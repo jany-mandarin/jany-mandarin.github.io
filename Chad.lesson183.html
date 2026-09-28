@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Mandarin Lesson 184: Ordering Drinks</title>
+    <title>Mandarin Lesson 183</title>
     <style>
         :root { --bg: #FDFBF7; --primary: #D4A373; --text: #4a4a4a; --white: #fff; }
         body { font-family: 'Helvetica Neue', Arial, sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; max-width: 800px; margin: 0 auto; padding: 20px; }
@@ -20,6 +20,7 @@
         .zy-char { font-size: 26px; font-family: "DFKai-SB", "BiauKai", serif; }
         .zy-box { display: inline-flex; flex-direction: column; justify-content: center; position: relative; margin-left: 2px; padding-right: 8px; }
         .zy-symbols { writing-mode: vertical-rl; text-orientation: upright; font-size: 11px; letter-spacing: -2px; }
+        /* 調整了 right 的數值，讓聲調更靠近注音 */
         .zy-tone { position: absolute; right: 0px; top: 50%; transform: translateY(-50%); font-size: 11px; }
         .zy-neutral { position: absolute; top: -11px; left: 50%; transform: translateX(-50%); font-size: 11px; }
         .en-trans { color: #777; font-size: 15px; font-style: italic; margin-left: 45px; }
@@ -33,7 +34,7 @@
 </head>
 <body>
     <div class="header">
-        <h1>Mandarin Lesson 184: 買飲料</h1>
+        <h1>Mandarin Lesson 183</h1>
         <p>Today's Date: <span id="date"></span></p>
     </div>
 
@@ -75,42 +76,121 @@
             speechSynthesis.speak(utterance);
         }
 
-        // 這裡是我幫你生成的新課程內容 (Lesson 184)
         const data = [
             {
-                title: "1. Ordering Boba (買珍珠奶茶)",
-                note: "In Taiwan, customizing ice and sugar levels is very common when ordering drinks.",
+                title: "1. Did you... (有沒有)",
+                note: "Used to ask if someone did something in the past. Example: Did you eat a burger yesterday? (你昨天有沒有吃漢堡？) / Did you sleep before 10? (你有沒有十點前睡覺？)",
                 items: [
-                    { zh: "老(ㄌㄠˇ)闆(ㄅㄢˇ)，我(ㄨㄛˇ)要(ㄧㄠˋ)一(ㄧˋ)杯(ㄅㄟ)珍(ㄓㄣ)珠(ㄓㄨ)奶(ㄋㄞˇ)茶(ㄔㄚˊ)。", en: "Boss, I want a cup of pearl milk tea (boba)." },
-                    { zh: "甜(ㄊㄧㄢˊ)度(ㄉㄨˋ)冰(ㄅㄧㄥ)塊(ㄎㄨㄞˋ)怎(ㄗㄣˇ)麼(ㄇㄜ˙)調(ㄊㄧㄠˊ)？", en: "How would you like the sweetness and ice level?" },
-                    { zh: "半(ㄅㄢˋ)糖(ㄊㄤˊ)少(ㄕㄠˇ)冰(ㄅㄧㄥ)，謝(ㄒㄧㄝˋ)謝(ㄒㄧㄝˋ)。", en: "Half sugar, less ice, thank you." }
+                    { zh: "現(ㄒㄧㄢˋ)在(ㄗㄞˋ)基(ㄐㄧ)隆(ㄌㄨㄥˊ)有(ㄧㄡˇ)沒(ㄇㄟˊ)有(ㄧㄡˇ)下(ㄒㄧㄚˋ)雨(ㄩˇ)？", en: "Is it raining in Keelung right now?" },
+                    { zh: "沒(ㄇㄟˊ)有(ㄧㄡˇ)沒(ㄇㄟˊ)有(ㄧㄡˇ)！！非(ㄈㄟ)常(ㄔㄤˊ)熱(ㄖㄜˋ)！", en: "No, no!! It's extremely hot!" }
                 ]
             },
             {
-                title: "2. Sizes and Bags (尺寸與袋子)",
+                title: "2. Measure Words & Verbs for Clothes",
+                note: "Use '件' (jiàn) for clothes and '個' (ge) for hats. Verb for wearing clothes is '穿' (chuān), and for hats is '戴' (dài).",
                 items: [
-                    { zh: "大(ㄉㄚˋ)杯(ㄅㄟ)還(ㄏㄞˊ)是(ㄕˋ)中(ㄓㄨㄥ)杯(ㄅㄟ)？", en: "Large or medium cup?" },
-                    { zh: "大(ㄉㄚˋ)杯(ㄅㄟ)的(ㄉㄜ˙)。需(ㄒㄩ)要(ㄧㄠˋ)買(ㄇㄞˇ)袋(ㄉㄞˋ)子(ㄗ˙)嗎(ㄇㄚ˙)？", en: "Large. Do you need to buy a bag?" },
-                    { zh: "不(ㄅㄨˊ)用(ㄩㄥˋ)，我(ㄨㄛˇ)自(ㄗˋ)己(ㄐㄧˇ)有(ㄧㄡˇ)帶(ㄉㄞˋ)。", en: "No need, I brought my own." }
+                    { zh: "一(ㄧˊ)件(ㄐㄧㄢˋ)衣(ㄧ)服(ㄈㄨˊ)、一(ㄧˊ)個(ㄍㄜ˙)帽(ㄇㄠˋ)子(ㄗ˙)", en: "A piece of clothing, a hat" },
+                    { zh: "穿(ㄔㄨㄢ)衣(ㄧ)服(ㄈㄨˊ)，戴(ㄉㄞˋ)帽(ㄇㄠˋ)子(ㄗ˙)", en: "Wear clothes, wear a hat" },
+                    { zh: "我(ㄨㄛˇ)在(ㄗㄞˋ)做(ㄗㄨㄛˋ)一(ㄧˊ)個(ㄍㄜ˙)帽(ㄇㄠˋ)子(ㄗ˙)，我(ㄨㄛˇ)想(ㄒㄧㄤˇ)要(ㄧㄠˋ)給(ㄍㄟˇ)我(ㄨㄛˇ)的(ㄉㄜ˙)媽(ㄇㄚ)媽(ㄇㄚ˙)。", en: "I am making a hat, I want to give it to my mom." },
+                    { zh: "要(ㄧㄠˋ)是(ㄕˋ)媽(ㄇㄚ)媽(ㄇㄚ˙)戴(ㄉㄞˋ)漂(ㄆㄧㄠˋ)亮(ㄌㄧㄤˋ)的(ㄉㄜ˙)帽(ㄇㄠˋ)子(ㄗ˙)出(ㄔㄨ)門(ㄇㄣˊ)，賣(ㄇㄞˋ)東(ㄉㄨㄥ)西(ㄒㄧ)的(ㄉㄜ˙)老(ㄌㄠˇ)闆(ㄅㄢˇ)會(ㄏㄨㄟˋ)叫(ㄐㄧㄠˋ)她(ㄊㄚ)小(ㄒㄧㄠˇ)姐(ㄐㄧㄝˇ)，媽(ㄇㄚ)媽(ㄇㄚ˙)會(ㄏㄨㄟˋ)很(ㄏㄣˇ)開(ㄎㄞ)心(ㄒㄧㄣ)。", en: "If mom wears a beautiful hat out, the sellers will call her 'Miss', and she will be very happy." }
+                ]
+            },
+            {
+                title: "3. Mid-Autumn & Teachers' Day (中秋節與教師節)",
+                items: [
+                    { zh: "A: 禮(ㄌㄧˇ)拜(ㄅㄞˋ)五(ㄨˇ)是(ㄕˋ)中(ㄓㄨㄥ)秋(ㄑㄧㄡ)節(ㄐㄧㄝˊ)，明(ㄇㄧㄥˊ)天(ㄊㄧㄢ)是(ㄕˋ)老(ㄌㄠˇ)師(ㄕ)節(ㄐㄧㄝˊ)。", en: "Friday is Mid-Autumn Festival, tomorrow is Teachers' Day." },
+                    { zh: "B: 大(ㄉㄚˋ)家(ㄐㄧㄚ)有(ㄧㄡˇ)放(ㄈㄤˋ)假(ㄐㄧㄚˋ)嗎(ㄇㄚ˙)？", en: "Does everyone have a day off?" },
+                    { zh: "A: 對(ㄉㄨㄟˋ)啊(ㄚ˙)！大(ㄉㄚˋ)家(ㄐㄧㄚ)都(ㄉㄡ)放(ㄈㄤˋ)假(ㄐㄧㄚˋ)。", en: "Yes! Everyone has the day off." },
+                    { zh: "老(ㄌㄠˇ)師(ㄕ)節(ㄐㄧㄝˊ)是(ㄕˋ)孔(ㄎㄨㄥˇ)子(ㄗˇ)的(ㄉㄜ˙)生(ㄕㄥ)日(ㄖˋ)。孔(ㄎㄨㄥˇ)子(ㄗˇ)是(ㄕˋ)第(ㄉㄧˋ)一(ㄧ)個(ㄍㄜ˙)不(ㄅㄨˋ)只(ㄓˇ)教(ㄐㄧㄠ)有(ㄧㄡˇ)錢(ㄑㄧㄢˊ)人(ㄖㄣˊ)的(ㄉㄜ˙)老(ㄌㄠˇ)師(ㄕ)。", en: "Teachers' Day is Confucius's birthday. He was the first teacher to not only teach the rich." },
+                    { zh: "你(ㄋㄧˇ)聽(ㄊㄧㄥ)過(ㄍㄨㄛˋ)孔(ㄎㄨㄥˇ)子(ㄗˇ)嗎(ㄇㄚ˙)？", en: "Have you heard of Confucius?" },
+                    { zh: "B: 對(ㄉㄨㄟˋ)～我(ㄨㄛˇ)聽(ㄊㄧㄥ)過(ㄍㄨㄛˋ)。", en: "Yes, I've heard of him." }
+                ]
+            },
+            {
+                title: "4. Video Games & Comic Books (電動與漫畫書)",
+                note: "The phrase '在說' (zài shuō) means 'is about'. The word '電動' (diàn dòng) literally means 'electric + moving parts'.",
+                items: [
+                    { zh: "昨(ㄗㄨㄛˊ)天(ㄊㄧㄢ)我(ㄨㄛˇ)看(ㄎㄢˋ)了(ㄌㄜ˙)兩(ㄌㄧㄤˇ)本(ㄅㄣˇ)書(ㄕ)。", en: "Yesterday I read two books." },
+                    { zh: "一(ㄧˋ)本(ㄅㄣˇ)書(ㄕ)是(ㄕˋ)在(ㄗㄞˋ)說(ㄕㄨㄛ)以(ㄧˇ)前(ㄑㄧㄢˊ)人(ㄖㄣˊ)怎(ㄗㄣˇ)麼(ㄇㄜ˙)寫(ㄒㄧㄝˇ)字(ㄗˋ)。", en: "One book is about how people in the past wrote characters." },
+                    { zh: "一(ㄧˋ)本(ㄅㄣˇ)書(ㄕ)是(ㄕˋ)日(ㄖˋ)本(ㄅㄣˇ)的(ㄉㄜ˙)公(ㄍㄨㄥ)司(ㄙ)叫(ㄐㄧㄠˋ) Nintendo，他(ㄊㄚ)們(ㄇㄣ˙)做(ㄗㄨㄛˋ)第(ㄉㄧˋ)一(ㄧ)個(ㄍㄜ˙)電(ㄉㄧㄢˋ)動(ㄉㄨㄥˋ)。", en: "One book is about a Japanese company called Nintendo, they made the first video game." },
+                    { zh: "A: 你(ㄋㄧˇ)小(ㄒㄧㄠˇ)時(ㄕˊ)候(ㄏㄡˋ)會(ㄏㄨㄟˋ)玩(ㄨㄢˊ)電(ㄉㄧㄢˋ)動(ㄉㄨㄥˋ)嗎(ㄇㄚ˙)？", en: "Did you play video games when you were little?" },
+                    { zh: "B: 我(ㄨㄛˇ)有(ㄧㄡˇ)一(ㄧˊ)個(ㄍㄜ˙)很(ㄏㄣˇ)舊(ㄐㄧㄡˋ)很(ㄏㄣˇ)舊(ㄐㄧㄡˋ)的(ㄉㄜ˙)電(ㄉㄧㄢˋ)動(ㄉㄨㄥˋ)，是(ㄕˋ)我(ㄨㄛˇ)爸(ㄅㄚˋ)媽(ㄇㄚ)買(ㄇㄞˇ)給(ㄍㄟˇ)我(ㄨㄛˇ)的(ㄉㄜ˙)。", en: "I have a very, very old video game console, my parents bought it for me." },
+                    { zh: "他(ㄊㄚ)們(ㄇㄣ˙)說(ㄕㄨㄛ)要(ㄧㄠˋ)是(ㄕˋ)你(ㄋㄧˇ)想(ㄒㄧㄤˇ)玩(ㄨㄢˊ)電(ㄉㄧㄢˋ)動(ㄉㄨㄥˋ)，你(ㄋㄧˇ)要(ㄧㄠˋ)努(ㄋㄨˇ)力(ㄌㄧˋ)讀(ㄉㄨˊ)書(ㄕ)。", en: "They said if you want to play video games, you must study hard." },
+                    { zh: "我(ㄨㄛˇ)太(ㄊㄞˋ)太(ㄊㄞ˙)喜(ㄒㄧˇ)歡(ㄏㄨㄢ)玩(ㄨㄢˊ)俄(ㄜˋ)羅(ㄌㄨㄛˊ)斯(ㄙ)方(ㄈㄤ)塊(ㄎㄨㄞˋ)。", en: "My wife likes playing Tetris." },
+                    { zh: "你(ㄋㄧˇ)的(ㄉㄜ˙)電(ㄉㄧㄢˋ)動(ㄉㄨㄥˋ)是(ㄕˋ)幾(ㄐㄧˇ)年(ㄋㄧㄢˊ)的(ㄉㄜ˙)？", en: "What year is your video game from?" },
+                    { zh: "我(ㄨㄛˇ)的(ㄉㄜ˙)電(ㄉㄧㄢˋ)動(ㄉㄨㄥˋ)是(ㄕˋ)1989年(ㄋㄧㄢˊ)的(ㄉㄜ˙)，那(ㄋㄚˋ)時(ㄕˊ)候(ㄏㄡˋ)還(ㄏㄞˊ)有(ㄧㄡˇ)東(ㄉㄨㄥ)德(ㄉㄜˊ)和(ㄏㄢˋ)西(ㄒㄧ)德(ㄉㄜˊ)。", en: "My video game is from 1989, at that time East and West Germany still existed." },
+                    { zh: "哇(ㄨㄚ)！1989年(ㄋㄧㄢˊ)！我(ㄨㄛˇ)還(ㄏㄞˊ)沒(ㄇㄟˊ)在(ㄗㄞˋ)地(ㄉㄧˋ)球(ㄑㄧㄡˊ)上(ㄕㄤˋ)。", en: "Wow! 1989! I wasn't even on Earth yet." },
+                    { zh: "我(ㄨㄛˇ)在(ㄗㄞˋ)飛(ㄈㄟ)機(ㄐㄧ)上(ㄕㄤˋ)的(ㄉㄜ˙)時(ㄕˊ)候(ㄏㄡˋ)常(ㄔㄤˊ)常(ㄔㄤˊ)看(ㄎㄢˋ)中(ㄓㄨㄥ)文(ㄨㄣˊ)漫(ㄇㄢˋ)畫(ㄏㄨㄚˋ)書(ㄕ)。", en: "When I am on the airplane, I often read Chinese comic books." }
+                ]
+            },
+            {
+                title: "5. Clock & Carve (鐘與刻)",
+                items: [
+                    { zh: "你(ㄋㄧˇ)家(ㄐㄧㄚ)有(ㄧㄡˇ)時(ㄕˊ)鐘(ㄓㄨㄥ)嗎(ㄇㄚ˙)？", en: "Do you have a clock at home?" },
+                    { zh: "我(ㄨㄛˇ)家(ㄐㄧㄚ)還(ㄏㄞˊ)是(ㄕˋ)有(ㄧㄡˇ)時(ㄕˊ)鐘(ㄓㄨㄥ)，只(ㄓˇ)是(ㄕˋ)現(ㄒㄧㄢˋ)在(ㄗㄞˋ)很(ㄏㄣˇ)多(ㄉㄨㄛ)人(ㄖㄣˊ)都(ㄉㄡ)看(ㄎㄢˋ)手(ㄕㄡˇ)機(ㄐㄧ)。", en: "I still have a clock at home, but nowadays many people just look at their phones." },
+                    { zh: "你(ㄋㄧˇ)太(ㄊㄞˋ)太(ㄊㄞˋ)一(ㄧˋ)天(ㄊㄧㄢ)花(ㄏㄨㄚ)幾(ㄐㄧˇ)個(ㄍㄜ˙)鐘(ㄓㄨㄥ)頭(ㄊㄡˊ)在(ㄗㄞˋ)客(ㄎㄜˋ)廳(ㄊㄧㄥ)？", en: "How many hours does your wife spend in the living room a day?" },
+                    { zh: "今(ㄐㄧㄣ)天(ㄊㄧㄢ)是(ㄕˋ)禮(ㄌㄧˇ)拜(ㄅㄞˋ)天(ㄊㄧㄢ)，我(ㄨㄛˇ)太(ㄊㄞˋ)太(ㄊㄞˋ)一(ㄧˋ)天(ㄊㄧㄢ)要(ㄧㄠˋ)花(ㄏㄨㄚ)八(ㄅㄚ)個(ㄍㄜ˙)鐘(ㄓㄨㄥ)頭(ㄊㄡˊ)在(ㄗㄞˋ)客(ㄎㄜˋ)廳(ㄊㄧㄥ)，因(ㄧㄣ)為(ㄨㄟˋ)她(ㄊㄚ)不(ㄅㄨˋ)想(ㄒㄧㄤˇ)做(ㄗㄨㄛˋ)事(ㄕˋ)。", en: "Today is Sunday, my wife spends eight hours in the living room a day because she doesn't want to do anything." },
+                    { zh: "我(ㄨㄛˇ)覺(ㄐㄩㄝˊ)得(ㄉㄜ˙)今(ㄐㄧㄣ)天(ㄊㄧㄢ)早(ㄗㄠˇ)上(ㄕㄤˋ)跟(ㄍㄣ)我(ㄨㄛˇ)貓(ㄇㄠ)一(ㄧˋ)起(ㄑㄧˇ)吃(ㄔ)飯(ㄈㄢˋ)的(ㄉㄜ˙)那(ㄋㄚˋ)一(ㄧˊ)刻(ㄎㄜˋ)，非(ㄈㄟ)常(ㄔㄤˊ)開(ㄎㄞ)心(ㄒㄧㄣ)。", en: "I felt that the moment I ate breakfast with my cat this morning was very happy." }
+                ]
+            },
+            {
+                title: "6. Not too... (不太)",
+                note: "A polite way to express negative descriptions.",
+                items: [
+                    { zh: "這(ㄓㄜˋ)個(ㄍㄜ˙)不(ㄅㄨˊ)太(ㄊㄞˋ)難(ㄋㄢˊ)。", en: "This is not too difficult." },
+                    { zh: "這(ㄓㄜˋ)個(ㄍㄜ˙)不(ㄅㄨˊ)太(ㄊㄞˋ)好(ㄏㄠˇ)吃(ㄔ)。", en: "This is not very tasty." },
+                    { zh: "我(ㄨㄛˇ)不(ㄅㄨˊ)太(ㄊㄞˋ)高(ㄍㄠ)。", en: "I am not very tall." },
+                    { zh: "這(ㄓㄜˋ)個(ㄍㄜ˙)衣(ㄧ)服(ㄈㄨˊ)不(ㄅㄨˊ)太(ㄊㄞˋ)好(ㄏㄠˇ)看(ㄎㄢˋ)。", en: "These clothes don't look very good." },
+                    { zh: "我(ㄨㄛˇ)現(ㄒㄧㄢˋ)在(ㄗㄞˋ)不(ㄅㄨˊ)太(ㄊㄞˋ)好(ㄏㄠˇ)。", en: "I am not feeling very well right now." }
+                ]
+            },
+            {
+                title: "7. Important Grammar & Pronunciation (重點文法與發音)",
+                items: [
+                    { zh: "這(ㄓㄜˋ)是(ㄕˋ)一(ㄧˋ)家(ㄐㄧㄚ)新(ㄒㄧㄣ)的(ㄉㄜ˙)餐(ㄘㄢ)廳(ㄊㄧㄥ)", en: "It's a new restaurant (In Chinese, we explicitly say 'one' new restaurant)." },
+                    { zh: "終(ㄓㄨㄥ)於(ㄩˊ)", en: "Finally (Pronunciation check: yú is 2nd tone)" },
+                    { zh: "樓(ㄌㄡˊ)梯(ㄊㄧ)", en: "Stairs" },
+                    { zh: "又(ㄧㄡˋ)大(ㄉㄚˋ)又(ㄧㄡˋ)漂(ㄆㄧㄠˋ)亮(ㄌㄧㄤˋ)", en: "Big and beautiful ('又...又...' does not need '很')." },
+                    { zh: "菜(ㄘㄞˋ)單(ㄉㄢ)上(ㄕㄤˋ)寫(ㄒㄧㄝˇ)都(ㄉㄡ)是(ㄕˋ)素(ㄙㄨˋ)食(ㄕˊ)", en: "The menu says this place is totally vegetarian (Do not translate '100% vegetarian' directly)." }
                 ]
             }
         ];
 
-        // 新的糾正語法庫
         const rules = [
             {
-                title: "Ice Level: 'Less ice' vs 'Little ice'",
-                note: "Don't translate 'a little ice' directly as 一點冰. The correct menu term is 微冰 (wéi bīng) or 少冰 (shǎo bīng).",
-                wrong: "我(ㄨㄛˇ)要(ㄧㄠˋ)一(ㄧˋ)點(ㄉㄧㄢˇ)冰(ㄅㄧㄥ)",
-                correct: "我(ㄨㄛˇ)要(ㄧㄠˋ)微(ㄨㄟˊ)冰(ㄅㄧㄥ)",
-                en: "I want light ice."
+                title: "Floor (樓) vs. Building (大樓)",
+                note: "The character '樓' means floor and is rarely used alone to mean a building. Use '大樓' for a building.",
+                wrong: "在(ㄗㄞˋ)新(ㄒㄧㄣ)樓(ㄌㄡˊ)裡(ㄌㄧˇ)面(ㄇㄧㄢˋ)",
+                correct: "在(ㄗㄞˋ)新(ㄒㄧㄣ)大(ㄉㄚˋ)樓(ㄌㄡˊ)裡(ㄌㄧˇ)面(ㄇㄧㄢˋ)",
+                en: "Inside the new building"
             },
             {
-                title: "To Go / Takeout",
-                note: "When asking to take food/drinks to go, use 帶走 (dài zǒu) or 外帶 (wài dài), not 拿走 (ná zǒu).",
-                wrong: "我(ㄨㄛˇ)要(ㄧㄠˋ)拿(ㄋㄚˊ)走(ㄗㄡˇ)",
-                correct: "我(ㄨㄛˇ)要(ㄧㄠˋ)外(ㄨㄞˋ)帶(ㄉㄞˋ)",
-                en: "I want it to go."
+                title: "Feeling unwell vs. Physical pain",
+                note: "'我覺得很痛' refers to literal physical pain. If you just feel sick or unwell, say '我現在不太好'.",
+                wrong: "我(ㄨㄛˇ)覺(ㄐㄩㄝˊ)得(ㄉㄜ˙)很(ㄏㄣˇ)痛(ㄊㄨㄥˋ)",
+                correct: "我(ㄨㄛˇ)現(ㄒㄧㄢˋ)在(ㄗㄞˋ)不(ㄅㄨˊ)太(ㄊㄞˋ)好(ㄏㄠˇ)",
+                en: "I don't feel well right now."
+            },
+            {
+                title: "Eat well vs. Eat more rice",
+                note: "To say 'drink water and eat well', don't translate literally. Say 'drink more water and eat more rice/healthy food'.",
+                wrong: "你(ㄋㄧˇ)今(ㄐㄧㄣ)天(ㄊㄧㄢ)要(ㄧㄠˋ)多(ㄉㄨㄛ)喝(ㄏㄜ)水(ㄕㄨㄟˇ)跟(ㄍㄣ)吃(ㄔ)非(ㄈㄟ)常(ㄔㄤˊ)好(ㄏㄠˇ)的(ㄉㄜ˙)食(ㄕˊ)物(ㄨˋ)",
+                correct: "你(ㄋㄧˇ)要(ㄧㄠˋ)多(ㄉㄨㄛ)喝(ㄏㄜ)水(ㄕㄨㄟˇ)跟(ㄍㄣ)多(ㄉㄨㄛ)吃(ㄔ)飯(ㄈㄢˋ)",
+                en: "You need to drink water and eat well today."
+            },
+            {
+                title: "Awesome",
+                note: "'Awesome' is more naturally translated as '太棒了', not '非常好' (very good).",
+                wrong: "非(ㄈㄟ)常(ㄔㄤˊ)好(ㄏㄠˇ)",
+                correct: "太(ㄊㄞˋ)棒(ㄅㄤˋ)了(ㄌㄜ˙)",
+                en: "Awesome!"
+            },
+            {
+                title: "Let's do something",
+                note: "'讓' (let) requires a subject (A lets B do something). For 'Let's...', use '我們一起去...'.",
+                wrong: "讓(ㄖㄤˋ)我(ㄨㄛˇ)們(ㄇㄣ˙)多(ㄉㄨㄛ)吃(ㄔ)超(ㄔㄠ)好(ㄏㄠˇ)吃(ㄔ)的(ㄉㄜ˙)食(ㄕˊ)物(ㄨˋ)吧(ㄅㄚ˙)",
+                correct: "我(ㄨㄛˇ)們(ㄇㄣ˙)一(ㄧˋ)起(ㄑㄧˇ)去(ㄑㄩˋ)吃(ㄔ)超(ㄔㄠ)好(ㄏㄠˇ)吃(ㄔ)的(ㄉㄜ˙)食(ㄕˊ)物(ㄨˋ)吧(ㄅㄚ˙)",
+                en: "Let's get some delicious food!"
             }
         ];
 
@@ -156,17 +236,23 @@
         ruleHtml += `</div>`;
         container.innerHTML += ruleHtml;
 
-        // 新的作業
+        // Homework Section
         let hwHtml = `
             <div class="section">
                 <h2>📝 Homework: Reading Comprehension</h2>
                 <div class="homework">
-                    <p>今天天氣非常熱，李明下班後去飲料店買飲料。他點了一杯大杯的烏龍茶，因為他正在減肥，所以他點了無糖、去冰。店員問他需要買袋子嗎？李明說不用，他把它放在自己的包包裡。喝完飲料後，他覺得心情好多了。</p>
+                    <p>前天禮拜五是中秋節，大家都放假，回家跟家人在一起烤肉和吃月餅，路上的烤肉味很香，全台灣天氣都很好。王陽明住在一個大樓，大樓不可以烤肉，所以他跟家人一起去烤肉店，可是每家烤肉店裡都有非常多人，他們找不到位子，他很難過，去了五家烤肉店、開了兩個鐘頭的車後，終於找到一家有位子，那一刻大家開心地坐下來，一起吃烤肉看月亮，過中秋節。</p>
                     
-                    <div class="homework-q">Q1. 李明點了什麼飲料？</div>
+                    <div class="homework-q">Q1. 中秋節的時候，全台灣人會做什麼事?</div>
                     <textarea style="width:100%; height:40px; margin-top:8px; margin-bottom:15px; border-radius:4px; border:1px solid #ccc; padding: 5px;"></textarea>
 
-                    <div class="homework-q">Q2. 他的甜度跟冰塊怎麼調？為什麼？</div>
+                    <div class="homework-q">Q2. 王陽明一開始為什麼很難過?</div>
+                    <textarea style="width:100%; height:40px; margin-top:8px; margin-bottom:15px; border-radius:4px; border:1px solid #ccc; padding: 5px;"></textarea>
+
+                    <div class="homework-q">Q3. 王陽明花了多久找到烤肉店?</div>
+                    <textarea style="width:100%; height:40px; margin-top:8px; margin-bottom:15px; border-radius:4px; border:1px solid #ccc; padding: 5px;"></textarea>
+
+                    <div class="homework-q">Q4. 王陽明最後怎麼了?</div>
                     <textarea style="width:100%; height:40px; margin-top:8px; margin-bottom:15px; border-radius:4px; border:1px solid #ccc; padding: 5px;"></textarea>
                 </div>
             </div>
