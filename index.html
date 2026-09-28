@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Mandarin Lesson 184: Ordering Drinks</title>
+    <style>
+        :root { --bg: #FDFBF7; --primary: #D4A373; --text: #4a4a4a; --white: #fff; }
+        body { font-family: 'Helvetica Neue', Arial, sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; max-width: 800px; margin: 0 auto; padding: 20px; }
+        .header { text-align: center; border-bottom: 2px solid var(--primary); padding-bottom: 10px; margin-bottom: 20px; }
+        .controls { position: sticky; top: 0; background: var(--bg); padding: 15px; text-align: center; border-bottom: 1px solid #ccc; z-index: 100; margin-bottom: 20px; }
+        button { background: var(--primary); color: white; border: none; padding: 10px 15px; margin: 5px; border-radius: 6px; cursor: pointer; font-size: 14px; font-weight: bold; }
+        button:hover { background: #B5835A; }
+        .audio-btn { background: #f0f0f0; color: #333; font-size: 16px; padding: 8px; border-radius: 50%; width: 35px; height: 35px; display: inline-flex; align-items: center; justify-content: center; }
+        .audio-btn:hover { background: #e0e0e0; }
+        h2 { color: #8C6239; border-left: 5px solid var(--primary); padding-left: 10px; margin-top: 30px; }
+        .section { margin-bottom: 30px; background: var(--white); padding: 20px; border-radius: 12px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
+        .item { margin-bottom: 20px; display: flex; flex-direction: column; }
+        .item-content { display: flex; align-items: flex-start; margin-bottom: 5px; }
+        .zy-char-wrap { display: inline-flex; align-items: center; margin-right: 2px; }
+        .zy-char { font-size: 26px; font-family: "DFKai-SB", "BiauKai", serif; }
+        .zy-box { display: inline-flex; flex-direction: column; justify-content: center; position: relative; margin-left: 2px; padding-right: 8px; }
+        .zy-symbols { writing-mode: vertical-rl; text-orientation: upright; font-size: 11px; letter-spacing: -2px; }
+        .zy-tone { position: absolute; right: 0px; top: 50%; transform: translateY(-50%); font-size: 11px; }
+        .zy-neutral { position: absolute; top: -11px; left: 50%; transform: translateX(-50%); font-size: 11px; }
+        .en-trans { color: #777; font-size: 15px; font-style: italic; margin-left: 45px; }
+        .grammar-box { background: #FFF9F0; border: 1px solid #E6D5B8; border-radius: 8px; padding: 15px; margin: 15px 0; }
+        .wrong { color: #D9534F; font-size: 20px; font-weight: bold;}
+        .correct { color: #5CB85C; font-size: 20px; font-weight: bold;}
+        .note { font-size: 14px; color: #666; margin-bottom: 10px; }
+        .homework { background: #FEF8E7; padding: 20px; border-radius: 8px; font-size: 18px; }
+        .homework-q { margin-top: 15px; font-size: 16px; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Mandarin Lesson 184: 買飲料</h1>
+        <p>Today's Date: <span id="date"></span></p>
+    </div>
+
+    <div class="controls">
+        <button onclick="toggleZhuyin()">Toggle Bopomofo</button>
+        <button onclick="toggleEnglish()">Toggle English</button>
+    </div>
+
+    <div id="content"></div>
+
+    <script>
+        document.getElementById('date').innerText = new Date().toLocaleDateString();
+
+        function parseZhuyin(text) {
+            const regex = /([\u4e00-\u9fa5a-zA-Z0-9])\((.*?)\)/g;
+            let parsed = text.replace(regex, (match, char, zy) => {
+                let tone = '';
+                let symbols = zy;
+                let isNeutral = false;
+                
+                if (zy.includes('ˊ')) { tone = 'ˊ'; symbols = zy.replace('ˊ', ''); }
+                else if (zy.includes('ˇ')) { tone = 'ˇ'; symbols = zy.replace('ˇ', ''); }
+                else if (zy.includes('ˋ')) { tone = 'ˋ'; symbols = zy.replace('ˋ', ''); }
+                else if (zy.includes('˙')) { isNeutral = true; symbols = zy.replace('˙', ''); }
+
+                let toneHtml = tone ? `<span class="zy-tone">${tone}</span>` : '';
+                let neutralHtml = isNeutral ? `<span class="zy-neutral">˙</span>` : '';
+
+                return `<div class="zy-char-wrap"><span class="zy-char">${char}</span><div class="zy-box">${neutralHtml}<span class="zy-symbols">${symbols}</span>${toneHtml}</div></div>`;
+            });
+            return parsed;
+        }
+
+        function playAudio(text) {
+            const cleanText = text.replace(/\(.*?\)/g, '').replace(/[^\u4e00-\u9fa5，。？！]/g, '');
+            const utterance = new SpeechSynthesisUtterance(cleanText);
+            utterance.lang = 'zh-TW';
+            utterance.rate = 0.85;
+            speechSynthesis.speak(utterance);
+        }
+
+        // 這裡是我幫你生成的新課程內容 (Lesson 184)
+        const data = [
+            {
+                title: "1. Ordering Boba (買珍珠奶茶)",
+                note: "In Taiwan, customizing ice and sugar levels is very common when ordering drinks.",
+                items: [
+                    { zh: "老(ㄌㄠˇ)闆(ㄅㄢˇ)，我(ㄨㄛˇ)要(ㄧㄠˋ)一(ㄧˋ)杯(ㄅㄟ)珍(ㄓㄣ)珠(ㄓㄨ)奶(ㄋㄞˇ)茶(ㄔㄚˊ)。", en: "Boss, I want a cup of pearl milk tea (boba)." },
+                    { zh: "甜(ㄊㄧㄢˊ)度(ㄉㄨˋ)冰(ㄅㄧㄥ)塊(ㄎㄨㄞˋ)怎(ㄗㄣˇ)麼(ㄇㄜ˙)調(ㄊㄧㄠˊ)？", en: "How would you like the sweetness and ice level?" },
+                    { zh: "半(ㄅㄢˋ)糖(ㄊㄤˊ)少(ㄕㄠˇ)冰(ㄅㄧㄥ)，謝(ㄒㄧㄝˋ)謝(ㄒㄧㄝˋ)。", en: "Half sugar, less ice, thank you." }
+                ]
+            },
+            {
+                title: "2. Sizes and Bags (尺寸與袋子)",
+                items: [
+                    { zh: "大(ㄉㄚˋ)杯(ㄅㄟ)還(ㄏㄞˊ)是(ㄕˋ)中(ㄓㄨㄥ)杯(ㄅㄟ)？", en: "Large or medium cup?" },
+                    { zh: "大(ㄉㄚˋ)杯(ㄅㄟ)的(ㄉㄜ˙)。需(ㄒㄩ)要(ㄧㄠˋ)買(ㄇㄞˇ)袋(ㄉㄞˋ)子(ㄗ˙)嗎(ㄇㄚ˙)？", en: "Large. Do you need to buy a bag?" },
+                    { zh: "不(ㄅㄨˊ)用(ㄩㄥˋ)，我(ㄨㄛˇ)自(ㄗˋ)己(ㄐㄧˇ)有(ㄧㄡˇ)帶(ㄉㄞˋ)。", en: "No need, I brought my own." }
+                ]
+            }
+        ];
+
+        // 新的糾正語法庫
+        const rules = [
+            {
+                title: "Ice Level: 'Less ice' vs 'Little ice'",
+                note: "Don't translate 'a little ice' directly as 一點冰. The correct menu term is 微冰 (wéi bīng) or 少冰 (shǎo bīng).",
+                wrong: "我(ㄨㄛˇ)要(ㄧㄠˋ)一(ㄧˋ)點(ㄉㄧㄢˇ)冰(ㄅㄧㄥ)",
+                correct: "我(ㄨㄛˇ)要(ㄧㄠˋ)微(ㄨㄟˊ)冰(ㄅㄧㄥ)",
+                en: "I want light ice."
+            },
+            {
+                title: "To Go / Takeout",
+                note: "When asking to take food/drinks to go, use 帶走 (dài zǒu) or 外帶 (wài dài), not 拿走 (ná zǒu).",
+                wrong: "我(ㄨㄛˇ)要(ㄧㄠˋ)拿(ㄋㄚˊ)走(ㄗㄡˇ)",
+                correct: "我(ㄨㄛˇ)要(ㄧㄠˋ)外(ㄨㄞˋ)帶(ㄉㄞˋ)",
+                en: "I want it to go."
+            }
+        ];
+
+        const container = document.getElementById('content');
+        
+        data.forEach(sec => {
+            let html = `<div class="section"><h2>${sec.title}</h2>`;
+            if(sec.note) html += `<p class="note">${sec.note}</p>`;
+            
+            sec.items.forEach(item => {
+                html += `
+                    <div class="item">
+                        <div class="item-content">
+                            <button class="audio-btn" onclick="playAudio('${item.zh}')">🔊</button>
+                            <div class="zhuyin-content">${parseZhuyin(item.zh)}</div>
+                        </div>
+                        <div class="en-trans">${item.en}</div>
+                    </div>
+                `;
+            });
+            html += `</div>`;
+            container.innerHTML += html;
+        });
+
+        let ruleHtml = `<div class="section"><h2>⚖️ Authentic Expressions (❌ vs ✅)</h2>`;
+        rules.forEach(rule => {
+            ruleHtml += `
+                <div class="grammar-box">
+                    <div style="font-weight:bold; margin-bottom: 5px;">${rule.title}</div>
+                    <div class="note">${rule.note}</div>
+                    <div class="item-content" style="margin-top: 15px; align-items:center;">
+                        <button class="audio-btn" style="width:30px;height:30px;font-size:14px;margin-right:15px;" onclick="playAudio('${rule.wrong}')">🔊</button>
+                        <span class="wrong">❌ </span> <span style="margin-left:8px;">${parseZhuyin(rule.wrong)}</span>
+                    </div>
+                    <div class="item-content" style="margin-top: 15px; align-items:center;">
+                        <button class="audio-btn" style="width:30px;height:30px;font-size:14px;margin-right:15px;" onclick="playAudio('${rule.correct}')">🔊</button>
+                        <span class="correct">✅ </span> <span style="margin-left:8px;">${parseZhuyin(rule.correct)}</span>
+                    </div>
+                    <div class="en-trans" style="margin-left:45px; margin-top:10px;">${rule.en}</div>
+                </div>
+            `;
+        });
+        ruleHtml += `</div>`;
+        container.innerHTML += ruleHtml;
+
+        // 新的作業
+        let hwHtml = `
+            <div class="section">
+                <h2>📝 Homework: Reading Comprehension</h2>
+                <div class="homework">
+                    <p>今天天氣非常熱，李明下班後去飲料店買飲料。他點了一杯大杯的烏龍茶，因為他正在減肥，所以他點了無糖、去冰。店員問他需要買袋子嗎？李明說不用，他把它放在自己的包包裡。喝完飲料後，他覺得心情好多了。</p>
+                    
+                    <div class="homework-q">Q1. 李明點了什麼飲料？</div>
+                    <textarea style="width:100%; height:40px; margin-top:8px; margin-bottom:15px; border-radius:4px; border:1px solid #ccc; padding: 5px;"></textarea>
+
+                    <div class="homework-q">Q2. 他的甜度跟冰塊怎麼調？為什麼？</div>
+                    <textarea style="width:100%; height:40px; margin-top:8px; margin-bottom:15px; border-radius:4px; border:1px solid #ccc; padding: 5px;"></textarea>
+                </div>
+            </div>
+        `;
+        container.innerHTML += hwHtml;
+
+        let zyVisible = true;
+        let enVisible = true;
+
+        function toggleZhuyin() {
+            zyVisible = !zyVisible;
+            document.querySelectorAll('.zy-box').forEach(el => {
+                el.style.display = zyVisible ? 'inline-flex' : 'none';
+            });
+        }
+
+        function toggleEnglish() {
+            enVisible = !enVisible;
+            document.querySelectorAll('.en-trans').forEach(el => {
+                el.style.display = enVisible ? 'block' : 'none';
+            });
+        }
+    </script>
+</body>
+</html>
