@@ -128,8 +128,11 @@
         }
 
         function playAudio(text) {
-            // 針對音檔發音優化：確保俄讀 ㄜˋ、和讀 ㄏㄢˋ
-            let cleanText = text.replace(/\(.*?\)/g, '').replace(/[^\u4e00-\u9fa5，。？！]/g, '');
+            // 轉換發音文字：處理俄的四聲，並將 1989 年替換成中文數字以供 TTS 正確朗讀
+            let cleanText = text.replace(/\(.*?\)/g, '')
+                                .replace(/俄羅斯/g, '俄ˋ羅斯')
+                                .replace(/1989年/g, '一九八九年')
+                                .replace(/[^\u4e00-\u9fa5，。？！]/g, '');
             const utterance = new SpeechSynthesisUtterance(cleanText);
             utterance.lang = 'zh-TW';
             utterance.rate = 0.85;
