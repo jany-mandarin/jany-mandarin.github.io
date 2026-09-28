@@ -128,7 +128,6 @@
         }
 
         function playAudio(text) {
-            // 轉換發音文字：處理俄的四聲，並將 1989 年替換成中文數字以供 TTS 正確朗讀
             let cleanText = text.replace(/\(.*?\)/g, '')
                                 .replace(/俄羅斯/g, '俄ˋ羅斯')
                                 .replace(/1989年/g, '一九八九年')
@@ -173,17 +172,17 @@
                 title: "4. Video Games & Comic Books (電動與漫畫書)",
                 note: "The phrase '在說' (zài shuō) means 'is about'. The word '電動' (diàn dòng) literally means 'electric + moving parts'.",
                 items: [
-                    { zh: "昨(ㄗㄨㄛˊ)天(ㄊㄧㄢ)我(ㄨㄛˇ)看(ㄎㄢˋ)了(ㄌㄜ˙)兩(ㄌㄧㄤˇ)本(ㄅㄣˇ)書(ㄕ)。", en: "Yesterday I read two books." },
-                    { zh: "一(ㄧˋ)本(ㄅㄣˇ)書(ㄕ)是(ㄕˋ)在(ㄗㄞˋ)說(ㄕㄨㄛ)以(ㄧˇ)前(ㄑㄧㄢˊ)人(ㄖㄣˊ)怎(ㄗㄣˇ)麼(ㄇㄜ˙)寫(ㄒㄧㄝˇ)字(ㄗˋ)。", en: "One book is about how people in the past wrote characters." },
-                    { zh: "一(ㄧˋ)本(ㄅㄣˇ)書(ㄕ)是(ㄕˋ)日(ㄖˋ)本(ㄅㄣˇ)的(ㄉㄜ˙)公(ㄍㄨㄥ)司(ㄙ)叫(ㄐㄧㄠˋ) Nintendo，他(ㄊㄚ)們(ㄇㄣ˙)做(ㄗㄨㄛˋ)第(ㄉㄧˋ)一(ㄧ)個(ㄍㄜ˙)電(ㄉㄧㄢˋ)動(ㄉㄨㄥˋ)。", en: "One book is about a Japanese company called Nintendo, they made the first video game." },
+                    { zh: "昨(ㄗㄨㄛˊ)天(ㄊㄧㄢ)我(ㄨㄛˇ)看(ㄎㄢˋ)了(ㄌㄜ˙)兩(ㄌㄧㄤˇ)本(ㄅㄣˇ)書(ㄕㄨ)。", en: "Yesterday I read two books." },
+                    { zh: "一(ㄧˋ)本(ㄅㄣˇ)書(ㄕㄨ)是(ㄕˋ)在(ㄗㄞˋ)說(ㄕㄨㄛ)以(ㄧˇ)前(ㄑㄧㄢˊ)人(ㄖㄣˊ)怎(ㄗㄣˇ)麼(ㄇㄜ˙)寫(ㄒㄧㄝˇ)字(ㄗˋ)。", en: "One book is about how people in the past wrote characters." },
+                    { zh: "一(ㄧˋ)本(ㄅㄣˇ)書(ㄕㄨ)是(ㄕˋ)日(ㄖˋ)本(ㄅㄣˇ)的(ㄉㄜ˙)公(ㄍㄨㄥ)司(ㄙ)叫(ㄐㄧㄠˋ) Nintendo，他(ㄊㄚ)們(ㄇㄣ˙)做(ㄗㄨㄛˋ)第(ㄉㄧˋ)一(ㄧ)個(ㄍㄜ˙)電(ㄉㄧㄢˋ)動(ㄉㄨㄥˋ)。", en: "One book is about a Japanese company called Nintendo, they made the first video game." },
                     { zh: "A: 你(ㄋㄧˇ)小(ㄒㄧㄠˇ)時(ㄕˊ)候(ㄏㄡˋ)會(ㄏㄨㄟˋ)玩(ㄨㄢˊ)電(ㄉㄧㄢˋ)動(ㄉㄨㄥˋ)嗎(ㄇㄚ˙)？", en: "Did you play video games when you were little?" },
                     { zh: "B: 我(ㄨㄛˇ)有(ㄧㄡˇ)一(ㄧˊ)個(ㄍㄜ˙)很(ㄏㄣˇ)舊(ㄐㄧㄡˋ)很(ㄏㄣˇ)舊(ㄐㄧㄡˋ)的(ㄉㄜ˙)電(ㄉㄧㄢˋ)動(ㄉㄨㄥˋ)，是(ㄕˋ)我(ㄨㄛˇ)爸(ㄅㄚˋ)媽(ㄇㄚ)買(ㄇㄞˇ)給(ㄍㄟˇ)我(ㄨㄛˇ)的(ㄉㄜ˙)。", en: "I have a very, very old video game console, my parents bought it for me." },
-                    { zh: "他(ㄊㄚ)們(ㄇㄣ˙)說(ㄕㄨㄛ)要(ㄧㄠˋ)是(ㄕˋ)你(ㄋㄧˇ)想(ㄒㄧㄤˇ)玩(ㄨㄢˊ)電(ㄉㄧㄢˋ)動(ㄉㄨㄥˋ)，你(ㄋㄧˇ)要(ㄧㄠˋ)努(ㄋㄨˇ)力(ㄌㄧˋ)讀(ㄉㄨˊ)書(ㄕ)。", en: "They said if you want to play video games, you must study hard." },
+                    { zh: "他(ㄊㄚ)們(ㄇㄣ˙)說(ㄕㄨㄛ)要(ㄧㄠˋ)是(ㄕˋ)你(ㄋㄧˇ)想(ㄒㄧㄤˇ)玩(ㄨㄢˊ)電(ㄉㄧㄢˋ)動(ㄉㄨㄥˋ)，你(ㄋㄧˇ)要(ㄧㄠˋ)努(ㄋㄨˇ)力(ㄌㄧˋ)讀(ㄉㄨˊ)書(ㄕㄨ)。", en: "They said if you want to play video games, you must study hard." },
                     { zh: "我(ㄨㄛˇ)太(ㄊㄞˋ)太(ㄊㄞ˙)喜(ㄒㄧˇ)歡(ㄏㄨㄢ)玩(ㄨㄢˊ)俄(ㄜˋ)羅(ㄌㄨㄛˊ)斯(ㄙ)方(ㄈㄤ)塊(ㄎㄨㄞˋ)。", en: "My wife likes playing Tetris." },
                     { zh: "你(ㄋㄧˇ)的(ㄉㄜ˙)電(ㄉㄧㄢˋ)動(ㄉㄨㄥˋ)是(ㄕˋ)幾(ㄐㄧˇ)年(ㄋㄧㄢˊ)的(ㄉㄜ˙)？", en: "What year is your video game from?" },
                     { zh: "我(ㄨㄛˇ)的(ㄉㄜ˙)電(ㄉㄧㄢˋ)動(ㄉㄨㄥˋ)是(ㄕˋ)1989年(ㄋㄧㄢˊ)的(ㄉㄜ˙)，那(ㄋㄚˋ)時(ㄕˊ)候(ㄏㄡˋ)還(ㄏㄞˊ)有(ㄧㄡˇ)東(ㄉㄨㄥ)德(ㄉㄜˊ)和(ㄏㄢˋ)西(ㄒㄧ)德(ㄉㄜˊ)。", en: "My video game is from 1989, at that time East and West Germany still existed." },
                     { zh: "哇(ㄨㄚ)！1989年(ㄋㄧㄢˊ)！我(ㄨㄛˇ)還(ㄏㄞˊ)沒(ㄇㄟˊ)在(ㄗㄞˋ)地(ㄉㄧˋ)球(ㄑㄧㄡˊ)上(ㄕㄤˋ)。", en: "Wow! 1989! I wasn't even on Earth yet." },
-                    { zh: "我(ㄨㄛˇ)在(ㄗㄞˋ)飛(ㄈㄟ)機(ㄐㄧ)上(ㄕㄤˋ)的(ㄉㄜ˙)時(ㄕˊ)候(ㄏㄡˋ)常(ㄔㄤˊ)常(ㄔㄤˊ)看(ㄎㄢˋ)中(ㄓㄨㄥ)文(ㄨㄣˊ)漫(ㄇㄢˋ)畫(ㄏㄨㄚˋ)書(ㄕ)。", en: "When I am on the airplane, I often read Chinese comic books." }
+                    { zh: "我(ㄨㄛˇ)在(ㄗㄞˋ)飛(ㄈㄟ)機(ㄐㄧ)上(ㄕㄤˋ)的(ㄉㄜ˙)時(ㄕˊ)候(ㄏㄡˋ)常(ㄔㄤˊ)常(ㄔㄤˊ)看(ㄎㄢˋ)中(ㄓㄨㄥ)文(ㄨㄣˊ)漫(ㄇㄢˋ)畫(ㄏㄨㄚˋ)書(ㄕㄨ)。", en: "When I am on the airplane, I often read Chinese comic books." }
                 ]
             }
         ];
