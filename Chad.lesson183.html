@@ -4,24 +4,34 @@
     <meta charset="UTF-8">
     <title>Mandarin Lesson 183</title>
     <style>
-        :root { --bg: #FDFBF7; --primary: #D4A373; --text: #4a4a4a; --white: #fff; }
-        html { scroll-behavior: smooth; } /* 加入平滑捲動效果 */
-        body { font-family: 'Helvetica Neue', Arial, sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; max-width: 800px; margin: 0 auto; padding: 20px; }
-        .header { text-align: center; border-bottom: 2px solid var(--primary); padding-bottom: 10px; margin-bottom: 20px; }
-        .outline-box { background: #FFF9F0; border: 1px solid #E6D5B8; border-radius: 8px; padding: 15px 20px; margin-bottom: 20px; }
-        .outline-box h3 { margin-top: 0; color: #8C6239; }
-        .outline-box ol { margin: 0; padding-left: 20px; color: #555; }
-        /* 設定大綱連結樣式 */
-        .outline-box a { color: #555; text-decoration: none; padding: 2px 0; display: inline-block; }
-        .outline-box a:hover { color: #8C6239; text-decoration: underline; font-weight: bold; }
+        :root { --bg: #FDFBF7; --primary: #D4A373; --text: #4a4a4a; --white: #fff; --sidebar-width: 280px; }
+        html { scroll-behavior: smooth; }
+        body { font-family: 'Helvetica Neue', Arial, sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; margin: 0; padding: 0; display: flex; }
         
-        .controls { position: sticky; top: 0; background: var(--bg); padding: 15px; text-align: center; border-bottom: 1px solid #ccc; z-index: 100; margin-bottom: 20px; }
-        button { background: var(--primary); color: white; border: none; padding: 10px 15px; margin: 5px; border-radius: 6px; cursor: pointer; font-size: 14px; font-weight: bold; }
-        button:hover { background: #B5835A; }
-        .audio-btn { background: #f0f0f0; color: #333; font-size: 16px; padding: 8px; border-radius: 50%; width: 35px; height: 35px; display: inline-flex; align-items: center; justify-content: center; }
+        /* 左側收合大綱導覽列 */
+        .sidebar { width: var(--sidebar-width); background: #FFF9F0; border-right: 1px solid #E6D5B8; height: 100vh; position: fixed; top: 0; left: 0; overflow-y: auto; padding: 20px; box-sizing: border-box; transition: transform 0.3s ease; z-index: 1000; }
+        .sidebar h3 { margin-top: 0; color: #8C6239; font-size: 18px; border-bottom: 2px solid var(--primary); padding-bottom: 8px; }
+        .sidebar ol { padding-left: 20px; margin: 10px 0; color: #555; }
+        .sidebar li { margin-bottom: 8px; font-size: 14px; }
+        .sidebar a { color: #555; text-decoration: none; display: block; }
+        .sidebar a:hover { color: #8C6239; font-weight: bold; }
+        
+        /* 收合按鈕 */
+        .sidebar-toggle { position: fixed; top: 15px; left: 15px; z-index: 1100; background: var(--primary); color: white; border: none; padding: 8px 12px; border-radius: 6px; cursor: pointer; font-size: 14px; display: none; }
+
+        /* 主內容區 */
+        .main-content { margin-left: var(--sidebar-width); width: calc(100% - var(--sidebar-width)); padding: 20px 40px; box-sizing: border-box; max-width: 900px; }
+        .header { text-align: center; border-bottom: 2px solid var(--primary); padding-bottom: 10px; margin-bottom: 20px; }
+        
+        .controls { position: sticky; top: 0; background: var(--bg); padding: 15px; text-align: center; border-bottom: 1px solid #ccc; z-index: 100; margin-bottom: 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
+        button.control-btn { background: var(--primary); color: white; border: none; padding: 10px 15px; margin: 5px; border-radius: 6px; cursor: pointer; font-size: 14px; font-weight: bold; }
+        button.control-btn:hover { background: #B5835A; }
+        
+        .audio-btn { background: #f0f0f0; color: #333; font-size: 16px; padding: 8px; border-radius: 50%; width: 35px; height: 35px; display: inline-flex; align-items: center; justify-content: center; border: none; cursor: pointer; }
         .audio-btn:hover { background: #e0e0e0; }
+        
         h2 { color: #8C6239; border-left: 5px solid var(--primary); padding-left: 10px; margin-top: 30px; }
-        .section { margin-bottom: 30px; background: var(--white); padding: 20px; border-radius: 12px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); scroll-margin-top: 80px; } /* scroll-margin 避免被上方導覽列擋住 */
+        .section { margin-bottom: 30px; background: var(--white); padding: 20px; border-radius: 12px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); scroll-margin-top: 80px; }
         .item { margin-bottom: 20px; display: flex; flex-direction: column; }
         .item-content { display: flex; align-items: flex-start; margin-bottom: 5px; }
         .zy-char-wrap { display: inline-flex; align-items: center; margin-right: 2px; }
@@ -38,41 +48,60 @@
         .homework { background: #FEF8E7; padding: 20px; border-radius: 8px; font-size: 18px; }
         .homework-q { margin-top: 15px; font-size: 16px; font-weight: bold; }
         .hw-textarea { width: 100%; height: 40px; margin-top: 8px; margin-bottom: 15px; border-radius: 4px; border: 1px solid #ccc; padding: 5px; font-family: inherit; }
+        
+        /* RWD Responsive */
+        @media (max-width: 900px) {
+            .sidebar { transform: translateX(-100%); }
+            .sidebar.active { transform: translateX(0); }
+            .main-content { margin-left: 0; width: 100%; padding: 20px; }
+            .sidebar-toggle { display: block; }
+        }
     </style>
 </head>
 <body>
-    <div class="header">
-        <h1>Mandarin Lesson 183</h1>
-        <h2>(第 183 次上課)</h2>
-        <p>Today's Date: <span id="date"></span></p>
-    </div>
 
-    <!-- 大綱加入超連結錨點 -->
-    <div class="outline-box">
-        <h3>📖 Outline (課程大綱)</h3>
+    <!-- 手機版收合按鈕 -->
+    <button class="sidebar-toggle" onclick="toggleSidebar()">☰ Outline</button>
+
+    <!-- 左側懸浮大綱導覽列 -->
+    <div class="sidebar" id="sidebar">
+        <h3>📖 Outline <button style="float:right; background:none; border:none; color:#8C6239; font-weight:bold; cursor:pointer;" onclick="toggleSidebar()">×</button></h3>
         <ol>
-            <li><a href="#sec-0">Did you... (有沒有)</a></li>
-            <li><a href="#sec-1">Measure Words & Verbs for Clothes (衣服與帽子)</a></li>
-            <li><a href="#sec-2">Mid-Autumn & Teachers' Day (中秋節與教師節)</a></li>
-            <li><a href="#sec-3">Video Games & Comic Books (電動與漫畫書)</a></li>
-            <li><a href="#sec-4">Clock & Carve (鐘與刻)</a></li>
-            <li><a href="#sec-5">Not too... (不太)</a></li>
-            <li><a href="#sec-6">Important Grammar & Pronunciation (重點文法與發音)</a></li>
-            <li><a href="#sec-7">Authentic Expressions (道地說法 ❌ vs ✅)</a></li>
-            <li><a href="#sec-8">Homework Part 1: Translation (翻譯練習)</a></li>
-            <li><a href="#sec-9">Homework Part 2: Reading Comprehension (短文理解)</a></li>
+            <li><a href="#sec-0" onclick="toggleSidebar()">Did you... (有沒有)</a></li>
+            <li><a href="#sec-1" onclick="toggleSidebar()">Measure Words & Verbs for Clothes</a></li>
+            <li><a href="#sec-2" onclick="toggleSidebar()">Mid-Autumn & Teachers' Day</a></li>
+            <li><a href="#sec-3" onclick="toggleSidebar()">Video Games & Comic Books</a></li>
+            <li><a href="#sec-4" onclick="toggleSidebar()">Pronunciation Practice (發音練習)</a></li>
+            <li><a href="#sec-5" onclick="toggleSidebar()">Authentic Expressions (道地說法)</a></li>
+            <li><a href="#sec-6" onclick="toggleSidebar()">Clock & Carve (鐘與刻)</a></li>
+            <li><a href="#sec-7" onclick="toggleSidebar()">Homework Part 1: Translation</a></li>
+            <li><a href="#sec-8" onclick="toggleSidebar()">Homework Part 2: Reading</a></li>
         </ol>
     </div>
 
-    <div class="controls">
-        <button onclick="toggleZhuyin()">Toggle Bopomofo</button>
-        <button onclick="toggleEnglish()">Toggle English</button>
-    </div>
+    <!-- 主內容 -->
+    <div class="main-content">
+        <div class="header">
+            <h1>Mandarin Lesson 183</h1>
+            <h2>(第 183 次上課)</h2>
+            <p>Today's Date: <span id="date"></span></p>
+        </div>
 
-    <div id="content"></div>
+        <div class="controls">
+            <button class="control-btn" onclick="toggleZhuyin()">Toggle Bopomofo</button>
+            <button class="control-btn" onclick="toggleEnglish()">Toggle English</button>
+        </div>
+
+        <div id="content"></div>
+    </div>
 
     <script>
         document.getElementById('date').innerText = new Date().toLocaleDateString();
+
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            sidebar.classList.toggle('active');
+        }
 
         function parseZhuyin(text) {
             const regex = /([\u4e00-\u9fa5a-zA-Z0-9])\((.*?)\)/g;
@@ -148,38 +177,13 @@
                     { zh: "哇(ㄨㄚ)！1989年(ㄋㄧㄢˊ)！我(ㄨㄛˇ)還(ㄏㄞˊ)沒(ㄇㄟˊ)在(ㄗㄞˋ)地(ㄉㄧˋ)球(ㄑㄧㄡˊ)上(ㄕㄤˋ)。", en: "Wow! 1989! I wasn't even on Earth yet." },
                     { zh: "我(ㄨㄛˇ)在(ㄗㄞˋ)飛(ㄈㄟ)機(ㄐㄧ)上(ㄕㄤˋ)的(ㄉㄜ˙)時(ㄕˊ)候(ㄏㄡˋ)常(ㄔㄤˊ)常(ㄔㄤˊ)看(ㄎㄢˋ)中(ㄓㄨㄥ)文(ㄨㄣˊ)漫(ㄇㄢˋ)畫(ㄏㄨㄚˋ)書(ㄕ)。", en: "When I am on the airplane, I often read Chinese comic books." }
                 ]
-            },
-            {
-                title: "5. Clock & Carve (鐘與刻)",
-                items: [
-                    { zh: "你(ㄋㄧˇ)家(ㄐㄧㄚ)有(ㄧㄡˇ)時(ㄕˊ)鐘(ㄓㄨㄥ)嗎(ㄇㄚ˙)？", en: "Do you have a clock at home?" },
-                    { zh: "我(ㄨㄛˇ)家(ㄐㄧㄚ)還(ㄏㄞˊ)是(ㄕˋ)有(ㄧㄡˇ)時(ㄕˊ)鐘(ㄓㄨㄥ)，只(ㄓˇ)是(ㄕˋ)現(ㄒㄧㄢˋ)在(ㄗㄞˋ)很(ㄏㄣˇ)多(ㄉㄨㄛ)人(ㄖㄣˊ)都(ㄉㄡ)看(ㄎㄢˋ)手(ㄕㄡˇ)機(ㄐㄧ)。", en: "I still have a clock at home, but nowadays many people just look at their phones." },
-                    { zh: "你(ㄋㄧˇ)太(ㄊㄞˋ)太(ㄊㄞˋ)一(ㄧˋ)天(ㄊㄧㄢ)花(ㄏㄨㄚ)幾(ㄐㄧˇ)個(ㄍㄜ˙)鐘(ㄓㄨㄥ)頭(ㄊㄡˊ)在(ㄗㄞˋ)客(ㄎㄜˋ)廳(ㄊㄧㄥ)？", en: "How many hours does your wife spend in the living room a day?" },
-                    { zh: "今(ㄐㄧㄣ)天(ㄊㄧㄢ)是(ㄕˋ)禮(ㄌㄧˇ)拜(ㄅㄞˋ)天(ㄊㄧㄢ)，我(ㄨㄛˇ)太(ㄊㄞˋ)太(ㄊㄞˋ)一(ㄧˋ)天(ㄊㄧㄢ)要(ㄧㄠˋ)花(ㄏㄨㄚ)八(ㄅㄚ)個(ㄍㄜ˙)鐘(ㄓㄨㄥ)頭(ㄊㄡˊ)在(ㄗㄞˋ)客(ㄎㄜˋ)廳(ㄊㄧㄥ)，因(ㄧㄣ)為(ㄨㄟˋ)她(ㄊㄚ)不(ㄅㄨˋ)想(ㄒㄧㄤˇ)做(ㄗㄨㄛˋ)事(ㄕˋ)。", en: "Today is Sunday, my wife spends eight hours in the living room a day because she doesn't want to do anything." },
-                    { zh: "我(ㄨㄛˇ)覺(ㄐㄩㄝˊ)得(ㄉㄜ˙)今(ㄐㄧㄣ)天(ㄊㄧㄢ)早(ㄗㄠˇ)上(ㄕㄤˋ)跟(ㄍㄣ)我(ㄨㄛˇ)貓(ㄇㄠ)一(ㄧˋ)起(ㄑㄧˇ)吃(ㄔ)飯(ㄈㄢˋ)的(ㄉㄜ˙)那(ㄋㄚˋ)一(ㄧˊ)刻(ㄎㄜˋ)，非(ㄈㄟ)常(ㄔㄤˊ)開(ㄎㄞ)心(ㄒㄧㄣ)。", en: "I felt that the moment I ate breakfast with my cat this morning was very happy." }
-                ]
-            },
-            {
-                title: "6. Not too... (不太)",
-                note: "A polite way to express negative descriptions.",
-                items: [
-                    { zh: "這(ㄓㄜˋ)個(ㄍㄜ˙)不(ㄅㄨˊ)太(ㄊㄞˋ)難(ㄋㄢˊ)。", en: "This is not too difficult." },
-                    { zh: "這(ㄓㄜˋ)個(ㄍㄜ˙)不(ㄅㄨˊ)太(ㄊㄞˋ)好(ㄏㄠˇ)吃(ㄔ)。", en: "This is not very tasty." },
-                    { zh: "我(ㄨㄛˇ)不(ㄅㄨˊ)太(ㄊㄞˋ)高(ㄍㄠ)。", en: "I am not very tall." },
-                    { zh: "這(ㄓㄜˋ)個(ㄍㄜ˙)衣(ㄧ)服(ㄈㄨˊ)不(ㄅㄨˊ)太(ㄊㄞˋ)好(ㄏㄠˇ)看(ㄎㄢˋ)。", en: "These clothes don't look very good." },
-                    { zh: "我(ㄨㄛˇ)現(ㄒㄧㄢˋ)在(ㄗㄞˋ)不(ㄅㄨˊ)太(ㄊㄞˋ)好(ㄏㄠˇ)。", en: "I am not feeling very well right now." }
-                ]
-            },
-            {
-                title: "7. Important Grammar & Pronunciation (重點文法與發音)",
-                items: [
-                    { zh: "這(ㄓㄜˋ)是(ㄕˋ)一(ㄧˋ)家(ㄐㄧㄚ)新(ㄒㄧㄣ)的(ㄉㄜ˙)餐(ㄘㄢ)廳(ㄊㄧㄥ)", en: "It's a new restaurant (In Chinese, we explicitly say 'one' new restaurant)." },
-                    { zh: "終(ㄓㄨㄥ)於(ㄩˊ)", en: "Finally (Pronunciation check: yú is 2nd tone)" },
-                    { zh: "樓(ㄌㄡˊ)梯(ㄊㄧ)", en: "Stairs" },
-                    { zh: "又(ㄧㄡˋ)大(ㄉㄚˋ)又(ㄧㄡˋ)漂(ㄆㄧㄠˋ)亮(ㄌㄧㄤˋ)", en: "Big and beautiful ('又...又...' does not need '很')." },
-                    { zh: "菜(ㄘㄞˋ)單(ㄉㄢ)上(ㄕㄤˋ)寫(ㄒㄧㄝˇ)都(ㄉㄡ)是(ㄕˋ)素(ㄙㄨˋ)食(ㄕˊ)", en: "The menu says this place is totally vegetarian (Do not translate '100% vegetarian' directly)." }
-                ]
             }
+        ];
+
+        const pronNotes = [
+            { title: "終於 (Zhōngyú)", note: "Pronunciation check: yú is 2nd tone, not 4th tone.", zh: "終(ㄓㄨㄥ)於(ㄩˊ)", en: "Finally" },
+            { title: "樓梯 (Lóutī)", note: "Pronunciation check: lóu tī.", zh: "樓(ㄌㄡˊ)梯(ㄊㄧ)", en: "Stairs" },
+            { title: "健康 (Jiànkāng)", note: "Vocabulary pronunciation practice.", zh: "健(ㄐㄧㄢˋ)康(ㄎㄤ)", en: "Healthy / Health" }
         ];
 
         const rules = [
@@ -200,7 +204,7 @@
             {
                 title: "Eat well vs. Eat more rice",
                 note: "To say 'drink water and eat well', don't translate literally. Say 'drink more water and eat more rice/healthy food'.",
-                wrong: "你(ㄋㄧˇ)今(ㄐㄧㄣ)天(ㄊㄧㄢ)要(ㄧㄠˋ)多(ㄉㄨㄛ)喝(ㄏㄜ)水(ㄕㄨㄟˇ)跟(ㄍㄣ)吃(ㄔ)非(ㄈㄟ)常(ㄔㄤˊ)好(ㄏㄠˇ)的(ㄉㄜ˙)食(ㄕˊ)物(ㄨˋ)",
+                wrong: "你(ㄋㄧˇ)今(ㄐㄧㄣ)天(ㄊㄧㄢ)要(ㄧㄠˋ)多(ㄉㄨㄛ)喝(ㄏㄜ)水(ㄕㄨㄟˇ)跟(ㄍㄣ)吃(ㄔ)非(ㄈㄟ)常(ㄔㄤˊ)好(ㄏㄠˇ)的(ㄉㄜ˙)食(ˢˊ)物(ㄨˋ)",
                 correct: "你(ㄋㄧˇ)要(ㄧㄠˋ)多(ㄉㄨㄛ)喝(ㄏㄜ)水(ㄕㄨㄟˇ)跟(ㄍㄣ)多(ㄉㄨㄛ)吃(ㄔ)飯(ㄈㄢˋ)",
                 en: "You need to drink water and eat well today."
             },
@@ -217,12 +221,33 @@
                 wrong: "讓(ㄖㄤˋ)我(ㄨㄛˇ)們(ㄇㄣ˙)多(ㄉㄨㄛ)吃(ㄔ)超(ㄔㄠ)好(ㄏㄠˇ)吃(ㄔ)的(ㄉㄜ˙)食(ㄕˊ)物(ㄨˋ)吧(ㄅㄚ˙)",
                 correct: "我(ㄨㄛˇ)們(ㄇㄣ˙)一(ㄧˋ)起(ㄑㄧˇ)去(ㄑㄩˋ)吃(ㄔ)超(ㄔㄠ)好(ㄏㄠˇ)吃(ㄔ)的(ㄉㄜ˙)食(ㄕˊ)物(ㄨˋ)吧(ㄅㄚ˙)",
                 en: "Let's get some delicious food!"
+            },
+            {
+                title: "Expressing 'A new restaurant'",
+                note: "In Chinese, we explicitly include the number 'one' (一) with a measure word when introducing a new entity.",
+                wrong: "這(ㄓㄜˋ)是(ㄕˋ)新(ㄒㄧㄣ)餐(ㄘㄢ)廳(ㄊㄧㄥ)",
+                correct: "這(ㄓㄜˋ)是(ㄕˋ)一(ㄧˋ)家(ㄐㄧㄚ)新(ㄒㄧㄣ)的(ㄉㄜ˙)餐(ㄘㄢ)廳(ㄊㄧㄥ)",
+                en: "It's a new restaurant."
+            },
+            {
+                title: "Translating 'Totally vegetarian'",
+                note: "Do not translate literally as '100% vegetarian' (一百分素食). Instead, say 'The menu says it's all vegetarian'.",
+                wrong: "菜(ㄘㄞˋ)單(ㄉㄢ)上(ㄕㄤˋ)寫(ㄒㄧㄝˇ)一(ㄧˋ)百(ㄅㄞˇ)分(ㄈㄣ)素(ㄙㄨˋ)食(ㄕˊ)",
+                correct: "菜(ㄘㄞˋ)單(ㄉㄢ)上(ㄕㄤˋ)寫(ㄒㄧㄝˇ)都(ㄉㄡ)是(ㄕˋ)素(ㄙㄨˋ)食(ㄕˊ)",
+                en: "The menu says this place is totally vegetarian."
+            },
+            {
+                title: "Using '又...又...' (Both... and...)",
+                note: "The correlative conjunction '又...又...' is inherently descriptive and does not require the adverb '很' (very).",
+                wrong: "這(ㄓㄜˋ)裡(ㄌㄧˇ)又(ㄧㄡˋ)大(ㄉㄚˋ)又(ㄧㄡˋ)很(ㄏㄣˇ)漂(ㄆㄧㄠˋ)亮(ㄌㄧㄤˋ)",
+                correct: "這(ㄓㄜˋ)裡(ㄌㄧˇ)又(ㄧㄡˋ)大(ㄉㄚˋ)又(ㄧㄡˋ)漂(ㄆㄧㄠˋ)亮(ㄌㄧㄤˋ)",
+                en: "Here is big and beautiful."
             }
         ];
 
         const container = document.getElementById('content');
         
-        // 渲染 1-7 段落，並加上 ID
+        // 1-4 段落
         data.forEach((sec, index) => {
             let html = `<div class="section" id="sec-${index}"><h2>${sec.title}</h2>`;
             if(sec.note) html += `<p class="note">${sec.note}</p>`;
@@ -242,18 +267,35 @@
             container.innerHTML += html;
         });
 
-        // 渲染第 8 段（對比說法），並加上 ID sec-7
-        let ruleHtml = `<div class="section" id="sec-7"><h2>8. Authentic Expressions (道地說法 ❌ vs ✅)</h2>`;
+        // 5. 發音錯誤練習
+        let pronHtml = `<div class="section" id="sec-4"><h2>5. Pronunciation Practice (發音練習)</h2>`;
+        pronNotes.forEach(p => {
+            pronHtml += `
+                <div class="grammar-box">
+                    <div style="font-weight:bold; margin-bottom: 5px;">${p.title}</div>
+                    <div class="note">${p.note}</div>
+                    <div class="item-content" style="margin-top: 10px; align-items:center;">
+                        <button class="audio-btn" style="width:30px;height:30px;font-size:14px;margin-right:15px;" onclick="playAudio('${p.zh}')">🔊</button>
+                        <span style="font-weight:bold;">✅ </span> <span style="margin-left:8px;">${parseZhuyin(p.zh)}</span>
+                    </div>
+                    <div class="en-trans" style="margin-left:45px; margin-top:5px;">${p.en}</div>
+                </div>
+            `;
+        });
+        pronHtml += `</div>`;
+        container.innerHTML += pronHtml;
+
+        // 6. 道地說法 Authentic Expressions
+        let ruleHtml = `<div class="section" id="sec-5"><h2>6. Authentic Expressions (道地說法 ❌ vs ✅)</h2>`;
         rules.forEach(rule => {
             ruleHtml += `
                 <div class="grammar-box">
                     <div style="font-weight:bold; margin-bottom: 5px;">${rule.title}</div>
                     <div class="note">${rule.note}</div>
                     <div class="item-content" style="margin-top: 15px; align-items:center;">
-                        <button class="audio-btn" style="width:30px;height:30px;font-size:14px;margin-right:15px;" onclick="playAudio('${rule.wrong}')">🔊</button>
-                        <span class="wrong">❌ </span> <span style="margin-left:8px;">${parseZhuyin(rule.wrong)}</span>
+                        <span class="wrong" style="margin-right:15px;">❌ </span> <span>${parseZhuyin(rule.wrong)}</span>
                     </div>
-                    <div class="item-content" style="margin-top: 15px; align-items:center;">
+                    <div class="item-content" style="margin-top: 10px; align-items:center;">
                         <button class="audio-btn" style="width:30px;height:30px;font-size:14px;margin-right:15px;" onclick="playAudio('${rule.correct}')">🔊</button>
                         <span class="correct">✅ </span> <span style="margin-left:8px;">${parseZhuyin(rule.correct)}</span>
                     </div>
@@ -264,10 +306,53 @@
         ruleHtml += `</div>`;
         container.innerHTML += ruleHtml;
 
-        // 渲染第 9 和 10 段（作業區），並分別加上 ID sec-8 和 sec-9
+        // 7. 鐘與刻
+        let clockCarveHtml = `
+            <div class="section" id="sec-6">
+                <h2>7. Character Etymology: 鐘 (Clock) & 刻 (Carve / Moment)</h2>
+                
+                <div class="grammar-box">
+                    <div style="font-weight:bold; font-size:18px; color:#8C6239;">鐘 (zhōng) - Clock / Bell</div>
+                    <p class="note" style="margin-top:8px;">Etymology note: The character '鐘' originates from a large ancient bell (大鐘). Therefore, '時鐘' means a clock.</p>
+                    <div style="text-align:center; margin:15px 0;">
+                        <img src="https://cdn.phototourl.com/member/2026-09-28-71e02e37-776b-4553-b9c5-ef389ec2da34.png" alt="鐘字源圖示" style="max-width:100%; height:auto; border-radius:8px; border:1px solid #E6D5B8;">
+                    </div>
+                    <div class="item-content" style="margin-top: 15px; align-items:center;">
+                        <button class="audio-btn" style="width:30px;height:30px;font-size:14px;margin-right:15px;" onclick="playAudio('你家有時鐘嗎？')">🔊</button>
+                        <span>${parseZhuyin("你(ㄋㄧˇ)家(ㄐㄧㄚ)有(ㄧㄡˇ)時(ㄕˊ)鐘(ㄓㄨㄥ)嗎(ㄇㄚ˙)？")}</span>
+                    </div>
+                    <div class="en-trans" style="margin-left:45px; margin-top:5px;">Do you have a clock at home?</div>
+
+                    <p class="note" style="margin-top:15px;">Cultural note on '鐘頭' (zhōngtóu): Older generations in Taiwan (above 50 years old) love using '鐘頭' to mean 'hours' (小時).</p>
+                    <div class="item-content" style="margin-top: 15px; align-items:center;">
+                        <button class="audio-btn" style="width:30px;height:30px;font-size:14px;margin-right:15px;" onclick="playAudio('你太太一天花幾個鐘頭在客廳？')">🔊</button>
+                        <span>${parseZhuyin("你(ㄋㄧˇ)太(ㄊㄞˋ)太(ㄊㄞˋ)一(ㄧˋ)天(ㄊㄧㄢ)花(ㄏㄨㄚ)幾(ㄐㄧˇ)個(ㄍㄜ˙)鐘(ㄓㄨㄥ)頭(ㄊㄡˊ)在(ㄗㄞˋ)客(ㄎㄜˋ)廳(ㄊㄧㄥ)？")}</span>
+                    </div>
+                    <div class="en-trans" style="margin-left:45px; margin-top:5px;">How many hours does your wife spend in the living room a day?</div>
+                </div>
+
+                <div class="grammar-box" style="margin-top:20px;">
+                    <div style="font-weight:bold; font-size:18px; color:#8C6239;">刻 (kè) - Carve / Moment</div>
+                    <p class="note" style="margin-top:8px;">Etymology note: Originally meant 'to carve' (刻東西). Ancient people used water-dripping clepsydras (called 刻漏) to measure time. However, nobody in modern Taiwan uses '一刻' to mean 15 minutes anymore.</p>
+                    <div style="text-align:center; margin:15px 0;">
+                        <img src="https://cdn.phototourl.com/member/2026-09-28-9abe3a6e-284d-436f-80ea-a1d1b10a04f0.png" alt="刻漏圖示" style="max-width:100%; height:auto; border-radius:8px; border:1px solid #E6D5B8;">
+                    </div>
+                    <p class="note" style="margin-top:10px;">Instead, '刻' is now used for specific moments: <strong>這一刻</strong> (this very moment, close to the speaker) and <strong>那一刻</strong> (that moment in time further away).</p>
+                    
+                    <div class="item-content" style="margin-top: 15px; align-items:center;">
+                        <button class="audio-btn" style="width:30px;height:30px;font-size:14px;margin-right:15px;" onclick="playAudio('我覺得今天早上跟我貓吃飯的那一刻，非常開心。')">🔊</button>
+                        <span>${parseZhuyin("我(ㄨㄛˇ)覺(ㄐㄩㄝˊ)得(ㄉㄜ˙)今(ㄐㄧㄣ)天(ㄊㄧㄢ)早(ㄗㄠˇ)上(ㄕㄤˋ)跟(ㄍㄣ)我(ㄨㄛˇ)貓(ㄇㄠ)一(ㄧˋ)起(ㄑㄧˇ)吃(ㄔ)飯(ㄈㄢˋ)的(ㄉㄜ˙)那(ㄋㄚˋ)一(ㄧˊ)刻(ㄎㄜˋ)，非(ㄈㄟ)常(ㄔㄤˊ)開(ㄎㄞ)心(ㄒㄧㄣ)。")}</span>
+                    </div>
+                    <div class="en-trans" style="margin-left:45px; margin-top:5px;">I felt that the moment I ate breakfast with my cat this morning was very happy.</div>
+                </div>
+            </div>
+        `;
+        container.innerHTML += clockCarveHtml;
+
+        // 8 & 9. 作業區
         let hwHtml = `
-            <div class="section" id="sec-8">
-                <h2>📝 9. Homework Part 1: Translation (翻譯練習)</h2>
+            <div class="section" id="sec-7">
+                <h2>📝 8. Homework Part 1: Translation (翻譯練習)</h2>
                 <div class="homework">
                     <p class="note">Translate the following English sentences into Chinese using the grammar and vocabulary from today's lesson.</p>
                     
@@ -288,8 +373,8 @@
                 </div>
             </div>
 
-            <div class="section" id="sec-9">
-                <h2>📝 10. Homework Part 2: Reading Comprehension (短文理解)</h2>
+            <div class="section" id="sec-8">
+                <h2>📝 9. Homework Part 2: Reading Comprehension (短文理解)</h2>
                 <div class="homework">
                     <p>前天禮拜五是中秋節，大家都放假，回家跟家人在一起烤肉和吃月餅，路上的烤肉味很香，全台灣天氣都很好。王陽明住在一個大樓，大樓不可以烤肉，所以他跟家人一起去烤肉店，可是每家烤肉店裡都有非常多人，他們找不到位子，他很難過，去了五家烤肉店、開了兩個鐘頭的車後，終於找到一家有位子，那一刻大家開心地坐下來，一起吃烤肉看月亮，過中秋節。</p>
                     
