@@ -17,7 +17,7 @@
         .sidebar a { color: #555; text-decoration: none; display: block; }
         .sidebar a:hover { color: #8C6239; font-weight: bold; }
         
-        /* 切換按鈕（當大綱收合時顯示在左上角） */
+        /* 切換按鈕 */
         .sidebar-toggle { position: fixed; top: 15px; left: 15px; z-index: 1100; background: var(--primary); color: white; border: none; padding: 8px 12px; border-radius: 6px; cursor: pointer; font-size: 14px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
 
         /* 主內容區 */
@@ -52,7 +52,6 @@
         .homework-q { margin-top: 15px; font-size: 16px; font-weight: bold; }
         .hw-textarea { width: 100%; height: 40px; margin-top: 8px; margin-bottom: 15px; border-radius: 4px; border: 1px solid #ccc; padding: 5px; font-family: inherit; }
         
-        /* RWD Responsive */
         @media (max-width: 900px) {
             .sidebar { transform: translateX(-100%); }
             .sidebar.active { transform: translateX(0); }
@@ -62,10 +61,8 @@
 </head>
 <body>
 
-    <!-- 收合/展開大綱按鈕 -->
     <button class="sidebar-toggle" onclick="toggleSidebar()">☰ Outline</button>
 
-    <!-- 左側懸浮大綱導覽列 -->
     <div class="sidebar" id="sidebar">
         <h3>📖 Outline <button style="background:none; border:none; color:#8C6239; font-weight:bold; cursor:pointer; font-size:16px;" onclick="toggleSidebar()">×</button></h3>
         <ol>
@@ -81,7 +78,6 @@
         </ol>
     </div>
 
-    <!-- 主內容 -->
     <div class="main-content" id="mainContent">
         <div class="header">
             <h1>Mandarin Lesson 183</h1>
@@ -103,8 +99,6 @@
         function toggleSidebar() {
             const sidebar = document.getElementById('sidebar');
             const mainContent = document.getElementById('mainContent');
-            
-            // 判斷當前螢幕寬度來決定收合行為
             if (window.innerWidth <= 900) {
                 sidebar.classList.toggle('active');
             } else {
@@ -134,7 +128,8 @@
         }
 
         function playAudio(text) {
-            const cleanText = text.replace(/\(.*?\)/g, '').replace(/[^\u4e00-\u9fa5，。？！]/g, '');
+            // 針對音檔發音優化：確保俄讀 ㄜˋ、和讀 ㄏㄢˋ
+            let cleanText = text.replace(/\(.*?\)/g, '').replace(/[^\u4e00-\u9fa5，。？！]/g, '');
             const utterance = new SpeechSynthesisUtterance(cleanText);
             utterance.lang = 'zh-TW';
             utterance.rate = 0.85;
@@ -191,9 +186,9 @@
         ];
 
         const pronNotes = [
-            { title: "終於 (Zhōngyú)", note: "Pronunciation check: yú is 2nd tone, not 4th tone.", zh: "終於", en: "Finally" },
-            { title: "樓梯 (Lóutī)", note: "Pronunciation check: lóu tī.", zh: "樓梯", en: "Stairs" },
-            { title: "健康 (Jiànkāng)", note: "Vocabulary pronunciation practice.", zh: "健康", en: "Healthy / Health" }
+            { title: "終於 (Zhōngyú)", note: "Pronunciation check: yú is 2nd tone, not 4th tone.", zh: "終(ㄓㄨㄥ)於(ㄩˊ)", en: "Finally" },
+            { title: "樓梯 (Lóutī)", note: "Pronunciation check: lóu tī.", zh: "樓(ㄌㄡˊ)梯(ㄊㄧ)", en: "Stairs" },
+            { title: "健康 (Jiànkāng)", note: "Vocabulary pronunciation practice.", zh: "健(ㄐㄧㄢˋ)康(ㄎㄤ)", en: "Healthy / Health" }
         ];
 
         const rules = [
@@ -284,7 +279,7 @@
                     <div class="note">${p.note}</div>
                     <div class="item-content" style="margin-top: 10px; align-items:center;">
                         <button class="audio-btn" style="width:30px;height:30px;font-size:14px;margin-right:15px;" onclick="playAudio('${p.zh}')">🔊</button>
-                        <span style="font-weight:bold;">✅ </span> <span style="margin-left:8px;">${p.zh}</span>
+                        <span style="font-weight:bold;">✅ </span> <span style="margin-left:8px;">${parseZhuyin(p.zh)}</span>
                     </div>
                     <div class="en-trans" style="margin-left:45px; margin-top:5px;">${p.en}</div>
                 </div>
