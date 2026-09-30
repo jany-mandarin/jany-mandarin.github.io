@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Chad's Mandarin Lesson 184</title>
+    <style>
+        :root { --bg: #FDFBF7; --primary: #D4A373; --text: #4a4a4a; --white: #fff; --sidebar-width: 280px; }
+        html { scroll-behavior: smooth; }
+        body { font-family: 'Helvetica Neue', Arial, sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; margin: 0; padding: 0; display: flex; transition: margin-left 0.3s ease; }
+        
+        /* Sidebar Navigation */
+        .sidebar { width: var(--sidebar-width); background: #FFF9F0; border-right: 1px solid #E6D5B8; height: 100vh; position: fixed; top: 0; left: 0; overflow-y: auto; padding: 20px; box-sizing: border-box; transition: transform 0.3s ease; z-index: 1000; }
+        .sidebar.collapsed { transform: translateX(-100%); }
+        .sidebar h3 { margin-top: 0; color: #8C6239; font-size: 18px; border-bottom: 2px solid var(--primary); padding-bottom: 8px; display: flex; justify-content: space-between; align-items: center; }
+        .sidebar ol { padding-left: 20px; margin: 10px 0; color: #555; }
+        .sidebar li { margin-bottom: 8px; font-size: 14px; }
+        .sidebar a { color: #555; text-decoration: none; display: block; }
+        .sidebar a:hover { color: #8C6239; font-weight: bold; }
+        
+        /* Toggle Button */
+        .sidebar-toggle { position: fixed; top: 15px; left: 15px; z-index: 1100; background: var(--primary); color: white; border: none; padding: 8px 12px; border-radius: 6px; cursor: pointer; font-size: 14px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+
+        /* Main Content */
+        .main-content { margin-left: var(--sidebar-width); width: calc(100% - var(--sidebar-width)); padding: 20px 40px; box-sizing: border-box; max-width: 900px; transition: margin-left 0.3s ease, width 0.3s ease; }
+        .main-content.expanded { margin-left: 0; width: 100%; }
+
+        .header { text-align: center; border-bottom: 2px solid var(--primary); padding-bottom: 10px; margin-bottom: 20px; }
+        
+        .controls { position: sticky; top: 0; background: var(--bg); padding: 15px; text-align: center; border-bottom: 1px solid #ccc; z-index: 100; margin-bottom: 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
+        button.control-btn { background: var(--primary); color: white; border: none; padding: 10px 15px; margin: 5px; border-radius: 6px; cursor: pointer; font-size: 14px; font-weight: bold; }
+        button.control-btn:hover { background: #B5835A; }
+        
+        .audio-btn { background: #f0f0f0; color: #333; font-size: 14px; padding: 6px 12px; border-radius: 20px; border: none; cursor: pointer; display: inline-flex; align-items: center; gap: 5px; margin-right: 8px; }
+        .audio-btn:hover { background: #e0e0e0; }
+        
+        .rec-btn { background: #e07a5f; color: white; font-size: 14px; padding: 6px 12px; border-radius: 20px; border: none; cursor: pointer; display: inline-flex; align-items: center; gap: 5px; margin-right: 5px; }
+        .rec-btn:hover { background: #cc6b50; }
+        .rec-btn.recording { background: #d90429; animation: pulse 1.5s infinite; }
+        
+        .play-rec-btn { background: #457b9d; color: white; font-size: 14px; padding: 6px 12px; border-radius: 20px; border: none; cursor: pointer; display: inline-flex; align-items: center; gap: 5px; }
+        .play-rec-btn:hover { background: #1d3557; }
+        .play-rec-btn:disabled { background: #ccc; cursor: not-allowed; }
+
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
+
+        h2 { color: #8C6239; border-left: 5px solid var(--primary); padding-left: 10px; margin-top: 30px; }
+        .section { margin-bottom: 30px; background: var(--white); padding: 20px; border-radius: 12px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); scroll-margin-top: 80px; }
+        .item { margin-bottom: 20px; display: flex; flex-direction: column; border-bottom: 1px dashed #eee; padding-bottom: 15px; }
+        .item-content { display: flex; align-items: flex-start; flex-wrap: wrap; margin-bottom: 5px; gap: 10px; }
+        
+        /* Bopomofo (Zhuyin) Vertical Formatting */
+        .zy-char-wrap { display: inline-flex; align-items: center; margin-right: 2px; }
+        .zy-char { font-size: 26px; font-family: "DFKai-SB", "BiauKai", serif; }
+        .zy-box { display: inline-flex; flex-direction: column; justify-content: center; position: relative; margin-left: 2px; padding-right: 8px; }
+        .zy-symbols { writing-mode: vertical-rl; text-orientation: upright; font-size: 11px; letter-spacing: -2px; }
+        .zy-tone { position: absolute; right: 0px; top: 50%; transform: translateY(-50%); font-size: 11px; }
+        .zy-neutral { position: absolute; top: -11px; left: 50%; transform: translateX(-50%); font-size: 11px; }
+        
+        .en-trans { color: #666; font-size: 15px; font-style: italic; margin-top: 5px; width: 100%; }
+        .grammar-box { background: #FFF9F0; border: 1px solid #E6D5B8; border-radius: 8px; padding: 15px; margin: 15px 0; }
+        .wrong { color: #D9534F; font-size: 18px; font-weight: bold;}
+        .correct { color: #5CB85C; font-size: 18px; font-weight: bold;}
+        .note { font-size: 14px; color: #555; margin-bottom: 10px; line-height: 1.5; }
+        .vocab-img { max-width: 250px; height: auto; border-radius: 8px; border: 1px solid #E6D5B8; display: block; margin: 10px 0; }
+        .img-row { display: flex; gap: 15px; flex-wrap: wrap; margin: 10px 0; }
+        
+        .homework-q { margin-top: 15px; font-size: 16px; font-weight: bold; }
+        .hw-textarea { width: 100%; height: 40px; margin-top: 8px; margin-bottom: 15px; border-radius: 4px; border: 1px solid #ccc; padding: 5px; font-family: inherit; }
+        
+        @media (max-width: 900px) {
+            .sidebar { transform: translateX(-100%); }
+            .sidebar.active { transform: translateX(0); }
+            .main-content { margin-left: 0; width: 100%; padding: 20px; }
+        }
+    </style>
+</head>
+<body>
+
+    <button class="sidebar-toggle" onclick="toggleSidebar()">☰ Outline</button>
+
+    <div class="sidebar" id="sidebar">
+        <h3>📖 Outline <button style="background:none; border:none; color:#8C6239; font-weight:bold; cursor:pointer; font-size:16px;" onclick="toggleSidebar()">×</button></h3>
+        <ol>
+            <li><a href="#sec-0">Warm-up & Vocabulary</a></li>
+            <li><a href="#sec-1">Previous Homework Review</a></li>
+            <li><a href="#sec-2">Lesson 11</a></li>
+            <li><a href="#sec-3">Homework</a></li>
+        </ol>
+    </div>
+
+    <div class="main-content" id="mainContent">
+        <div class="header">
+            <h1>Chad's Mandarin Lesson 184</h1>
+            <p>Date: 2026/9/30</p>
+        </div>
+
+        <div class="controls">
+            <button class="control-btn" onclick="toggleZhuyin()">Toggle Bopomofo</button>
+            <button class="control-btn" onclick="toggleEnglish()">Toggle English</button>
+        </div>
+
+        <div id="content"></div>
+    </div>
+
+    <script>
+        // Toggle Sidebar
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const mainContent = document.getElementById('mainContent');
+            if (window.innerWidth <= 900) {
+                sidebar.classList.toggle('active');
+            } else {
+                sidebar.classList.toggle('collapsed');
+                mainContent.classList.toggle('expanded');
+            }
+        }
+
+        // Bopomofo Parser for Taiwan Zhuyin Layout
+        function parseZhuyin(text) {
+            const regex = /([\u4e00-\u9fa5a-zA-Z0-9])\((.*?)\)/g;
+            let parsed = text.replace(regex, (match, char, zy) => {
+                let tone = '';
+                let symbols = zy;
+                let isNeutral = false;
+                
+                if (zy.includes('ˊ')) { tone = 'ˊ'; symbols = zy.replace('ˊ', ''); }
+                else if (zy.includes('ˇ')) { tone = 'ˇ'; symbols = zy.replace('ˇ', ''); }
+                else if (zy.includes('ˋ')) { tone = 'ˋ'; symbols = zy.replace('ˋ', ''); }
+                else if (zy.includes('˙')) { isNeutral = true; symbols = zy.replace('˙', ''); }
+
+                let toneHtml = tone ? `<span class="zy-tone">${tone}</span>` : '';
+                let neutralHtml = isNeutral ? `<span class="zy-neutral">˙</span>` : '';
+
+                return `<div class="zy-char-wrap"><span class="zy-char">${char}</span><div class="zy-box">${neutralHtml}<span class="zy-symbols">${symbols}</span>${toneHtml}</div></div>`;
+            });
+            return parsed;
+        }
+
+        // Play Audio (Taiwan Accent TTS, converting '和' to '汗' purely for correct Hàn pronunciation)
+        function playAudio(text) {
+            let cleanText = text.replace(/\(.*?\)/g, '')
+                                .replace(/和/g, '汗') // Force Taiwan TTS to pronounce 'hàn'
+                                .replace(/[^\u4e00-\u9fa5，。？！]/g, '');
+            const utterance = new SpeechSynthesisUtterance(cleanText);
+            utterance.lang = 'zh-TW';
+            utterance.rate = 0.85;
+            speechSynthesis.speak(utterance);
+        }
+
+        // Student Recording Functions
+        let mediaRecorders = {};
+        let audioChunks = {};
+        let audioUrls = {};
+
+        async function toggleRecord(btn, id) {
+            if (!mediaRecorders[id] || mediaRecorders[id].state === "inactive") {
+                try {
+                    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+                    let chunks = [];
+                    let recorder = new MediaRecorder(stream);
+                    
+                    recorder.ondataavailable = e => chunks.push(e.data);
+                    recorder.onstop = () => {
+                        const blob = new Blob(chunks, { 'type': 'audio/ogg; codecs=opus' });
+                        audioUrls[id] = URL.createObjectURL(blob);
+                        document.getElementById(`play-rec-${id}`).disabled = false;
+                    };
+
+                    recorder.start();
+                    mediaRecorders[id] = recorder;
+                    btn.innerText = "🛑 Stop";
+                    btn.classList.add("recording");
+                } catch (err) {
+                    alert("Microphone access denied or not supported.");
+                }
+            } else {
+                mediaRecorders[id].stop();
+                btn.innerText = "🎤 Record";
+                btn.classList.remove("recording");
+            }
+        }
+
+        function playRecording(id) {
+            if (audioUrls[id]) {
+                const audio = new Audio(audioUrls[id]);
+                audio.play();
+            }
+        }
+
+        const lessonData = [
+            {
+                title: "1. Warm-up & Vocabulary",
+                items: [
+                    {
+                        type: "grammar",
+                        title: "1) Have you finished eating? (吃完了嗎?)",
+                        examples: [
+                            { zh: "你(ㄋㄧˇ)的(ㄉㄜ˙)貓(ㄇㄠ)吃(ㄔ)完(ㄨㄢˊ)了(ㄌㄜ˙)嗎(ㄇㄚ˙)？", en: "Has your cat finished eating?" },
+                            { zh: "你(ㄋㄧˇ)的(ㄉㄜ˙)作(ㄗㄨㄛˋ)業(ㄧㄝˋ)寫(ㄒㄧㄝˇ)完(ㄨㄢˊ)了(ㄌㄜ˙)嗎(ㄇㄚ˙)？", en: "Have you finished writing your homework?" }
+                        ]
+                    },
+                    {
+                        type: "grammar",
+                        title: "2) Food & Measure Words",
+                        note: "Vocabulary: 高(ㄍㄠ)麗(ㄌㄧˋ)菜(ㄘㄞˋ) (Cabbage), 義(ㄧˋ)大(ㄉㄚˋ)利(ㄌㄧˋ)麵(ㄇㄧㄢˋ) (Pasta).<br>Measure words for pieces/slices: 一塊麵包, 一塊蛋糕, 一塊芝加哥式披薩, 一片披薩 (Note: '片' is more common for slices like pizza; '塊' is used for weird/blocky shapes), 一塊牛排.<br>Measurement: 一打 (A dozen = 12), 半打 (Half a dozen = 6).",
+                        customHtml: `
+                            <div class="img-row">
+                                <div><p style="font-weight:bold; margin-bottom:5px;">一(ㄧˋ)打(ㄉㄚˇ) (A dozen = 12)</p><img src="https://images.unsplash.com/photo-1622483767028-3f66f32aef97?q=80&w=200&auto=format&fit=crop" class="vocab-img" alt="A dozen"></div>
+                                <div><p style="font-weight:bold; margin-bottom:5px;">半(ㄅㄢˋ)打(ㄉㄚˇ) (Half a dozen = 6)</p><img src="https://images.unsplash.com/photo-1598215437812-320c22621007?q=80&w=200&auto=format&fit=crop" class="vocab-img" alt="Half a dozen"></div>
+                            </div>
+                        `,
+                        examples: [
+                            { zh: "我(ㄨㄛˇ)太(ㄊㄞˋ)太(ㄊㄞˋ)買(ㄇㄞˇ)了(ㄌㄜ˙)六(ㄌㄧㄡˋ)罐(ㄍㄨㄢˋ)能(ㄋㄥˊ)量(ㄌㄧㄤˋ)飲(ㄧㄣˇ)。", en: "My wife bought 6 cans of energy drink." }
+                        ]
+                    },
+                    {
+                        type: "grammar",
+                        title: "3) Cook (煮) vs. Make Food (做)",
+                        note: "• 煮 (zhǔ) is used when you turn on the stove/fire to cook something (e.g., stir-fry veggies, fried rice).<br>• 做 (zuò) is used when making food without necessarily firing up a stove (e.g., make a sandwich, make a pizza).<br>Note: 廚房 is kitchen, 廚師 is chef.",
+                        examples: [
+                            { zh: "昨(ㄗㄨㄛˊ)天(ㄊㄧㄢ)我(ㄨㄛˇ)不(ㄅㄨˋ)知(ㄓ)道(ㄉㄠˋ)我(ㄨㄛˇ)能(ㄋㄥˊ)不(ㄅㄨˋ)能(ㄋㄥˊ)做(ㄗㄨㄛˋ)出(ㄔㄨ)好(ㄏㄠˇ)吃(ㄔ)的(ㄉㄜ˙)食(ㄕˊ)物(ㄨˋ)，最(ㄗㄨㄟˋ)後(ㄏㄡˋ)我(ㄨㄛˇ)做(ㄗㄨㄛˋ)到(ㄉㄠˋ)了(ㄌㄜ˙)！", en: "Yesterday I didn't know if I could make delicious food, but in the end I did it!" },
+                            { zh: "我(ㄨㄛˇ)煮(ㄓㄨˇ)了(ㄌㄜ˙)義(ㄧˋ)大(ㄉㄚˋ)利(ㄌㄧˋ)麵(ㄇㄧㄢˋ)，我(ㄨㄛˇ)太(ㄊㄞˋ)太(ㄊㄞˋ)說(ㄕㄨㄛ)我(ㄨㄛˇ)是(ㄕˋ)廚(ㄔㄨˊ)師(ㄕ)。", en: "I cooked pasta, and my wife said I am a chef." }
+                        ]
+                    },
+                    {
+                        type: "grammar",
+                        title: "4) Empty (空空的)",
+                        note: "Used to describe a space that has absolutely nothing inside.",
+                        customHtml: `
+                            <div class="img-row">
+                                <img src="https://images.unsplash.com/photo-1583337130417-3346a1be7dee?q=80&w=200&auto=format&fit=crop" class="vocab-img" alt="Empty bowl">
+                                <img src="https://images.unsplash.com/photo-1588698579344-934d40b9156f?q=80&w=200&auto=format&fit=crop" class="vocab-img" alt="Empty fridge">
+                            </div>
+                        `,
+                        examples: [
+                            { zh: "每(ㄇㄟˇ)次(ㄘˋ)我(ㄨㄛˇ)看(ㄎㄢˋ)到(ㄉㄠˋ)我(ㄨㄛˇ)的(ㄉㄜ˙)貓(ㄇㄠ)碗(ㄨㄢˇ)裡(ㄌㄧˇ)都(ㄉㄡ)空(ㄎㄨㄥ)空(ㄎㄨㄥ)的(ㄉㄜ˙)。", en: "Every time I see my cat's bowl, it is empty." },
+                            { zh: "我(ㄨㄛˇ)家(ㄐㄧㄚ)冰(ㄅㄧㄥ)箱(ㄒㄧㄤ)空(ㄎㄨㄥ)空(ㄎㄨㄥ)的(ㄉㄜ˙)，沒(ㄇㄟˊ)有(ㄧㄡˇ)東(ㄉㄨㄥ)西(ㄒㄧ)。", en: "My fridge at home is empty, there is nothing in it." }
+                        ]
+                    }
+                ]
+            },
+            {
+                title: "2. Previous Homework Review",
+                items: [
+                    {
+                        type: "grammar",
+                        title: "1) Grammar Correction: Introducing a new entity",
+                        note: "Explanation: In Chinese, we explicitly include the number 'one' (一) with a measure word when introducing a new entity.",
+                        wrong: "我媽媽戴很漂亮的帽子。",
+                        correct: "我(ㄨㄛˇ)妈(ㄇㄚ)妈(ㄇㄚ˙)戴(ㄉㄞˋ)一(ㄧˊ)個(ㄍㄜ˙)很(ㄏㄣˇ)漂(ㄆㄧㄠˋ)亮(ㄌㄧㄤˋ)的(ㄉㄜ˙)帽(ㄇㄠˋ)子(ㄗ˙)。",
+                        en: "My mom is wearing a beautiful hat."
+                    },
+                    {
+                        type: "grammar",
+                        title: "2) Authentic Expressions: Let's / Awesome",
+                        note: "Explanation for '太棒了!': Used when you hear exciting news, win something, or celebrate a happy surprise.<br>Explanation for 'Let's': Sentences starting with 'Let's' usually end with the particle '吧' in Chinese.",
+                        customHtml: `
+                            <div class="img-row">
+                                <img src="https://cdn.phototourl.com/member/2026-09-30-25d36e2a-5e95-4a64-8515-38622e52179a.png" class="vocab-img" alt="Awesome 1">
+                                <img src="https://cdn.phototourl.com/member/2026-09-30-9698550f-02af-45c6-a8d4-0d5fc0bcb56f.png" class="vocab-img" alt="Awesome 2">
+                            </div>
+                        `,
+                        wrong: "我們一起吃很棒的素食！",
+                        correct: "我(ㄨㄛˇ)們(ㄇㄣ˙)一(ㄧˋ)起(ㄑㄧˇ)吃(ㄔ)超(ㄔㄠ)好(ㄏㄠˇ)吃(ㄔ)的(ㄉㄜ˙)素(ㄙㄨˋ)食(ㄕˊ)吧(ㄅㄚ˙)！",
+                        en: "Let's eat some super delicious vegetarian food together!"
+                    },
+                    {
+                        type: "grammar",
+                        title: "3) Pronunciation Practice: 終於 vs 中午",
+                        note: "• ㄨ (u): Tongue is flat, mouth slightly open, like English 'oo'.<br>• ㄩ (yu): Tongue is flat (don't curl it), but lips are pursed as if kissing.",
+                        customHtml: `
+                            <div class="img-row">
+                                <div><p style="font-weight:bold; margin-bottom:5px;">ㄨ (u)</p><img src="https://cdn.phototourl.com/member/2026-09-30-e69070e6-359f-4f9e-a316-d45f166c54a6.png" class="vocab-img" alt="ㄨ mouth shape"></div>
+                                <div><p style="font-weight:bold; margin-bottom:5px;">ㄩ (yu)</p><img src="https://cdn.phototourl.com/member/2026-09-30-ce39ba56-cda7-4d55-9d46-499f5fa16438.png" class="vocab-img" alt="ㄩ mouth shape"></div>
+                            </div>
+                        `
+                    },
+                    {
+                        type: "grammar",
+                        title: "4) Pronunciation Practice: 月餅 (Mooncake)",
+                        note: "The character 餅 (bǐng) is 3rd tone.",
+                        customHtml: `
+                            <div class="img-row">
+                                <div style="text-align:center;"><img src="https://images.unsplash.com/photo-1601000676916-2581abfa87b6?q=80&w=150&auto=format&fit=crop" class="vocab-img" alt="月餅"><br><span>${parseZhuyin("月(ㄩㄝˋ)餅(ㄅㄧㄥˇ)")}</span></div>
+                                <div style="text-align:center;"><img src="https://images.unsplash.com/photo-1499636136210-6f4ee915583e?q=80&w=150&auto=format&fit=crop" class="vocab-img" alt="餅乾"><br><span>${parseZhuyin("餅(ㄅㄧㄥˇ)乾(ㄍㄢ)")}</span></div>
+                                <div style="text-align:center;"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d7/Suncake_%28Taiwan%29.jpg/320px-Suncake_%28Taiwan%29.jpg" class="vocab-img" alt="太陽餅"><br><span>${parseZhuyin("太(ㄊㄞˋ)陽(ㄧㄤˊ)餅(ㄅㄧㄥˇ)")}</span></div>
+                            </div>
+                        `
+                    },
+                    {
+                        type: "grammar",
+                        title: "5) Usage of '忙' (Busy)",
+                        note: "Explanation: Only used for people, describing someone busy moving around. You cannot say a restaurant is 'busy'.",
+                        wrong: "也很多烤肉店都非常忙",
+                        correct: "很(ㄏㄣˇ)多(ㄉㄨㄛ)烤(ㄎㄠˇ)肉(ㄖㄡˋ)店(ㄉㄧㄢˋ)裡(ㄌㄧˇ)都(ㄉㄡ)有(ㄧㄡˇ)很(ㄏㄣˇ)多(ㄉㄨㄛ)人(ㄖㄣˊ)。",
+                        en: "Many BBQ restaurants have a lot of people inside."
+                    },
+                    {
+                        type: "grammar",
+                        title: "6) Usage of '最後' (In the end / Finally)",
+                        note: "Explanation: Means 'in the end'.<br>• 開心地: The '地' (de) means the word is an adverb (happily).<br>• 坐下 vs 坐下來: '坐下' is a command from a teacher or to a pet. '坐下來' describes the normal action of a person sitting down.",
+                        examples: [
+                            { zh: "王(ㄨㄤˊ)陽(ㄧㄤˊ)明(ㄇㄧㄥˊ)最(ㄗㄨㄟˋ)後(ㄏㄡˋ)找(ㄓㄠˇ)到(ㄉㄠˋ)烤(ㄎㄠˇ)肉(ㄖㄡˋ)店(ㄉㄧㄢˋ)，跟(ㄍㄣ)家(ㄐㄧㄚ)人(ㄖㄣˊ)開(ㄎㄞ)心(ㄒㄧㄣ)地(ㄉㄜ˙)坐(ㄗㄨㄛˋ)下(ㄒㄧㄚˋ)來(ㄌㄞˊ)。", en: "In the end, Wang Yangming found a BBQ restaurant and sat down happily with his family." }
+                        ]
+                    }
+                ]
+            },
+            {
+                title: "3. Lesson 11",
+                items: [
+                    {
+                        type: "grammar",
+                        title: "1) 休息 (Rest)",
+                        note: "Etymology Note:<br>• 休: Pictogram of a person sitting next to a tree.<br>• 息: Breath coming out of the nose and the heart. Means taking a rest for a while.<br>Note: 多久 means 'how long'.",
+                        customHtml: `
+                            <img src="https://cdn.phototourl.com/member/2026-09-30-3d79aa4b-9189-4dc9-b012-239cea888240.png" class="vocab-img" alt="息 Character Origin">
+                        `,
+                        examples: [
+                            { zh: "他(ㄊㄚ)們(ㄇㄣ˙)公(ㄍㄨㄥ)司(ㄙ)每(ㄇㄟˇ)天(ㄊㄧㄢ)中(ㄓㄨㄥ)午(ㄨˇ)休(ㄒㄧㄡ)息(ㄒㄧˊ)四(ㄙˋ)十(ㄕˊ)分(ㄈㄣ)鐘(ㄓㄨㄥ)。", en: "Their company rests for 40 minutes at noon every day." },
+                            { zh: "我(ㄨㄛˇ)的(ㄉㄜ˙)貓(ㄇㄠ)的(ㄉㄜ˙)工(ㄍㄨㄥ)作(ㄗㄨㄛˋ)是(ㄕˋ)休(ㄒㄧㄡ)息(ㄒㄧˊ)。", en: "My cat's job is resting." },
+                            { zh: "我(ㄨㄛˇ)現(ㄒㄧㄢˋ)在(ㄗㄞˋ)在(ㄗㄞˋ)家(ㄐㄧㄚ)上(ㄕㄤˋ)班(ㄅㄢ)，我(ㄨㄛˇ)不(ㄅㄨˋ)知(ㄓ)道(ㄉㄠˋ)我(ㄨㄛˇ)每(ㄇㄟˇ)天(ㄊㄧㄢ)休(ㄒㄧㄡ)息(ㄒㄧˊ)多(ㄉㄨㄛ)久(ㄐㄧㄡˇ)。", en: "I work from home now, I don't know how long I rest every day." }
+                        ]
+                    },
+                    {
+                        type: "grammar",
+                        title: "2) 上午 vs 早上 (Morning)",
+                        note: "• 早上: Used in spoken language.<br>• 上午: Used in written or more formal language.",
+                        examples: [
+                            { zh: "請(ㄑㄧㄥˇ)你(ㄋㄧˇ)明(ㄇㄧㄥˊ)天(ㄊㄧㄢ)上(ㄕㄤˋ)午(ㄨˇ)九(ㄐㄧㄡˇ)點(ㄉㄧㄢˇ)半(ㄅㄢˋ)在(ㄗㄞˋ)圖(ㄊㄨˊ)書(ㄕㄨ)館(ㄍㄨㄢˇ)門(ㄇㄣˊ)口(ㄎㄡˇ)等(ㄉㄥˇ)我(ㄨㄛˇ)。", en: "Please wait for me at the library entrance at 9:30 AM tomorrow." }
+                        ]
+                    },
+                    {
+                        type: "grammar",
+                        title: "3) Dates (x月x號)",
+                        note: "In spoken Chinese, we use 號 (hào) for the day of the month. Written form uses 日 (rì).",
+                        examples: [
+                            { zh: "今(ㄐㄧㄣ)天(ㄊㄧㄢ)是(ㄕˋ)九(ㄐㄧㄡˇ)月(ㄩㄝˋ)三(ㄙㄢ)十(ㄕˊ)號(ㄏㄠˋ)。", en: "Today is September 30th." }
+                        ]
+                    },
+                    {
+                        type: "grammar",
+                        title: "4) 過 (Spend / Pass)",
+                        note: "Explanation: This word has many meanings, such as spending time to celebrate a festival together, or passing a point in time.",
+                        examples: [
+                            { zh: "我(ㄨㄛˇ)們(ㄇㄣ˙)一(ㄧˋ)起(ㄑㄧˇ)過(ㄍㄨㄛˋ)中(ㄓㄨㄥ)秋(ㄑㄧㄡ)節(ㄐㄧㄝˊ)。", en: "We celebrate/spend the Mid-Autumn Festival together." },
+                            { zh: "現(ㄒㄧㄢˋ)在(ㄗㄞˋ)已(ㄧˇ)經(ㄐㄧㄥ)過(ㄍㄨㄛˋ)了(ㄌㄜ˙)中(ㄓㄨㄥ)午(ㄨˇ)。", en: "It is already past noon now." },
+                            { zh: "你(ㄋㄧˇ)太(ㄊㄞˋ)太(ㄊㄞˋ)生(ㄕㄥ)日(ㄖˋ)過(ㄍㄨㄛˋ)了(ㄌㄜ˙)嗎(ㄇㄚ˙)？今(ㄐㄧㄣ)年(ㄋㄧㄢˊ)已(ㄧˇ)經(ㄐㄧㄥ)過(ㄍㄨㄛˋ)了(ㄌㄜ˙)！", en: "Has your wife's birthday passed? It already passed this year!" },
+                            { zh: "台(ㄊㄞˊ)灣(ㄨㄢ)的(ㄉㄜ˙)生(ㄕㄥ)日(ㄖˋ)過(ㄍㄨㄛˋ)了(ㄌㄜ˙)嗎(ㄇㄚ˙)？今(ㄐㄧㄣ)年(ㄋㄧㄢˊ)還(ㄏㄞˊ)沒(ㄇㄟˊ)過(ㄍㄨㄛˋ)，是(ㄕˋ)十(ㄕˊ)月(ㄩㄝˋ)十(ㄕˊ)號(ㄏㄠˋ)，所(ㄙㄨㄛˇ)以(ㄧˇ)我(ㄨㄛˇ)們(ㄇㄣ˙)叫(ㄐㄧㄠˋ)雙(ㄕㄨㄤ)十(ㄕˊ)節(ㄐㄧㄝˊ)。", en: "Has Taiwan's birthday passed? Not yet this year, it's on October 10th, so we call it Double Tenth Day." }
+                        ]
+                    },
+                    {
+                        type: "grammar",
+                        title: "5) 叫 (Call / Wake up)",
+                        note: "Explanation: Can be used for people, animals, or alarm clocks calling you.",
+                        examples: [
+                            { zh: "我(ㄨㄛˇ)的(ㄉㄜ˙)貓(ㄇㄠ)每(ㄇㄟˇ)天(ㄊㄧㄢ)早(ㄗㄠˇ)上(ㄕㄤˋ)都(ㄉㄡ)會(ㄏㄨㄟˋ)叫(ㄐㄧㄠˋ)我(ㄨㄛˇ)們(ㄇㄣ˙)起(ㄑㄧˇ)床(ㄔㄨㄤˊ)。", en: "My cat calls us to get up every morning." }
+                        ]
+                    },
+                    {
+                        type: "grammar",
+                        title: "6) 差 (Lack / Short of) & 差不多 (Almost)",
+                        note: "Explanation for 差: In spoken Chinese, it's usually pronounced as 1st tone (chā). Written materials teach it as 4th tone (chà). It means 'short of' a grain of rice to plant or a bit of work to do.<br>Explanation for 差不多: Means you don't want to specify the exact amount, just 'about that much' or 'almost'.",
+                        customHtml: `
+                            <img src="https://cdn.phototourl.com/member/2026-09-30-2ce93309-2196-4c18-8c55-90d859c8352e.png" class="vocab-img" alt="差 Character Origin">
+                        `,
+                        examples: [
+                            { zh: "這(ㄓㄜˋ)碗(ㄨㄢˇ)麵(ㄇㄧㄢˋ)一(ㄧˋ)百(ㄅㄞˇ)塊(ㄎㄨㄞˋ)錢(ㄑㄧㄢˊ)，我(ㄨㄛˇ)只(ㄓˇ)有(ㄧㄡˇ)九(ㄐㄧㄡˇ)十(ㄕˊ)塊(ㄎㄨㄞˋ)，我(ㄨㄛˇ)的(ㄉㄜ˙)錢(ㄑㄧㄢˊ)不(ㄅㄨˊ)夠(ㄍㄡˋ)，還(ㄏㄞˊ)差(ㄔㄚ)十(ㄕˊ)塊(ㄎㄨㄞˋ)錢(ㄑㄧㄢˊ)。", en: "This bowl of noodles is 100 dollars, I only have 90 dollars, my money is not enough, I am short 10 dollars." },
+                            { zh: "他(ㄊㄚ)說(ㄕㄨㄛ)的(ㄉㄜ˙)話(ㄏㄨㄚˋ)，我(ㄨㄛˇ)差(ㄔㄚ)不(ㄅㄨˋ)多(ㄉㄨㄛ)都(ㄉㄡ)懂(ㄉㄨㄥˇ)。", en: "I understand almost everything he said. (About 80-90%)" },
+                            { zh: "你(ㄋㄧˇ)昨(ㄗㄨㄛˊ)天(ㄊㄧㄢ)買(ㄇㄞˇ)五(ㄨˇ)個(ㄍㄜ˙)蘋(ㄆㄧㄥˊ)果(ㄍㄨㄛˇ)嗎(ㄇㄚ˙)？差(ㄔㄚ)不(ㄅㄨˋ)多(ㄉㄨㄛ)，我(ㄨㄛˇ)買(ㄇㄞˇ)六(ㄌㄧㄡˋ)個(ㄍㄜ˙)蘋(ㄆㄧㄥˊ)果(ㄍㄨㄛˇ)。", en: "Did you buy 5 apples yesterday? Almost, I bought 6 apples." },
+                            { zh: "你(ㄋㄧˇ)老(ㄌㄠˇ)婆(ㄆㄛˊ)和(ㄏㄢˋ)Taylor Swift一(ㄧˊ)樣(ㄧㄤˋ)嗎(ㄇㄚ˙)？差(ㄔㄚ)不(ㄅㄨˋ)多(ㄉㄨㄛ)，都(ㄉㄡ)一(ㄧˊ)樣(ㄧㄤˋ)美(ㄇㄟˇ)。", en: "Is your wife the same as Taylor Swift? Almost, both are equally beautiful." }
+                        ]
+                    }
+                ]
+            },
+            {
+                title: "4. Homework",
+                items: [
+                    {
+                        type: "homework",
+                        title: "Part 1: Translation Practice",
+                        questions: [
+                            "1. Has your cat finished eating? My cat's bowl is empty.",
+                            "2. My fridge is empty, I want to cook pasta.",
+                            "3. I bought half a dozen energy drinks.",
+                            "4. Let's celebrate the Mid-Autumn Festival together!",
+                            "5. I am short 10 dollars, can you help me?"
+                        ]
+                    },
+                    {
+                        type: "homework_reading",
+                        title: "Part 2: Reading Comprehension",
+                        passages: [
+                            {
+                                text: "十月五號是我朋友小美的生日。她找我們星期六晚上一起去吃吃到飽。這家餐廳很有名，聽說那裡的廚師是從日本來的。我們六點到餐廳，可是我中午沒有吃飯，所以肚子空空的。小美對牛奶過敏，所以她不喝牛奶，也不吃冰淇淋，只吃水果。我們拿了半打啤酒，大家一起吃吃喝喝。我們坐下來後，我先去了一下洗手間，回來的時候，小美又站起來去拿吃的東西，那一刻，我們都笑了。",
+                                qs: [
+                                    "Q1. Where did the chef come from?",
+                                    "Q2. Why was the author's stomach empty?",
+                                    "Q3. What did Xiaomei eat and why?"
+                                ]
+                            },
+                            {
+                                text: "星期六上午，我在家玩電動。我最喜歡玩俄羅斯方塊，因為很簡單，可是很有意思。我玩了三個鐘頭，眼睛很累，媽媽就叫我去休息。她問我：「你玩多久了？」我說：「差不多三個鐘頭。」我走到外面，看到天很亮，天氣很好。我想買一個新的電動遊戲，可是我還差三百塊，所以我要再等一個月。",
+                                qs: [
+                                    "Q1. Why did the mother tell the author to rest?",
+                                    "Q2. How long did the author play the video game?",
+                                    "Q3. Why does the author have to wait a month to buy a new game?"
+                                ]
+                            },
+                            {
+                                text: "我阿姨叫王美玲，她在醫院工作，每天都有很多病人。她的先生在工廠上班，所以他們兩個都很忙。有一天，一個老病人對阿姨說：「謝謝你，我今天好多了。」那一刻，阿姨覺得工作很有意思。下午五點，她離開醫院，回家煮飯。她最近想買一支新手機，可是還差五百塊。她問先生：「你可以幫我買嗎？」先生說：「好啊！你上班很辛苦」。",
+                                qs: [
+                                    "Q1. Where do Aunt Wang Meiling and her husband work?",
+                                    "Q2. Why did Aunt Wang Meiling feel her job was interesting?",
+                                    "Q3. Why did her husband agree to help her buy a new phone?"
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            }
+        ];
+
+        const container = document.getElementById('content');
+        let counter = 0;
+
+        lessonData.forEach((sec, sIdx) => {
+            let html = `<div class="section" id="sec-${sIdx}"><h2>${sec.title}</h2>`;
+            if(sec.note) html += `<p class="note">${sec.note}</p>`;
+            
+            sec.items.forEach(item => {
+                if (item.type === "grammar") {
+                    html += `<div class="grammar-box">
+                        <div style="font-weight:bold; font-size:16px; color:#8C6239; margin-bottom:5px;">${item.title}</div>`;
+                    if(item.note) html += `<div class="note">${item.note}</div>`;
+                    if(item.customHtml) html += item.customHtml;
+                    
+                    if (item.wrong && item.correct) {
+                        html += `
+                        <div class="item-content" style="margin-top: 10px; align-items:center;">
+                            <span class="wrong" style="margin-right:15px;">❌ </span> <span>${item.wrong}</span>
+                        </div>
+                        <div class="item-content" style="margin-top: 10px; align-items:center;">
+                            <button class="audio-btn" onclick="playAudio('${item.correct}')">🔊 Listen</button>
+                            <button class="rec-btn" onclick="toggleRecord(this, 'rec-${counter}')">🎤 Record</button>
+                            <button class="play-rec-btn" id="play-rec-rec-${counter}" onclick="playRecording('rec-${counter}')" disabled>▶ Play Mine</button>
+                            <span class="correct" style="margin-left:8px;">✅ </span> <span style="margin-left:8px;">${parseZhuyin(item.correct)}</span>
+                        </div>
+                        <div class="en-trans">${item.en}</div>`;
+                        counter++;
+                    }
+
+                    if (item.examples) {
+                        item.examples.forEach(ex => {
+                            html += `
+                            <div class="item" style="border:none; margin-top:10px; padding-bottom:0;">
+                                <div class="item-content" style="align-items:center;">
+                                    <button class="audio-btn" onclick="playAudio('${ex.zh}')">🔊 Listen</button>
+                                    <button class="rec-btn" onclick="toggleRecord(this, 'rec-${counter}')">🎤 Record</button>
+                                    <button class="play-rec-btn" id="play-rec-rec-${counter}" onclick="playRecording('rec-${counter}')" disabled>▶ Play Mine</button>
+                                    <div style="margin-left:8px;">${parseZhuyin(ex.zh)}</div>
+                                </div>
+                                <div class="en-trans">${ex.en}</div>
+                            </div>`;
+                            counter++;
+                        });
+                    }
+                    html += `</div>`;
+                } else if (item.type === "homework") {
+                    html += `<div class="grammar-box">
+                        <div style="font-weight:bold; font-size:16px; color:#8C6239; margin-bottom:15px;">${item.title}</div>`;
+                    item.questions.forEach(q => {
+                        html += `
+                            <div class="homework-q">${q}</div>
+                            <textarea class="hw-textarea" placeholder="Type your answer here..."></textarea>
+                        `;
+                    });
+                    html += `</div>`;
+                } else if (item.type === "homework_reading") {
+                    html += `<div class="grammar-box">
+                        <div style="font-weight:bold; font-size:16px; color:#8C6239; margin-bottom:15px;">${item.title}</div>`;
+                    item.passages.forEach((p, idx) => {
+                        html += `<div style="background:#fff; padding:15px; border-radius:8px; margin-bottom:20px; border:1px solid #ddd;">
+                            <p style="font-size:16px; line-height:1.8; margin-top:0;">${p.text}</p>
+                            <hr style="border:0; border-top:1px dashed #ccc; margin:15px 0;">
+                        `;
+                        p.qs.forEach(q => {
+                            html += `
+                                <div class="homework-q">${q}</div>
+                                <textarea class="hw-textarea" placeholder="Type your answer here..."></textarea>
+                            `;
+                        });
+                        html += `</div>`;
+                    });
+                    html += `</div>`;
+                } else if (item.zh) {
+                    html += `
+                    <div class="item">
+                        <div class="item-content" style="align-items:center;">
+                            <button class="audio-btn" onclick="playAudio('${item.zh}')">🔊 Listen</button>
+                            <button class="rec-btn" onclick="toggleRecord(this, 'rec-${counter}')">🎤 Record</button>
+                            <button class="play-rec-btn" id="play-rec-rec-${counter}" onclick="playRecording('rec-${counter}')" disabled>▶ Play Mine</button>
+                            <div style="margin-left:8px;">${parseZhuyin(item.zh)}</div>
+                        </div>
+                        <div class="en-trans">${item.en}</div>
+                    </div>`;
+                    counter++;
+                }
+            });
+            html += `</div>`;
+            container.innerHTML += html;
+        });
+
+        // Toggle Bopomofo & English
+        let zyVisible = true;
+        let enVisible = true;
+
+        function toggleZhuyin() {
+            zyVisible = !zyVisible;
+            document.querySelectorAll('.zy-box').forEach(el => {
+                el.style.display = zyVisible ? 'inline-flex' : 'none';
+            });
+        }
+
+        function toggleEnglish() {
+            enVisible = !enVisible;
+            document.querySelectorAll('.en-trans').forEach(el => {
+                el.style.display = enVisible ? 'block' : 'none';
+            });
+        }
+    </script>
+</body>
+</html>
