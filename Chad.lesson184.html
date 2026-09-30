@@ -139,8 +139,6 @@
         }
 
         function playAudio(text) {
-            // Regex allows Chinese, English letters, spaces, and basic punctuation
-            // Forces '和' to '汗', '都' to '兜' (dōu), and '差' to '插' (chā) for correct Taiwan TTS
             let cleanText = text.replace(/\(.*?\)/g, '')
                                 .replace(/和/g, '汗') 
                                 .replace(/都/g, '兜') 
@@ -207,12 +205,6 @@
                         type: "grammar",
                         title: "2) Food & Measure Words",
                         note: "Measure words for pieces/slices: Note that '片' is more common for thin slices like pizza; '塊' is used for thicker, blocky, or weirdly shaped things.",
-                        customHtml: `
-                            <div class="img-row">
-                                <img src="https://cdn.phototourl.com/member/2026-09-30-bce78811-ca64-419d-a985-8e384c856c3b.png" class="vocab-img" alt="A dozen">
-                                <img src="https://cdn.phototourl.com/member/2026-09-30-e200b071-f2fc-4941-96b6-05999775b982.jpg" class="vocab-img" alt="Half a dozen">
-                            </div>
-                        `,
                         examples: [
                             { zh: "高(ㄍㄠ)麗(ㄌㄧˋ)菜(ㄘㄞˋ)", en: "Cabbage" },
                             { zh: "義(ㄧˋ)大(ㄉㄚˋ)利(ㄌㄧˋ)麵(ㄇㄧㄢˋ)", en: "Pasta" },
@@ -220,8 +212,8 @@
                             { zh: "一(ㄧˊ)塊(ㄎㄨㄞˋ)蛋(ㄉㄢˋ)糕(ㄍㄠ)", en: "A piece of cake" },
                             { zh: "一(ㄧˊ)塊(ㄎㄨㄞˋ)芝(ㄓ)加(ㄐㄧㄚ)哥(ㄍㄜ)式(ㄕˋ)披(ㄆㄧ)薩(ㄙㄚˋ)", en: "A piece of Chicago-style pizza" },
                             { zh: "一(ㄧˊ)片(ㄆㄧㄢˋ)披(ㄆㄧ)薩(ㄙㄚˋ)", en: "A slice of pizza" },
-                            { zh: "一(ㄧˋ)打(ㄉㄚˇ)可(ㄎㄜˇ)樂(ㄌㄜˋ)", en: "A dozen colas" },
-                            { zh: "半(ㄅㄢˋ)打(ㄉㄚˇ)可(ㄎㄜˇ)樂(ㄌㄜˋ)", en: "Half a dozen colas" },
+                            { zh: "一(ㄧˋ)打(ㄉㄚˇ)可(ㄎㄜˇ)樂(ㄌㄜˋ)", en: "A dozen colas", img: "https://cdn.phototourl.com/member/2026-09-30-bce78811-ca64-419d-a985-8e384c856c3b.png" },
+                            { zh: "半(ㄅㄢˋ)打(ㄉㄚˇ)可(ㄎㄜˇ)樂(ㄌㄜˋ)", en: "Half a dozen colas", img: "https://cdn.phototourl.com/member/2026-09-30-e200b071-f2fc-4941-96b6-05999775b982.jpg" },
                             { zh: "我(ㄨㄛˇ)太(ㄊㄞˋ)太(ㄊㄞˋ)買(ㄇㄞˇ)了(ㄌㄜ˙)半(ㄅㄢˋ)打(ㄉㄚˇ)能(ㄋㄥˊ)量(ㄌㄧㄤˋ)飲(ㄧㄣˇ)。", en: "My wife bought half a dozen energy drinks." }
                         ]
                     },
@@ -284,19 +276,21 @@
                                 <div><p style="font-weight:bold; margin-bottom:5px;">ㄨ</p><img src="https://cdn.phototourl.com/member/2026-09-30-e69070e6-359f-4f9e-a316-d45f166c54a6.png" class="vocab-img" alt="ㄨ mouth shape"></div>
                                 <div><p style="font-weight:bold; margin-bottom:5px;">ㄩ</p><img src="https://cdn.phototourl.com/member/2026-09-30-ce39ba56-cda7-4d55-9d46-499f5fa16438.png" class="vocab-img" alt="ㄩ mouth shape"></div>
                             </div>
-                        `
+                        `,
+                        examples: [
+                            { zh: "終(ㄓㄨㄥ)於(ㄩˊ)", en: "Finally" },
+                            { zh: "中(ㄓㄨㄥ)午(ㄨˇ)", en: "Noon" }
+                        ]
                     },
                     {
                         type: "grammar",
                         title: "4) Pronunciation Practice: 月餅 (Mooncake)",
                         note: "The character 餅 (bǐng) is 3rd tone.",
-                        customHtml: `
-                            <div class="img-row">
-                                <div style="text-align:center;"><img src="https://cdn.phototourl.com/member/2026-09-30-c7411860-ae1b-40e8-bd62-599ec337b8a3.jpg" class="vocab-img" alt="月餅"><br><span>${parseZhuyin("月(ㄩㄝˋ)餅(ㄅㄧㄥˇ)")}</span></div>
-                                <div style="text-align:center;"><img src="https://cdn.phototourl.com/member/2026-09-30-e07d05d3-baee-4031-905f-bd93458814bd.jpg" class="vocab-img" alt="餅乾"><br><span>${parseZhuyin("餅(ㄅㄧㄥˇ)乾(ㄍㄢ)")}</span></div>
-                                <div style="text-align:center;"><img src="https://cdn.phototourl.com/member/2026-09-30-43b4dbd4-5c1b-48b3-83f6-7564bf9b3c4a.jpg" class="vocab-img" alt="太陽餅"><br><span>${parseZhuyin("太(ㄊㄞˋ)陽(ㄧㄤˊ)餅(ㄅㄧㄥˇ)")}</span></div>
-                            </div>
-                        `
+                        examples: [
+                            { zh: "月(ㄩㄝˋ)餅(ㄅㄧㄥˇ)", en: "Mooncake", img: "https://cdn.phototourl.com/member/2026-09-30-c7411860-ae1b-40e8-bd62-599ec337b8a3.jpg" },
+                            { zh: "餅(ㄅㄧㄥˇ)乾(ㄍㄢ)", en: "Cookie / Cracker", img: "https://cdn.phototourl.com/member/2026-09-30-e07d05d3-baee-4031-905f-bd93458814bd.jpg" },
+                            { zh: "太(ㄊㄞˋ)陽(ㄧㄤˊ)餅(ㄅㄧㄥˇ)", en: "Sun cake", img: "https://cdn.phototourl.com/member/2026-09-30-43b4dbd4-5c1b-48b3-83f6-7564bf9b3c4a.jpg" }
+                        ]
                     },
                     {
                         type: "grammar",
@@ -309,7 +303,7 @@
                     {
                         type: "grammar",
                         title: "6) Usage of '最後' (In the end / Finally)",
-                        note: "Explanation: Means 'in the end'.<br>• 開心地: The '地' (de) means the word is an adverb (happily).<br>• 坐下 vs 坐下來: '坐下' is a command from a teacher or to a pet. '坐下來' describes the normal action of a person sitting down.",
+                        note: "Explanation: Means 'in the end'.<br>• 開心地: The '地' means the word is an adverb (happily).<br>• 坐下 vs 坐下來: '坐下' is a command from a teacher or to a pet. '坐下來' describes the normal action of a person sitting down.",
                         examples: [
                             { zh: "王(ㄨㄤˊ)陽(ㄧㄤˊ)明(ㄇㄧㄥˊ)最(ㄗㄨㄟˋ)後(ㄏㄡˋ)找(ㄓㄠˇ)到(ㄉㄠˋ)烤(ㄎㄠˇ)肉(ㄖㄡˋ)店(ㄉㄧㄢˋ)，跟(ㄍㄣ)家(ㄐㄧㄚ)人(ㄖㄣˊ)開(ㄎㄞ)心(ㄒㄧㄣ)地(ㄉㄜ˙)坐(ㄗㄨㄛˋ)下(ㄒㄧㄚˋ)來(ㄌㄞˊ)。", en: "In the end, Wang Yangming found a BBQ restaurant and sat down happily with his family." }
                         ]
@@ -378,7 +372,7 @@
                             { zh: "這(ㄓㄜˋ)碗(ㄨㄢˇ)麵(ㄇㄧㄢˋ)一(ㄧˋ)百(ㄅㄞˇ)塊(ㄎㄨㄞˋ)錢(ㄑㄧㄢˊ)，我(ㄨㄛˇ)只(ㄓˇ)有(ㄧㄡˇ)九(ㄐㄧㄡˇ)十(ㄕˊ)塊(ㄎㄨㄞˋ)，我(ㄨㄛˇ)的(ㄉㄜ˙)錢(ㄑㄧㄢˊ)不(ㄅㄨˊ)夠(ㄍㄡˋ)，還(ㄏㄞˊ)差(ㄔㄚ)十(ㄕˊ)塊(ㄎㄨㄞˋ)錢(ㄑㄧㄢˊ)。", en: "This bowl of noodles is 100 dollars, I only have 90 dollars, my money is not enough, I am short 10 dollars." },
                             { zh: "他(ㄊㄚ)說(ㄕㄨㄛ)的(ㄉㄜ˙)話(ㄏㄨㄚˋ)，我(ㄨㄛˇ)差(ㄔㄚ)不(ㄅㄨˋ)多(ㄉㄨㄛ)都(ㄉㄡ)懂(ㄉㄨㄥˇ)。", en: "I understand almost everything he said. (About 80-90%)" },
                             { zh: "你(ㄋㄧˇ)昨(ㄗㄨㄛˊ)天(ㄊㄧㄢ)買(ㄇㄞˇ)五(ㄨˇ)個(ㄍㄜ˙)蘋(ㄆㄧㄥˊ)果(ㄍㄨㄛˇ)嗎(ㄇㄚ˙)？差(ㄔㄚ)不(ㄅㄨˋ)多(ㄉㄨㄛ)，我(ㄨㄛˇ)買(ㄇㄞˇ)六(ㄌㄧㄡˋ)個(ㄍㄜ˙)蘋(ㄆㄧㄥˊ)果(ㄍㄨㄛˇ)。", en: "Did you buy 5 apples yesterday? Almost, I bought 6 apples." },
-                            { zh: "你(ㄋㄧˇ)老(ㄌㄠˇ)婆(ㄆㄛˊ)和(ㄏㄢˋ)Taylor Swift一(ㄧˊ)樣(ㄧㄤˋ)美(ㄇㄟˇ)嗎(ㄇㄚ˙)？", en: "Is your wife as beautiful as Taylor Swift?" }
+                            { zh: "你(ㄋㄧˇ)老(ㄌㄠˇ)婆(ㄆㄛˊ)和(ㄏㄢˋ)Taylor Swift一(ㄧˊ)樣(ㄧㄤˋ)美(ㄇㄟˇ)嗎(ㄇㄚ˙)？差(ㄔㄚ)不(ㄅㄨˋ)多(ㄉㄨㄛ)，她(ㄊㄚ)們(ㄇㄣ˙)都(ㄉㄡ)一(ㄧˊ)樣(ㄧㄤˋ)美(ㄇㄟˇ)。", en: "Is your wife as beautiful as Taylor Swift? Almost, they are equally beautiful." }
                         ]
                     }
                 ]
@@ -422,7 +416,7 @@
                                 qs: [
                                     "Q1. 王美玲和她的先生在哪裡工作？",
                                     "Q2. 為什麼王美玲覺得她的工作很有意思？",
-                                    "Q3. 為什麼先生答應幫王美玲買新手機？"
+                                    "Q3. 為什麼先生要幫王美玲買手機？"
                                 ]
                             }
                         ]
@@ -470,8 +464,11 @@
                                     <button class="play-rec-btn" id="play-rec-rec-${counter}" onclick="playRecording('rec-${counter}')" disabled>▶ Play Mine</button>
                                     <div style="margin-left:8px;">${parseZhuyin(ex.zh)}</div>
                                 </div>
-                                <div class="en-trans">${ex.en}</div>
-                            </div>`;
+                                <div class="en-trans">${ex.en}</div>`;
+                            if (ex.img) {
+                                html += `<img src="${ex.img}" class="vocab-img" style="margin-top: 10px;">`;
+                            }
+                            html += `</div>`;
                             counter++;
                         });
                     }
