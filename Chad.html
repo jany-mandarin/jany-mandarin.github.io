@@ -4,35 +4,64 @@
     <meta charset="UTF-8">
     <title>Chad's Mandarin Lessons</title>
     <style>
-        :root { --bg: #FDFBF7; --primary: #D4A373; --text: #4a4a4a; --white: #fff; }
-        body { font-family: 'Helvetica Neue', Arial, sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; max-width: 600px; margin: 0 auto; padding: 30px 20px; text-align: center; }
-        h1 { color: #8C6239; border-bottom: 2px solid var(--primary); padding-bottom: 15px; margin-bottom: 30px; }
-        .menu { display: flex; flex-direction: column; gap: 15px; }
-        .menu-item { background: #fff; padding: 15px 20px; border-radius: 8px; text-decoration: none; color: var(--text); font-size: 18px; font-weight: bold; border: 1px solid #eee; transition: all 0.2s; display: block; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
-        .menu-item:hover { background: #FFF9F0; border-color: var(--primary); color: #8C6239; transform: translateY(-3px); box-shadow: 0 5px 10px rgba(0,0,0,0.1); }
-        .subtitle { font-size: 13px; color: #777; font-weight: normal; margin-top: 5px; }
-        .profile { font-size: 16px; margin-bottom: 30px; color: #555; }
+        :root { --bg: #FDFBF7; --primary: #D4A373; --text: #4a4a4a; --white: #fff; --highlight: #8C6239; }
+        body { font-family: 'Helvetica Neue', Arial, sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; max-width: 650px; margin: 0 auto; padding: 30px 20px; }
+        h1 { color: var(--highlight); border-bottom: 2px solid var(--primary); padding-bottom: 15px; margin-bottom: 20px; text-align: center; }
+        .profile { font-size: 16px; margin-bottom: 30px; color: #555; text-align: center; }
+        
+        /* 課程卡片的外觀設定 */
+        .menu { display: flex; flex-direction: column; gap: 20px; }
+        .menu-item { background: var(--white); padding: 20px; border-radius: 12px; text-decoration: none; color: var(--text); border: 2px solid transparent; transition: all 0.2s; display: block; box-shadow: 0 3px 8px rgba(0,0,0,0.05); }
+        .menu-item:hover { background: #FFF9F0; border-color: var(--primary); transform: translateY(-3px); box-shadow: 0 6px 12px rgba(0,0,0,0.1); }
+        
+        /* 卡片標題與最新標籤 */
+        .lesson-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px dashed #eee; padding-bottom: 10px; margin-bottom: 10px; }
+        .lesson-title { font-size: 20px; font-weight: bold; color: var(--highlight); margin: 0; }
+        .new-badge { background: #E74C3C; color: white; font-size: 12px; padding: 3px 8px; border-radius: 20px; font-weight: bold; letter-spacing: 1px; }
+        
+        /* 大綱列表設定 */
+        .outline { margin: 0; padding-left: 20px; font-size: 14.5px; color: #555; }
+        .outline li { margin-bottom: 6px; }
+        .outline strong { color: #664d34; }
     </style>
 </head>
 <body>
     <h1>👨‍🎓 Chad's Mandarin Lessons</h1>
     
     <div class="profile">
-        Welcome back, Chad! Here are your lesson notes:
+        Welcome back, Chad! Please select a lesson below. <br>
+        <span style="font-size: 14px; color: #888;">(Newest lessons are at the top)</span>
     </div>
 
     <div class="menu">
-        <!-- 指向 Chad 的第 183 課 -->
-        <a href="Chad.lesson183.html" class="menu-item">
-            📖 Lesson 183
-            <div class="subtitle">Did you... (有沒有), Clothes, Mid-Autumn...</div>
-        </a>
         
-        <!-- 指向 Chad 的第 184 課 (檔案要記得建立喔) -->
+        <!-- Lesson 184 (最新的放在最上面，並加上 NEW 標籤) -->
         <a href="Chad.lesson184.html" class="menu-item">
-            🧋 Lesson 184
-            <div class="subtitle">Ordering Drinks (買飲料)</div>
+            <div class="lesson-header">
+                <div class="lesson-title">🌟 Lesson 184: Warm-up & Lesson 11</div>
+                <div class="new-badge">NEW</div>
+            </div>
+            <ul class="outline">
+                <li><strong>核心文法：</strong>動作完成 (吃完了嗎)、過 (spend/pass)、差 vs 差不多。</li>
+                <li><strong>字詞辨析：</strong>煮 vs 做 (Cook vs Make)、上午 vs 早上。</li>
+                <li><strong>量詞與單字：</strong>空空的、片 vs 塊、半打、休息、叫 (Call/Wake up)。</li>
+                <li><strong>發音與糾正：</strong>ㄨ vs ㄩ (終於/中午)、忙的正確用法、一起...吧。</li>
+            </ul>
         </a>
+
+        <!-- Lesson 183 -->
+        <a href="Chad.lesson183.html" class="menu-item">
+            <div class="lesson-header">
+                <div class="lesson-title">📖 Lesson 183: Daily Conversations</div>
+            </div>
+            <ul class="outline">
+                <li><strong>核心文法：</strong>有沒有 (Did you...)、不太 (Not too...) 委婉否定。</li>
+                <li><strong>量詞與動詞：</strong>穿衣服 (件) vs 戴帽子 (個)。</li>
+                <li><strong>常見糾正：</strong>大樓 vs 樓、身體痛 vs 不太好。</li>
+                <li><strong>文化話題：</strong>中秋節烤肉、教師節、復古電動遊戲。</li>
+            </ul>
+        </a>
+
     </div>
 
 </body>
