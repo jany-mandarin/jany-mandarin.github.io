@@ -107,7 +107,6 @@
     </div>
 
     <script>
-        // Toggle Sidebar
         function toggleSidebar() {
             const sidebar = document.getElementById('sidebar');
             const mainContent = document.getElementById('mainContent');
@@ -119,7 +118,6 @@
             }
         }
 
-        // Bopomofo Parser for Taiwan Zhuyin Layout
         function parseZhuyin(text) {
             const regex = /([\u4e00-\u9fa5a-zA-Z0-9])\((.*?)\)/g;
             let parsed = text.replace(regex, (match, char, zy) => {
@@ -140,18 +138,20 @@
             return parsed;
         }
 
-        // Play Audio (Taiwan Accent TTS, converting '和' to '汗' purely for correct Hàn pronunciation)
         function playAudio(text) {
+            // Regex allows Chinese, English letters, spaces, and basic punctuation
+            // Forces '和' to '汗', '都' to '兜' (dōu), and '差' to '插' (chā) for correct Taiwan TTS
             let cleanText = text.replace(/\(.*?\)/g, '')
-                                .replace(/和/g, '汗') // Force Taiwan TTS to pronounce 'hàn'
-                                .replace(/[^\u4e00-\u9fa5，。？！]/g, '');
+                                .replace(/和/g, '汗') 
+                                .replace(/都/g, '兜') 
+                                .replace(/差/g, '插') 
+                                .replace(/[^\u4e00-\u9fa5，。？！a-zA-Z ]/g, '');
             const utterance = new SpeechSynthesisUtterance(cleanText);
             utterance.lang = 'zh-TW';
             utterance.rate = 0.85;
             speechSynthesis.speak(utterance);
         }
 
-        // Student Recording Functions
         let mediaRecorders = {};
         let audioChunks = {};
         let audioUrls = {};
@@ -206,22 +206,32 @@
                     {
                         type: "grammar",
                         title: "2) Food & Measure Words",
-                        note: "Vocabulary: 高(ㄍㄠ)麗(ㄌㄧˋ)菜(ㄘㄞˋ) (Cabbage), 義(ㄧˋ)大(ㄉㄚˋ)利(ㄌㄧˋ)麵(ㄇㄧㄢˋ) (Pasta).<br>Measure words for pieces/slices: 一塊麵包, 一塊蛋糕, 一塊芝加哥式披薩, 一片披薩 (Note: '片' is more common for slices like pizza; '塊' is used for weird/blocky shapes), 一塊牛排.<br>Measurement: 一打 (A dozen = 12), 半打 (Half a dozen = 6).",
+                        note: "Measure words for pieces/slices: Note that '片' is more common for thin slices like pizza; '塊' is used for thicker, blocky, or weirdly shaped things.",
                         customHtml: `
                             <div class="img-row">
-                                <div><p style="font-weight:bold; margin-bottom:5px;">一(ㄧˋ)打(ㄉㄚˇ) (A dozen = 12)</p><img src="https://images.unsplash.com/photo-1622483767028-3f66f32aef97?q=80&w=200&auto=format&fit=crop" class="vocab-img" alt="A dozen"></div>
-                                <div><p style="font-weight:bold; margin-bottom:5px;">半(ㄅㄢˋ)打(ㄉㄚˇ) (Half a dozen = 6)</p><img src="https://images.unsplash.com/photo-1598215437812-320c22621007?q=80&w=200&auto=format&fit=crop" class="vocab-img" alt="Half a dozen"></div>
+                                <img src="https://cdn.phototourl.com/member/2026-09-30-bce78811-ca64-419d-a985-8e384c856c3b.png" class="vocab-img" alt="A dozen">
+                                <img src="https://cdn.phototourl.com/member/2026-09-30-e200b071-f2fc-4941-96b6-05999775b982.jpg" class="vocab-img" alt="Half a dozen">
                             </div>
                         `,
                         examples: [
-                            { zh: "我(ㄨㄛˇ)太(ㄊㄞˋ)太(ㄊㄞˋ)買(ㄇㄞˇ)了(ㄌㄜ˙)六(ㄌㄧㄡˋ)罐(ㄍㄨㄢˋ)能(ㄋㄥˊ)量(ㄌㄧㄤˋ)飲(ㄧㄣˇ)。", en: "My wife bought 6 cans of energy drink." }
+                            { zh: "高(ㄍㄠ)麗(ㄌㄧˋ)菜(ㄘㄞˋ)", en: "Cabbage" },
+                            { zh: "義(ㄧˋ)大(ㄉㄚˋ)利(ㄌㄧˋ)麵(ㄇㄧㄢˋ)", en: "Pasta" },
+                            { zh: "一(ㄧˊ)塊(ㄎㄨㄞˋ)麵(ㄇㄧㄢˋ)包(ㄅㄠ)", en: "A piece of bread" },
+                            { zh: "一(ㄧˊ)塊(ㄎㄨㄞˋ)蛋(ㄉㄢˋ)糕(ㄍㄠ)", en: "A piece of cake" },
+                            { zh: "一(ㄧˊ)塊(ㄎㄨㄞˋ)芝(ㄓ)加(ㄐㄧㄚ)哥(ㄍㄜ)式(ㄕˋ)披(ㄆㄧ)薩(ㄙㄚˋ)", en: "A piece of Chicago-style pizza" },
+                            { zh: "一(ㄧˊ)片(ㄆㄧㄢˋ)披(ㄆㄧ)薩(ㄙㄚˋ)", en: "A slice of pizza" },
+                            { zh: "一(ㄧˋ)打(ㄉㄚˇ)可(ㄎㄜˇ)樂(ㄌㄜˋ)", en: "A dozen colas" },
+                            { zh: "半(ㄅㄢˋ)打(ㄉㄚˇ)可(ㄎㄜˇ)樂(ㄌㄜˋ)", en: "Half a dozen colas" },
+                            { zh: "我(ㄨㄛˇ)太(ㄊㄞˋ)太(ㄊㄞˋ)買(ㄇㄞˇ)了(ㄌㄜ˙)半(ㄅㄢˋ)打(ㄉㄚˇ)能(ㄋㄥˊ)量(ㄌㄧㄤˋ)飲(ㄧㄣˇ)。", en: "My wife bought half a dozen energy drinks." }
                         ]
                     },
                     {
                         type: "grammar",
                         title: "3) Cook (煮) vs. Make Food (做)",
-                        note: "• 煮 (zhǔ) is used when you turn on the stove/fire to cook something (e.g., stir-fry veggies, fried rice).<br>• 做 (zuò) is used when making food without necessarily firing up a stove (e.g., make a sandwich, make a pizza).<br>Note: 廚房 is kitchen, 廚師 is chef.",
+                        note: "• 煮 is used when you turn on the stove/fire to cook something (e.g., stir-fry veggies, pasta).<br>• 做 is used when making food without necessarily firing up a stove (e.g., make a sandwich, make a pizza).",
                         examples: [
+                            { zh: "廚(ㄔㄨˊ)房(ㄈㄤˊ)", en: "Kitchen" },
+                            { zh: "廚(ㄔㄨˊ)師(ㄕ)", en: "Chef" },
                             { zh: "昨(ㄗㄨㄛˊ)天(ㄊㄧㄢ)我(ㄨㄛˇ)不(ㄅㄨˋ)知(ㄓ)道(ㄉㄠˋ)我(ㄨㄛˇ)能(ㄋㄥˊ)不(ㄅㄨˋ)能(ㄋㄥˊ)做(ㄗㄨㄛˋ)出(ㄔㄨ)好(ㄏㄠˇ)吃(ㄔ)的(ㄉㄜ˙)食(ㄕˊ)物(ㄨˋ)，最(ㄗㄨㄟˋ)後(ㄏㄡˋ)我(ㄨㄛˇ)做(ㄗㄨㄛˋ)到(ㄉㄠˋ)了(ㄌㄜ˙)！", en: "Yesterday I didn't know if I could make delicious food, but in the end I did it!" },
                             { zh: "我(ㄨㄛˇ)煮(ㄓㄨˇ)了(ㄌㄜ˙)義(ㄧˋ)大(ㄉㄚˋ)利(ㄌㄧˋ)麵(ㄇㄧㄢˋ)，我(ㄨㄛˇ)太(ㄊㄞˋ)太(ㄊㄞˋ)說(ㄕㄨㄛ)我(ㄨㄛˇ)是(ㄕˋ)廚(ㄔㄨˊ)師(ㄕ)。", en: "I cooked pasta, and my wife said I am a chef." }
                         ]
@@ -231,10 +241,7 @@
                         title: "4) Empty (空空的)",
                         note: "Used to describe a space that has absolutely nothing inside.",
                         customHtml: `
-                            <div class="img-row">
-                                <img src="https://images.unsplash.com/photo-1583337130417-3346a1be7dee?q=80&w=200&auto=format&fit=crop" class="vocab-img" alt="Empty bowl">
-                                <img src="https://images.unsplash.com/photo-1588698579344-934d40b9156f?q=80&w=200&auto=format&fit=crop" class="vocab-img" alt="Empty fridge">
-                            </div>
+                            <img src="https://cdn.phototourl.com/member/2026-09-30-fd03f23f-09dd-43f5-9a5a-93bfd6bae19a.png" class="vocab-img" alt="Empty">
                         `,
                         examples: [
                             { zh: "每(ㄇㄟˇ)次(ㄘˋ)我(ㄨㄛˇ)看(ㄎㄢˋ)到(ㄉㄠˋ)我(ㄨㄛˇ)的(ㄉㄜ˙)貓(ㄇㄠ)碗(ㄨㄢˇ)裡(ㄌㄧˇ)都(ㄉㄡ)空(ㄎㄨㄥ)空(ㄎㄨㄥ)的(ㄉㄜ˙)。", en: "Every time I see my cat's bowl, it is empty." },
@@ -251,7 +258,7 @@
                         title: "1) Grammar Correction: Introducing a new entity",
                         note: "Explanation: In Chinese, we explicitly include the number 'one' (一) with a measure word when introducing a new entity.",
                         wrong: "我媽媽戴很漂亮的帽子。",
-                        correct: "我(ㄨㄛˇ)妈(ㄇㄚ)妈(ㄇㄚ˙)戴(ㄉㄞˋ)一(ㄧˊ)個(ㄍㄜ˙)很(ㄏㄣˇ)漂(ㄆㄧㄠˋ)亮(ㄌㄧㄤˋ)的(ㄉㄜ˙)帽(ㄇㄠˋ)子(ㄗ˙)。",
+                        correct: "我(ㄨㄛˇ)媽(ㄇㄚ)媽(ㄇㄚ˙)戴(ㄉㄞˋ)一(ㄧˊ)個(ㄍㄜ˙)很(ㄏㄣˇ)漂(ㄆㄧㄠˋ)亮(ㄌㄧㄤˋ)的(ㄉㄜ˙)帽(ㄇㄠˋ)子(ㄗ˙)。",
                         en: "My mom is wearing a beautiful hat."
                     },
                     {
@@ -261,7 +268,7 @@
                         customHtml: `
                             <div class="img-row">
                                 <img src="https://cdn.phototourl.com/member/2026-09-30-25d36e2a-5e95-4a64-8515-38622e52179a.png" class="vocab-img" alt="Awesome 1">
-                                <img src="https://cdn.phototourl.com/member/2026-09-30-9698550f-02af-45c6-a8d4-0d5fc0bcb56f.png" class="vocab-img" alt="Awesome 2">
+                                <img src="https://cdn.phototourl.com/member/2026-09-30-0f563985-405e-4ab8-9e39-06b97f1bfe71.png" class="vocab-img" alt="Awesome 2">
                             </div>
                         `,
                         wrong: "我們一起吃很棒的素食！",
@@ -271,11 +278,11 @@
                     {
                         type: "grammar",
                         title: "3) Pronunciation Practice: 終於 vs 中午",
-                        note: "• ㄨ (u): Tongue is flat, mouth slightly open, like English 'oo'.<br>• ㄩ (yu): Tongue is flat (don't curl it), but lips are pursed as if kissing.",
+                        note: "• ㄨ : Tongue is flat, mouth slightly open, like English 'oo'.<br>• ㄩ : Tongue is flat (don't curl it), but lips are pursed as if kissing.",
                         customHtml: `
                             <div class="img-row">
-                                <div><p style="font-weight:bold; margin-bottom:5px;">ㄨ (u)</p><img src="https://cdn.phototourl.com/member/2026-09-30-e69070e6-359f-4f9e-a316-d45f166c54a6.png" class="vocab-img" alt="ㄨ mouth shape"></div>
-                                <div><p style="font-weight:bold; margin-bottom:5px;">ㄩ (yu)</p><img src="https://cdn.phototourl.com/member/2026-09-30-ce39ba56-cda7-4d55-9d46-499f5fa16438.png" class="vocab-img" alt="ㄩ mouth shape"></div>
+                                <div><p style="font-weight:bold; margin-bottom:5px;">ㄨ</p><img src="https://cdn.phototourl.com/member/2026-09-30-e69070e6-359f-4f9e-a316-d45f166c54a6.png" class="vocab-img" alt="ㄨ mouth shape"></div>
+                                <div><p style="font-weight:bold; margin-bottom:5px;">ㄩ</p><img src="https://cdn.phototourl.com/member/2026-09-30-ce39ba56-cda7-4d55-9d46-499f5fa16438.png" class="vocab-img" alt="ㄩ mouth shape"></div>
                             </div>
                         `
                     },
@@ -285,9 +292,9 @@
                         note: "The character 餅 (bǐng) is 3rd tone.",
                         customHtml: `
                             <div class="img-row">
-                                <div style="text-align:center;"><img src="https://images.unsplash.com/photo-1601000676916-2581abfa87b6?q=80&w=150&auto=format&fit=crop" class="vocab-img" alt="月餅"><br><span>${parseZhuyin("月(ㄩㄝˋ)餅(ㄅㄧㄥˇ)")}</span></div>
-                                <div style="text-align:center;"><img src="https://images.unsplash.com/photo-1499636136210-6f4ee915583e?q=80&w=150&auto=format&fit=crop" class="vocab-img" alt="餅乾"><br><span>${parseZhuyin("餅(ㄅㄧㄥˇ)乾(ㄍㄢ)")}</span></div>
-                                <div style="text-align:center;"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d7/Suncake_%28Taiwan%29.jpg/320px-Suncake_%28Taiwan%29.jpg" class="vocab-img" alt="太陽餅"><br><span>${parseZhuyin("太(ㄊㄞˋ)陽(ㄧㄤˊ)餅(ㄅㄧㄥˇ)")}</span></div>
+                                <div style="text-align:center;"><img src="https://cdn.phototourl.com/member/2026-09-30-c7411860-ae1b-40e8-bd62-599ec337b8a3.jpg" class="vocab-img" alt="月餅"><br><span>${parseZhuyin("月(ㄩㄝˋ)餅(ㄅㄧㄥˇ)")}</span></div>
+                                <div style="text-align:center;"><img src="https://cdn.phototourl.com/member/2026-09-30-e07d05d3-baee-4031-905f-bd93458814bd.jpg" class="vocab-img" alt="餅乾"><br><span>${parseZhuyin("餅(ㄅㄧㄥˇ)乾(ㄍㄢ)")}</span></div>
+                                <div style="text-align:center;"><img src="https://cdn.phototourl.com/member/2026-09-30-43b4dbd4-5c1b-48b3-83f6-7564bf9b3c4a.jpg" class="vocab-img" alt="太陽餅"><br><span>${parseZhuyin("太(ㄊㄞˋ)陽(ㄧㄤˊ)餅(ㄅㄧㄥˇ)")}</span></div>
                             </div>
                         `
                     },
@@ -321,7 +328,7 @@
                         `,
                         examples: [
                             { zh: "他(ㄊㄚ)們(ㄇㄣ˙)公(ㄍㄨㄥ)司(ㄙ)每(ㄇㄟˇ)天(ㄊㄧㄢ)中(ㄓㄨㄥ)午(ㄨˇ)休(ㄒㄧㄡ)息(ㄒㄧˊ)四(ㄙˋ)十(ㄕˊ)分(ㄈㄣ)鐘(ㄓㄨㄥ)。", en: "Their company rests for 40 minutes at noon every day." },
-                            { zh: "我(ㄨㄛˇ)的(ㄉㄜ˙)貓(ㄇㄠ)的(ㄉㄜ˙)工(ㄍㄨㄥ)作(ㄗㄨㄛˋ)是(ㄕˋ)休(ㄒㄧㄡ)息(ㄒㄧˊ)。", en: "My cat's job is resting." },
+                            { zh: "我(ㄨㄛˇ)的(ㄉㄜ˙)貓(ㄇㄠ)工(ㄍㄨㄥ)作(ㄗㄨㄛˋ)是(ㄕˋ)休(ㄒㄧㄡ)息(ㄒㄧˊ)。", en: "My cat's job is resting." },
                             { zh: "我(ㄨㄛˇ)現(ㄒㄧㄢˋ)在(ㄗㄞˋ)在(ㄗㄞˋ)家(ㄐㄧㄚ)上(ㄕㄤˋ)班(ㄅㄢ)，我(ㄨㄛˇ)不(ㄅㄨˋ)知(ㄓ)道(ㄉㄠˋ)我(ㄨㄛˇ)每(ㄇㄟˇ)天(ㄊㄧㄢ)休(ㄒㄧㄡ)息(ㄒㄧˊ)多(ㄉㄨㄛ)久(ㄐㄧㄡˇ)。", en: "I work from home now, I don't know how long I rest every day." }
                         ]
                     },
@@ -371,7 +378,7 @@
                             { zh: "這(ㄓㄜˋ)碗(ㄨㄢˇ)麵(ㄇㄧㄢˋ)一(ㄧˋ)百(ㄅㄞˇ)塊(ㄎㄨㄞˋ)錢(ㄑㄧㄢˊ)，我(ㄨㄛˇ)只(ㄓˇ)有(ㄧㄡˇ)九(ㄐㄧㄡˇ)十(ㄕˊ)塊(ㄎㄨㄞˋ)，我(ㄨㄛˇ)的(ㄉㄜ˙)錢(ㄑㄧㄢˊ)不(ㄅㄨˊ)夠(ㄍㄡˋ)，還(ㄏㄞˊ)差(ㄔㄚ)十(ㄕˊ)塊(ㄎㄨㄞˋ)錢(ㄑㄧㄢˊ)。", en: "This bowl of noodles is 100 dollars, I only have 90 dollars, my money is not enough, I am short 10 dollars." },
                             { zh: "他(ㄊㄚ)說(ㄕㄨㄛ)的(ㄉㄜ˙)話(ㄏㄨㄚˋ)，我(ㄨㄛˇ)差(ㄔㄚ)不(ㄅㄨˋ)多(ㄉㄨㄛ)都(ㄉㄡ)懂(ㄉㄨㄥˇ)。", en: "I understand almost everything he said. (About 80-90%)" },
                             { zh: "你(ㄋㄧˇ)昨(ㄗㄨㄛˊ)天(ㄊㄧㄢ)買(ㄇㄞˇ)五(ㄨˇ)個(ㄍㄜ˙)蘋(ㄆㄧㄥˊ)果(ㄍㄨㄛˇ)嗎(ㄇㄚ˙)？差(ㄔㄚ)不(ㄅㄨˋ)多(ㄉㄨㄛ)，我(ㄨㄛˇ)買(ㄇㄞˇ)六(ㄌㄧㄡˋ)個(ㄍㄜ˙)蘋(ㄆㄧㄥˊ)果(ㄍㄨㄛˇ)。", en: "Did you buy 5 apples yesterday? Almost, I bought 6 apples." },
-                            { zh: "你(ㄋㄧˇ)老(ㄌㄠˇ)婆(ㄆㄛˊ)和(ㄏㄢˋ)Taylor Swift一(ㄧˊ)樣(ㄧㄤˋ)嗎(ㄇㄚ˙)？差(ㄔㄚ)不(ㄅㄨˋ)多(ㄉㄨㄛ)，都(ㄉㄡ)一(ㄧˊ)樣(ㄧㄤˋ)美(ㄇㄟˇ)。", en: "Is your wife the same as Taylor Swift? Almost, both are equally beautiful." }
+                            { zh: "你(ㄋㄧˇ)老(ㄌㄠˇ)婆(ㄆㄛˊ)和(ㄏㄢˋ)Taylor Swift一(ㄧˊ)樣(ㄧㄤˋ)美(ㄇㄟˇ)嗎(ㄇㄚ˙)？", en: "Is your wife as beautiful as Taylor Swift?" }
                         ]
                     }
                 ]
@@ -395,27 +402,27 @@
                         title: "Part 2: Reading Comprehension",
                         passages: [
                             {
-                                text: "十月五號是我朋友小美的生日。她找我們星期六晚上一起去吃吃到飽。這家餐廳很有名，聽說那裡的廚師是從日本來的。我們六點到餐廳，可是我中午沒有吃飯，所以肚子空空的。小美對牛奶過敏，所以她不喝牛奶，也不吃冰淇淋，只吃水果。我們拿了半打啤酒，大家一起吃吃喝喝。我們坐下來後，我先去了一下洗手間，回來的時候，小美又站起來去拿吃的東西，那一刻，我們都笑了。",
+                                text: "十月五號是美華朋友小美的生日。小美找美華星期六晚上一起去吃吃到飽。這家餐廳很有名，聽說那裡的廚師是從日本來的。她們六點到餐廳，可是美華中午沒有吃飯，所以肚子空空的。小美對牛奶過敏，所以她不喝牛奶，也不吃冰淇淋，只吃水果。美華拿了半打啤酒，大家一起吃吃喝喝。她們坐下來後，美華先去了一下洗手間，回來的時候，小美又站起來去拿吃的東西，那一刻，大家都很高興。",
                                 qs: [
-                                    "Q1. Where did the chef come from?",
-                                    "Q2. Why was the author's stomach empty?",
-                                    "Q3. What did Xiaomei eat and why?"
+                                    "Q1. 廚師是從哪裡來的？",
+                                    "Q2. 為什麼美華的肚子空空的？",
+                                    "Q3. 為什麼大家都很高興？"
                                 ]
                             },
                             {
-                                text: "星期六上午，我在家玩電動。我最喜歡玩俄羅斯方塊，因為很簡單，可是很有意思。我玩了三個鐘頭，眼睛很累，媽媽就叫我去休息。她問我：「你玩多久了？」我說：「差不多三個鐘頭。」我走到外面，看到天很亮，天氣很好。我想買一個新的電動遊戲，可是我還差三百塊，所以我要再等一個月。",
+                                text: "星期六上午，文雄在家玩電動。他最喜歡玩俄羅斯方塊，因為很簡單，可是很有意思。文雄玩了三個鐘頭，眼睛很累，媽媽就叫他去休息。媽媽問他：「你玩多久了？」文雄說：「差不多三個鐘頭。」他走到外面，看到天很亮，天氣很好。文雄想買一個新的電動遊戲，可是他還差三百塊，所以他要再等一個月。",
                                 qs: [
-                                    "Q1. Why did the mother tell the author to rest?",
-                                    "Q2. How long did the author play the video game?",
-                                    "Q3. Why does the author have to wait a month to buy a new game?"
+                                    "Q1. 媽媽為什麼叫文雄去休息？",
+                                    "Q2. 文雄玩電動玩了多久？",
+                                    "Q3. 為什麼文雄要再等一個月才能買新的電動遊戲？"
                                 ]
                             },
                             {
-                                text: "我阿姨叫王美玲，她在醫院工作，每天都有很多病人。她的先生在工廠上班，所以他們兩個都很忙。有一天，一個老病人對阿姨說：「謝謝你，我今天好多了。」那一刻，阿姨覺得工作很有意思。下午五點，她離開醫院，回家煮飯。她最近想買一支新手機，可是還差五百塊。她問先生：「你可以幫我買嗎？」先生說：「好啊！你上班很辛苦」。",
+                                text: "思芳的阿姨叫王美玲，她在醫院工作，每天都有很多病人。阿姨的先生在工廠上班，所以他們兩個都很忙。有一天，一個老病人對阿姨說：「謝謝你，我今天好多了。」那一刻，阿姨覺得工作很有意思。下午五點，她離開醫院，回家煮飯。阿姨最近想買一支新手機，可是還差五百塊。她問先生：「你可以幫我買嗎？」先生說：「好啊！你上班很辛苦」。",
                                 qs: [
-                                    "Q1. Where do Aunt Wang Meiling and her husband work?",
-                                    "Q2. Why did Aunt Wang Meiling feel her job was interesting?",
-                                    "Q3. Why did her husband agree to help her buy a new phone?"
+                                    "Q1. 王美玲和她的先生在哪裡工作？",
+                                    "Q2. 為什麼王美玲覺得她的工作很有意思？",
+                                    "Q3. 為什麼先生答應幫王美玲買新手機？"
                                 ]
                             }
                         ]
