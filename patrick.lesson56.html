@@ -118,7 +118,11 @@
         }
 
         function playAudio(text) {
-            let cleanText = text.replace(/\(.*?\)/g, '');
+            // 過濾掉括號、a:、b:、以及開頭的數字序號 (如 1. 2. 等)，避免TTS唸出來
+            let cleanText = text.replace(/\(.*?\)/g, '')
+                                .replace(/^[a-zA-Z]:\s*/g, '')
+                                .replace(/^\d+\.\s*/, '')
+                                .replace(/[^\u4e00-\u9fa5，。？！]/g, '');
             const utterance = new SpeechSynthesisUtterance(cleanText);
             utterance.lang = 'zh-CN';
             utterance.rate = 0.85;
@@ -180,8 +184,8 @@
                     {
                         title: "2. Vocabulary: 月饼 (yuèbǐng - Mooncake)",
                         items: [
-                            { zh: "A: 我(wǒ)回(huí)家(jiā)吃(chī)了(le)很(hěn)多(duō)月(yuè)饼(bǐng)，你(nǐ)吃(chī)过(guò)月(yuè)饼(bǐng)吗(ma)？", en: "A: I went home and ate a lot of mooncakes. Have you ever eaten mooncakes?" },
-                            { zh: "B: 我(wǒ)家(jiā)也(yě)有(yǒu)很(hěn)多(duō)月(yuè)饼(bǐng)，我(wǒ)喜(xǐ)欢(huan)月(yuè)饼(bǐng)。", en: "B: My family also has many mooncakes, I like mooncakes." }
+                            { zh: "a: 我(wǒ)回(huí)家(jiā)吃(chī)了(le)很(hěn)多(duō)月(yuè)饼(bǐng)，你(nǐ)吃(chī)过(guò)月(yuè)饼(bǐng)吗(ma)？", en: "A: I went home and ate a lot of mooncakes. Have you ever eaten mooncakes?" },
+                            { zh: "b: 我(wǒ)家(jiā)也(yě)有(yǒu)很(hěn)多(duō)月(yuè)饼(bǐng)，我(wǒ)喜(xǐ)欢(huan)月(yuè)饼(bǐng)。", en: "B: My family also has many mooncakes, I like mooncakes." }
                         ]
                     },
                     {
@@ -236,7 +240,7 @@
                             { zh: "(我(wǒ)们(men))今(jīn)天(tiān)晚(wǎn)上(shang)就(jiù)吃(chī)海(hǎi)南(nán)鸡(jī)饭(fàn)吧(ba)。", en: "Let's just eat Hainanese chicken rice tonight." },
                             { zh: "这(zhè)就(jiù)是(shì)我(wǒ)想(xiǎng)喝(hē)的(de)红(hóng)茶(chá)！", en: "This is precisely the black tea I wanted to drink!" },
                             { zh: "我(wǒ)就(jiù)是(shì)Patrick！", en: "I am Patrick! (Used for emphasis in a crowd)" },
-                            { zh: "A: 你(nǐ)有(yǒu)女(nǚ)友(yǒu)吗(ma)？<br>B: 我(wǒ)的(de)女(nǚ)友(yǒu)就(jiù)在(zài)那(nà)里(lǐ)。", en: "A: Do you have a girlfriend? \nB: My girlfriend is right over there." }
+                            { zh: "a: 你(nǐ)有(yǒu)女(nǚ)友(yǒu)吗(ma)？<br>b: 我(wǒ)的(de)女(nǚ)友(yǒu)就(jiù)在(zài)那(nà)里(lǐ)。", en: "A: Do you have a girlfriend? \nB: My girlfriend is right over there." }
                         ]
                     },
                     {
@@ -253,7 +257,7 @@
                     {
                         type: "grammar",
                         title: "3. Usage of '有点儿 / 有点'",
-                        note: "Explanation: Used to describe a feeling or state (somewhat / a bit). Note that 一点 (yìdiǎn) emphasizes a small quantity.",
+                        note: "Explanation: Used to describe a feeling or state (somewhat / a bit). Note that 一点 (yīdiǎn) emphasizes a small quantity.",
                         examples: [
                             { zh: "今(jīn)天(tiān)天(tiān)气(qì)有(yǒu)点(diǎn)冷(lěng)。", en: "The weather is a bit cold today." },
                             { zh: "我(wǒ)昨(zuó)天(tiān)有(yǒu)点(diǎn)累(lèi)。", en: "I was a bit tired yesterday." },
