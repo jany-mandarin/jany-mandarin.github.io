@@ -77,22 +77,21 @@
     <div class="sidebar" id="sidebar">
         <h3>📖 Outline <button style="background:none; border:none; color:#8C6239; font-weight:bold; cursor:pointer; font-size:16px;" onclick="toggleSidebar()">×</button></h3>
         <ol>
-            <li><a href="#sec-0">一、开场闲聊与实用词汇 (Warm-up & Vocab)</a></li>
-            <li><a href="#sec-1">二、第五课核心语法 (Lesson 5 Grammar)</a></li>
-            <li><a href="#sec-2">三、重音练习 (Stress Practice)</a></li>
+            <li><a href="#sec-0">Warm-up Chat & Useful Vocabulary</a></li>
+            <li><a href="#sec-1">Lesson 5 Core Grammar</a></li>
+            <li><a href="#sec-2">Stress Practice</a></li>
         </ol>
     </div>
 
     <div class="main-content" id="mainContent">
         <div class="header">
             <h1>Patrick's Mandarin Lesson 56</h1>
-            <h2>学生 (Student)：Patrick | 第 56 堂课 (Lesson 56)</h2>
             <p>Date: 2026/9/30</p>
         </div>
 
         <div class="controls">
-            <button class="control-btn" onclick="togglePinyin()">Toggle Pinyin (拼音开关)</button>
-            <button class="control-btn" onclick="toggleEnglish()">Toggle English (英文翻译开关)</button>
+            <button class="control-btn" onclick="togglePinyin()">Toggle Pinyin</button>
+            <button class="control-btn" onclick="toggleEnglish()">Toggle English</button>
         </div>
 
         <div id="content"></div>
@@ -113,7 +112,7 @@
         function parsePinyin(text) {
             const regex = /([\u4e00-\u9fa5a-zA-Z0-9，。？！、：""''])\((.*?)\)/g;
             let parsed = text.replace(regex, (match, char, py) => {
-                return `<span class="pinyin-group"><py class="py-text">${py}</py><span class="hz-text">${char}</span></span>`;
+                return `<span class="pinyin-group"><span class="py-text">${py}</span><span class="hz-text">${char}</span></span>`;
             });
             return parsed;
         }
@@ -167,19 +166,19 @@
 
         const lessonData = [
             {
-                title: "一、开场闲聊与实用词汇 (Warm-up Chat & Useful Vocabulary)",
+                title: "Warm-up Chat & Useful Vocabulary",
                 note: "Warm-up chat and vocabulary breakdown.",
                 items: [
                     {
                         type: "grammar",
-                        title: "1. 常用问句辨析：你去哪里？ vs 你吃什么？ (Question Comparison)",
+                        title: "1. Question Comparison: 你去哪里？ vs 你吃什么？",
                         note: "Explanation: Because the pronunciation of 去 (qù) and 吃 (chī) sounds very similar, listening carefully to what follows is crucial to avoid misunderstandings.",
                         wrong: "你去什么？",
                         correct: "你(nǐ)去(qù)哪(nǎ)里(lǐ)？ / 你(nǐ)吃(chī)什(shén)么(me)？",
                         en: "Where are you going? / What are you eating?"
                     },
                     {
-                        title: "2. 名词介绍：月饼 (yuèbǐng - Mooncake)",
+                        title: "2. Vocabulary: 月饼 (yuèbǐng - Mooncake)",
                         items: [
                             { zh: "A: 我(wǒ)回(huí)家(jiā)吃(chī)了(le)很(hěn)多(duō)月(yuè)饼(bǐng)，你(nǐ)吃(chī)过(guò)月(yuè)饼(bǐng)吗(ma)？", en: "A: I went home and ate a lot of mooncakes. Have you ever eaten mooncakes?" },
                             { zh: "B: 我(wǒ)家(jiā)也(yě)有(yǒu)很(hěn)多(duō)月(yuè)饼(bǐng)，我(wǒ)喜(xǐ)欢(huan)月(yuè)饼(bǐng)。", en: "B: My family also has many mooncakes, I like mooncakes." }
@@ -187,7 +186,7 @@
                     },
                     {
                         type: "grammar",
-                        title: "3. 「过」的用法 (Usage of 'Guò')",
+                        title: "3. Usage of '过' (Guò)",
                         note: "Explanation: Used to indicate having experienced or tried something. Sometimes it also means 'several'.",
                         examples: [
                             { zh: "在(zài)那(nà)个(gè)波(bō)兰(lán)饭(fàn)馆(guǎn)，有(yǒu)些(xiē)东(dōng)西(xī)我(wǒ)也(yě)没(méi)吃(chī)过(guò)。", en: "At that Polish restaurant, there are some things I haven't tried yet." }
@@ -195,7 +194,7 @@
                     },
                     {
                         type: "grammar",
-                        title: "4. 「再」的用法 (Usage of 'Zài')",
+                        title: "4. Usage of '再' (Zài)",
                         note: "Explanation: Usually placed before a verb to express wanting to do an action again.",
                         examples: [
                             { zh: "我(wǒ)想(xiǎng)再(zài)去(qù)那(nà)里(lǐ)。", en: "I want to go there again." }
@@ -203,7 +202,7 @@
                     },
                     {
                         type: "grammar",
-                        title: "5. 「地道」的用法 (Usage of 'Dìdao')",
+                        title: "5. Usage of '地道' (Dìdao)",
                         note: "Explanation: Usually used to describe something very authentic or true to local culture.",
                         examples: [
                             { zh: "那(nà)个(gè)波(bō)兰(lán)饭(fàn)馆(guǎn)很(hěn)地(dì)道(dao)。", en: "That Polish restaurant is very authentic." }
@@ -211,7 +210,7 @@
                     },
                     {
                         type: "grammar",
-                        title: "6. 「帮」的用法 (Usage of 'Bāng')",
+                        title: "6. Usage of '帮' (Bāng)",
                         note: "Explanation: Usually used when doing something to help someone else.",
                         examples: [
                             { zh: "每(měi)次(cì)我(wǒ)的(de)奶(nǎi)奶(nai)去(qù)饭(fàn)馆(guǎn)，都(dōu)会(huì)帮(bāng)大(dà)家(jiā)买(mǎi)伏(fú)特(tè)加(jiā)。", en: "Every time my grandma goes to the restaurant, she helps everyone buy vodka." }
@@ -220,12 +219,12 @@
                 ]
             },
             {
-                title: "二、第五课核心语法 (Lesson 5 Core Grammar)",
+                title: "Lesson 5 Core Grammar",
                 note: "Core grammar points from Lesson 5.",
                 items: [
                     {
                         type: "grammar",
-                        title: "1. 「就」的用法 (Usage of 'Jiù')",
+                        title: "1. Usage of '就' (Jiù)",
                         note: "Explanation: When you hear '就', it emphasizes the following clause or action. Pay close attention!<br>• Meaning 1 (Decision/Then): Making a decision right away.<br>• Meaning 2 (Precisely/Exact): Emphasizing 'precisely this'.<br>• Meaning 3 (Let's just): Omitting the subject 'we' (我们), meaning 'Let's just do sth.'",
                         examples: [
                             { zh: "你(nǐ)不(bù)想(xiǎng)去(qù)，就(jiù)在(zài)家(jiā)休(xiū)息(xi)吧(ba)。", en: "If you don't want to go, just rest at home." },
@@ -242,19 +241,19 @@
                     },
                     {
                         type: "grammar",
-                        title: "2. 「还 / 还好 / 还行」 (Usage of 'Hái / Hǎihǎo / Háixíng')",
+                        title: "2. Usage of '还 / 还好 / 还行'",
                         note: "Explanation: Means 'so-so', 'fairly', or 'not bad'—neither extremely good nor extremely bad.",
                         examples: [
                             { zh: "a: 你(nǐ)的(de)身(shēn)体(tǐ)怎(zěn)么(me)样(yàng)？<br>b: 还(hái)好(hǎo)。", en: "a: How is your health? \nb: Fairly good / So-so." },
-                            { zh: "a: 这(zhè)件(jiàn)衣(yī)服(fu)大(dà)吗(ma)？<br>b: 还(hái)行(xíng)，不(bù)太(tài)大(dà)。", en: "a: Is this clothing big? \nb: It's alright, not too big." },
+                            { zh: "a: 这(zhè)件(jiàn)衣(yī)服(fu)大(dà)吗(ma)？<br>b: 还(hái)行(xíng)，不(bú)太(tài)大(dà)。", en: "a: Is this clothing big? \nb: It's alright, not too big." },
                             { zh: "a: 昨(zuó)天(tiān)的(de)考(kǎo)试(shì)怎(zěn)么(me)样(yàng)？<br>b: 我(wǒ)觉(jué)得(de)听(tīng)和(hé)说(shuō)还(hái)行(xíng)，读(dú)和(hé)写(xiě)不(bù)好(hǎo)。", en: "a: How was yesterday's exam? \nb: I think listening and speaking were okay, reading and writing were not good." },
                             { zh: "a: 你(nǐ)喜(xǐ)欢(huan)你(nǐ)的(de)公(gōng)司(sī)吗(ma)？<br>b: 还(hái)好(hǎo) / 还(hái)行(xíng)。<br><small style='color:#777;'>(Meaning it's not extremely loved, but not strongly disliked either)</small>", en: "a: Do you like your company? \nb: It's alright." }
                         ]
                     },
                     {
                         type: "grammar",
-                        title: "3. 「有点儿 / 有点」 (Usage of 'Yǒudiǎnr / Yǒudiǎn')",
-                        note: "Explanation: Used to describe a feeling or state (somewhat / a bit). Note that 一点 (yīdiǎn) emphasizes a small quantity.",
+                        title: "3. Usage of '有点儿 / 有点'",
+                        note: "Explanation: Used to describe a feeling or state (somewhat / a bit). Note that 一点 (yìdiǎn) emphasizes a small quantity.",
                         examples: [
                             { zh: "今(jīn)天(tiān)天(tiān)气(qì)有(yǒu)点(diǎn)冷(lěng)。", en: "The weather is a bit cold today." },
                             { zh: "我(wǒ)昨(zuó)天(tiān)有(yǒu)点(diǎn)累(lèi)。", en: "I was a bit tired yesterday." },
@@ -264,7 +263,7 @@
                     },
                     {
                         type: "grammar",
-                        title: "4. 「以后」 (Usage of 'Yǐhòu')",
+                        title: "4. Usage of '以后'",
                         note: "Explanation: If placed after a verb/phrase, it means 'after...'. If placed at the very beginning of a sentence, it means 'in the future'.",
                         examples: [
                             { zh: "我(wǒ)下(xià)午(wǔ)四(sì)点(diǎn)考(kǎo)试(shì)，考(kǎo)试(shì)以(yǐ)后(hòu)给(gěi)你(nǐ)打(dǎ)电(diàn)话(huà)。", en: "I have an exam at 4 PM, I'll call you after the exam." },
@@ -275,7 +274,7 @@
                     },
                     {
                         type: "grammar",
-                        title: "5. 「想」 (Usage of 'Xiǎng')",
+                        title: "5. Usage of '想'",
                         note: "Explanation: This character has multiple meanings (based on the heart radical 心 at the bottom representing inner thoughts). It translates to want, think, or miss.",
                         examples: [
                             { zh: "a: 他(tā)在(zài)做(zuò)什(shén)么(me)？<br>b: 他(tā)在(zài)想(xiǎng)昨(zuó)天(tiān)的(de)考(kǎo)试(shì)呢(ne)！", en: "a: What is he doing? \nb: He is thinking about yesterday's exam!" },
@@ -285,7 +284,7 @@
                     },
                     {
                         type: "grammar",
-                        title: "6. 「少 + V / V + 少」 & 「多 + V / V + 多」 (Do less / Do more)",
+                        title: "6. '少 + V / V + 少' & '多 + V / V + 多'",
                         note: "Explanation: Expressing doing less or more of a certain action.",
                         examples: [
                             { zh: "少(shǎo)喝(hē)一(yì)点(diǎn)吧(ba)。", en: "Drink a little less." },
@@ -295,10 +294,10 @@
                     },
                     {
                         type: "grammar",
-                        title: "7. 「A 对 B 不好 / 好」 (Be good/bad to someone)",
+                        title: "7. 'A 对 B 不好 / 好'",
                         note: "Explanation: Expressing how someone treats another person or thing.",
                         examples: [
-                            { zh: "酒(jiǔ)喝(hē)多(duō)了(le)对(duì)身(shēn)体(tǐ)不(bù)好(hǎo)。", en: "Drinking too much alcohol is bad for your health." },
+                            { zh: "酒(jiǔ)喝(hē)多(duō)了(le)对(duì)身(shēn)体(tǐ)不(bú)好(hǎo)。", en: "Drinking too much alcohol is bad for your health." },
                             { zh: "他(tā)对(duì)女(nǚ)友(yǒu)很(hěn)好(hǎo)，常(cháng)常(cháng)帮(bāng)女(nǚ)友(yǒu)。", en: "He is very good to his girlfriend and often helps her." },
                             { zh: "我(wǒ)的(de)公(gōng)司(sī)对(duì)我(wǒ)很(hěn)好(hǎo)，给(gěi)我(wǒ)很(hěn)多(duō)钱(qián)。", en: "My company is very good to me and gives me a lot of money." }
                         ]
@@ -306,7 +305,7 @@
                 ]
             },
             {
-                title: "三、重音练习 (Stress Practice)",
+                title: "Stress Practice",
                 note: "Explanation: Stress is used to emphasize specific information and ensure the listener catches key points.",
                 items: [
                     { zh: "1. 那(nà)是(shì)我(wǒ)妈(mā)妈(ma)做(zuò)的(de)中(zhōng)国(guó)菜(cài)。", en: "That is Chinese food made by my mom." },
@@ -348,7 +347,7 @@
                             <span class="wrong" style="margin-right:15px;">❌ </span> <span>${item.wrong}</span>
                         </div>
                         <div class="item-content" style="margin-top: 10px; align-items:center;">
-                            <button class="audio-btn" onclick="playAudio('${item.correct}')">🔊 朗读 (Listen)</button>
+                            <button class="audio-btn" onclick="playAudio('${item.correct}')">🔊 Listen</button>
                             <button class="rec-btn" onclick="toggleRecord(this, 'rec-${counter}')">🎤 Record</button>
                             <button class="play-rec-btn" id="play-rec-rec-${counter}" onclick="playRecording('rec-${counter}')" disabled>▶ Play Mine</button>
                             <span class="correct" style="margin-left:8px;">✅ </span> <span style="margin-left:8px;">${parsePinyin(item.correct)}</span>
@@ -361,7 +360,7 @@
                             html += `
                             <div class="item" style="border:none; margin-top:10px; padding-bottom:0;">
                                 <div class="item-content" style="align-items:center;">
-                                    <button class="audio-btn" onclick="playAudio('${ex.zh}')">🔊 朗读 (Listen)</button>
+                                    <button class="audio-btn" onclick="playAudio('${ex.zh}')">🔊 Listen</button>
                                     <button class="rec-btn" onclick="toggleRecord(this, 'rec-${counter}')">🎤 Record</button>
                                     <button class="play-rec-btn" id="play-rec-rec-${counter}" onclick="playRecording('rec-${counter}')" disabled>▶ Play Mine</button>
                                     <div style="margin-left:8px;">${parsePinyin(ex.zh)}</div>
@@ -376,7 +375,7 @@
                     html += `
                     <div class="item">
                         <div class="item-content" style="align-items:center;">
-                            <button class="audio-btn" onclick="playAudio('${item.zh}')">🔊 朗读 (Listen)</button>
+                            <button class="audio-btn" onclick="playAudio('${item.zh}')">🔊 Listen</button>
                             <button class="rec-btn" onclick="toggleRecord(this, 'rec-${counter}')">🎤 Record</button>
                             <button class="play-rec-btn" id="play-rec-rec-${counter}" onclick="playRecording('rec-${counter}')" disabled>▶ Play Mine</button>
                             <div style="margin-left:8px;">${parsePinyin(item.zh)}</div>
