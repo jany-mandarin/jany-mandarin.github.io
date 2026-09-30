@@ -118,7 +118,6 @@
         }
 
         function playAudio(text) {
-            // 過濾掉括號、a:、b:、以及開頭的數字序號 (如 1. 2. 等)，避免TTS唸出來
             let cleanText = text.replace(/\(.*?\)/g, '')
                                 .replace(/^[a-zA-Z]:\s*/g, '')
                                 .replace(/^\d+\.\s*/, '')
@@ -219,6 +218,14 @@
                         examples: [
                             { zh: "每(měi)次(cì)我(wǒ)的(de)奶(nǎi)奶(nai)去(qù)饭(fàn)馆(guǎn)，都(dōu)会(huì)帮(bāng)大(dà)家(jiā)买(mǎi)伏(fú)特(tè)加(jiā)。", en: "Every time my grandma goes to the restaurant, she helps everyone buy vodka." }
                         ]
+                    },
+                    {
+                        type: "grammar",
+                        title: "7. Usage of '一些' (Yīxiē)",
+                        note: "Explanation: Means 'a few' or 'some' (indicating a small quantity).<br><small style='color:#777;'>(Note: 月 means moon; 饼 is commonly used for desserts/pastries, like biscuits/cookies)</small>",
+                        examples: [
+                            { zh: "我(wǒ)家(jiā)有(yǒu)一(yì)些(xiē)月(yuè)饼(bǐng)，我(wǒ)觉(jué)得(de)月(yuè)饼(bǐng)很(hěn)好(hǎo)吃(chī)。", en: "My family has some mooncakes, I think mooncakes are very delicious." }
+                        ]
                     }
                 ]
             },
@@ -240,7 +247,7 @@
                             { zh: "(我(wǒ)们(men))今(jīn)天(tiān)晚(wǎn)上(shang)就(jiù)吃(chī)海(hǎi)南(nán)鸡(jī)饭(fàn)吧(ba)。", en: "Let's just eat Hainanese chicken rice tonight." },
                             { zh: "这(zhè)就(jiù)是(shì)我(wǒ)想(xiǎng)喝(hē)的(de)红(hóng)茶(chá)！", en: "This is precisely the black tea I wanted to drink!" },
                             { zh: "我(wǒ)就(jiù)是(shì)Patrick！", en: "I am Patrick! (Used for emphasis in a crowd)" },
-                            { zh: "a: 你(nǐ)有(yǒu)女(nǚ)友(yǒu)吗(ma)？<br>b: 我(wǒ)的(de)女(nǚ)友(yǒu)就(jiù)在(zài)那(nà)里(lǐ)。", en: "A: Do you have a girlfriend? \nB: My girlfriend is right over there." }
+                            { zh: "A: 你(nǐ)有(yǒu)女(nǚ)友(yǒu)吗(ma)？<br>B: 我(wǒ)的(de)女(nǚ)友(yǒu)就(jiù)在(zài)那(nà)里(lǐ)。", en: "A: Do you have a girlfriend? \nB: My girlfriend is right over there." }
                         ]
                     },
                     {
@@ -319,7 +326,7 @@
                     { zh: "5. 大(dà)卫(wèi)的(de)狗(gǒu)飞(fēi)一(yì)样(yàng)地(de)跑(pǎo)了(le)过(guò)去(qù)。", en: "David's dog ran past like flying." },
                     { zh: "6. 我(wǒ)爸(bà)爸(ba)是(shì)医(yī)生(shēng)，每(měi)天(tiān)从(cóng)早(zǎo)到(dào)晚(wǎn)忙(máng)工(gōng)作(zuò)。", en: "My dad is a doctor, busy working from morning till night every day." },
                     { zh: "7. 这(zhè)是(shì)今(jīn)天(tiān)早(zǎo)上(shang)的(de)报(bào)纸(zhǐ)。", en: "This is this morning's newspaper." },
-                    { zh: "8. 今(jīn)天(tiān)的(de)羊(yáng)肉(ròu)很(hěn)好(hǎo)吃(chī)。", en: "Today's mutton is very delicious." },
+                    { zh: "8. 今(jīn)天(tiān)的(de)羊(yáng)肉(ròu)很(hěn)好(hěn)吃(chī)。", en: "Today's mutton is very delicious." },
                     { zh: "9. 这(zhè)个(gè)粉(fěn)色(sè)的(de)房(fáng)间(jiān)是(shì)我(wǒ)女(nǚ)儿(ér)的(de)。", en: "This pink room is my daughter's." },
                     { zh: "10. 大(dà)卫(wèi)在(zài)北(běi)京(jīng)学(xué)习(xí)汉(hàn)语(yǔ)。", en: "David is studying Chinese in Beijing." },
                     { zh: "11. 我(wǒ)们(men)学(xué)校(xiào)每(měi)天(tiān)早(zǎo)上(shang)八(bā)点(diǎn)半(bàn)上(shàng)课(kè)。", en: "Our school starts classes every day at 8:30 AM." },
