@@ -26,6 +26,11 @@
 
         .header { text-align: center; border-bottom: 2px solid var(--primary); padding-bottom: 10px; margin-bottom: 20px; }
         
+        /* 頂部導覽列按鈕區 */
+        .nav-links { margin-bottom: 15px; display: flex; justify-content: center; gap: 15px; }
+        .nav-link-btn { background: #E6D5B8; color: #555; text-decoration: none; padding: 6px 14px; border-radius: 20px; font-size: 13px; font-weight: bold; transition: background 0.2s; }
+        .nav-link-btn:hover { background: var(--primary); color: white; }
+
         .controls { position: sticky; top: 0; background: var(--bg); padding: 15px; text-align: center; border-bottom: 1px solid #ccc; z-index: 100; margin-bottom: 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
         button.control-btn { background: var(--primary); color: white; border: none; padding: 10px 15px; margin: 5px; border-radius: 6px; cursor: pointer; font-size: 14px; font-weight: bold; }
         button.control-btn:hover { background: #B5835A; }
@@ -96,6 +101,11 @@
         <div class="header">
             <h1>Chad's Mandarin Lesson 184</h1>
             <p>Date: 2026/9/30</p>
+            <!-- 快速導覽列 (Lesson 183 & 目錄) -->
+            <div class="nav-links">
+                <a href="https://jany-mandarin.github.io/Chad.lesson183.html" class="nav-link-btn" target="_blank">⬅️ Lesson 183</a>
+                <a href="https://jany-mandarin.github.io/Chad.html" class="nav-link-btn" target="_blank">🏠 課程目錄 (Directory)</a>
+            </div>
         </div>
 
         <div class="controls">
