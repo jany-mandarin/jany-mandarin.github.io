@@ -107,7 +107,7 @@
         }
 
         function parsePinyin(text) {
-            const regex = /([\u4e00-\u9fa5a-zA-Z0-9，。？！、：""''()./])\((.*?)\)/g;
+            const regex = /([\u4e00-\u9fa5a-zA-Z0-9，。？！./])\((.*?)\)/g;
             let parsed = text.replace(regex, (match, char, py) => {
                 return `<span class="pinyin-group"><span class="py-text">${py}</span><span class="hz-text">${char}</span></span>`;
             });
@@ -234,7 +234,7 @@
                         title: "4. 经济杠杆 (jīngjì gànggǎn)",
                         note: "英文：Economic leverage。<br>解释：利用借贷资金或政策工具来放大经济效果。<br>Explanation: Economic leverage.",
                         examples: [
-                            { zh: "政(zhèng)府(fǔ)利(lì)用(yòng)金(jīn)融(róng)杠(gàng)杆(gǎn)来(lái)调(diáo)控(kòng)房(fáng)地(dì)产(chǎn)市(shì)场(chǎng)。", en: "The government uses financial leverage to regulate the real estate market." }
+                            { zh: "政(zhèng)府(fǔ)利(lì)用(yòng)金(jīn)融(róng)杠(gàng)杆(gǎn)来(lái)调(tiáo)控(kòng)房(fáng)地(dì)产(chǎn)市(shì)场(chǎng)。", en: "The government uses financial leverage to regulate the real estate market." }
                         ]
                     },
                     {
