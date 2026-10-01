@@ -12,8 +12,8 @@
         .sidebar { width: var(--sidebar-width); background: #FFF9F0; border-right: 1px solid #E6D5B8; height: 100vh; position: fixed; top: 0; left: 0; overflow-y: auto; padding: 20px; box-sizing: border-box; transition: transform 0.3s ease; z-index: 1000; }
         .sidebar.collapsed { transform: translateX(-100%); }
         .sidebar h3 { margin-top: 0; color: #8C6239; font-size: 18px; border-bottom: 2px solid var(--primary); padding-bottom: 8px; display: flex; justify-content: space-between; align-items: center; }
-        .sidebar ol { padding-left: 20px; margin: 10px 0; color: #555; }
-        .sidebar li { margin-bottom: 8px; font-size: 14px; }
+        .sidebar ol { padding-left: 20px; margin: 10px 0; color: #555; list-style-type: none; }
+        .sidebar li { margin-bottom: 10px; font-size: 14px; }
         .sidebar a { color: #555; text-decoration: none; display: block; }
         .sidebar a:hover { color: #8C6239; font-weight: bold; }
         
@@ -55,8 +55,10 @@
         .en-trans { color: #666; font-size: 15px; font-style: italic; margin-top: 5px; }
         .grammar-box { background: #FFF9F0; border: 1px solid #E6D5B8; border-radius: 8px; padding: 15px; margin: 15px 0; }
         .note { font-size: 14px; color: #555; margin-bottom: 10px; line-height: 1.5; }
+        
+        /* 縮小圖片尺寸並置中 */
         .img-container { text-align: center; margin: 15px 0; }
-        .img-container img { max-width: 100%; height: auto; border-radius: 8px; border: 1px solid #E6D5B8; }
+        .img-container img { max-width: 350px; width: 100%; height: auto; border-radius: 8px; border: 1px solid #E6D5B8; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
 
         @media (max-width: 900px) {
             .sidebar { transform: translateX(-100%); }
@@ -173,7 +175,7 @@
                     {
                         type: "grammar",
                         title: "2. 台湾的信仰 (Taiwan's Beliefs)",
-                        note: "台(tái)湾(wān)的(de)信(xìn)仰(yǎng)有(yǒu)很(hěn)多(duō)，可(kě)能(néng)是(shì)因(yīn)为(wèi)是(shì)一(yí)个(gè)小(xiǎo)岛(dǎo)，以(yǐ)前(qián)人(rén)常(cháng)出(chū)海(hǎi)捕(bǔ)鱼(yú)，就(jiù)有(yǒu)许(xǔ)多(duō)民(mín)间(jiān)信(xìn)仰(yǎng)，像(xiàng)是(shì)道(dào)教(jiào)，也(yě)有(yǒu)被(bèi)西(xī)方(fāng)国(guó)家(jiā)殖(zhí)民(mín)过(guò)，也(yě)有(yǒu)很(hěn)多(duō)人(rén)信(xìn)仰(yǎng)天(tiān)主(zhǔ)教(jiào)和(hé)基(jī)督(dū)教(jiào)，还(hái)有(yǒu)从(cóng)中(zhōng)国(guó)传(chuán)入(rù)的(de)佛(fó)教(jiào)、一(yì)贯(guàn)道(dào)，还(hái)有(yǒu)现(xiàn)在(zài)流(liú)行(xíng)的(de)塔(tǎ)罗(luó)牌(pái)算(suàn)命(mìng)、星(xīng)座(zuò)算(suàn)命(mìng)，政(zhèng)府(fǔ)都(dōu)没(méi)有(yǒu)禁(jìn)止(zhǐ)，人(rén)民(mín)就(jiù)有(yǒu)信(xìn)仰(yǎng)自(zì)由(yóu)，只(zhǐ)是(shì)有(yǒu)时(shí)候(hòu)人(rén)民(mín)太(tài)单(dān)纯(chún)，就(jiù)有(yǒu)人(rén)利(lì)用(yòng)信(xìn)仰(yǎng)诈(zhà)骗(piàn)钱(qián)财(cái)，台(tái)湾(wān)近(jìn)几(jǐ)年(nián)有(yǒu)不(bù)少(shǎo)案(àn)例(lì)。<br><small style='color:#777;'>（注：天主教是 Catholicism，基督教是 Christianity，佛教是 Buddhism，一贯道是佛教的某一种支派，星座是 Zodiac Signs）</small><br><br>台(tái)湾(wān)有(yǒu)很(hěn)多(duō)庙(miào)，也(yě)有(yǒu)人(rén)会(huì)去(qù)庙(miào)里(lǐ)掷(zhì)杯(bēi)向(xiàng)神(shén)明(míng)问(wèn)事(shì)：",
+                        note: "台(tái)湾(wān)的(de)信(xìn)仰(yǎng)有(yǒu)很(hěn)多(duō)，可(kě)能(néng)是(shì)因(yīn)为(wèi)是(shì)一(yí)个(gè)小(xiǎo)岛(dǎo)，以(yǐ)前(qián)人(rén)常(cháng)出(chū)海(hǎi)捕(bǔ)鱼(yú)，就(jiù)有(yǒu)许(xǔ)多(duō)民(mín)间(jiān)信(xìn)仰(yǎng)，像(xiàng)是(shì)道(dào)教(jiào)，也(yě)有(yǒu)被(bèi)西(xī)方(fāng)国(guó)家(jiā)殖(zhí)民(mín)过(guò)，也(yě)有(yǒu)很(hěn)多(duō)人(rén)信(xìn)仰(yǎng)天(tiān)主(zhǔ)教(jiào)和(hé)基(jī)督(dū)教(jiào)，还(hái)有(yǒu)从(cóng)中(zhōng)国(guó)传(chuán)入(rù)的(de)佛(fó)教(jiào)、一(yì)贯(guàn)道(dào)，还(hái)有(yǒu)现(xiàn)在(zài)流(liú)行(xíng)的(de)塔(tǎ)罗(luó)牌(pái)算(suàn)命(mìng)、星(xīng)座(zuò)算(suàn)命(mìng)，政(zhèng)府(fǔ)都(dōu)没(méi)有(yǒu)禁(jìn)止(zhǐ)，人(rén)民(mín)就(jiù)有(yǒu)信(xìn)仰(yǎng)自(zì)由(yóu)，只(zhǐ)是(shì)有(yǒu)时(shí)候(hòu)人(rén)民(mín)太(tài)单(dān)纯(chún)，就(jiù)有(yǒu)人(rén)利(lì)用(yòng)信(xìn)仰(yǎng)诈(zhà)骗(piàn)钱(qián)财(cái)，台(tái)湾(wān)近(jìn)几(jìn)年(nián)有(yǒu)不(bù)少(shǎo)案(àn)例(lì)。<br><small style='color:#777;'>（注：天主教是 Catholicism，基督教是 Christianity，佛教是 Buddhism，一贯道是佛教的某一种支派，星座是 Zodiac Signs）</small><br><br>台(tái)湾(wān)有(yǒu)很(hěn)多(duō)庙(miào)，也(yě)有(yǒu)人(rén)会(huì)去(qù)庙(miào)里(lǐ)掷(zhì)杯(bēi)向(xiàng)神(shén)明(míng)问(wèn)事(shì)：",
                         examples: [
                             { zh: "我(wǒ)去(qù)庙(miào)里(lǐ)问(wèn)神(shén)明(míng)今(jīn)年(nián)的(de)工(gōng)作(zuò)运(yùn)势(shì)怎(zěn)么(me)样(yàng)？", en: "I went to the temple to ask the deities about this year's career fortune." }
                         ]
@@ -248,15 +250,7 @@
                     },
                     {
                         type: "grammar",
-                        title: "6. x艺",
-                        note: "解释：各种专门的技能或手艺。<br>造词：厨艺、手艺、工艺、园艺、才艺。",
-                        examples: [
-                            { zh: "他(tā)的(de)厨(chú)艺(yì)非(fēi)常(cháng)好(hǎo)。", en: "His cooking skills are very good." }
-                        ]
-                    },
-                    {
-                        type: "grammar",
-                        title: "7. 实质的 (shízhì de)",
+                        title: "6. 实质的 (shízhì de)",
                         note: "解释：不是表面的，而是真正的、核心的内容。<br>Explanation: Substantive / Actual.",
                         examples: [
                             { zh: "两(liǎng)家(jiā)公(gōng)司(sī)经(jīng)过(guò)谈(tán)判(pàn)，取(qǔ)得(dé)了(le)实(shí)质(zhì)性(xìng)的(de)进(jìn)展(zhǎn)。", en: "The two companies made substantive progress after negotiation." }
@@ -264,7 +258,7 @@
                     },
                     {
                         type: "grammar",
-                        title: "8. 侵蚀某人的信任 (qīnshí)",
+                        title: "7. 侵蚀某人的信任 (qīnshí)",
                         note: "解释：像水侵蚀土地一样，一点一点地破坏、削弱。<br>Explanation: Erode someone's trust.",
                         examples: [
                             { zh: "谎(huǎng)言(yán)会(huì)慢(màn)慢(màn)侵(qīn)蚀(shí)我(wǒ)们(men)之(zhī)间(jiān)的(de)信(xìn)任(rèn)。", en: "Lies will gradually erode the trust between us." }
@@ -276,7 +270,7 @@
                     },
                     {
                         type: "grammar",
-                        title: "9. 语法修正：连锁反应的报复性",
+                        title: "8. 语法修正：连锁反应的报复性",
                         note: "Explanation：把原本不太顺畅的「连锁性的报復性」改为「连锁反应的报复性」，避免一个句子有两个「性」，表达更为地道自然。",
                         examples: [
                             { zh: "这(zhè)个(gè)制(zhì)裁(cái)引(yǐn)发(fā)了(le)市(shì)场(chǎng)上(shàng)的(de)连(lián)锁(suǒ)反(fǎn)应(yīng)的(de)报(bào)复(fù)性(xìng)措(cuò)施(shī)。", en: "This sanction triggered chain-reaction retaliatory measures in the market." }
@@ -338,7 +332,15 @@
                     },
                     {
                         type: "grammar",
-                        title: "6. 精湛的 (jīngzhàn de)",
+                        title: "6. x艺",
+                        note: "解释：各种专门的技能或手艺。<br>造词：厨艺、手艺、工艺、园艺、才艺。",
+                        examples: [
+                            { zh: "他(tā)的(de)厨(chú)艺(yì)非(fēi)常(cháng)好(hǎo)。", en: "His cooking skills are very good." }
+                        ]
+                    },
+                    {
+                        type: "grammar",
+                        title: "7. 精湛的 (jīngzhàn de)",
                         note: "解释：技艺非常高超、纯熟。<br>Explanation: Exquisite / Masterly (skills).",
                         examples: [
                             { zh: "他(tā)的(de)厨(chú)艺(yì)十(shí)分(fēn)精(jīng)湛(zhàn)，做(zuò)出(chū)的(de)菜(cài)极(jí)美(měi)味(wèi)。", en: "His culinary skills are exquisite, and the dishes he makes are extremely delicious." }
@@ -346,7 +348,7 @@
                     },
                     {
                         type: "grammar",
-                        title: "7. 神射手 (shénshèshǒu)",
+                        title: "8. 神射手 (shénshèshǒu)",
                         note: "解释：射箭技术极高的人。<br>Explanation: Master archer / Sharpshooter.",
                         examples: [
                             { zh: "他(tā)是(shì)军(jūn)队(duì)里(lǐ)最(zuì)厉(lì)害(hài)的(de)神(shén)射(shè)手(shǒu)。", en: "He is the best sharpshooter in the army." }
@@ -354,7 +356,7 @@
                     },
                     {
                         type: "grammar",
-                        title: "8. 拯救 (zhěngjiù)",
+                        title: "9. 拯救 (zhěngjiù)",
                         note: "解释：救助、挽救（生命或危机）。<br>Explanation: Save / Rescue.",
                         examples: [
                             { zh: "医(yī)生(shēng)们(men)尽(jìn)力(lì)拯(zhěng)救(jiù)每(měi)一(yí)个(gè)病(bìng)人(rén)。", en: "Doctors try their best to save every patient." }
@@ -362,7 +364,7 @@
                     },
                     {
                         type: "grammar",
-                        title: "9. 感激 (gǎnjī)",
+                        title: "10. 感激 (gǎnjī)",
                         note: "解释：深深地感谢。<br>Explanation: Feel grateful / Appreciative.",
                         examples: [
                             { zh: "我(wǒ)对(duì)他(tā)的(de)帮(bāng)助(zhù)表(biǎo)示(shì)万(wàn)分(fēn)感(gǎn)激(jī)。", en: "I am extremely grateful for his help." }
@@ -370,7 +372,7 @@
                     },
                     {
                         type: "grammar",
-                        title: "10. 深受拥戴 (shēnshòu yōngdài)",
+                        title: "11. 深受拥戴 (shēnshòu yōngdài)",
                         note: "解释：得到大家的真心支持和爱戴。<br>Explanation: Deeply supported and loved by the people.",
                         examples: [
                             { zh: "这(zhè)位(wèi)领(lǐng)导(dǎo)为(wéi)人(rén)正(zhèng)直(zhí)，深(shēn)受(shòu)百(bǎi)姓(xìng)拥(yōng)戴(dài)。", en: "This leader is upright and deeply loved by the people." }
@@ -378,7 +380,7 @@
                     },
                     {
                         type: "grammar",
-                        title: "11. 时间流逝 (shíjiān liúshì)",
+                        title: "12. 时间流逝 (shíjiān liúshì)",
                         note: "解释：形容时间和水一样，快速流过去。<br>Explanation: Time passes / Slips away.",
                         examples: [
                             { zh: "随(suí)着(zhe)时(shí)间(jiān)的(de)流(liú)逝(shì)，我(wǒ)们(men)都(dōu)长(zhǎng)大(dà)了(le)。", en: "As time passed by, we all grew up." }
@@ -386,7 +388,7 @@
                     },
                     {
                         type: "grammar",
-                        title: "12. 日益衰老 (rìyì shuāilǎo)",
+                        title: "13. 日益衰老 (rìyì shuāilǎo)",
                         note: "解释：一天比一天老、体力一天比一天差。<br>Explanation: Aging day by day.",
                         examples: [
                             { zh: "爸(bà)爸(ba)妈(mā)妈(ma)日(rì)益(yì)衰(shuāi)老(lǎo)，我(wǒ)们(men)要(yào)多(duō)陪(péi)陪(péi)他(tā)们(men)。", en: "Mom and dad are aging day by day, we should spend more time with them." }
@@ -394,7 +396,7 @@
                     },
                     {
                         type: "grammar",
-                        title: "13. 残暴不仁 (cánbào bùrén)",
+                        title: "14. 残暴不仁 (cánbào bùrén)",
                         note: "解释：凶残暴虐，没有仁慈之心。<br>Explanation: Cruel and inhumane.",
                         examples: [
                             { zh: "历(lì)史(shǐ)上(shàng)那(nà)个(gè)残(cán)暴(bào)不(bù)仁(rén)的(de)统(tǒng)治(zhì)者(zhě)，很(hěn)快(kuài)就(jiù)失(shī)去(qù)了(le)政(zhèng)权(quán)。", en: "That cruel and inhumane ruler in history quickly lost power." }
@@ -402,7 +404,7 @@
                     },
                     {
                         type: "grammar",
-                        title: "14. 暴躁 (bàozào)",
+                        title: "15. 暴躁 (bàozào)",
                         note: "解释：容易发脾气、情绪不稳定。<br>Explanation: Irritable / Hot-tempered.",
                         examples: [
                             { zh: "他(tā)最(zuì)近(jìn)工(gōng)作(zuò)压(yā)力(lì)大(dà)，性(xìng)格(gé)有(yǒu)点(diǎn)暴(bào)躁(zào)。", en: "He has been under a lot of work pressure lately and is a bit irritable." }
@@ -410,7 +412,7 @@
                     },
                     {
                         type: "grammar",
-                        title: "15. 暴君 (bàojūn)",
+                        title: "16. 暴君 (bàojūn)",
                         note: "解释：残害人民的残酷君主。<br>Explanation: Tyrant.",
                         examples: [
                             { zh: "人(rén)民(mín)最(zuì)后(hòu)起(qǐ)义(yì)推(tuī)翻(fān)了(le)这(zhè)个(gè)暴(bào)君(jūn)。", en: "The people finally rose up in revolt and overthrew the tyrant." }
@@ -418,7 +420,7 @@
                     },
                     {
                         type: "grammar",
-                        title: "16. 动辄 (dòngzhé) [相关词：撤回 (chèhuí)、重蹈覆辙 (chóngdǎo fùzhé)]",
+                        title: "17. 动辄 (dòngzhé) [相关词：撤回 (chèhuí)、重蹈覆辙 (chóngdǎo fùzhé)]",
                         note: "解释：动不动就（往往用于不好的情况）。<br>Explanation: Easily / Frequently.<br>• 撤回 (chèhuí): Withdraw.<br>• 重蹈覆辙 (chóngdǎo fùzhé): Repeat past mistakes.",
                         examples: [
                             { zh: "他(tā)脾(pí)气(qì)不(bù)好(hǎo)，动(dòng)辄(zhé)对(duì)人(rén)发(fā)火(huǒ)。", en: "He has a bad temper and flies into a rage easily." },
@@ -428,7 +430,7 @@
                     },
                     {
                         type: "grammar",
-                        title: "17. 严惩 (yánchéng)",
+                        title: "18. 严惩 (yánchéng)",
                         note: "解释：严格而严厉地惩罚。<br>Explanation: Severely punish.",
                         examples: [
                             { zh: "法(fǎ)律(lǜ)一(yí)定(dìng)会(huì)严(yán)惩(chéng)这(zhè)种(zhǒng)恶(è)意(yì)犯(fàn)罪(zuì)。", en: "The law will definitely severely punish this kind of malicious crime." }
@@ -436,7 +438,7 @@
                     },
                     {
                         type: "grammar",
-                        title: "18. 滥杀 (lànshā)",
+                        title: "19. 滥杀 (lànshā)",
                         note: "解释：不分好坏，杀害很多人。<br>Explanation: Indiscriminate killing.",
                         examples: [
                             { zh: "战(zhàn)争(zhēng)中(zhōng)最(zuì)可(kě)怜(lián)的(de)就(jiù)是(shì)被(bèi)滥(làn)杀(shā)的(de)平(píng)民(mín)。", en: "The most pitiful victims in war are the civilians indiscriminately killed." }
@@ -444,7 +446,7 @@
                     },
                     {
                         type: "grammar",
-                        title: "19. 沉溺 (chénnì)",
+                        title: "20. 沉溺 (chénnì)",
                         note: "解释：深深地陷入某种不好的爱好或习惯中不能自拔。<br>Explanation: Indulge in.",
                         examples: [
                             { zh: "他(tā)整(zhěng)天(tiān)沉(chén)溺(nì)于(yú)网(wǎng)络(luò)游(yóu)戏(xì)，无(wú)心(xīn)学(xué)习(xí)。", en: "He is indulged in online games all day and has no heart for study." }
@@ -452,7 +454,7 @@
                     },
                     {
                         type: "grammar",
-                        title: "20. 抛诸脑后 (pāozhū nǎohòu)",
+                        title: "21. 抛诸脑后 (pāozhū nǎohòu)",
                         note: "解释：把事情完全忘得一干二净。<br>Explanation: Completely forget.",
                         examples: [
                             { zh: "放(fàng)假(jià)一(yì)开(kāi)始(shǐ)，他(tā)就(jiù)把(bǎ)老(lǎo)师(shī)交(jiāo)代(dài)的(de)作(zuò)业(yè)抛(pāo)诸(zhū)脑(nǎo)后(hòu)了(le)。", en: "As soon as the holiday started, he cast his teacher's homework to the winds." }
@@ -460,7 +462,7 @@
                     },
                     {
                         type: "grammar",
-                        title: "21. 苦不堪言 (kǔ bù kān yán)",
+                        title: "22. 苦不堪言 (kǔ bù kān yán)",
                         note: "解释：痛苦得无法用语言来形容。<br>Explanation: Unspeakable suffering.",
                         examples: [
                             { zh: "经(jīng)济(jì)危(wēi)机(jī)让(ràng)老(lǎo)百(bǎi)姓(xìng)苦(kǔ)不(bù)堪(kān)言(yán)。", en: "The economic crisis has made the common people suffer beyond words." }
@@ -468,7 +470,7 @@
                     },
                     {
                         type: "grammar",
-                        title: "22. 痛心疾首 (tòngxīn jíshǒu)",
+                        title: "23. 痛心疾首 (tòngxīn jíshǒu)",
                         note: "解释：形容极为痛恨或极为悲伤、痛心。<br>Explanation: Bitterly grieved.",
                         examples: [
                             { zh: "发(fā)生(shēng)了(le)这(zhè)么(me)多(duō)坏(huài)事(shì)，让(ràng)人(rén)痛(tòng)心(xīn)疾(jí)首(shǒu)。", en: "So many bad things have happened, which makes people bitterly grieved." }
@@ -476,7 +478,7 @@
                     },
                     {
                         type: "grammar",
-                        title: "23. 无能为力 (wúnéng wéilì)",
+                        title: "24. 无能为力 (wúnéng wéilì)",
                         note: "解释：虽然想帮忙，但没有能力或办法去做。<br>Explanation: Powerless.",
                         examples: [
                             { zh: "面(miàn)对(duì)这(zhè)个(gè)意(yì)外(wài)，我(wǒ)们(men)感(gǎn)到(dào)无(wú)能(néng)为(wéi)力(lì)。", en: "Faced with this accident, we felt completely powerless." }
@@ -498,7 +500,7 @@
                 } else if (item.type === "grammar") {
                     html += `<div class="grammar-box">
                         <div style="font-weight:bold; font-size:16px; color:#8C6239; margin-bottom:5px;">${item.title}</div>`;
-                    if(item.note) html += `<div class="note">${item.note}</div>`;
+                    if(item.note) html += `<div class="note">${parsePinyin(item.note)}</div>`;
                     
                     if (item.examples) {
                         item.examples.forEach(ex => {
