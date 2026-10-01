@@ -8,8 +8,13 @@
         html { scroll-behavior: smooth; }
         body { font-family: 'Helvetica Neue', Arial, sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; margin: 0; padding: 0; display: flex; transition: margin-left 0.3s ease; }
         
+        /* 頂部連結導覽 */
+        .top-nav { position: fixed; top: 0; left: 0; width: 100%; background: #FFF9F0; border-bottom: 1px solid #E6D5B8; padding: 10px 20px; box-sizing: border-box; text-align: right; z-index: 1200; display: flex; justify-content: flex-end; align-items: center; }
+        .top-nav a { color: var(--primary); font-weight: bold; text-decoration: none; margin-left: 20px; font-size: 15px; }
+        .top-nav a:hover { text-decoration: underline; color: #8C6239; }
+
         /* 左側收合大綱導覽列 */
-        .sidebar { width: var(--sidebar-width); background: #FFF9F0; border-right: 1px solid #E6D5B8; height: 100vh; position: fixed; top: 0; left: 0; overflow-y: auto; padding: 20px; box-sizing: border-box; transition: transform 0.3s ease; z-index: 1000; }
+        .sidebar { width: var(--sidebar-width); background: #FFF9F0; border-right: 1px solid #E6D5B8; height: 100vh; position: fixed; top: 0; left: 0; overflow-y: auto; padding: 60px 20px 20px 20px; box-sizing: border-box; transition: transform 0.3s ease; z-index: 1000; }
         .sidebar.collapsed { transform: translateX(-100%); }
         .sidebar h3 { margin-top: 0; color: #8C6239; font-size: 18px; border-bottom: 2px solid var(--primary); padding-bottom: 8px; display: flex; justify-content: space-between; align-items: center; }
         .sidebar ol { padding-left: 20px; margin: 10px 0; color: #555; }
@@ -18,37 +23,41 @@
         .sidebar a:hover { color: #8C6239; font-weight: bold; }
         
         /* 切換按鈕 */
-        .sidebar-toggle { position: fixed; top: 15px; left: 15px; z-index: 1100; background: var(--primary); color: white; border: none; padding: 8px 12px; border-radius: 6px; cursor: pointer; font-size: 14px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        .sidebar-toggle { position: fixed; top: 50px; left: 15px; z-index: 1100; background: var(--primary); color: white; border: none; padding: 8px 12px; border-radius: 6px; cursor: pointer; font-size: 14px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
 
         /* 主內容區 */
-        .main-content { margin-left: var(--sidebar-width); width: calc(100% - var(--sidebar-width)); padding: 20px 40px; box-sizing: border-box; max-width: 900px; transition: margin-left 0.3s ease, width 0.3s ease; }
+        .main-content { margin-top: 40px; margin-left: var(--sidebar-width); width: calc(100% - var(--sidebar-width)); padding: 20px 40px; box-sizing: border-box; max-width: 900px; transition: margin-left 0.3s ease, width 0.3s ease; }
         .main-content.expanded { margin-left: 0; width: 100%; }
 
-        .header { text-align: center; border-bottom: 2px solid var(--primary); padding-bottom: 10px; margin-bottom: 20px; }
+        .header { text-align: center; border-bottom: 2px solid var(--primary); padding-bottom: 10px; margin-bottom: 20px; margin-top: 20px; }
         
-        .controls { position: sticky; top: 0; background: var(--bg); padding: 15px; text-align: center; border-bottom: 1px solid #ccc; z-index: 100; margin-bottom: 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
+        .controls { position: sticky; top: 40px; background: var(--bg); padding: 15px; text-align: center; border-bottom: 1px solid #ccc; z-index: 100; margin-bottom: 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
         button.control-btn { background: var(--primary); color: white; border: none; padding: 10px 15px; margin: 5px; border-radius: 6px; cursor: pointer; font-size: 14px; font-weight: bold; }
         button.control-btn:hover { background: #B5835A; }
         
-        .audio-btn { background: #f0f0f0; color: #333; font-size: 16px; padding: 8px; border-radius: 50%; width: 35px; height: 35px; display: inline-flex; align-items: center; justify-content: center; border: none; cursor: pointer; }
+        .audio-btn { background: #f0f0f0; color: #333; font-size: 16px; padding: 8px; border-radius: 50%; width: 35px; height: 35px; display: inline-flex; align-items: center; justify-content: center; border: none; cursor: pointer; margin-right: 5px; }
         .audio-btn:hover { background: #e0e0e0; }
+        .audio-player { height: 35px; margin-left: 10px; outline: none; }
         
         h2 { color: #8C6239; border-left: 5px solid var(--primary); padding-left: 10px; margin-top: 30px; }
-        .section { margin-bottom: 30px; background: var(--white); padding: 20px; border-radius: 12px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); scroll-margin-top: 80px; }
+        .section { margin-bottom: 30px; background: var(--white); padding: 20px; border-radius: 12px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); scroll-margin-top: 130px; }
         .item { margin-bottom: 20px; display: flex; flex-direction: column; }
-        .item-content { display: flex; align-items: flex-start; margin-bottom: 5px; }
+        .item-content { display: flex; align-items: flex-start; margin-bottom: 5px; flex-wrap: wrap; }
+        .btn-group { display: flex; align-items: center; margin-right: 10px; margin-bottom: 5px; }
+        
         .zy-char-wrap { display: inline-flex; align-items: center; margin-right: 2px; }
         .zy-char { font-size: 26px; font-family: "DFKai-SB", "BiauKai", serif; }
         .zy-box { display: inline-flex; flex-direction: column; justify-content: center; position: relative; margin-left: 2px; padding-right: 8px; }
         .zy-symbols { writing-mode: vertical-rl; text-orientation: upright; font-size: 11px; letter-spacing: -2px; }
         .zy-tone { position: absolute; right: 0px; top: 50%; transform: translateY(-50%); font-size: 11px; }
         .zy-neutral { position: absolute; top: -11px; left: 50%; transform: translateX(-50%); font-size: 11px; }
-        .en-trans { color: #777; font-size: 15px; font-style: italic; margin-left: 45px; }
+        
+        .en-trans { color: #777; font-size: 15px; font-style: italic; margin-left: 85px; width: 100%; }
         .grammar-box { background: #FFF9F0; border: 1px solid #E6D5B8; border-radius: 8px; padding: 15px; margin: 15px 0; }
         .wrong { color: #D9534F; font-size: 20px; font-weight: bold;}
         .correct { color: #5CB85C; font-size: 20px; font-weight: bold;}
         .note { font-size: 14px; color: #666; margin-bottom: 10px; }
-        .homework { background: #FEF8E7; padding: 20px; border-radius: 8px; font-size: 18px; }
+        .homework { background: #FEF8E7; padding: 20px; border-radius: 8px; font-size: 18px; line-height: 2.2; }
         .homework-q { margin-top: 15px; font-size: 16px; font-weight: bold; }
         .hw-textarea { width: 100%; height: 40px; margin-top: 8px; margin-bottom: 15px; border-radius: 4px; border: 1px solid #ccc; padding: 5px; font-family: inherit; }
         
@@ -60,6 +69,12 @@
     </style>
 </head>
 <body>
+
+    <!-- 頂部導覽列 -->
+    <div class="top-nav">
+        <a href="https://jany-mandarin.github.io/Chad.html">Index</a>
+        <a href="https://jany-mandarin.github.io/Chad.lesson184.html">Lesson 184</a>
+    </div>
 
     <button class="sidebar-toggle" onclick="toggleSidebar()">☰ Outline</button>
 
@@ -136,6 +151,55 @@
             utterance.lang = 'zh-TW';
             utterance.rate = 0.85;
             speechSynthesis.speak(utterance);
+        }
+
+        // 學生錄音功能
+        async function toggleRecord(btn) {
+            let container = btn.parentElement;
+            let player = container.querySelector('.audio-player');
+            
+            // 建立播放器
+            if (!player) {
+                player = document.createElement('audio');
+                player.className = 'audio-player';
+                player.controls = true;
+                player.style.display = 'none';
+                container.appendChild(player);
+            }
+
+            if (btn.classList.contains('recording')) {
+                // 停止錄音
+                btn.mediaRecorder.stop();
+                btn.classList.remove('recording');
+                btn.innerText = '🎤';
+                btn.style.background = '#f0f0f0';
+                btn.style.color = '#333';
+            } else {
+                // 開始錄音
+                try {
+                    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+                    const recorder = new MediaRecorder(stream);
+                    btn.mediaRecorder = recorder;
+                    let chunks = [];
+                    
+                    recorder.ondataavailable = e => chunks.push(e.data);
+                    recorder.onstop = () => {
+                        const blob = new Blob(chunks, { type: 'audio/webm' });
+                        player.src = URL.createObjectURL(blob);
+                        player.style.display = 'inline-block';
+                        stream.getTracks().forEach(track => track.stop()); // 釋放麥克風
+                    };
+                    
+                    recorder.start();
+                    btn.classList.add('recording');
+                    btn.innerText = '⏹️';
+                    btn.style.background = '#ff4d4d';
+                    btn.style.color = 'white';
+                    player.style.display = 'none'; // 隱藏舊的錄音
+                } catch (err) {
+                    alert('Microphone access denied or not available. 請允許瀏覽器使用麥克風。');
+                }
+            }
         }
 
         const data = [
@@ -262,8 +326,11 @@
                 html += `
                     <div class="item">
                         <div class="item-content">
-                            <button class="audio-btn" onclick="playAudio('${item.zh}')">🔊</button>
-                            <div class="zhuyin-content">${parseZhuyin(item.zh)}</div>
+                            <div class="btn-group">
+                                <button class="audio-btn" onclick="playAudio('${item.zh}')">🔊</button>
+                                <button class="audio-btn record-btn" onclick="toggleRecord(this)" title="Record your voice">🎤</button>
+                            </div>
+                            <div class="zhuyin-content" style="flex:1;">${parseZhuyin(item.zh)}</div>
                         </div>
                         <div class="en-trans">${item.en}</div>
                     </div>
@@ -280,10 +347,13 @@
                     <div style="font-weight:bold; margin-bottom: 5px;">${p.title}</div>
                     <div class="note">${p.note}</div>
                     <div class="item-content" style="margin-top: 10px; align-items:center;">
-                        <button class="audio-btn" style="width:30px;height:30px;font-size:14px;margin-right:15px;" onclick="playAudio('${p.zh}')">🔊</button>
-                        <span style="font-weight:bold;">✅ </span> <span style="margin-left:8px;">${parseZhuyin(p.zh)}</span>
+                        <div class="btn-group">
+                            <button class="audio-btn" onclick="playAudio('${p.zh}')">🔊</button>
+                            <button class="audio-btn record-btn" onclick="toggleRecord(this)" title="Record your voice">🎤</button>
+                        </div>
+                        <span style="font-weight:bold; margin-right:8px;">✅ </span> <span>${parseZhuyin(p.zh)}</span>
                     </div>
-                    <div class="en-trans" style="margin-left:45px; margin-top:5px;">${p.en}</div>
+                    <div class="en-trans" style="margin-top:5px;">${p.en}</div>
                 </div>
             `;
         });
@@ -297,13 +367,16 @@
                     <div style="font-weight:bold; margin-bottom: 5px;">${rule.title}</div>
                     <div class="note">${rule.note}</div>
                     <div class="item-content" style="margin-top: 15px; align-items:center;">
-                        <span class="wrong" style="margin-right:15px;">❌ </span> <span>${rule.wrong}</span>
+                        <span class="wrong" style="margin-right:15px; width:45px;">❌ </span> <span style="flex:1;">${rule.wrong}</span>
                     </div>
                     <div class="item-content" style="margin-top: 10px; align-items:center;">
-                        <button class="audio-btn" style="width:30px;height:30px;font-size:14px;margin-right:15px;" onclick="playAudio('${rule.correct}')">🔊</button>
-                        <span class="correct">✅ </span> <span style="margin-left:8px;">${parseZhuyin(rule.correct)}</span>
+                        <div class="btn-group">
+                            <button class="audio-btn" onclick="playAudio('${rule.correct}')">🔊</button>
+                            <button class="audio-btn record-btn" onclick="toggleRecord(this)" title="Record your voice">🎤</button>
+                        </div>
+                        <span class="correct" style="margin-right:8px;">✅ </span> <span style="flex:1;">${parseZhuyin(rule.correct)}</span>
                     </div>
-                    <div class="en-trans" style="margin-left:45px; margin-top:10px;">${rule.en}</div>
+                    <div class="en-trans" style="margin-top:10px;">${rule.en}</div>
                 </div>
             `;
         });
@@ -321,17 +394,23 @@
                         <img src="https://cdn.phototourl.com/member/2026-09-28-71e02e37-776b-4553-b9c5-ef389ec2da34.png" alt="鐘字源圖示" style="max-width:100%; height:auto; border-radius:8px; border:1px solid #E6D5B8;">
                     </div>
                     <div class="item-content" style="margin-top: 15px; align-items:center;">
-                        <button class="audio-btn" style="width:30px;height:30px;font-size:14px;margin-right:15px;" onclick="playAudio('你家有時鐘嗎？')">🔊</button>
-                        <span>${parseZhuyin("你(ㄋㄧˇ)家(ㄐㄧㄚ)有(ㄧㄡˇ)時(ㄕˊ)鐘(ㄓㄨㄥ)嗎(ㄇㄚ˙)？")}</span>
+                        <div class="btn-group">
+                            <button class="audio-btn" onclick="playAudio('你家有時鐘嗎？')">🔊</button>
+                            <button class="audio-btn record-btn" onclick="toggleRecord(this)" title="Record your voice">🎤</button>
+                        </div>
+                        <span style="flex:1;">${parseZhuyin("你(ㄋㄧˇ)家(ㄐㄧㄚ)有(ㄧㄡˇ)時(ㄕˊ)鐘(ㄓㄨㄥ)嗎(ㄇㄚ˙)？")}</span>
                     </div>
-                    <div class="en-trans" style="margin-left:45px; margin-top:5px;">Do you have a clock at home?</div>
+                    <div class="en-trans" style="margin-top:5px;">Do you have a clock at home?</div>
 
                     <p class="note" style="margin-top:15px;">Cultural note on '鐘頭' (zhōngtóu): Older generations in Taiwan (above 50 years old) love using '鐘頭' to mean 'hours' (小時).</p>
                     <div class="item-content" style="margin-top: 15px; align-items:center;">
-                        <button class="audio-btn" style="width:30px;height:30px;font-size:14px;margin-right:15px;" onclick="playAudio('你太太一天花幾個鐘頭在客廳？')">🔊</button>
-                        <span>${parseZhuyin("你(ㄋㄧˇ)太(ㄊㄞˋ)太(ㄊㄞˋ)一(ㄧˋ)天(ㄊㄧㄢ)花(ㄏㄨㄚ)幾(ㄐㄧˇ)個(ㄍㄜ˙)鐘(ㄓㄨㄥ)頭(ㄊㄡˊ)在(ㄗㄞˋ)客(ㄎㄜˋ)廳(ㄊㄧㄥ)？")}</span>
+                        <div class="btn-group">
+                            <button class="audio-btn" onclick="playAudio('你太太一天花幾個鐘頭在客廳？')">🔊</button>
+                            <button class="audio-btn record-btn" onclick="toggleRecord(this)" title="Record your voice">🎤</button>
+                        </div>
+                        <span style="flex:1;">${parseZhuyin("你(ㄋㄧˇ)太(ㄊㄞˋ)太(ㄊㄞˋ)一(ㄧˋ)天(ㄊㄧㄢ)花(ㄏㄨㄚ)幾(ㄐㄧˇ)個(ㄍㄜ˙)鐘(ㄓㄨㄥ)頭(ㄊㄡˊ)在(ㄗㄞˋ)客(ㄎㄜˋ)廳(ㄊㄧㄥ)？")}</span>
                     </div>
-                    <div class="en-trans" style="margin-left:45px; margin-top:5px;">How many hours does your wife spend in the living room a day?</div>
+                    <div class="en-trans" style="margin-top:5px;">How many hours does your wife spend in the living room a day?</div>
                 </div>
 
                 <div class="grammar-box" style="margin-top:20px;">
@@ -343,10 +422,13 @@
                     <p class="note" style="margin-top:10px;">Instead, '刻' is now used for specific moments: <strong>這一刻</strong> (this very moment, close to the speaker) and <strong>那一刻</strong> (that moment in time further away).</p>
                     
                     <div class="item-content" style="margin-top: 15px; align-items:center;">
-                        <button class="audio-btn" style="width:30px;height:30px;font-size:14px;margin-right:15px;" onclick="playAudio('我覺得今天早上跟我貓吃飯的那一刻，非常開心。')">🔊</button>
-                        <span>${parseZhuyin("我(ㄨㄛˇ)覺(ㄐㄩㄝˊ)得(ㄉㄜ˙)今(ㄐㄧㄣ)天(ㄊㄧㄢ)早(ㄗㄠˇ)上(ㄕㄤˋ)跟(ㄍㄣ)我(ㄨㄛˇ)貓(ㄇㄠ)一(ㄧˋ)起(ㄑㄧˇ)吃(ㄔ)飯(ㄈㄢˋ)的(ㄉㄜ˙)那(ㄋㄚˋ)一(ㄧˊ)刻(ㄎㄜˋ)，非(ㄈㄟ)常(ㄔㄤˊ)開(ㄎㄞ)心(ㄒㄧㄣ)。")}</span>
+                        <div class="btn-group">
+                            <button class="audio-btn" onclick="playAudio('我覺得今天早上跟我貓吃飯的那一刻，非常開心。')">🔊</button>
+                            <button class="audio-btn record-btn" onclick="toggleRecord(this)" title="Record your voice">🎤</button>
+                        </div>
+                        <span style="flex:1;">${parseZhuyin("我(ㄨㄛˇ)覺(ㄐㄩㄝˊ)得(ㄉㄜ˙)今(ㄐㄧㄣ)天(ㄊㄧㄢ)早(ㄗㄠˇ)上(ㄕㄤˋ)跟(ㄍㄣ)我(ㄨㄛˇ)貓(ㄇㄠ)一(ㄧˋ)起(ㄑㄧˇ)吃(ㄔ)飯(ㄈㄢˋ)的(ㄉㄜ˙)那(ㄋㄚˋ)一(ㄧˊ)刻(ㄎㄜˋ)，非(ㄈㄟ)常(ㄔㄤˊ)開(ㄎㄞ)心(ㄒㄧㄣ)。")}</span>
                     </div>
-                    <div class="en-trans" style="margin-left:45px; margin-top:5px;">I felt that the moment I ate breakfast with my cat this morning was very happy.</div>
+                    <div class="en-trans" style="margin-top:5px;">I felt that the moment I ate breakfast with my cat this morning was very happy.</div>
                 </div>
             </div>
         `;
@@ -378,7 +460,16 @@
             <div class="section" id="sec-8">
                 <h2>📝 9. Homework Part 2: Reading Comprehension (短文理解)</h2>
                 <div class="homework">
-                    <p>前天禮拜五是中秋節，大家都放假，回家跟家人在一起烤肉和吃月餅，路上的烤肉味很香，全台灣天氣都很好。王陽明住在一個大樓，大樓不可以烤肉，所以他跟家人一起去烤肉店，可是每家烤肉店裡都有非常多人，他們找不到位子，他很難過，去了五家烤肉店、開了兩個鐘頭的車後，終於找到一家有位子，那一刻大家開心地坐下來，一起吃烤肉看月亮，過中秋節。</p>
+                    
+                    <div class="item-content" style="align-items:flex-start; margin-bottom: 20px;">
+                        <div class="btn-group" style="margin-top:5px; margin-right: 15px;">
+                            <button class="audio-btn" onclick="playAudio('前天禮拜五是中秋節，大家都放假，回家跟家人在一起烤肉和吃月餅，路上的烤肉味很香，全台灣天氣都很好。王陽明住在一個大樓，大樓不可以烤肉，所以他跟家人一起去烤肉店，可是每家烤肉店裡都有非常多人，他們找不到位子，他很難過，去了五家烤肉店、開了兩個鐘頭的車後，終於找到一家有位子，那一刻大家開心地坐下來，一起吃烤肉看月亮，過中秋節。')">🔊</button>
+                            <button class="audio-btn record-btn" onclick="toggleRecord(this)" title="Record your voice">🎤</button>
+                        </div>
+                        <div style="flex:1;">
+                            ${parseZhuyin("前(ㄑㄧㄢˊ)天(ㄊㄧㄢ)禮(ㄌㄧˇ)拜(ㄅㄞˋ)五(ㄨˇ)是(ㄕˋ)中(ㄓㄨㄥ)秋(ㄑㄧㄡ)節(ㄐㄧㄝˊ)，大(ㄉㄚˋ)家(ㄐㄧㄚ)都(ㄉㄡ)放(ㄈㄤˋ)假(ㄐㄧㄚˋ)，回(ㄏㄨㄟˊ)家(ㄐㄧㄚ)跟(ㄍㄣ)家(ㄐㄧㄚ)人(ㄖㄣˊ)在(ㄗㄞˋ)一(ㄧˋ)起(ㄑㄧˇ)烤(ㄎㄠˇ)肉(ㄖㄡˋ)和(ㄏㄢˋ)吃(ㄔ)月(ㄩㄝˋ)餅(ㄅㄧㄥˇ)，路(ㄌㄨˋ)上(ㄕㄤˋ)的(ㄉㄜ˙)烤(ㄎㄠˇ)肉(ㄖㄡˋ)味(ㄨㄟˋ)很(ㄏㄣˇ)香(ㄒㄧㄤ)，全(ㄑㄩㄢˊ)台(ㄊㄞˊ)灣(ㄨㄢ)天(ㄊㄧㄢ)氣(ㄑㄧˋ)都(ㄉㄡ)很(ㄏㄣˇ)好(ㄏㄠˇ)。王(ㄨㄤˊ)陽(ㄧㄤˊ)明(ㄇㄧㄥˊ)住(ㄓㄨˋ)在(ㄗㄞˋ)一(ㄧˊ)個(ㄍㄜ˙)大(ㄉㄚˋ)樓(ㄌㄡˊ)，大(ㄉㄚˋ)樓(ㄌㄡˊ)不(ㄅㄨˋ)可(ㄎㄜˇ)以(ㄧˇ)烤(ㄎㄠˇ)肉(ㄖㄡˋ)，所(ㄙㄨㄛˇ)以(ㄧˇ)他(ㄊㄚ)跟(ㄍㄣ)家(ㄐㄧㄚ)人(ㄖㄣˊ)一(ㄧˋ)起(ㄑㄧˇ)去(ㄑㄩˋ)烤(ㄎㄠˇ)肉(ㄖㄡˋ)店(ㄉㄧㄢˋ)，可(ㄎㄜˇ)是(ㄕˋ)每(ㄇㄟˇ)家(ㄐㄧㄚ)烤(ㄎㄠˇ)肉(ㄖㄡˋ)店(ㄉㄧㄢˋ)裡(ㄌㄧˇ)都(ㄉㄡ)有(ㄧㄡˇ)非(ㄈㄟ)常(ㄔㄤˊ)多(ㄉㄨㄛ)人(ㄖㄣˊ)，他(ㄊㄚ)們(ㄇㄣ˙)找(ㄓㄠˇ)不(ㄅㄨˊ)到(ㄉㄠˋ)位(ㄨㄟˋ)子(ㄗ˙)，他(ㄊㄚ)很(ㄏㄣˇ)難(ㄋㄢˊ)過(ㄍㄨㄛˋ)，去(ㄑㄩˋ)了(ㄌㄜ˙)五(ㄨˇ)家(ㄐㄧㄚ)烤(ㄎㄠˇ)肉(ㄖㄡˋ)店(ㄉㄧㄢˋ)、開(ㄎㄞ)了(ㄌㄜ˙)兩(ㄌㄧㄤˇ)個(ㄍㄜ˙)鐘(ㄓㄨㄥ)頭(ㄊㄡˊ)的(ㄉㄜ˙)車(ㄔㄜ)後(ㄏㄡˋ)，終(ㄓㄨㄥ)於(ㄩˊ)找(ㄓㄠˇ)到(ㄉㄠˋ)一(ㄧˋ)家(ㄐㄧㄚ)有(ㄧㄡˇ)位(ㄨㄟˋ)子(ㄗ˙)，那(ㄋㄚˋ)一(ㄧˊ)刻(ㄎㄜˋ)大(ㄉㄚˋ)家(ㄐㄧㄚ)開(ㄎㄞ)心(ㄒㄧㄣ)地(ㄉㄜ˙)坐(ㄗㄨㄛˋ)下(ㄒㄧㄚˋ)來(ㄌㄞˊ)，一(ㄧˋ)起(ㄑㄧˇ)吃(ㄔ)烤(ㄎㄠˇ)肉(ㄖㄡˋ)看(ㄎㄢˋ)月(ㄩㄝˋ)亮(ㄌㄧㄤˋ)，過(ㄍㄨㄛˋ)中(ㄓㄨㄥ)秋(ㄑㄧㄡ)節(ㄐㄧㄝˊ)。")}
+                        </div>
+                    </div>
                     
                     <div class="homework-q">Q1. 中秋節的時候，全台灣人會做什麼事?</div>
                     <textarea class="hw-textarea"></textarea>
