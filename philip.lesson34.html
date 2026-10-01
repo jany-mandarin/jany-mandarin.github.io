@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>菲利普的中文第 34 堂课</title>
+    <style>
+        :root { --bg: #FDFBF7; --primary: #D4A373; --text: #4a4a4a; --white: #fff; --sidebar-width: 280px; }
+        html { scroll-behavior: smooth; }
+        body { font-family: 'Helvetica Neue', Arial, sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; margin: 0; padding: 0; display: flex; transition: margin-left 0.3s ease; }
+        
+        /* 左側收合大綱導覽列 */
+        .sidebar { width: var(--sidebar-width); background: #FFF9F0; border-right: 1px solid #E6D5B8; height: 100vh; position: fixed; top: 0; left: 0; overflow-y: auto; padding: 20px; box-sizing: border-box; transition: transform 0.3s ease; z-index: 1000; }
+        .sidebar.collapsed { transform: translateX(-100%); }
+        .sidebar h3 { margin-top: 0; color: #8C6239; font-size: 18px; border-bottom: 2px solid var(--primary); padding-bottom: 8px; display: flex; justify-content: space-between; align-items: center; }
+        .sidebar ol { padding-left: 20px; margin: 10px 0; color: #555; }
+        .sidebar li { margin-bottom: 8px; font-size: 14px; }
+        .sidebar a { color: #555; text-decoration: none; display: block; }
+        .sidebar a:hover { color: #8C6239; font-weight: bold; }
+        
+        /* 切換按鈕 */
+        .sidebar-toggle { position: fixed; top: 15px; left: 15px; z-index: 1100; background: var(--primary); color: white; border: none; padding: 8px 12px; border-radius: 6px; cursor: pointer; font-size: 14px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+
+        /* 主內容區 */
+        .main-content { margin-left: var(--sidebar-width); width: calc(100% - var(--sidebar-width)); padding: 20px 40px; box-sizing: border-box; max-width: 950px; transition: margin-left 0.3s ease, width 0.3s ease; }
+        .main-content.expanded { margin-left: 0; width: 100%; }
+
+        .header { text-align: center; border-bottom: 2px solid var(--primary); padding-bottom: 10px; margin-bottom: 20px; }
+        
+        .controls { position: sticky; top: 0; background: var(--bg); padding: 15px; text-align: center; border-bottom: 1px solid #ccc; z-index: 100; margin-bottom: 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
+        button.control-btn { background: var(--primary); color: white; border: none; padding: 10px 15px; margin: 5px; border-radius: 6px; cursor: pointer; font-size: 14px; font-weight: bold; }
+        button.control-btn:hover { background: #B5835A; }
+        
+        /* 圖示化按鈕 (仿造使用者提供的圖片範例) */
+        .icon-btn { background: #f8f9fa; border: 1px solid #ddd; border-radius: 50%; width: 38px; height: 38px; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; font-size: 16px; margin-right: 5px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); transition: background 0.2s; }
+        .icon-btn:hover { background: #e9ecef; }
+        .rec-btn.recording { background: #ff4d4f; color: white; animation: pulse 1.5s infinite; border-color: #ff4d4f; }
+        .play-rec-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
+
+        h2 { color: #8C6239; border-left: 5px solid var(--primary); padding-left: 10px; margin-top: 30px; }
+        .section { margin-bottom: 30px; background: var(--white); padding: 20px; border-radius: 12px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); scroll-margin-top: 80px; }
+        .item { margin-bottom: 20px; display: flex; flex-direction: column; border-bottom: 1px dashed #eee; padding-bottom: 15px; }
+        .item-content { display: flex; align-items: flex-start; flex-wrap: wrap; margin-bottom: 5px; gap: 10px; }
+        
+        /* 上排拼音與漢字排版 */
+        .pinyin-group { display: inline-flex; flex-direction: column; align-items: center; margin-right: 3px; vertical-align: bottom; }
+        .py-text { font-size: 11px; color: #777; line-height: 1; margin-bottom: 2px; }
+        .hz-text { font-size: 24px; font-family: sans-serif; line-height: 1.2; }
+        
+        .en-trans { color: #666; font-size: 15px; font-style: italic; margin-top: 5px; }
+        .grammar-box { background: #FFF9F0; border: 1px solid #E6D5B8; border-radius: 8px; padding: 15px; margin: 15px 0; }
+        .note { font-size: 14px; color: #555; margin-bottom: 10px; line-height: 1.5; }
+        .img-container { text-align: center; margin: 15px 0; }
+        .img-container img { max-width: 100%; height: auto; border-radius: 8px; border: 1px solid #E6D5B8; }
+
+        @media (max-width: 900px) {
+            .sidebar { transform: translateX(-100%); }
+            .sidebar.active { transform: translateX(0); }
+            .main-content { margin-left: 0; width: 100%; padding: 20px; }
+        }
+    </style>
+</head>
+<body>
+
+    <button class="sidebar-toggle" onclick="toggleSidebar()">☰ 目录</button>
+
+    <div class="sidebar" id="sidebar">
+        <h3>📖 目录 (Outline) <button style="background:none; border:none; color:#8C6239; font-weight:bold; cursor:pointer; font-size:16px;" onclick="toggleSidebar()">×</button></h3>
+        <ol>
+            <li><a href="#sec-0">一、暖身闲聊 (Warm-up)</a></li>
+            <li><a href="#sec-1">二、上次作业复习 (Homework Review)</a></li>
+            <li><a href="#sec-2">三、中秋故事与高级词汇 (Mid-Autumn Story & Vocab)</a></li>
+        </ol>
+    </div>
+
+    <div class="main-content" id="mainContent">
+        <div class="header">
+            <h1>菲利普的中分第 34 堂课</h1>
+            <h2>学生：菲利普 | 第 34 堂</h2>
+            <p>日期：2026/10/1</p>
+        </div>
+
+        <div class="controls">
+            <button class="control-btn" onclick="togglePinyin()">隐藏/显示拼音 (Toggle Pinyin)</button>
+            <button class="control-btn" onclick="toggleEnglish()">隐藏/显示英文 (Toggle English)</button>
+        </div>
+
+        <div id="content"></div>
+    </div>
+
+    <script>
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const mainContent = document.getElementById('mainContent');
+            if (window.innerWidth <= 900) {
+                sidebar.classList.toggle('active');
+            } else {
+                sidebar.classList.toggle('collapsed');
+                mainContent.classList.toggle('expanded');
+            }
+        }
+
+        function parsePinyin(text) {
+            const regex = /([\u4e00-\u9fa5a-zA-Z0-9，。？！、：""''()./])\((.*?)\)/g;
+            let parsed = text.replace(regex, (match, char, py) => {
+                return `<span class="pinyin-group"><span class="py-text">${py}</span><span class="hz-text">${char}</span></span>`;
+            });
+            return parsed;
+        }
+
+        function playAudio(text) {
+            let cleanText = text.replace(/\(.*?\)/g, '');
+            const utterance = new SpeechSynthesisUtterance(cleanText);
+            utterance.lang = 'zh-CN';
+            utterance.rate = 0.85;
+            speechSynthesis.speak(utterance);
+        }
+
+        let mediaRecorders = {};
+        let audioUrls = {};
+
+        async function toggleRecord(btn, id) {
+            if (!mediaRecorders[id] || mediaRecorders[id].state === "inactive") {
+                try {
+                    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+                    let chunks = [];
+                    let recorder = new MediaRecorder(stream);
+                    
+                    recorder.ondataavailable = e => chunks.push(e.data);
+                    recorder.onstop = () => {
+                        const blob = new Blob(chunks, { 'type': 'audio/ogg; codecs=opus' });
+                        audioUrls[id] = URL.createObjectURL(blob);
+                        document.getElementById(`play-rec-${id}`).disabled = false;
+                    };
+
+                    recorder.start();
+                    mediaRecorders[id] = recorder;
+                    btn.innerHTML = "⏹️";
+                    btn.classList.add("recording");
+                } catch (err) {
+                    alert("麦克风权限被拒绝或不支持。");
+                }
+            } else {
+                mediaRecorders[id].stop();
+                btn.innerHTML = "🎤";
+                btn.classList.remove("recording");
+            }
+        }
+
+        function playRecording(id) {
+            if (audioUrls[id]) {
+                const audio = new Audio(audioUrls[id]);
+                audio.play();
+            }
+        }
+
+        const lessonData = [
+            {
+                title: "一、暖身闲聊 (Warm-up Chat)",
+                items: [
+                    {
+                        type: "grammar",
+                        title: "1. 拉票 (lāpiào)",
+                        note: "解释：候选人为了在选举中获得选民的支持，到处拜托大家投给自己。<br>Explanation: Canvassing for votes.",
+                        examples: [
+                            { zh: "大(dà)选(xuǎn)快(kuài)到(dào)了(le)，政(zhèng)治(zhì)人(rén)物(wù)都(dōu)到(dào)家(jiā)家(jiā)户(hù)户(hù)拉(lā)票(piào)。", en: "The general election is coming, and politicians are going from door to door canvassing for votes." }
+                        ]
+                    },
+                    {
+                        type: "grammar",
+                        title: "2. 台湾的信仰 (Taiwan's Beliefs)",
+                        note: "台湾的信仰有很多，可能是因为是一个小岛，以前人常出海捕鱼，就有许多民间信仰，像是道教，也有被西方国家殖民过，也有很多人信仰天主教和基督教，还有从中国传入的佛教、一贯道，还有现在流行的塔罗牌算命、星座算命，政府都没有禁止，人民就有信仰自由，只是有时候人民太单纯，就有人利用信仰诈骗钱财，台湾近几年有不少案例。<br><small style='color:#777;'>（注：天主教是 Catholicism，基督教是 Christianity，佛教是 Buddhism，一贯道是佛教的某一种支派）</small><br><br>台湾有很多庙，也有人会去庙里掷杯向神明问事：",
+                        examples: [
+                            { zh: "我(wǒ)去(qù)庙(miào)里(lǐ)问(wèn)神(shén)明(míng)今(jīn)年(nián)的(de)工(gōng)作(zuò)运(yùn)势(shì)怎么样(zěnmàng)。", en: "I went to the temple to ask the deities about this year's career fortune." }
+                        ]
+                    },
+                    {
+                        type: "html",
+                        content: `<div class="img-container"><img src="https://cdn.phototourl.com/member/2026-10-01-c18dd9ea-b848-4002-9a49-912fcb0e5f38.png" alt="掷杯图示"></div>`
+                    },
+                    {
+                        type: "grammar",
+                        title: "抽签 (chōuqiān)",
+                        note: "解释：当有人遇到烦恼（像是爱情或工作），就会去庙里抽签求指引。<br>Explanation: Drawing lots in a temple for guidance.",
+                        examples: [
+                            { zh: "他(tā)遇(yù)到(dào)感(gǎn)情(qíng)问(wèn)题(tí)，去(qù)庙(miào)里(lǐ)抽(chōu)了(le)一(yì)支(zhī)签(qiān)。", en: "He encountered a relationship problem and drew a lot at the temple." }
+                        ]
+                    },
+                    {
+                        type: "html",
+                        content: `<div class="img-container"><img src="https://cdn.phototourl.com/member/2026-10-01-f80ad5b1-0a33-408e-851e-4aa7e3095e94.jpg" alt="抽签图示"></div>`
+                    }
+                ]
+            },
+            {
+                title: "二、上次作业复习 (Homework Review)",
+                items: [
+                    {
+                        type: "grammar",
+                        title: "1. 演变 (yǎnbiàn) vs 演化 (yǎnhuà)",
+                        note: "解释（演变）：指事物慢慢发生变化（多用于社会、文化、局势）。<br>解释（演化）：多指生物或自然界的长期发展变化。<br>Explanation: Evolution / Gradual change.",
+                        examples: [
+                            { zh: "中(zhōng)国(guó)字(zì)经(jīng)过(guò)长(cháng)期(qī)的(de)演(yǎn)变(biàn)，变(biàn)成(chéng)了(le)现(xiàn)在(zài)的(de)样(yàng)子(zi)。", en: "Chinese characters have evolved over a long time into what they look like today." },
+                            { zh: "这(zhè)是(shì)生(shēng)物(wù)进(jìn)化(huà)和(hé)演(yǎn)化(huà)的(de)自(zì)然(rán)规(guī)律(lǜ)。", en: "This is the natural law of biological evolution." }
+                        ]
+                    },
+                    {
+                        type: "grammar",
+                        title: "2. 刷新 (shuāxīn) vs 刷机 (shuājī)",
+                        note: "解释（刷新）：更新数据、纪录或网页。<br>解释（刷机）：给手机或电子设备重新安装系统。<br>Explanation: Refresh / Flash a device ROM.",
+                        examples: [
+                            { zh: "他(tā)跑(pǎo)步(bù)创(chuàng)下(xià)了(le)新(xīn)纪(jì)录(lù)，刷(shuā)新(xīn)了(le)历(lì)史(shǐ)成(chéng)绩(jì)。", en: "He set a new running record, refreshing the historical score." },
+                            { zh: "我(wǒ)的(de)手(shǒu)机(jī)开(kāi)不(bù)了(le)机(jī)了(le)，需(xū)要(yào)拿(ná)去(qù)刷(shuā)机(jī)。", en: "My phone won't turn on, I need to flash the system." }
+                        ]
+                    },
+                    {
+                        type: "grammar",
+                        title: "3. 预见 (yùjiàn) / 预料 (yùliào) / 预判 (yùpàn)",
+                        note: "解释：预见（看到未来会发生的事）、预料（猜测、估计）、预判（根据现有情况做出判断）。<br>Explanation: Foresee / Anticipate / Predict.",
+                        examples: [
+                            { zh: "谁(shuí)也(yě)不(bù)能(néng)预(yù)见(jiàn)明(míng)天(tiān)会(huì)发(fā)生(shēng)什(shén)么(me)。", en: "Nobody can foresee what will happen tomorrow." },
+                            { zh: "结(jié)果(guǒ)比(bǐ)我(wǒ)们(men)预(yù)料(liào)的(de)还要(hàiyào)好(hǎo)。", en: "The result was even better than we anticipated." }
+                        ]
+                    },
+                    {
+                        type: "grammar",
+                        title: "4. 经济杠杆 (jīngjì gànggǎn)",
+                        note: "英文：Economic leverage。<br>解释：利用借贷资金或政策工具来放大经济效果。<br>Explanation: Economic leverage.",
+                        examples: [
+                            { zh: "政(zhèng)府(fǔ)利(lì)用(yòng)金(jīn)融(róng)杠(gàng)杆(gǎn)来(lái)调(tiáo)控(kòng)房(fáng)地(dì)产(chǎn)市(shì)场(chǎng)。", en: "The government uses financial leverage to regulate the real estate market." }
+                        ]
+                    },
+                    {
+                        type: "grammar",
+                        title: "5. 发音练习 (Pronunciation Practice)",
+                        note: "请跟读以下词汇：",
+                        examples: [
+                            { zh: "秩(zhì)序(xù)", en: "Order" },
+                            { zh: "挽(wǎn)回(huí)", en: "Salvage / Retrieve" },
+                            { zh: "屈(qū)服(fú)", en: "Surrender / Submit" },
+                            { zh: "吞(tūn)并(bìng)", en: "Annex / Swallow up" }
+                        ]
+                    },
+                    {
+                        type: "grammar",
+                        title: "6. 实质的 (shízhì de)",
+                        note: "解释：不是表面的，而是真正的、核心的内容。<br>Explanation: Substantive / Actual.",
+                        examples: [
+                            { zh: "两(liǎng)家(jiā)公(gōng)司(sī)经(jīng)过(guò)谈(tán)判(pàn)，取(qǔ)得(dé)了(le)实(shí)质(zhì)性(xìng)的(de)进(jìn)展(zhǎn)。", en: "The two companies made substantive progress after negotiation." }
+                        ]
+                    },
+                    {
+                        type: "grammar",
+                        title: "7. 侵蚀某人的信任 (qīnshí)",
+                        note: "解释：像水侵蚀土地一样，一点一点地破坏、削弱。<br>Explanation: Erode someone's trust.",
+                        examples: [
+                            { zh: "谎(huǎng)言(yán)会(huì)慢(màn)慢(màn)侵(qīn)蚀(shí)我(wǒ)们(men)之(zhī)间(jiān)的(de)信(xìn)任(rèn)。", en: "Lies will gradually erode the trust between us." }
+                        ]
+                    },
+                    {
+                        type: "html",
+                        content: `<div class="img-container"><img src="https://cdn.phototourl.com/member/2026-10-01-d2d54b9f-2e7a-4760-ba8c-9a654c778bed.png" alt="侵蚀图示"></div>`
+                    },
+                    {
+                        type: "grammar",
+                        title: "8. 语法修正：连锁反应的报復性",
+                        note: "Explanation：把原本不太顺畅的「连锁性的报復性」改为「连锁反应」，表达因果相连的报复行动更为地道自然。",
+                        examples: [
+                            { zh: "这(zhè)个(gè)制(zhì)裁(cái)引(yǐn)发(fā)了(le)市(shì)场(chǎng)上(shàng)的(de)连(lián)锁(suǒ)反(fǎn)应(yīng)。", en: "This sanction triggered a chain reaction in the market." }
+                        ]
+                    }
+                ]
+            },
+            {
+                title: "三、中秋故事与高级词汇 (Mid-Autumn Story & Advanced Vocab)",
+                items: [
+                    {
+                        type: "grammar",
+                        title: "0. 主角介绍 (Main Characters)",
+                        note: "中秋传说中的两位核心人物：",
+                        examples: [
+                            { zh: "嫦(cháng)娥(é)", en: "Chang'e (Goddess of the Moon)" },
+                            { zh: "后(hòu)羿(yì)", en: "Hou Yi (The Archer)" }
+                        ]
+                    },
+                    {
+                        type: "grammar",
+                        title: "1. 乾涸 (qiánhé)",
+                        note: "解释：水源枯竭，没有水了。<br>Explanation: Dried up / Parched.",
+                        examples: [
+                            { zh: "天(tiān)气(qì)太(tài)热(rè)，河(hé)水(shuǐ)都(dōu)干(qián)涸(hé)了(le)。", en: "It was too hot, and the river dried up." }
+                        ]
+                    },
+                    {
+                        type: "grammar",
+                        title: "2. 庄稼 (zhuāngjia)",
+                        note: "解释：田地里种的农作物（如稻子、麦子）。<br>Explanation: Crops.",
+                        examples: [
+                            { zh: "没(méi)有(yǒu)雨(yǔ)水(shuǐ)，地(dì)里(lǐ)的(de)庄(zhuāng)稼(jia)都(dōu)要(yào)死(sǐ)了(le)。", en: "Without rain, the crops in the fields are going to die." }
+                        ]
+                    },
+                    {
+                        type: "grammar",
+                        title: "3. 枯萎 (kūwěi)",
+                        note: "解释：植物因缺水或生病而干枯萎缩。<br>Explanation: Wither / Dry up.",
+                        examples: [
+                            { zh: "这(zhè)盆(pén)花(huā)几(jǐ)天(tiān)没(méi)浇(jiāo)水(shuǐ)，已(yǐ)经(jīng)枯(kū)萎(wěi)了(le)。", en: "This pot of flowers hasn't been watered for days and has withered." }
+                        ]
+                    },
+                    {
+                        type: "grammar",
+                        title: "4. 水深火热 (shuǐshēn huǒrè)",
+                        note: "解释：形容老百姓生活非常痛苦、悲惨。<br>Explanation: In dire misery / Abyss of suffering.",
+                        examples: [
+                            { zh: "战(zhàn)争(zhēng)让(ràng)人(rén)民(mín)生(shēng)活(huó)在(zài)水(shuǐ)深(shēn)火(huǒ)热(rè)之(zhī)中(zhōng)。", en: "War plunges the people into the abyss of suffering." }
+                        ]
+                    },
+                    {
+                        type: "grammar",
+                        title: "5. 凭借 (píngjiè)",
+                        note: "解释：依靠、借助某种力量或条件。<br>Explanation: Rely on / By means of.",
+                        examples: [
+                            { zh: "他(tā)凭(píng)藉(jiè)自(zì)己(jǐ)的(de)努(nǔ)力(lì)，终于(zhōngyú)成功(chénggōng)了(le)。", en: "By relying on his own efforts, he finally succeeded." }
+                        ]
+                    },
+                    {
+                        type: "grammar",
+                        title: "6. 精湛的 (jīngzhàn de)",
+                        note: "解释：技艺非常高超、纯熟。<br>Explanation: Exquisite / Masterly (skills).",
+                        examples: [
+                            { zh: "他(tā)的(de)厨(chú)艺(yì)十(shí)分(fēn)精(jīng)湛(zhàn)，做(zuò)出(chū)的(de)菜(cài)极(jí)美(měi)味(wèi)。", en: "His culinary skills are exquisite, and the dishes he makes are extremely delicious." }
+                        ]
+                    },
+                    {
+                        type: "grammar",
+                        title: "7. 神射手 (shénshèshǒu)",
+                        note: "解释：射箭技术极高的人。<br>Explanation: Master archer / Sharpshooter.",
+                        examples: [
+                            { zh: "他(tā)是(shì)军(jūn)队(duì)里(lǐ)最(zuì)厉(lì)害(hài)的(de)神(shén)射(shè)手(shǒu)。", en: "He is the best sharpshooter in the army." }
+                        ]
+                    },
+                    {
+                        type: "grammar",
+                        title: "8. 拯救 (zhěngjiù)",
+                        note: "解释：救助、挽救（生命或危机）。<br>Explanation: Save / Rescue.",
+                        examples: [
+                            { zh: "医(yī)生(shēng)们(men)尽(jìn)力(lì)拯(zhěng)救(jiù)每(měi)一(yí)个(gè)病(bìng)人(rén)。", en: "Doctors try their best to save every patient." }
+                        ]
+                    },
+                    {
+                        type: "grammar",
+                        title: "9. 感激 (gǎnjī)",
+                        note: "解释：深深地感谢。<br>Explanation: Feel grateful / Appreciative.",
+                        examples: [
+                            { zh: "我(wǒ)对(duì)他(tā)的(de)帮(bāng)助(zhù)表(biǎo)示(shì)万(wàn)分(fēn)感(gǎn)激(jī)。", en: "I am extremely grateful for his help." }
+                        ]
+                    },
+                    {
+                        type: "grammar",
+                        title: "10. 深受拥戴 (shēnshòu yōngdài)",
+                        note: "解释：得到大家的真心支持和爱戴。<br>Explanation: Deeply supported and loved by the people.",
+                        examples: [
+                            { zh: "这(zhè)位(wèi)领(lǐng)导(dǎo)为人(wéirén)正(zhèng)直(zhí)，深(shēn)受(shòu)百(bǎi)姓(xìng)拥(yōng)戴(dài)。", en: "This leader is upright and deeply loved by the people." }
+                        ]
+                    },
+                    {
+                        type: "grammar",
+                        title: "11. 时间流逝 (shíjiān liúshì)",
+                        note: "解释：形容时间和水一样，快速流过去。<br>Explanation: Time passes / Slips away.",
+                        examples: [
+                            { zh: "随(suí)着(zhe)时(shí)间(jiān)的(de)流(liú)逝(shì)，我(wǒ)们(men)都(dōu)长(zhǎng)大(dà)了(le)。", en: "As time passed by, we all grew up." }
+                        ]
+                    },
+                    {
+                        type: "grammar",
+                        title: "12. 日益衰老 (rìyì shuāilǎo)",
+                        note: "解释：一天比一天老、体力一天比一天差。<br>Explanation: Aging day by day.",
+                        examples: [
+                            { zh: "爸(bà)爸(ba)妈(mā)妈(ma)日(rì)益(yì)衰(shuāi)老(lǎo)，我(wǒ)们(men)要(yào)多(duō)陪(péi)陪(péi)他(tā)们(men)。", en: "Mom and dad are aging day by day, we should spend more time with them." }
+                        ]
+                    },
+                    {
+                        type: "grammar",
+                        title: "13. 残暴不仁 (cánbào bùrén)",
+                        note: "解释：凶残暴虐，没有仁慈之心。<br>Explanation: Cruel and inhumane.",
+                        examples: [
+                            { zh: "历(lì)史(shǐ)上(shàng)那(nà)个(gè)残(cán)暴(bào)不(bù)仁(rén)的(de)统(tǒng)治(zhì)者(zhě)很(hěn)快(kuài)就(jiù)失(shī)去了(le)政(zhèng)权(quán)。", en: "That cruel and inhumane ruler in history quickly lost power." }
+                        ]
+                    },
+                    {
+                        type: "grammar",
+                        title: "14. 暴躁 (bàozào)",
+                        note: "解释：容易发脾气、情绪不稳定。<br>Explanation: Irritable / Hot-tempered.",
+                        examples: [
+                            { zh: "他(tā)最近(zuìjìn)工(gōng)作(zuò)压(yā)力(lì)大(dà)，性(xìng)格(gé)有(yǒu)点(diǎn)暴(bào)躁(zào)。", en: "He has been under a lot of work pressure lately and is a bit irritable." }
+                        ]
+                    },
+                    {
+                        type: "grammar",
+                        title: "15. 暴君 (bàojūn)",
+                        note: "解释：残害人民的残酷君主。<br>Explanation: Tyrant.",
+                        examples: [
+                            { zh: "人(rén)民(mín)最(zuì)后(hòu)起(qǐ)义(yì)推(tuī)翻(fān)了(le)这(zhè)个(gè)暴(bào)君(jūn)。", en: "The people finally rose up in revolt and overthrew the tyrant." }
+                    ]
+                    },
+                    {
+                        type: "grammar",
+                        title: "16. 动辄 (dòngzhé) [相关词：撤回(chèhuí)、重蹈覆轍(chóngdǎo fùzhé)]",
+                        note: "解释：动不动就（往往用于不好的情况）。<br>Explanation: Easily / Frequently (often with negative connotation).<br>• 撤回 (chèhuí): Withdraw / Take back.<br>• 重蹈覆辙 (chóngdǎo fùzhé): Follow the same old disastrous road / Repeat past mistakes.",
+                        examples: [
+                            { zh: "他(tā)脾(pí)气(qì)不(bù)好(hǎo)，动(dòng)辄(zhé)对(duì)人(rén)发(fā)火(huǒ)。", en: "He has a bad temper and flies into a rage at the drop of a hat." },
+                            { zh: "公(gōng)司(sī)决(jué)定(dìng)撤(chè)回(huí)那(nà)个(gè)错(cuò)误(wù)的(de)决(jué)策(cè)。", en: "The company decided to withdraw that wrong decision." },
+                            { zh: "我(wǒ)们(men)不(bù)能(néng)重(chóng)蹈(dǎo)覆(fù)辙(zhé)，再(zài)犯(fàn)同(tóng)样(yàng)的(de)错(cuò)误(wù)。", en: "We cannot repeat past mistakes and make the same error again." }
+                        ]
+                    },
+                    {
+                        type: "grammar",
+                        title: "17. 严惩 (yánchéng)",
+                        note: "解释：严格而严厉地惩罚。<br>Explanation: Severely punish.",
+                        examples: [
+                            { zh: "法(fǎ)律(lǜ)一(yí)定(dìng)会(huì)严(yán)惩(chéng)这(zhè)种(zhǒng)恶(è)意(yì)犯(fàn)罪(zuì)。", en: "The law will definitely severely punish this kind of malicious crime." }
+                        ]
+                    },
+                    {
+                        type: "grammar",
+                        title: "18. 滥杀 (lànshā)",
+                        note: "解释：胡乱地、无辜地杀害人。<br>Explanation: Indiscriminate killing.",
+                        examples: [
+                            { zh: "战(zhàn)争(zhēng)中(zhōng)最(zuì)无(wú)辜(gū)的(de)就(jiù)是(shì)被(bèi)滥(làn)杀(shā)的(de)平(píng)民(mín)。", en: "The most innocent victims in war are the civilians indiscriminately killed." }
+                        ]
+                    },
+                    {
+                        type: "grammar",
+                        title: "19. 沉溺 (chénnì)",
+                        note: "解释：深深地陷入某种不好的爱好或习惯中不能自拔。<br>Explanation: Indulge in / Wallow in.",
+                        examples: [
+                            { zh: "他(tā)整(zhěng)天(tiān)沉(chén)溺(nì)于(yú)网(wǎng)络(luò)游(yóu)戏(xì)，无(wú)心(xīn)学(xué)习(xí)。", en: "He is indulged in online games all day and has no heart for study." }
+                        ]
+                    },
+                    {
+                        type: "grammar",
+                        title: "20. 抛诸脑后 (pāozhū nǎohòu)",
+                        note: "解释：把事情完全忘得一干二净。<br>Explanation: Cast to the winds / Completely forget.",
+                        examples: [
+                            { zh: "放(fàng)假(jià)一(yì)开(kāi)始(shǐ)，他(tā)就把(bǎ)老(lǎo)师(shī)交(jiāo)代(dài)的(de)作(zuò)业(yè)抛(pāo)诸(zhū)脑(nǎo)后(hòu)了(le)。", en: "As soon as the holiday started, he cast his teacher's homework to the winds." }
+                        ]
+                    },
+                    {
+                        type: "grammar",
+                        title: "21. 苦不堪言 (kǔ bù kān yán)",
+                        note: "解释：痛苦得无法用语言来形容。<br>Explanation: Too miserable to endure / Unspeakable suffering.",
+                        examples: [
+                            { zh: "经(jīng)济(jì)危机(wēijī)让(ràng)老(lǎo)百(bǎi)姓(xìng)苦(kǔ)不(bù)堪(kān)言(yán)。", en: "The economic crisis has made the common people suffer beyond words." }
+                        ]
+                    },
+                    {
+                        type: "grammar",
+                        title: "22. 痛心疾首 (tòngxīn jíshǒu)",
+                        note: "解释：形容极为痛恨或极为悲伤、痛心。<br>Explanation: Bitterly grieved and disappointed.",
+                        examples: [
+                            { zh: "看(kàn)到(dào)这(zhè)个(gè)年(nián)轻(qīng)人(rén)自(zì)甘(gān)堕(duò)落(luò)，老(lǎo)师(shī)感到(gǎndào)痛(tòng)心(xīn)疾(jí)首(shǒu)。", en: "Seeing this young man degenerate, the teacher felt bitterly grieved and disappointed." }
+                        ]
+                    },
+                    {
+                        type: "grammar",
+                        title: "23. 无能为力 (wúnéng wéilì)",
+                        note: "解释：虽然想帮忙，但没有能力或办法去做。<br>Explanation: Powerless / Helpless.",
+                        examples: [
+                            { zh: "面对(miànduì)这(zhè)个(gè)意(yì)外(wài)，我(wǒ)们(men)感(gǎn)到(dào)无(wú)能(néng)为(wéi)力(lì)。", en: "Faced with this accident, we felt completely powerless." }
+                        ]
+                    }
+                ]
+            }
+        ];
+
+        const container = document.getElementById('content');
+        let counter = 0;
+
+        lessonData.forEach((sec, sIdx) => {
+            let html = `<div class="section" id="sec-${sIdx}"><h2>${sec.title}</h2>`;
+            
+            sec.items.forEach(item => {
+                if (item.type === "html") {
+                    html += item.content;
+                } else if (item.type === "grammar") {
+                    html += `<div class="grammar-box">
+                        <div style="font-weight:bold; font-size:16px; color:#8C6239; margin-bottom:5px;">${item.title}</div>`;
+                    if(item.note) html += `<div class="note">${item.note}</div>`;
+                    
+                    if (item.examples) {
+                        item.examples.forEach(ex => {
+                            html += `
+                            <div class="item" style="border:none; margin-top:10px; padding-bottom:0;">
+                                <div class="item-content" style="align-items:center;">
+                                    <button class="icon-btn" onclick="playAudio('${ex.zh}')" title="朗读">🔊</button>
+                                    <button class="icon-btn rec-btn" onclick="toggleRecord(this, 'rec-${counter}')" title="录音">🎤</button>
+                                    <button class="icon-btn play-rec-btn" id="play-rec-rec-${counter}" onclick="playRecording('rec-${counter}')" disabled title="播放录音">▶️</button>
+                                    <div style="margin-left:8px;">${parsePinyin(ex.zh)}</div>
+                                </div>
+                                <div class="en-trans">${ex.en}</div>
+                            </div>`;
+                            counter++;
+                        });
+                    }
+                    html += `</div>`;
+                } else if (item.zh) {
+                    html += `
+                    <div class="item">
+                        <div class="item-content" style="align-items:center;">
+                            <button class="icon-btn" onclick="playAudio('${item.zh}')" title="朗读">🔊</button>
+                            <button class="icon-btn rec-btn" onclick="toggleRecord(this, 'rec-${counter}')" title="录音">🎤</button>
+                            <button class="icon-btn play-rec-btn" id="play-rec-rec-${counter}" onclick="playRecording('rec-${counter}')" disabled title="播放录音">▶️</button>
+                            <div style="margin-left:8px;">${parsePinyin(item.zh)}</div>
+                        </div>
+                        <div class="en-trans">${item.en}</div>
+                    </div>`;
+                    counter++;
+                }
+            });
+            html += `</div>`;
+            container.innerHTML += html;
+        });
+
+        let pinyinVisible = true;
+        let enVisible = true;
+
+        function togglePinyin() {
+            pinyinVisible = !pinyinVisible;
+            document.querySelectorAll('.py-text').forEach(el => {
+                el.style.display = pinyinVisible ? 'block' : 'none';
+            });
+        }
+
+        function toggleEnglish() {
+            enVisible = !enVisible;
+            document.querySelectorAll('.en-trans').forEach(el => {
+                el.style.display = enVisible ? 'block' : 'none';
+            });
+        }
+    </script>
+</body>
+</html>
