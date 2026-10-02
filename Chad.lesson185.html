@@ -39,7 +39,6 @@
         
         .audio-btn { background: #f0f0f0; color: #333; font-size: 16px; padding: 8px; border-radius: 50%; width: 35px; height: 35px; display: inline-flex; align-items: center; justify-content: center; border: none; cursor: pointer; margin-right: 5px; }
         .audio-btn:hover { background: #e0e0e0; }
-        .audio-player { height: 35px; margin-left: 10px; outline: none; }
         
         .rec-btn { background: #e07a5f; color: white; font-size: 14px; padding: 6px 12px; border-radius: 20px; border: none; cursor: pointer; display: inline-flex; align-items: center; gap: 5px; margin-right: 5px; }
         .rec-btn:hover { background: #cc6b50; }
@@ -75,7 +74,6 @@
         .correct { color: #5CB85C; font-size: 18px; font-weight: bold;}
         .note { font-size: 14px; color: #555; margin-bottom: 10px; line-height: 1.5; }
         .vocab-img { max-width: 250px; height: auto; border-radius: 8px; border: 1px solid #E6D5B8; display: block; margin: 10px 0; }
-        .img-row { display: flex; gap: 15px; flex-wrap: wrap; margin: 10px 0; }
         
         .homework-q { margin-top: 15px; font-size: 16px; font-weight: bold; }
         .hw-textarea { width: 100%; height: 40px; margin-top: 8px; margin-bottom: 15px; border-radius: 4px; border: 1px solid #ccc; padding: 5px; font-family: inherit; }
@@ -176,7 +174,9 @@
             return parsed;
         }
 
-        function playAudio(text) {
+        let currentUtteranceText = "";
+
+        function playAudio(text, btn) {
             let cleanText = text.replace(/\(.*?\)/g, '')
                                 .replace(/和/g, '汗')
                                 .replace(/都/g, '兜')
@@ -184,24 +184,42 @@
                                 .replace(/俄/g, '惡')
                                 .replace(/少康/g, '邵康')
                                 .replace(/[^\u4e00-\u9fa5，。？！a-zA-Z ]/g, '');
+
+            // 判斷是否為正在播放的同一句話，如果是，則切換暫停與播放
+            if (speechSynthesis.speaking && currentUtteranceText === cleanText) {
+                if (speechSynthesis.paused) {
+                    speechSynthesis.resume();
+                } else {
+                    speechSynthesis.pause();
+                }
+                return;
+            }
+
+            // 如果是新的一句話，先取消所有舊的語音，再重新播放
+            speechSynthesis.cancel(); 
+            currentUtteranceText = cleanText;
             const utterance = new SpeechSynthesisUtterance(cleanText);
             utterance.lang = 'zh-TW';
             utterance.rate = 0.85;
+            utterance.onend = () => { currentUtteranceText = ""; };
             speechSynthesis.speak(utterance);
         }
 
         let mediaRecorders = {};
-        let audioUrls = {};
 
         async function toggleRecord(btn, id) {
-            let container = btn.parentElement.parentElement;
+            // 尋找外層的容器 (句子的最外圍)，讓播放器可以接在下方
+            let container = btn.closest('.item') || btn.closest('.grammar-box') || btn.closest('div[style*="background:#fff"]');
             let player = container.querySelector('.audio-player');
             
+            // 如果還沒有播放器，在句子最下方產生一個
             if (!player) {
                 player = document.createElement('audio');
                 player.className = 'audio-player';
                 player.controls = true;
                 player.style.display = 'none';
+                player.style.width = '100%';
+                player.style.marginTop = '15px';
                 container.appendChild(player);
             }
 
@@ -215,7 +233,7 @@
                     recorder.onstop = () => {
                         const blob = new Blob(chunks, { 'type': 'audio/webm' });
                         player.src = URL.createObjectURL(blob);
-                        player.style.display = 'inline-block';
+                        player.style.display = 'block'; // 顯示於下方
                         document.getElementById(`play-rec-${id}`).disabled = false;
                         stream.getTracks().forEach(track => track.stop());
                     };
@@ -236,7 +254,9 @@
         }
 
         function playRecording(id) {
-            let player = document.querySelector(`#play-rec-${id}`).parentElement.parentElement.querySelector('.audio-player');
+            let btn = document.getElementById(`play-rec-${id}`);
+            let container = btn.closest('.item') || btn.closest('.grammar-box') || btn.closest('div[style*="background:#fff"]');
+            let player = container.querySelector('.audio-player');
             if (player && player.src) {
                 player.play();
             }
@@ -429,7 +449,7 @@
                                 ]
                             },
                             {
-                                text: "少(ㄕㄠˋ)康(ㄎㄤ)下(ㄒㄧㄚˋ)個(ㄍㄜ˙)禮(ㄌㄧˇ)拜(ㄅㄞˋ)要(ㄧㄠˋ)去(ㄑㄩˋ)鳳(ㄈㄥˋ)凰(ㄏㄨㄤˊ)城(ㄔㄥˊ)看(ㄎㄢˋ)朋(ㄆㄥˊ)友(ㄧㄡˇ)。他(ㄊㄚ)要(ㄧㄠˋ)在(ㄗㄞˋ)洛(ㄌㄨㄛˋ)杉(ㄕㄢ)磯(ㄐㄧ)轉(ㄓㄨㄢˇ)機(ㄐㄧ)，所(ㄙㄨㄛˇ)以(ㄧˇ)行(ㄒㄧㄥˊ)李(ㄌㄧˇ)不(ㄅㄨˋ)能(ㄋㄥˊ)太(ㄊㄞˋ)多(ㄉㄨㄛ)。少(ㄕㄠˋ)康(ㄎㄤ)的(ㄉㄜ˙)太(ㄊㄞˋ)太(ㄊㄞ˙)雪(ㄒㄩㄝˇ)菲(ㄈㄟ)覺(ㄐㄩㄝˊ)得(ㄉㄜ˙)護(ㄏㄨˋ)照(ㄓㄠˋ)很(ㄏㄣˇ)重(ㄓㄨㄥˋ)要(ㄧㄠˋ)，她(ㄊㄚ)拜(ㄅㄞˋ)託(ㄊㄨㄛ)少(ㄕㄠˋ)康(ㄎㄤ)不(ㄅㄨˊ)要(ㄧㄠˋ)忘(ㄨㄤˋ)記(ㄐㄧˋ)帶(ㄉㄞˋ)。少(ㄕㄠˋ)康(ㄎㄤ)又(ㄧㄡˋ)檢(ㄐㄧㄢˇ)查(ㄔㄚˊ)了(ㄌㄜ˙)一(ㄧˊ)次(ㄘˋ)包(ㄅㄠ)包(ㄅㄠ)，東(ㄉㄨㄥ)西(ㄒㄧ)差(ㄔㄚ)不(ㄅㄨˋ)多(ㄉㄨㄛ)都(ㄉㄡ)準(ㄓㄨㄣˇ)備(ㄅㄟˋ)好(ㄏㄠˇ)了(ㄌㄜ˙)。最(ㄗㄨㄟˋ)近(ㄐㄧㄣˋ)他(ㄊㄚ)工(ㄍㄨㄥ)作(ㄗㄨㄛˋ)很(ㄏㄣˇ)忙(ㄇㄤˊ)，又(ㄧㄡˋ)累(ㄌㄟˋ)又(ㄧㄡˋ)想(ㄒㄧㄤˇ)睡(ㄕㄨㄟˋ)，雪(ㄒㄩㄝˇ)菲(ㄈㄟ)希(ㄒㄧ)望(ㄨㄤˋ)他(ㄊㄚ)上(ㄕㄤˋ)飛(ㄈㄟ)機(ㄐㄧ)以(ㄧˇ)後(ㄏㄡˋ)好(ㄏㄠˇ)好(ㄏㄠˇ)休(ㄒㄧㄡ)息(ㄒㄧˊ)。出(ㄔㄨ)發(ㄈㄚ)的(ㄉㄜ˙)那(ㄋㄚˋ)天(ㄊㄧㄢ)早(ㄗㄠˇ)上(ㄕㄤˋ)，天(ㄊㄧㄢ)剛(ㄍㄤ)亮(ㄌㄧㄤˋ)，雪(ㄒㄩㄝˇ)菲(ㄈㄟ)就(ㄐㄧㄡˋ)幫(ㄅㄤ)少(ㄕㄠˋ)康(ㄎㄤ)提(ㄊㄧˊ)行(ㄒㄧㄥˊ)李(ㄌㄧˇ)，送(ㄙㄨㄥˋ)他(ㄊㄚ)去(ㄑㄩˋ)機(ㄐㄧ)場(ㄔㄤˇ)。少(ㄕㄠˋ)康(ㄎㄤ)只(ㄓˇ)是(ㄕˋ)有(ㄧㄡˇ)一(ㄧˋ)點(ㄉㄧㄢˇ)感(ㄍㄢˇ)冒(ㄇㄠˋ)，吃(ㄔ)了(ㄌㄜ˙)藥(ㄧㄠˋ)就(ㄐㄧㄡˋ)好(ㄏㄠˇ)多(ㄉㄨㄛ)了(ㄌㄜ˙)。到(ㄉㄠˋ)了(ㄌㄜ˙)鳳(ㄈㄥˋ)凰(ㄏㄨㄤˊ)城(ㄔㄥˊ)，朋(ㄆㄥˊ)友(ㄧㄡˇ)找(ㄓㄠˇ)他(ㄊㄚ)去(ㄑㄩˋ)一(ㄧˊ)個(ㄍㄜ˙)安(ㄢ)靜(ㄐㄧㄥˋ)的(ㄉㄜ˙)小(ㄒㄧㄠˇ)鎮(ㄓㄣˋ)玩(ㄨㄢˊ)。少(ㄕㄠˋ)康(ㄎㄤ)很(ㄏㄣˇ)開(ㄎㄞ)心(ㄒㄧㄣ)，就(ㄐㄧㄡˋ)是(ㄕˋ)想(ㄒㄧㄤˇ)在(ㄗㄞˋ)那(ㄋㄚˋ)裡(ㄌㄧˇ)住(ㄓㄨˋ)幾(ㄐㄧˇ)天(ㄊㄧㄢ)。他(ㄊㄚ)點(ㄉㄧㄢˇ)了(ㄌㄜ˙)一(ㄧˋ)杯(ㄅㄟ)飲(ㄧㄣˇ)料(ㄌㄧㄠˋ)，問(ㄨㄣˋ)店(ㄉㄧㄢˋ)員(ㄩㄢˊ)可(ㄎㄜˇ)以(ㄧˇ)外(ㄨㄞˋ)帶(ㄉㄞˋ)嗎(ㄇㄚ˙)？因(ㄧㄣ)為(ㄨㄟˋ)他(ㄊㄚ)對(ㄉㄨㄟˋ)海(ㄏㄞˇ)鮮(ㄒㄧㄢ)過(ㄍㄨㄛˋ)敏(ㄇㄧㄣˇ)，所(ㄙㄨㄛˇ)以(ㄧˇ)也(ㄧㄝˇ)問(ㄨㄣˋ)店(ㄉㄧㄢˋ)員(ㄩㄢˊ)有(ㄧㄡˇ)沒(ㄇㄟˊ)有(ㄧㄡˇ)魚(ㄩˊ)的(ㄉㄜ˙)食(ㄕˊ)物(ㄨˋ)嗎(ㄇㄚ˙)？",
+                                text: "少(ㄕㄠˋ)康(ㄎㄤ)下(ㄒㄧㄚˋ)個(ㄍㄜ˙)禮(ㄌㄧˇ)拜(ㄅㄞˋ)要(ㄧㄠˋ)去(ㄑㄩˋ)鳳(ㄈㄥˋ)凰(ㄏㄨㄤˊ)城(ㄔㄥˊ)看(ㄎㄢˋ)朋(ㄆㄥˊ)友(ㄧㄡˇ)。他(ㄊㄚ)要(ㄧㄠˋ)在(ㄗㄞˋ)洛(ㄌㄨㄛˋ)杉(ㄕㄢ)磯(ㄐㄧ)轉(ㄓㄨㄢˇ)機(ㄐㄧ)，所(ㄙㄨㄛˇ)以(ㄧˇ)行(ㄒㄧㄥˊ)李(ㄌㄧˇ)不(ㄅㄨˋ)能(ㄋㄥˊ)太(ㄊㄞˋ)多(ㄉㄨㄛ)。少(ㄕㄠˋ)康(ㄎㄤ)的(ㄉㄜ˙)太(ㄊㄞˋ)太(ㄊㄞ˙)雪(ㄒㄩㄝˇ)菲(ㄈㄟ)覺(ㄐㄩㄝˊ)得(ㄉㄜ˙)護(ㄏㄨˋ)照(ㄓㄠˋ)很(ㄏㄣˇ)重(ㄓㄨㄥˋ)要(ㄧㄠˋ)，她(ㄊㄚ)拜(ㄅㄞˋ)託(ㄊㄨㄛ)少(ㄕㄠˋ)康(ㄎㄤ)不(ㄅㄨˊ)要(ㄧㄠˋ)忘(ㄨㄤˋ)了(ㄌㄜ˙)帶(ㄉㄞˋ)。少(ㄕㄠˋ)康(ㄎㄤ)又(ㄧㄡˋ)檢(ㄐㄧㄢˇ)查(ㄔㄚˊ)了(ㄌㄜ˙)一(ㄧˊ)次(ㄘˋ)包(ㄅㄠ)包(ㄅㄠ)，東(ㄉㄨㄥ)西(ㄒㄧ)差(ㄔㄚ)不(ㄅㄨˋ)多(ㄉㄨㄛ)都(ㄉㄡ)好(ㄏㄠˇ)了(ㄌㄜ˙)。最(ㄗㄨㄟˋ)近(ㄐㄧㄣˋ)他(ㄊㄚ)工(ㄍㄨㄥ)作(ㄗㄨㄛˋ)很(ㄏㄣˇ)忙(ㄇㄤˊ)，又(ㄧㄡˋ)累(ㄌㄟˋ)又(ㄧㄡˋ)想(ㄒㄧㄤˇ)睡(ㄕㄨㄟˋ)，雪(ㄒㄩㄝˇ)菲(ㄈㄟ)想(ㄒㄧㄤˇ)要(ㄧㄠˋ)他(ㄊㄚ)在(ㄗㄞˋ)飛(ㄈㄟ)機(ㄐㄧ)上(ㄕㄤˋ)好(ㄏㄠˇ)好(ㄏㄠˇ)休(ㄒㄧㄡ)息(ㄒㄧˊ)。出(ㄔㄨ)發(ㄈㄚ)的(ㄉㄜ˙)那(ㄋㄚˋ)天(ㄊㄧㄢ)早(ㄗㄠˇ)上(ㄕㄤˋ)，天(ㄊㄧㄢ)剛(ㄍㄤ)亮(ㄌㄧㄤˋ)，雪(ㄒㄩㄝˇ)菲(ㄈㄟ)就(ㄐㄧㄡˋ)幫(ㄅㄤ)少(ㄕㄠˋ)康(ㄎㄤ)拿(ㄋㄚˊ)行(ㄒㄧㄥˊ)李(ㄌㄧˇ)，送(ㄙㄨㄥˋ)他(ㄊㄚ)去(ㄑㄩˋ)機(ㄐㄧ)場(ㄔㄤˇ)。少(ㄕㄠˋ)康(ㄎㄤ)有(ㄧㄡˇ)一(ㄧˋ)點(ㄉㄧㄢˇ)感(ㄍㄢˇ)冒(ㄇㄠˋ)，吃(ㄔ)了(ㄌㄜ˙)藥(ㄧㄠˋ)就(ㄐㄧㄡˋ)好(ㄏㄠˇ)多(ㄉㄨㄛ)了(ㄌㄜ˙)。到(ㄉㄠˋ)了(ㄌㄜ˙)鳳(ㄈㄥˋ)凰(ㄏㄨㄤˊ)城(ㄔㄥˊ)，朋(ㄆㄥˊ)友(ㄧㄡˇ)找(ㄓㄠˇ)他(ㄊㄚ)去(ㄑㄩˋ)一(ㄧˊ)個(ㄍㄜ˙)的(ㄉㄜ˙)小(ㄒㄧㄠˇ)鎮(ㄓㄣˋ)玩(ㄨㄢˊ)。少(ㄕㄠˋ)康(ㄎㄤ)很(ㄏㄣˇ)開(ㄎㄞ)心(ㄒㄧㄣ)，就(ㄐㄧㄡˋ)是(ㄕˋ)想(ㄒㄧㄤˇ)在(ㄗㄞˋ)那(ㄋㄚˋ)裡(ㄌㄧˇ)住(ㄓㄨˋ)幾(ㄐㄧˇ)天(ㄊㄧㄢ)。他(ㄊㄚ)點(ㄉㄧㄢˇ)了(ㄌㄜ˙)一(ㄧˋ)杯(ㄅㄟ)飲(ㄧㄣˇ)料(ㄌㄧㄠˋ)，問(ㄨㄣˋ)店(ㄉㄧㄢˋ)員(ㄩㄢˊ)可(ㄎㄜˇ)以(ㄧˇ)外(ㄨㄞˋ)帶(ㄉㄞˋ)嗎(ㄇㄚ˙)？還(ㄏㄞˊ)有(ㄧㄡˇ)他(ㄊㄚ)對(ㄉㄨㄟˋ)海(ㄏㄞˇ)鮮(ㄒㄧㄢ)過(ㄍㄨㄛˋ)敏(ㄇㄧㄣˇ)，所(ㄙㄨㄛˇ)以(ㄧˇ)也(ㄧㄝˇ)問(ㄨㄣˋ)店(ㄉㄧㄢˋ)員(ㄩㄢˊ)有(ㄧㄡˇ)沒(ㄇㄟˊ)有(ㄧㄡˇ)魚(ㄩˊ)的(ㄉㄜ˙)食(ㄕˊ)物(ㄨˋ)嗎(ㄇㄚ˙)？",
                                 qs: [
                                     "Q1. 少康要去哪裡？他要在哪裡轉機？",
                                     "Q2. 雪菲覺得什麼東西很重要？",
@@ -463,7 +483,7 @@
                         </div>
                         <div class="item-content" style="margin-top: 10px; align-items:center;">
                             <div class="btn-group">
-                                <button class="audio-btn" onclick="playAudio('${item.correct}')">🔊</button>
+                                <button class="audio-btn" onclick="playAudio('${item.correct}', this)">🔊</button>
                                 <button class="audio-btn record-btn" onclick="toggleRecord(this, 'rec-${counter}')" title="Record your voice">🎤</button>
                                 <button class="play-rec-btn" id="play-rec-rec-${counter}" onclick="playRecording('rec-${counter}')" disabled>▶</button>
                             </div>
@@ -479,7 +499,7 @@
                             <div class="item" style="border:none; margin-top:10px; padding-bottom:0;">
                                 <div class="item-content" style="align-items:center;">
                                     <div class="btn-group">
-                                        <button class="audio-btn" onclick="playAudio('${ex.zh}')">🔊</button>
+                                        <button class="audio-btn" onclick="playAudio('${ex.zh}', this)">🔊</button>
                                         <button class="audio-btn record-btn" onclick="toggleRecord(this, 'rec-${counter}')" title="Record your voice">🎤</button>
                                         <button class="play-rec-btn" id="play-rec-rec-${counter}" onclick="playRecording('rec-${counter}')" disabled>▶</button>
                                     </div>
@@ -511,7 +531,7 @@
                         html += `<div style="background:#fff; padding:15px; border-radius:8px; margin-bottom:20px; border:1px solid #ddd;">
                             <div class="item-content" style="align-items:flex-start; margin-bottom: 20px;">
                                 <div class="btn-group" style="margin-top:5px; margin-right: 15px;">
-                                    <button class="audio-btn" onclick="playAudio('${p.text}')">🔊</button>
+                                    <button class="audio-btn" onclick="playAudio('${p.text}', this)">🔊</button>
                                     <button class="audio-btn record-btn" onclick="toggleRecord(this, 'rec-${counter}')" title="Record your voice">🎤</button>
                                     <button class="play-rec-btn" id="play-rec-rec-${counter}" onclick="playRecording('rec-${counter}')" disabled>▶</button>
                                 </div>
