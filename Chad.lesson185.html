@@ -133,7 +133,7 @@
     <div class="main-content" id="mainContent">
         <div class="header">
             <h1>Chad's Mandarin Lesson 185</h1>
-            <p>Date: <span id="currentDate"></span></p>
+            <p>Date: <span id="currentDate">2026/10/2</span></p>
         </div>
 
         <div class="controls">
@@ -145,8 +145,6 @@
     </div>
 
     <script>
-        document.getElementById('currentDate').innerText = new Date().toLocaleDateString();
-
         function toggleSidebar() {
             const sidebar = document.getElementById('sidebar');
             const mainContent = document.getElementById('mainContent');
@@ -180,6 +178,11 @@
 
         function playAudio(text) {
             let cleanText = text.replace(/\(.*?\)/g, '')
+                                .replace(/和/g, '汗')
+                                .replace(/都/g, '兜')
+                                .replace(/差/g, '插')
+                                .replace(/俄/g, '惡')
+                                .replace(/少康/g, '邵康')
                                 .replace(/[^\u4e00-\u9fa5，。？！a-zA-Z ]/g, '');
             const utterance = new SpeechSynthesisUtterance(cleanText);
             utterance.lang = 'zh-TW';
@@ -331,9 +334,9 @@
                     {
                         type: "grammar",
                         title: "4) Can you help me?",
-                        note: "Explanation: Saying '請你幫我' (Please help me) can sound a bit too direct and almost like a command. It is much softer and polite to use '拜託你幫我' (I beg you to help me) or '可以幫我嗎?' (Can you help me?).",
+                        note: "Explanation: Saying '請你幫我' (Please help me) can sound a bit too direct and almost like a command. It is much softer and polite to use '可以幫我嗎?' (Can you help me?).",
                         wrong: "我還差十塊，請你幫我！",
-                        correct: "我(ㄨㄛˇ)還(ㄏㄞˊ)差(ㄔㄚ)十(ㄕˊ)塊(ㄎㄨㄞˋ)，拜(ㄅㄞˋ)託(ㄊㄨㄛ)你(ㄋㄧˇ)幫(ㄅㄤ)我(ㄨㄛˇ)！或是...可(ㄎㄜˇ)以(ㄧˇ)幫(ㄅㄤ)我(ㄨㄛˇ)嗎(ㄇㄚ˙)？",
+                        correct: "我(ㄨㄛˇ)還(ㄏㄞˊ)差(ㄔㄚ)十(ㄕˊ)塊(ㄎㄨㄞˋ)，可(ㄎㄜˇ)以(ㄧˇ)幫(ㄅㄤ)我(ㄨㄛˇ)嗎(ㄇㄚ˙)？",
                         en: "I am still short 10 dollars, can you help me?"
                     },
                     {
@@ -341,8 +344,11 @@
                         title: "5) A幫B do sth. (A helps B)",
                         note: "Explanation: '幫' means to help or do a favor. You cannot combine it loosely as '幫給', you must clearly say '幫買' (help buy) or '給錢' (give money).",
                         wrong: "他幫給她錢。",
-                        correct: "我(ㄨㄛˇ)先(ㄒㄧㄢ)生(ㄕㄥ)幫(ㄅㄤ)我(ㄨㄛˇ)買(ㄇㄞˇ)手(ㄕㄡˇ)機(ㄐㄧ)。 或是 我(ㄨㄛˇ)先(ㄒㄧㄢ)生(ㄕㄥ)給(ㄍㄟˇ)我(ㄨㄛˇ)錢(ㄑㄧㄢˊ)買(ㄇㄞˇ)手(ㄕㄡˇ)機(ㄐㄧ)。",
-                        en: "My husband helped me buy a cell phone. OR My husband gave me money to buy a cell phone."
+                        correct: "我(ㄨㄛˇ)先(ㄒㄧㄢ)生(ㄕㄥ)幫(ㄅㄤ)我(ㄨㄛˇ)買(ㄇㄞˇ)手(ㄕㄡˇ)機(ㄐㄧ)。",
+                        en: "My husband helped me buy a cell phone.",
+                        examples: [
+                            { zh: "我(ㄨㄛˇ)先(ㄒㄧㄢ)生(ㄕㄥ)給(ㄍㄟˇ)我(ㄨㄛˇ)錢(ㄑㄧㄢˊ)買(ㄇㄞˇ)手(ㄕㄡˇ)機(ㄐㄧ)。", en: "My husband gave me money to buy a cell phone." }
+                        ]
                     },
                     {
                         type: "grammar",
@@ -423,7 +429,7 @@
                                 ]
                             },
                             {
-                                text: "少(ㄕㄠˋ)康(ㄎㄤ)下(ㄒㄧㄚˋ)個(ㄍㄜ˙)禮(ㄌㄧˇ)拜(ㄅㄞˋ)要(ㄧㄠˋ)去(ㄑㄩˋ)鳳(ㄈㄥˋ)凰(ㄏㄨㄤˊ)城(ㄔㄥˊ)看(ㄎㄢˋ)朋(ㄆㄥˊ)友(ㄧㄡˇ)。他(ㄊㄚ)要(ㄧㄠˋ)在(ㄗㄞˋ)洛(ㄌㄨㄛˋ)杉(ㄕㄢ)磯(ㄐㄧ)轉(ㄓㄨㄢˇ)機(ㄐㄧ)，所(ㄙㄨㄛˇ)以(ㄧˇ)行(ㄒㄧㄥˊ)李(ㄌㄧˇ)不(ㄅㄨˋ)能(ㄋㄥˊ)太(ㄊㄞˋ)多(ㄉㄨㄛ)。少(ㄕㄠˋ)康(ㄎㄤ)的(ㄉㄜ˙)太(ㄊㄞˋ)太(ㄊㄞ˙)雪(ㄒㄩㄝˇ)菲(ㄈㄟ)覺(ㄐㄩㄝˊ)得(ㄉㄜ˙)護(ㄏㄨˋ)照(ㄓㄠˋ)很(ㄏㄣˇ)重(ㄓㄨㄥˋ)要(ㄧㄠˋ)，她(ㄊㄚ)拜(ㄅㄞˋ)託(ㄊㄨㄛ)少(ㄕㄠˋ)康(ㄎㄤ)不(ㄅㄨˊ)要(ㄧㄠˋ)忘(ㄨㄤˋ)了(ㄌㄜ˙)帶(ㄉㄞˋ)。少(ㄕㄠˋ)康(ㄎㄤ)又(ㄧㄡˋ)檢(ㄐㄧㄢˇ)查(ㄔㄚˊ)了(ㄌㄜ˙)一(ㄧˊ)次(ㄘˋ)包(ㄅㄠ)包(ㄅㄠ)，東(ㄉㄨㄥ)西(ㄒㄧ)差(ㄔㄚ)不(ㄅㄨˋ)多(ㄉㄨㄛ)都(ㄉㄡ)好(ㄏㄠˇ)了(ㄌㄜ˙)。最(ㄗㄨㄟˋ)近(ㄐㄧㄣˋ)他(ㄊㄚ)工(ㄍㄨㄥ)作(ㄗㄨㄛˋ)很(ㄏㄣˇ)忙(ㄇㄤˊ)，又(ㄧㄡˋ)累(ㄌㄟˋ)又(ㄧㄡˋ)想(ㄒㄧㄤˇ)睡(ㄕㄨㄟˋ)，雪(ㄒㄩㄝˇ)菲(ㄈㄟ)想(ㄒㄧㄤˇ)要(ㄧㄠˋ)他(ㄊㄚ)上(ㄕㄤˋ)飛(ㄈㄟ)機(ㄐㄧ)後(ㄏㄡˋ)好(ㄏㄠˇ)好(ㄏㄠˇ)休(ㄒㄧㄡ)息(ㄒㄧˊ)。出(ㄔㄨ)發(ㄈㄚ)的(ㄉㄜ˙)那(ㄋㄚˋ)天(ㄊㄧㄢ)早(ㄗㄠˇ)上(ㄕㄤˋ)，天(ㄊㄧㄢ)剛(ㄍㄤ)亮(ㄌㄧㄤˋ)，雪(ㄒㄩㄝˇ)菲(ㄈㄟ)就(ㄐㄧㄡˋ)幫(ㄅㄤ)少(ㄕㄠˋ)康(ㄎㄤ)拿(ㄋㄚˊ)行(ㄒㄧㄥˊ)李(ㄌㄧˇ)，送(ㄙㄨㄥˋ)他(ㄊㄚ)去(ㄑㄩˋ)機(ㄐㄧ)場(ㄔㄤˇ)。少(ㄕㄠˋ)康(ㄎㄤ)只(ㄓˇ)有(ㄧㄡˇ)一(ㄧˋ)點(ㄉㄧㄢˇ)感(ㄍㄢˇ)冒(ㄇㄠˋ)，吃(ㄔ)了(ㄌㄜ˙)藥(ㄧㄠˋ)好(ㄏㄠˇ)多(ㄉㄨㄛ)了(ㄌㄜ˙)。到(ㄉㄠˋ)了(ㄌㄜ˙)鳳(ㄈㄥˋ)凰(ㄏㄨㄤˊ)城(ㄔㄥˊ)，朋(ㄆㄥˊ)友(ㄧㄡˇ)找(ㄓㄠˇ)他(ㄊㄚ)去(ㄑㄩˋ)一(ㄧˊ)個(ㄍㄜ˙)小(ㄒㄧㄠˇ)鎮(ㄓㄣˋ)玩(ㄨㄢˊ)。少(ㄕㄠˋ)康(ㄎㄤ)很(ㄏㄣˇ)開(ㄎㄞ)心(ㄒㄧㄣ)，想(ㄒㄧㄤˇ)在(ㄗㄞˋ)那(ㄋㄚˋ)裡(ㄌㄧˇ)住(ㄓㄨˋ)幾(ㄐㄧˇ)天(ㄊㄧㄢ)。他(ㄊㄚ)點(ㄉㄧㄢˇ)了(ㄌㄜ˙)一(ㄧˋ)杯(ㄅㄟ)飲(ㄧㄣˇ)料(ㄌㄧㄠˋ)，問(ㄨㄣˋ)店(ㄉㄧㄢˋ)員(ㄩㄢˊ)可(ㄎㄜˇ)以(ㄧˇ)不(ㄅㄨˋ)可(ㄎㄜˇ)以(ㄧˇ)外(ㄨㄞˋ)帶(ㄉㄞˋ)。因(ㄧㄣ)為(ㄨㄟˋ)他(ㄊㄚ)對(ㄉㄨㄟˋ)魚(ㄩˊ)過(ㄍㄨㄛˋ)敏(ㄇㄧㄣˇ)，所(ㄙㄨㄛˇ)以(ㄧˇ)問(ㄨㄣˋ)店(ㄉㄧㄢˋ)員(ㄩㄢˊ)有(ㄧㄡˇ)沒(ㄇㄟˊ)有(ㄧㄡˇ)沒(ㄇㄟˊ)有(ㄧㄡˇ)魚(ㄩˊ)的(ㄉㄜ˙)食(ㄕˊ)物(ㄨˋ)？",
+                                text: "少(ㄕㄠˋ)康(ㄎㄤ)下(ㄒㄧㄚˋ)個(ㄍㄜ˙)禮(ㄌㄧˇ)拜(ㄅㄞˋ)要(ㄧㄠˋ)去(ㄑㄩˋ)鳳(ㄈㄥˋ)凰(ㄏㄨㄤˊ)城(ㄔㄥˊ)看(ㄎㄢˋ)朋(ㄆㄥˊ)友(ㄧㄡˇ)。他(ㄊㄚ)要(ㄧㄠˋ)在(ㄗㄞˋ)洛(ㄌㄨㄛˋ)杉(ㄕㄢ)磯(ㄐㄧ)轉(ㄓㄨㄢˇ)機(ㄐㄧ)，所(ㄙㄨㄛˇ)以(ㄧˇ)行(ㄒㄧㄥˊ)李(ㄌㄧˇ)不(ㄅㄨˋ)能(ㄋㄥˊ)太(ㄊㄞˋ)多(ㄉㄨㄛ)。少(ㄕㄠˋ)康(ㄎㄤ)的(ㄉㄜ˙)太(ㄊㄞˋ)太(ㄊㄞ˙)雪(ㄒㄩㄝˇ)菲(ㄈㄟ)覺(ㄐㄩㄝˊ)得(ㄉㄜ˙)護(ㄏㄨˋ)照(ㄓㄠˋ)很(ㄏㄣˇ)重(ㄓㄨㄥˋ)要(ㄧㄠˋ)，她(ㄊㄚ)拜(ㄅㄞˋ)託(ㄊㄨㄛ)少(ㄕㄠˋ)康(ㄎㄤ)不(ㄅㄨˊ)要(ㄧㄠˋ)忘(ㄨㄤˋ)記(ㄐㄧˋ)帶(ㄉㄞˋ)。少(ㄕㄠˋ)康(ㄎㄤ)又(ㄧㄡˋ)檢(ㄐㄧㄢˇ)查(ㄔㄚˊ)了(ㄌㄜ˙)一(ㄧˊ)次(ㄘˋ)包(ㄅㄠ)包(ㄅㄠ)，東(ㄉㄨㄥ)西(ㄒㄧ)差(ㄔㄚ)不(ㄅㄨˋ)多(ㄉㄨㄛ)都(ㄉㄡ)準(ㄓㄨㄣˇ)備(ㄅㄟˋ)好(ㄏㄠˇ)了(ㄌㄜ˙)。最(ㄗㄨㄟˋ)近(ㄐㄧㄣˋ)他(ㄊㄚ)工(ㄍㄨㄥ)作(ㄗㄨㄛˋ)很(ㄏㄣˇ)忙(ㄇㄤˊ)，又(ㄧㄡˋ)累(ㄌㄟˋ)又(ㄧㄡˋ)想(ㄒㄧㄤˇ)睡(ㄕㄨㄟˋ)，雪(ㄒㄩㄝˇ)菲(ㄈㄟ)希(ㄒㄧ)望(ㄨㄤˋ)他(ㄊㄚ)上(ㄕㄤˋ)飛(ㄈㄟ)機(ㄐㄧ)以(ㄧˇ)後(ㄏㄡˋ)好(ㄏㄠˇ)好(ㄏㄠˇ)休(ㄒㄧㄡ)息(ㄒㄧˊ)。出(ㄔㄨ)發(ㄈㄚ)的(ㄉㄜ˙)那(ㄋㄚˋ)天(ㄊㄧㄢ)早(ㄗㄠˇ)上(ㄕㄤˋ)，天(ㄊㄧㄢ)剛(ㄍㄤ)亮(ㄌㄧㄤˋ)，雪(ㄒㄩㄝˇ)菲(ㄈㄟ)就(ㄐㄧㄡˋ)幫(ㄅㄤ)少(ㄕㄠˋ)康(ㄎㄤ)提(ㄊㄧˊ)行(ㄒㄧㄥˊ)李(ㄌㄧˇ)，送(ㄙㄨㄥˋ)他(ㄊㄚ)去(ㄑㄩˋ)機(ㄐㄧ)場(ㄔㄤˇ)。少(ㄕㄠˋ)康(ㄎㄤ)只(ㄓˇ)是(ㄕˋ)有(ㄧㄡˇ)一(ㄧˋ)點(ㄉㄧㄢˇ)感(ㄍㄢˇ)冒(ㄇㄠˋ)，吃(ㄔ)了(ㄌㄜ˙)藥(ㄧㄠˋ)就(ㄐㄧㄡˋ)好(ㄏㄠˇ)多(ㄉㄨㄛ)了(ㄌㄜ˙)。到(ㄉㄠˋ)了(ㄌㄜ˙)鳳(ㄈㄥˋ)凰(ㄏㄨㄤˊ)城(ㄔㄥˊ)，朋(ㄆㄥˊ)友(ㄧㄡˇ)找(ㄓㄠˇ)他(ㄊㄚ)去(ㄑㄩˋ)一(ㄧˊ)個(ㄍㄜ˙)安(ㄢ)靜(ㄐㄧㄥˋ)的(ㄉㄜ˙)小(ㄒㄧㄠˇ)鎮(ㄓㄣˋ)玩(ㄨㄢˊ)。少(ㄕㄠˋ)康(ㄎㄤ)很(ㄏㄣˇ)開(ㄎㄞ)心(ㄒㄧㄣ)，就(ㄐㄧㄡˋ)是(ㄕˋ)想(ㄒㄧㄤˇ)在(ㄗㄞˋ)那(ㄋㄚˋ)裡(ㄌㄧˇ)住(ㄓㄨˋ)幾(ㄐㄧˇ)天(ㄊㄧㄢ)。他(ㄊㄚ)點(ㄉㄧㄢˇ)了(ㄌㄜ˙)一(ㄧˋ)杯(ㄅㄟ)飲(ㄧㄣˇ)料(ㄌㄧㄠˋ)，問(ㄨㄣˋ)店(ㄉㄧㄢˋ)員(ㄩㄢˊ)可(ㄎㄜˇ)以(ㄧˇ)外(ㄨㄞˋ)帶(ㄉㄞˋ)嗎(ㄇㄚ˙)？因(ㄧㄣ)為(ㄨㄟˋ)他(ㄊㄚ)對(ㄉㄨㄟˋ)海(ㄏㄞˇ)鮮(ㄒㄧㄢ)過(ㄍㄨㄛˋ)敏(ㄇㄧㄣˇ)，所(ㄙㄨㄛˇ)以(ㄧˇ)也(ㄧㄝˇ)問(ㄨㄣˋ)店(ㄉㄧㄢˋ)員(ㄩㄢˊ)有(ㄧㄡˇ)沒(ㄇㄟˊ)有(ㄧㄡˇ)魚(ㄩˊ)的(ㄉㄜ˙)食(ㄕˊ)物(ㄨˋ)嗎(ㄇㄚ˙)？",
                                 qs: [
                                     "Q1. 少康要去哪裡？他要在哪裡轉機？",
                                     "Q2. 雪菲覺得什麼東西很重要？",
@@ -459,7 +465,7 @@
                             <div class="btn-group">
                                 <button class="audio-btn" onclick="playAudio('${item.correct}')">🔊</button>
                                 <button class="audio-btn record-btn" onclick="toggleRecord(this, 'rec-${counter}')" title="Record your voice">🎤</button>
-                                <button class="play-rec-btn" id="play-rec-rec-${counter}" onclick="playRecording('rec-${counter}')" disabled>▶ Play</button>
+                                <button class="play-rec-btn" id="play-rec-rec-${counter}" onclick="playRecording('rec-${counter}')" disabled>▶</button>
                             </div>
                             <span class="correct" style="margin-right:8px; margin-left:8px;">✅ </span> <span style="flex:1;">${parseZhuyin(item.correct)}</span>
                         </div>
@@ -475,7 +481,7 @@
                                     <div class="btn-group">
                                         <button class="audio-btn" onclick="playAudio('${ex.zh}')">🔊</button>
                                         <button class="audio-btn record-btn" onclick="toggleRecord(this, 'rec-${counter}')" title="Record your voice">🎤</button>
-                                        <button class="play-rec-btn" id="play-rec-rec-${counter}" onclick="playRecording('rec-${counter}')" disabled>▶ Play</button>
+                                        <button class="play-rec-btn" id="play-rec-rec-${counter}" onclick="playRecording('rec-${counter}')" disabled>▶</button>
                                     </div>
                                     <div class="zhuyin-content" style="flex:1; margin-left:8px;">${parseZhuyin(ex.zh)}</div>
                                 </div>
@@ -507,7 +513,7 @@
                                 <div class="btn-group" style="margin-top:5px; margin-right: 15px;">
                                     <button class="audio-btn" onclick="playAudio('${p.text}')">🔊</button>
                                     <button class="audio-btn record-btn" onclick="toggleRecord(this, 'rec-${counter}')" title="Record your voice">🎤</button>
-                                    <button class="play-rec-btn" id="play-rec-rec-${counter}" onclick="playRecording('rec-${counter}')" disabled>▶ Play</button>
+                                    <button class="play-rec-btn" id="play-rec-rec-${counter}" onclick="playRecording('rec-${counter}')" disabled>▶</button>
                                 </div>
                                 <div style="flex:1; font-size:16px; line-height:1.8; margin-left:8px;">
                                     ${parseZhuyin(p.text)}
