@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Chad's Mandarin Lesson 186</title>
+    <style>
+        :root { --bg: #FDFBF7; --primary: #D4A373; --text: #4a4a4a; --white: #fff; --sidebar-width: 280px; }
+        html { scroll-behavior: smooth; }
+        body { font-family: 'Helvetica Neue', Arial, sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; margin: 0; padding: 0; display: flex; transition: margin-left 0.3s ease; }
+        
+        /* 頂部連結導覽 */
+        .top-nav { position: fixed; top: 0; left: 0; width: 100%; background: #FFF9F0; border-bottom: 1px solid #E6D5B8; padding: 10px 20px; box-sizing: border-box; text-align: right; z-index: 1200; display: flex; justify-content: flex-end; align-items: center; }
+        .top-nav a { color: var(--primary); font-weight: bold; text-decoration: none; margin-left: 20px; font-size: 15px; }
+        .top-nav a:hover { text-decoration: underline; color: #8C6239; }
+
+        /* 左側收合大綱導覽列 */
+        .sidebar { width: var(--sidebar-width); background: #FFF9F0; border-right: 1px solid #E6D5B8; height: 100vh; position: fixed; top: 0; left: 0; overflow-y: auto; padding: 60px 20px 20px 20px; box-sizing: border-box; transition: transform 0.3s ease; z-index: 1000; }
+        .sidebar.collapsed { transform: translateX(-100%); }
+        .sidebar h3 { margin-top: 0; color: #8C6239; font-size: 18px; border-bottom: 2px solid var(--primary); padding-bottom: 8px; display: flex; justify-content: space-between; align-items: center; }
+        .sidebar ol { padding-left: 20px; margin: 10px 0; color: #555; }
+        .sidebar li { margin-bottom: 8px; font-size: 15px; font-weight: bold; color: #8C6239; }
+        .sidebar ul { padding-left: 15px; list-style-type: circle; margin-top: 5px; margin-bottom: 15px; font-weight: normal; }
+        .sidebar ul li { font-size: 13.5px; margin-bottom: 6px; color: #555; }
+        .sidebar a { color: #555; text-decoration: none; display: block; }
+        .sidebar a:hover { color: #D4A373; font-weight: bold; }
+        
+        /* 切換按鈕 */
+        .sidebar-toggle { position: fixed; top: 50px; left: 15px; z-index: 1100; background: var(--primary); color: white; border: none; padding: 8px 12px; border-radius: 6px; cursor: pointer; font-size: 14px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+
+        /* 主內容區 */
+        .main-content { margin-top: 40px; margin-left: var(--sidebar-width); width: calc(100% - var(--sidebar-width)); padding: 20px 40px; box-sizing: border-box; max-width: 900px; transition: margin-left 0.3s ease, width 0.3s ease; }
+        .main-content.expanded { margin-left: 0; width: 100%; }
+
+        .header { text-align: center; border-bottom: 2px solid var(--primary); padding-bottom: 10px; margin-bottom: 20px; margin-top: 20px; }
+        
+        .controls { position: sticky; top: 40px; background: var(--bg); padding: 15px; text-align: center; border-bottom: 1px solid #ccc; z-index: 100; margin-bottom: 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
+        button.control-btn { background: var(--primary); color: white; border: none; padding: 10px 15px; margin: 5px; border-radius: 6px; cursor: pointer; font-size: 14px; font-weight: bold; }
+        button.control-btn:hover { background: #B5835A; }
+        
+        .audio-btn { background: #f0f0f0; color: #333; font-size: 16px; padding: 8px; border-radius: 50%; width: 35px; height: 35px; display: inline-flex; align-items: center; justify-content: center; border: none; cursor: pointer; margin-right: 5px; }
+        .audio-btn:hover { background: #e0e0e0; }
+        
+        .rec-btn { background: #e07a5f; color: white; font-size: 14px; padding: 6px 12px; border-radius: 20px; border: none; cursor: pointer; display: inline-flex; align-items: center; gap: 5px; margin-right: 5px; }
+        .rec-btn:hover { background: #cc6b50; }
+        .rec-btn.recording { background: #d90429; animation: pulse 1.5s infinite; }
+        
+        .play-rec-btn { background: #457b9d; color: white; font-size: 14px; padding: 6px 12px; border-radius: 20px; border: none; cursor: pointer; display: inline-flex; align-items: center; gap: 5px; }
+        .play-rec-btn:hover { background: #1d3557; }
+        .play-rec-btn:disabled { background: #ccc; cursor: not-allowed; }
+
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
+
+        h2 { color: #8C6239; border-left: 5px solid var(--primary); padding-left: 10px; margin-top: 30px; }
+        .section { margin-bottom: 30px; background: var(--white); padding: 20px; border-radius: 12px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); scroll-margin-top: 130px; }
+        .item { margin-bottom: 20px; display: flex; flex-direction: column; border-bottom: 1px dashed #eee; padding-bottom: 15px; }
+        .item-content { display: flex; align-items: flex-start; flex-wrap: wrap; margin-bottom: 5px; gap: 10px; }
+        .btn-group { display: flex; align-items: center; margin-right: 10px; margin-bottom: 5px; }
+        
+        /* Bopomofo (Zhuyin) Vertical Formatting */
+        .zy-char-wrap { display: inline-flex; align-items: center; margin-right: 2px; }
+        .zy-char { font-size: 26px; font-family: "DFKai-SB", "BiauKai", serif; }
+        .zy-box { display: inline-flex; flex-direction: column; justify-content: center; position: relative; margin-left: 2px; padding-right: 8px; }
+        .zy-symbols { writing-mode: vertical-rl; text-orientation: upright; font-size: 11px; letter-spacing: -2px; }
+        .zy-tone { position: absolute; right: 0px; top: 50%; transform: translateY(-50%); font-size: 11px; }
+        .zy-neutral { position: absolute; top: -11px; left: 50%; transform: translateX(-50%); font-size: 11px; }
+        
+        .en-trans { color: #666; font-size: 15px; font-style: italic; margin-top: 5px; margin-left: 12px; width: 100%; }
+        .grammar-box { background: #FFF9F0; border: 1px solid #E6D5B8; border-radius: 8px; padding: 15px; margin: 15px 0; scroll-margin-top: 140px; }
+        .wrong { color: #D9534F; font-size: 18px; font-weight: bold;}
+        .correct { color: #5CB85C; font-size: 18px; font-weight: bold;}
+        .note { font-size: 14px; color: #555; margin-bottom: 10px; line-height: 1.5; }
+        .vocab-img { max-width: 250px; height: auto; border-radius: 8px; border: 1px solid #E6D5B8; display: block; margin: 10px 0; }
+        
+        .homework-q { margin-top: 15px; font-size: 16px; font-weight: bold; }
+        .hw-textarea { width: 100%; height: 40px; margin-top: 8px; margin-bottom: 15px; border-radius: 4px; border: 1px solid #ccc; padding: 5px; font-family: inherit; }
+        
+        @media (max-width: 900px) {
+            .sidebar { transform: translateX(-100%); }
+            .sidebar.active { transform: translateX(0); }
+            .main-content { margin-left: 0; width: 100%; padding: 20px; }
+            .en-trans { margin-left: 0; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 頂部導覽列 -->
+    <div class="top-nav">
+        <a href="https://jany-mandarin.github.io/Chad.html">Index</a>
+        <a href="https://jany-mandarin.github.io/Chad.lesson185.html">Lesson 185</a>
+    </div>
+
+    <button class="sidebar-toggle" onclick="toggleSidebar()">☰ Outline</button>
+
+    <div class="sidebar" id="sidebar">
+        <h3>📖 Outline <button style="background:none; border:none; color:#8C6239; font-weight:bold; cursor:pointer; font-size:16px;" onclick="toggleSidebar()">×</button></h3>
+        <ol>
+            <li><a href="#sec-0">Warm-up</a>
+                <ul>
+                    <li><a href="#sec-0-item-0">叫 (Call / Wake up)</a></li>
+                    <li><a href="#sec-0-item-1">換 (Change)</a></li>
+                    <li><a href="#sec-0-item-2">酷 (Cool)</a></li>
+                    <li><a href="#sec-0-item-3">紫 (Purple)</a></li>
+                    <li><a href="#sec-0-item-4">比較難和難過 (Hard vs Sad)</a></li>
+                    <li><a href="#sec-0-item-5">關於 (About)</a></li>
+                    <li><a href="#sec-0-item-6">有錢人 (Rich person)</a></li>
+                    <li><a href="#sec-0-item-7">好人 (Good person)</a></li>
+                    <li><a href="#sec-0-item-8">卡車 (Truck)</a></li>
+                    <li><a href="#sec-0-item-9">想 (Think / Want / Miss)</a></li>
+                </ul>
+            </li>
+            <li><a href="#sec-1">Homework Review</a>
+                <ul>
+                    <li><a href="#sec-1-item-0">拜託 (Beg / Please)</a></li>
+                    <li><a href="#sec-1-item-1">發音練習 (Pronunciation)</a></li>
+                    <li><a href="#sec-1-item-2">本來 (Originally)</a></li>
+                    <li><a href="#sec-1-item-3">少 (Less / Title)</a></li>
+                </ul>
+            </li>
+            <li><a href="#sec-2">Lesson 11</a>
+                <ul>
+                    <li><a href="#sec-2-item-0">別 (Don't / Other)</a></li>
+                </ul>
+            </li>
+            <li><a href="#sec-3">Homework: Translation</a></li>
+            <li><a href="#sec-4">Homework: Reading</a></li>
+        </ol>
+    </div>
+
+    <div class="main-content" id="mainContent">
+        <div class="header">
+            <h1>Chad's Mandarin Lesson 186</h1>
+            <p>Date: <span id="currentDate">2026/10/4</span></p>
+        </div>
+
+        <div class="controls">
+            <button class="control-btn" onclick="toggleZhuyin()">Toggle Bopomofo</button>
+            <button class="control-btn" onclick="toggleEnglish()">Toggle English</button>
+        </div>
+
+        <div id="content"></div>
+    </div>
+
+    <script>
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const mainContent = document.getElementById('mainContent');
+            if (window.innerWidth <= 900) {
+                sidebar.classList.toggle('active');
+            } else {
+                sidebar.classList.toggle('collapsed');
+                mainContent.classList.toggle('expanded');
+            }
+        }
+
+        function parseZhuyin(text) {
+            const regex = /([\u4e00-\u9fa5a-zA-Z0-9])\((.*?)\)/g;
+            let parsed = text.replace(regex, (match, char, zy) => {
+                let tone = '';
+                let symbols = zy;
+                let isNeutral = false;
+                
+                if (zy.includes('ˊ')) { tone = 'ˊ'; symbols = zy.replace('ˊ', ''); }
+                else if (zy.includes('ˇ')) { tone = 'ˇ'; symbols = zy.replace('ˇ', ''); }
+                else if (zy.includes('ˋ')) { tone = 'ˋ'; symbols = zy.replace('ˋ', ''); }
+                else if (zy.includes('˙')) { isNeutral = true; symbols = zy.replace('˙', ''); }
+
+                let toneHtml = tone ? `<span class="zy-tone">${tone}</span>` : '';
+                let neutralHtml = isNeutral ? `<span class="zy-neutral">˙</span>` : '';
+
+                return `<div class="zy-char-wrap"><span class="zy-char">${char}</span><div class="zy-box">${neutralHtml}<span class="zy-symbols">${symbols}</span>${toneHtml}</div></div>`;
+            });
+            return parsed;
+        }
+
+        let currentUtteranceText = "";
+
+        function playAudio(text, btn) {
+            let cleanText = text.replace(/\(.*?\)/g, '')
+                                .replace(/和/g, '汗')
+                                .replace(/都/g, '兜')
+                                .replace(/差/g, '插')
+                                .replace(/俄/g, '惡')
+                                .replace(/少康/g, '邵康')
+                                .replace(/空少/g, '空邵')
+                                .replace(/[^\u4e00-\u9fa5，。？！a-zA-Z ]/g, '');
+
+            if (speechSynthesis.speaking && currentUtteranceText === cleanText) {
+                if (speechSynthesis.paused) {
+                    speechSynthesis.resume();
+                } else {
+                    speechSynthesis.pause();
+                }
+                return;
+            }
+
+            speechSynthesis.cancel(); 
+            currentUtteranceText = cleanText;
+            const utterance = new SpeechSynthesisUtterance(cleanText);
+            utterance.lang = 'zh-TW';
+            utterance.rate = 0.85;
+            utterance.onend = () => { currentUtteranceText = ""; };
+            speechSynthesis.speak(utterance);
+        }
+
+        let mediaRecorders = {};
+
+        async function toggleRecord(btn, id) {
+            let container = btn.closest('.item') || btn.closest('.grammar-box') || btn.closest('div[style*="background:#fff"]');
+            let player = container.querySelector('.audio-player');
+            
+            if (!player) {
+                player = document.createElement('audio');
+                player.className = 'audio-player';
+                player.controls = true;
+                player.style.display = 'none';
+                player.style.width = '100%';
+                player.style.marginTop = '15px';
+                container.appendChild(player);
+            }
+
+            if (!mediaRecorders[id] || mediaRecorders[id].state === "inactive") {
+                try {
+                    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+                    let chunks = [];
+                    let recorder = new MediaRecorder(stream);
+                    
+                    recorder.ondataavailable = e => chunks.push(e.data);
+                    recorder.onstop = () => {
+                        const blob = new Blob(chunks, { 'type': 'audio/webm' });
+                        player.src = URL.createObjectURL(blob);
+                        player.style.display = 'block';
+                        document.getElementById(`play-rec-${id}`).disabled = false;
+                        stream.getTracks().forEach(track => track.stop());
+                    };
+
+                    recorder.start();
+                    mediaRecorders[id] = recorder;
+                    btn.innerHTML = "⏹️";
+                    btn.classList.add("recording");
+                    player.style.display = 'none';
+                } catch (err) {
+                    alert("Microphone access denied. 請允許瀏覽器使用麥克風。");
+                }
+            } else {
+                mediaRecorders[id].stop();
+                btn.innerHTML = "🎤";
+                btn.classList.remove("recording");
+            }
+        }
+
+        function playRecording(id) {
+            let btn = document.getElementById(`play-rec-${id}`);
+            let container = btn.closest('.item') || btn.closest('.grammar-box') || btn.closest('div[style*="background:#fff"]');
+            let player = container.querySelector('.audio-player');
+            if (player && player.src) {
+                player.play();
+            }
+        }
+
+        const lessonData = [
+            {
+                title: "1. Warm-up (課前暖身)",
+                items: [
+                    {
+                        type: "grammar",
+                        title: "1) 叫 (Call / Wake up)",
+                        note: "Explanation: Can be used for waking someone up.",
+                        examples: [
+                            { zh: "今(ㄐㄧㄣ)天(ㄊㄧㄢ)早(ㄗㄠˇ)上(ㄕㄤˋ)手(ㄕㄡˇ)機(ㄐㄧ)沒(ㄇㄟˊ)有(ㄧㄡˇ)叫(ㄐㄧㄠˋ)我(ㄨㄛˇ)起(ㄑㄧˇ)床(ㄔㄨㄤˊ)，我(ㄨㄛˇ)早(ㄗㄠˇ)上(ㄕㄤˋ)起(ㄑㄧˇ)床(ㄔㄨㄤˊ)的(ㄉㄜ˙)時(ㄕˊ)候(ㄏㄡˋ)看(ㄎㄢˋ)到(ㄉㄠˋ)我(ㄨㄛˇ)的(ㄉㄜ˙)手(ㄕㄡˇ)機(ㄐㄧ)是(ㄕˋ)六(ㄌㄧㄡˋ)點(ㄉㄧㄢˇ)五(ㄨˇ)十(ㄕˊ)五(ㄨˇ)分(ㄈㄣ)，我(ㄨㄛˇ)馬(ㄇㄚˇ)上(ㄕㄤˋ)起(ㄑㄧˇ)床(ㄔㄨㄤˊ)。", en: "This morning my phone didn't wake me up, when I got up in the morning and saw my phone was at 6:55, I got up immediately." }
+                        ]
+                    },
+                    {
+                        type: "grammar",
+                        title: "2) 換 (Change / Exchange)",
+                        note: "Explanation: In the old days before money, people bartered and exchanged what they had with others. This is the origin of this character.",
+                        customHtml: `<img src="https://cdn.phototourl.com/member/2026-10-04-843fd7a4-8d3e-4965-a022-f1403e5adbcb.png" class="vocab-img" alt="Change origin">`,
+                        examples: [
+                            { zh: "哇(ㄨㄚ)！你(ㄋㄧˇ)的(ㄉㄜ˙)燈(ㄉㄥ)可(ㄎㄜˇ)以(ㄧˇ)換(ㄏㄨㄢˋ)顏(ㄧㄢˊ)色(ㄙㄜˋ)！！", en: "Wow! Your light can change colors!!" },
+                            { zh: "我(ㄨㄛˇ)今(ㄐㄧㄣ)天(ㄊㄧㄢ)感(ㄍㄢˇ)冒(ㄇㄠˋ)了(ㄌㄜ˙)，可(ㄎㄜˇ)以(ㄧˇ)換(ㄏㄨㄢˋ)到(ㄉㄠˋ)明(ㄇㄧㄥˊ)天(ㄊㄧㄢ)上(ㄕㄤˋ)課(ㄎㄜˋ)嗎(ㄇㄚ˙)？", en: "I caught a cold today, can we change the class to tomorrow?" },
+                            { zh: "我(ㄨㄛˇ)現(ㄒㄧㄢˋ)在(ㄗㄞˋ)在(ㄗㄞˋ)換(ㄏㄨㄢˋ)衣(ㄧ)服(ㄈㄨˊ)，不(ㄅㄨˋ)可(ㄎㄜˇ)以(ㄧˇ)看(ㄎㄢˋ)我(ㄨㄛˇ)！", en: "I am changing clothes right now, you cannot look at me!" }
+                        ]
+                    },
+                    {
+                        type: "grammar",
+                        title: "3) 酷 (Cool)",
+                        note: "Explanation: Originally used to describe the strong/pungent smell of wine. Later, as foreign words were introduced, it sounded like the English word 'cool', so it took on that meaning! Often used to respond when someone tells you something special.",
+                        customHtml: `<img src="https://cdn.phototourl.com/member/2026-10-04-cfefb56a-a004-43dc-8cd3-d81c2873ecbe.png" class="vocab-img" alt="Cool origin">`,
+                        examples: [
+                            { zh: "哇(ㄨㄚ)！你(ㄋㄧˇ)家(ㄐㄧㄚ)的(ㄉㄜ˙)電(ㄉㄧㄢˋ)燈(ㄉㄥ)好(ㄏㄠˇ)酷(ㄎㄨˋ)！！可(ㄎㄜˇ)以(ㄧˇ)換(ㄏㄨㄢˋ)不(ㄅㄨˋ)一(ㄧˊ)樣(ㄧㄤˋ)的(ㄉㄜ˙)顏(ㄧㄢˊ)色(ㄙㄜˋ)！！", en: "Wow! The lights in your house are so cool!! They can change to different colors!!" },
+                            { zh: "哇(ㄨㄚ)！你(ㄋㄧˇ)的(ㄉㄜ˙)家(ㄐㄧㄚ)好(ㄏㄠˇ)酷(ㄎㄨˋ)，能(ㄋㄥˊ)在(ㄗㄞˋ)地(ㄉㄧˋ)下(ㄒㄧㄚˋ)室(ㄕˋ)上(ㄕㄤˋ)課(ㄎㄜˋ)，台(ㄊㄞˊ)灣(ㄨㄢ)的(ㄉㄜ˙)房(ㄈㄤˊ)子(ㄗ˙)地(ㄉㄧˋ)下(ㄒㄧㄚˋ)室(ㄕˋ)都(ㄉㄡ)是(ㄕˋ)停(ㄊㄧㄥˊ)車(ㄔㄜ)場(ㄔㄤˇ)。", en: "Wow! Your house is so cool, you can have class in the basement. The basements of houses in Taiwan are all parking lots." }
+                        ]
+                    },
+                    {
+                        type: "grammar",
+                        title: "4) 紫 (Purple)",
+                        note: "Explanation: In ancient China, purple was a noble color exclusive to the emperor. You can imagine the emperor sending someone to dye this special color for him. The top part represents sending someone to walk over, and the bottom part is a rope, giving the feeling of dyeing that rope.",
+                        examples: [
+                            { zh: "你(ㄋㄧˇ)的(ㄉㄜ˙)燈(ㄉㄥ)是(ㄕˋ)紫(ㄗˇ)色(ㄙㄜˋ)的(ㄉㄜ˙)嗎(ㄇㄚ˙)？對(ㄉㄨㄟˋ)！是(ㄕˋ)紫(ㄗˇ)色(ㄙㄜˋ)的(ㄉㄜ˙)，還(ㄏㄞˊ)可(ㄎㄜˇ)以(ㄧˇ)用(ㄩㄥˋ)手(ㄕㄡˇ)機(ㄐㄧ)換(ㄏㄨㄢˋ)顏(ㄧㄢˊ)色(ㄙㄜˋ)。", en: "Is your light purple? Yes! It is purple, and I can also use my phone to change its color." }
+                        ]
+                    },
+                    {
+                        type: "grammar",
+                        title: "5) 比較難和難過 (Hard vs Sad)",
+                        examples: [
+                            { zh: "我(ㄨㄛˇ)看(ㄎㄢˋ)完(ㄨㄢˊ)這(ㄓㄜˋ)個(ㄍㄜ˙)電(ㄉㄧㄢˋ)影(ㄧㄥˇ)，覺(ㄐㄩㄝˊ)得(ㄉㄜ˙)很(ㄏㄣˇ)難(ㄋㄢˊ)過(ㄍㄨㄛˋ)。", en: "I felt very sad after watching this movie." },
+                            { zh: "我(ㄨㄛˇ)覺(ㄐㄩㄝˊ)得(ㄉㄜ˙)開(ㄎㄞ)車(ㄔㄜ)不(ㄅㄨˋ)難(ㄋㄢˊ)。", en: "I think driving is not hard." }
+                        ]
+                    },
+                    {
+                        type: "grammar",
+                        title: "6) 關於 (About / Regarding)",
+                        note: "Explanation: Think of the English word 'close'. '關於' means being closely related to a matter. Common pattern: A is about... (A 是關於...), A is related to B (A 跟 B 有關係).<br>Note on 沒關係 (No worries): It has two meanings. The second meaning is 'it has no relation to me', so there is no need to care. In sentences, the '係' is sometimes omitted (沒關).",
+                        examples: [
+                            { zh: "Digger這(ㄓㄜˋ)個(ㄍㄜ˙)電(ㄉㄧㄢˋ)影(ㄧㄥˇ)是(ㄕˋ)有(ㄧㄡˇ)關(ㄍㄨㄢ)於(ㄩˊ)不(ㄅㄨˋ)好(ㄏㄠˇ)的(ㄉㄜ˙)天(ㄊㄧㄢ)氣(ㄑㄧˋ)。", en: "The movie Digger is about bad weather." },
+                            { zh: "這(ㄓㄜˋ)是(ㄕˋ)有(ㄧㄡˇ)關(ㄍㄨㄢ)於(ㄩˊ)貓(ㄇㄠ)的(ㄉㄜ˙)書(ㄕㄨ)。", en: "This is a book about cats." },
+                            { zh: "老(ㄌㄠˇ)闆(ㄅㄢˇ)今(ㄐㄧㄣ)天(ㄊㄧㄢ)打(ㄉㄚˇ)電(ㄉㄧㄢˋ)話(ㄏㄨㄚˋ)給(ㄍㄟˇ)我(ㄨㄛˇ)是(ㄕˋ)關(ㄍㄨㄢ)於(ㄩˊ)新(ㄒㄧㄣ)的(ㄉㄜ˙)工(ㄍㄨㄥ)作(ㄗㄨㄛˋ)。", en: "The boss called me today about a new job." },
+                            { zh: "這(ㄓㄜˋ)件(ㄐㄧㄢˋ)事(ㄕˋ)跟(ㄍㄣ)我(ㄨㄛˇ)有(ㄧㄡˇ)關(ㄍㄨㄢ)(係(ㄒㄧˋ))，那(ㄋㄚˋ)件(ㄐㄧㄢˋ)事(ㄕˋ)跟(ㄍㄣ)我(ㄨㄛˇ)沒(ㄇㄟˊ)關(ㄍㄨㄢ)(係(ㄒㄧˋ))。", en: "This matter is related to me, that matter is not related to me." },
+                            { zh: "你(ㄋㄧˇ)今(ㄐㄧㄣ)天(ㄊㄧㄢ)很(ㄏㄣˇ)開(ㄎㄞ)心(ㄒㄧㄣ)是(ㄕˋ)跟(ㄍㄣ)你(ㄋㄧˇ)的(ㄉㄜ˙)貓(ㄇㄠ)有(ㄧㄡˇ)關(ㄍㄨㄢ)(係(ㄒㄧˋ))嗎(ㄇㄚ˙)？對(ㄉㄨㄟˋ)啊(ㄚ)！我(ㄨㄛˇ)的(ㄉㄜ˙)貓(ㄇㄠ)每(ㄇㄟˇ)天(ㄊㄧㄢ)都(ㄉㄡ)讓(ㄖㄤˋ)我(ㄨㄛˇ)很(ㄏㄣˇ)開(ㄎㄞ)心(ㄒㄧㄣ)。", en: "Are you very happy today because of your cat? Yes! My cat makes me very happy every day." }
+                        ]
+                    },
+                    {
+                        type: "grammar",
+                        title: "7) 有錢人 (Rich person)",
+                        note: "Explanation: Must remember to include the word '有' (have) before money (錢).",
+                        examples: [
+                            { zh: "在(ㄗㄞˋ)Digger這(ㄓㄜˋ)個(ㄍㄜ˙)電(ㄉㄧㄢˋ)影(ㄧㄥˇ)裡(ㄌㄧˇ)，阿(ㄚ)湯(ㄊㄤ)哥(ㄍㄜ)是(ㄕˋ)有(ㄧㄡˇ)錢(ㄑㄧㄢˊ)人(ㄖㄣˊ)。", en: "In the movie Digger, Brother Tom is a rich person." }
+                        ]
+                    },
+                    {
+                        type: "grammar",
+                        title: "8) 好人 (Good person)",
+                        examples: [
+                            { zh: "在(ㄗㄞˋ)Digger這(ㄓㄜˋ)個(ㄍㄜ˙)電(ㄉㄧㄢˋ)影(ㄧㄥˇ)裡(ㄌㄧˇ)，阿(ㄚ)湯(ㄊㄤ)哥(ㄍㄜ)是(ㄕˋ)好(ㄏㄠˇ)人(ㄖㄣˊ)嗎(ㄇㄚ˙)？不(ㄅㄨˊ)是(ㄕˋ)，他(ㄊㄚ)讓(ㄖㄤˋ)地(ㄉㄧˋ)球(ㄑㄧㄡˊ)死(ㄙˇ)了(ㄌㄜ˙)，他(ㄊㄚ)是(ㄕˋ)有(ㄧㄡˇ)錢(ㄑㄧㄢˊ)的(ㄉㄜ˙)老(ㄌㄠˇ)人(ㄖㄣˊ)。", en: "In the movie Digger, is Brother Tom a good person? No, he made the earth die, he is a rich old man." }
+                        ]
+                    },
+                    {
+                        type: "grammar",
+                        title: "9) 卡車 (Truck)",
+                        note: "Explanation: Early Chinese people saw trucks used for carrying cargo and heard the English word 'car' which sounds like '卡' (kǎ), so they called it 卡車.",
+                        examples: [
+                            { zh: "在(ㄗㄞˋ)美(ㄇㄟˇ)國(ㄍㄨㄛˊ)，沒(ㄇㄟˊ)有(ㄧㄡˇ)很(ㄏㄣˇ)多(ㄉㄨㄛ)有(ㄧㄡˇ)錢(ㄑㄧㄢˊ)人(ㄖㄣˊ)，但(ㄉㄢˋ)我(ㄨㄛˇ)不(ㄅㄨˋ)知(ㄓ)道(ㄉㄠˋ)為(ㄨㄟˋ)什(ㄕㄣˊ)麼(ㄇㄜ˙)很(ㄏㄣˇ)多(ㄉㄨㄛ)人(ㄖㄣˊ)喜(ㄒㄧˇ)歡(ㄏㄨㄢ)買(ㄇㄞˇ)大(ㄉㄚˋ)卡(ㄎㄚˇ)車(ㄔㄜ)。", en: "In the US, there are not many rich people, but I don't know why many people like to buy big trucks." },
+                            { zh: "在(ㄗㄞˋ)台(ㄊㄞˊ)灣(ㄨㄢ)，沒(ㄇㄟˊ)有(ㄧㄡˇ)很(ㄏㄣˇ)多(ㄉㄨㄛ)卡(ㄎㄚˇ)車(ㄔㄜ)，因(ㄧㄣ)為(ㄨㄟˋ)要(ㄧㄠˋ)是(ㄕˋ)開(ㄎㄞ)卡(ㄎㄚˇ)車(ㄔㄜ)，很(ㄏㄣˇ)難(ㄋㄢˊ)找(ㄓㄠˇ)到(ㄉㄠˋ)停(ㄊㄧㄥˊ)車(ㄔㄜ)位(ㄨㄟˋ)。", en: "In Taiwan, there are not many trucks, because if you drive a truck, it's very hard to find a parking space." }
+                        ]
+                    },
+                    {
+                        type: "grammar",
+                        title: "10) 想 (Think / Want / Miss)",
+                        note: "Explanation: Can mean to think with your brain, to want to do something, or to miss someone/something.",
+                        examples: [
+                            { zh: "在(ㄗㄞˋ)美(ㄇㄟˇ)國(ㄍㄨㄛˊ)，很(ㄏㄣˇ)多(ㄉㄨㄛ)人(ㄖㄣˊ)不(ㄅㄨˋ)喜(ㄒㄧˇ)歡(ㄏㄨㄢ)Digger這(ㄓㄜˋ)個(ㄍㄜ˙)電(ㄉㄧㄢˋ)影(ㄧㄥˇ)，因(ㄧㄣ)為(ㄨㄟˋ)很(ㄏㄣˇ)多(ㄉㄨㄛ)美(ㄇㄟˇ)國(ㄍㄨㄛˊ)人(ㄖㄣˊ)不(ㄅㄨˋ)想(ㄒㄧㄤˇ)知(ㄓ)道(ㄉㄠˋ)很(ㄏㄣˇ)難(ㄋㄢˊ)的(ㄉㄜ˙)事(ㄕˋ)。", en: "In the US, many people don't like the movie Digger, because many Americans don't want to know hard things." },
+                            { zh: "看(ㄎㄢˋ)完(ㄨㄢˊ)電(ㄉㄧㄢˋ)影(ㄧㄥˇ)後(ㄏㄡˋ)，你(ㄋㄧˇ)想(ㄒㄧㄤˇ)要(ㄧㄠˋ)做(ㄗㄨㄛˋ)什(ㄕㄣˊ)麼(ㄇㄜ˙)？我(ㄨㄛˇ)想(ㄒㄧㄤˇ)要(ㄧㄠˋ)買(ㄇㄞˇ)電(ㄉㄧㄢˋ)車(ㄔㄜ)。因(ㄧㄣ)為(ㄨㄟˋ)我(ㄨㄛˇ)不(ㄅㄨˋ)想(ㄒㄧㄤˇ)用(ㄩㄥˋ)很(ㄏㄣˇ)多(ㄉㄨㄛ)油(ㄧㄡˊ)，在(ㄗㄞˋ)美(ㄇㄟˇ)國(ㄍㄨㄛˊ)很(ㄏㄣˇ)多(ㄉㄨㄛ)人(ㄖㄣˊ)都(ㄉㄡ)有(ㄧㄡˇ)卡(ㄎㄚˇ)車(ㄔㄜ)，開(ㄎㄞ)卡(ㄎㄚˇ)車(ㄔㄜ)要(ㄧㄠˋ)用(ㄩㄥˋ)很(ㄏㄣˇ)多(ㄉㄨㄛ)油(ㄧㄡˊ)，我(ㄨㄛˇ)不(ㄅㄨˋ)知(ㄓ)道(ㄉㄠˋ)為(ㄨㄟˋ)什(ㄕㄣˊ)麼(ㄇㄜ˙)他(ㄊㄚ)們(ㄇㄣ˙)想(ㄒㄧㄤˇ)買(ㄇㄞˇ)，他(ㄊㄚ)們(ㄇㄣ˙)不(ㄅㄨˋ)用(ㄩㄥˋ)大(ㄉㄚˋ)卡(ㄎㄚˇ)車(ㄔㄜ)，車(ㄔㄜ)上(ㄕㄤˋ)都(ㄉㄡ)空(ㄎㄨㄥ)空(ㄎㄨㄥ)的(ㄉㄜ˙)、沒(ㄇㄟˊ)有(ㄧㄡˇ)放(ㄈㄤˋ)很(ㄏㄣˇ)多(ㄉㄨㄛ)東(ㄉㄨㄥ)西(ㄒㄧ)。我(ㄨㄛˇ)現(ㄒㄧㄢˋ)在(ㄗㄞˋ)知(ㄓ)道(ㄉㄠˋ)要(ㄧㄠˋ)是(ㄕˋ)用(ㄩㄥˋ)很(ㄏㄣˇ)多(ㄉㄨㄛ)油(ㄧㄡˊ)，地(ㄉㄧˋ)球(ㄑㄧㄡˊ)可(ㄎㄜˇ)能(ㄋㄥˊ)會(ㄏㄨㄟˋ)死(ㄙˇ)。", en: "What do you want to do after watching the movie? I want to buy an electric car. Because I don't want to use a lot of gas, in the US many people have trucks, and driving trucks uses a lot of gas. I don't know why they want to buy them, they don't use big trucks, the cars are empty and don't hold many things. I now know if we use a lot of gas, the earth might die." }
+                        ]
+                    }
+                ]
+            },
+            {
+                title: "2. Homework Review (上次作業)",
+                items: [
+                    {
+                        type: "grammar",
+                        title: "1) 拜託 (Beg / Please)",
+                        note: "Explanation: The left part '拜' represents hands praying, the right part '託' has a speech radical, meaning using words to ask for help.",
+                        customHtml: `<img src="https://cdn.phototourl.com/member/2026-10-04-4b055d21-9557-4360-93e4-e4a8fb284253.png" class="vocab-img" alt="Beg origin">`,
+                        examples: [
+                            { zh: "我(ㄨㄛˇ)太(ㄊㄞˋ)太(ㄊㄞˋ)拜(ㄅㄞˋ)託(ㄊㄨㄛ)我(ㄨㄛˇ)下(ㄒㄧㄚˋ)午(ㄨˇ)去(ㄑㄩˋ)超(ㄔㄠ)市(ㄕˋ)買(ㄇㄞˇ)菜(ㄘㄞˋ)。", en: "My wife begged (asked) me to go to the supermarket to buy groceries in the afternoon." },
+                            { zh: "我(ㄨㄛˇ)拜(ㄅㄞˋ)託(ㄊㄨㄛ)我(ㄨㄛˇ)的(ㄉㄜ˙)貓(ㄇㄠ)不(ㄅㄨˊ)要(ㄧㄠˋ)吐(ㄊㄨˇ)在(ㄗㄞˋ)地(ㄉㄧˋ)上(ㄕㄤˋ)。", en: "I beg my cat not to throw up on the floor." }
+                        ]
+                    },
+                    {
+                        type: "grammar",
+                        title: "2) 發音練習 (Pronunciation Practice)",
+                        examples: [
+                            { zh: "內(ㄋㄟˋ)用(ㄩㄥˋ)", en: "Pinyin: nèi yòng (Dine-in)" },
+                            { zh: "行(ㄒㄧㄥˊ)李(ㄌㄧˇ)", en: "Pinyin: xíng lǐ (Luggage)" },
+                            { zh: "檢(ㄐㄧㄢˇ)查(ㄔㄚˊ)", en: "Pinyin: jiǎn chá (Check / Inspect)" },
+                            { zh: "海(ㄏㄞˇ)鮮(ㄒㄧㄢ)", en: "Pinyin: hǎi xiān (Seafood)" }
+                        ]
+                    },
+                    {
+                        type: "grammar",
+                        title: "3) 本來 (Originally)",
+                        note: "Explanation: The character '本' originates from the root of a tree, carrying the meaning of source or origin.",
+                        examples: [
+                            { zh: "我(ㄨㄛˇ)本(ㄅㄣˇ)來(ㄌㄞˊ)今(ㄐㄧㄣ)天(ㄊㄧㄢ)早(ㄗㄠˇ)上(ㄕㄤˋ)想(ㄒㄧㄤˇ)去(ㄑㄩˋ)公(ㄍㄨㄥ)園(ㄩㄢˊ)走(ㄗㄡˇ)走(ㄗㄡˇ)，可(ㄎㄜˇ)是(ㄕˋ)下(ㄒㄧㄚˋ)雨(ㄩˇ)了(ㄌㄜ˙)，所(ㄙㄨㄛˇ)以(ㄧˇ)我(ㄨㄛˇ)今(ㄐㄧㄣ)天(ㄊㄧㄢ)沒(ㄇㄟˊ)去(ㄑㄩˋ)公(ㄍㄨㄥ)園(ㄩㄢˊ)。", en: "I originally wanted to take a walk in the park this morning, but it rained, so I didn't go to the park today." },
+                            { zh: "我(ㄨㄛˇ)本(ㄅㄣˇ)來(ㄌㄞˊ)要(ㄧㄠˋ)早(ㄗㄠˇ)上(ㄕㄤˋ)六(ㄌㄧㄡˋ)點(ㄉㄧㄢˇ)半(ㄅㄢˋ)起(ㄑㄧˇ)床(ㄔㄨㄤˊ)，可(ㄎㄜˇ)是(ㄕˋ)我(ㄨㄛˇ)很(ㄏㄣˇ)想(ㄒㄧㄤˇ)睡(ㄕㄨㄟˋ)覺(ㄐㄧㄠˋ)，所(ㄙㄨㄛˇ)以(ㄧˇ)我(ㄨㄛˇ)睡(ㄕㄨㄟˋ)到(ㄉㄠˋ)七(ㄑㄧ)點(ㄉㄧㄢˇ)才(ㄘㄞˊ)起(ㄑㄧˇ)床(ㄔㄨㄤˊ)。", en: "I was originally going to get up at 6:30 AM, but I was very sleepy, so I slept until 7:00." }
+                        ]
+                    },
+                    {
+                        type: "grammar",
+                        title: "4) 少 (Less / Title)",
+                        note: "Explanation: This word has two pronunciations. As 3rd tone (shǎo), it means 'lack/less'. As 4th tone (shào), it's a neutral term often used in titles or names to show respect (young master).",
+                        examples: [
+                            { zh: "少(ㄕㄠˋ)康(ㄎㄤ)", en: "Shaokang (A name. Note: 4th tone)" },
+                            { zh: "空(ㄎㄨㄥ)少(ㄕㄠˋ)", en: "Male flight attendant (Note: females are 空姐 kōng jiě. 4th tone)" }
+                        ]
+                    }
+                ]
+            },
+            {
+                title: "3. Lesson 11 (第十一課)",
+                items: [
+                    {
+                        type: "grammar",
+                        title: "1) 別 (Don't / Other)",
+                        note: "Explanation 1: Originates from a bone being cut in half by a knife. The right side is a knife, the left is a broken bone. Meaning 'separate' or 'other'.<br>Explanation 2: If you say '不要' (bú yào / don't want) 10 times fast, it sounds like '別' (bié). So 不要 = 別.",
+                        customHtml: `<img src="https://cdn.phototourl.com/member/2026-10-04-c7e7542d-ce32-46d7-9bf8-05a3ee51f4d9.png" class="vocab-img" alt="Don't origin">`,
+                        examples: [
+                            { zh: "我(ㄨㄛˇ)不(ㄅㄨˋ)想(ㄒㄧㄤˇ)吃(ㄔ)麵(ㄇㄧㄢˋ)，我(ㄨㄛˇ)想(ㄒㄧㄤˇ)吃(ㄔ)別(ㄅㄧㄝˊ)的(ㄉㄜ˙)。", en: "I don't want to eat noodles, I want to eat something else." },
+                            { zh: "這(ㄓㄜˋ)件(ㄐㄧㄢˋ)衣(ㄧ)服(ㄈㄨˊ)太(ㄊㄞˋ)小(ㄒㄧㄠˇ)了(ㄌㄜ˙)，你(ㄋㄧˇ)有(ㄧㄡˇ)沒(ㄇㄟˊ)有(ㄧㄡˇ)別(ㄅㄧㄝˊ)的(ㄉㄜ˙)大(ㄉㄚˋ)小(ㄒㄧㄠˇ)？", en: "This shirt is too small, do you have another size?" },
+                            { zh: "他(ㄊㄚ)去(ㄑㄩˋ)買(ㄇㄞˇ)別(ㄅㄧㄝˊ)的(ㄉㄜ˙)東(ㄉㄨㄥ)西(ㄒㄧ)，會(ㄏㄨㄟˋ)馬(ㄇㄚˇ)上(ㄕㄤˋ)回(ㄏㄨㄟˊ)來(ㄌㄞˊ)。", en: "He went to buy something else, he will be right back." },
+                            { zh: "現(ㄒㄧㄢˋ)在(ㄗㄞˋ)上(ㄕㄤˋ)中(ㄓㄨㄥ)文(ㄨㄣˊ)課(ㄎㄜˋ)，別(ㄅㄧㄝˊ)說(ㄕㄨㄛ)英(ㄧㄥ)文(ㄨㄣˊ)！", en: "We are in Chinese class now, don't speak English!" },
+                            { zh: "別(ㄅㄧㄝˊ)說(ㄕㄨㄛ)話(ㄏㄨㄚˋ)，老(ㄌㄠˇ)師(ㄕ)在(ㄗㄞˋ)上(ㄕㄤˋ)課(ㄎㄜˋ)。", en: "Don't talk, the teacher is teaching." }
+                        ]
+                    }
+                ]
+            },
+            {
+                title: "4. Homework: Translation (翻譯)",
+                items: [
+                    {
+                        type: "homework",
+                        title: "Part 1: Translation Practice",
+                        questions: [
+                            "1. My phone is too old. I want to switch to the new iPhone Duo.",
+                            "2. There is no good fried rice here; I want to go somewhere else.",
+                            "3. Your new electric car looks really cool. Where did you buy it?",
+                            "4. It is very hot outside. Don't forget to bring a hat when you go out.",
+                            "5. Don't eat or drink on the MRT.",
+                            "6. This is a movie about cats.",
+                            "7. Regarding tomorrow's meeting, don't forget."
+                        ]
+                    }
+                ]
+            },
+            {
+                title: "5. Homework: Reading (閱讀)",
+                items: [
+                    {
+                        type: "homework_reading",
+                        title: "Part 2: Reading Comprehension",
+                        passages: [
+                            {
+                                text: "星(ㄒㄧㄥ)期(ㄑㄧˊ)六(ㄌㄧㄡˋ)早(ㄗㄠˇ)上(ㄕㄤˋ)，天(ㄊㄧㄢ)還(ㄏㄞˊ)不(ㄅㄨˊ)太(ㄊㄞˋ)亮(ㄌㄧㄤˋ)，月(ㄩㄝˋ)珠(ㄓㄨ)就(ㄐㄧㄡˋ)起(ㄑㄧˇ)來(ㄌㄞˊ)了(ㄌㄜ˙)。今(ㄐㄧㄣ)天(ㄊㄧㄢ)她(ㄊㄚ)要(ㄧㄠˋ)和(ㄏㄢˋ)朋(ㄆㄥˊ)友(ㄧㄡˇ)正(ㄓㄥˋ)雄(ㄒㄩㄥˊ)去(ㄑㄩˋ)山(ㄕㄢ)上(ㄕㄤˋ)玩(ㄨㄢˊ)。她(ㄊㄚ)換(ㄏㄨㄢˋ)了(ㄌㄜ˙)衣(ㄧ)服(ㄈㄨˊ)，坐(ㄗㄨㄛˋ)在(ㄗㄞˋ)門(ㄇㄣˊ)口(ㄎㄡˇ)等(ㄉㄥˇ)他(ㄊㄚ)。七(ㄑㄧ)點(ㄉㄧㄢˇ)，外(ㄨㄞˋ)面(ㄇㄧㄢˋ)有(ㄧㄡˇ)很(ㄏㄣˇ)大(ㄉㄚˋ)的(ㄉㄜ˙)聲(ㄕㄥ)音(ㄧㄣ)。月(ㄩㄝˋ)珠(ㄓㄨ)一(ㄧˊ)看(ㄎㄢˋ)，是(ㄕˋ)一(ㄧˋ)台(ㄊㄞˊ)卡(ㄎㄚˇ)車(ㄔㄜ)！卡(ㄎㄚˇ)車(ㄔㄜ)是(ㄕˋ)紫(ㄗˇ)色(ㄙㄜˋ)的(ㄉㄜ˙)，看(ㄎㄢˋ)起(ㄑㄧˇ)來(ㄌㄞˊ)真(ㄓㄣ)的(ㄉㄜ˙)很(ㄏㄣˇ)酷(ㄎㄨˋ)。正(ㄓㄥˋ)雄(ㄒㄩㄥˊ)從(ㄘㄨㄥˊ)車(ㄔㄜ)上(ㄕㄤˋ)下(ㄒㄧㄚˋ)來(ㄌㄞˊ)，說(ㄕㄨㄛ)：「這(ㄓㄜˋ)是(ㄕˋ)我(ㄨㄛˇ)爸(ㄅㄚˋ)爸(ㄅㄚ˙)的(ㄉㄜ˙)卡(ㄎㄚˇ)車(ㄔㄜ)。今(ㄐㄧㄣ)天(ㄊㄧㄢ)他(ㄊㄚ)開(ㄎㄞ)車(ㄔㄜ)帶(ㄉㄞˋ)我(ㄨㄛˇ)們(ㄇㄣ˙)去(ㄑㄩˋ)山(ㄕㄢ)上(ㄕㄤˋ)！」",
+                                qs: []
+                            },
+                            {
+                                text: "月(ㄩㄝˋ)珠(ㄓㄨ)說(ㄕㄨㄛ)：「我(ㄨㄛˇ)第(ㄉㄧˋ)一(ㄧ)次(ㄘˋ)坐(ㄗㄨㄛˋ)卡(ㄎㄚˇ)車(ㄔㄜ)！」她(ㄊㄚ)很(ㄏㄣˇ)高(ㄍㄠ)興(ㄒㄧㄥˋ)，馬(ㄇㄚˇ)上(ㄕㄤˋ)上(ㄕㄤˋ)車(ㄔㄜ)了(ㄌㄜ˙)。路(ㄌㄨˋ)上(ㄕㄤˋ)，正(ㄓㄥˋ)雄(ㄒㄩㄥˊ)一(ㄧˋ)直(ㄓˊ)說(ㄕㄨㄛ)話(ㄏㄨㄚˋ)。他(ㄊㄚ)說(ㄕㄨㄛ)：「關(ㄍㄨㄢ)於(ㄩˊ)那(ㄋㄚˋ)座(ㄗㄨㄛˋ)山(ㄕㄢ)，我(ㄨㄛˇ)知(ㄓ)道(ㄉㄠˋ)很(ㄏㄣˇ)多(ㄉㄨㄛ)。山(ㄕㄢ)上(ㄕㄤˋ)有(ㄧㄡˇ)很(ㄏㄣˇ)多(ㄉㄨㄛ)樹(ㄕㄨˋ)，也(ㄧㄝˇ)有(ㄧㄡˇ)很(ㄏㄣˇ)多(ㄉㄨㄛ)花(ㄏㄨㄚ)。」月(ㄩㄝˋ)珠(ㄓㄨ)說(ㄕㄨㄛ)：「真(ㄓㄣ)的(ㄉㄜ˙)嗎(ㄇㄚ˙)？我(ㄨㄛˇ)好(ㄏㄠˇ)想(ㄒㄧㄤˇ)看(ㄎㄢˋ)！」",
+                                qs: []
+                            },
+                            {
+                                text: "可(ㄎㄜˇ)是(ㄕˋ)路(ㄌㄨˋ)很(ㄏㄣˇ)遠(ㄩㄢˇ)。他(ㄊㄚ)們(ㄇㄣ˙)坐(ㄗㄨㄛˋ)了(ㄌㄜ˙)兩(ㄌㄧㄤˇ)個(ㄍㄜ˙)鐘(ㄓㄨㄥ)頭(ㄊㄡˊ)，還(ㄏㄞˊ)沒(ㄇㄟˊ)到(ㄉㄠˋ)。月(ㄩㄝˋ)珠(ㄓㄨ)早(ㄗㄠˇ)上(ㄕㄤˋ)沒(ㄇㄟˊ)有(ㄧㄡˇ)吃(ㄔ)東(ㄉㄨㄥ)西(ㄒㄧ)，這(ㄓㄜˋ)讓(ㄖㄤˋ)她(ㄊㄚ)餓(ㄜˋ)死(ㄙˇ)了(ㄌㄜ˙)。正(ㄓㄥˋ)雄(ㄒㄩㄥˊ)的(ㄉㄜ˙)爸(ㄅㄚˋ)爸(ㄅㄚ˙)說(ㄕㄨㄛ)：「再(ㄗㄞˋ)等(ㄉㄥˇ)一(ㄧˊ)下(ㄒㄧㄚˋ)，山(ㄕㄢ)就(ㄐㄧㄡˋ)在(ㄗㄞˋ)前(ㄑㄧㄢˊ)面(ㄇㄧㄢˋ)了(ㄌㄜ˙)。」",
+                                qs: []
+                            },
+                            {
+                                text: "中(ㄓㄨㄥ)午(ㄨˇ)，他(ㄊㄚ)們(ㄇㄣ˙)終(ㄓㄨㄥ)於(ㄩˊ)到(ㄉㄠˋ)了(ㄌㄜ˙)。山(ㄕㄢ)上(ㄕㄤˋ)很(ㄏㄣˇ)漂(ㄆㄧㄠˋ)亮(ㄌㄧㄤˋ)，天(ㄊㄧㄢ)很(ㄏㄣˇ)藍(ㄌㄢˊ)，樹(ㄕㄨˋ)很(ㄏㄣˇ)綠(ㄌㄩˋ)，花(ㄏㄨㄚ)也(ㄧㄝˇ)很(ㄏㄣˇ)多(ㄉㄨㄛ)。月(ㄩㄝˋ)珠(ㄓㄨ)下(ㄒㄧㄚˋ)車(ㄔㄜ)以(ㄧˇ)後(ㄏㄡˋ)，想(ㄒㄧㄤˇ)看(ㄎㄢˋ)看(ㄎㄢˋ)手(ㄕㄡˇ)機(ㄐㄧ)。可(ㄎㄜˇ)是(ㄕˋ)，手(ㄕㄡˇ)機(ㄐㄧ)不(ㄅㄨˊ)見(ㄐㄧㄢˋ)了(ㄌㄜ˙)！她(ㄊㄚ)找(ㄓㄠˇ)了(ㄌㄜ˙)很(ㄏㄣˇ)久(ㄐㄧㄡˇ)，都(ㄉㄡ)找(ㄓㄠˇ)不(ㄅㄨˊ)到(ㄉㄠˋ)。她(ㄊㄚ)很(ㄏㄣˇ)難(ㄋㄢˊ)過(ㄍㄨㄛˋ)，說(ㄕㄨㄛ)：「我(ㄨㄛˇ)的(ㄉㄜ˙)手(ㄕㄡˇ)機(ㄐㄧ)不(ㄅㄨˊ)見(ㄐㄧㄢˋ)了(ㄌㄜ˙)，怎(ㄗㄣˇ)麼(ㄇㄜ˙)辦(ㄅㄢˋ)？」",
+                                qs: []
+                            },
+                            {
+                                text: "正(ㄓㄥˋ)雄(ㄒㄩㄥˊ)說(ㄕㄨㄛ)：「別(ㄅㄧㄝˊ)難(ㄋㄢˊ)過(ㄍㄨㄛˋ)，我(ㄨㄛˇ)們(ㄇㄣ˙)先(ㄒㄧㄢ)休(ㄒㄧㄡ)息(ㄒㄧˊ)一(ㄧˊ)下(ㄒㄧㄚˋ)，吃(ㄔ)點(ㄉㄧㄢˇ)麵(ㄇㄧㄢˋ)包(ㄅㄠ)吧(ㄅㄚ˙)。」他(ㄊㄚ)給(ㄍㄟˇ)月(ㄩㄝˋ)珠(ㄓㄨ)一(ㄧˊ)個(ㄍㄜ˙)麵(ㄇㄧㄢˋ)包(ㄅㄠ)，月(ㄩㄝˋ)珠(ㄓㄨ)吃(ㄔ)了(ㄌㄜ˙)，覺(ㄐㄩㄝˊ)得(ㄉㄜ˙)好(ㄏㄠˇ)吃(ㄔ)。正(ㄓㄥˋ)雄(ㄒㄩㄥˊ)說(ㄕㄨㄛ)：「我(ㄨㄛˇ)叫(ㄐㄧㄠˋ)爸(ㄅㄚˋ)爸(ㄅㄚ˙)再(ㄗㄞˋ)找(ㄓㄠˇ)一(ㄧˊ)次(ㄘˋ)卡(ㄎㄚˇ)車(ㄔㄜ)上(ㄕㄤˋ)面(ㄇㄧㄢˋ)。我(ㄨㄛˇ)們(ㄇㄣ˙)一(ㄧˋ)起(ㄑㄧˇ)找(ㄓㄠˇ)吧(ㄅㄚ˙)！」",
+                                qs: []
+                            },
+                            {
+                                text: "他(ㄊㄚ)們(ㄇㄣ˙)一(ㄧˋ)起(ㄑㄧˇ)去(ㄑㄩˋ)找(ㄓㄠˇ)。正(ㄓㄥˋ)雄(ㄒㄩㄥˊ)看(ㄎㄢˋ)到(ㄉㄠˋ)座(ㄗㄨㄛˋ)位(ㄨㄟˋ)下(ㄒㄧㄚˋ)面(ㄇㄧㄢˋ)有(ㄧㄡˇ)一(ㄧˊ)個(ㄍㄜ˙)東(ㄉㄨㄥ)西(ㄒㄧ)，說(ㄕㄨㄛ)：「是(ㄕˋ)不(ㄅㄨˊ)是(ㄕˋ)這(ㄓㄜˋ)個(ㄍㄜ˙)？」月(ㄩㄝˋ)珠(ㄓㄨ)說(ㄕㄨㄛ)：「對(ㄉㄨㄟˋ)！就(ㄐㄧㄡˋ)是(ㄕˋ)這(ㄓㄜˋ)個(ㄍㄜ˙)！」她(ㄊㄚ)的(ㄉㄜ˙)手(ㄕㄡˇ)機(ㄐㄧ)在(ㄗㄞˋ)卡(ㄎㄚˇ)車(ㄔㄜ)上(ㄕㄤˋ)！",
+                                qs: []
+                            },
+                            {
+                                text: "大(ㄉㄚˋ)家(ㄐㄧㄚ)都(ㄉㄡ)很(ㄏㄣˇ)高(ㄍㄠ)興(ㄒㄧㄥˋ)。正(ㄓㄥˋ)雄(ㄒㄩㄥˊ)問(ㄨㄣˋ)：「你(ㄋㄧˇ)還(ㄏㄞˊ)想(ㄒㄧㄤˇ)去(ㄑㄩˋ)別(ㄅㄧㄝˊ)的(ㄉㄜ˙)地(ㄉㄧˋ)方(ㄈㄤ)看(ㄎㄢˋ)看(ㄎㄢˋ)嗎(ㄇㄚ˙)？」月(ㄩㄝˋ)珠(ㄓㄨ)說(ㄕㄨㄛ)：「想(ㄒㄧㄤˇ)！我(ㄨㄛˇ)們(ㄇㄣ˙)去(ㄑㄩˋ)看(ㄎㄢˋ)花(ㄏㄨㄚ)吧(ㄅㄚ˙)！」過(ㄍㄨㄛˋ)了(ㄌㄜ˙)一(ㄧˊ)個(ㄍㄜ˙)鐘(ㄓㄨㄥ)頭(ㄊㄡˊ)，月(ㄩㄝˋ)珠(ㄓㄨ)不(ㄅㄨˊ)餓(ㄜˋ)了(ㄌㄜ˙)，也(ㄧㄝˇ)不(ㄅㄨˋ)難(ㄋㄢˊ)過(ㄍㄨㄛˋ)了(ㄌㄜ˙)，看(ㄎㄢˋ)起(ㄑㄧˇ)來(ㄌㄞˊ)好(ㄏㄠˇ)多(ㄉㄨㄛ)了(ㄌㄜ˙)。她(ㄊㄚ)說(ㄕㄨㄛ)：「今(ㄐㄧㄣ)天(ㄊㄧㄢ)真(ㄓㄣ)好(ㄏㄠˇ)玩(ㄨㄢˊ)！謝(ㄒㄧㄝˋ)謝(ㄒㄧㄝˋ)你(ㄋㄧˇ)，正(ㄓㄥˋ)雄(ㄒㄩㄥˊ)。」",
+                                qs: [
+                                    "Q1. 月珠為什麼很難過？",
+                                    "Q2. 月珠的手機在哪裡找到的？",
+                                    "Q3. 一開始月珠很餓、很難過，最後為什麼「看起來好多了」？"
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            }
+        ];
+
+        let counter = 0;
+        const container = document.getElementById('content');
+
+        lessonData.forEach((sec, sIdx) => {
+            let html = `<div class="section" id="sec-${sIdx}"><h2>${sec.title}</h2>`;
+            
+            sec.items.forEach((item, iIdx) => {
+                if (item.type === "grammar") {
+                    html += `<div class="grammar-box" id="sec-${sIdx}-item-${iIdx}">
+                        <div style="font-weight:bold; font-size:16px; color:#8C6239; margin-bottom:5px;">${item.title}</div>`;
+                    
+                    if(item.note) html += `<div class="note">${item.note}</div>`;
+                    if(item.customHtml) html += item.customHtml;
+                    
+                    if (item.wrong && item.correct) {
+                        html += `
+                        <div class="item-content" style="margin-top: 10px; align-items:center;">
+                            <span class="wrong" style="margin-right:15px;">❌ </span> <span>${item.wrong}</span>
+                        </div>
+                        <div class="item-content" style="margin-top: 10px; align-items:center;">
+                            <div class="btn-group">
+                                <button class="audio-btn" onclick="playAudio('${item.correct}', this)">🔊</button>
+                                <button class="audio-btn record-btn" onclick="toggleRecord(this, 'rec-${counter}')" title="Record your voice">🎤</button>
+                                <button class="play-rec-btn" id="play-rec-rec-${counter}" onclick="playRecording('rec-${counter}')" disabled>▶</button>
+                            </div>
+                            <span class="correct" style="margin-right:8px; margin-left:8px;">✅ </span> <span style="flex:1;">${parseZhuyin(item.correct)}</span>
+                        </div>
+                        <div class="en-trans">${item.en}</div>`;
+                        counter++;
+                    }
+
+                    if (item.examples) {
+                        item.examples.forEach(ex => {
+                            html += `
+                            <div class="item" style="border:none; margin-top:10px; padding-bottom:0;">
+                                <div class="item-content" style="align-items:center;">
+                                    <div class="btn-group">
+                                        <button class="audio-btn" onclick="playAudio('${ex.zh}', this)">🔊</button>
+                                        <button class="audio-btn record-btn" onclick="toggleRecord(this, 'rec-${counter}')" title="Record your voice">🎤</button>
+                                        <button class="play-rec-btn" id="play-rec-rec-${counter}" onclick="playRecording('rec-${counter}')" disabled>▶</button>
+                                    </div>
+                                    <div class="zhuyin-content" style="flex:1; margin-left:8px;">${parseZhuyin(ex.zh)}</div>
+                                </div>
+                                <div class="en-trans">${ex.en}</div>`;
+                            if (ex.img) {
+                                html += `<img src="${ex.img}" class="vocab-img" style="margin-top: 10px; margin-left: 12px;">`;
+                            }
+                            html += `</div>`;
+                            counter++;
+                        });
+                    }
+                    html += `</div>`;
+                } else if (item.type === "homework") {
+                    html += `<div class="grammar-box" id="sec-${sIdx}-item-${iIdx}">
+                        <div style="font-weight:bold; font-size:16px; color:#8C6239; margin-bottom:15px;">${item.title}</div>`;
+                    item.questions.forEach(q => {
+                        html += `
+                            <div class="homework-q">${q}</div>
+                            <textarea class="hw-textarea" placeholder="Type your answer here..."></textarea>
+                        `;
+                    });
+                    html += `</div>`;
+                } else if (item.type === "homework_reading") {
+                    html += `<div class="grammar-box" id="sec-${sIdx}-item-${iIdx}">
+                        <div style="font-weight:bold; font-size:16px; color:#8C6239; margin-bottom:15px;">${item.title}</div>`;
+                    item.passages.forEach((p) => {
+                        html += `<div style="background:#fff; padding:15px; border-radius:8px; margin-bottom:20px; border:1px solid #ddd;">
+                            <div class="item-content" style="align-items:flex-start; margin-bottom: 20px;">
+                                <div class="btn-group" style="margin-top:5px; margin-right: 15px;">
+                                    <button class="audio-btn" onclick="playAudio('${p.text}', this)">🔊</button>
+                                    <button class="audio-btn record-btn" onclick="toggleRecord(this, 'rec-${counter}')" title="Record your voice">🎤</button>
+                                    <button class="play-rec-btn" id="play-rec-rec-${counter}" onclick="playRecording('rec-${counter}')" disabled>▶</button>
+                                </div>
+                                <div style="flex:1; font-size:16px; line-height:1.8; margin-left:8px;">
+                                    ${parseZhuyin(p.text)}
+                                </div>
+                            </div>
+                        `;
+                        counter++;
+                        if (p.qs && p.qs.length > 0) {
+                            html += `<hr style="border:0; border-top:1px dashed #ccc; margin:15px 0;">`;
+                            p.qs.forEach(q => {
+                                html += `
+                                    <div class="homework-q">${q}</div>
+                                    <textarea class="hw-textarea" placeholder="Type your answer here..."></textarea>
+                                `;
+                            });
+                        }
+                        html += `</div>`;
+                    });
+                    html += `</div>`;
+                }
+            });
+            html += `</div>`;
+            container.innerHTML += html;
+        });
+
+        // Toggle Bopomofo & English
+        let zyVisible = true;
+        let enVisible = true;
+
+        function toggleZhuyin() {
+            zyVisible = !zyVisible;
+            document.querySelectorAll('.zy-box').forEach(el => {
+                el.style.display = zyVisible ? 'inline-flex' : 'none';
+            });
+        }
+
+        function toggleEnglish() {
+            enVisible = !enVisible;
+            document.querySelectorAll('.en-trans').forEach(el => {
+                el.style.display = enVisible ? 'block' : 'none';
+            });
+        }
+    </script>
+</body>
+</html>
