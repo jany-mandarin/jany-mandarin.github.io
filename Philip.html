@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>Philip's Mandarin Lessons</title>
+    <style>
+        :root { --bg: #FDFBF7; --primary: #D4A373; --text: #4a4a4a; --white: #fff; --highlight: #8C6239; }
+        body { font-family: 'Helvetica Neue', Arial, sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; max-width: 680px; margin: 0 auto; padding: 40px 20px 30px 20px; }
+        h1 { color: var(--highlight); border-bottom: 2px solid var(--primary); padding-bottom: 15px; margin-bottom: 20px; text-align: center; }
+        .profile { font-size: 16px; margin-bottom: 30px; color: #555; text-align: center; }
+        
+        /* 課程卡片的外觀設定 */
+        .menu { display: flex; flex-direction: column; gap: 20px; }
+        .menu-item { background: var(--white); padding: 20px; border-radius: 12px; text-decoration: none; color: var(--text); border: 2px solid transparent; transition: all 0.2s; display: block; box-shadow: 0 3px 8px rgba(0,0,0,0.05); }
+        .menu-item:hover { background: #FFF9F0; border-color: var(--primary); transform: translateY(-3px); box-shadow: 0 6px 12px rgba(0,0,0,0.1); }
+        
+        /* 卡片標題與最新標籤 */
+        .lesson-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px dashed #eee; padding-bottom: 10px; margin-bottom: 10px; }
+        .lesson-title { font-size: 20px; font-weight: bold; color: var(--highlight); margin: 0; }
+        .new-badge { background: #E74C3C; color: white; font-size: 12px; padding: 3px 8px; border-radius: 20px; font-weight: bold; letter-spacing: 1px; }
+        
+        /* 大綱列表設定 */
+        .outline { margin: 0; padding-left: 20px; font-size: 14.5px; color: #555; }
+        .outline li { margin-bottom: 6px; }
+        .outline strong { color: #664d34; }
+    </style>
+</head>
+<body>
+
+    <h1>👨‍🎓 Philip 的中文课 (Mandarin Lessons)</h1>
+    
+    <div class="profile">
+        欢迎回来，菲利普！请选择下方的课程继续学习。<br>
+        <span style="font-size: 14px; color: #888;">(最新课程排列在最上方，历史课程将持续累加)</span>
+    </div>
+
+    <div class="menu">
+        
+        <!-- 第35课 (最新的一課放在最上面) -->
+        <a href="philip.lesson35.html" class="menu-item">
+            <div class="lesson-header">
+                <div class="lesson-title">🌟 菲利普的第35堂中文课</div>
+                <div class="new-badge">NEW</div>
+            </div>
+            <ul class="outline">
+                <li><strong>一、暖身闲聊：</strong> 温润、清爽、鲜甜、幸福、改善、节省 vs. 节约。</li>
+                <li><strong>二、上次作业复习：</strong> 向人拉票、建立 vs. 兴建、溺 vs. 淹、残酷 vs. 严苛、撤回 vs. 撤退。</li>
+                <li><strong>三、中秋节由来故事：</strong> 赐、葫芦、服药、兴高采烈与进阶成语。</li>
+            </ul>
+        </a>
+
+        <!-- 第34课 -->
+        <a href="philip.lesson34.html" class="menu-item">
+            <div class="lesson-header">
+                <div class="lesson-title">📖 菲利普的第34堂中文课</div>
+            </div>
+            <ul class="outline">
+                <li><strong>一、暖身闲聊：</strong> 政治拉票、台湾民间信仰、掷杯与抽签文化。</li>
+                <li><strong>二、作业复习与词汇：</strong> 演变 vs. 演化、刷新 vs. 刷机、预见/预料/预判、经济杠杆。</li>
+                <li><strong>三、中秋故事与高级词汇：</strong> 乾涸、庄稼、枯萎、水深火热、精湛、暴君、痛心疾首。</li>
+            </ul>
+        </a>
+
+    </div>
+
+</body>
+</html>
