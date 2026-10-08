@@ -45,7 +45,7 @@
         h2 { color: #8C6239; border-left: 5px solid var(--primary); padding-left: 10px; margin-top: 30px; }
         .section { margin-bottom: 30px; background: var(--white); padding: 20px; border-radius: 12px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); scroll-margin-top: 80px; }
         .item { margin-bottom: 20px; display: flex; flex-direction: column; border-bottom: 1px dashed #eee; padding-bottom: 15px; }
-        .item-content { display: flex; align-items: flex-start; flex-wrap: wrap; margin-bottom: 5px; gap: 10px; }
+        .item-content { display: flex; align-items: center; flex-wrap: wrap; margin-bottom: 5px; gap: 5px; }
         
         /* 錄音播放器獨立換行區塊 */
         .audio-player-container { width: 100%; margin-top: 8px; }
@@ -150,8 +150,7 @@
                     recorder.onstop = () => {
                         const blob = new Blob(chunks, { 'type': 'audio/ogg; codecs=opus' });
                         audioUrls[id] = URL.createObjectURL(blob);
-                        const playerContainer = document.getElementById(`audio-container-${id}`);
-                        playerContainer.innerHTML = `<audio controls src="${audioUrls[id]}"></audio>`;
+                        document.getElementById(`play-rec-${id}`).disabled = false;
                     };
 
                     recorder.start();
@@ -165,6 +164,13 @@
                 mediaRecorders[id].stop();
                 btn.innerHTML = "🎤";
                 btn.classList.remove("recording");
+            }
+        }
+
+        function playRecording(id) {
+            if (audioUrls[id]) {
+                const audio = new Audio(audioUrls[id]);
+                audio.play();
             }
         }
 
@@ -186,7 +192,7 @@
                         title: "2. 幸福 (Xìngfú)",
                         note: "解释：指生活或处境感到满意、愉快、称心。<br>Explanation: Happy / Blessed.",
                         examples: [
-                            { zh: "我(wǒ)觉(jué)得(de)奥(ào)克(kè)兰(lán)人(rén)很(hěn)幸(xìng)福(fú)，路(lù)上(shang)都(dōu)有(yǒu)很(hěn)多(duō)亚(yà)洲(zhōu)餐(cān)厅(tīng)，选(xuǎn)择(zé)非(fēi)常(cháng)多(duō)，每(měi)家(jiā)都(dōu)很(hěn)好(hǎo)吃(chī)。", en: "I think people in Auckland are very blessed; there are many Asian restaurants on the street with huge choices, and every one is delicious." }
+                            { zh: "我(wǒ)觉(jué)得(de)奥(ào)克(kè)兰(lán)人(rén)很(hěn)幸(xìng)福(fú)，路(lù)上(shang)都(dōu)有(yǒu)很(hěn)多(duō)亚(yà)洲(zhōu)餐(cān)厅(tīng)，选(xuǎn)择(zé)非(fēn)常(cháng)多(duō)，每(měi)家(jiā)都(dōu)很(hěn)好(hǎo)吃(chī)。", en: "I think people in Auckland are very blessed; there are many Asian restaurants on the street with huge choices, and every one is delicious." }
                         ]
                     },
                     {
@@ -297,7 +303,7 @@
                         title: "3. 服药 (fúyào)",
                         note: "解释：吃药、喝药。<br>Explanation: Take medicine.",
                         examples: [
-                            { zh: "生(shēng)病(bìng)了(le)就要(jiàoyào)按(àn)时(shí)服(fú)药(yào)才(cái)能(néng)快(kuài)点(diǎn)好(hǎo)。", en: "When you are sick, you must take medicine on time to get well faster." }
+                            { zh: "生(shēng)病(bìng)了(le)就(jiù)要(yào)按(àn)时(shí)服(fú)药(yào)才(cái)能(néng)快(kuài)点(diǎn)好(hǎo)。", en: "When you are sick, you must take medicine on time to get well faster." }
                         ]
                     },
                     {
@@ -323,59 +329,4 @@
                     html += item.content;
                 } else if (item.type === "grammar") {
                     html += `<div class="grammar-box">
-                        <div style="font-weight:bold; font-size:16px; color:#8C6239; margin-bottom:5px;">${item.title}</div>`;
-                    if(item.note) html += `<div class="note">${parsePinyin(item.note)}</div>`;
-                    
-                    if (item.examples) {
-                        item.examples.forEach(ex => {
-                            html += `
-                            <div class="item" style="border:none; margin-top:10px; padding-bottom:0;">
-                                <div class="item-content" style="align-items:center;">
-                                    <button class="icon-btn" onclick="playAudio('${ex.zh}')" title="朗读">🔊</button>
-                                    <button class="icon-btn rec-btn" onclick="toggleRecord(this, 'rec-${counter}')" title="录音">🎤</button>
-                                </div>
-                                <div class="audio-player-container" id="audio-container-rec-${counter}"></div>
-                                <div style="margin-top:5px;">${parsePinyin(ex.zh)}</div>
-                                <div class="en-trans">${ex.en}</div>
-                            </div>`;
-                            counter++;
-                        });
-                    }
-                    html += `</div>`;
-                } else if (item.zh) {
-                    html += `
-                    <div class="item">
-                        <div class="item-content" style="align-items:center;">
-                            <button class="icon-btn" onclick="playAudio('${item.zh}')" title="朗读">🔊</button>
-                            <button class="icon-btn rec-btn" onclick="toggleRecord(this, 'rec-${counter}')" title="录音">🎤</button>
-                        </div>
-                        <div class="audio-player-container" id="audio-container-rec-${counter}"></div>
-                        <div style="margin-top:5px;">${parsePinyin(item.zh)}</div>
-                        <div class="en-trans">${item.en}</div>
-                    </div>`;
-                    counter++;
-                }
-            });
-            html += `</div>`;
-            container.innerHTML += html;
-        });
-
-        let pinyinVisible = true;
-        let enVisible = true;
-
-        function togglePinyin() {
-            pinyinVisible = !pinyinVisible;
-            document.querySelectorAll('.py-text').forEach(el => {
-                el.style.display = pinyinVisible ? 'block' : 'none';
-            });
-        }
-
-        function toggleEnglish() {
-            enVisible = !enVisible;
-            document.querySelectorAll('.en-trans').forEach(el => {
-                el.style.display = enVisible ? 'block' : 'none';
-            });
-        }
-    </script>
-</body>
-</html>
+                        <div style="font-weight:bold; font-
