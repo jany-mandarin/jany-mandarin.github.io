@@ -103,4 +103,197 @@
         <ol>
             <li><a href="#sec-0">Warm-up</a>
                 <ul>
-                    <li><a href="#sec-0-item-0">抓 (Catch / Grab / Scratch / Se
+                    <li><a href="#sec-0-item-0">抓 (Catch / Grab / Scratch / Seize)</a></li>
+                    <li><a href="#sec-0-item-1">很好玩 (Fun / Interesting)</a></li>
+                    <li><a href="#sec-0-item-2">Adj. + N. 句子 (Adjective + Noun)</a></li>
+                    <li><a href="#sec-0-item-3">半盒 (Half a box)</a></li>
+                </ul>
+            </li>
+            <li><a href="#sec-1">Homework Review</a>
+                <ul>
+                    <li><a href="#sec-1-item-0">換新手機 (Switching phones)</a></li>
+                    <li><a href="#sec-1-item-1">別忘了帶帽子 (Don't forget)</a></li>
+                    <li><a href="#sec-1-item-2">別忘了開會 (Meeting reminder)</a></li>
+                    <li><a href="#sec-1-item-3">不見了 / 看不到 (Disappeared / Cannot see)</a></li>
+                    <li><a href="#sec-1-item-4">座 (Measure word / Seat)</a></li>
+                    <li><a href="#sec-1-item-5">別的 (Other / Something else)</a></li>
+                    <li><a href="#sec-1-item-6">請不要不見 (Please don't disappear)</a></li>
+                    <li><a href="#sec-1-item-7">轉機 (Transfer flight)</a></li>
+                </ul>
+            </li>
+            <li><a href="#sec-2">Lesson 11</a>
+                <ul>
+                    <li><a href="#sec-2-item-0">夜裡 (At night)</a></li>
+                    <li><a href="#sec-2-item-1">半夜 (Middle of the night)</a></li>
+                    <li><a href="#sec-2-item-2">夜店 (Nightclub)</a></li>
+                    <li><a href="#sec-2-item-3">有事 / 有空 (Busy / Free)</a></li>
+                </ul>
+            </li>
+            <li><a href="#sec-3">Homework: Translation</a></li>
+            <li><a href="#sec-4">Homework: Reading</a></li>
+        </ol>
+    </div>
+
+    <div class="main-content" id="mainContent">
+        <div class="header">
+            <h1>Chad's Mandarin Lesson 187</h1>
+            <p>Date: <span id="currentDate">2026/10/11</span></p>
+        </div>
+
+        <div class="controls">
+            <button class="control-btn" onclick="toggleZhuyin()">Toggle Bopomofo</button>
+            <button class="control-btn" onclick="toggleEnglish()">Toggle English</button>
+        </div>
+
+        <div id="content"></div>
+    </div>
+
+    <script>
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const mainContent = document.getElementById('mainContent');
+            if (window.innerWidth <= 900) {
+                sidebar.classList.toggle('active');
+            } else {
+                sidebar.classList.toggle('collapsed');
+                mainContent.classList.toggle('expanded');
+            }
+        }
+
+        function parseZhuyin(text) {
+            const regex = /([\u4e00-\u9fa5a-zA-Z0-9])\((.*?)\)/g;
+            let parsed = text.replace(regex, (match, char, zy) => {
+                let tone = '';
+                let symbols = zy;
+                let isNeutral = false;
+                
+                if (zy.includes('ˊ')) { tone = 'ˊ'; symbols = zy.replace('ˊ', ''); }
+                else if (zy.includes('ˇ')) { tone = 'ˇ'; symbols = zy.replace('ˇ', ''); }
+                else if (zy.includes('ˋ')) { tone = 'ˋ'; symbols = zy.replace('ˋ', ''); }
+                else if (zy.includes('˙')) { isNeutral = true; symbols = zy.replace('˙', ''); }
+
+                let toneHtml = tone ? `<span class="zy-tone">${tone}</span>` : '';
+                let neutralHtml = isNeutral ? `<span class="zy-neutral">˙</span>` : '';
+
+                return `<div class="zy-char-wrap"><span class="zy-char">${char}</span><div class="zy-box">${neutralHtml}<span class="zy-symbols">${symbols}</span>${toneHtml}</div></div>`;
+            });
+            return parsed;
+        }
+
+        let currentUtteranceText = "";
+
+        function playAudio(text, btn) {
+            let cleanText = text.replace(/\(.*?\)/g, '')
+                                .replace(/和/g, '汗')
+                                .replace(/都/g, '兜')
+                                .replace(/差/g, '插')
+                                .replace(/俄/g, '惡')
+                                .replace(/少康/g, '邵康')
+                                .replace(/空少/g, '空邵')
+                                .replace(/吐/g, '兔')
+                                .replace(/空/g, '控')
+                                .replace(/[^\u4e00-\u9fa5，。？！a-zA-Z ]/g, '');
+
+            if (speechSynthesis.speaking && currentUtteranceText === cleanText) {
+                if (speechSynthesis.paused) {
+                    speechSynthesis.resume();
+                } else {
+                    speechSynthesis.pause();
+                }
+                return;
+            }
+
+            speechSynthesis.cancel(); 
+            currentUtteranceText = cleanText;
+            const utterance = new SpeechSynthesisUtterance(cleanText);
+            utterance.lang = 'zh-TW';
+            utterance.rate = 0.85;
+            utterance.onend = () => { currentUtteranceText = ""; };
+            speechSynthesis.speak(utterance);
+        }
+
+        let mediaRecorders = {};
+
+        async function toggleRecord(btn, id) {
+            let container = btn.closest('.item') || btn.closest('.grammar-box') || btn.closest('div[style*="background:#fff"]');
+            let player = container.querySelector('.audio-player');
+            
+            if (!player) {
+                player = document.createElement('audio');
+                player.className = 'audio-player';
+                player.controls = true;
+                player.style.display = 'none';
+                player.style.width = '100%';
+                player.style.marginTop = '15px';
+                container.appendChild(player);
+            }
+
+            if (!mediaRecorders[id] || mediaRecorders[id].state === "inactive") {
+                try {
+                    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+                    let chunks = [];
+                    let recorder = new MediaRecorder(stream);
+                    
+                    recorder.ondataavailable = e => chunks.push(e.data);
+                    recorder.onstop = () => {
+                        const blob = new Blob(chunks, { 'type': 'audio/webm' });
+                        player.src = URL.createObjectURL(blob);
+                        player.style.display = 'block';
+                        document.getElementById(`play-rec-${id}`).disabled = false;
+                        stream.getTracks().forEach(track => track.stop());
+                    };
+
+                    recorder.start();
+                    mediaRecorders[id] = recorder;
+                    btn.innerHTML = "⏹️";
+                    btn.classList.add("recording");
+                    player.style.display = 'none';
+                } catch (err) {
+                    alert("Microphone access denied. 請允許瀏覽器使用麥克風。");
+                }
+            } else {
+                mediaRecorders[id].stop();
+                btn.innerHTML = "🎤";
+                btn.classList.remove("recording");
+            }
+        }
+
+        function playRecording(id) {
+            let btn = document.getElementById(`play-rec-${id}`);
+            let container = btn.closest('.item') || btn.closest('.grammar-box') || btn.closest('div[style*="background:#fff"]');
+            let player = container.querySelector('.audio-player');
+            if (player && player.src) {
+                player.play();
+            }
+        }
+
+        const lessonData = [
+            {
+                title: "1. Warm-up (課前暖身)",
+                items: [
+                    {
+                        type: "grammar",
+                        title: "1) 抓 (Catch / Grab / Scratch / Seize)",
+                        note: "Explanation: Has multiple meanings, essentially anything done by grabbing or catching with hands, such as Catch, Grab, Scratch, Seize / Grasp.<br>Note on '住': '住' means to live. '抓住' means to catch/grasp something, emphasizing a resulting hold.",
+                        customHtml: `
+                            <img src="https://cdn.phototourl.com/member/2026-10-11-08e4a3e0-cd55-4a62-be1d-e0ba66f930cb.png" class="vocab-img" alt="Catch origin">
+                            <img src="https://cdn.phototourl.com/member/2026-10-11-89d86ef3-80c0-47f3-bb62-0b6d0f351026.png" class="vocab-img" alt="Grab origin">
+                        `,
+                        examples: [
+                            { zh: "我(ㄨㄛˇ)的(ㄉㄜ˙)貓(ㄇㄠ)很(ㄏㄣˇ)喜(ㄒㄧˇ)歡(ㄏㄨㄢ)抓(ㄓㄨㄚ)我(ㄨㄛˇ)的(ㄉㄜ˙)椅(ㄧˇ)子(ㄗ˙)，他(ㄊㄚ)不(ㄅㄨˊ)乖(ㄍㄨㄞ)。", en: "My cat really likes to scratch my chair, he is not a good boy." },
+                            { zh: "別(ㄅㄧㄝˊ)抓(ㄓㄨㄚ)住(ㄓㄨˋ)我(ㄨㄛˇ)！我(ㄨㄛˇ)是(ㄕˋ)乖(ㄍㄨㄞ)孩(ㄏㄞˊ)子(ㄗ˙)！", en: "Don't grab me! I am a good kid!" },
+                            { zh: "我(ㄨㄛˇ)抓(ㄓㄨㄚ)了(ㄌㄜ˙)一(ㄧˊ)些(ㄒㄧㄝ)糖(ㄊㄤˊ)果(ㄍㄨㄛˇ)放(ㄈㄤˋ)在(ㄗㄞˋ)包(ㄅㄠ)包(ㄅㄠ)裡(ㄌㄧˇ)。", en: "I grabbed some candies and put them in my bag." }
+                        ]
+                    },
+                    {
+                        type: "grammar",
+                        title: "2) 很好玩 (Fun / Interesting)",
+                        examples: [
+                            { zh: "我(ㄨㄛˇ)的(ㄉㄜ˙)貓(ㄇㄠ)抓(ㄓㄨㄚ)椅(ㄧˇ)子(ㄗ˙)的(ㄉㄜ˙)時(ㄕˊ)候(ㄏㄡˋ)，我(ㄨㄛˇ)想(ㄒㄧㄤˇ)他(ㄊㄚ)覺(ㄐㄩㄝˊ)得(ㄉㄜ˙)很(ㄏㄣˇ)好(ㄏㄠˇ)玩(ㄨㄢˊ)。", en: "When my cat scratches the chair, I think he finds it very fun." }
+                        ]
+                    },
+                    {
+                        type: "grammar",
+                        title: "3) Adj. + N. 句子 (Adjective + Noun sentences)",
+                        examples: [
+                            { zh: "在(ㄗㄞˋ)鳳(ㄈㄥˋ)凰(ㄏㄨㄤˊ)城(ㄔㄥˊ)，我(ㄨㄛˇ)看(ㄎㄢˋ)到(ㄉㄠˋ)很(ㄏㄣˇ
