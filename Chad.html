@@ -2,126 +2,108 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Chad's Mandarin Lesson 187</title>
+    <title>Chad's Mandarin Lessons</title>
     <style>
-        :root { --bg: #FDFBF7; --primary: #D4A373; --text: #4a4a4a; --white: #fff; --sidebar-width: 280px; }
-        html { scroll-behavior: smooth; }
-        body { font-family: 'Helvetica Neue', Arial, sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; margin: 0; padding: 0; display: flex; transition: margin-left 0.3s ease; }
+        :root { --bg: #FDFBF7; --primary: #D4A373; --text: #4a4a4a; --white: #fff; --highlight: #8C6239; }
+        body { font-family: 'Helvetica Neue', Arial, sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; max-width: 650px; margin: 0 auto; padding: 40px 20px 30px 20px; }
+        h1 { color: var(--highlight); border-bottom: 2px solid var(--primary); padding-bottom: 15px; margin-bottom: 20px; text-align: center; }
+        .profile { font-size: 16px; margin-bottom: 30px; color: #555; text-align: center; }
         
-        /* 頂部連結導覽 */
-        .top-nav { position: fixed; top: 0; left: 0; width: 100%; background: #FFF9F0; border-bottom: 1px solid #E6D5B8; padding: 10px 20px; box-sizing: border-box; text-align: right; z-index: 1200; display: flex; justify-content: flex-end; align-items: center; }
-        .top-nav a { color: var(--primary); font-weight: bold; text-decoration: none; margin-left: 20px; font-size: 15px; }
-        .top-nav a:hover { text-decoration: underline; color: #8C6239; }
-
-        /* 左側收合大綱導覽列 */
-        .sidebar { width: var(--sidebar-width); background: #FFF9F0; border-right: 1px solid #E6D5B8; height: 100vh; position: fixed; top: 0; left: 0; overflow-y: auto; padding: 60px 20px 20px 20px; box-sizing: border-box; transition: transform 0.3s ease; z-index: 1000; }
-        .sidebar.collapsed { transform: translateX(-100%); }
-        .sidebar h3 { margin-top: 0; color: #8C6239; font-size: 18px; border-bottom: 2px solid var(--primary); padding-bottom: 8px; display: flex; justify-content: space-between; align-items: center; }
-        .sidebar ol { padding-left: 20px; margin: 10px 0; color: #555; }
-        .sidebar li { margin-bottom: 8px; font-size: 15px; font-weight: bold; color: #8C6239; }
-        .sidebar ul { padding-left: 15px; list-style-type: circle; margin-top: 5px; margin-bottom: 15px; font-weight: normal; }
-        .sidebar ul li { font-size: 13.5px; margin-bottom: 6px; color: #555; }
-        .sidebar a { color: #555; text-decoration: none; display: block; }
-        .sidebar a:hover { color: #D4A373; font-weight: bold; }
+        /* 課程卡片的外觀設定 */
+        .menu { display: flex; flex-direction: column; gap: 20px; }
+        .menu-item { background: var(--white); padding: 20px; border-radius: 12px; text-decoration: none; color: var(--text); border: 2px solid transparent; transition: all 0.2s; display: block; box-shadow: 0 3px 8px rgba(0,0,0,0.05); }
+        .menu-item:hover { background: #FFF9F0; border-color: var(--primary); transform: translateY(-3px); box-shadow: 0 6px 12px rgba(0,0,0,0.1); }
         
-        /* 切換按鈕 */
-        .sidebar-toggle { position: fixed; top: 50px; left: 15px; z-index: 1100; background: var(--primary); color: white; border: none; padding: 8px 12px; border-radius: 6px; cursor: pointer; font-size: 14px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
-
-        /* 主內容區 */
-        .main-content { margin-top: 40px; margin-left: var(--sidebar-width); width: calc(100% - var(--sidebar-width)); padding: 20px 40px; box-sizing: border-box; max-width: 900px; transition: margin-left 0.3s ease, width 0.3s ease; }
-        .main-content.expanded { margin-left: 0; width: 100%; }
-
-        .header { text-align: center; border-bottom: 2px solid var(--primary); padding-bottom: 10px; margin-bottom: 20px; margin-top: 20px; }
+        /* 卡片標題與最新標籤 */
+        .lesson-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px dashed #eee; padding-bottom: 10px; margin-bottom: 10px; }
+        .lesson-title { font-size: 20px; font-weight: bold; color: var(--highlight); margin: 0; }
+        .new-badge { background: #E74C3C; color: white; font-size: 12px; padding: 3px 8px; border-radius: 20px; font-weight: bold; letter-spacing: 1px; }
         
-        .controls { position: sticky; top: 40px; background: var(--bg); padding: 15px; text-align: center; border-bottom: 1px solid #ccc; z-index: 100; margin-bottom: 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
-        button.control-btn { background: var(--primary); color: white; border: none; padding: 10px 15px; margin: 5px; border-radius: 6px; cursor: pointer; font-size: 14px; font-weight: bold; }
-        button.control-btn:hover { background: #B5835A; }
-        
-        .audio-btn { background: #f0f0f0; color: #333; font-size: 16px; padding: 8px; border-radius: 50%; width: 35px; height: 35px; display: inline-flex; align-items: center; justify-content: center; border: none; cursor: pointer; margin-right: 5px; }
-        .audio-btn:hover { background: #e0e0e0; }
-        
-        .rec-btn { background: #e07a5f; color: white; font-size: 14px; padding: 6px 12px; border-radius: 20px; border: none; cursor: pointer; display: inline-flex; align-items: center; gap: 5px; margin-right: 5px; }
-        .rec-btn:hover { background: #cc6b50; }
-        .rec-btn.recording { background: #d90429; animation: pulse 1.5s infinite; }
-        
-        .play-rec-btn { background: #457b9d; color: white; font-size: 14px; padding: 6px 12px; border-radius: 20px; border: none; cursor: pointer; display: inline-flex; align-items: center; gap: 5px; }
-        .play-rec-btn:hover { background: #1d3557; }
-        .play-rec-btn:disabled { background: #ccc; cursor: not-allowed; }
-
-        @keyframes pulse {
-            0% { opacity: 1; }
-            50% { opacity: 0.5; }
-            100% { opacity: 1; }
-        }
-
-        h2 { color: #8C6239; border-left: 5px solid var(--primary); padding-left: 10px; margin-top: 30px; }
-        .section { margin-bottom: 30px; background: var(--white); padding: 20px; border-radius: 12px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); scroll-margin-top: 130px; }
-        .item { margin-bottom: 20px; display: flex; flex-direction: column; border-bottom: 1px dashed #eee; padding-bottom: 15px; }
-        .item-content { display: flex; align-items: flex-start; flex-wrap: wrap; margin-bottom: 5px; gap: 10px; }
-        .btn-group { display: flex; align-items: center; margin-right: 10px; margin-bottom: 5px; }
-        
-        /* Bopomofo (Zhuyin) Vertical Formatting */
-        .zy-char-wrap { display: inline-flex; align-items: center; margin-right: 2px; }
-        .zy-char { font-size: 26px; font-family: "DFKai-SB", "BiauKai", serif; }
-        .zy-box { display: inline-flex; flex-direction: column; justify-content: center; position: relative; margin-left: 2px; padding-right: 8px; }
-        .zy-symbols { writing-mode: vertical-rl; text-orientation: upright; font-size: 11px; letter-spacing: -2px; }
-        .zy-tone { position: absolute; right: 0px; top: 50%; transform: translateY(-50%); font-size: 11px; }
-        .zy-neutral { position: absolute; top: -11px; left: 50%; transform: translateX(-50%); font-size: 11px; }
-        
-        .en-trans { color: #666; font-size: 15px; font-style: italic; margin-top: 5px; margin-left: 12px; width: 100%; }
-        .grammar-box { background: #FFF9F0; border: 1px solid #E6D5B8; border-radius: 8px; padding: 15px; margin: 15px 0; scroll-margin-top: 140px; }
-        .wrong { color: #D9534F; font-size: 18px; font-weight: bold;}
-        .correct { color: #5CB85C; font-size: 18px; font-weight: bold;}
-        .note { font-size: 14px; color: #555; margin-bottom: 10px; line-height: 1.5; }
-        
-        /* Image Size */
-        .vocab-img { max-width: 400px; height: auto; border-radius: 8px; border: 1px solid #E6D5B8; display: block; margin: 10px 0; }
-        
-        .homework-q { margin-top: 15px; font-size: 16px; font-weight: bold; }
-        .hw-textarea { width: 100%; height: 40px; margin-top: 8px; margin-bottom: 15px; border-radius: 4px; border: 1px solid #ccc; padding: 5px; font-family: inherit; }
-        
-        @media (max-width: 900px) {
-            .sidebar { transform: translateX(-100%); }
-            .sidebar.active { transform: translateX(0); }
-            .main-content { margin-left: 0; width: 100%; padding: 20px; }
-            .en-trans { margin-left: 0; }
-        }
+        /* 大綱列表設定 */
+        .outline { margin: 0; padding-left: 20px; font-size: 14.5px; color: #555; }
+        .outline li { margin-bottom: 6px; }
+        .outline strong { color: #664d34; }
     </style>
 </head>
 <body>
 
-    <!-- 頂部導覽列 -->
-    <div class="top-nav">
-        <a href="https://jany-mandarin.github.io/Chad.html">Index</a>
-        <a href="https://jany-mandarin.github.io/Chad.lesson186.html">Lesson 186</a>
+    <h1>👨‍🎓 Chad's Mandarin Lessons</h1>
+    
+    <div class="profile">
+        Welcome back, Chad! Please select a lesson below. <br>
+        <span style="font-size: 14px; color: #888;">(Newest lessons are at the top, and all history is preserved)</span>
     </div>
 
-    <button class="sidebar-toggle" onclick="toggleSidebar()">☰ Outline</button>
+    <div class="menu">
+        
+        <!-- Lesson 187 (最新的一課放在最上面) -->
+        <a href="Chad.lesson187.html" class="menu-item">
+            <div class="lesson-header">
+                <div class="lesson-title">🌟 Lesson 187: Warm-up, Homework Review & Lesson 11</div>
+                <div class="new-badge">NEW</div>
+            </div>
+            <ul class="outline">
+                <li><strong>Warm-up:</strong> 抓 (Catch/Grab/Scratch)、很好玩 (Fun/Interesting)、Adj. + N. 句子、半盒 (Half a box)。</li>
+                <li><strong>Homework Review:</strong> 換新手機 (iPhone Duo)、別忘了帶帽子 / 開會、不見了 / 看不到、座 (Seat)、別的、請不要不見、轉機。</li>
+                <li><strong>Lesson 11 Focus:</strong> 夜裡 (At night)、半夜 (Middle of the night)、夜店 (Nightclub)、有事 / 有空 (Busy / Free)。</li>
+                <li><strong>Homework:</strong> Translation Practice & Reading Comprehension (子晴與小黃的的故事)。</li>
+            </ul>
+        </a>
 
-    <div class="sidebar" id="sidebar">
-        <h3>📖 Outline <button style="background:none; border:none; color:#8C6239; font-weight:bold; cursor:pointer; font-size:16px;" onclick="toggleSidebar()">×</button></h3>
-        <ol>
-            <li><a href="#sec-0">Warm-up</a>
-                <ul>
-                    <li><a href="#sec-0-item-0">抓 (Catch / Grab / Scratch / Seize)</a></li>
-                    <li><a href="#sec-0-item-1">很好玩 (Fun / Interesting)</a></li>
-                    <li><a href="#sec-0-item-2">Adj. + N. 句子 (Adjective + Noun)</a></li>
-                    <li><a href="#sec-0-item-3">半盒 (Half a box)</a></li>
-                </ul>
-            </li>
-            <li><a href="#sec-1">Homework Review</a>
-                <ul>
-                    <li><a href="#sec-1-item-0">換新手機 (Switching phones)</a></li>
-                    <li><a href="#sec-1-item-1">別忘了帶帽子 (Don't forget)</a></li>
-                    <li><a href="#sec-1-item-2">別忘了開會 (Meeting reminder)</a></li>
-                    <li><a href="#sec-1-item-3">不見了 / 看不到 (Disappeared / Cannot see)</a></li>
-                    <li><a href="#sec-1-item-4">座 (Measure word / Seat)</a></li>
-                    <li><a href="#sec-1-item-5">別的 (Other / Something else)</a></li>
-                    <li><a href="#sec-1-item-6">請不要不見 (Please don't disappear)</a></li>
-                    <li><a href="#sec-1-item-7">轉機 (Transfer flight)</a></li>
-                </ul>
-            </li>
-            <li><a href="#sec-2">Lesson 11</a>
-                <ul>
-                    <li><a href="#sec-2-item-0">夜裡 (At night)</a></li>
-                    <li><a href="#sec-2-item-1">半
+        <!-- Lesson 186 -->
+        <a href="Chad.lesson186.html" class="menu-item">
+            <div class="lesson-header">
+                <div class="lesson-title">📖 Lesson 186: Warm-up & Lesson 11</div>
+            </div>
+            <ul class="outline">
+                <li><strong>Core Grammar & Vocab:</strong> Call/Wake up (叫)、Change/Exchange (換)、Cool (酷)、Purple (紫)、Hard vs. Sad (難 vs. 難過)。</li>
+                <li><strong>Advanced Expressions:</strong> About/Regarding (關於)、Rich person (有錢人)、Good person (好人)、Truck (卡車)、Think/Want/Miss (想)。</li>
+                <li><strong>Homework Review & New Characters:</strong> Beg/Please (拜託)、Originally (本來)、Less/Title (少 / 空少)。</li>
+                <li><strong>Lesson 11 Focus:</strong> Don't / Other (別)。</li>
+            </ul>
+        </a>
+
+        <!-- Lesson 185 -->
+        <a href="Chad.lesson185.html" class="menu-item">
+            <div class="lesson-header">
+                <div class="lesson-title">📖 Lesson 185: Warm-up & Homework Review</div>
+            </div>
+            <ul class="outline">
+                <li><strong>Core Grammar:</strong> Can you help me?, A helps B (A幫B), Again/Repeatedly (又), Just/Simply (就是/只是)。</li>
+                <li><strong>Word Choice & Phrases:</strong> Beverage (飲料), Energy drink (能量飲), To bring outside food (帶外面的東西)。</li>
+                <li><strong>Vocabulary & New Characters:</strong> Bright (亮), Much better (好多了), Recently/Nearest (最近), Invite/Look for (找)。</li>
+                <li><strong>Cultural & Fun Topics:</strong> Boba shops, Tom Cruise (阿湯哥), Movie reviews (很好看)。</li>
+            </ul>
+        </a>
+
+        <!-- Lesson 184 -->
+        <a href="Chad.lesson184.html" class="menu-item">
+            <div class="lesson-header">
+                <div class="lesson-title">📖 Lesson 184: Warm-up & Lesson 11</div>
+            </div>
+            <ul class="outline">
+                <li><strong>Core Grammar:</strong> Finished? (吃完了嗎)、Spend/Pass (過)、Almost / Short of (差不多 / 差)。</li>
+                <li><strong>Word Choice:</strong> Cook vs. Make (煮 vs. 做)、Morning (上午 vs. 早上)。</li>
+                <li><strong>Vocabulary & New Characters:</strong> 休息 (Rest)、Empty (空空的)、Piece (片 vs. 塊)、Half a dozen (半打)。</li>
+                <li><strong>Pronunciation & Corrections:</strong> ㄨ vs. ㄩ (finally vs. noon), "Busy" usage。</li>
+            </ul>
+        </a>
+
+        <!-- Lesson 183 -->
+        <a href="Chad.lesson183.html" class="menu-item">
+            <div class="lesson-header">
+                <div class="lesson-title">📖 Lesson 183: Conversation & Lesson 11</div>
+            </div>
+            <ul class="outline">
+                <li><strong>Core Grammar:</strong> Did you... (有沒有), Not too... (不太)。</li>
+                <li><strong>Measure Words & Verbs:</strong> Clothes (件/穿) vs. Hats (個/戴)。</li>
+                <li><strong>Vocabulary & New Characters:</strong> 鐘 (Clock/Hour)、刻 (Quarter/Moment)。</li>
+                <li><strong>Common Corrections:</strong> Building (大樓) vs. Floor (樓), Feeling unwell vs. Pain。</li>
+                <li><strong>Cultural Topics:</strong> Mid-Autumn Festival, Teachers' Day, Retro video games。</li>
+            </ul>
+        </a>
+
+    </div>
+
+</body>
+</html>
