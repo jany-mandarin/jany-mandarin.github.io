@@ -145,324 +145,427 @@
             <button class="control-btn" onclick="toggleEnglish()">Toggle English</button>
         </div>
 
-        <!-- 區塊 1：課前暖身 -->
-        <div class="section" id="sec-0">
-            <h2>1. Warm-up (課前暖身)</h2>
-            
-            <div class="grammar-box" id="sec-0-item-0">
-                <div style="font-weight:bold; font-size:16px; color:#8C6239; margin-bottom:5px;">1) 抓 (Catch / Grab / Scratch / Seize)</div>
-                <div class="note">Explanation: Has multiple meanings, essentially anything done by grabbing or catching with hands, such as Catch, Grab, Scratch, Seize / Grasp.<br>Note on '住': '住' means to live. '抓住' means to catch/grasp something, emphasizing a resulting hold.</div>
-                <img src="https://cdn.phototourl.com/member/2026-10-11-08e4a3e0-cd55-4a62-be1d-e0ba66f930cb.png" class="vocab-img" alt="Catch origin">
-                <img src="https://cdn.phototourl.com/member/2026-10-11-89d86ef3-80c0-47f3-bb62-0b6d0f351026.png" class="vocab-img" alt="Grab origin">
+        <div id="content"></div>
+    </div>
+
+    <script>
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const mainContent = document.getElementById('mainContent');
+            if (window.innerWidth <= 900) {
+                sidebar.classList.toggle('active');
+            } else {
+                sidebar.classList.toggle('collapsed');
+                mainContent.classList.toggle('expanded');
+            }
+        }
+
+        function parseZhuyin(text) {
+            const regex = /([\u4e00-\u9fa5a-zA-Z0-9])\((.*?)\)/g;
+            let parsed = text.replace(regex, (match, char, zy) => {
+                let tone = '';
+                let symbols = zy;
+                let isNeutral = false;
                 
-                <div class="item" style="border:none; margin-top:10px; padding-bottom:0;">
-                    <div class="item-content" style="align-items:center;">
-                        <div class="btn-group">
-                            <button class="audio-btn" onclick="playAudio('我的貓很喜歡抓我的椅子，他不乖。', this)">🔊</button>
-                            <button class="audio-btn record-btn" onclick="toggleRecord(this, 'rec-0')" title="Record your voice">🎤</button>
-                            <button class="play-rec-btn" id="play-rec-rec-0" onclick="playRecording('rec-0')" disabled>▶</button>
-                        </div>
-                        <div class="zhuyin-content" style="flex:1; margin-left:8px;">我(ㄨㄛˇ)的(ㄉㄜ˙)貓(ㄇㄠ)很(ㄏㄣˇ)喜(ㄒㄧˇ)歡(ㄏㄨㄢ)抓(ㄓㄨㄚ)我(ㄨㄛˇ)的(ㄉㄜ˙)椅(ㄧˇ)子(ㄗ˙)，他(ㄊㄚ)不(ㄅㄨˊ)乖(ㄍㄨㄞ)。</div>
-                    </div>
-                    <div class="en-trans">My cat really likes to scratch my chair, he is not a good boy.</div>
-                </div>
-                <div class="item" style="border:none; margin-top:10px; padding-bottom:0;">
-                    <div class="item-content" style="align-items:center;">
-                        <div class="btn-group">
-                            <button class="audio-btn" onclick="playAudio('別抓住我！我是乖孩子！', this)">🔊</button>
-                            <button class="audio-btn record-btn" onclick="toggleRecord(this, 'rec-1')" title="Record your voice">🎤</button>
-                            <button class="play-rec-btn" id="play-rec-rec-1" onclick="playRecording('rec-1')" disabled>▶</button>
-                        </div>
-                        <div class="zhuyin-content" style="flex:1; margin-left:8px;">別(ㄅㄧㄝˊ)抓(ㄓㄨㄚ)住(ㄓㄨˋ)我(ㄨㄛˇ)！我(ㄨㄛˇ)是(ㄕˋ)乖(ㄍㄨㄞ)孩(ㄏㄞˊ)子(ㄗ˙)！</div>
-                    </div>
-                    <div class="en-trans">Don't grab me! I am a good kid!</div>
-                </div>
-                <div class="item" style="border:none; margin-top:10px; padding-bottom:0;">
-                    <div class="item-content" style="align-items:center;">
-                        <div class="btn-group">
-                            <button class="audio-btn" onclick="playAudio('我抓了一些糖果放在包包裡。', this)">🔊</button>
-                            <button class="audio-btn record-btn" onclick="toggleRecord(this, 'rec-2')" title="Record your voice">🎤</button>
-                            <button class="play-rec-btn" id="play-rec-rec-2" onclick="playRecording('rec-2')" disabled>▶</button>
-                        </div>
-                        <div class="zhuyin-content" style="flex:1; margin-left:8px;">我(ㄨㄛˇ)抓(ㄓㄨㄚ)了(ㄌㄜ˙)一(ㄧˊ)些(ㄒㄧㄝ)糖(ㄊㄤˊ)果(ㄍㄨㄛˇ)放(ㄈㄤˋ)在(ㄗㄞˋ)包(ㄅㄠ)包(ㄅㄠ)裡(ㄌㄧˇ)。</div>
-                    </div>
-                    <div class="en-trans">I grabbed some candies and put them in my bag.</div>
-                </div>
-            </div>
+                if (zy.includes('ˊ')) { tone = 'ˊ'; symbols = zy.replace('ˊ', ''); }
+                else if (zy.includes('ˇ')) { tone = 'ˇ'; symbols = zy.replace('ˇ', ''); }
+                else if (zy.includes('ˋ')) { tone = 'ˋ'; symbols = zy.replace('ˋ', ''); }
+                else if (zy.includes('˙')) { isNeutral = true; symbols = zy.replace('˙', ''); }
 
-            <div class="grammar-box" id="sec-0-item-1">
-                <div style="font-weight:bold; font-size:16px; color:#8C6239; margin-bottom:5px;">2) 很好玩 (Fun / Interesting)</div>
-                <div class="item" style="border:none; margin-top:10px; padding-bottom:0;">
-                    <div class="item-content" style="align-items:center;">
-                        <div class="btn-group">
-                            <button class="audio-btn" onclick="playAudio('我的貓抓椅子的時候，我想他覺得很好玩。', this)">🔊</button>
-                            <button class="audio-btn record-btn" onclick="toggleRecord(this, 'rec-3')" title="Record your voice">🎤</button>
-                            <button class="play-rec-btn" id="play-rec-rec-3" onclick="playRecording('rec-3')" disabled>▶</button>
-                        </div>
-                        <div class="zhuyin-content" style="flex:1; margin-left:8px;">我(ㄨㄛˇ)的(ㄉㄜ˙)貓(ㄇㄠ)抓(ㄓㄨㄚ)椅(ㄧˇ)子(ㄗ˙)的(ㄉㄜ˙)時(ㄕˊ)候(ㄏㄡˋ)，我(ㄨㄛˇ)想(ㄒㄧㄤˇ)他(ㄊㄚ)覺(ㄐㄩㄝˊ)得(ㄉㄜ˙)很(ㄏㄣˇ)好(ㄏㄠˇ)玩(ㄨㄢˊ)。</div>
-                    </div>
-                    <div class="en-trans">When my cat scratches the chair, I think he finds it very fun.</div>
-                </div>
-            </div>
+                let toneHtml = tone ? `<span class="zy-tone">${tone}</span>` : '';
+                let neutralHtml = isNeutral ? `<span class="zy-neutral">˙</span>` : '';
 
-            <div class="grammar-box" id="sec-0-item-2">
-                <div style="font-weight:bold; font-size:16px; color:#8C6239; margin-bottom:5px;">3) Adj. + N. 句子 (Adjective + Noun sentences)</div>
-                <div class="item" style="border:none; margin-top:10px; padding-bottom:0;">
-                    <div class="item-content" style="align-items:center;">
-                        <div class="btn-group">
-                            <button class="audio-btn" onclick="playAudio('在鳳凰城，我看到很多賣螺絲的公司。', this)">🔊</button>
-                            <button class="audio-btn record-btn" onclick="toggleRecord(this, 'rec-4')" title="Record your voice">🎤</button>
-                            <button class="play-rec-btn" id="play-rec-rec-4" onclick="playRecording('rec-4')" disabled>▶</button>
-                        </div>
-                        <div class="zhuyin-content" style="flex:1; margin-left:8px;">在(ㄗㄞˋ)鳳(ㄈㄥˋ)凰(ㄏㄨㄤˊ)城(ㄔㄥˊ)，我(ㄨㄛˇ)看(ㄎㄢˋ)到(ㄉㄠˋ)很(ㄏㄣˇ)多(ㄉㄨㄛ)賣(ㄇㄞˋ)螺(ㄌㄨㄛˊ)絲(ㄙ)的(ㄉㄜ˙)公(ㄍㄨㄥ)司(ㄙ)。</div>
-                    </div>
-                    <div class="en-trans">In Phoenix, I saw many companies selling screws.</div>
-                </div>
-                <div class="item" style="border:none; margin-top:10px; padding-bottom:0;">
-                    <div class="item-content" style="align-items:center;">
-                        <div class="btn-group">
-                            <button class="audio-btn" onclick="playAudio('在鳳凰城，有我認識的公司，也有我不認識的公司。', this)">🔊</button>
-                            <button class="audio-btn record-btn" onclick="toggleRecord(this, 'rec-5')" title="Record your voice">🎤</button>
-                            <button class="play-rec-btn" id="play-rec-rec-5" onclick="playRecording('rec-5')" disabled>▶</button>
-                        </div>
-                        <div class="zhuyin-content" style="flex:1; margin-left:8px;">在(ㄗㄞˋ)鳳(ㄈㄥˋ)凰(ㄏㄨㄤˊ)城(ㄔㄥˊ)，有(ㄧㄡˇ)我(ㄨㄛˇ)認(ㄖㄣˋ)識(ㄕ˙)的(ㄉㄜ˙)公(ㄍㄨㄥ)司(ㄙ)，也(ㄧㄝˇ)有(ㄧㄡˇ)我(ㄨㄛˇ)不(ㄅㄨˊ)認(ㄖㄣˋ)識(ㄕ˙)的(ㄉㄜ˙)公(ㄍㄨㄥ)司(ㄙ)。</div>
-                    </div>
-                    <div class="en-trans">In Phoenix, there are companies I know, and also companies I don't know.</div>
-                </div>
-            </div>
+                return `<div class="zy-char-wrap"><span class="zy-char">${char}</span><div class="zy-box">${neutralHtml}<span class="zy-symbols">${symbols}</span>${toneHtml}</div></div>`;
+            });
+            return parsed;
+        }
 
-            <div class="grammar-box" id="sec-0-item-3">
-                <div style="font-weight:bold; font-size:16px; color:#8C6239; margin-bottom:5px;">4) 半盒 (Half a box)</div>
-                <div class="note">Explanation: 一盒半 = 1.5 boxes, 半盒 = 0.5 box.</div>
-                <div class="item" style="border:none; margin-top:10px; padding-bottom:0;">
-                    <div class="item-content" style="align-items:center;">
-                        <div class="btn-group">
-                            <button class="audio-btn" onclick="playAudio('我吃了半盒鳳梨酥。', this)">🔊</button>
-                            <button class="audio-btn record-btn" onclick="toggleRecord(this, 'rec-6')" title="Record your voice">🎤</button>
-                            <button class="play-rec-btn" id="play-rec-rec-6" onclick="playRecording('rec-6')" disabled>▶</button>
-                        </div>
-                        <div class="zhuyin-content" style="flex:1; margin-left:8px;">我(ㄨㄛˇ)吃(ㄔ)了(ㄌㄜ˙)半(ㄅㄢˋ)盒(ㄏㄜˊ)鳳(ㄈㄥˋ)梨(ㄌㄧˊ)酥(ㄙㄨ)。</div>
-                    </div>
-                    <div class="en-trans">I ate half a box of pineapple cakes.</div>
-                </div>
-            </div>
-        </div>
+        let currentUtteranceText = "";
 
-        <!-- 區塊 2：上次作業 -->
-        <div class="section" id="sec-1">
-            <h2>2. Homework Review (上次作業)</h2>
+        function playAudio(text, btn) {
+            let cleanText = text.replace(/\(.*?\)/g, '')
+                                .replace(/和/g, '汗')
+                                .replace(/都/g, '兜')
+                                .replace(/差/g, '插')
+                                .replace(/俄/g, '惡')
+                                .replace(/少康/g, '邵康')
+                                .replace(/空少/g, '空邵')
+                                .replace(/吐/g, '兔')
+                                .replace(/空/g, '控')
+                                .replace(/[^\u4e00-\u9fa5，。？！a-zA-Z ]/g, '');
 
-            <div class="grammar-box" id="sec-1-item-0">
-                <div style="font-weight:bold; font-size:16px; color:#8C6239; margin-bottom:5px;">1) 換新手機 (Switching phones)</div>
-                <div class="item-content" style="margin-top: 10px; align-items:center;">
-                    <span class="wrong" style="margin-right:15px;">❌ </span> <span>我想換新手機叫iPhone Duo</span>
-                </div>
-                <div class="item-content" style="margin-top: 10px; align-items:center;">
-                    <div class="btn-group">
-                        <button class="audio-btn" onclick="playAudio('我想換新iPhone Duo。', this)">🔊</button>
-                        <button class="audio-btn record-btn" onclick="toggleRecord(this, 'rec-7')" title="Record your voice">🎤</button>
-                        <button class="play-rec-btn" id="play-rec-rec-7" onclick="playRecording('rec-7')" disabled>▶</button>
-                    </div>
-                    <span class="correct" style="margin-right:8px; margin-left:8px;">✅ </span> <span style="flex:1;">我(ㄨㄛˇ)想(ㄒㄧㄤˇ)換(ㄏㄨㄢˋ)新(ㄒㄧㄣ)iPhone Duo。</span>
-                </div>
-                <div class="en-trans">I want to switch to the new iPhone Duo.</div>
-            </div>
+            if (speechSynthesis.speaking && currentUtteranceText === cleanText) {
+                if (speechSynthesis.paused) {
+                    speechSynthesis.resume();
+                } else {
+                    speechSynthesis.pause();
+                }
+                return;
+            }
 
-            <div class="grammar-box" id="sec-1-item-1">
-                <div style="font-weight:bold; font-size:16px; color:#8C6239; margin-bottom:5px;">2) 別忘了帶帽子 (Don't forget to bring a hat)</div>
-                <div class="item-content" style="margin-top: 10px; align-items:center;">
-                    <span class="wrong" style="margin-right:15px;">❌ </span> <span>你出發的時候別忘一頂帽子</span>
-                </div>
-                <div class="item-content" style="margin-top: 10px; align-items:center;">
-                    <div class="btn-group">
-                        <button class="audio-btn" onclick="playAudio('你出門的時候別忘了帶帽子。', this)">🔊</button>
-                        <button class="audio-btn record-btn" onclick="toggleRecord(this, 'rec-8')" title="Record your voice">🎤</button>
-                        <button class="play-rec-btn" id="play-rec-rec-8" onclick="playRecording('rec-8')" disabled>▶</button>
-                    </div>
-                    <span class="correct" style="margin-right:8px; margin-left:8px;">✅ </span> <span style="flex:1;">你(ㄋㄧˇ)出(ㄔㄨ)門(ㄇㄣˊ)的(ㄉㄜ˙)時(ㄕˊ)候(ㄏㄡˋ)別(ㄅㄧㄝˊ)忘(ㄨㄤˋ)了(ㄌㄜ˙)帶(ㄉㄞˋ)帽(ㄇㄠˋ)子(ㄗ˙)。</span>
-                </div>
-                <div class="en-trans">Don't forget to bring a hat when you go out.</div>
-            </div>
+            speechSynthesis.cancel(); 
+            currentUtteranceText = cleanText;
+            const utterance = new SpeechSynthesisUtterance(cleanText);
+            utterance.lang = 'zh-TW';
+            utterance.rate = 0.85;
+            utterance.onend = () => { currentUtteranceText = ""; };
+            speechSynthesis.speak(utterance);
+        }
 
-            <div class="grammar-box" id="sec-1-item-2">
-                <div style="font-weight:bold; font-size:16px; color:#8C6239; margin-bottom:5px;">3) 別忘了開會 (Meeting reminder)</div>
-                <div class="item-content" style="margin-top: 10px; align-items:center;">
-                    <span class="wrong" style="margin-right:15px;">❌ </span> <span>關於明天的開會，別忘了!</span>
-                </div>
-                <div class="item-content" style="margin-top: 10px; align-items:center;">
-                    <div class="btn-group">
-                        <button class="audio-btn" onclick="playAudio('別忘了明天的開會！', this)">🔊</button>
-                        <button class="audio-btn record-btn" onclick="toggleRecord(this, 'rec-9')" title="Record your voice">🎤</button>
-                        <button class="play-rec-btn" id="play-rec-rec-9" onclick="playRecording('rec-9')" disabled>▶</button>
-                    </div>
-                    <span class="correct" style="margin-right:8px; margin-left:8px;">✅ </span> <span style="flex:1;">別(ㄅㄧㄝˊ)忘(ㄨㄤˋ)了(ㄌㄜ˙)明(ㄇㄧㄥˊ)天(ㄊㄧㄢ)的(ㄉㄜ˙)開(ㄎㄞ)會(ㄏㄨㄟˋ)！</span>
-                </div>
-                <div class="en-trans">Don't forget tomorrow's meeting!</div>
-            </div>
+        let mediaRecorders = {};
 
-            <div class="grammar-box" id="sec-1-item-3">
-                <div style="font-weight:bold; font-size:16px; color:#8C6239; margin-bottom:5px;">4) 不見了 / 看不到 (Disappeared / Cannot see)</div>
-                <div class="item" style="border:none; margin-top:10px; padding-bottom:0;">
-                    <div class="item-content" style="align-items:center;">
-                        <div class="btn-group">
-                            <button class="audio-btn" onclick="playAudio('我的手機不見了 / 我的包包不見了！', this)">🔊</button>
-                            <button class="audio-btn record-btn" onclick="toggleRecord(this, 'rec-10')" title="Record your voice">🎤</button>
-                            <button class="play-rec-btn" id="play-rec-rec-10" onclick="playRecording('rec-10')" disabled>▶</button>
-                        </div>
-                        <div class="zhuyin-content" style="flex:1; margin-left:8px;">我(ㄨㄛˇ)的(ㄉㄜ˙)手(ㄕㄡˇ)機(ㄐㄧ)不(ㄅㄨˊ)見(ㄐㄧㄢˋ)了(ㄌㄜ˙) / 我(ㄨㄛˇ)的(ㄉㄜ˙)包(ㄅㄠ)包(ㄅㄠ)不(ㄅㄨˊ)見(ㄐㄧㄢˋ)了(ㄌㄜ˙)！</div>
-                    </div>
-                    <div class="en-trans">My phone disappeared / My bag disappeared!</div>
-                </div>
-                <div class="item" style="border:none; margin-top:10px; padding-bottom:0;">
-                    <div class="item-content" style="align-items:center;">
-                        <div class="btn-group">
-                            <button class="audio-btn" onclick="playAudio('我的貓在我前面，我看不到電視。', this)">🔊</button>
-                            <button class="audio-btn record-btn" onclick="toggleRecord(this, 'rec-11')" title="Record your voice">🎤</button>
-                            <button class="play-rec-btn" id="play-rec-rec-11" onclick="playRecording('rec-11')" disabled>▶</button>
-                        </div>
-                        <div class="zhuyin-content" style="flex:1; margin-left:8px;">我(ㄨㄛˇ)的(ㄉㄜ˙)貓(ㄇㄠ)在(ㄗㄞˋ)我(ㄨㄛˇ)前(ㄑㄧㄢˊ)面(ㄇㄧㄢˋ)，我(ㄨㄛˇ)看(ㄎㄢˋ)不(ㄅㄨˊ)到(ㄉㄠˋ)電(ㄉㄧㄢˋ)視(ㄕˋ)。</div>
-                    </div>
-                    <div class="en-trans">My cat is in front of me, I cannot see the TV.</div>
-                </div>
-                <div class="item" style="border:none; margin-top:10px; padding-bottom:0;">
-                    <div class="item-content" style="align-items:center;">
-                        <div class="btn-group">
-                            <button class="audio-btn" onclick="playAudio('這裡太黑了，我看不到東西。', this)">🔊</button>
-                            <button class="audio-btn record-btn" onclick="toggleRecord(this, 'rec-12')" title="Record your voice">🎤</button>
-                            <button class="play-rec-btn" id="play-rec-rec-12" onclick="playRecording('rec-12')" disabled>▶</button>
-                        </div>
-                        <div class="zhuyin-content" style="flex:1; margin-left:8px;">這(ㄓㄜˋ)裡(ㄌㄧˇ)太(ㄊㄞˋ)黑(ㄏㄟ)了(ㄌㄜ˙)，我(ㄨㄛˇ)看(ㄎㄢˋ)不(ㄅㄨˊ)到(ㄉㄠˋ)東(ㄉㄨㄥ)西(ㄒㄧ)。</div>
-                    </div>
-                    <div class="en-trans">It's too dark here, I cannot see anything.</div>
-                </div>
-            </div>
+        async function toggleRecord(btn, id) {
+            let container = btn.closest('.item') || btn.closest('.grammar-box') || btn.closest('div[style*="background:#fff"]');
+            let player = container.querySelector('.audio-player');
+            
+            if (!player) {
+                player = document.createElement('audio');
+                player.className = 'audio-player';
+                player.controls = true;
+                player.style.display = 'none';
+                player.style.width = '100%';
+                player.style.marginTop = '15px';
+                container.appendChild(player);
+            }
 
-            <div class="grammar-box" id="sec-1-item-4">
-                <div style="font-weight:bold; font-size:16px; color:#8C6239; margin-bottom:5px;">5) 座 (Measure word / Seat)</div>
-                <div class="note">Explanation: Measure word for mountains. '座位' means seat.</div>
-                <div class="item" style="border:none; margin-top:10px; padding-bottom:0;">
-                    <div class="item-content" style="align-items:center;">
-                        <div class="btn-group">
-                            <button class="audio-btn" onclick="playAudio('我家前面有一座山。', this)">🔊</button>
-                            <button class="audio-btn record-btn" onclick="toggleRecord(this, 'rec-13')" title="Record your voice">🎤</button>
-                            <button class="play-rec-btn" id="play-rec-rec-13" onclick="playRecording('rec-13')" disabled>▶</button>
-                        </div>
-                        <div class="zhuyin-content" style="flex:1; margin-left:8px;">我(ㄨㄛˇ)家(ㄐㄧㄚ)前(ㄑㄧㄢˊ)面(ㄇㄧㄢˋ)有(ㄧㄡˇ)一(ㄧˊ)座(ㄗㄨㄛˋ)山(ㄕㄢ)。</div>
-                    </div>
-                    <div class="en-trans">There is a mountain in front of my house.</div>
-                </div>
-                <div class="item" style="border:none; margin-top:10px; padding-bottom:0;">
-                    <div class="item-content" style="align-items:center;">
-                        <div class="btn-group">
-                            <button class="audio-btn" onclick="playAudio('他的手機在車子的座位下。', this)">🔊</button>
-                            <button class="audio-btn record-btn" onclick="toggleRecord(this, 'rec-14')" title="Record your voice">🎤</button>
-                            <button class="play-rec-btn" id="play-rec-rec-14" onclick="playRecording('rec-14')" disabled>▶</button>
-                        </div>
-                        <div class="zhuyin-content" style="flex:1; margin-left:8px;">他(ㄊㄚ)的(ㄉㄜ˙)手(ㄕㄡˇ)機(ㄐㄧ)在(ㄗㄞˋ)車(ㄔㄜ)子(ㄗ˙)的(ㄉㄜ˙)座(ㄗㄨㄛˋ)位(ㄨㄟˋ)下(ㄒㄧㄚˋ)。</div>
-                    </div>
-                    <div class="en-trans">His phone is under the car seat.</div>
-                </div>
-                <div class="item" style="border:none; margin-top:10px; padding-bottom:0;">
-                    <div class="item-content" style="align-items:center;">
-                        <div class="btn-group">
-                            <button class="audio-btn" onclick="playAudio('現在公司裡沒有我的座位，所以我在家上班。', this)">🔊</button>
-                            <button class="audio-btn record-btn" onclick="toggleRecord(this, 'rec-15')" title="Record your voice">🎤</button>
-                            <button class="play-rec-btn" id="play-rec-rec-15" onclick="playRecording('rec-15')" disabled>▶</button>
-                        </div>
-                        <div class="zhuyin-content" style="flex:1; margin-left:8px;">現(ㄒㄧㄢˋ)在(ㄗㄞˋ)公(ㄍㄨㄥ)司(ㄙ)裡(ㄌㄧˇ)沒(ㄇㄟˊ)有(ㄧㄡˇ)我(ㄨㄛˇ)的(ㄉㄜ˙)座(ㄗㄨㄛˋ)位(ㄨㄟˋ)，所(ㄙㄨㄛˇ)以(ㄧˇ)我(ㄨㄛˇ)在(ㄗㄞˋ)家(ㄐㄧㄚ)上(ㄕㄤˋ)班(ㄅㄢ)。</div>
-                    </div>
-                    <div class="en-trans">There is no seat for me in the company now, so I work from home.</div>
-                </div>
-            </div>
+            if (!mediaRecorders[id] || mediaRecorders[id].state === "inactive") {
+                try {
+                    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+                    let chunks = [];
+                    let recorder = new MediaRecorder(stream);
+                    
+                    recorder.ondataavailable = e => chunks.push(e.data);
+                    recorder.onstop = () => {
+                        const blob = new Blob(chunks, { 'type': 'audio/webm' });
+                        player.src = URL.createObjectURL(blob);
+                        player.style.display = 'block';
+                        document.getElementById(`play-rec-${id}`).disabled = false;
+                        stream.getTracks().forEach(track => track.stop());
+                    };
 
-            <div class="grammar-box" id="sec-1-item-5">
-                <div style="font-weight:bold; font-size:16px; color:#8C6239; margin-bottom:5px;">6) 別的 (Other / Something else)</div>
-                <div class="item" style="border:none; margin-top:10px; padding-bottom:0;">
-                    <div class="item-content" style="align-items:center;">
-                        <div class="btn-group">
-                            <button class="audio-btn" onclick="playAudio('你還想去別的地方看看嗎？', this)">🔊</button>
-                            <button class="audio-btn record-btn" onclick="toggleRecord(this, 'rec-16')" title="Record your voice">🎤</button>
-                            <button class="play-rec-btn" id="play-rec-rec-16" onclick="playRecording('rec-16')" disabled>▶</button>
-                        </div>
-                        <div class="zhuyin-content" style="flex:1; margin-left:8px;">你(ㄋㄧˇ)還(ㄏㄞˊ)想(ㄒㄧㄤˇ)去(ㄑㄩˋ)別(ㄅㄧㄝˊ)的(ㄉㄜ˙)地(ㄉㄧˋ)方(ㄈㄤ)看(ㄎㄢˋ)看(ㄎㄢˋ)嗎(ㄇㄚ˙)？</div>
-                    </div>
-                    <div class="en-trans">Do you still want to go look at other places?</div>
-                </div>
-                <div class="item" style="border:none; margin-top:10px; padding-bottom:0;">
-                    <div class="item-content" style="align-items:center;">
-                        <div class="btn-group">
-                            <button class="audio-btn" onclick="playAudio('這個不好吃，我想吃別的。', this)">🔊</button>
-                            <button class="audio-btn record-btn" onclick="toggleRecord(this, 'rec-17')" title="Record your voice">🎤</button>
-                            <button class="play-rec-btn" id="play-rec-rec-17" onclick="playRecording('rec-17')" disabled>▶</button>
-                        </div>
-                        <div class="zhuyin-content" style="flex:1; margin-left:8px;">這(ㄓㄜˋ)個(ㄍㄜ˙)不(ㄅㄨˋ)好(ㄏㄠˇ)吃(ㄔ)，我(ㄨㄛˇ)想(ㄒㄧㄤˇ)吃(ㄔ)別(ㄅㄧㄝˊ)的(ㄉㄜ˙)。</div>
-                    </div>
-                    <div class="en-trans">This doesn't taste good, I want to eat something else.</div>
-                </div>
-            </div>
+                    recorder.start();
+                    mediaRecorders[id] = recorder;
+                    btn.innerHTML = "⏹️";
+                    btn.classList.add("recording");
+                    player.style.display = 'none';
+                } catch (err) {
+                    alert("Microphone access denied. 請允許瀏覽器使用麥克風。");
+                }
+            } else {
+                mediaRecorders[id].stop();
+                btn.innerHTML = "🎤";
+                btn.classList.remove("recording");
+            }
+        }
 
-            <div class="grammar-box" id="sec-1-item-6">
-                <div style="font-weight:bold; font-size:16px; color:#8C6239; margin-bottom:5px;">7) 請不要不見 (Please don't disappear)</div>
-                <div class="note">Explanation: '請拜託' means 'please pay attention / be sure to'. The Chinese word for 'don't' is '不要'.</div>
-                <div class="item-content" style="margin-top: 10px; align-items:center;">
-                    <span class="wrong" style="margin-right:15px;">❌ </span> <span>手機太貴了，請拜託不見了。</span>
-                </div>
-                <div class="item-content" style="margin-top: 10px; align-items:center;">
-                    <div class="btn-group">
-                        <button class="audio-btn" onclick="playAudio('手機太貴了，請不要不見。', this)">🔊</button>
-                        <button class="audio-btn record-btn" onclick="toggleRecord(this, 'rec-18')" title="Record your voice">🎤</button>
-                        <button class="play-rec-btn" id="play-rec-rec-18" onclick="playRecording('rec-18')" disabled>▶</button>
-                    </div>
-                    <span class="correct" style="margin-right:8px; margin-left:8px;">✅ </span> <span style="flex:1;">手(ㄕㄡˇ)機(ㄐㄧ)太(ㄊㄞˋ)貴(ㄍㄨㄟˋ)了(ㄌㄜ˙)，請(ㄑㄧㄥˇ)不(ㄅㄨˋ)要(ㄧㄠˋ)不(ㄅㄨˊ)見(ㄐㄧㄢˋ)。</span>
-                </div>
-                <div class="en-trans">The phone is too expensive, please don't let it disappear.</div>
-            </div>
+        function playRecording(id) {
+            let btn = document.getElementById(`play-rec-${id}`);
+            let container = btn.closest('.item') || btn.closest('.grammar-box') || btn.closest('div[style*="background:#fff"]');
+            let player = container.querySelector('.audio-player');
+            if (player && player.src) {
+                player.play();
+            }
+        }
 
-            <div class="grammar-box" id="sec-1-item-7">
-                <div style="font-weight:bold; font-size:16px; color:#8C6239; margin-bottom:5px;">8) 轉機 (Transfer flight)</div>
-                <div class="item" style="border:none; margin-top:10px; padding-bottom:0;">
-                    <div class="item-content" style="align-items:center;">
-                        <div class="btn-group">
-                            <button class="audio-btn" onclick="playAudio('前天沒有從鳳凰城到明尼蘇達的飛機，所以我在丹佛轉機，等了兩個鐘頭，再到明尼蘇達。', this)">🔊</button>
-                            <button class="audio-btn record-btn" onclick="toggleRecord(this, 'rec-19')" title="Record your voice">🎤</button>
-                            <button class="play-rec-btn" id="play-rec-rec-19" onclick="playRecording('rec-19')" disabled>▶</button>
+        const lessonData = [
+            {
+                title: "1. Warm-up (課前暖身)",
+                items: [
+                    {
+                        type: "grammar",
+                        title: "1) 抓 (Catch / Grab / Scratch / Seize)",
+                        note: "Explanation: Has multiple meanings, essentially anything done by grabbing or catching with hands, such as Catch, Grab, Scratch, Seize / Grasp.<br>Note on '住': '住' means to live. '抓住' means to catch/grasp something, emphasizing a resulting hold.",
+                        customHtml: `
+                            <img src="https://cdn.phototourl.com/member/2026-10-11-08e4a3e0-cd55-4a62-be1d-e0ba66f930cb.png" class="vocab-img" alt="Catch origin">
+                            <img src="https://cdn.phototourl.com/member/2026-10-11-89d86ef3-80c0-47f3-bb62-0b6d0f351026.png" class="vocab-img" alt="Grab origin">
+                        `,
+                        examples: [
+                            { zh: "我(ㄨㄛˇ)的(ㄉㄜ˙)貓(ㄇㄠ)很(ㄏㄣˇ)喜(ㄒㄧˇ)歡(ㄏㄨㄢ)抓(ㄓㄨㄚ)我(ㄨㄛˇ)的(ㄉㄜ˙)椅(ㄧˇ)子(ㄗ˙)，他(ㄊㄚ)不(ㄅㄨˊ)乖(ㄍㄨㄞ)。", en: "My cat really likes to scratch my chair, he is not a good boy." },
+                            { zh: "別(ㄅㄧㄝˊ)抓(ㄓㄨㄚ)住(ㄓㄨˋ)我(ㄨㄛˇ)！我(ㄨㄛˇ)是(ㄕˋ)乖(ㄍㄨㄞ)孩(ㄏㄞˊ)子(ㄗ˙)！", en: "Don't grab me! I am a good kid!" },
+                            { zh: "我(ㄨㄛˇ)抓(ㄓㄨㄚ)了(ㄌㄜ˙)一(ㄧˊ)些(ㄒㄧㄝ)糖(ㄊㄤˊ)果(ㄍㄨㄛˇ)放(ㄈㄤˋ)在(ㄗㄞˋ)包(ㄅㄠ)包(ㄅㄠ)裡(ㄌㄧˇ)。", en: "I grabbed some candies and put them in my bag." }
+                        ]
+                    },
+                    {
+                        type: "grammar",
+                        title: "2) 很好玩 (Fun / Interesting)",
+                        examples: [
+                            { zh: "我(ㄨㄛˇ)的(ㄉㄜ˙)貓(ㄇㄠ)抓(ㄓㄨㄚ)椅(ㄧˇ)子(ㄗ˙)的(ㄉㄜ˙)時(ㄕˊ)候(ㄏㄡˋ)，我(ㄨㄛˇ)想(ㄒㄧㄤˇ)他(ㄊㄚ)覺(ㄐㄩㄝˊ)得(ㄉㄜ˙)很(ㄏㄣˇ)好(ㄏㄠˇ)玩(ㄨㄢˊ)。", en: "When my cat scratches the chair, I think he finds it very fun." }
+                        ]
+                    },
+                    {
+                        type: "grammar",
+                        title: "3) Adj. + N. 句子 (Adjective + Noun sentences)",
+                        examples: [
+                            { zh: "在(ㄗㄞˋ)鳳(ㄈㄥˋ)凰(ㄏㄨㄤˊ)城(ㄔㄥˊ)，我(ㄨㄛˇ)看(ㄎㄢˋ)到(ㄉㄠˋ)很(ㄏㄣˇ)多(ㄉㄨㄛ)賣(ㄇㄞˋ)螺(ㄌㄨㄛˊ)絲(ㄙ)的(ㄉㄜ˙)公(ㄍㄨㄥ)司(ㄙ)。", en: "In Phoenix, I saw many companies selling screws." },
+                            { zh: "在(ㄗㄞˋ)鳳(ㄈㄥˋ)凰(ㄏㄨㄤˊ)城(ㄔㄥˊ)，有(ㄧㄡˇ)我(ㄨㄛˇ)認(ㄖㄣˋ)識(ㄕ˙)的(ㄉㄜ˙)公(ㄍㄨㄥ)司(ㄙ)，也(ㄧㄝˇ)有(ㄧㄡˇ)我(ㄨㄛˇ)不(ㄅㄨˊ)認(ㄖㄣˋ)識(ㄕ˙)的(ㄉㄜ˙)公(ㄍㄨㄥ)司(ㄙ)。", en: "In Phoenix, there are companies I know, and also companies I don't know." }
+                        ]
+                    },
+                    {
+                        type: "grammar",
+                        title: "4) 半盒 (Half a box)",
+                        note: "Explanation: 一盒半 = 1.5 boxes, 半盒 = 0.5 box.",
+                        examples: [
+                            { zh: "我(ㄨㄛˇ)吃(ㄔ)了(ㄌㄜ˙)半(ㄅㄢˋ)盒(ㄏㄜˊ)鳳(ㄈㄥˋ)梨(ㄌㄧˊ)酥(ㄙㄨ)。", en: "I ate half a box of pineapple cakes." }
+                        ]
+                    }
+                ]
+            },
+            {
+                title: "2. Homework Review (上次作業)",
+                items: [
+                    {
+                        type: "grammar",
+                        title: "1) 換新手機 (Switching phones)",
+                        wrong: "我想換新手機叫iPhone Duo",
+                        correct: "我(ㄨㄛˇ)想(ㄒㄧㄤˇ)換(ㄏㄨㄢˋ)新(ㄒㄧㄣ)iPhone Duo。",
+                        en: "I want to switch to the new iPhone Duo."
+                    },
+                    {
+                        type: "grammar",
+                        title: "2) 別忘了帶帽子 (Don't forget to bring a hat)",
+                        wrong: "你出發的時候別忘一頂帽子",
+                        correct: "你(ㄋㄧˇ)出(ㄔㄨ)門(ㄇㄣˊ)的(ㄉㄜ˙)時(ㄕˊ)候(ㄏㄡˋ)別(ㄅㄧㄝˊ)忘(ㄨㄤˋ)了(ㄌㄜ˙)帶(ㄉㄞˋ)帽(ㄇㄠˋ)子(ㄗ˙)。",
+                        en: "Don't forget to bring a hat when you go out."
+                    },
+                    {
+                        type: "grammar",
+                        title: "3) 別忘了開會 (Meeting reminder)",
+                        wrong: "關於明天的開會，別忘了!",
+                        correct: "別(ㄅㄧㄝˊ)忘(ㄨㄤˋ)了(ㄌㄜ˙)明(ㄇㄧㄥˊ)天(ㄊㄧㄢ)的(ㄉㄜ˙)開(ㄎㄞ)會(ㄏㄨㄟˋ)！",
+                        en: "Don't forget tomorrow's meeting!"
+                    },
+                    {
+                        type: "grammar",
+                        title: "4) 不見了 / 看不到 (Disappeared / Cannot see)",
+                        examples: [
+                            { zh: "我(ㄨㄛˇ)的(ㄉㄜ˙)手(ㄕㄡˇ)機(ㄐㄧ)不(ㄅㄨˊ)見(ㄐㄧㄢˋ)了(ㄌㄜ˙) / 我(ㄨㄛˇ)的(ㄉㄜ˙)包(ㄅㄠ)包(ㄅㄠ)不(ㄅㄨˊ)見(ㄐㄧㄢˋ)了(ㄌㄜ˙)！", en: "My phone disappeared / My bag disappeared!" },
+                            { zh: "我(ㄨㄛˇ)的(ㄉㄜ˙)貓(ㄇㄠ)在(ㄗㄞˋ)我(ㄨㄛˇ)前(ㄑㄧㄢˊ)面(ㄇㄧㄢˋ)，我(ㄨㄛˇ)看(ㄎㄢˋ)不(ㄅㄨˊ)到(ㄉㄠˋ)電(ㄉㄧㄢˋ)視(ㄕˋ)。", en: "My cat is in front of me, I cannot see the TV." },
+                            { zh: "這(ㄓㄜˋ)裡(ㄌㄧˇ)太(ㄊㄞˋ)黑(ㄏㄟ)了(ㄌㄜ˙)，我(ㄨㄛˇ)看(ㄎㄢˋ)不(ㄅㄨˊ)到(ㄉㄠˋ)東(ㄉㄨㄥ)西(ㄒㄧ)。", en: "It's too dark here, I cannot see anything." }
+                        ]
+                    },
+                    {
+                        type: "grammar",
+                        title: "5) 座 (Measure word / Seat)",
+                        note: "Explanation: Measure word for mountains. '座位' means seat.",
+                        examples: [
+                            { zh: "我(ㄨㄛˇ)家(ㄐㄧㄚ)前(ㄑㄧㄢˊ)面(ㄇㄧㄢˋ)有(ㄧㄡˇ)一(ㄧˊ)座(ㄗㄨㄛˋ)山(ㄕㄢ)。", en: "There is a mountain in front of my house." },
+                            { zh: "他(ㄊㄚ)的(ㄉㄜ˙)手(ㄕㄡˇ)機(ㄐㄧ)在(ㄗㄞˋ)車(ㄔㄜ)子(ㄗ˙)的(ㄉㄜ˙)座(ㄗㄨㄛˋ)位(ㄨㄟˋ)下(ㄒㄧㄚˋ)。", en: "His phone is under the car seat." },
+                            { zh: "現(ㄒㄧㄢˋ)在(ㄗㄞˋ)公(ㄍㄨㄥ)司(ㄙ)裡(ㄌㄧˇ)沒(ㄇㄟˊ)有(ㄧㄡˇ)我(ㄨㄛˇ)的(ㄉㄜ˙)座(ㄗㄨㄛˋ)位(ㄨㄟˋ)，所(ㄙㄨㄛˇ)以(ㄧˇ)我(ㄨㄛˇ)在(ㄗㄞˋ)家(ㄐㄧㄚ)上(ㄕㄤˋ)班(ㄅㄢ)。", en: "There is no seat for me in the company now, so I work from home." }
+                        ]
+                    },
+                    {
+                        type: "grammar",
+                        title: "6) 別的 (Other / Something else)",
+                        examples: [
+                            { zh: "你(ㄋㄧˇ)還(ㄏㄞˊ)想(ㄒㄧㄤˇ)去(ㄑㄩˋ)別(ㄅㄧㄝˊ)的(ㄉㄜ˙)地(ㄉㄧˋ)方(ㄈㄤ)看(ㄎㄢˋ)看(ㄎㄢˋ)嗎(ㄇㄚ˙)？", en: "Do you still want to go look at other places?" },
+                            { zh: "這(ㄓㄜˋ)個(ㄍㄜ˙)不(ㄅㄨˋ)好(ㄏㄠˇ)吃(ㄔ)，我(ㄨㄛˇ)想(ㄒㄧㄤˇ)吃(ㄔ)別(ㄅㄧㄝˊ)的(ㄉㄜ˙)。", en: "This doesn't taste good, I want to eat something else." }
+                        ]
+                    },
+                    {
+                        type: "grammar",
+                        title: "7) 請不要不見 (Please don't disappear)",
+                        note: "Explanation: '請拜託' means 'please pay attention / be sure to'. The Chinese word for 'don't' is '不要'.",
+                        wrong: "手機太貴了，請拜託不見了。",
+                        correct: "手(ㄕㄡˇ)機(ㄐㄧ)太(ㄊㄞˋ)貴(ㄍㄨㄟˋ)了(ㄌㄜ˙)，請(ㄑㄧㄥˇ)不(ㄅㄨˋ)要(ㄧㄠˋ)不(ㄅㄨˊ)見(ㄐㄧㄢˋ)。",
+                        en: "The phone is too expensive, please don't let it disappear."
+                    },
+                    {
+                        type: "grammar",
+                        title: "8) 轉機 (Transfer flight)",
+                        examples: [
+                            { zh: "前(ㄑㄧㄢˊ)天(ㄊㄧㄢ)沒(ㄇㄟˊ)有(ㄧㄡˇ)從(ㄘㄨㄥˊ)鳳(ㄈㄥˋ)凰(ㄏㄨㄤˊ)城(ㄔㄥˊ)到(ㄉㄠˋ)明(ㄇㄧㄥˊ)尼(ㄋㄧˊ)蘇(ㄙㄨ)達(ㄉㄚˊ)的(ㄉㄜ˙)飛(ㄈㄟ)機(ㄐㄧ)，所(ㄙㄨㄛˇ)以(ㄧˇ)我(ㄨㄛˇ)在(ㄗㄞˋ)丹(ㄉㄢ)佛(ㄈㄛˊ)轉(ㄓㄨㄢˇ)機(ㄐㄧ)，等(ㄉㄥˇ)了(ㄌㄜ˙)兩(ㄌㄧㄤˇ)個(ㄍㄜ˙)鐘(ㄓㄨㄥ)頭(ㄊㄡˊ)，再(ㄗㄞˋ)到(ㄉㄠˋ)明(ㄇㄧㄥˊ)尼(ㄋㄧˊ)蘇(ㄙㄨ)達(ㄉㄚˊ)。", en: "The day before yesterday, there were no direct flights from Phoenix to Minnesota, so I transferred in flights in Denver, waited for two hours, and then arrived in Minnesota." }
+                        ]
+                    }
+                ]
+            },
+            {
+                title: "3. Lesson 11 (第十一課)",
+                items: [
+                    {
+                        type: "grammar",
+                        title: "1) 夜裡 (At night)",
+                        examples: [
+                            { zh: "我(ㄨㄛˇ)喜(ㄒㄧˇ)歡(ㄏㄨㄢ)夜(ㄧㄝˋ)裡(ㄌㄧˇ)睡(ㄕㄨㄟˋ)覺(ㄐㄧㄠˋ)的(ㄉㄜ˙)時(ㄕˊ)候(ㄏㄡˋ)，冷(ㄌㄥˇ)冷(ㄌㄥˇ)的(ㄉㄜ˙)，這(ㄓㄜˋ)樣(ㄧㄤˋ)我(ㄨㄛˇ)才(ㄘㄞˊ)睡(ㄕㄨㄟˋ)得(ㄉㄜ˙)很(ㄏㄣˇ)好(ㄏㄠˇ)。", en: "I like it when it's cold when sleeping at night, that way I sleep very well." },
+                            { zh: "昨(ㄗㄨㄛˊ)天(ㄊㄧㄢ)夜(ㄧㄝˋ)裡(ㄌㄧˇ)很(ㄏㄣˇ)熱(ㄖㄜˋ)，我(ㄨㄛˇ)睡(ㄕㄨㄟˋ)得(ㄉㄜ˙)不(ㄅㄨˋ)好(ㄏㄠˇ)。", en: "It was very hot last night, I didn't sleep well." }
+                        ]
+                    },
+                    {
+                        type: "grammar",
+                        title: "2) 半夜 (Middle of the night)",
+                        examples: [
+                            { zh: "你(ㄋㄧˇ)的(ㄉㄜ˙)貓(ㄇㄠ)會(ㄏㄨㄟˋ)半(ㄅㄢˋ)夜(ㄧㄝˋ)起(ㄑㄧˇ)床(ㄔㄨㄤˊ)嗎(ㄇㄚ˙)？會(ㄏㄨㄟˋ)啊(ㄚ)！我(ㄨㄛˇ)的(ㄉㄜ˙)貓(ㄇㄠ)半(ㄅㄢˋ)夜(ㄧㄝˋ)常(ㄔㄤˊ)常(ㄔㄤˊ)很(ㄏㄣˇ)忙(ㄇㄤˊ)。", en: "Does your cat get up in the middle of the night? Yes! My cat is often very busy in the middle of the night." },
+                            { zh: "現(ㄒㄧㄢˋ)在(ㄗㄞˋ)半(ㄅㄢˋ)夜(ㄧㄝˋ)一(ㄧˋ)點(ㄉㄧㄢˇ)，我(ㄨㄛˇ)還(ㄏㄞˊ)沒(ㄇㄟˊ)睡(ㄕㄨㄟˋ)覺(ㄐㄧㄠˋ)。", en: "It's 1 AM in the middle of the night now, I haven't gone to sleep yet." }
+                        ]
+                    },
+                    {
+                        type: "grammar",
+                        title: "3) 夜店 (Nightclub)",
+                        examples: [
+                            { zh: "我(ㄨㄛˇ)不(ㄅㄨˋ)喜(ㄒㄧˇ)歡(ㄏㄨㄢ)去(ㄑㄩˋ)夜(ㄧㄝˋ)店(ㄉㄧㄢˋ)，因(ㄧㄣ)為(ㄨㄟˋ)我(ㄨㄛˇ)是(ㄕˋ)老(ㄌㄠˇ)人(ㄖㄣˊ)。", en: "I don't like going to nightclubs, because I am an old person." }
+                        ]
+                    },
+                    {
+                        type: "grammar",
+                        title: "4) 有事 / 有空 (Busy / Free)",
+                        note: "Explanation: 有事 = 忙 (busy / have matters to attend to), 沒有事 = 有空 (free).<br>Note: In Taiwan, politely declining an invitation usually involves saying '我有事，下次再去' (I have things to do, let's go next time) to give the other person hope.",
+                        examples: [
+                            { zh: "你(ㄋㄧˇ)明(ㄇㄧㄥˊ)天(ㄊㄧㄢ)有(ㄧㄡˇ)沒(ㄇㄟˊ)有(ㄧㄡˇ)空(ㄎㄨㄥˋ)？要(ㄧㄠˋ)不(ㄅㄨˋ)要(ㄧㄠˋ)去(ㄑㄩˋ)夜(ㄧㄝˋ)店(ㄉㄧㄢˋ)？我(ㄨㄛˇ)有(ㄧㄡˇ)事(ㄕˋ)，下(ㄒㄧㄚˋ)次(ㄘˋ)再(ㄗㄞˋ)去(ㄑㄩˋ)好(ㄏㄠˇ)了(ㄌㄜ˙)。", en: "Are you free tomorrow? Do you want to go to a nightclub? I am busy, let's go next time." }
+                        ]
+                    }
+                ]
+            },
+            {
+                title: "4. Homework: Translation (翻譯)",
+                items: [
+                    {
+                        type: "homework",
+                        title: "Part 1: Translation Practice",
+                        questions: [
+                            "1. He grabbed my bag with his hand.",
+                            "2. All the other classmates have gone home, only I am still at school.",
+                            "3. Is this seat taken?",
+                            "4. Yesterday night, I heard my cat jumping around."
+                        ]
+                    }
+                ]
+            },
+            {
+                title: "5. Homework: Reading (閱讀)",
+                items: [
+                    {
+                        type: "homework_reading",
+                        title: "Part 2: Reading Comprehension",
+                        passages: [
+                            {
+                                text: "子(ㄗˇ)晴(ㄑㄧㄥˊ)是(ㄕˋ)大(ㄉㄚˋ)學(ㄒㄩㄝˊ)生(ㄕㄥ)，她(ㄊㄚ)有(ㄧㄡˇ)一(ㄧˋ)隻(ㄓ)貓(ㄇㄠ)，叫(ㄐㄧㄠˋ)小(ㄒㄧㄠˇ)黃(ㄏㄨㄤˊ)。小(ㄒㄧㄠˇ)黃(ㄏㄨㄤˊ)很(ㄏㄣˇ)可(ㄎㄜˇ)愛(ㄞˋ)，可(ㄎㄜˇ)是(ㄕˋ)常(ㄔㄤˊ)常(ㄔㄤˊ)半(ㄅㄢˋ)夜(ㄧㄝˋ)不(ㄅㄨˋ)睡(ㄕㄨㄟˋ)覺(ㄐㄧㄠˋ)。星(ㄒㄧㄥ)期(ㄑㄧˊ)六(ㄌㄧㄡˋ)晚(ㄨㄢˇ)上(ㄕㄤˋ)，朋(ㄆㄥˊ)友(ㄧㄡˇ)家(ㄐㄧㄚ)樂(ㄌㄜˋ)找(ㄓㄠˇ)子(ㄗˇ)晴(ㄑㄧㄥˊ)去(ㄑㄩˋ)吃(ㄔ)飯(ㄈㄢˋ)。子(ㄗˇ)晴(ㄑㄧㄥˊ)說(ㄕㄨㄛ)：「對(ㄉㄨㄟˋ)不(ㄅㄨˊ)起(ㄑㄧˇ)，我(ㄨㄛˇ)今(ㄐㄧㄣ)天(ㄊㄧㄢ)有(ㄧㄡˇ)事(ㄕˋ)，我(ㄨㄛˇ)想(ㄒㄧㄤˇ)在(ㄗㄞˋ)家(ㄐㄧㄚ)。」家(ㄐㄧㄚ)樂(ㄌㄜˋ)說(ㄕㄨㄛ)：「沒(ㄇㄟˊ)關(ㄍㄨㄢ)係(ㄒㄧ˙)，我(ㄨㄛˇ)們(ㄇㄣ˙)下(ㄒㄧㄚˋ)次(ㄘˋ)再(ㄗㄞˋ)去(ㄑㄩˋ)。」半(ㄅㄢˋ)夜(ㄧㄝˋ)，子(ㄗˇ)晴(ㄑㄧㄥˊ)聽(ㄊㄧㄥ)到(ㄉㄠˋ)很(ㄏㄣˇ)大(ㄉㄚˋ)的(ㄉㄜ˙)聲(ㄕㄥ)音(ㄧㄣ)。她(ㄊㄚ)起(ㄑㄧˇ)來(ㄌㄞˊ)一(ㄧˊ)看(ㄎㄢˋ)，門(ㄇㄣˊ)開(ㄎㄞ)了(ㄌㄜ˙)，小(ㄒㄧㄠˇ)黃(ㄏㄨㄤˊ)不(ㄅㄨˊ)見(ㄐㄧㄢˋ)了(ㄌㄜ˙)！她(ㄊㄚ)去(ㄑㄩˋ)外(ㄨㄞˋ)面(ㄇㄧㄢˋ)找(ㄓㄠˇ)了(ㄌㄜ˙)很(ㄏㄣˇ)久(ㄐㄧㄡˇ)，可(ㄎㄜˇ)是(ㄕˋ)沒(ㄇㄟˊ)有(ㄧㄡˇ)找(ㄓㄠˇ)到(ㄉㄠˋ)。那(ㄋㄚˋ)一(ㄧˊ)刻(ㄎㄜˋ)，她(ㄊㄚ)非(ㄈㄟ)常(ㄔㄤˊ)難(ㄋㄢˊ)過(ㄍㄨㄛˋ)，可(ㄎㄜˇ)是(ㄕˋ)她(ㄊㄚ)想(ㄒㄧㄤˇ)到(ㄉㄠˋ)：「我(ㄨㄛˇ)記(ㄐㄧˋ)得(ㄉㄜ˙)小(ㄒㄧㄠˇ)黃(ㄏㄨㄤˊ)有(ㄧㄡˇ)晶(ㄐㄧㄥ)片(ㄆㄧㄢˋ)！」第(ㄉㄧˋ)二(ㄦˋ)天(ㄊㄧㄢ)早(ㄗㄠˇ)上(ㄕㄤˋ)，她(ㄊㄚ)打(ㄉㄚˇ)電(ㄉㄧˋ)話(ㄏㄨㄚˋ)給(ㄍㄟˇ)醫(ㄧ)生(ㄕㄥ)。醫(ㄧ)生(ㄕㄥ)說(ㄕㄨㄛ)：「關(ㄍㄨㄢ)於(ㄩˊ)小(ㄒㄧㄠˇ)黃(ㄏㄨㄤˊ)的(ㄉㄜ˙)晶(ㄐㄧㄥ)片(ㄆㄧㄢˋ)，我(ㄨㄛˇ)可(ㄎㄜˇ)以(ㄧˇ)幫(ㄅㄤ)你(ㄋㄧˇ)找(ㄓㄠˇ)。」醫(ㄕㄥ)生(ㄕㄥ)找(ㄓㄠˇ)到(ㄉㄠˋ)了(ㄌㄜ˙)小(ㄒㄧㄠˇ)黃(ㄏㄨㄤˊ)。小(ㄒㄧㄠˇ)黃(ㄏㄨㄤˊ)在(ㄗㄞˋ)一(ㄧˊ)位(ㄨㄟˋ)老(ㄌㄠˇ)先(ㄒㄧㄢ)生(ㄕㄥ)的(ㄉㄜ˙)家(ㄐㄧㄚ)。老(ㄌㄠˇ)先(ㄒㄧㄢ)生(ㄕㄥ)說(ㄕㄨㄛ)：「昨(ㄗㄨㄛˊ)天(ㄊㄧㄢ)半(ㄅㄢˋ)夜(ㄧㄝˋ)，我(ㄨㄛˇ)在(ㄗㄞˋ)路(ㄌㄨˋ)上(ㄕㄤˋ)看(ㄎㄢˋ)到(ㄉㄠˋ)牠(ㄊㄚ)。外(ㄨㄞˋ)面(ㄇㄧㄢˋ)很(ㄏㄣˇ)冷(ㄌㄥˇ)，我(ㄨㄛˇ)就(ㄐㄧㄡˋ)把(ㄅㄚˇ)牠(ㄊㄚ)抓(ㄓㄨㄚ)回(ㄏㄨㄟˊ)家(ㄐㄧㄚ)了(ㄌㄜ˙)。」子(ㄗˇ)晴(ㄑㄧㄥˊ)很(ㄏㄣˇ)高(ㄍㄠ)興(ㄒㄧㄥˋ)。她(ㄊㄚ)說(ㄕㄨㄛ)：「謝(ㄒㄧㄝˋ)謝(ㄒㄧㄝˋ)您(ㄋㄧㄣˊ)！我(ㄨㄛˇ)不(ㄅㄨˋ)想(ㄒㄧㄤˇ)要(ㄧㄠˋ)別(ㄅㄧㄝˊ)的(ㄉㄜ˙)貓(ㄇㄠ)，我(ㄨㄛˇ)只(ㄓˇ)要(ㄧㄠˋ)小(ㄒㄧㄠˇ)黃(ㄏㄨㄤˊ)。」回(ㄏㄨㄟˊ)家(ㄐㄧㄚ)以(ㄧˇ)後(ㄏㄡˋ)，子(ㄗˇ)晴(ㄑㄧㄥˊ)對(ㄉㄨㄟˋ)小(ㄒㄧㄠˇ)黃(ㄏㄨㄤˊ)說(ㄕㄨㄛ)：「我(ㄨㄛˇ)以(ㄧˇ)後(ㄏㄡˋ)會(ㄏㄨㄟˋ)努(ㄋㄨˇ)力(ㄌㄧˋ)記(ㄐㄧˋ)得(ㄉㄜ˙)關(ㄍㄨㄢ)門(ㄇㄣˊ)。」",
+                                qs: [
+                                    "Q1. 誰找誰去吃飯？",
+                                    "Q2. 子晴為什麼不去吃飯？",
+                                    "Q3. 子晴怎麼知道小黃在哪裡？",
+                                    "Q4. 老先生為什麼把小黃抓回家？",
+                                    "Q5. 子晴為什麼說「我不想要別的貓，我只要小黃」？"
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            }
+        ];
+
+        let counter = 0;
+        const container = document.getElementById('content');
+
+        lessonData.forEach((sec, sIdx) => {
+            let html = `<div class="section" id="sec-${sIdx}"><h2>${sec.title}</h2>`;
+            
+            sec.items.forEach((item, iIdx) => {
+                if (item.type === "grammar") {
+                    html += `<div class="grammar-box" id="sec-${sIdx}-item-${iIdx}">
+                        <div style="font-weight:bold; font-size:16px; color:#8C6239; margin-bottom:5px;">${item.title}</div>`;
+                    
+                    if(item.note) html += `<div class="note">${item.note}</div>`;
+                    if(item.customHtml) html += item.customHtml;
+                    
+                    if (item.wrong && item.correct) {
+                        html += `
+                        <div class="item-content" style="margin-top: 10px; align-items:center;">
+                            <span class="wrong" style="margin-right:15px;">❌ </span> <span>${item.wrong}</span>
                         </div>
-                        <div class="zhuyin-content" style="flex:1; margin-left:8px;">前(ㄑㄧㄢˊ)天(ㄊㄧㄢ)沒(ㄇㄟˊ)有(ㄧㄡˇ)從(ㄘㄨㄥˊ)鳳(ㄈㄥˋ)凰(ㄏㄨㄤˊ)城(ㄔㄥˊ)到(ㄉㄠˋ)明(ㄇㄧㄥˊ)尼(ㄋㄧˊ)蘇(ㄙㄨ)達(ㄉㄚˊ)的(ㄉㄜ˙)飛(ㄈㄟ)機(ㄐㄧ)，所(ㄙㄨㄛˇ)以(ㄧˇ)我(ㄨㄛˇ)在(ㄗㄞˋ)丹(ㄉㄢ)佛(ㄈㄛˊ)轉(ㄓㄨㄢˇ)機(ㄐㄧ)，等(ㄉㄥˇ)了(ㄌㄜ˙)兩(ㄌㄧㄤˇ)個(ㄍㄜ˙)鐘(ㄓㄨㄥ)頭(ㄊㄡˊ)，再(ㄗㄞˋ)到(ㄉㄠˋ)明(ㄇㄧㄥˊ)尼(ㄋㄧˊ)蘇(ㄙㄨ)達(ㄉㄚˊ)。</div>
-                    </div>
-                    <div class="en-trans">The day before yesterday, there were no direct flights from Phoenix to Minnesota, so I transferred in flights in Denver, waited for two hours, and then arrived in Minnesota.</div>
-                </div>
-            </div>
-        </div>
-
-        <!-- 區塊 3：第十一課 -->
-        <div class="section" id="sec-2">
-            <h2>3. Lesson 11 (第十一課)</h2>
-
-            <div class="grammar-box" id="sec-2-item-0">
-                <div style="font-weight:bold; font-size:16px; color:#8C6239; margin-bottom:5px;">1) 夜裡 (At night)</div>
-                <div class="item" style="border:none; margin-top:10px; padding-bottom:0;">
-                    <div class="item-content" style="align-items:center;">
-                        <div class="btn-group">
-                            <button class="audio-btn" onclick="playAudio('我喜歡夜裡睡覺的時候，冷冷的，這樣我才睡得很好。', this)">🔊</button>
-                            <button class="audio-btn record-btn" onclick="toggleRecord(this, 'rec-20')" title="Record your voice">🎤</button>
-                            <button class="play-rec-btn" id="play-rec-rec-20" onclick="playRecording('rec-20')" disabled>▶</button>
+                        <div class="item-content" style="margin-top: 10px; align-items:center;">
+                            <div class="btn-group">
+                                <button class="audio-btn" onclick="playAudio('${item.correct.replace(/\(.*?\)/g, '')}', this)">🔊</button>
+                                <button class="audio-btn record-btn" onclick="toggleRecord(this, 'rec-${counter}')" title="Record your voice">🎤</button>
+                                <button class="play-rec-btn" id="play-rec-rec-${counter}" onclick="playRecording('rec-${counter}')" disabled>▶</button>
+                            </div>
+                            <span class="correct" style="margin-right:8px; margin-left:8px;">✅ </span> <span style="flex:1;">${parseZhuyin(item.correct)}</span>
                         </div>
-                        <div class="zhuyin-content" style="flex:1; margin-left:8px;">我(ㄨㄛˇ)喜(ㄒㄧˇ)歡(ㄏㄨㄢ)夜(ㄧㄝˋ)裡(ㄌㄧˇ)睡(ㄕㄨㄟˋ)覺(ㄐㄧㄠˋ)的(ㄉㄜ˙)時(ㄕˊ)候(ㄏㄡˋ)，冷(ㄌㄥˇ)冷(ㄌㄥˇ)的(ㄉㄜ˙)，這(ㄓㄜˋ)樣(ㄧㄤˋ)我(ㄨㄛˇ)才(ㄘㄞˊ)睡(ㄕㄨㄟˋ)得(ㄉㄜ˙)很(ㄏㄣˇ)好(ㄏㄠˇ)。</div>
-                    </div>
-                    <div class="en-trans">I like it when it's cold when sleeping at night, that way I sleep very well.</div>
-                </div>
-                <div class="item" style="border:none; margin-top:10px; padding-bottom:0;">
-                    <div class="item-content" style="align-items:center;">
-                        <div class="btn-group">
-                            <button class="audio-btn" onclick="playAudio('昨天夜裡很熱，我睡得不好。', this)">🔊</button>
-                            <button class="audio-btn record-btn" onclick="toggleRecord(this, 'rec-21')" title="Record your voice">🎤</button>
-                            <button class="play-rec-btn" id="play-rec-rec-21" onclick="playRecording('rec-21')" disabled>▶</button>
-                        </div>
-                        <div class="zhuyin-content" style="flex:1; margin-left:8px;">昨(ㄗㄨㄛˊ)天(ㄊㄧㄢ)夜(ㄧㄝˋ)裡(ㄌㄧˇ)很(ㄏㄣˇ)熱(ㄖㄜˋ)，我(ㄨㄛˇ)睡(ㄕㄨㄟˋ)得(ㄉㄜ˙)不(ㄅㄨˋ)好(ㄏㄠˇ)。</div>
-                    </div>
-                    <div class="en-trans">It was very hot last night, I didn't sleep well.</div>
-                </div>
-            </div>
+                        <div class="en-trans">${item.en}</div>`;
+                        counter++;
+                    }
 
-            <div class="grammar-box" id="sec-2-item-1">
-                <div style="font-weight:bold; font-size:16px; color:#8C6239; margin-bottom:5px;">2)
+                    if (item.examples) {
+                        item.examples.forEach(ex => {
+                            html += `
+                            <div class="item" style="border:none; margin-top:10px; padding-bottom:0;">
+                                <div class="item-content" style="align-items:center;">
+                                    <div class="btn-group">
+                                        <button class="audio-btn" onclick="playAudio('${ex.zh.replace(/\(.*?\)/g, '')}', this)">🔊</button>
+                                        <button class="audio-btn record-btn" onclick="toggleRecord(this, 'rec-${counter}')" title="Record your voice">🎤</button>
+                                        <button class="play-rec-btn" id="play-rec-rec-${counter}" onclick="playRecording('rec-${counter}')" disabled>▶</button>
+                                    </div>
+                                    <div class="zhuyin-content" style="flex:1; margin-left:8px;">${parseZhuyin(ex.zh)}</div>
+                                </div>
+                                <div class="en-trans">${ex.en}</div>`;
+                            if (ex.img) {
+                                html += `<img src="${ex.img}" class="vocab-img" style="margin-top: 10px; margin-left: 12px;">`;
+                            }
+                            html += `</div>`;
+                            counter++;
+                        });
+                    }
+                    html += `</div>`;
+                } else if (item.type === "homework") {
+                    html += `<div class="grammar-box" id="sec-${sIdx}-item-${iIdx}">
+                        <div style="font-weight:bold; font-size:16px; color:#8C6239; margin-bottom:15px;">${item.title}</div>`;
+                    item.questions.forEach(q => {
+                        html += `
+                            <div class="homework-q">${q}</div>
+                            <textarea class="hw-textarea" placeholder="Type your answer here..."></textarea>
+                        `;
+                    });
+                    html += `</div>`;
+                } else if (item.type === "homework_reading") {
+                    html += `<div class="grammar-box" id="sec-${sIdx}-item-${iIdx}">
+                        <div style="font-weight:bold; font-size:16px; color:#8C6239; margin-bottom:15px;">${item.title}</div>`;
+                    item.passages.forEach((p) => {
+                        html += `<div style="background:#fff; padding:15px; border-radius:8px; margin-bottom:20px; border:1px solid #ddd;">
+                            <div class="item-content" style="align-items:flex-start; margin-bottom: 20px;">
+                                <div class="btn-group" style="margin-top:5px; margin-right: 15px;">
+                                    <button class="audio-btn" onclick="playAudio('${p.text.replace(/\(.*?\)/g, '')}', this)">🔊</button>
+                                    <button class="audio-btn record-btn" onclick="toggleRecord(this, 'rec-${counter}')" title="Record your voice">🎤</button>
+                                    <button class="play-rec-btn" id="play-rec-rec-${counter}" onclick="playRecording('rec-${counter}')" disabled>▶</button>
+                                </div>
+                                <div style="flex:1; font-size:16px; line-height:2.2; margin-left:8px;">
+                                    ${parseZhuyin(p.text)}
+                                </div>
+                            </div>
+                        `;
+                        counter++;
+                        if (p.qs && p.qs.length > 0) {
+                            html += `<hr style="border:0; border-top:1px dashed #ccc; margin:15px 0;">`;
+                            p.qs.forEach(q => {
+                                html += `
+                                    <div class="homework-q">${q}</div>
+                                    <textarea class="hw-textarea" placeholder="Type your answer here..."></textarea>
+                                `;
+                            });
+                        }
+                        html += `</div>`;
+                    });
+                    html += `</div>`;
+                }
+            });
+            html += `</div>`;
+            container.innerHTML += html;
+        });
+
+        // Toggle Bopomofo & English
+        let zyVisible = true;
+        let enVisible = true;
+
+        function toggleZhuyin() {
+            zyVisible = !zyVisible;
+            document.querySelectorAll('.zy-box').forEach(el => {
+                el.style.display = zyVisible ? 'inline-flex' : 'none';
+            });
+        }
+
+        function toggleEnglish() {
+            enVisible = !enVisible;
+            document.querySelectorAll('.en-trans').forEach(el => {
+                el.style.display = enVisible ? 'block' : 'none';
+            });
+        }
+    </script>
+</body>
+</html>
