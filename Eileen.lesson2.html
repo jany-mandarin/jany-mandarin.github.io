@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eileen's Mandarin Lesson - Medical & Daily</title>
+    <style>
+        /* 1. 版面與視覺設計 (UI / Design) */
+        :root {
+            --bg-color: #FDFBF7;
+            --main-color: #D4A373;
+            --text-color: #333;
+            --eng-color: #777;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            display: flex;
+        }
+
+        /* 左側目錄 (Sidebar) */
+        #sidebar {
+            width: 250px;
+            background-color: #fff;
+            height: 100vh;
+            border-right: 2px solid var(--main-color);
+            padding: 20px;
+            box-sizing: border-box;
+            position: fixed;
+            overflow-y: auto;
+            transition: transform 0.3s ease;
+        }
+        #sidebar h2 { color: var(--main-color); font-size: 1.2rem; }
+        #sidebar ul { list-style: none; padding: 0; }
+        #sidebar li { margin: 15px 0; cursor: pointer; color: var(--text-color); font-size: 0.95rem; }
+        #sidebar li:hover { color: var(--main-color); font-weight: bold; }
+
+        /* 主內容區 */
+        main {
+            margin-left: 250px;
+            padding: 40px;
+            width: calc(100% - 250px);
+            box-sizing: border-box;
+        }
+
+        /* 頂部導覽 (Top Nav) */
+        #top-nav {
+            position: absolute;
+            top: 20px;
+            right: 40px;
+        }
+        #top-nav a {
+            color: var(--main-color);
+            text-decoration: none;
+            margin-left: 15px;
+            font-weight: bold;
+        }
+
+        /* 懸浮控制列 (Controls) */
+        #floating-controls {
+            position: sticky;
+            top: 20px;
+            background: #fff;
+            padding: 10px 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            display: inline-flex;
+            gap: 15px;
+            margin-bottom: 30px;
+            border: 1px solid var(--main-color);
+            z-index: 100;
+        }
+        .toggle-btn {
+            background: var(--main-color);
+            color: #fff;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.9rem;
+        }
+
+        /* 2. 文字與內容排版 (Typography & Content) */
+        .grammar-section {
+            margin-bottom: 50px;
+            background: #fff;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.02);
+        }
+        .grammar-title {
+            color: var(--main-color);
+            border-bottom: 2px solid var(--bg-color);
+            padding-bottom: 10px;
+        }
+        
+        .sentence-block {
+            margin: 25px 0;
+            padding: 15px;
+            border-left: 4px solid var(--main-color);
+            background: var(--bg-color);
+            border-radius: 0 8px 8px 0;
+        }
+
+        .lesson-img {
+            max-width: 300px;
+            border-radius: 8px;
+            margin: 10px 0;
+            display: block;
+        }
+
+        /* 拼音與中文 */
+        ruby { font-size: 1.4rem; margin-right: 2px; }
+        rt { font-size: 0.75rem; color: #555; transition: opacity 0.3s; }
+        .hide-pinyin rt { opacity: 0; }
+
+        /* 英文翻譯與解說 */
+        .english {
+            color: var(--eng-color);
+            font-style: italic;
+            display: block;
+            margin-top: 10px;
+            font-size: 1.05rem;
+            transition: opacity 0.3s;
+        }
+        .explanation {
+            color: #555;
+            background: #f4f4f4;
+            padding: 10px;
+            border-radius: 5px;
+            font-size: 0.95rem;
+            margin-top: 10px;
+        }
+        .hide-english .english, .hide-english .explanation { display: none; }
+
+        /* 道地說法對比 */
+        .comparison-box {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            background: #fff;
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px dashed var(--main-color);
+            margin-top: 15px;
+        }
+        .wrong-text { color: #d9534f; font-size: 1.2rem; margin-bottom: 5px; }
+        .correct { color: #5cb85c; }
+
+        /* 3. 語音與互動功能 (Audio & Interactive) */
+        .interaction-bar {
+            display: flex;
+            gap: 15px;
+            margin-top: 15px;
+            align-items: center;
+        }
+        .icon-btn {
+            background: none;
+            border: 2px solid #ddd;
+            font-size: 1.2rem;
+            cursor: pointer;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+        }
+        .icon-btn:hover { border-color: var(--main-color); }
+        
+        .record-btn.recording {
+            color: #d9534f;
+            border-color: #d9534f;
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(217, 83, 79, 0.4); }
+            70% { box-shadow: 0 0 0 10px rgba(217, 83, 79, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(217, 83, 79, 0); }
+        }
+
+        .audio-container { width: 100%; margin-top: 15px; }
+        audio { width: 100%; height: 40px; outline: none; }
+    </style>
+</head>
+<body>
+
+    <!-- 左側目錄 -->
+    <aside id="sidebar">
+        <h2>Hi, Eileen!</h2>
+        <ul>
+            <li onclick="document.getElementById('part1').scrollIntoView({behavior:'smooth'})"><strong>Part 1: Hospital (医院)</strong></li>
+            <li onclick="document.getElementById('h-1').scrollIntoView({behavior:'smooth'})">- What's the problem?</li>
+            <li onclick="document.getElementById('h-2').scrollIntoView({behavior:'smooth'})">- Stomachache</li>
+            <li onclick="document.getElementById('h-3').scrollIntoView({behavior:'smooth'})">- Fever & Diarrhea</li>
+            <li onclick="document.getElementById('h-9').scrollIntoView({behavior:'smooth'})">- Physical Exam</li>
+            <li onclick="document.getElementById('h-12').scrollIntoView({behavior:'smooth'})">- Describing Pain</li>
+            <li onclick="document.getElementById('h-14').scrollIntoView({behavior:'smooth'})">- ICU & Anesthesia</li>
+            
+            <li onclick="document.getElementById('part2').scrollIntoView({behavior:'smooth'})" style="margin-top: 20px;"><strong>Part 2: Daily (日常)</strong></li>
+            <li onclick="document.getElementById('d-1').scrollIntoView({behavior:'smooth'})">- Often (常常)</li>
+            <li onclick="document.getElementById('d-4').scrollIntoView({behavior:'smooth'})">- Braces (牙套)</li>
+            <li onclick="document.getElementById('d-8').scrollIntoView({behavior:'smooth'})">- Train & Change</li>
+            <li onclick="document.getElementById('d-9').scrollIntoView({behavior:'smooth'})">- Communication</li>
+        </ul>
+    </aside>
+
+    <!-- 主內容區 -->
+    <main>
+        <nav id="top-nav">
+            <a href="#">Index</a>
+        </nav>
+
+        <div id="floating-controls">
+            <button class="toggle-btn" onclick="document.body.classList.toggle('hide-pinyin')">Toggle Pinyin</button>
+            <button class="toggle-btn" onclick="document.body.classList.toggle('hide-english')">Toggle English</button>
+        </div>
+
+        <!-- ================= 一、醫院對話 ================= -->
+        <section id="part1" class="grammar-section">
+            <h2 class="grammar-title">Part 1: Hospital Dialogues (医院对话)</h2>
+            
+            <!-- 1. What seems to be the problem -->
+            <div id="h-1" class="sentence-block">
+                <h3>1. Hello there! What seems to be the problem today?</h3>
+                <img class="lesson-img" src="https://cdn.phototourl.com/member/2026-10-12-32cbe9e5-18f4-4724-9f55-aef3d7a4f46a.png" alt="Doctor asking">
+                
+                <div class="comparison-box">
+                    <div class="sentence-block">
+                        <div class="wrong-text">❌ 你好，你今天有问题吗？</div>
+                        <div class="explanation"><strong>Teacher's Note:</strong> "问题 (wèn tí)" means "question". You use it when you have a question to ask, not for a medical problem!</div>
+                    </div>
+                    <div class="sentence-block" style="border-left-color: #5cb85c;">
+                        <div class="chinese-text correct">
+                            ✅ <ruby>你<rt>nǐ</rt></ruby><ruby>好<rt>hǎo</rt></ruby>，<ruby>请<rt>qǐng</rt></ruby><ruby>问<rt>wèn</rt></ruby><ruby>哪<rt>nǎ</rt></ruby><ruby>里<rt>lǐ</rt></ruby><ruby>不<rt>bù</rt></ruby><ruby>舒<rt>shū</rt></ruby><ruby>服<rt>fu</rt></ruby>？
+                        </div>
+                        <span class="english">Hello, where are you feeling uncomfortable?</span>
+                        <div class="interaction-bar">
+                            <button class="icon-btn tts-btn" data-text="你好，请问哪里不舒服？">🔊</button>
+                            <button class="icon-btn record-btn">🎤</button>
+                        </div>
+                        <div class="audio-container"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 2. Stomachache -->
+            <div id="h-2" class="sentence-block">
+                <h3>2. I have a very bad stomachache</h3>
+                <img class="lesson-img" src="https://cdn.phototourl.com/member/2026-10-12-7f81118d-5dfb-461b-887b-cce4b84d7b25.png" alt="Stomachache">
+                
+                <div class="comparison-box">
+                    <div class="sentence-block">
+                        <div class="wrong-text">❌ 我有一个不好的胃痛</div>
+                        <div class="explanation"><strong>Teacher's Note:</strong> Patients usually say "肚子痛" (stomachache). "不好" means something is bad in quality. To describe illness, we say "很痛" (very painful) or "非常痛" (extremely painful).</div>
+                    </div>
+                    <div class="sentence-block" style="border-left-color: #5cb85c;">
+                        <div class="chinese-text correct">
+                            ✅ <ruby>我<rt>wǒ</rt></ruby><ruby>的<rt>de</rt></ruby><ruby>肚<rt>dù</rt></ruby><ruby>子<rt>zi</rt></ruby><ruby>很<rt>hěn</rt></ruby><ruby>痛<rt>tòng</rt></ruby>。 <br><br>
+                            ✅ <ruby>我<rt>wǒ</rt></ruby><ruby>的<rt>de</rt></ruby><ruby>胃<rt>wèi</rt></ruby><ruby>非<rt>fēi</rt></ruby><ruby>常<rt>cháng</rt></ruby><ruby>痛<rt>tòng</rt></ruby>。
+                        </div>
+                        <span class="english">My stomach is very painful. / My stomach is extremely painful.</span>
+                        <div class="interaction-bar">
+                            <button class="icon-btn tts-btn" data-text="我的肚子很痛。我的胃非常痛。">🔊</button>
+                            <button class="icon-btn record-btn">🎤</button>
+                        </div>
+                        <div class="audio-container"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 3 & 4 & 5 & 6 & 7 & 8. Fever & Diarrhea Flow -->
+            <div id="h-3" class="sentence-block">
+                <h3>3. I started a fever last night.</h3>
+                <div class="comparison-box">
+                    <div class="sentence-block">
+                        <div class="wrong-text">❌ 我昨晚有发烧。</div>
+                        <div class="explanation"><strong>Teacher's Note:</strong> The particle "了 (le)" here indicates a state change (from not having a fever to having one).</div>
+                    </div>
+                    <div class="sentence-block" style="border-left-color: #5cb85c;">
+                        <div class="chinese-text correct">
+                            ✅ <ruby>我<rt>wǒ</rt></ruby><ruby>昨<rt>zuó</rt></ruby><ruby>晚<rt>wǎn</rt></ruby><ruby>开<rt>kāi</rt></ruby><ruby>始<rt>shǐ</rt></ruby><ruby>发<rt>fā</rt></ruby><ruby>烧<rt>shāo</rt></ruby><ruby>了<rt>le</rt></ruby>！
+                        </div>
+                        <div class="interaction-bar">
+                            <button class="icon-btn tts-btn" data-text="我昨晚开始发烧了！">🔊</button>
+                            <button class="icon-btn record-btn">🎤</button>
+                        </div>
+                        <div class="audio-container"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="sentence-block">
+                <h3>4. How long have you had the fever?</h3>
+                <div class="comparison-box">
+                    <div class="sentence-block">
+                        <div class="wrong-text">❌ 你有发烧几天？</div>
+                        <div class="explanation"><strong>Teacher's Note:</strong> "有" implies a completed action in the past, but the fever is continuing today. Do not use "有".</div>
+                    </div>
+                    <div class="sentence-block" style="border-left-color: #5cb85c;">
+                        <div class="chinese-text correct">
+                            ✅ <ruby>你<rt>nǐ</rt></ruby><ruby>发<rt>fā</rt></ruby><ruby>烧<rt>shāo</rt></ruby><ruby>几<rt>jǐ</rt></ruby><ruby>天<rt>tiān</rt></ruby><ruby>了<rt>le</rt></ruby>？
+                        </div>
+                        <div class="interaction-bar">
+                            <button class="icon-btn tts-btn" data-text="你发烧几天了？">🔊</button>
+                            <button class="icon-btn record-btn">🎤</button>
+                        </div>
+                        <div class="audio-container"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="sentence-block">
+                <h3>5. Have you had any fever or vomiting?</h3>
+                <div class="explanation"><strong>Attention:</strong> 吐 here is 4th tone (tù).</div>
+                <div class="chinese-text">
+                    <ruby>你<rt>nǐ</rt></ruby><ruby>有<rt>yǒu</rt></ruby><ruby>没<rt>méi</rt></ruby><ruby>有<rt>yǒu</rt></ruby><ruby>发<rt>fā</rt></ruby><ruby>烧<rt>shāo</rt></ruby><ruby>还<rt>hái</rt></ruby><ruby>是<rt>shì</rt></ruby><ruby>吐<rt>tù</rt></ruby>？
+                </div>
+                <span class="english">Did you have a fever or vomit?</span>
+                <div class="interaction-bar">
+                    <button class="icon-btn tts-btn" data-text="你有没有发烧还是吐？">🔊</button>
+                    <button class="icon-btn record-btn">🎤</button>
+                </div>
+                <div class="audio-container"></div>
+            </div>
+
+            <div class="sentence-block">
+                <h3>6. The fever has been for one day.</h3>
+                <div class="comparison-box">
+                    <div class="sentence-block">
+                        <div class="wrong-text">❌ 这个发烧一天</div>
+                    </div>
+                    <div class="sentence-block" style="border-left-color: #5cb85c;">
+                        <div class="chinese-text correct">
+                            ✅ <ruby>我<rt>wǒ</rt></ruby><ruby>发<rt>fā</rt></ruby><ruby>烧<rt>shāo</rt></ruby><ruby>一<rt>yì</rt></ruby><ruby>天<rt>tiān</rt></ruby><ruby>了<rt>le</rt></ruby>！
+                        </div>
+                        <span class="english">I have had a fever for one day!</span>
+                        <div class="interaction-bar">
+                            <button class="icon-btn tts-btn" data-text="我发烧一天了！">🔊</button>
+                            <button class="icon-btn record-btn">🎤</button>
+                        </div>
+                        <div class="audio-container"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="sentence-block">
+                <h3>7. I had diarrhea three times last night.</h3>
+                <div class="comparison-box">
+                    <div class="sentence-block">
+                        <div class="wrong-text">❌ 我拉肚子三时昨晚</div>
+                    </div>
+                    <div class="sentence-block" style="border-left-color: #5cb85c;">
+                        <div class="chinese-text correct">
+                            ✅ <ruby>我<rt>wǒ</rt></ruby><ruby>昨<rt>zuó</rt></ruby><ruby>晚<rt>wǎn</rt></ruby><ruby>拉<rt>lā</rt></ruby><ruby>肚<rt>dù</rt></ruby><ruby>子<rt>zi</rt></ruby><ruby>三<rt>sān</rt></ruby><ruby>次<rt>cì</rt></ruby>。
+                        </div>
+                        <div class="interaction-bar">
+                            <button class="icon-btn tts-btn" data-text="我昨晚拉肚子三次。">🔊</button>
+                            <button class="icon-btn record-btn">🎤</button>
+                        </div>
+                        <div class="audio-container"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="sentence-block">
+                <h3>8. I vomited at the end.</h3>
+                <div class="chinese-text correct">
+                    ✅ <ruby>然<rt>rán</rt></ruby><ruby>后<rt>hòu</rt></ruby><ruby>我<rt>wǒ</rt></ruby><ruby>吐<rt>tù</rt></ruby><ruby>了<rt>le</rt></ruby>。
+                </div>
+                <div class="interaction-bar">
+                    <button class="icon-btn tts-btn" data-text="然后我吐了。">🔊</button>
+                    <button class="icon-btn record-btn">🎤</button>
+                </div>
+                <div class="audio-container"></div>
+            </div>
+
+            <!-- 9 & 10 & 11 Physical Exam -->
+            <div id="h-9" class="sentence-block">
+                <h3>9. Please open your mouth wide and stick out your tongue.</h3>
+                <img class="lesson-img" src="https://cdn.phototourl.com/member/2026-10-12-e214cb92-b87c-4086-955f-3da5774bc0b0.png" alt="Open mouth">
+                <div class="chinese-text correct">
+                    ✅ <ruby>好<rt>hǎo</rt></ruby>，<ruby>请<rt>qǐng</rt></ruby><ruby>张<rt>zhāng</rt></ruby><ruby>大<rt>dà</rt></ruby><ruby>嘴<rt>zuǐ</rt></ruby><ruby>巴<rt>bā</rt></ruby>，<ruby>伸<rt>shēn</rt></ruby><ruby>出<rt>chū</rt></ruby><ruby>舌<rt>shé</rt></ruby><ruby>头<rt>tou</rt></ruby>，<ruby>让<rt>ràng</rt></ruby><ruby>我<rt>wǒ</rt></ruby><ruby>看<rt>kàn</rt></ruby><ruby>看<rt>kan</rt></ruby>。
+                </div>
+                <div class="interaction-bar">
+                    <button class="icon-btn tts-btn" data-text="好，请张大嘴巴，伸出舌头，让我看看。">🔊</button>
+                    <button class="icon-btn record-btn">🎤</button>
+                </div>
+                <div class="audio-container"></div>
+            </div>
+
+            <div class="sentence-block">
+                <h3>10. Please take deep breaths. Breathe in... Breathe out.</h3>
+                <img class="lesson-img" src="https://cdn.phototourl.com/member/2026-10-12-a64ca414-a786-4965-b62e-c90d80713048.png" alt="Breathe">
+                <div class="explanation"><strong>Teacher's Note:</strong> For normal actions like breathing out, "吐" is the 3rd tone (tǔ). For abnormal actions like vomiting, it is the 4th tone (tù).</div>
+                <div class="chinese-text correct">
+                    ✅ <ruby>请<rt>qǐng</rt></ruby><ruby>和<rt>hé</rt></ruby><ruby>我<rt>wǒ</rt></ruby><ruby>一<rt>yì</rt></ruby><ruby>起<rt>qǐ</rt></ruby><ruby>深<rt>shēn</rt></ruby><ruby>呼<rt>hū</rt></ruby><ruby>吸<rt>xī</rt></ruby>，<ruby>吸<rt>xī</rt></ruby><ruby>气<rt>qì</rt></ruby>……<ruby>吐<rt>tǔ</rt></ruby><ruby>气<rt>qì</rt></ruby>。
+                </div>
+                <div class="interaction-bar">
+                    <button class="icon-btn tts-btn" data-text="请和我一起深呼吸，吸气，吐气。">🔊</button>
+                    <button class="icon-btn record-btn">🎤</button>
+                </div>
+                <div class="audio-container"></div>
+            </div>
+
+            <div class="sentence-block">
+                <h3>11. I'm going to touch your stomach. Does it hurt here?</h3>
+                <img class="lesson-img" src="https://cdn.phototourl.com/member/2026-10-12-02ee572a-2ced-4787-8161-8b89c745d04d.png" alt="Touch stomach">
+                <div class="chinese-text correct">
+                    ✅ <ruby>我<rt>wǒ</rt></ruby><ruby>要<rt>yào</rt></ruby><ruby>摸<rt>mō</rt></ruby><ruby>一<rt>yí</rt></ruby><ruby>下<rt>xià</rt></ruby><ruby>你<rt>nǐ</rt></ruby><ruby>的<rt>de</rt></ruby><ruby>肚<rt>dù</rt></ruby><ruby>子<rt>zi</rt></ruby>，<ruby>这<rt>zhè</rt></ruby><ruby>里<rt>lǐ</rt></ruby><ruby>会<rt>huì</rt></ruby><ruby>痛<rt>tòng</rt></ruby><ruby>吗<rt>ma</rt></ruby>？
+                </div>
+                <div class="interaction-bar">
+                    <button class="icon-btn tts-btn" data-text="我要摸一下你的肚子，这里会痛吗？">🔊</button>
+                    <button class="icon-btn record-btn">🎤</button>
+                </div>
+                <div class="audio-container"></div>
+            </div>
+
+            <!-- 12 & 13 Describing Pain -->
+            <div id="h-12" class="sentence-block">
+                <h3>12. Ways to describe stomach pain</h3>
+                <img class="lesson-img" src="https://cdn.phototourl.com/member/2026-10-12-3274a1a8-6abd-4c99-b829-c6c8d506a6d7.png" alt="Stomach pain types">
+                
+                <p><strong>Doctor:</strong></p>
+                <div class="chinese-text">
+                    <ruby>你<rt>nǐ</rt></ruby><ruby>的<rt>de</rt></ruby><ruby>肚<rt>dù</rt></ruby><ruby>子<rt>zi</rt></ruby><ruby>是<rt>shì</rt></ruby><ruby>哪<rt>nǎ</rt></ruby><ruby>一<rt>yì</rt></ruby><ruby>种<rt>zhǒng</rt></ruby><ruby>痛<rt>tòng</rt></ruby>？
+                </div>
+                <span class="english">What kind of pain is in your stomach?</span>
+                
+                <p><strong>Patient Examples:</strong></p>
+                <ul>
+                    <li><ruby>刺<rt>cì</rt></ruby><ruby>痛<rt>tòng</rt></ruby> <span class="english">- Stabbing pain</span></li>
+                    <li><ruby>痉<rt>jìng</rt></ruby><ruby>挛<rt>luán</rt></ruby> <span class="english">- Cramping</span></li>
+                    <li><ruby>绞<rt>jiǎo</rt></ruby><ruby>痛<rt>tòng</rt></ruby> <span class="english">- Colic / Severe twisting pain</span></li>
+                    <li><ruby>像<rt>xiàng</rt></ruby><ruby>在<rt>zài</rt></ruby><ruby>烧<rt>shāo</rt></ruby> <span class="english">- Like it's burning</span></li>
+                </ul>
+            </div>
+
+            <div class="sentence-block">
+                <h3>13. 刺 (cì) - to prick / stab</h3>
+                <img class="lesson-img" src="https://cdn.phototourl.com/member/2026-10-12-8ddcf802-4c32-4dc3-bf39-5b09ac8c1d4f.png" alt="Thorn prick">
+                <div class="chinese-text">
+                    <ruby>我<rt>wǒ</rt></ruby><ruby>的<rt>de</rt></ruby><ruby>手<rt>shǒu</rt></ruby><ruby>刺<rt>cì</rt></ruby><ruby>到<rt>dào</rt></ruby><ruby>了<rt>le</rt></ruby>。
+                </div>
+                <span class="english">My hand got pricked.</span>
+                <div class="interaction-bar">
+                    <button class="icon-btn tts-btn" data-text="我的手刺到了。">🔊</button>
+                    <button class="icon-btn record-btn">🎤</button>
+                </div>
+                <div class="audio-container"></div>
+            </div>
+
+            <!-- 14, 15, 16 ICU & Anesthesia -->
+            <div id="h-14" class="sentence-block">
+                <h3>14. 麻醉 (má zuì) - Anesthesia</h3>
+                <div class="explanation"><strong>Teacher's Note:</strong> "麻 (má)" means numb. "醉 (zuì)" means drunk. You can imagine anesthesia is like making the patient fall down drunk!</div>
+                <div class="chinese-text">
+                    <ruby>我<rt>wǒ</rt></ruby><ruby>是<rt>shì</rt></ruby><ruby>麻<rt>má</rt></ruby><ruby>醉<rt>zuì</rt></ruby><ruby>医<rt>yī</rt></ruby><ruby>生<rt>shēng</rt></ruby>，<ruby>可<rt>kě</rt></ruby><ruby>是<rt>shì</rt></ruby><ruby>我<rt>wǒ</rt></ruby><ruby>喜<rt>xǐ</rt></ruby><ruby>欢<rt>huan</rt></ruby><ruby>加<rt>jiā</rt></ruby><ruby>护<rt>hù</rt></ruby><ruby>病<rt>bìng</rt></ruby><ruby>房<rt>fáng</rt></ruby><ruby>医<rt>yī</rt></ruby><ruby>生<rt>shēng</rt></ruby>。
+                </div>
+                <span class="english">I am an anesthesiologist, but I like ICU doctors.</span>
+                <div class="interaction-bar">
+                    <button class="icon-btn tts-btn" data-text="我是麻醉医生，可是我喜欢加护病房医生。">🔊</button>
+                    <button class="icon-btn record-btn">🎤</button>
+                </div>
+                <div class="audio-container"></div>
+            </div>
+
+            <div class="sentence-block">
+                <h3>15. 加护病房 (jiā hù bìng fáng) - ICU</h3>
+                <div class="explanation"><strong>Teacher's Note:</strong> "加 (jiā)" is add. "护 (hù)" is protect. You can imagine patients in this room need "extra protection".</div>
+                <div class="chinese-text">
+                    <ruby>我<rt>wǒ</rt></ruby><ruby>喜<rt>xǐ</rt></ruby><ruby>欢<rt>huan</rt></ruby><ruby>在<rt>zài</rt></ruby><ruby>加<rt>jiā</rt></ruby><ruby>护<rt>hù</rt></ruby><ruby>病<rt>bìng</rt></ruby><ruby>房<rt>fáng</rt></ruby><ruby>做<rt>zuò</rt></ruby><ruby>医<rt>yī</rt></ruby><ruby>生<rt>shēng</rt></ruby>，<ruby>可<rt>kě</rt></ruby><ruby>以<rt>yǐ</rt></ruby><ruby>和<rt>hé</rt></ruby><ruby>病<rt>bìng</rt></ruby><ruby>人<rt>rén</rt></ruby><ruby>说<rt>shuō</rt></ruby><ruby>话<rt>huà</rt></ruby>。
+                </div>
+                <span class="english">I like being a doctor in the ICU, I can talk to patients.</span>
+                <div class="interaction-bar">
+                    <button class="icon-btn tts-btn" data-text="我喜欢在加护病房做医生，可以和病人说话。">🔊</button>
+                    <button class="icon-btn record-btn">🎤</button>
+                </div>
+                <div class="audio-container"></div>
+            </div>
+
+            <div class="sentence-block">
+                <h3>16. 安心 (ān xīn) - Feel at ease</h3>
+                <div class="chinese-text">
+                    <ruby>我<rt>wǒ</rt></ruby><ruby>喜<rt>xǐ</rt></ruby><ruby>欢<rt>huan</rt></ruby><ruby>在<rt>zài</rt></ruby><ruby>加<rt>jiā</rt></ruby><ruby>护<rt>hù</rt></ruby><ruby>病<rt>bìng</rt></ruby><ruby>房<rt>fáng</rt></ruby><ruby>和<rt>hé</rt></ruby><ruby>病<rt>bìng</rt></ruby><ruby>人<rt>rén</rt></ruby><ruby>的<rt>de</rt></ruby><ruby>家<rt>jiā</rt></ruby><ruby>人<rt>rén</rt></ruby><ruby>说<rt>shuō</rt></ruby><ruby>话<rt>huà</rt></ruby>，
+                    <ruby>让<rt>ràng</rt></ruby><ruby>家<rt>jiā</rt></ruby><ruby>人<rt>rén</rt></ruby><ruby>安<rt>ān</rt></ruby><ruby>心<rt>xīn</rt></ruby>，<ruby>我<rt>wǒ</rt></ruby><ruby>也<rt>yě</rt></ruby><ruby>有<rt>yǒu</rt></ruby><ruby>听<rt>tīng</rt></ruby><ruby>到<rt>dào</rt></ruby><ruby>他<rt>tā</rt></ruby><ruby>们<rt>men</rt></ruby><ruby>的<rt>de</rt></ruby><ruby>想<rt>xiǎng</rt></ruby><ruby>法<rt>fǎ</rt></ruby>。
+                </div>
+                <span class="english">I like talking to patients' families in the ICU to make them feel at ease, and I also hear their thoughts.</span>
+                <div class="interaction-bar">
+                    <button class="icon-btn tts-btn" data-text="我喜欢在加护病房和病人的家人说话，让家人安心，我也有听到他们的想法。">🔊</button>
+                    <button class="icon-btn record-btn">🎤</button>
+                </div>
+                <div class="audio-container"></div>
+            </div>
+        </section>
+
+        <!-- ================= 二、日常對話 ================= -->
+        <section id="part2" class="grammar-section">
+            <h2 class="grammar-title">Part 2: Daily Dialogues (日常对话)</h2>
+            
+            <div id="d-1" class="sentence-block">
+                <h3>1. 常常 (cháng cháng) - Often</h3>
+                <div class="chinese-text">
+                    <ruby>我<rt>wǒ</rt></ruby><ruby>今<rt>jīn</rt></ruby><ruby>天<rt>tiān</rt></ruby><ruby>没<rt>méi</rt></ruby><ruby>有<rt>yǒu</rt></ruby><ruby>去<rt>qù</rt></ruby><ruby>我<rt>wǒ</rt></ruby><ruby>常<rt>cháng</rt></ruby><ruby>常<rt>cháng</rt></ruby><ruby>去<rt>qù</rt></ruby><ruby>的<rt>de</rt></ruby><ruby>医<rt>yī</rt></ruby><ruby>院<rt>yuàn</rt></ruby>，<br>
+                    <ruby>我<rt>wǒ</rt></ruby><ruby>不<rt>bù</rt></ruby><ruby>喜<rt>xǐ</rt></ruby><ruby>欢<rt>huan</rt></ruby>，<ruby>因<rt>yīn</rt></ruby><ruby>为<rt>wèi</rt></ruby><ruby>我<rt>wǒ</rt></ruby><ruby>不<rt>bù</rt></ruby><ruby>知<rt>zhī</rt></ruby><ruby>道<rt>dào</rt></ruby><ruby>我<rt>wǒ</rt></ruby><ruby>要<rt>yào</rt></ruby><ruby>做<rt>zuò</rt></ruby><ruby>什<rt>shén</rt></ruby><ruby>么<rt>me</rt></ruby>。
+                </div>
+                <span class="english">I didn't go to the hospital I usually go to today. I don't like it because I don't know what I need to do.</span>
+                <div class="interaction-bar">
+                    <button class="icon-btn tts-btn" data-text="我今天没有去我常常去的医院，我不喜欢，因为我不知道我要做什么。">🔊</button>
+                    <button class="icon-btn record-btn">🎤</button>
+                </div>
+                <div class="audio-container"></div>
+            </div>
+
+            <div class="sentence-block">
+                <h3>2. 游泳池 (yóu yǒng chí) - Swimming pool</h3>
+                <div class="chinese-text">
+                    <ruby>我<rt>wǒ</rt></ruby><ruby>上<rt>shàng</rt></ruby><ruby>星<rt>xīng</rt></ruby><ruby>期<rt>qī</rt></ruby><ruby>去<rt>qù</rt></ruby><ruby>游<rt>yóu</rt></ruby><ruby>泳<rt>yǒng</rt></ruby><ruby>池<rt>chí</rt></ruby><ruby>游<rt>yóu</rt></ruby><ruby>泳<rt>yǒng</rt></ruby>。
+                </div>
+                <span class="english">I went to the swimming pool to swim last week.</span>
+                <div class="interaction-bar">
+                    <button class="icon-btn tts-btn" data-text="我上星期去游泳池游泳。">🔊</button>
+                    <button class="icon-btn record-btn">🎤</button>
+                </div>
+                <div class="audio-container"></div>
+            </div>
+
+            <div class="sentence-block">
+                <h3>3. 岁 (suì) - Years old</h3>
+                <div class="chinese-text">
+                    <ruby>我<rt>wǒ</rt></ruby><ruby>朋<rt>péng</rt></ruby><ruby>友<rt>you</rt></ruby><ruby>的<rt>de</rt></ruby><ruby>小<rt>xiǎo</rt></ruby><ruby>孩<rt>hái</rt></ruby><ruby>两<rt>liǎng</rt></ruby><ruby>岁<rt>suì</rt></ruby>。
+                </div>
+                <span class="english">My friend's child is two years old.</span>
+                <div class="interaction-bar">
+                    <button class="icon-btn tts-btn" data-text="我朋友的小孩两岁。">🔊</button>
+                    <button class="icon-btn record-btn">🎤</button>
+                </div>
+                <div class="audio-container"></div>
+            </div>
+
+            <div id="d-4" class="sentence-block">
+                <h3>4 & 5. 牙套 (yá tào) - Braces & Months</h3>
+                <div class="explanation"><strong>Teacher's Note:</strong> "戴 (dài)" is used for wearing accessories, like wearing a hat (戴帽子) or a watch (戴手表). <br>Also, pay attention to "个" in months: 11个月 (11 months duration) vs 11月 (November).</div>
+                
+                <div class="chinese-text">
+                    <ruby>我<rt>wǒ</rt></ruby><ruby>的<rt>de</rt></ruby><ruby>牙<rt>yá</rt></ruby><ruby>齿<rt>chǐ</rt></ruby><ruby>不<rt>bù</rt></ruby><ruby>舒<rt>shū</rt></ruby><ruby>服<rt>fu</rt></ruby>，<ruby>所<rt>suǒ</rt></ruby><ruby>以<rt>yǐ</rt></ruby><ruby>我<rt>wǒ</rt></ruby><ruby>戴<rt>dài</rt></ruby><ruby>牙<rt>yá</rt></ruby><ruby>套<rt>tào</rt></ruby>。<br><br>
+                    <ruby>你<rt>nǐ</rt></ruby><ruby>要<rt>yào</rt></ruby><ruby>戴<rt>dài</rt></ruby><ruby>牙<rt>yá</rt></ruby><ruby>套<rt>tào</rt></ruby><ruby>多<rt>duō</rt></ruby><ruby>久<rt>jiǔ</rt></ruby>？<ruby>我<rt>wǒ</rt></ruby><ruby>要<rt>yào</rt></ruby><ruby>戴<rt>dài</rt></ruby><ruby>11<rt>shí yī</rt></ruby><ruby>个<rt>ge</rt></ruby><ruby>月<rt>yuè</rt></ruby>。
+                </div>
+                <span class="english">My teeth are uncomfortable, so I wear braces. <br>How long do you need to wear braces? I need to wear them for 11 months.</span>
+                <div class="interaction-bar">
+                    <button class="icon-btn tts-btn" data-text="我的牙齿不舒服，所以我戴牙套。你要戴牙套多久？我要戴11个月。">🔊</button>
+                    <button class="icon-btn record-btn">🎤</button>
+                </div>
+                <div class="audio-container"></div>
+            </div>
+
+            <div class="sentence-block">
+                <h3>6. 很麻烦 (hěn má fan) - Very troublesome</h3>
+                <div class="chinese-text">
+                    <ruby>我<rt>wǒ</rt></ruby><ruby>觉<rt>jué</rt></ruby><ruby>得<rt>de</rt></ruby><ruby>戴<rt>dài</rt></ruby><ruby>牙<rt>yá</rt></ruby><ruby>套<rt>tào</rt></ruby><ruby>很<rt>hěn</rt></ruby><ruby>麻<rt>má</rt></ruby><ruby>烦<rt>fan</rt></ruby>。
+                </div>
+                <span class="english">I think wearing braces is very troublesome.</span>
+                <div class="interaction-bar">
+                    <button class="icon-btn tts-btn" data-text="我觉得戴牙套很麻烦。">🔊</button>
+                    <button class="icon-btn record-btn">🎤</button>
+                </div>
+                <div class="audio-container"></div>
+            </div>
+
+            <div id="d-8" class="sentence-block">
+                <h3>7 & 8. 变 (biàn) & 训练 (xùn liàn) - Change & Train</h3>
+                <div class="explanation"><strong>Teacher's Note:</strong> "变 (biàn)" or "变成 (biàn chéng)" means to turn into or become.</div>
+                
+                <div class="chinese-text">
+                    <ruby>我<rt>wǒ</rt></ruby><ruby>想<rt>xiǎng</rt></ruby><ruby>要<rt>yào</rt></ruby><ruby>我<rt>wǒ</rt></ruby><ruby>戴<rt>dài</rt></ruby><ruby>牙<rt>yá</rt></ruby><ruby>套<rt>tào</rt></ruby><ruby>后<rt>hòu</rt></ruby><ruby>变<rt>biàn</rt></ruby><ruby>舒<rt>shū</rt></ruby><ruby>服<rt>fu</rt></ruby>。<br><br>
+                    <ruby>我<rt>wǒ</rt></ruby><ruby>在<rt>zài</rt></ruby><ruby>训<rt>xùn</rt></ruby><ruby>练<rt>liàn</rt></ruby><ruby>我<rt>wǒ</rt></ruby><ruby>的<rt>de</rt></ruby><ruby>狗<rt>gǒu</rt></ruby><ruby>变<rt>biàn</rt></ruby><ruby>好<rt>hǎo</rt></ruby>。<br><br>
+                    <ruby>我<rt>wǒ</rt></ruby><ruby>的<rt>de</rt></ruby><ruby>老<rt>lǎo</rt></ruby><ruby>板<rt>bǎn</rt></ruby><ruby>训<rt>xùn</rt></ruby><ruby>练<rt>liàn</rt></ruby><ruby>我<rt>wǒ</rt></ruby><ruby>变<rt>biàn</rt></ruby><ruby>好<rt>hǎo</rt></ruby>。
+                </div>
+                <span class="english">I want to become comfortable after wearing braces. <br>I am training my dog to become good. <br>My boss trains me to become better.</span>
+                <div class="interaction-bar">
+                    <button class="icon-btn tts-btn" data-text="我想要我戴牙套后变舒服。我在训练我的狗变好。我的老板训练我变好。">🔊</button>
+                    <button class="icon-btn record-btn">🎤</button>
+                </div>
+                <div class="audio-container"></div>
+            </div>
+
+            <div id="d-9" class="sentence-block">
+                <h3>9. 沟通 (gōu tōng) - Communication</h3>
+                <div class="explanation"><strong>Teacher's Note:</strong> "沟 (gōu)" means gap. "通 (tōng)" means keep clear/open. Together, it means bridging the gap to keep information flowing!</div>
+                <div class="chinese-text">
+                    <ruby>我<rt>wǒ</rt></ruby><ruby>下<rt>xià</rt></ruby><ruby>个<rt>ge</rt></ruby><ruby>月<rt>yuè</rt></ruby><ruby>要<rt>yào</rt></ruby><ruby>去<rt>qù</rt></ruby><ruby>澳<rt>ào</rt></ruby><ruby>大<rt>dà</rt></ruby><ruby>利<rt>lì</rt></ruby><ruby>亚<rt>yà</rt></ruby><ruby>上<rt>shàng</rt></ruby><ruby>沟<rt>gōu</rt></ruby><ruby>通<rt>tōng</rt></ruby><ruby>课<rt>kè</rt></ruby>，<br>
+                    <ruby>帮<rt>bāng</rt></ruby><ruby>我<rt>wǒ</rt></ruby><ruby>和<rt>hé</rt></ruby><ruby>病<rt>bìng</rt></ruby><ruby>人<rt>rén</rt></ruby><ruby>能<rt>néng</rt></ruby><ruby>好<rt>hǎo</rt></ruby><ruby>好<rt>hǎo</rt></ruby><ruby>沟<rt>gōu</rt></ruby><ruby>通<rt>tōng</rt></ruby>。
+                </div>
+                <span class="english">I am going to Australia next month to take a communication class, to help me communicate well with patients.</span>
+                <div class="interaction-bar">
+                    <button class="icon-btn tts-btn" data-text="我下个月要去澳大利亚上沟通课，帮我和病人能好好沟通。">🔊</button>
+                    <button class="icon-btn record-btn">🎤</button>
+                </div>
+                <div class="audio-container"></div>
+            </div>
+
+            <div class="sentence-block">
+                <h3>10. 耐心 (nài xīn) - Patience</h3>
+                <div class="explanation"><strong>Teacher's Note:</strong> "耐 (nài)" means to endure. "心 (xīn)" means heart. Patience is having a heart that can endure.</div>
+                <div class="chinese-text">
+                    <ruby>我<rt>wǒ</rt></ruby><ruby>会<rt>huì</rt></ruby><ruby>对<rt>duì</rt></ruby><ruby>病<rt>bìng</rt></ruby><ruby>人<rt>rén</rt></ruby><ruby>很<rt>hěn</rt></ruby><ruby>有<rt>yǒu</rt></ruby><ruby>耐<rt>nài</rt></ruby><ruby>心<rt>xīn</rt></ruby>。
+                </div>
+                <span class="english">I will be very patient with the patients.</span>
+                <div class="interaction-bar">
+                    <button class="icon-btn tts-btn" data-text="我会对病人很有耐心。">🔊</button>
+                    <button class="icon-btn record-btn">🎤</button>
+                </div>
+                <div class="audio-container"></div>
+            </div>
+
+        </section>
+    </main>
+
+    <script>
+        // --- TTS 朗讀功能 ---
+        const synth = window.speechSynthesis;
+        let currentUtterance = null;
+        let activeTtsBtn = null;
+
+        document.querySelectorAll('.tts-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const textToRead = this.getAttribute('data-text');
+
+                if (activeTtsBtn === this) {
+                    if (synth.speaking && !synth.paused) { synth.pause(); return; } 
+                    else if (synth.paused) { synth.resume(); return; }
+                }
+
+                synth.cancel();
+                activeTtsBtn = this;
+
+                currentUtterance = new SpeechSynthesisUtterance(textToRead);
+                currentUtterance.lang = 'zh-CN'; 
+                currentUtterance.rate = 0.85; 
+                
+                currentUtterance.onend = () => { activeTtsBtn = null; };
+                synth.speak(currentUtterance);
+            });
+        });
+
+        // --- 麥克風錄音功能 ---
+        document.querySelectorAll('.record-btn').forEach(btn => {
+            let mediaRecorder;
+            let audioChunks = [];
+
+            btn.addEventListener('click', async function() {
+                const container = this.closest('.sentence-block').querySelector('.audio-container') || this.parentElement.nextElementSibling;
+                
+                if (this.classList.contains('recording')) {
+                    mediaRecorder.stop();
+                    this.classList.remove('recording');
+                    this.textContent = '🎤';
+                    return;
+                } 
+
+                try {
+                    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+                    mediaRecorder = new MediaRecorder(stream);
+                    
+                    mediaRecorder.ondataavailable = e => { audioChunks.push(e.data); };
+
+                    mediaRecorder.onstop = () => {
+                        const audioBlob = new Blob(audioChunks, { type: 'audio/webm' });
+                        const audioUrl = URL.createObjectURL(audioBlob);
+                        
+                        const audioEl = document.createElement('audio');
+                        audioEl.controls = true;
+                        audioEl.src = audioUrl;
+                        
+                        container.innerHTML = '';
+                        container.appendChild(audioEl);
+                        
+                        stream.getTracks().forEach(track => track.stop());
+                    };
+
+                    audioChunks = [];
+                    mediaRecorder.start();
+                    this.classList.add('recording');
+                    this.textContent = '⏹️'; 
+                    container.innerHTML = '';
+
+                } catch (err) {
+                    alert("請允許使用麥克風來進行錄音。");
+                    console.error("麥克風存取失敗: ", err);
+                }
+            });
+        });
+    </script>
+</body>
+</html>
