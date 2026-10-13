@@ -30,14 +30,15 @@
         button.control-btn { background: var(--primary); color: white; border: none; padding: 10px 15px; margin: 5px; border-radius: 6px; cursor: pointer; font-size: 14px; font-weight: bold; }
         button.control-btn:hover { background: #B5835A; }
         
-        .audio-btn { background: #f0f0f0; color: #333; font-size: 14px; padding: 6px 12px; border-radius: 20px; border: none; cursor: pointer; display: inline-flex; align-items: center; gap: 5px; margin-right: 8px; }
+        /* 簡化後的按鈕風格 */
+        .audio-btn { background: #f0f0f0; color: #333; font-size: 13px; padding: 5px 10px; border-radius: 15px; border: none; cursor: pointer; display: inline-flex; align-items: center; gap: 4px; }
         .audio-btn:hover { background: #e0e0e0; }
         
-        .rec-btn { background: #e07a5f; color: white; font-size: 14px; padding: 6px 12px; border-radius: 20px; border: none; cursor: pointer; display: inline-flex; align-items: center; gap: 5px; margin-right: 5px; }
+        .rec-btn { background: #e07a5f; color: white; font-size: 13px; padding: 5px 10px; border-radius: 15px; border: none; cursor: pointer; display: inline-flex; align-items: center; gap: 4px; }
         .rec-btn:hover { background: #cc6b50; }
         .rec-btn.recording { background: #d90429; animation: pulse 1.5s infinite; }
         
-        .play-rec-btn { background: #457b9d; color: white; font-size: 14px; padding: 6px 12px; border-radius: 20px; border: none; cursor: pointer; display: inline-flex; align-items: center; gap: 5px; }
+        .play-rec-btn { background: #457b9d; color: white; font-size: 13px; padding: 5px 10px; border-radius: 15px; border: none; cursor: pointer; display: inline-flex; align-items: center; gap: 4px; }
         .play-rec-btn:hover { background: #1d3557; }
         .play-rec-btn:disabled { background: #ccc; cursor: not-allowed; }
 
@@ -50,20 +51,21 @@
         h2 { color: #8C6239; border-left: 5px solid var(--primary); padding-left: 10px; margin-top: 30px; }
         .section { margin-bottom: 30px; background: var(--white); padding: 20px; border-radius: 12px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); scroll-margin-top: 80px; }
         .item { margin-bottom: 20px; display: flex; flex-direction: column; border-bottom: 1px dashed #eee; padding-bottom: 15px; }
-        .item-content { display: flex; align-items: flex-start; flex-wrap: wrap; margin-bottom: 5px; gap: 10px; }
+        .sentence-row { display: flex; align-items: flex-start; flex-wrap: wrap; gap: 10px; margin-bottom: 8px; }
+        .recording-row { display: flex; align-items: center; gap: 8px; margin-top: 5px; margin-left: 2px; }
         
         /* 上排拼音與簡體字排版 */
         .pinyin-group { display: inline-flex; flex-direction: column; align-items: center; margin-right: 3px; vertical-align: bottom; }
         .py-text { font-size: 11px; color: #777; line-height: 1; margin-bottom: 2px; }
         .hz-text { font-size: 24px; font-family: sans-serif; line-height: 1.2; }
         
-        .en-trans { color: #666; font-size: 15px; font-style: italic; margin-top: 5px; }
+        .en-trans { color: #666; font-size: 15px; font-style: italic; margin-top: 3px; }
         .grammar-box { background: #FFF9F0; border: 1px solid #E6D5B8; border-radius: 8px; padding: 15px; margin: 15px 0; }
         .wrong { color: #D9534F; font-size: 18px; font-weight: bold;}
         .correct { color: #5CB85C; font-size: 18px; font-weight: bold;}
         .note { font-size: 14px; color: #555; margin-bottom: 10px; line-height: 1.5; }
         .img-container { text-align: center; margin: 15px 0; }
-        .img-container img { max-width: 100%; max-height: 250px; border-radius: 8px; border: 1px solid #E6D5B8; }
+        .img-container img { max-width: 100%; max-height: 220px; border-radius: 8px; border: 1px solid #E6D5B8; }
         
         @media (max-width: 900px) {
             .sidebar { transform: translateX(-100%); }
@@ -414,37 +416,45 @@
                         <div class="item-content" style="margin-top: 10px; align-items:center;">
                             <span class="wrong" style="margin-right:15px;">❌ </span> <span>${item.wrong}</span>
                         </div>
-                        <div class="item-content" style="margin-top: 10px; align-items:center;">
-                            <button class="audio-btn" onclick="playAudio('${item.correct}')">🔊 Listen</button>
-                            <button class="rec-btn" onclick="toggleRecord(this, 'rec-${counter}')">🎤 Record</button>
-                            <button class="play-rec-btn" id="play-rec-rec-${counter}" onclick="playRecording('rec-${counter}')" disabled>▶ Play Mine</button>
-                            <span class="correct" style="margin-left:8px;">✅ </span> <span style="margin-left:8px;">${parsePinyin(item.correct)}</span>
+                        <div class="item" style="border:none; margin-top:5px; padding-bottom:0;">
+                            <div class="sentence-row">
+                                <span class="correct" style="margin-right:5px;">✅ </span>
+                                <button class="audio-btn" onclick="playAudio('${item.correct}')">🔊 Listen</button>
+                                <div style="margin-left:5px;">${parsePinyin(item.correct)}</div>
+                            </div>
+                            <div class="recording-row">
+                                <button class="rec-btn" onclick="toggleRecord(this, 'rec-${counter}')">🎤 Record</button>
+                                <button class="play-rec-btn" id="play-rec-rec-${counter}" onclick="playRecording('rec-${counter}')" disabled>▶ Play Mine</button>
+                            </div>
                         </div>`;
                         counter++;
                     } else if (item.correct) {
                         html += `
-                        <div class="item-content" style="margin-top: 10px; align-items:center;">
-                            <button class="audio-btn" onclick="playAudio('${item.correct}')">🔊 Listen</button>
-                            <button class="rec-btn" onclick="toggleRecord(this, 'rec-${counter}')">🎤 Record</button>
-                            <button class="play-rec-btn" id="play-rec-rec-${counter}" onclick="playRecording('rec-${counter}')" disabled>▶ Play Mine</button>
-                            <span class="correct" style="margin-left:8px;">✅ </span> <span style="margin-left:8px;">${parsePinyin(item.correct)}</span>
+                        <div class="item" style="border:none; margin-top:5px; padding-bottom:0;">
+                            <div class="sentence-row">
+                                <span class="correct" style="margin-right:5px;">✅ </span>
+                                <button class="audio-btn" onclick="playAudio('${item.correct}')">🔊 Listen</button>
+                                <div style="margin-left:5px;">${parsePinyin(item.correct)}</div>
+                            </div>
+                            <div class="recording-row">
+                                <button class="rec-btn" onclick="toggleRecord(this, 'rec-${counter}')">🎤 Record</button>
+                                <button class="play-rec-btn" id="play-rec-rec-${counter}" onclick="playRecording('rec-${counter}')" disabled>▶ Play Mine</button>
+                            </div>
                         </div>`;
                         counter++;
-                    }
-
-                    if (item.en && !item.wrong && !item.correct) {
-                        // handled below
                     }
 
                     if (item.examples) {
                         item.examples.forEach(ex => {
                             html += `
                             <div class="item" style="border:none; margin-top:10px; padding-bottom:0;">
-                                <div class="item-content" style="align-items:center;">
+                                <div class="sentence-row">
                                     <button class="audio-btn" onclick="playAudio('${ex.zh}')">🔊 Listen</button>
+                                    <div style="margin-left:5px;">${parsePinyin(ex.zh)}</div>
+                                </div>
+                                <div class="recording-row">
                                     <button class="rec-btn" onclick="toggleRecord(this, 'rec-${counter}')">🎤 Record</button>
                                     <button class="play-rec-btn" id="play-rec-rec-${counter}" onclick="playRecording('rec-${counter}')" disabled>▶ Play Mine</button>
-                                    <div style="margin-left:8px;">${parsePinyin(ex.zh)}</div>
                                 </div>
                                 <div class="en-trans">${ex.en}</div>
                             </div>`;
@@ -453,7 +463,6 @@
                     }
                     html += `</div>`;
                 } else if (item.title) {
-                    // Category with sub-items
                     html += `<div class="grammar-box"><div style="font-weight:bold; font-size:16px; color:#8C6239; margin-bottom:5px;">${item.title}</div>`;
                     if(item.img) {
                         html += `<div class="img-container"><img src="${item.img}" alt="Illustration"></div>`;
@@ -462,11 +471,13 @@
                         item.items.forEach(sub => {
                             html += `
                             <div class="item" style="border:none; margin-top:10px; padding-bottom:0;">
-                                <div class="item-content" style="align-items:center;">
+                                <div class="sentence-row">
                                     <button class="audio-btn" onclick="playAudio('${sub.zh}')">🔊 Listen</button>
+                                    <div style="margin-left:5px;">${parsePinyin(sub.zh)}</div>
+                                </div>
+                                <div class="recording-row">
                                     <button class="rec-btn" onclick="toggleRecord(this, 'rec-${counter}')">🎤 Record</button>
                                     <button class="play-rec-btn" id="play-rec-rec-${counter}" onclick="playRecording('rec-${counter}')" disabled>▶ Play Mine</button>
-                                    <div style="margin-left:8px;">${parsePinyin(sub.zh)}</div>
                                 </div>
                                 <div class="en-trans">${sub.en}</div>
                             </div>`;
