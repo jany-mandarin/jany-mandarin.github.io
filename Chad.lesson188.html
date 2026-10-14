@@ -19,6 +19,8 @@
         .sidebar h3 { margin-top: 0; color: #8C6239; font-size: 18px; border-bottom: 2px solid var(--primary); padding-bottom: 8px; display: flex; justify-content: space-between; align-items: center; }
         .sidebar ol { padding-left: 20px; margin: 10px 0; color: #555; }
         .sidebar li { margin-bottom: 8px; font-size: 15px; font-weight: bold; color: #8C6239; }
+        .sidebar ul { padding-left: 15px; list-style-type: circle; margin-top: 5px; margin-bottom: 15px; font-weight: normal; }
+        .sidebar ul li { font-size: 13.5px; margin-bottom: 6px; color: #555; }
         .sidebar a { color: #555; text-decoration: none; display: block; }
         .sidebar a:hover { color: #D4A373; font-weight: bold; }
         
@@ -51,7 +53,7 @@
         .grammar-box { background: #FFF9F0; border: 1px solid #E6D5B8; border-radius: 8px; padding: 15px; margin: 15px 0; scroll-margin-top: 140px; }
         .item-content { display: flex; align-items: flex-start; margin-top: 10px; margin-bottom: 5px; }
         
-        /* Bopomofo (Zhuyin) Vertical Formatting - Exactly like 187 */
+        /* Bopomofo (Zhuyin) Vertical Formatting */
         .zy-text { display: inline-block; line-height: 2.4; font-size: 18px; }
         .zy-char-wrap { display: inline-flex; align-items: center; margin-right: 2px; }
         .zy-char { font-size: 26px; font-family: "DFKai-SB", "BiauKai", serif; }
@@ -107,9 +109,33 @@
     <div class="sidebar" id="sidebar">
         <h3>📖 Outline <button style="background:none; border:none; color:#8C6239; font-weight:bold; cursor:pointer; font-size:16px;" onclick="toggleSidebar()">×</button></h3>
         <ol>
-            <li><a href="#sec-0">Warm-up (暖身閒聊)</a></li>
-            <li><a href="#sec-1">Homework (上次作業)</a></li>
-            <li><a href="#sec-2">Lesson 11 (第十一課)</a></li>
+            <li><a href="#sec-0">Warm-up (暖身閒聊)</a>
+                <ul>
+                    <li><a href="#wu-1">沒有 vs 不會</a></li>
+                    <li><a href="#wu-prac">Practice (互動練習)</a></li>
+                    <li><a href="#wu-2">錯誤和道地句子</a></li>
+                    <li><a href="#wu-3">別的</a></li>
+                    <li><a href="#wu-4">趴 (Percent)</a></li>
+                </ul>
+            </li>
+            <li><a href="#sec-1">Homework (上次作業)</a>
+                <ul>
+                    <li><a href="#hw-1">翻譯練習 - 別的</a></li>
+                    <li><a href="#hw-2">翻譯練習 - 空的</a></li>
+                    <li><a href="#hw-3">翻譯練習 - 夜裡 & 在床上</a></li>
+                    <li><a href="#hw-4">發音練習</a></li>
+                    <li><a href="#hw-5">晴 (Sunny)</a></li>
+                    <li><a href="#hw-6">我今天有事</a></li>
+                    <li><a href="#hw-7">一直 vs 一定</a></li>
+                </ul>
+            </li>
+            <li><a href="#sec-2">Lesson 11 (第十一課)</a>
+                <ul>
+                    <li><a href="#ls-1">就 vs 才</a></li>
+                    <li><a href="#ls-prac">Practice (互動練習)</a></li>
+                    <li><a href="#ls-2">接 (jiē)</a></li>
+                </ul>
+            </li>
             <li><a href="#sec-3">Reading (閱讀理解)</a></li>
         </ol>
     </div>
@@ -129,7 +155,7 @@
         <div class="section" id="sec-0">
             <h2>1. Warm-up (暖身閒聊)</h2>
             
-            <div class="grammar-box">
+            <div class="grammar-box" id="wu-1">
                 <div style="font-weight:bold; font-size:16px; color:#8C6239; margin-bottom:5px;">1. 沒有 vs 不會</div>
                 <div class="note">
                     <b>沒有 (méi yǒu):</b> Used for actions that did not happen in the past.<br>
@@ -147,10 +173,10 @@
                     </div>
                 </div>
                 
-                <h4 style="margin-top:20px; color:#8C6239;">Practice (互動練習)</h4>
+                <h4 id="wu-prac" style="margin-top:20px; color:#8C6239;">Practice (互動練習)</h4>
                 
                 <div class="quiz-card">
-                    <div class="quiz-question">1) 你昨天有吃披薩嗎? (Did you eat pizza yesterday?)</div>
+                    <div class="quiz-question">1) 你昨天有吃披薩嗎?</div>
                     <div class="quiz-options">
                         <label><input type="radio" name="q1" value="meiyou"> 沒有</label>
                         <label><input type="radio" name="q1" value="buhui"> 不會</label>
@@ -160,7 +186,7 @@
                 </div>
 
                 <div class="quiz-card">
-                    <div class="quiz-question">2) 你明天會去台灣嗎? (Will you go to Taiwan tomorrow?)</div>
+                    <div class="quiz-question">2) 你明天會去台灣嗎?</div>
                     <div class="quiz-options">
                         <label><input type="radio" name="q2" value="meiyou"> 沒有</label>
                         <label><input type="radio" name="q2" value="buhui"> 不會</label>
@@ -170,7 +196,7 @@
                 </div>
 
                 <div class="quiz-card">
-                    <div class="quiz-question">3) 你今天會跟你太太去超市嗎? (Will you go to the supermarket with your wife today?)</div>
+                    <div class="quiz-question">3) 你今天會跟你太太去超市嗎?</div>
                     <div class="quiz-options">
                         <label><input type="radio" name="q3" value="meiyou"> 沒有</label>
                         <label><input type="radio" name="q3" value="buhui"> 不會</label>
@@ -180,7 +206,7 @@
                 </div>
 
                 <div class="quiz-card">
-                    <div class="quiz-question">4) 你上星期有去按摩店嗎? (Did you go to the massage shop last week?)</div>
+                    <div class="quiz-question">4) 你上星期有去按摩店嗎?</div>
                     <div class="quiz-options">
                         <label><input type="radio" name="q4" value="meiyou"> 沒有</label>
                         <label><input type="radio" name="q4" value="buhui"> 不會</label>
@@ -190,7 +216,7 @@
                 </div>
                 
                 <div class="quiz-card">
-                    <div class="quiz-question">5) 你12月會去英國嗎? (Will you go to the UK in December?)</div>
+                    <div class="quiz-question">5) 你12月會去英國嗎?</div>
                     <div class="quiz-options">
                         <label><input type="radio" name="q5" value="meiyou"> 沒有</label>
                         <label><input type="radio" name="q5" value="buhui"> 不會</label>
@@ -200,7 +226,7 @@
                 </div>
 
                 <div class="quiz-card">
-                    <div class="quiz-question">6) 你後天會去墨西哥嗎? (Will you go to Mexico the day after tomorrow?)</div>
+                    <div class="quiz-question">6) 你後天會去墨西哥嗎?</div>
                     <div class="quiz-options">
                         <label><input type="radio" name="q6" value="meiyou"> 沒有</label>
                         <label><input type="radio" name="q6" value="buhui"> 不會</label>
@@ -210,7 +236,7 @@
                 </div>
             </div>
 
-            <div class="grammar-box">
+            <div class="grammar-box" id="wu-2">
                 <div style="font-weight:bold; font-size:16px; color:#8C6239; margin-bottom:5px;">2. 錯誤和道地句子 (Correcting Mistakes)</div>
                 <div class="item-content">
                     <span class="wrong-ans" style="margin-right:15px; flex-shrink:0;">❌</span> 
@@ -230,7 +256,7 @@
                 </div>
             </div>
 
-            <div class="grammar-box">
+            <div class="grammar-box" id="wu-3">
                 <div style="font-weight:bold; font-size:16px; color:#8C6239; margin-bottom:5px;">3. 別的 (Other / Another)</div>
                 <div class="item-content">
                     <div class="btn-group">
@@ -245,7 +271,7 @@
                 </div>
             </div>
             
-            <div class="grammar-box">
+            <div class="grammar-box" id="wu-4">
                 <div style="font-weight:bold; font-size:16px; color:#8C6239; margin-bottom:5px;">4. 趴 (Percent)</div>
                 <div class="note"><b>Explanation:</b> Originally "百分之X" (X percent), but in spoken Mandarin, people often lazily say "X 趴(pā)" which sounds similar to the English word "percent".</div>
                 <div class="item-content">
@@ -266,7 +292,7 @@
         <div class="section" id="sec-1">
             <h2>2. Homework Review (上次作業)</h2>
             
-            <div class="grammar-box">
+            <div class="grammar-box" id="hw-1">
                 <div style="font-weight:bold; font-size:16px; color:#8C6239; margin-bottom:5px;">1. 翻譯練習 - 別的</div>
                 <div class="en-trans" style="margin-bottom:5px;">All the other classmates have gone home, only I am still at school.</div>
                 <div class="item-content">
@@ -275,7 +301,7 @@
                 </div>
             </div>
 
-            <div class="grammar-box">
+            <div class="grammar-box" id="hw-2">
                 <div style="font-weight:bold; font-size:16px; color:#8C6239; margin-bottom:5px;">2. 翻譯練習 - 空的</div>
                 <div class="en-trans" style="margin-bottom:5px;">Is this seat taken?</div>
                 <div class="item-content">
@@ -284,7 +310,7 @@
                 </div>
             </div>
 
-            <div class="grammar-box">
+            <div class="grammar-box" id="hw-3">
                 <div style="font-weight:bold; font-size:16px; color:#8C6239; margin-bottom:5px;">3. 翻譯練習 - 夜裡 & 4. 在床上</div>
                 <div class="en-trans" style="margin-bottom:5px;">Yesterday night, I heard my cat jumping around.</div>
                 <div class="item-content">
@@ -300,7 +326,7 @@
                 </div>
             </div>
 
-            <div class="grammar-box">
+            <div class="grammar-box" id="hw-4">
                 <div style="font-weight:bold; font-size:16px; color:#8C6239; margin-bottom:5px;">5. 發音練習 (Pronunciation)</div>
                 <div class="item-content">
                     <div class="btn-group"><button class="audio-btn" onclick="playAudioText(this)">🔊</button></div>
@@ -308,7 +334,7 @@
                 </div>
             </div>
 
-            <div class="grammar-box">
+            <div class="grammar-box" id="hw-5">
                 <div style="font-weight:bold; font-size:16px; color:#8C6239; margin-bottom:5px;">6. 晴 (Sunny)</div>
                 <div class="note"><b>Explanation:</b> The left side is "日" (sun), so "晴" means a sunny day.</div>
                 <div class="item-content">
@@ -320,7 +346,7 @@
                 </div>
             </div>
 
-            <div class="grammar-box">
+            <div class="grammar-box" id="hw-6">
                 <div style="font-weight:bold; font-size:16px; color:#8C6239; margin-bottom:5px;">7. 我今天有事 (I'm busy today)</div>
                 <div class="note"><b>Explanation:</b> This is a polite way to decline an invitation, used when you don't want to go out with someone today. (Literally: "I have matters to attend to today.")</div>
                 <div class="item-content">
@@ -332,7 +358,7 @@
                 </div>
             </div>
 
-            <div class="grammar-box">
+            <div class="grammar-box" id="hw-7">
                 <div style="font-weight:bold; font-size:16px; color:#8C6239; margin-bottom:5px;">8. 一直 vs 一定</div>
                 <div class="note">
                     <b>一直 (yì zhí):</b> has an "eye" (目) underneath -> continuously looking at / doing something.<br>
@@ -353,7 +379,7 @@
         <div class="section" id="sec-2">
             <h2>3. Lesson 11 (第十一課)</h2>
             
-            <div class="grammar-box">
+            <div class="grammar-box" id="ls-1">
                 <div style="font-weight:bold; font-size:16px; color:#8C6239; margin-bottom:5px;">1. 就 (jiù) vs 才 (cái)</div>
                 <div class="note">They both have many usages. Here we focus on: <b>Subject + Time + 就 / 才 + Verb</b></div>
                 
@@ -401,46 +427,46 @@
                     </div>
                 </div>
 
-                <h4 style="margin-top:20px; color:#8C6239;">Practice (互動練習)</h4>
+                <h4 id="ls-prac" style="margin-top:20px; color:#8C6239;">Practice (互動練習)</h4>
                 
                 <div class="quiz-card">
-                    <div class="quiz-question">1) 我吃了三個小時 _____ 吃完我的晚餐。 (It took 3 hours, very slow)</div>
+                    <div class="quiz-question">1) 我吃了三個小時 _____ 吃完我的晚餐。</div>
                     <div class="quiz-options"><label><input type="radio" name="q7" value="jiu"> 就</label><label><input type="radio" name="q7" value="cai"> 才</label></div>
                     <button class="check-btn" onclick="checkAns('q7', 'cai', 'Three hours for dinner is very slow/long, so we use 才.')">Check Answer</button>
                     <div class="quiz-feedback" id="fb-q7"></div><div class="quiz-explanation" id="exp-q7"></div>
                 </div>
                 
                 <div class="quiz-card">
-                    <div class="quiz-question">2) 我花兩分鐘 _____ 吃完我的大披薩。 (It took 2 mins, very fast)</div>
+                    <div class="quiz-question">2) 我花兩分鐘 _____ 吃完我的大披薩。</div>
                     <div class="quiz-options"><label><input type="radio" name="q8" value="jiu"> 就</label><label><input type="radio" name="q8" value="cai"> 才</label></div>
                     <button class="check-btn" onclick="checkAns('q8', 'jiu', 'Two minutes for a large pizza is extremely fast, so we use 就.')">Check Answer</button>
                     <div class="quiz-feedback" id="fb-q8"></div><div class="quiz-explanation" id="exp-q8"></div>
                 </div>
 
                 <div class="quiz-card">
-                    <div class="quiz-question">3) 我花四個鐘頭 _____ 寫完我的作業。 (It took 4 hours, slow/hard)</div>
+                    <div class="quiz-question">3) 我花四個鐘頭 _____ 寫完我的作業。</div>
                     <div class="quiz-options"><label><input type="radio" name="q9" value="jiu"> 就</label><label><input type="radio" name="q9" value="cai"> 才</label></div>
                     <button class="check-btn" onclick="checkAns('q9', 'cai', 'Four hours feels like a long, difficult time, so we use 才.')">Check Answer</button>
                     <div class="quiz-feedback" id="fb-q9"></div><div class="quiz-explanation" id="exp-q9"></div>
                 </div>
 
                 <div class="quiz-card">
-                    <div class="quiz-question">4) 我的太太今天下午三點 _____ 去上班。 (3 PM is late for starting work)</div>
+                    <div class="quiz-question">4) 我的太太今天下午三點 _____ 去上班。</div>
                     <div class="quiz-options"><label><input type="radio" name="q10" value="jiu"> 就</label><label><input type="radio" name="q10" value="cai"> 才</label></div>
                     <button class="check-btn" onclick="checkAns('q10', 'cai', '3 PM is usually considered very late to go to work, so we use 才.')">Check Answer</button>
                     <div class="quiz-feedback" id="fb-q10"></div><div class="quiz-explanation" id="exp-q10"></div>
                 </div>
 
                 <div class="quiz-card">
-                    <div class="quiz-question">5) 我的貓今天一分鐘 _____ 吃完牠的食物。 (Depends on normal speed)</div>
+                    <div class="quiz-question">5) 我的貓今天一分鐘 _____ 吃完牠的食物。</div>
                     <div class="quiz-options"><label><input type="radio" name="q11" value="jiu"> 就</label><label><input type="radio" name="q11" value="cai"> 才</label></div>
-                    <button class="check-btn" onclick="checkAns('q11', 'jiu', 'If 1 minute is super fast for your cat, use 就. (If 1 min is somehow slow, you could use 才, but usually 1 min is fast -> 就).')">Check Answer</button>
+                    <button class="check-btn" onclick="checkAns('q11', 'jiu,cai', '兩個都可以！取決於你的貓平常吃飯速度多快，如果平常是30秒，就用「才」，如果是三分鐘，就用「就」。(Both are correct depending on normal speed!)')">Check Answer</button>
                     <div class="quiz-feedback" id="fb-q11"></div><div class="quiz-explanation" id="exp-q11"></div>
                 </div>
 
             </div>
 
-            <div class="grammar-box">
+            <div class="grammar-box" id="ls-2">
                 <div style="font-weight:bold; font-size:16px; color:#8C6239; margin-bottom:5px;">2. 接 (jiē) - To connect, catch, pick up</div>
                 <img src="https://cdn.phototourl.com/member/2026-10-14-51dfafc7-61c9-4f23-95f4-bb4cced5c010.png" class="vocab-img" alt="接 origin">
                 <div class="note"><b>Explanation:</b> The right side represents an ancient wife. A wife usually had to handle and touch many things. So "接" means to contact, answer, pick up, or catch.</div>
@@ -486,13 +512,13 @@
                 </div>
                 
                 <hr style="border:0; border-top:1px dashed #ccc; margin:15px 0;">
-                <div class="homework-q">Q1. 健文幾點到火車站?花容幾點到? (What time did Jianwen arrive at the station? What time did Huarong arrive?)</div>
+                <div class="homework-q">Q1. 健文幾點到火車站?花容幾點到?</div>
                 <textarea class="hw-textarea" placeholder="Type your answer here..."></textarea>
                 
-                <div class="homework-q">Q2. 花容為什麼想換房間? (Why did Huarong want to change rooms?)</div>
+                <div class="homework-q">Q2. 花容為什麼想換房間?</div>
                 <textarea class="hw-textarea" placeholder="Type your answer here..."></textarea>
                 
-                <div class="homework-q">Q3. 他們在餐廳等了多久才有座位? (How long did they wait at the restaurant before getting a seat?)</div>
+                <div class="homework-q">Q3. 他們在餐廳等了多久才有座位?</div>
                 <textarea class="hw-textarea" placeholder="Type your answer here..."></textarea>
             </div>
         </div>
@@ -538,7 +564,7 @@
         document.addEventListener("DOMContentLoaded", parseZhuyinDOM);
 
         // ====== Quiz Checking ======
-        function checkAns(questionId, correctVal, expText) {
+        function checkAns(questionId, correctValsStr, expText) {
             const radios = document.getElementsByName(questionId);
             let selectedVal = "";
             for (let r of radios) {
@@ -563,7 +589,10 @@
             exp.style.display = "block";
             exp.innerHTML = "💡 <b>Explanation:</b> " + expText;
 
-            if (selectedVal === correctVal) {
+            // Allow multiple correct answers separated by comma
+            let correctArr = correctValsStr.split(',');
+
+            if (correctArr.includes(selectedVal)) {
                 fb.className = "quiz-feedback correct-fb";
                 fb.innerHTML = "✅ Correct! (正確！)";
             } else {
@@ -594,6 +623,9 @@
             } else {
                 cleanText = zyDiv.innerText.replace(/\(.*?\)/g, '');
             }
+            
+            // Remove slashes so they are not spoken aloud (e.g. in pronunciation practice)
+            cleanText = cleanText.replace(/\//g, ' ');
 
             if (speechSynthesis.speaking && currentUtteranceText === cleanText) {
                 if (speechSynthesis.paused) {
