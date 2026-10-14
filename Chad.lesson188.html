@@ -8,95 +8,95 @@
         html { scroll-behavior: smooth; }
         body { font-family: 'Helvetica Neue', Arial, sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; margin: 0; padding: 0; display: flex; transition: margin-left 0.3s ease; }
         
-        /* 頂部連結導覽 */
+        /* Navigation */
         .top-nav { position: fixed; top: 0; left: 0; width: 100%; background: #FFF9F0; border-bottom: 1px solid #E6D5B8; padding: 10px 20px; box-sizing: border-box; text-align: right; z-index: 1200; display: flex; justify-content: flex-end; align-items: center; }
         .top-nav a { color: var(--primary); font-weight: bold; text-decoration: none; margin-left: 20px; font-size: 15px; }
         .top-nav a:hover { text-decoration: underline; color: #8C6239; }
 
-        /* 左側收合大綱導覽列 */
+        /* Sidebar */
         .sidebar { width: var(--sidebar-width); background: #FFF9F0; border-right: 1px solid #E6D5B8; height: 100vh; position: fixed; top: 0; left: 0; overflow-y: auto; padding: 60px 20px 20px 20px; box-sizing: border-box; transition: transform 0.3s ease; z-index: 1000; }
         .sidebar.collapsed { transform: translateX(-100%); }
         .sidebar h3 { margin-top: 0; color: #8C6239; font-size: 18px; border-bottom: 2px solid var(--primary); padding-bottom: 8px; display: flex; justify-content: space-between; align-items: center; }
         .sidebar ol { padding-left: 20px; margin: 10px 0; color: #555; }
         .sidebar li { margin-bottom: 8px; font-size: 15px; font-weight: bold; color: #8C6239; }
-        .sidebar ul { padding-left: 15px; list-style-type: circle; margin-top: 5px; margin-bottom: 15px; font-weight: normal; }
-        .sidebar ul li { font-size: 13.5px; margin-bottom: 6px; color: #555; }
         .sidebar a { color: #555; text-decoration: none; display: block; }
         .sidebar a:hover { color: #D4A373; font-weight: bold; }
         
-        /* 切換按鈕 */
         .sidebar-toggle { position: fixed; top: 50px; left: 15px; z-index: 1100; background: var(--primary); color: white; border: none; padding: 8px 12px; border-radius: 6px; cursor: pointer; font-size: 14px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
 
-        /* 主內容區 */
+        /* Main Content */
         .main-content { margin-top: 40px; margin-left: var(--sidebar-width); width: calc(100% - var(--sidebar-width)); padding: 20px 40px; box-sizing: border-box; max-width: 900px; transition: margin-left 0.3s ease, width 0.3s ease; }
         .main-content.expanded { margin-left: 0; width: 100%; }
-
         .header { text-align: center; border-bottom: 2px solid var(--primary); padding-bottom: 10px; margin-bottom: 20px; margin-top: 20px; }
         
+        /* Controls */
         .controls { position: sticky; top: 40px; background: var(--bg); padding: 15px; text-align: center; border-bottom: 1px solid #ccc; z-index: 100; margin-bottom: 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
         button.control-btn { background: var(--primary); color: white; border: none; padding: 10px 15px; margin: 5px; border-radius: 6px; cursor: pointer; font-size: 14px; font-weight: bold; }
         button.control-btn:hover { background: #B5835A; }
         
-        .audio-btn { background: #f0f0f0; color: #333; font-size: 16px; padding: 8px; border-radius: 50%; width: 35px; height: 35px; display: inline-flex; align-items: center; justify-content: center; border: none; cursor: pointer; margin-right: 5px; }
+        /* Audio Buttons */
+        .btn-group { display: flex; align-items: center; margin-right: 15px; margin-bottom: 5px; }
+        .audio-btn { background: #f0f0f0; color: #333; font-size: 16px; padding: 8px; border-radius: 50%; width: 35px; height: 35px; display: inline-flex; align-items: center; justify-content: center; border: none; cursor: pointer; margin-right: 5px; flex-shrink:0; }
         .audio-btn:hover { background: #e0e0e0; }
-        
         .rec-btn { background: #e07a5f; color: white; font-size: 14px; padding: 6px 12px; border-radius: 20px; border: none; cursor: pointer; display: inline-flex; align-items: center; gap: 5px; margin-right: 5px; }
-        .rec-btn:hover { background: #cc6b50; }
         .rec-btn.recording { background: #d90429; animation: pulse 1.5s infinite; }
-        
-        .play-rec-btn { background: #457b9d; color: white; font-size: 14px; padding: 6px 12px; border-radius: 20px; border: none; cursor: pointer; display: inline-flex; align-items: center; gap: 5px; }
-        .play-rec-btn:hover { background: #1d3557; }
+        .play-rec-btn { background: #457b9d; color: white; font-size: 14px; padding: 6px 12px; border-radius: 20px; border: none; cursor: pointer; margin-right: 5px; display: inline-flex; align-items: center; justify-content: center; width: 35px; height: 35px;}
         .play-rec-btn:disabled { background: #ccc; cursor: not-allowed; }
 
-        @keyframes pulse {
-            0% { opacity: 1; }
-            50% { opacity: 0.5; }
-            100% { opacity: 1; }
-        }
+        @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.5; } 100% { opacity: 1; } }
 
+        /* Content Blocks */
         h2 { color: #8C6239; border-left: 5px solid var(--primary); padding-left: 10px; margin-top: 30px; }
         .section { margin-bottom: 30px; background: var(--white); padding: 20px; border-radius: 12px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); scroll-margin-top: 130px; }
-        .item { margin-bottom: 20px; display: flex; flex-direction: column; border-bottom: 1px dashed #eee; padding-bottom: 15px; }
-        .item-content { display: flex; align-items: flex-start; flex-wrap: wrap; margin-bottom: 5px; gap: 10px; }
-        .btn-group { display: flex; align-items: center; margin-right: 10px; margin-bottom: 5px; }
+        .grammar-box { background: #FFF9F0; border: 1px solid #E6D5B8; border-radius: 8px; padding: 15px; margin: 15px 0; scroll-margin-top: 140px; }
+        .item-content { display: flex; align-items: flex-start; margin-top: 10px; margin-bottom: 5px; }
         
-        /* Bopomofo (Zhuyin) Vertical Formatting */
-        .zy-char-wrap { display: inline-flex; align-items: center; margin-right: 2px; }
-        .zy-char { font-size: 26px; font-family: "DFKai-SB", "BiauKai", serif; }
+        /* Bopomofo (Zhuyin) Vertical Formatting - THIS PUTS IT ON THE RIGHT */
+        .zy-text { display: inline-block; line-height: 2.2; font-size: 18px; }
+        .zy-char-wrap { display: inline-flex; align-items: center; margin-right: 2px; vertical-align: middle; }
+        .zy-char { font-size: 24px; font-family: "DFKai-SB", "BiauKai", serif; }
         .zy-box { display: inline-flex; flex-direction: column; justify-content: center; position: relative; margin-left: 2px; padding-right: 8px; }
         .zy-symbols { writing-mode: vertical-rl; text-orientation: upright; font-size: 11px; letter-spacing: -2px; }
-        .zy-tone { position: absolute; right: 0px; top: 50%; transform: translateY(-50%); font-size: 11px; }
-        .zy-neutral { position: absolute; top: -11px; left: 50%; transform: translateX(-50%); font-size: 11px; }
+        .zy-tone { position: absolute; right: 0px; top: 50%; transform: translateY(-50%); font-size: 11px; font-weight: bold;}
+        .zy-neutral { position: absolute; top: -11px; left: 50%; transform: translateX(-50%); font-size: 11px; font-weight: bold;}
         
-        .en-trans { color: #666; font-size: 15px; font-style: italic; margin-top: 5px; margin-left: 12px; width: 100%; }
-        .grammar-box { background: #FFF9F0; border: 1px solid #E6D5B8; border-radius: 8px; padding: 15px; margin: 15px 0; scroll-margin-top: 140px; }
-        .wrong { color: #D9534F; font-size: 18px; font-weight: bold;}
-        .correct { color: #5CB85C; font-size: 18px; font-weight: bold;}
+        .en-trans { color: #666; font-size: 15px; font-style: italic; margin-top: 5px; margin-left: 0; width: 100%; display:block;}
         .note { font-size: 14px; color: #555; margin-bottom: 10px; line-height: 1.5; }
+        .vocab-img { max-width: 100%; height: auto; border-radius: 8px; border: 1px solid #E6D5B8; display: block; margin: 10px 0; max-height: 200px; }
+        
+        /* Compare Box for 就 / 才 */
+        .compare-container { display: flex; flex-wrap: wrap; gap: 15px; margin-top: 15px; }
+        .compare-box { flex: 1; min-width: 250px; background: #fff; border: 1px solid #E6D5B8; padding: 15px; border-radius: 8px; }
+        .compare-title { font-weight: bold; color: #d9534f; font-size: 18px; border-bottom: 2px solid #E6D5B8; padding-bottom: 5px; margin-bottom: 10px; }
         
         /* Quiz Styling */
-        .quiz-card { background: #fff; border: 1px solid #E6D5B8; border-radius: 8px; padding: 15px; margin-top: 15px; }
+        .quiz-card { background: #fff; border: 1px solid #E6D5B8; border-radius: 8px; padding: 15px; margin-top: 15px; box-shadow: 0 2px 4px rgba(0,0,0,0.02); }
         .quiz-question { font-size: 16px; font-weight: bold; margin-bottom: 10px; color: #4a4a4a; }
-        .quiz-options { margin-bottom: 10px; }
-        .quiz-options label { margin-right: 15px; font-size: 15px; cursor: pointer; font-weight: 500; }
+        .quiz-options { margin-bottom: 12px; }
+        .quiz-options label { margin-right: 20px; font-size: 15px; cursor: pointer; font-weight: 500; display: inline-flex; align-items: center; gap:5px;}
+        .quiz-options input { transform: scale(1.2); }
         .check-btn { background: var(--primary); color: white; border: none; padding: 6px 14px; border-radius: 4px; cursor: pointer; font-weight: bold; font-size: 14px; }
         .check-btn:hover { background: #B5835A; }
         .quiz-feedback { margin-top: 10px; font-weight: bold; font-size: 15px; display: none; }
         .quiz-feedback.correct-fb { color: #5CB85C; }
         .quiz-feedback.wrong-fb { color: #D9534F; }
-        .quiz-explanation { margin-top: 5px; font-size: 14px; color: #666; display: none; }
+        .quiz-explanation { margin-top: 5px; font-size: 14px; color: #666; display: none; background: #f9f9f9; padding: 8px; border-left: 3px solid var(--primary); }
+
+        .homework-q { margin-top: 15px; font-size: 16px; font-weight: bold; }
+        .hw-textarea { width: 100%; height: 50px; margin-top: 8px; margin-bottom: 15px; border-radius: 4px; border: 1px solid #ccc; padding: 8px; font-family: inherit; font-size:15px; box-sizing: border-box;}
+        
+        .correct-ans { color: #5CB85C; font-weight:bold; }
+        .wrong-ans { color: #D9534F; font-weight:bold; }
 
         @media (max-width: 900px) {
             .sidebar { transform: translateX(-100%); }
             .sidebar.active { transform: translateX(0); }
             .main-content { margin-left: 0; width: 100%; padding: 20px; }
-            .en-trans { margin-left: 0; }
         }
     </style>
 </head>
 <body>
 
-    <!-- 頂部導覽列 -->
     <div class="top-nav">
         <a href="https://jany-mandarin.github.io/Chad.html">Index</a>
         <a href="https://jany-mandarin.github.io/Chad.lesson187.html">Lesson 187</a>
@@ -107,8 +107,10 @@
     <div class="sidebar" id="sidebar">
         <h3>📖 Outline <button style="background:none; border:none; color:#8C6239; font-weight:bold; cursor:pointer; font-size:16px;" onclick="toggleSidebar()">×</button></h3>
         <ol>
-            <li><a href="#sec-0">Grammar Focus: 沒有 vs 不會</a></li>
-            <li><a href="#sec-1">Interactive Quiz (互動練習)</a></li>
+            <li><a href="#sec-0">Warm-up (暖身閒聊)</a></li>
+            <li><a href="#sec-1">Homework (上次作業)</a></li>
+            <li><a href="#sec-2">Lesson 11 (第十一課)</a></li>
+            <li><a href="#sec-3">Reading (閱讀理解)</a></li>
         </ol>
     </div>
 
@@ -123,96 +125,375 @@
             <button class="control-btn" onclick="toggleEnglish()">Toggle English</button>
         </div>
 
-        <!-- 區塊 1：文法重點解析 -->
+        <!-- Section 1: Warm-up -->
         <div class="section" id="sec-0">
-            <h2>1. Grammar Focus (文法重點：沒有 vs 不會)</h2>
+            <h2>1. Warm-up (暖身閒聊)</h2>
             
             <div class="grammar-box">
-                <div style="font-weight:bold; font-size:16px; color:#8C6239; margin-bottom:5px;">1) 沒有 (Méiyǒu) - Past / Non-existence / Incompletion</div>
+                <div style="font-weight:bold; font-size:16px; color:#8C6239; margin-bottom:5px;">1. 沒有 vs 不會</div>
                 <div class="note">
-                    <strong>用法說明：</strong>用來表示過去沒有發生過某事、客觀上不存在、或還沒完成某個動作。<br>
-                    <strong>英文對應：</strong>Have not / Did not / There is no...
+                    <b>沒有 (méi yǒu):</b> Used for actions that did not happen in the past.<br>
+                    <b>不會 (bú huì):</b> Used for future or present situations (won't happen / cannot do).
                 </div>
-                <div class="item" style="border:none; margin-top:10px; padding-bottom:0;">
-                    <div class="item-content" style="align-items:center;">
-                        <div class="btn-group">
-                            <button class="audio-btn" onclick="playAudio('我昨天沒有去上課。', this)">🔊</button>
-                        </div>
-                        <div class="zhuyin-content" style="flex:1; margin-left:8px;">我(ㄨㄛˇ)昨(ㄗㄨㄛˊ)天(ㄊㄧㄢ)沒(ㄇㄟˊ)有(ㄧㄡˇ)去(ㄑㄩˋ)上(ㄕㄤˋ)課(ㄎㄜˋ)。</div>
+                <div class="item-content">
+                    <div class="btn-group">
+                        <button class="audio-btn" onclick="playAudioText(this)">🔊</button>
+                        <button class="audio-btn" onclick="toggleRecord(this)">🎤</button>
+                        <button class="play-rec-btn" disabled>▶</button>
                     </div>
-                    <div class="en-trans">I didn't go to class yesterday. (Action didn't happen in the past)</div>
+                    <div style="flex:1;">
+                        <div class="zy-text">你(ㄋㄧˇ)現(ㄒㄧㄢˋ)在(ㄗㄞˋ)會(ㄏㄨㄟˋ)背(ㄅㄟˋ)痛(ㄊㄨㄥˋ)嗎(ㄇㄚ˙)？我(ㄨㄛˇ)現(ㄒㄧㄢˋ)在(ㄗㄞˋ)不(ㄅㄨˊ)會(ㄏㄨㄟˋ)痛(ㄊㄨㄥˋ)。</div>
+                        <div class="en-trans">Does your back ache now? It doesn't ache now.</div>
+                    </div>
+                </div>
+                
+                <h4 style="margin-top:20px; color:#8C6239;">Practice (互動練習)</h4>
+                
+                <div class="quiz-card">
+                    <div class="quiz-question">1) 你昨天有吃披薩嗎? (Did you eat pizza yesterday?)</div>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q1" value="meiyou"> 沒有</label>
+                        <label><input type="radio" name="q1" value="buhui"> 不會</label>
+                    </div>
+                    <button class="check-btn" onclick="checkAns('q1', 'meiyou', 'Because it asks about an action in the past (yesterday).')">Check Answer</button>
+                    <div class="quiz-feedback" id="fb-q1"></div><div class="quiz-explanation" id="exp-q1"></div>
+                </div>
+
+                <div class="quiz-card">
+                    <div class="quiz-question">2) 你明天會去台灣嗎? (Will you go to Taiwan tomorrow?)</div>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q2" value="meiyou"> 沒有</label>
+                        <label><input type="radio" name="q2" value="buhui"> 不會</label>
+                    </div>
+                    <button class="check-btn" onclick="checkAns('q2', 'buhui', 'Because it asks about a future action (tomorrow).')">Check Answer</button>
+                    <div class="quiz-feedback" id="fb-q2"></div><div class="quiz-explanation" id="exp-q2"></div>
+                </div>
+
+                <div class="quiz-card">
+                    <div class="quiz-question">3) 你今天會跟你太太去超市嗎? (Will you go to the supermarket with your wife today?)</div>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q3" value="meiyou"> 沒有</label>
+                        <label><input type="radio" name="q3" value="buhui"> 不會</label>
+                    </div>
+                    <button class="check-btn" onclick="checkAns('q3', 'buhui', 'Because it asks about an intention/future action for today.')">Check Answer</button>
+                    <div class="quiz-feedback" id="fb-q3"></div><div class="quiz-explanation" id="exp-q3"></div>
+                </div>
+
+                <div class="quiz-card">
+                    <div class="quiz-question">4) 你上星期有去按摩店嗎? (Did you go to the massage shop last week?)</div>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q4" value="meiyou"> 沒有</label>
+                        <label><input type="radio" name="q4" value="buhui"> 不會</label>
+                    </div>
+                    <button class="check-btn" onclick="checkAns('q4', 'meiyou', 'Because it asks about a completed action in the past (last week).')">Check Answer</button>
+                    <div class="quiz-feedback" id="fb-q4"></div><div class="quiz-explanation" id="exp-q4"></div>
+                </div>
+                
+                <div class="quiz-card">
+                    <div class="quiz-question">5) 你12月會去英國嗎? (Will you go to the UK in December?)</div>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q5" value="meiyou"> 沒有</label>
+                        <label><input type="radio" name="q5" value="buhui"> 不會</label>
+                    </div>
+                    <button class="check-btn" onclick="checkAns('q5', 'buhui', 'Because it asks about a future plan (December).')">Check Answer</button>
+                    <div class="quiz-feedback" id="fb-q5"></div><div class="quiz-explanation" id="exp-q5"></div>
+                </div>
+
+                <div class="quiz-card">
+                    <div class="quiz-question">6) 你後天會去墨西哥嗎? (Will you go to Mexico the day after tomorrow?)</div>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q6" value="meiyou"> 沒有</label>
+                        <label><input type="radio" name="q6" value="buhui"> 不會</label>
+                    </div>
+                    <button class="check-btn" onclick="checkAns('q6', 'buhui', 'Because it asks about a future action (the day after tomorrow).')">Check Answer</button>
+                    <div class="quiz-feedback" id="fb-q6"></div><div class="quiz-explanation" id="exp-q6"></div>
                 </div>
             </div>
 
             <div class="grammar-box">
-                <div style="font-weight:bold; font-size:16px; color:#8C6239; margin-bottom:5px;">2) 不會 (Búhuì) - Inability / Lack of skill</div>
-                <div class="note">
-                    <strong>用法說明：</strong>用來表示主觀上「沒有能力」、「不會這項技能」或「不可能發生」。<br>
-                    <strong>英文對應：</strong>Cannot / Do not know how to / Unlikely.
+                <div style="font-weight:bold; font-size:16px; color:#8C6239; margin-bottom:5px;">2. 錯誤和道地句子 (Correcting Mistakes)</div>
+                <div class="item-content">
+                    <span class="wrong-ans" style="margin-right:15px; flex-shrink:0;">❌</span> 
+                    <div class="zy-text" style="color:#D9534F;">下開會，我要跟同事去四川麵店</div>
                 </div>
-                <div class="item" style="border:none; margin-top:10px; padding-bottom:0;">
-                    <div class="item-content" style="align-items:center;">
-                        <div class="btn-group">
-                            <button class="audio-btn" onclick="playAudio('我不會開車，所以我搭捷運。', this)">🔊</button>
-                        </div>
-                        <div class="zhuyin-content" style="flex:1; margin-left:8px;">我(ㄨㄛˇ)不(ㄅㄨˊ)會(ㄏㄨㄟˋ)開(ㄎㄞ)車(ㄔㄜ)，所(ㄙㄨㄛˇ)以(ㄧˇ)我(ㄨㄛˇ)搭(ㄉㄚ)捷(ㄐㄧㄝˊ)運(ㄩㄣˋ)。</div>
+                <div class="item-content">
+                    <div class="btn-group">
+                        <button class="audio-btn" onclick="playAudioText(this)">🔊</button>
+                        <button class="audio-btn" onclick="toggleRecord(this)">🎤</button>
+                        <button class="play-rec-btn" disabled>▶</button>
                     </div>
-                    <div class="en-trans">I don't know how to drive, so I take the MRT. (Lack of skill/ability)</div>
+                    <span class="correct-ans" style="margin-right:8px;">✅</span>
+                    <div style="flex:1;">
+                        <div class="zy-text">開(ㄎㄞ)完(ㄨㄢˊ)會(ㄏㄨㄟˋ)，我(ㄨㄛˇ)要(ㄧㄠˋ)跟(ㄍㄣ)同(ㄊㄨㄥˊ)事(ㄕˋ)去(ㄑㄩˋ)四(ㄙˋ)川(ㄔㄨㄢ)麵(ㄇㄧㄢˋ)店(ㄉㄧㄢˋ)。</div>
+                        <div class="en-trans">After finishing the meeting, I will go to the Sichuan noodle shop with my colleagues.</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grammar-box">
+                <div style="font-weight:bold; font-size:16px; color:#8C6239; margin-bottom:5px;">3. 別的 (Other / Another)</div>
+                <div class="item-content">
+                    <div class="btn-group">
+                        <button class="audio-btn" onclick="playAudioText(this)">🔊</button>
+                        <button class="audio-btn" onclick="toggleRecord(this)">🎤</button>
+                        <button class="play-rec-btn" disabled>▶</button>
+                    </div>
+                    <div style="flex:1;">
+                        <div class="zy-text">你(ㄋㄧˇ)要(ㄧㄠˋ)去(ㄑㄩˋ)哪(ㄋㄚˇ)裡(ㄌㄧˇ)開(ㄎㄞ)會(ㄏㄨㄟˋ)？我(ㄨㄛˇ)要(ㄧㄠˋ)去(ㄑㄩˋ)別(ㄅㄧㄝˊ)的(ㄉㄜ˙)公(ㄍㄨㄥ)司(ㄙ)開(ㄎㄞ)會(ㄏㄨㄟˋ)。</div>
+                        <div class="en-trans">Where are you going for the meeting? I am going to another company for the meeting.</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="grammar-box">
+                <div style="font-weight:bold; font-size:16px; color:#8C6239; margin-bottom:5px;">4. 趴 (Percent)</div>
+                <div class="note"><b>Explanation:</b> Originally "百分之X" (X percent), but in spoken Mandarin, people often lazily say "X 趴(pā)" which sounds similar to the English word "percent".</div>
+                <div class="item-content">
+                    <div class="btn-group">
+                        <button class="audio-btn" onclick="playAudioText(this)">🔊</button>
+                        <button class="audio-btn" onclick="toggleRecord(this)">🎤</button>
+                        <button class="play-rec-btn" disabled>▶</button>
+                    </div>
+                    <div style="flex:1;">
+                        <div class="zy-text">今(ㄐㄧㄣ)天(ㄊㄧㄢ)有(ㄧㄡˇ)50趴(ㄆㄚ)會(ㄏㄨㄟˋ)下(ㄒㄧㄚˋ)雨(ㄩˇ)。</div>
+                        <div class="en-trans">There is a 50% chance it will rain today.</div>
+                    </div>
                 </div>
             </div>
         </div>
 
-        <!-- 區塊 2：學生互動練習題 -->
+        <!-- Section 2: Previous Homework -->
         <div class="section" id="sec-1">
-            <h2>2. Interactive Practice (互動練習：選「沒有」還是「不會」)</h2>
-            <div class="note" style="margin-bottom: 20px;">請根據句意，選擇正確答案（沒有 / 不會），點擊「Check Answer」查看對錯與解析！</div>
-
-            <!-- 題目 1 -->
-            <div class="quiz-card" id="q1">
-                <div class="quiz-question">Q1. 我(ㄨㄛˇ)（  ）做(ㄗㄨㄛˋ)這(ㄓㄜˋ)個(ㄍㄜˋ)菜(ㄘㄞˋ)，因(ㄧㄣ)為(ㄨㄟˋ)我(ㄨㄛˇ)從(ㄘㄨㄥˊ)來(ㄌㄞˊ)沒(ㄇㄟˊ)學(ㄒㄩㄝˊ)過(ㄍㄨㄛˋ)。</div>
-                <div class="quiz-options">
-                    <label><input type="radio" name="q1" value="meiyou"> 沒有</label>
-                    <label><input type="radio" name="q1" value="buhui"> 不會</label>
+            <h2>2. Homework Review (上次作業)</h2>
+            
+            <div class="grammar-box">
+                <div style="font-weight:bold; font-size:16px; color:#8C6239; margin-bottom:5px;">1. 翻譯練習 - 別的</div>
+                <div class="en-trans" style="margin-bottom:5px;">All the other classmates have gone home, only I am still at school.</div>
+                <div class="item-content">
+                    <div class="btn-group"><button class="audio-btn" onclick="playAudioText(this)">🔊</button></div>
+                    <div class="zy-text">別(ㄅㄧㄝˊ)的(ㄉㄜ˙)學(ㄒㄩㄝˊ)生(ㄕㄥ)都(ㄉㄡ)回(ㄏㄨㄟˊ)家(ㄐㄧㄚ)了(ㄌㄜ˙)，只(ㄓˇ)有(ㄧㄡˇ)我(ㄨㄛˇ)還(ㄏㄞˊ)在(ㄗㄞˋ)學(ㄒㄩㄝˊ)校(ㄒㄧㄠˋ)裡(ㄌㄧˇ)。</div>
                 </div>
-                <button class="check-btn" onclick="checkAnswer('q1', 'buhui')">Check Answer</button>
-                <div class="quiz-feedback" id="q1-fb"></div>
-                <div class="quiz-explanation" id="q1-exp">💡 <strong>解析：</strong>因為強調「從來沒學過」導致缺乏這項技能/能力，所以要用「不會」。</div>
             </div>
 
-            <!-- 題目 2 -->
-            <div class="quiz-card" id="q2">
-                <div class="quiz-question">Q2. 昨(ㄗㄨㄛˊ)天(ㄊㄧㄢ)晚(ㄨㄢˇ)上(ㄕㄤˋ)大(ㄉㄚˋ)家(ㄐㄧㄚ)都(ㄉㄡ)去(ㄑㄩˋ)吃(ㄔ)火(ㄏㄨㄛˇ)鍋(ㄍㄨㄛ)，可(ㄎㄜˇ)是(ㄕˋ)我(ㄨㄛˇ)（  ）去(ㄑㄩˋ)。</div>
-                <div class="quiz-options">
-                    <label><input type="radio" name="q2" value="meiyou"> 沒有</label>
-                    <label><input type="radio" name="q2" value="buhui"> 不會</label>
+            <div class="grammar-box">
+                <div style="font-weight:bold; font-size:16px; color:#8C6239; margin-bottom:5px;">2. 翻譯練習 - 空的</div>
+                <div class="en-trans" style="margin-bottom:5px;">Is this seat taken?</div>
+                <div class="item-content">
+                    <div class="btn-group"><button class="audio-btn" onclick="playAudioText(this)">🔊</button></div>
+                    <div class="zy-text">這(ㄓㄜˋ)個(ㄍㄜ˙)位(ㄨㄟˋ)子(ㄗ˙)是(ㄕˋ)空(ㄎㄨㄥ)的(ㄉㄜ˙)嗎(ㄇㄚ˙)？ 這(ㄓㄜˋ)個(ㄍㄜ˙)位(ㄨㄟˋ)子(ㄗ˙)有(ㄧㄡˇ)人(ㄖㄣˊ)嗎(ㄇㄚ˙)？</div>
                 </div>
-                <button class="check-btn" onclick="checkAnswer('q2', 'meiyou')">Check Answer</button>
-                <div class="quiz-feedback" id="q2-fb"></div>
-                <div class="quiz-explanation" id="q2-exp">💡 <strong>解析：</strong>這是描述昨天過去的一個客觀事實（動作沒發生），所以要用「沒有」。</div>
             </div>
 
-            <!-- 題目 3 -->
-            <div class="quiz-card" id="q3">
-                <div class="quiz-question">Q3. 他(ㄊㄚ)（  ）說(ㄕㄨㄛ)中(ㄓㄨㄥ)文(ㄨㄣˊ)，因(ㄧㄣ)為(ㄨㄟˋ)他(ㄊㄚ)剛(ㄍㄤ)剛(ㄍㄤ)開(ㄎㄞ)始(ㄕˇ)學(ㄒㄩㄝˊ)。</div>
-                <div class="quiz-options">
-                    <label><input type="radio" name="q3" value="meiyou"> 沒有</label>
-                    <label><input type="radio" name="q3" value="buhui"> 不會</label>
+            <div class="grammar-box">
+                <div style="font-weight:bold; font-size:16px; color:#8C6239; margin-bottom:5px;">3. 翻譯練習 - 夜裡 & 4. 在床上</div>
+                <div class="en-trans" style="margin-bottom:5px;">Yesterday night, I heard my cat jumping around.</div>
+                <div class="item-content">
+                    <div class="btn-group"><button class="audio-btn" onclick="playAudioText(this)">🔊</button></div>
+                    <div class="zy-text">我(ㄨㄛˇ)昨(ㄗㄨㄛˊ)天(ㄊㄧㄢ)夜(ㄧㄝˋ)裡(ㄌㄧˇ)聽(ㄊㄧㄥ)到(ㄉㄠˋ)我(ㄨㄛˇ)的(ㄉㄜ˙)貓(ㄇㄠ)跳(ㄊㄧㄠˋ)來(ㄌㄞˊ)跳(ㄊㄧㄠˋ)去(ㄑㄩˋ)。</div>
                 </div>
-                <button class="check-btn" onclick="checkAnswer('q3', 'buhui')">Check Answer</button>
-                <div class="quiz-feedback" id="q3-fb"></div>
-                <div class="quiz-explanation" id="q3-exp">💡 <strong>解析：</strong>這裡牽涉到語言溝通的「能力」問題，因為剛學還沒掌握，所以用「不會」。</div>
+                <div class="item-content" style="margin-top:15px;">
+                    <div class="btn-group"><button class="audio-btn" onclick="playAudioText(this)">🔊</button></div>
+                    <div style="flex:1;">
+                        <div class="zy-text">昨(ㄗㄨㄛˊ)天(ㄊㄧㄢ)夜(ㄧㄝˋ)裡(ㄌㄧˇ)，我(ㄨㄛˇ)在(ㄗㄞˋ)床(ㄔㄨㄤˊ)上(ㄕㄤˋ)聽(ㄊㄧㄥ)到(ㄉㄠˋ)我(ㄨㄛˇ)的(ㄉㄜ˙)貓(ㄇㄠ)在(ㄗㄞˋ)很(ㄏㄣˇ)多(ㄉㄨㄛ)地(ㄉㄧˋ)方(ㄈㄤ)跳(ㄊㄧㄠˋ)來(ㄌㄞˊ)跳(ㄊㄧㄠˋ)去(ㄑㄩˋ)。</div>
+                        <div class="en-trans">Yesterday night, in bed, I heard my cat jumping around in many places.</div>
+                    </div>
+                </div>
             </div>
 
-            <!-- 題目 4 -->
-            <div class="quiz-card" id="q4">
-                <div class="quiz-question">Q4. 我(ㄨㄛˇ)皮(ㄆㄧˊ)包(ㄅㄠ)裡(ㄌㄧˇ)（  ）錢(ㄑㄧㄢˊ)了(ㄌㄜ˙)，得(ㄉㄟˇ)去(ㄑㄩˋ)提(ㄊㄧˊ)款(ㄎㄨㄢˇ)。</div>
-                <div class="quiz-options">
-                    <label><input type="radio" name="q4" value="meiyou"> 沒有</label>
-                    <label><input type="radio" name="q4" value="buhui"> 不會</label>
+            <div class="grammar-box">
+                <div style="font-weight:bold; font-size:16px; color:#8C6239; margin-bottom:5px;">5. 發音練習 (Pronunciation)</div>
+                <div class="item-content">
+                    <div class="btn-group"><button class="audio-btn" onclick="playAudioText(this)">🔊</button></div>
+                    <div class="zy-text">快(ㄎㄨㄞˋ)樂(ㄌㄜˋ) / 家(ㄐㄧㄚ)樂(ㄌㄜˋ) / 珍(ㄓㄣ)珠(ㄓㄨ) / 月(ㄩㄝˋ)珠(ㄓㄨ)</div>
                 </div>
-                <button class="check-btn" onclick="checkAnswer('q4', 'meiyou')">Check Answer</button>
-                <div class="quiz-feedback" id="q4-fb"></div>
-                <div class="quiz-explanation" id="q4-exp">💡 <strong>解析：</strong>這是描述物品的「存在與否（Possession / Existence）」，錢不存在了要用「沒有」。</div>
+            </div>
+
+            <div class="grammar-box">
+                <div style="font-weight:bold; font-size:16px; color:#8C6239; margin-bottom:5px;">6. 晴 (Sunny)</div>
+                <div class="note"><b>Explanation:</b> The left side is "日" (sun), so "晴" means a sunny day.</div>
+                <div class="item-content">
+                    <div class="btn-group"><button class="audio-btn" onclick="playAudioText(this)">🔊</button></div>
+                    <div style="flex:1;">
+                        <div class="zy-text">今(ㄐㄧㄣ)天(ㄊㄧㄢ)是(ㄕˋ)晴(ㄑㄧㄥˊ)天(ㄊㄧㄢ)，昨(ㄗㄨㄛˊ)天(ㄊㄧㄢ)不(ㄅㄨˊ)是(ㄕˋ)晴(ㄑㄧㄥˊ)天(ㄊㄧㄢ)，是(ㄕˋ)雨(ㄩˇ)天(ㄊㄧㄢ)。</div>
+                        <div class="en-trans">Today is a sunny day, yesterday wasn't a sunny day, it was a rainy day.</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grammar-box">
+                <div style="font-weight:bold; font-size:16px; color:#8C6239; margin-bottom:5px;">7. 我今天有事 (I'm busy today)</div>
+                <div class="note"><b>Explanation:</b> This is a polite way to decline an invitation, used when you don't want to go out with someone today. (Literally: "I have matters to attend to today.")</div>
+                <div class="item-content">
+                    <div class="btn-group"><button class="audio-btn" onclick="playAudioText(this)">🔊</button></div>
+                    <div style="flex:1;">
+                        <div class="zy-text">今(ㄐㄧㄣ)天(ㄊㄧㄢ)你(ㄋㄧˇ)想(ㄒㄧㄤˇ)跟(ㄍㄣ)我(ㄨㄛˇ)一(ㄧˋ)起(ㄑㄧˇ)去(ㄑㄩˋ)吃(ㄔ)飯(ㄈㄢˋ)嗎(ㄇㄚ˙)？我(ㄨㄛˇ)今(ㄐㄧㄣ)天(ㄊㄧㄢ)有(ㄧㄡˇ)事(ㄕˋ)，不(ㄅㄨˋ)好(ㄏㄠˇ)意(ㄧˋ)思(ㄙ)。</div>
+                        <div class="en-trans">Do you want to eat with me today? I am busy today, sorry.</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grammar-box">
+                <div style="font-weight:bold; font-size:16px; color:#8C6239; margin-bottom:5px;">8. 一直 vs 一定</div>
+                <div class="note">
+                    <b>一直 (yì zhí):</b> has an "eye" (目) underneath -> continuously looking at / doing something.<br>
+                    <b>一定 (yí dìng):</b> has "walk" (走-like) underneath -> will definitely execute something.<br>
+                    *Note: "一定沒問題" is used to give someone confidence (You'll definitely be fine).
+                </div>
+                <div class="item-content">
+                    <div class="btn-group"><button class="audio-btn" onclick="playAudioText(this)">🔊</button></div>
+                    <div style="flex:1;">
+                        <div class="zy-text">我(ㄨㄛˇ)很(ㄏㄣˇ)怕(ㄆㄚˋ)我(ㄨㄛˇ)學(ㄒㄩㄝˊ)不(ㄅㄨˊ)會(ㄏㄨㄟˋ)中(ㄓㄨㄥ)文(ㄨㄣˊ)。我(ㄨㄛˇ)知(ㄓ)道(ㄉㄠˋ)你(ㄋㄧˇ)一(ㄧˊ)定(ㄉㄧㄥˋ)沒(ㄇㄟˊ)問(ㄨㄣˋ)題(ㄊㄧˊ)。</div>
+                        <div class="en-trans">I am afraid I won't be able to learn Chinese. I know you will definitely have no problem.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 3: Lesson 11 -->
+        <div class="section" id="sec-2">
+            <h2>3. Lesson 11 (第十一課)</h2>
+            
+            <div class="grammar-box">
+                <div style="font-weight:bold; font-size:16px; color:#8C6239; margin-bottom:5px;">1. 就 (jiù) vs 才 (cái)</div>
+                <div class="note">They both have many usages. Here we focus on: <b>Subject + Time + 就 / 才 + Verb</b></div>
+                
+                <div class="compare-container">
+                    <!-- 就 Box -->
+                    <div class="compare-box">
+                        <div class="compare-title">就 (Early / Fast / Easy)</div>
+                        <div class="note" style="font-size:13px;">When the speaker feels something is early, quick, easy, or plentiful.</div>
+                        <hr style="border:0; border-top:1px dashed #ccc;">
+                        <div class="item-content">
+                            <div class="btn-group"><button class="audio-btn" onclick="playAudioText(this)">🔊</button></div>
+                            <div class="zy-text" style="font-size:16px;">我(ㄨㄛˇ)學(ㄒㄩㄝˊ)了(ㄌㄜ˙)一(ㄧˋ)天(ㄊㄧㄢ)，就(ㄐㄧㄡˋ)學(ㄒㄩㄝˊ)會(ㄏㄨㄟˋ)開(ㄎㄞ)車(ㄔㄜ)了(ㄌㄜ˙)。</div>
+                        </div>
+                        <div class="item-content">
+                            <div class="btn-group"><button class="audio-btn" onclick="playAudioText(this)">🔊</button></div>
+                            <div class="zy-text" style="font-size:16px;">我(ㄨㄛˇ)早(ㄗㄠˇ)上(ㄕㄤˋ)五(ㄨˇ)點(ㄉㄧㄢˇ)就(ㄐㄧㄡˋ)起(ㄑㄧˇ)床(ㄔㄨㄤˊ)了(ㄌㄜ˙)。</div>
+                        </div>
+                        <div class="item-content">
+                            <div class="btn-group"><button class="audio-btn" onclick="playAudioText(this)">🔊</button></div>
+                            <div class="zy-text" style="font-size:16px;">我(ㄨㄛˇ)常(ㄔㄤˊ)常(ㄔㄤˊ)很(ㄏㄣˇ)早(ㄗㄠˇ)就(ㄐㄧㄡˋ)去(ㄑㄩˋ)開(ㄎㄞ)會(ㄏㄨㄟˋ)。</div>
+                        </div>
+                    </div>
+                    
+                    <!-- 才 Box -->
+                    <div class="compare-box">
+                        <div class="compare-title">才 (Late / Slow / Hard)</div>
+                        <div class="note" style="font-size:13px;">When the speaker feels something is late, slow, difficult, or scarce.</div>
+                        <hr style="border:0; border-top:1px dashed #ccc;">
+                        <div class="item-content">
+                            <div class="btn-group"><button class="audio-btn" onclick="playAudioText(this)">🔊</button></div>
+                            <div class="zy-text" style="font-size:16px;">他(ㄊㄚ)早(ㄗㄠˇ)上(ㄕㄤˋ)十(ㄕˊ)點(ㄉㄧㄢˇ)才(ㄘㄞˊ)起(ㄑㄧˇ)床(ㄔㄨㄤˊ)。</div>
+                        </div>
+                        <div class="item-content">
+                            <div class="btn-group"><button class="audio-btn" onclick="playAudioText(this)">🔊</button></div>
+                            <div class="zy-text" style="font-size:16px;">他(ㄊㄚ)六(ㄌㄧㄡˋ)十(ㄕˊ)歲(ㄙㄨㄟˋ)才(ㄘㄞˊ)學(ㄒㄩㄝˊ)會(ㄏㄨㄟˋ)開(ㄎㄞ)車(ㄔㄜ)。</div>
+                        </div>
+                        <div class="item-content">
+                            <div class="btn-group"><button class="audio-btn" onclick="playAudioText(this)">🔊</button></div>
+                            <div class="zy-text" style="font-size:16px;">我(ㄨㄛˇ)等(ㄉㄥˇ)了(ㄌㄜ˙)兩(ㄌㄧㄤˇ)個(ㄍㄜ˙)鐘(ㄓㄨㄥ)頭(ㄊㄡˊ)，公(ㄍㄨㄥ)車(ㄔㄜ)才(ㄘㄞˊ)來(ㄌㄞˊ)。</div>
+                        </div>
+                        <div class="item-content">
+                            <div class="btn-group"><button class="audio-btn" onclick="playAudioText(this)">🔊</button></div>
+                            <div class="zy-text" style="font-size:16px;">我(ㄨㄛˇ)的(ㄉㄜ˙)老(ㄌㄠˇ)闆(ㄅㄢˇ)常(ㄔㄤˊ)常(ㄔㄤˊ)很(ㄏㄣˇ)晚(ㄨㄢˇ)才(ㄘㄞˊ)去(ㄑㄩˋ)開(ㄎㄞ)會(ㄏㄨㄟˋ)。</div>
+                        </div>
+                    </div>
+                </div>
+
+                <h4 style="margin-top:20px; color:#8C6239;">Practice (互動練習)</h4>
+                
+                <div class="quiz-card">
+                    <div class="quiz-question">1) 我吃了三個小時 _____ 吃完我的晚餐。 (It took 3 hours, very slow)</div>
+                    <div class="quiz-options"><label><input type="radio" name="q7" value="jiu"> 就</label><label><input type="radio" name="q7" value="cai"> 才</label></div>
+                    <button class="check-btn" onclick="checkAns('q7', 'cai', 'Three hours for dinner is very slow/long, so we use 才.')">Check Answer</button>
+                    <div class="quiz-feedback" id="fb-q7"></div><div class="quiz-explanation" id="exp-q7"></div>
+                </div>
+                
+                <div class="quiz-card">
+                    <div class="quiz-question">2) 我花兩分鐘 _____ 吃完我的大披薩。 (It took 2 mins, very fast)</div>
+                    <div class="quiz-options"><label><input type="radio" name="q8" value="jiu"> 就</label><label><input type="radio" name="q8" value="cai"> 才</label></div>
+                    <button class="check-btn" onclick="checkAns('q8', 'jiu', 'Two minutes for a large pizza is extremely fast, so we use 就.')">Check Answer</button>
+                    <div class="quiz-feedback" id="fb-q8"></div><div class="quiz-explanation" id="exp-q8"></div>
+                </div>
+
+                <div class="quiz-card">
+                    <div class="quiz-question">3) 我花四個鐘頭 _____ 寫完我的作業。 (It took 4 hours, slow/hard)</div>
+                    <div class="quiz-options"><label><input type="radio" name="q9" value="jiu"> 就</label><label><input type="radio" name="q9" value="cai"> 才</label></div>
+                    <button class="check-btn" onclick="checkAns('q9', 'cai', 'Four hours feels like a long, difficult time, so we use 才.')">Check Answer</button>
+                    <div class="quiz-feedback" id="fb-q9"></div><div class="quiz-explanation" id="exp-q9"></div>
+                </div>
+
+                <div class="quiz-card">
+                    <div class="quiz-question">4) 我的太太今天下午三點 _____ 去上班。 (3 PM is late for starting work)</div>
+                    <div class="quiz-options"><label><input type="radio" name="q10" value="jiu"> 就</label><label><input type="radio" name="q10" value="cai"> 才</label></div>
+                    <button class="check-btn" onclick="checkAns('q10', 'cai', '3 PM is usually considered very late to go to work, so we use 才.')">Check Answer</button>
+                    <div class="quiz-feedback" id="fb-q10"></div><div class="quiz-explanation" id="exp-q10"></div>
+                </div>
+
+                <div class="quiz-card">
+                    <div class="quiz-question">5) 我的貓今天一分鐘 _____ 吃完牠的食物。 (Depends on normal speed)</div>
+                    <div class="quiz-options"><label><input type="radio" name="q11" value="jiu"> 就</label><label><input type="radio" name="q11" value="cai"> 才</label></div>
+                    <button class="check-btn" onclick="checkAns('q11', 'jiu', 'If 1 minute is super fast for your cat, use 就. (If 1 min is somehow slow, you could use 才, but usually 1 min is fast -> 就).')">Check Answer</button>
+                    <div class="quiz-feedback" id="fb-q11"></div><div class="quiz-explanation" id="exp-q11"></div>
+                </div>
+
+            </div>
+
+            <div class="grammar-box">
+                <div style="font-weight:bold; font-size:16px; color:#8C6239; margin-bottom:5px;">2. 接 (jiē) - To connect, catch, pick up</div>
+                <img src="https://cdn.phototourl.com/member/2026-10-14-51dfafc7-61c9-4f23-95f4-bb4cced5c010.png" class="vocab-img" alt="接 origin">
+                <div class="note"><b>Explanation:</b> The right side represents an ancient wife. A wife usually had to handle and touch many things. So "接" means to contact, answer, pick up, or catch.</div>
+                
+                <div class="item-content">
+                    <div class="btn-group"><button class="audio-btn" onclick="playAudioText(this)">🔊</button></div>
+                    <div style="flex:1;">
+                        <div class="zy-text">我(ㄨㄛˇ)的(ㄉㄜ˙)新(ㄒㄧㄣ)老(ㄌㄠˇ)闆(ㄅㄢˇ)很(ㄏㄣˇ)少(ㄕㄠˇ)接(ㄐㄧㄝ)電(ㄉㄧㄢˋ)話(ㄏㄨㄚˋ)。</div>
+                        <div class="en-trans">My new boss rarely answers the phone.</div>
+                    </div>
+                </div>
+                <div class="item-content">
+                    <div class="btn-group"><button class="audio-btn" onclick="playAudioText(this)">🔊</button></div>
+                    <div style="flex:1;">
+                        <div class="zy-text">我(ㄨㄛˇ)明(ㄇㄧㄥˊ)天(ㄊㄧㄢ)去(ㄑㄩˋ)機(ㄐㄧ)場(ㄔㄤˇ)接(ㄐㄧㄝ)你(ㄋㄧˇ)。</div>
+                        <div class="en-trans">I will go to the airport to pick you up tomorrow.</div>
+                    </div>
+                </div>
+                <div class="item-content">
+                    <div class="btn-group"><button class="audio-btn" onclick="playAudioText(this)">🔊</button></div>
+                    <div style="flex:1;">
+                        <div class="zy-text">我(ㄨㄛˇ)今(ㄐㄧㄣ)天(ㄊㄧㄢ)接(ㄐㄧㄝ)到(ㄉㄠˋ)一(ㄧˊ)個(ㄍㄜ˙)棒(ㄅㄤˋ)球(ㄑㄧㄡˊ)了(ㄌㄜ˙)。</div>
+                        <div class="en-trans">I caught a baseball today.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 4: Reading -->
+        <div class="section" id="sec-3">
+            <h2>4. Reading Comprehension (閱讀理解)</h2>
+            <div class="grammar-box">
+                <div class="item-content">
+                    <div class="btn-group"><button class="audio-btn" onclick="playAudioText(this)">🔊</button></div>
+                    <div class="zy-text" style="flex:1;">
+                    花(ㄏㄨㄚ)容(ㄖㄨㄥˊ)和(ㄏㄢˋ)健(ㄐㄧㄢˋ)文(ㄨㄣˊ)是(ㄕˋ)好(ㄏㄠˇ)朋(ㄆㄥˊ)友(ㄧㄡˇ)。花(ㄏㄨㄚ)容(ㄖㄨㄥˊ)住(ㄓㄨˋ)在(ㄗㄞˋ)高(ㄍㄠ)雄(ㄒㄩㄥˊ)，她(ㄊㄚ)想(ㄒㄧㄤˇ)去(ㄑㄩˋ)台(ㄊㄞˊ)南(ㄋㄢˊ)玩(ㄨㄢˊ)兩(ㄌㄧㄤˇ)天(ㄊㄧㄢ)。<br>
+                    禮(ㄌㄧˇ)拜(ㄅㄞˋ)五(ㄨˇ)下(ㄒㄧㄚˋ)午(ㄨˇ)，花(ㄏㄨㄚ)容(ㄖㄨㄥˊ)的(ㄉㄜ˙)火(ㄏㄨㄛˇ)車(ㄔㄜ)三(ㄙㄢ)點(ㄉㄧㄢˇ)到(ㄉㄠˋ)台(ㄊㄞˊ)南(ㄋㄢˊ)。健(ㄐㄧㄢˋ)文(ㄨㄣˊ)兩(ㄌㄧㄤˇ)點(ㄉㄧㄢˇ)就(ㄐㄧㄡˋ)到(ㄉㄠˋ)火(ㄏㄨㄛˇ)車(ㄔㄜ)站(ㄓㄢˋ)了(ㄌㄜ˙)，他(ㄊㄚ)想(ㄒㄧㄤˇ)接(ㄐㄧㄝ)花(ㄏㄨㄚ)容(ㄖㄨㄥˊ)。可(ㄎㄜˇ)是(ㄕˋ)火(ㄏㄨㄛˇ)車(ㄔㄜ)慢(ㄇㄢˋ)了(ㄌㄜ˙)，花(ㄏㄨㄚ)容(ㄖㄨㄥˊ)三(ㄙㄢ)點(ㄉㄧㄢˇ)半(ㄅㄢˋ)才(ㄘㄞˊ)到(ㄉㄠˋ)。花(ㄏㄨㄚ)容(ㄖㄨㄥˊ)一(ㄧˊ)下(ㄒㄧㄚˋ)車(ㄔㄜ)說(ㄕㄨㄛ)：「今(ㄐㄧㄣ)天(ㄊㄧㄢ)天(ㄊㄧㄢ)氣(ㄑㄧˋ)真(ㄓㄣ)好(ㄏㄠˇ)！」對(ㄉㄨㄟˋ)啊(ㄚ˙)，今(ㄐㄧㄣ)天(ㄊㄧㄢ)是(ㄕˋ)晴(ㄑㄧㄥˊ)天(ㄊㄧㄢ)，真(ㄓㄣ)好(ㄏㄠˇ)。可(ㄎㄜˇ)是(ㄕˋ)健(ㄐㄧㄢˋ)文(ㄨㄣˊ)看(ㄎㄢˋ)了(ㄌㄜ˙)看(ㄎㄢˋ)手(ㄕㄡˇ)機(ㄐㄧ)，說(ㄕㄨㄛ)：「今(ㄐㄧㄣ)天(ㄊㄧㄢ)夜(ㄧㄝˋ)裡(ㄌㄧˇ)有(ㄧㄡˇ)八(ㄅㄚ)十(ㄕˊ)趴(ㄆㄚ)會(ㄏㄨㄟˋ)下(ㄒㄧㄚˋ)雨(ㄩˇ)。」花(ㄏㄨㄚ)容(ㄖㄨㄥˊ)說(ㄕㄨㄛ)：「沒(ㄇㄟˊ)關(ㄍㄨㄢ)係(ㄒㄧ˙)，我(ㄨㄛˇ)有(ㄧㄡˇ)帶(ㄉㄞˋ)雨(ㄩˇ)傘(ㄙㄢˇ)。」<br>
+                    他(ㄊㄚ)們(ㄇㄣ˙)先(ㄒㄧㄢ)去(ㄑㄩˋ)飯(ㄈㄢˋ)店(ㄉㄧㄢˋ)。老(ㄌㄠˇ)闆(ㄅㄢˇ)給(ㄍㄟˇ)花(ㄏㄨㄚ)容(ㄖㄨㄥˊ)一(ㄧˊ)個(ㄍㄜ˙)小(ㄒㄧㄠˇ)房(ㄈㄤˊ)間(ㄐㄧㄢ)。花(ㄏㄨㄚ)容(ㄖㄨㄥˊ)說(ㄕㄨㄛ)：「這(ㄓㄜˋ)個(ㄍㄜ˙)房(ㄈㄤˊ)間(ㄐㄧㄢ)有(ㄧㄡˇ)點(ㄉㄧㄢˇ)小(ㄒㄧㄠˇ)，也(ㄧㄝˇ)不(ㄅㄨˊ)太(ㄊㄞˋ)亮(ㄌㄧㄤˋ)。可(ㄎㄜˇ)以(ㄧˇ)換(ㄏㄨㄢˋ)嗎(ㄇㄚ˙)？」老(ㄌㄠˇ)闆(ㄅㄢˇ)說(ㄕㄨㄛ)：「好(ㄏㄠˇ)，我(ㄨㄛˇ)給(ㄍㄟˇ)你(ㄋㄧˇ)別(ㄅㄧㄝˊ)的(ㄉㄜ˙)房(ㄈㄤˊ)間(ㄐㄧㄢ)。」這(ㄓㄜˋ)個(ㄍㄜ˙)新(ㄒㄧㄣ)房(ㄈㄤˊ)間(ㄐㄧㄢ)又(ㄧㄡˋ)大(ㄉㄚˋ)又(ㄧㄡˋ)亮(ㄌㄧㄤˋ)，花(ㄏㄨㄚ)容(ㄖㄨㄥˊ)很(ㄏㄣˇ)高(ㄍㄠ)興(ㄒㄧㄥˋ)。<br>
+                    晚(ㄨㄢˇ)上(ㄕㄤˋ)六(ㄌㄧㄡˋ)點(ㄉㄧㄢˇ)，他(ㄊㄚ)們(ㄇㄣ˙)去(ㄑㄩˋ)一(ㄧˋ)家(ㄐㄧㄚ)很(ㄏㄣˇ)有(ㄧㄡˇ)名(ㄇㄧㄥˊ)的(ㄉㄜ˙)餐(ㄘㄢ)廳(ㄊㄧㄥ)。花(ㄏㄨㄚ)容(ㄖㄨㄥˊ)說(ㄕㄨㄛ)：「我(ㄨㄛˇ)五(ㄨˇ)點(ㄉㄧㄢˇ)就(ㄐㄧㄡˋ)餓(ㄜˋ)了(ㄌㄜ˙)！」可(ㄎㄜˇ)是(ㄕˋ)人(ㄖㄣˊ)很(ㄏㄣˇ)多(ㄉㄨㄛ)，他(ㄊㄚ)們(ㄇㄣ˙)等(ㄉㄥˇ)了(ㄌㄜ˙)一(ㄧˊ)個(ㄍㄜ˙)小(ㄒㄧㄠˇ)時(ㄕˊ)才(ㄘㄞˊ)有(ㄧㄡˇ)座(ㄗㄨㄛˋ)位(ㄨㄟˋ)。健(ㄐㄧㄢˋ)文(ㄨㄣˊ)說(ㄕㄨㄛ)：「我(ㄨㄛˇ)以(ㄧˇ)前(ㄑㄧㄢˊ)很(ㄏㄣˇ)常(ㄔㄤˊ)來(ㄌㄞˊ)，我(ㄨㄛˇ)知(ㄓ)道(ㄉㄠˋ)很(ㄏㄣˇ)多(ㄉㄨㄛ)關(ㄍㄨㄢ)於(ㄩˊ)這(ㄓㄜˋ)家(ㄐㄧㄚ)店(ㄉㄧㄢˋ)的(ㄉㄜ˙)事(ㄕˋ)。這(ㄓㄜˋ)裡(ㄌㄧˇ)的(ㄉㄜ˙)牛(ㄋㄧㄡˊ)肉(ㄖㄡˋ)湯(ㄊㄤ)非(ㄈㄟ)常(ㄔㄤˊ)好(ㄏㄠˇ)吃(ㄔ)。」<br>
+                    吃(ㄔ)飯(ㄈㄢˋ)的(ㄉㄜ˙)時(ㄕˊ)候(ㄏㄡˋ)，一(ㄧˋ)隻(ㄓ)小(ㄒㄧㄠˇ)貓(ㄇㄠ)跑(ㄆㄠˇ)進(ㄐㄧㄣˋ)餐(ㄘㄢ)廳(ㄊㄧㄥ)。健(ㄐㄧㄢˋ)文(ㄨㄣˊ)想(ㄒㄧㄤˇ)抓(ㄓㄨㄚ)牠(ㄊㄚ)，可(ㄎㄜˇ)是(ㄕˋ)沒(ㄇㄟˊ)有(ㄧㄡˇ)抓(ㄓㄨㄚ)到(ㄉㄠˋ)，小(ㄒㄧㄠˇ)貓(ㄇㄠ)一(ㄧˋ)直(ㄓˊ)跳(ㄊㄧㄠˋ)來(ㄌㄞˊ)跳(ㄊㄧㄠˋ)去(ㄑㄩˋ)。花(ㄏㄨㄚ)容(ㄖㄨㄥˊ)說(ㄕㄨㄛ)：「沒(ㄇㄟˊ)關(ㄍㄨㄢ)係(ㄒㄧ˙)，牠(ㄊㄚ)不(ㄅㄨˊ)會(ㄏㄨㄟˋ)餓(ㄜˋ)的(ㄉㄜ˙)，外(ㄨㄞˋ)面(ㄇㄧㄢˋ)有(ㄧㄡˇ)很(ㄏㄣˇ)多(ㄉㄨㄛ)人(ㄖㄣˊ)給(ㄍㄟˇ)牠(ㄊㄚ)吃(ㄔ)的(ㄉㄜ˙)。」<br>
+                    這(ㄓㄜˋ)時(ㄕˊ)候(ㄏㄡˋ)，外(ㄨㄞˋ)面(ㄇㄧㄢˋ)真(ㄓㄣ)的(ㄉㄜ˙)下(ㄒㄧㄚˋ)雨(ㄩˇ)了(ㄌㄜ˙)。花(ㄏㄨㄚ)容(ㄖㄨㄥˊ)說(ㄕㄨㄛ)：「還(ㄏㄞˊ)好(ㄏㄠˇ)我(ㄨㄛˇ)有(ㄧㄡˇ)帶(ㄉㄞˋ)雨(ㄩˇ)傘(ㄙㄢˇ)！」
+                    </div>
+                </div>
+                
+                <hr style="border:0; border-top:1px dashed #ccc; margin:15px 0;">
+                <div class="homework-q">Q1. 健文幾點到火車站?花容幾點到? (What time did Jianwen arrive at the station? What time did Huarong arrive?)</div>
+                <textarea class="hw-textarea" placeholder="Type your answer here..."></textarea>
+                
+                <div class="homework-q">Q2. 花容為什麼想換房間? (Why did Huarong want to change rooms?)</div>
+                <textarea class="hw-textarea" placeholder="Type your answer here..."></textarea>
+                
+                <div class="homework-q">Q3. 他們在餐廳等了多久才有座位? (How long did they wait at the restaurant before getting a seat?)</div>
+                <textarea class="hw-textarea" placeholder="Type your answer here..."></textarea>
             </div>
         </div>
 
@@ -230,8 +511,33 @@
             }
         }
 
-        // 檢查測驗答案函式
-        function checkAnswer(questionId, correctVal) {
+        // ====== Parse Zhuyin on Load (Safely DOM based) ======
+        function parseZhuyinDOM() {
+            const regex = /([一-龥a-zA-Z0-9])\((.*?)\)/g;
+            document.querySelectorAll('.zy-text').forEach(el => {
+                let html = el.innerHTML;
+                let parsed = html.replace(regex, (match, char, zy) => {
+                    let tone = '';
+                    let symbols = zy;
+                    let isNeutral = false;
+                    
+                    if (zy.includes('ˊ')) { tone = 'ˊ'; symbols = zy.replace('ˊ', ''); }
+                    else if (zy.includes('ˇ')) { tone = 'ˇ'; symbols = zy.replace('ˇ', ''); }
+                    else if (zy.includes('ˋ')) { tone = 'ˋ'; symbols = zy.replace('ˋ', ''); }
+                    else if (zy.includes('˙')) { isNeutral = true; symbols = zy.replace('˙', ''); }
+
+                    let toneHtml = tone ? `<span class="zy-tone">${tone}</span>` : '';
+                    let neutralHtml = isNeutral ? `<span class="zy-neutral">˙</span>` : '';
+
+                    return `<div class="zy-char-wrap"><span class="zy-char">${char}</span><div class="zy-box">${neutralHtml}<span class="zy-symbols">${symbols}</span>${toneHtml}</div></div>`;
+                });
+                el.innerHTML = parsed;
+            });
+        }
+        document.addEventListener("DOMContentLoaded", parseZhuyinDOM);
+
+        // ====== Quiz Checking ======
+        function checkAns(questionId, correctVal, expText) {
             const radios = document.getElementsByName(questionId);
             let selectedVal = "";
             for (let r of radios) {
@@ -241,33 +547,57 @@
                 }
             }
 
-            const fb = document.getElementById(questionId + "-fb");
-            const exp = document.getElementById(questionId + "-exp");
+            const fb = document.getElementById("fb-" + questionId);
+            const exp = document.getElementById("exp-" + questionId);
 
             if (selectedVal === "") {
                 fb.style.display = "block";
                 fb.className = "quiz-feedback wrong-fb";
-                fb.innerHTML = "⚠️ 請先選擇一個答案！";
+                fb.innerHTML = "⚠️ Please select an answer first!";
                 exp.style.display = "none";
                 return;
             }
 
             fb.style.display = "block";
             exp.style.display = "block";
+            exp.innerHTML = "💡 <b>Explanation:</b> " + expText;
 
             if (selectedVal === correctVal) {
                 fb.className = "quiz-feedback correct-fb";
-                fb.innerHTML = "✅ 正確！做得好！ (Correct!)";
+                fb.innerHTML = "✅ Correct! (正確！)";
             } else {
                 fb.className = "quiz-feedback wrong-fb";
-                fb.innerHTML = "❌ 答錯囉，再想想看！ (Incorrect, try again!)";
+                fb.innerHTML = "❌ Incorrect. Try again! (答錯囉，再想想看！)";
             }
         }
 
+        // ====== Audio Reading ======
         let currentUtteranceText = "";
+        function playAudioText(btn) {
+            let container = btn.closest('.item-content');
+            let zyDiv = container.querySelector('.zy-text');
+            if(!zyDiv) return;
+            
+            // Extract pure Chinese text (removing bopomofo boxes by just reading the `.zy-char` elements if parsed, or raw text if not)
+            let chars = zyDiv.querySelectorAll('.zy-char');
+            let cleanText = "";
+            if(chars.length > 0) {
+                chars.forEach(c => cleanText += c.innerText);
+                // Also get punctuation which are just text nodes
+                let walker = document.createTreeWalker(zyDiv, NodeFilter.SHOW_TEXT, null, false);
+                let node;
+                let fullTextWithPunc = "";
+                while(node = walker.nextNode()) {
+                    let val = node.nodeValue.trim();
+                    if(val && !val.includes('(') && !val.includes(')')) fullTextWithPunc += val; // crude but works mostly
+                }
+                // Simpler fallback: Just grab innerText which usually contains the visible chars
+                cleanText = zyDiv.innerText.replace(/[ㄅ-ㄬˊˇˋ˙]/g, '').replace(/
+/g,'').trim();
+            } else {
+                cleanText = zyDiv.innerText.replace(/\(.*?\)/g, '');
+            }
 
-        function playAudio(text, btn) {
-            let cleanText = text.replace(/\(.*?\)/g, '');
             if (speechSynthesis.speaking && currentUtteranceText === cleanText) {
                 if (speechSynthesis.paused) {
                     speechSynthesis.resume();
@@ -286,13 +616,68 @@
             speechSynthesis.speak(utterance);
         }
 
-        // Toggle Bopomofo & English
+        // ====== Audio Recording (Mock up for UI) ======
+        let mediaRecorders = {};
+        let recIdCounter = 0;
+        async function toggleRecord(btn) {
+            let container = btn.closest('.item-content');
+            let player = container.querySelector('audio');
+            let playBtn = container.querySelector('.play-rec-btn');
+            
+            if (!btn.dataset.recId) {
+                btn.dataset.recId = "rec-" + recIdCounter++;
+            }
+            let id = btn.dataset.recId;
+
+            if (!player) {
+                player = document.createElement('audio');
+                player.controls = true;
+                player.style.display = 'none';
+                player.style.width = '100%';
+                player.style.marginTop = '10px';
+                container.appendChild(player);
+            }
+
+            if (!mediaRecorders[id] || mediaRecorders[id].state === "inactive") {
+                try {
+                    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+                    let chunks = [];
+                    let recorder = new MediaRecorder(stream);
+                    
+                    recorder.ondataavailable = e => chunks.push(e.data);
+                    recorder.onstop = () => {
+                        const blob = new Blob(chunks, { 'type': 'audio/webm' });
+                        player.src = URL.createObjectURL(blob);
+                        player.style.display = 'block';
+                        playBtn.disabled = false;
+                        playBtn.onclick = () => player.play();
+                        stream.getTracks().forEach(track => track.stop());
+                    };
+
+                    recorder.start();
+                    mediaRecorders[id] = recorder;
+                    btn.innerHTML = "⏹️";
+                    btn.classList.add("recording");
+                    player.style.display = 'none';
+                } catch (err) {
+                    alert("Microphone access denied. 請允許瀏覽器使用麥克風。");
+                }
+            } else {
+                mediaRecorders[id].stop();
+                btn.innerHTML = "🎤";
+                btn.classList.remove("recording");
+            }
+        }
+
+        // Toggle visibility
         let zyVisible = true;
         let enVisible = true;
 
         function toggleZhuyin() {
             zyVisible = !zyVisible;
-            // 這裡可以針對頁面上的注音區塊做切換
+            document.querySelectorAll('.zy-box').forEach(el => {
+                el.style.display = zyVisible ? 'inline-flex' : 'none';
+            });
         }
 
         function toggleEnglish() {
