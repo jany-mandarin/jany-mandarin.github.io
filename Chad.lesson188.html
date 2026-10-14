@@ -51,14 +51,14 @@
         .grammar-box { background: #FFF9F0; border: 1px solid #E6D5B8; border-radius: 8px; padding: 15px; margin: 15px 0; scroll-margin-top: 140px; }
         .item-content { display: flex; align-items: flex-start; margin-top: 10px; margin-bottom: 5px; }
         
-        /* Bopomofo (Zhuyin) Vertical Formatting - THIS PUTS IT ON THE RIGHT */
-        .zy-text { display: inline-block; line-height: 2.2; font-size: 18px; }
-        .zy-char-wrap { display: inline-flex; align-items: center; margin-right: 2px; vertical-align: middle; }
-        .zy-char { font-size: 24px; font-family: "DFKai-SB", "BiauKai", serif; }
+        /* Bopomofo (Zhuyin) Vertical Formatting - Exactly like 187 */
+        .zy-text { display: inline-block; line-height: 2.4; font-size: 18px; }
+        .zy-char-wrap { display: inline-flex; align-items: center; margin-right: 2px; }
+        .zy-char { font-size: 26px; font-family: "DFKai-SB", "BiauKai", serif; }
         .zy-box { display: inline-flex; flex-direction: column; justify-content: center; position: relative; margin-left: 2px; padding-right: 8px; }
         .zy-symbols { writing-mode: vertical-rl; text-orientation: upright; font-size: 11px; letter-spacing: -2px; }
-        .zy-tone { position: absolute; right: 0px; top: 50%; transform: translateY(-50%); font-size: 11px; font-weight: bold;}
-        .zy-neutral { position: absolute; top: -11px; left: 50%; transform: translateX(-50%); font-size: 11px; font-weight: bold;}
+        .zy-tone { position: absolute; right: 0px; top: 50%; transform: translateY(-50%); font-size: 11px; }
+        .zy-neutral { position: absolute; top: -11px; left: 50%; transform: translateX(-50%); font-size: 11px; }
         
         .en-trans { color: #666; font-size: 15px; font-style: italic; margin-top: 5px; margin-left: 0; width: 100%; display:block;}
         .note { font-size: 14px; color: #555; margin-bottom: 10px; line-height: 1.5; }
@@ -214,7 +214,7 @@
                 <div style="font-weight:bold; font-size:16px; color:#8C6239; margin-bottom:5px;">2. 錯誤和道地句子 (Correcting Mistakes)</div>
                 <div class="item-content">
                     <span class="wrong-ans" style="margin-right:15px; flex-shrink:0;">❌</span> 
-                    <div class="zy-text" style="color:#D9534F;">下開會，我要跟同事去四川麵店</div>
+                    <div class="zy-text" style="color:#D9534F;">下(ㄒㄧㄚˋ)開(ㄎㄞ)會(ㄏㄨㄟˋ)，我(ㄨㄛˇ)要(ㄧㄠˋ)跟(ㄍㄣ)同(ㄊㄨㄥˊ)事(ㄕˋ)去(ㄑㄩˋ)四(ㄙˋ)川(ㄔㄨㄢ)麵(ㄇㄧㄢˋ)店(ㄉㄧㄢˋ)</div>
                 </div>
                 <div class="item-content">
                     <div class="btn-group">
@@ -513,7 +513,8 @@
 
         // ====== Parse Zhuyin on Load (Safely DOM based) ======
         function parseZhuyinDOM() {
-            const regex = /([一-龥a-zA-Z0-9])\((.*?)\)/g;
+            // Using precise unicode range for CJK characters so the regex parses perfectly in any JS engine
+            const regex = /([\u4e00-\u9fa5a-zA-Z0-9])\((.*?)\)/g;
             document.querySelectorAll('.zy-text').forEach(el => {
                 let html = el.innerHTML;
                 let parsed = html.replace(regex, (match, char, zy) => {
@@ -578,22 +579,18 @@
             let zyDiv = container.querySelector('.zy-text');
             if(!zyDiv) return;
             
-            // Extract pure Chinese text (removing bopomofo boxes by just reading the `.zy-char` elements if parsed, or raw text if not)
             let chars = zyDiv.querySelectorAll('.zy-char');
             let cleanText = "";
             if(chars.length > 0) {
                 chars.forEach(c => cleanText += c.innerText);
-                // Also get punctuation which are just text nodes
                 let walker = document.createTreeWalker(zyDiv, NodeFilter.SHOW_TEXT, null, false);
                 let node;
                 let fullTextWithPunc = "";
                 while(node = walker.nextNode()) {
                     let val = node.nodeValue.trim();
-                    if(val && !val.includes('(') && !val.includes(')')) fullTextWithPunc += val; // crude but works mostly
+                    if(val && !val.includes('(') && !val.includes(')')) fullTextWithPunc += val; 
                 }
-                // Simpler fallback: Just grab innerText which usually contains the visible chars
-                cleanText = zyDiv.innerText.replace(/[ㄅ-ㄬˊˇˋ˙]/g, '').replace(/
-/g,'').trim();
+                cleanText = zyDiv.innerText.replace(/[\u3105-\u312Cˊˇˋ˙]/g, '').replace(/\n/g,'').trim();
             } else {
                 cleanText = zyDiv.innerText.replace(/\(.*?\)/g, '');
             }
@@ -616,7 +613,7 @@
             speechSynthesis.speak(utterance);
         }
 
-        // ====== Audio Recording (Mock up for UI) ======
+        // ====== Audio Recording ======
         let mediaRecorders = {};
         let recIdCounter = 0;
         async function toggleRecord(btn) {
