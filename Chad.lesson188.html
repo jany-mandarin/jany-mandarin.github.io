@@ -1,44 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Chad's Mandarin Lesson 188</title>
-    <style>
-        :root { --bg: #FDFBF7; --primary: #D4A373; --text: #4a4a4a; --white: #fff; --sidebar-width: 280px; }
-        html { scroll-behavior: smooth; }
-        body { font-family: 'Helvetica Neue', Arial, sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; margin: 0; padding: 0; display: flex; transition: margin-left 0.3s ease; }
-        
-        /* Navigation */
-        .top-nav { position: fixed; top: 0; left: 0; width: 100%; background: #FFF9F0; border-bottom: 1px solid #E6D5B8; padding: 10px 20px; box-sizing: border-box; text-align: right; z-index: 1200; display: flex; justify-content: flex-end; align-items: center; }
-        .top-nav a { color: var(--primary); font-weight: bold; text-decoration: none; margin-left: 20px; font-size: 15px; }
-        .top-nav a:hover { text-decoration: underline; color: #8C6239; }
-
-        /* Sidebar */
-        .sidebar { width: var(--sidebar-width); background: #FFF9F0; border-right: 1px solid #E6D5B8; height: 100vh; position: fixed; top: 0; left: 0; overflow-y: auto; padding: 60px 20px 20px 20px; box-sizing: border-box; transition: transform 0.3s ease; z-index: 1000; }
-        .sidebar.collapsed { transform: translateX(-100%); }
-        .sidebar h3 { margin-top: 0; color: #8C6239; font-size: 18px; border-bottom: 2px solid var(--primary); padding-bottom: 8px; display: flex; justify-content: space-between; align-items: center; }
-        .sidebar ol { padding-left: 20px; margin: 10px 0; color: #555; }
-        .sidebar li { margin-bottom: 8px; font-size: 15px; font-weight: bold; color: #8C6239; }
-        .sidebar ul { padding-left: 15px; list-style-type: circle; margin-top: 5px; margin-bottom: 15px; font-weight: normal; }
-        .sidebar ul li { font-size: 13.5px; margin-bottom: 6px; color: #555; }
-        .sidebar a { color: #555; text-decoration: none; display: block; }
-        .sidebar a:hover { color: #D4A373; font-weight: bold; }
-        
-        .sidebar-toggle { position: fixed; top: 50px; left: 15px; z-index: 1100; background: var(--primary); color: white; border: none; padding: 8px 12px; border-radius: 6px; cursor: pointer; font-size: 14px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
-
-        /* Main Content */
-        .main-content { margin-top: 40px; margin-left: var(--sidebar-width); width: calc(100% - var(--sidebar-width)); padding: 20px 40px; box-sizing: border-box; max-width: 900px; transition: margin-left 0.3s ease, width 0.3s ease; }
-        .main-content.expanded { margin-left: 0; width: 100%; }
-        .header { text-align: center; border-bottom: 2px solid var(--primary); padding-bottom: 10px; margin-bottom: 20px; margin-top: 20px; }
-        
-        /* Controls */
-        .controls { position: sticky; top: 40px; background: var(--bg); padding: 15px; text-align: center; border-bottom: 1px solid #ccc; z-index: 100; margin-bottom: 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
-        button.control-btn { background: var(--primary); color: white; border: none; padding: 10px 15px; margin: 5px; border-radius: 6px; cursor: pointer; font-size: 14px; font-weight: bold; }
-        button.control-btn:hover { background: #B5835A; }
-        
-        /* Audio Buttons */
-        .btn-group { display: flex; align-items: center; margin-right: 15px; margin-bottom: 5px; }
-        .audio-btn { background: #f0f0f0; color: #333; font-size: 16px; padding: 8px; border-radius: 50%; width: 35px; height: 35px; display: inline-flex; align-items: center; justify-content: center; border: none; cursor: pointer; margin-right: 5px; flex-shrink:0; }
+right: 5px; flex-shrink:0; }
         .audio-btn:hover { background: #e0e0e0; }
         .rec-btn { background: #e07a5f; color: white; font-size: 14px; padding: 6px 12px; border-radius: 20px; border: none; cursor: pointer; display: inline-flex; align-items: center; gap: 5px; margin-right: 5px; }
         .rec-btn.recording { background: #d90429; animation: pulse 1.5s infinite; }
@@ -460,7 +420,7 @@
                 <div class="quiz-card">
                     <div class="quiz-question">5) 我的貓今天一分鐘 _____ 吃完牠的食物。</div>
                     <div class="quiz-options"><label><input type="radio" name="q11" value="jiu"> 就</label><label><input type="radio" name="q11" value="cai"> 才</label></div>
-                    <button class="check-btn" onclick="checkAns('q11', 'jiu,cai', '兩個都可以！取決於你的貓平常吃飯速度多快，如果平常是30秒，就用「才」，如果是三分鐘，就用「就」。(Both are correct depending on normal speed!)')">Check Answer</button>
+                    <button class="check-btn" onclick="checkAns('q11', 'jiu,cai', 'Both are correct! It depends on your cat&#39;s normal eating speed. If it normally takes 30 seconds, use 才 (cái) because 1 minute is slow. If it normally takes 3 minutes, use 就 (jiù) because 1 minute is fast.')">Check Answer</button>
                     <div class="quiz-feedback" id="fb-q11"></div><div class="quiz-explanation" id="exp-q11"></div>
                 </div>
 
