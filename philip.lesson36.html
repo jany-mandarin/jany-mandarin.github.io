@@ -49,9 +49,13 @@
         }
 
         h2 { color: #8C6239; border-left: 5px solid var(--primary); padding-left: 10px; margin-top: 30px; }
-        .section { margin-bottom: 30px; background: var(--white); padding: 20px; border-radius: 12px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); scroll-margin-top: 80px; }
+        .section { margin-bottom: 30px; background: var(--white); padding: 20px; border-radius: 12px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
         .item { margin-bottom: 20px; display: flex; flex-direction: column; border-bottom: 1px dashed #eee; padding-bottom: 15px; }
         .item-content { display: flex; align-items: center; flex-wrap: wrap; margin-bottom: 5px; gap: 5px; }
+        
+        /* 讓每個 grammar-box 支援精準錨點跳轉並預留頂部導覽空間 */
+        .grammar-box { background: #FFF9F0; border: 1px solid #E6D5B8; border-radius: 8px; padding: 15px; margin: 15px 0; scroll-margin-top: 80px; }
+        .note { font-size: 14px; color: #555; margin-bottom: 10px; line-height: 1.5; }
         
         /* 錄音播放器獨立換行區塊 */
         .audio-player-container { width: 100%; margin-top: 8px; }
@@ -63,11 +67,9 @@
         .hz-text { font-size: 24px; font-family: sans-serif; line-height: 1.2; }
         
         .en-trans { color: #666; font-size: 15px; font-style: italic; margin-top: 5px; }
-        .grammar-box { background: #FFF9F0; border: 1px solid #E6D5B8; border-radius: 8px; padding: 15px; margin: 15px 0; }
-        .note { font-size: 14px; color: #555; margin-bottom: 10px; line-height: 1.5; }
         
         /* 圖片縮小至 250px 並置中 */
-        .img-container { text-align: center; margin: 15px 0; }
+        .img-container { text-align: center; margin: 15px 0; scroll-margin-top: 80px; }
         .img-container img { max-width: 250px; width: 100%; height: auto; border-radius: 8px; border: 1px solid #E6D5B8; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
 
         @media (max-width: 900px) {
@@ -86,34 +88,36 @@
         <ul style="padding-left: 0; list-style: none;">
             <li class="main-menu-item"><a href="#sec-0">一、暖身 (Warm-up)</a></li>
             <ul>
-                <li><a href="#sec-0">1. 圣婴儿现象 / 反圣婴儿现象</a></li>
-                <li><a href="#sec-0">2. 保安</a></li>
-                <li><a href="#sec-0">3. 孵蛋</a></li>
+                <li><a href="#item-0-0">1. 圣婴现象 / 反圣婴现象</a></li>
+                <li><a href="#item-0-1">2. 保安</a></li>
+                <li><a href="#item-0-2">3. 孵蛋</a></li>
+                <li><a href="#item-0-3">4. 防弹背心</a></li>
             </ul>
             <li class="main-menu-item" style="margin-top: 10px;"><a href="#sec-1">二、上次作业 (Homework Review)</a></li>
             <ul>
-                <li><a href="#sec-1">1. 耗资 vs 预算庞大</a></li>
-                <li><a href="#sec-1">2. 洪水 / 淹水 / 淹没</a></li>
-                <li><a href="#sec-1">3. 风寒</a></li>
-                <li><a href="#sec-1">4. 讲述 vs 说出</a></li>
-                <li><a href="#sec-1">5. 残酷 vs 严苛</a></li>
-                <li><a href="#sec-1">6. 句型：不是...而是...</a></li>
+                <li><a href="#item-1-0">1. 耗资 vs 预算庞大</a></li>
+                <li><a href="#item-1-1">2. 洪水 / 淹水 / 淹没</a></li>
+                <li><a href="#item-1-2">3. 风寒</a></li>
+                <li><a href="#item-1-3">4. 讲述 vs 说出</a></li>
+                <li><a href="#item-1-4">5. 残酷 vs 严苛</a></li>
+                <li><a href="#item-1-5">6. 句型：不是...而是...</a></li>
             </ul>
             <li class="main-menu-item" style="margin-top: 10px;"><a href="#sec-2">三、中秋节的故事 (Story)</a></li>
             <ul>
-                <li><a href="#sec-2">1. 深思熟虑</a></li>
-                <li><a href="#sec-2">2. 暗自</a></li>
-                <li><a href="#sec-2">3. 劝酒 / 灌酒</a></li>
-                <li><a href="#sec-2">4. 大醉倒地</a></li>
-                <li><a href="#sec-2">5. 犹豫</a></li>
-                <li><a href="#sec-2">6. 怒不可遏</a></li>
-                <li><a href="#sec-2">7. 扑来</a></li>
-                <li><a href="#sec-2">8. 瞬间</a></li>
-                <li><a href="#sec-2">9. 顷刻间</a></li>
-                <li><a href="#sec-2">10. 轻盈飘逸</a></li>
-                <li><a href="#sec-2">11. 每逢</a></li>
-                <li><a href="#sec-2">12. 仰望</a></li>
-                <li><a href="#sec-2">13. 舍己救人</a></li>
+                <li><a href="#item-2-0">1. 深思熟虑</a></li>
+                <li><a href="#item-2-1">2. 暗自</a></li>
+                <li><a href="#item-2-2">3. 劝酒 / 灌酒</a></li>
+                <li><a href="#item-2-3">4. 大醉倒地</a></li>
+                <li><a href="#item-2-4">5. 犹豫</a></li>
+                <li><a href="#item-2-5">6. 怒不可遏</a></li>
+                <li><a href="#item-2-6">7. 扑来</a></li>
+                <li><a href="#item-2-7">8. 瞬间</a></li>
+                <li><a href="#item-2-8">9. 顷刻间</a></li>
+                <li><a href="#item-2-9">10. 轻盈飘逸</a></li>
+                <li><a href="#item-2-10">11. 每逢</a></li>
+                <li><a href="#item-2-11">12. 仰望</a></li>
+                <li><a href="#item-2-12">13. 舍己救人</a></li>
+                <li><a href="#item-2-13">14. 身躯</a></li>
             </ul>
         </ul>
     </div>
@@ -213,11 +217,11 @@
                 items: [
                     {
                         type: "grammar",
-                        title: "1. 圣(shèng)婴(yīng)儿(ér)现(xiàn)象(xiàng) / 反(fǎn)圣(shèng)婴(yīng)儿(ér)现(xiàn)象(xiàng)",
-                        note: "解释：圣(shèng)婴(yīng)儿(ér)现(xiàn)象(xiàng)指(zhǐ)太(tài)平(píng)洋(yáng)东(dōng)部(bù)和(hé)中(zhōng)部(bù)海(hǎi)水(shuǐ)异(yì)常(cháng)变(biàn)暖(nuǎn)的(de)现(xiàn)象(xiàng)；反(fǎn)圣(shèng)婴(yīng)儿(ér)现(xiàng)象(xiàng)则(zé)指(zhǐ)海(hǎi)水(shuǐ)异(yì)常(cháng)变(biàn)冷(lěng)的(de)现(xiàng)象(xiàng)，两(liǎng)者(zhě)都(dōu)会(huì)对(duì)全(quán)球(qiú)气(qì)候(hòu)造(zào)成(chéng)巨(jù)大(dà)影(yǐng)响(xiǎng)。<br>Explanation: El Niño and La Niña climate phenomena.",
+                        title: "1. 圣(shèng)婴(yīng)现(xiàn)象(xiàng) / 反(fǎn)圣(shèng)婴(yīng)现(xiàn)象(xiàng)",
+                        note: "解释：圣(shèng)婴(yīng)现(xiàn)象(xiàng)（El Niño）指(zhǐ)太(tài)平(píng)洋(yáng)东(dōng)部(bù)和(hé)中(zhōng)部(bù)海(hǎi)水(shuǐ)异(yì)常(cháng)变(biàn)暖(nuǎn)的(de)现(xiàn)象(xiàng)；反(fǎn)圣(shèng)婴(yīng)现(xiàn)象(xiàng)（La Niña）则(zé)指(zhǐ)海(hǎi)水(shuǐ)异(yì)常(cháng)变(biàn)冷(lěng)的(de)现(xiàng)象(xiàng)，两(liǎng)者(zhě)都(dōu)会(huì)对(duì)全(quán)球(qiú)气(qì)候(hòu)造(zào)成(chéng)巨(jù)大(dà)影(yǐng)响(xiǎng)。<br>Explanation: El Niño and La Niña climate phenomena.",
                         examples: [
-                            { zh: "受(shòu)到(dào)圣(shèng)婴(yīng)儿(ér)现(xiàn)象(xiàng)的(de)影(yǐng)响(xiǎng)，今(jīn)年(nián)夏(xià)天(tiān)特(tè)别(bié)炎(yán)热(rè)。", en: "Affected by El Niño, this summer is particularly hot." },
-                            { zh: "反(fǎn)圣(shèng)婴(yīng)儿(ér)现(xiàn)象(xiàng)往(wǎng)往(wǎng)会(huì)带(dài)来(lái)更(gèng)多(duō)的(de)降(jiàng)雨(yǔ)和(hé)台(tái)风(fēng)。", en: "La Niña tends to bring more rainfall and typhoons." }
+                            { zh: "受(shòu)到(dào)圣(shèng)婴(yīng)现(xiàn)象(xiàng)的(de)影(yǐng)响(xiǎng)，今(jīn)年(nián)夏(xià)天(tiān)特(tè)别(bié)炎(yán)热(rè)。", en: "Affected by El Niño, this summer is particularly hot." },
+                            { zh: "反(fǎn)圣(shèng)婴(yīng)现(xiàng)象(xiàng)往(wǎng)往(wǎng)会(huì)带(dài)来(lái)更(gèng)多(duō)的(de)降(jiàng)雨(yǔ)和(hé)台(tái)风(fēng)。", en: "La Niña tends to bring more rainfall and typhoons." }
                         ]
                     },
                     {
@@ -234,6 +238,14 @@
                         note: "解释：鸟(niǎo)类(lèi)或(huò)其(qí)他(tā)卵(luǎn)生(shēng)动(dòng)物(wù)用(yòng)体(tǐ)温(wēn)或(huò)其(qí)他(tā)方(fāng)式(shì)使(shǐ)卵(luǎn)化(huà)出(chū)幼(yòu)雏(chú)。<br>Explanation: Incubate / Hatch eggs.",
                         examples: [
                             { zh: "企(qǐ)鹅(é)爸(bà)爸(ba)和(hé)妈(mā)妈(ma)会(huì)轮(lún)流(liú)站(zhàn)在(zài)冰(bīng)上(shàng)孵(fū)蛋(dàn)。", en: "Penguin parents take turns standing on the ice to incubate eggs." }
+                        ]
+                    },
+                    {
+                        type: "grammar",
+                        title: "4. 防(fáng)弹(dàn)背(bèi)心(xīn)",
+                        note: "解释：一种能够吸收或阻挡子弹冲击力、保护人体重要器官的安全防护装备。<br>Explanation: Bulletproof vest.",
+                        examples: [
+                            { zh: "警(jǐng)察(chá)在(zài)执(zhí)行(xíng)危(wēi)险(xiǎn)任(rèn)务(wù)时(shí)，通(tōng)常(cháng)会(huì)穿(chuān)上(shàng)防(fáng)弹(dàn)背(bèi)心(xīn)。", en: "Police officers usually wear bulletproof vests when performing dangerous missions." }
                         ]
                     }
                 ]
@@ -256,7 +268,7 @@
                         note: "解释：淹(yān)水(shuǐ)是(shì)动(dòng)词(cí)（表(biǎo)示(shì)地(dì)方(fāng)积(jī)水(shuǐ)）；淹(yān)没(mò)表(biǎo)示(shì)整(zhěng)个(gè)地(dì)方(fāng)被(bèi)水(shuǐ)彻(chè)底(dǐ)盖(gài)住(zhù)了(le)（注(zhù)意(yì)「没(mò)」在(zài)此(cǐ)读(dú)作(zuò) mò，不(bù)读(dú) méi）。<br>Explanation: Flood/Inundate (mò).",
                         examples: [
                             { zh: "大(dà)雨(yǔ)引(yǐn)发(fā)了(le)洪(hóng)水(shuǐ)，这(zhè)个(gè)地(dì)方(fāng)被(bèi)洪(hóng)水(shuǐ)淹(yān)没(mò)了(le)。", en: "Heavy rain triggered floods, and this place was submerged by floodwaters." },
-                            { zh: "因(yīn)为(wèi)排(pái)水(shuǐ)不(bú)良(liáng)，路(lù)面(miàn)开(kāi)始(shǐ)淹(yān)水(shuǐ)了(le)。", en: "Due to poor drainage, the road surface began to flood." }
+                            { zh: "因(yīn)为(wèi)排(pài)水(shuǐ)不(bú)良(liáng)，路(lù)面(miàn)开(kāi)始(shǐ)淹(yān)水(shuǐ)了(le)。", en: "Due to poor drainage, the road surface began to flood." }
                         ]
                     },
                     {
@@ -270,10 +282,10 @@
                     {
                         type: "grammar",
                         title: "4. 讲(jiǎng)述(shù)... vs 说(shuō)出(chū)...",
-                        note: "解释：讲(jiǎng)述(shù)多(duō)用(yòng)在(zài)讲(jiǎng)述(shù)一(yí)个(gè)完(wán)整(zhěng)的(de)故(gù)事(shì)或(huò)客(kè)观(guān)事(shì)实(shí)；真(zhēn)相(xiàng)原(yuán)本(běn)是(shì)藏(cáng)起(qǐ)来(lái)的(de)，所(suǒ)以(yǐ)要(yào)用(yòng)「说(shuō)出(chū)」真(zhēn)相(xiàng)。<br>Explanation: Narrate (stories/facts) vs Reveal/Speak out (hidden truth).",
+                        note: "解释：讲(jiǎng)述(shù)多(duō)用(yòng)在(zài)讲(jiǎng)述(shù)一(yí)个(gè)完(wán)整(zhěng)的(de)故(gù)事(shì)或(huò)客(kè)观(guān)事(shì)实(shí)；真(zhēn)相(xiàng)原(yuán)本(běn)是(shì)藏(cáng)起(qǐ)来(lái)的(de)，所(suǒ)以(yǐ)要(yǒu)用(yòng)「说(shuō)出(chū)」真(zhēn)相(xiàng)。<br>Explanation: Narrate (stories/facts) vs Reveal/Speak out (hidden truth).",
                         examples: [
                             { zh: "这(zhè)本(běn)书(shū)讲(jiǎng)述(shù)了(le)一(yí)个(gè)关(guān)于(yú)勇(yǒng)气(qì)的(de)历(lì)史(shǐ)事(shì)实(shí)。", en: "This book narrates a historical fact about courage." },
-                            { zh: "他(tā)终(zhōng)于(yú)鼓(gǔ)起(qǐ)勇(yǒng)气(qì)说(shuō)出(chū)了(le)当(dāng)年(nián)的(de)真(zhēn)相(xiàng)。", en: "He finally mustered the courage to speak out the truth of that year." }
+                            { zh: "他(tā)终(zhōng)于(yú)鼓(gǔ)起(qì)勇(yǒng)气(qì)说(shuō)出(chū)了(le)当(dāng)年(nián)的(de)真(zhēn)相(xiàng)。", en: "He finally mustered the courage to speak out the truth of that year." }
                         ]
                     },
                     {
@@ -288,7 +300,7 @@
                     {
                         type: "grammar",
                         title: "6. 句(jù)型(xíng)：不(bú)是(shì)... 而(ér)是(shì)...",
-                        note: "解释：中(zhōng)文(wén)里(lǐ)使(shǐ)用(yòng)「不(bú)是(shì)... 而(ér)是(shì)...」时(shí)，句(jù)尾(wěi)喜(xǐ)欢(huān)用(yòng)对(duì)称(chēng)或(huò)相(xiāng)同(tóng)的(de)字(zì)眼(yǎn)，这(zhè)样(yàng)念(niàn)起(qǐ)来(lái)更(gèng)富(fù)有(yǒu)美(měi)感(gǎn)和(hé)节(jié)奏(zòu)感(gǎn)。<br>Explanation: Sentence pattern 'Not A, but B' with parallel endings for better rhythm.",
+                        note: "解释：中(zhōng)文(wén)里(lǐ)使(shǐ)用(yòng)「不(bú)是(shì)... 而(ér)是(shì)...」时(shí)，句(jù)尾(wěi)喜(xǐ)欢(huān)用(yòng)对(duì)称(chēng)或(huò)相(xiāng)同(tóng)的(de)字(zì)眼(yǎn)，这(zhè)样(yàng)念(niàn)起(qì)来(lái)更(gèng)富(fù)有(yǒu)美(měi)感(gǎn)和(hé)节(jié)奏(zòu)感(gǎn)。<br>Explanation: Sentence pattern 'Not A, but B' with parallel endings for better rhythm.",
                         examples: [
                             { zh: "一(yí)座(zuò)真(zhēn)正(zhèng)伟(wěi)大(dà)的(de)城(chéng)市(shì)，不(bú)是(shì)拥(yōng)有(yǒu)最(zuì)高(gāo)楼(lóu)的(de)大(dà)城(chéng)市(shì)，而(ér)是(shì)敢(gǎn)面(miàn)对(duì)过(guò)去(qù)的(de)大(dà)城(chéng)市(shì)。", en: "A truly great city is not a big city with the tallest buildings, but a big city that dares to face its past." }
                         ]
@@ -326,9 +338,9 @@
                     {
                         type: "grammar",
                         title: "4. 大(dà)醉(zuì)倒(dǎo)地(dì)",
-                        note: "解释：喝(hē)得(dé)酩(mǐng)酊(dǐng)大(dà)醉(zuì)，直(zhí)接(jiē)倒(dào)在(zài)地(dì)上(shàng)。<br>Explanation: Intoxicated and collapsed to the ground.",
+                        note: "解释：喝(hē)得(dé)酩(mǐng)酊(dǐng)大(dà)醉(zuì)，直(zhí)接(jiē)倒(dǎo)在(zài)地(dì)上(shàng)。<br>Explanation: Intoxicated and collapsed to the ground.",
                         examples: [
-                            { zh: "他(tā)昨(zuó)晚(wǎn)喝(hē)得(de)太(tài)多(duō)，大(dà)醉(zuì)倒(dào)地(dì)，不(bú)省(shěng)人(rén)事(shì)。", en: "He drank too much last night, got dead drunk and collapsed to the ground, unconscious." }
+                            { zh: "他(tā)昨(zuó)晚(wǎn)喝(hē)得(dé)太(tài)多(duō)，大(dà)醉(zuì)倒(dǎo)地(dì)，不(bú)省(shěng)人(rén)事(shì)。", en: "He drank too much last night, got dead drunk and collapsed to the ground, unconscious." }
                         ]
                     },
                     {
@@ -357,7 +369,7 @@
                     },
                     {
                         type: "html",
-                        content: `<div class="img-container"><img src="https://cdn.phototourl.com/member/2026-10-16-bd078550-25a6-4b3c-b97f-fd45c594fa78.jpg" alt="扑来图示"></div>`
+                        content: `<div class="img-container" id="item-2-6"><img src="https://cdn.phototourl.com/member/2026-10-16-bd078550-25a6-4b3c-b97f-fd45c594fa78.jpg" alt="扑来图示"></div>`
                     },
                     {
                         type: "grammar",
@@ -406,6 +418,14 @@
                         examples: [
                             { zh: "消(xiāo)防(fáng)员(yuán)的(de)舍(shě)己(jǐ)救(jiù)人(rén)精(jīng)神(shén)让(ràng)人(rén)十(shí)分(fēn)感(gǎn)动(dòng)。", en: "The firefighter's spirit of sacrificing themselves to save others is deeply touching." }
                         ]
+                    },
+                    {
+                        type: "grammar",
+                        title: "14. 身(shēn)躯(qū)",
+                        note: "解释：指(zhǐ)人(rén)的(de)身(shēn)体(tǐ)或(huò)躯(qū)干(gàn)（多(duō)用(yòng)于(yú)文(wén)学(xué)描(miáo)写(xiě)中(zhōng)）。<br>Explanation: Human body / Torso (used in literary descriptions).",
+                        examples: [
+                            { zh: "他(tā)高(gāo)大(dà)的(de)身(shēn)躯(qū)挡(dǎng)住(zhù)了(le)迎(yíng)面(miàn)吹(chuī)来(lái)的(de)寒(hán)风(fēng)。", en: "His tall physique blocked the cold wind blowing in his face." }
+                        ]
                     }
                 ]
             }
@@ -417,11 +437,11 @@
         lessonData.forEach((sec, sIdx) => {
             let html = `<div class="section" id="sec-${sIdx}"><h2>${sec.title}</h2>`;
             
-            sec.items.forEach(item => {
+            sec.items.forEach((item, iIdx) => {
                 if (item.type === "html") {
                     html += item.content;
                 } else if (item.type === "grammar") {
-                    html += `<div class="grammar-box">
+                    html += `<div class="grammar-box" id="item-${sIdx}-${iIdx}">
                         <div style="font-weight:bold; font-size:16px; color:#8C6239; margin-bottom:5px;">${parsePinyin(item.title)}</div>`;
                     if(item.note) html += `<div class="note">${parsePinyin(item.note)}</div>`;
                     
@@ -444,7 +464,7 @@
                     html += `</div>`;
                 } else if (item.zh) {
                     html += `
-                    <div class="item">
+                    <div class="item" id="item-${sIdx}-${iIdx}">
                         <div class="item-content">
                             <button class="icon-btn" onclick="playAudio('${item.zh}')" title="朗读">🔊</button>
                             <button class="icon-btn rec-btn" onclick="toggleRecord(this, 'rec-${counter}')" title="录音">🎤</button>
