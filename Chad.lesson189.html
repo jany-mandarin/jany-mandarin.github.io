@@ -63,7 +63,7 @@
         .zy-neutral { position: absolute; top: -11px; left: 50%; transform: translateX(-50%); font-size: 11px; }
         
         .en-trans { color: #666; font-size: 15px; font-style: italic; margin-top: 5px; margin-left: 0; width: 100%; display:block;}
-        .note { font-size: 14px; color: #555; margin-bottom: 10px; line-height: 1.5; background: #fdfaf6; padding: 8px 12px; border-left: 3px solid #D4A373; border-radius: 4px; }
+        .note { font-size: 14px; color: #555; margin-top: 10px; margin-bottom: 10px; line-height: 1.5; background: #fdfaf6; padding: 8px 12px; border-left: 3px solid #D4A373; border-radius: 4px; }
         .vocab-img { max-width: 100%; height: auto; border-radius: 8px; border: 1px solid #E6D5B8; display: block; margin: 10px 0; max-height: 200px; }
         
         /* Compare Box for 就 / 才 */
@@ -84,11 +84,9 @@
         .quiz-feedback.wrong-fb { color: #D9534F; }
         .quiz-explanation { margin-top: 5px; font-size: 14px; color: #666; display: none; background: #f9f9f9; padding: 8px; border-left: 3px solid var(--primary); }
 
-        .homework-q { margin-top: 15px; font-size: 16px; font-weight: bold; }
-        .hw-textarea { width: 100%; height: 50px; margin-top: 8px; margin-bottom: 15px; border-radius: 4px; border: 1px solid #ccc; padding: 8px; font-family: inherit; font-size:15px; box-sizing: border-box;}
-        
-        .correct-ans { color: #5CB85C; font-weight:bold; }
-        .wrong-ans { color: #D9534F; font-weight:bold; }
+        .homework-q { font-size: 16px; font-weight: bold; color: #8C6239; margin-bottom: 8px; }
+        .hw-textarea { width: 100%; height: 60px; margin-top: 5px; border-radius: 6px; border: 1px solid #E6D5B8; padding: 10px; font-family: inherit; font-size:16px; box-sizing: border-box; background: #fff; }
+        .hw-textarea:focus { border-color: var(--primary); outline: none; box-shadow: 0 0 5px rgba(212, 163, 115, 0.5); }
 
         @media (max-width: 900px) {
             .sidebar { transform: translateX(-100%); }
@@ -135,7 +133,7 @@
                     <li><a href="#ls-prac">Practice (互動練習)</a></li>
                 </ul>
             </li>
-            <li><a href="#sec-3">Translation Practice (翻譯練習)</a></li>
+            <li><a href="#sec-3">Homework (翻譯練習)</a></li>
         </ol>
     </div>
 
@@ -188,9 +186,9 @@
                 <!-- Character: 簡 -->
                 <div style="margin-bottom: 20px;">
                     <div style="font-weight:bold; color:#8C6239;">【 簡 (jiǎn) 】</div>
-                    <!-- 1. Picture (圖片) -->
+                    <!-- 1. 圖片 (Picture) -->
                     <img src="https://cdn.phototourl.com/member/2026-10-16-7eb98605-afd2-4b82-971c-87a3114a0c8c.png" class="vocab-img" alt="簡 character origin">
-                    <!-- 2. Example Sentence (例句) -->
+                    <!-- 2. 例句 (Example Sentence) -->
                     <div class="item-content">
                         <div class="btn-group"><button class="audio-btn" onclick="playAudioText(this)">🔊</button></div>
                         <div style="flex:1;">
@@ -198,8 +196,8 @@
                             <div class="en-trans">Can you read Simplified Chinese? I can read it, but I cannot write it.</div>
                         </div>
                     </div>
-                    <!-- 3. Note / Explanation (注/解釋) -->
-                    <div class="note"><b>💡 Character Origin Note:</b> In ancient China, bamboo was very easy to obtain, so the top part of "簡" contains bamboo (竹). Its pronunciation is also similar to "間" (jiān).</div>
+                    <!-- 3. 注/解釋 (Note) -->
+                    <div class="note"><b>💡 Character Origin Note:</b> In ancient China, bamboo was very easy to obtain, so the top part of "簡" contains bamboo (竹). Its pronunciation is similar to "間" (jiān).</div>
                 </div>
 
                 <hr style="border:0; border-top:1px dashed #E6D5B8; margin:15px 0;">
@@ -207,17 +205,17 @@
                 <!-- Character: 繁 -->
                 <div style="margin-bottom: 20px;">
                     <div style="font-weight:bold; color:#8C6239;">【 繁 (fán) 】</div>
-                    <!-- 1. Picture (圖片) -->
+                    <!-- 1. 圖片 (Picture) -->
                     <img src="https://cdn.phototourl.com/member/2026-10-16-56b76920-3b7a-4e2d-90b7-7c7815ff7f2a.png" class="vocab-img" alt="繁 character origin">
-                    <!-- 2. Example Sentence (例句) -->
+                    <!-- 2. 例句 (Example Sentence) -->
                     <div class="item-content">
                         <div class="btn-group"><button class="audio-btn" onclick="playAudioText(this)">🔊</button></div>
                         <div style="flex:1;">
                             <div class="zy-text">你(ㄋㄧˇ)想(ㄒㄧㄤˇ)學(ㄒㄩㄝˊ)簡(ㄐㄧㄢˇ)體(ㄊㄧˇ)中(ㄓㄨㄥ)文(ㄨㄣˊ)嗎(ㄇㄚ˙)？我(ㄨㄛˇ)...不(ㄅㄨˋ)想(ㄒㄧㄤˇ)學(ㄒㄩㄝˊ)，因(ㄧㄣ)為(ㄨㄟˋ)我(ㄨㄛˇ)不(ㄅㄨˋ)想(ㄒㄧㄤˇ)去(ㄑㄩˋ)中(ㄓㄨㄥ)國(ㄍㄨㄛˊ)，我(ㄨㄛˇ)只(ㄓˇ)想(ㄒㄧㄤˇ)去(ㄑㄩˋ)台(ㄊㄞˊ)灣(ㄨㄢ)。</div>
-                            <div class="en-trans">Do you want to learn Simplified Chinese? I... don't want to learn it, because I don't want to go to China, I only want to go to Taiwan.</div>
+                            <div class="en-trans">Do you want to learn Simplified Chinese? I... don’t want to learn it, because I don’t want to go to China, I only want to go to Taiwan.</div>
                         </div>
                     </div>
-                    <!-- 3. Note / Explanation (注/解釋) -->
+                    <!-- 3. 注/解釋 (Note) -->
                     <div class="note"><b>💡 Character Origin Note:</b> "繁" means complicated or performing intricate tasks repeatedly. It contains "每" (every), a hand (手) on the top right, and "糸" (silk/thread) at the bottom. Imagine in ancient times, making clothes required many complex steps, which is why Traditional Chinese characters are called "繁體字".</div>
                 </div>
 
@@ -226,9 +224,9 @@
                 <!-- Character: 體 -->
                 <div>
                     <div style="font-weight:bold; color:#8C6239;">【 體 (tǐ) 】</div>
-                    <!-- 1. Picture (圖片) -->
+                    <!-- 1. 圖片 (Picture) -->
                     <img src="https://cdn.phototourl.com/member/2026-10-16-dc180050-ed3e-4620-8acb-b28a4d88e032.png" class="vocab-img" alt="體 character origin">
-                    <!-- 2. Note / Explanation (注/解釋) -->
+                    <!-- 3. 注/解釋 (Note) -->
                     <div class="note"><b>💡 Character Origin Note:</b> The original meaning of "體" is body. The left side is "骨" (bone), because the body is supported by bones. The right side comes from "禮" (ritual/gift), representing items prepared for rituals. You can imagine the body as an instrument for offering rituals.</div>
                 </div>
             </div>
@@ -236,26 +234,26 @@
             <!-- 3. 放假 -->
             <div class="grammar-box" id="wu-3">
                 <div style="font-weight:bold; font-size:16px; color:#8C6239; margin-bottom:5px;">3. 放假 (fàng jià - To have a day off / vacation)</div>
-                <!-- 例句 -->
+                <!-- 例句 (Example Sentence) -->
                 <div class="item-content">
                     <div class="btn-group"><button class="audio-btn" onclick="playAudioText(this)">🔊</button></div>
                     <div style="flex:1;">
-                        <div class="zy-text">你(ㄋㄧˇ)明(ㄇㄧㄥˊ)天(ㄊㄧㄢ)放(ㄈㄤˋ)假(ㄐㄧㄚˋ)嗎(ㄇㄚ˙)？我(ㄨㄛˇ)明(ㄇㄧㄥˊ)天(ㄊㄧㄢ)放(ㄈㄤˋ)假(ㄐㄧㄚˋ)，我(ㄨㄛˇ)要(ㄧㄠˋ)跟(ㄍㄣ)太(ㄊㄞˋ)太(tai˙)去(ㄑㄩˋ)芝(ㄓ)加(ㄐㄧㄚ)哥(ㄍㄜ)。</div>
+                        <div class="zy-text">你(ㄋㄧˇ)明(ㄇㄧㄥˊ)天(ㄊㄧㄢ)放(ㄈㄤˋ)假(ㄐㄧㄚˋ)嗎(ㄇㄚ˙)？我(ㄨㄛˇ)明(ㄇㄧㄥˊ)天(ㄊㄧㄢ)放(ㄈㄤˋ)假(ㄐㄧㄚˋ)，我(ㄨㄛˇ)要(ㄧㄠˋ)跟(ㄍㄣ)太(ㄊㄞˋ)太(ㄊㄞ˙)去(ㄑㄩˋ)芝(ㄓ)加(ㄐㄧㄚ)哥(ㄍㄜ)。</div>
                         <div class="en-trans">Do you have tomorrow off? I have tomorrow off, I am going to Chicago with my wife.</div>
                     </div>
                 </div>
-                <!-- 注/解釋 -->
+                <!-- 注/解釋 (Note) -->
                 <div class="note"><b>💡 Explanation:</b> "放假" doesn't necessarily refer to an official holiday; it simply means any day off from work.</div>
             </div>
 
             <!-- 4. 妹妹 -->
             <div class="grammar-box" id="wu-4">
                 <div style="font-weight:bold; font-size:16px; color:#8C6239; margin-bottom:5px;">4. 妹妹 (mèi mei - Younger sister)</div>
-                <!-- 例句 -->
+                <!-- 例句 (Example Sentence) -->
                 <div class="item-content">
                     <div class="btn-group"><button class="audio-btn" onclick="playAudioText(this)">🔊</button></div>
                     <div style="flex:1;">
-                        <div class="zy-text">我(ㄨㄛˇ)太(ㄊㄞˋ)太(tai˙)的(ㄉㄜ˙)妹(ㄇㄟˋ)妹(mei˙)有(ㄧㄡˇ)點(ㄉㄧㄢˇ)生(ㄕㄥ)病(ㄅㄧㄥˋ)，可(ㄎㄜˇ)是(ㄕˋ)她(ㄊㄚ)的(ㄉㄜ˙)老(ㄌㄠˇ)公(ㄍㄨㄥ)不(ㄅㄨˊ)在(ㄗㄞˋ)芝(ㄓ)加(ㄐㄧㄚ)哥(ㄍㄜ)，所(ㄙㄨㄛˇ)以(ㄧˇ)我(ㄨㄛˇ)要(ㄧㄠˋ)跟(ㄍㄣ)太(ㄊㄞˋ)太(tai˙)一(ㄧˋ)起(ㄑㄧˇ)去(ㄑㄩˋ)芝(ㄓ)加(ㄐㄧㄚ)哥(ㄍㄜ)幫(ㄅㄤ)妹(ㄇㄟˋ)妹(mei˙)，妹(ㄇㄟˋ)妹(mei˙)有(ㄧㄡˇ)一(ㄧˊ)個(ㄍㄜ˙)孩(ㄏㄞˊ)子(ㄗ˙)。</div>
+                        <div class="zy-text">我(ㄨㄛˇ)太(ㄊㄞˋ)太(ㄊㄞ˙)的(ㄉㄜ˙)妹(ㄇㄟˋ)妹(ㄇㄟ˙)有(ㄧㄡˇ)點(ㄉㄧㄢˇ)生(ㄕㄥ)病(ㄅㄧㄥˋ)，可(ㄎㄜˇ)是(ㄕˋ)她(ㄊㄚ)的(ㄉㄜ˙)老(ㄌㄠˇ)公(ㄍㄨㄥ)不(ㄅㄨˊ)在(ㄗㄞˋ)芝(ㄓ)加(ㄐㄧㄚ)哥(ㄍㄜ)，所(ㄙㄨㄛˇ)以(ㄧˇ)我(ㄨㄛˇ)要(ㄧㄠˋ)跟(ㄍㄣ)太(ㄊㄞˋ)太(ㄊㄞ˙)一(ㄧˋ)起(ㄑㄧˇ)去(ㄑㄩˋ)芝(ㄓ)加(ㄐㄧㄚ)哥(ㄍㄜ)幫(ㄅㄤ)妹(ㄇㄟˋ)妹(ㄇㄟ˙)，妹(ㄇㄟˋ)妹(ㄇㄟ˙)有(ㄧㄡˇ)一(ㄧˊ)個(ㄍㄜ˙)孩(ㄏㄞˊ)子(ㄗ˙)。</div>
                         <div class="en-trans">My wife’s younger sister is a bit sick, but her husband is not in Chicago, so I need to go to Chicago with my wife to help her sister. Her sister has a child.</div>
                     </div>
                 </div>
@@ -264,11 +262,11 @@
             <!-- 5. X 歲 -->
             <div class="grammar-box" id="wu-5">
                 <div style="font-weight:bold; font-size:16px; color:#8C6239; margin-bottom:5px;">5. X 歲 (X suì - X years old)</div>
-                <!-- 例句 -->
+                <!-- 例句 (Example Sentence) -->
                 <div class="item-content">
                     <div class="btn-group"><button class="audio-btn" onclick="playAudioText(this)">🔊</button></div>
                     <div style="flex:1;">
-                        <div class="zy-text">妹(ㄇㄟˋ)妹(mei˙)的(ㄉㄜ˙)孩(ㄏㄞˊ)子(ㄗ˙)幾(ㄐㄧˇ)歲(ㄙㄨㄟˋ)？妹(ㄇㄟˋ)妹(mei˙)的(ㄉㄜ˙)孩(ㄏㄞˊ)子(ㄗ˙)只(ㄓˇ)有(ㄧㄡˇ)三(ㄙㄢ)歲(ㄙㄨㄟˋ)，可(ㄎㄜˇ)是(ㄕˋ)她(ㄊㄚ)認(ㄖㄣˋ)識(ㄕ˙)我(ㄨㄛˇ)們(ㄇㄣ˙)，所(ㄙㄨㄛˇ)以(ㄧˇ)沒(ㄇㄟˊ)關(ㄍㄨㄢ)係(ㄕ˙)。</div>
+                        <div class="zy-text">妹(ㄇㄟˋ)妹(ㄇㄟ˙)的(ㄉㄜ˙)孩(ㄏㄞˊ)子(ㄗ˙)幾(ㄐㄧˇ)歲(ㄙㄨㄟˋ)？妹(ㄇㄟˋ)妹(ㄇㄟ˙)的(ㄉㄜ˙)孩(ㄏㄞˊ)子(ㄗ˙)只(ㄓˇ)有(ㄧㄡˇ)三(ㄙㄢ)歲(ㄙㄨㄟˋ)，可(ㄎㄜˇ)是(ㄕˋ)她(ㄊㄚ)認(ㄖㄣˋ)識(ㄕˋ)我(ㄨㄛˇ)們(ㄇㄣ˙)，所(ㄙㄨㄛˇ)以(ㄧˇ)沒(ㄇㄟˊ)關(ㄍㄨㄢ)係(ㄒㄧ˙)。</div>
                         <div class="en-trans">How old is her sister’s child? Her sister’s child is only three years old, but she knows us, so it’s okay.</div>
                     </div>
                 </div>
@@ -427,7 +425,7 @@
                         <hr style="border:0; border-top:1px dashed #ccc;">
                         <div class="item-content">
                             <div class="btn-group"><button class="audio-btn" onclick="playAudioText(this)">🔊</button></div>
-                            <div class="zy-text" style="font-size:15px;">我(ㄨㄛˇ)太(ㄊㄞˋ)太(tai˙)一(ㄧˋ)天(ㄊㄧㄢ)就(ㄐㄧㄡˋ)幫(ㄅㄤ)了(ㄌㄜ˙)五(ㄨˇ)十(ㄕˊ)個(ㄍㄜ˙)病(ㄅㄧㄥˋ)人(ㄖㄣˊ)，她(ㄊㄚ)是(ㄕˋ)一(ㄧˊ)個(ㄍㄜ˙)很(ㄏㄣˇ)棒(ㄅㄤˋ)的(ㄉㄜ˙)醫(ㄧ)生(ㄕㄥ)。</div>
+                            <div class="zy-text" style="font-size:15px;">我(ㄨㄛˇ)太(ㄊㄞˋ)太(ㄊㄞ˙)一(ㄧˋ)天(ㄊㄧㄢ)就(ㄐㄧㄡˋ)幫(ㄅㄤ)了(ㄌㄜ˙)五(ㄨˇ)十(ㄕˊ)個(ㄍㄜ˙)病(ㄅㄧㄥˋ)人(ㄖㄣˊ)，她(ㄊㄚ)是(ㄕˋ)一(ㄧˊ)個(ㄍㄜ˙)很(ㄏㄣˇ)棒(ㄅㄤˋ)的(ㄉㄜ˙)醫(ㄧ)生(ㄕㄥ)。</div>
                         </div>
                         <div class="en-trans">My wife helped as many as 50 patients in a single day; she is a great doctor.</div>
                     </div>
@@ -447,13 +445,13 @@
                         <hr style="border:0; border-top:1px dashed #ccc;">
                         <div class="item-content">
                             <div class="btn-group"><button class="audio-btn" onclick="playAudioText(this)">🔊</button></div>
-                            <div class="zy-text" style="font-size:15px;">我(ㄨㄛˇ)弟(ㄉㄧˋ)弟(di˙)才(ㄘㄞˊ)三(ㄙㄢ)歲(ㄙㄨㄟˋ)，什(ㄕㄣˊ)麼(ㄇㄜ˙)都(ㄉㄡ)不(ㄅㄨˋ)懂(ㄉㄨㄥˇ)。</div>
+                            <div class="zy-text" style="font-size:15px;">我(ㄨㄛˇ)弟(ㄉㄧˋ)弟(ㄉㄧ˙)才(ㄘㄞˊ)三(ㄙㄢ)歲(ㄙㄨㄟˋ)，什(ㄕㄣˊ)麼(ㄇㄜ˙)都(ㄉㄡ)不(ㄅㄨˋ)懂(ㄉㄨㄥˇ)。</div>
                         </div>
                         <div class="en-trans">My younger brother is only three years old; he doesn’t understand anything.</div>
                         <hr style="border:0; border-top:1px dashed #ccc;">
                         <div class="item-content">
                             <div class="btn-group"><button class="audio-btn" onclick="playAudioText(this)">🔊</button></div>
-                            <div class="zy-text" style="font-size:15px;">你(ㄋㄧˇ)要(ㄧㄠˋ)當(ㄉㄤ)我(ㄨㄛˇ)的(ㄉㄜ˙)老(ㄌㄠˇ)婆(ㄆㄛˊ)嗎(ㄇㄚ˙)？我(ㄨㄛˇ)不(ㄅㄨˋ)要(ㄧㄠˋ)，我(ㄨㄛˇ)們(ㄇㄣ˙)才(ㄘㄞˊ)認(ㄖㄣˋ)識(ㄕ˙)三(ㄙㄢ)天(ㄊㄧㄢ)。</div>
+                            <div class="zy-text" style="font-size:15px;">你(ㄋㄧˇ)要(ㄧㄠˋ)當(ㄉㄤ)我(ㄨㄛˇ)的(ㄉㄜ˙)老(ㄌㄠˇ)婆(ㄆㄛˊ)嗎(ㄇㄚ˙)？我(ㄨㄛˇ)不(ㄅㄨˋ)要(ㄧㄠˋ)，我(ㄨㄛˇ)們(ㄇㄣ˙)才(ㄘㄞˊ)認(ㄖㄣˋ)識(ㄕˋ)三(ㄙㄢ)天(ㄊㄧㄢ)。</div>
                         </div>
                         <div class="en-trans">Will you be my wife? No, we’ve only known each other for three days!</div>
                         <hr style="border:0; border-top:1px dashed #ccc;">
@@ -497,7 +495,7 @@
                         <hr style="border:0; border-top:1px dashed #ccc;">
                         <div class="item-content">
                             <div class="btn-group"><button class="audio-btn" onclick="playAudioText(this)">🔊</button></div>
-                            <div class="zy-text" style="font-size:15px;">只(ㄓˇ)要(ㄧㄠˋ)我(ㄨㄛˇ)太(ㄊㄞˋ)太(tai˙)叫(ㄐㄧㄠˋ)我(ㄨㄛˇ)，我(ㄨㄛˇ)就(ㄐㄧㄡˋ)一(ㄧˋ)定(ㄉㄧㄥˋ)會(ㄏㄨㄟˋ)幫(ㄅㄤ)她(ㄊㄚ)。</div>
+                            <div class="zy-text" style="font-size:15px;">只(ㄓˇ)要(ㄧㄠˋ)我(ㄨㄛˇ)太(ㄊㄞˋ)太(ㄊㄞ˙)叫(ㄐㄧㄠˋ)我(ㄨㄛˇ)，我(ㄨㄛˇ)就(ㄐㄧㄡˋ)一(ㄧˋ)定(ㄉㄧㄥˋ)會(ㄏㄨㄟˋ)幫(ㄅㄤ)她(ㄊㄚ)。</div>
                         </div>
                         <div class="en-trans">As long as my wife asks me, I will definitely help her.</div>
                         <div class="note" style="font-size:12px; color:#777;">*Note: If you used 才 here, it would mean "ONLY if she asks will I help", which sounds too passive. Whenever she asks, I will help, so we use 就.</div>
@@ -514,6 +512,7 @@
                             <div class="zy-text" style="font-size:15px;">只(ㄓˇ)要(ㄧㄠˋ)下(ㄒㄧㄚˋ)雨(ㄩˇ)，我(ㄨㄛˇ)就(ㄐㄧㄡˋ)不(ㄅㄨˋ)要(ㄧㄠˋ)出(ㄔㄨ)門(ㄇㄣˊ)。</div>
                         </div>
                         <div class="en-trans">Whenever it rains, I don’t want to go out.</div>
+                        <div class="note" style="font-size:12px; color:#777;">*Note: There are multiple reasons for not going out, so staying indoors when raining uses 就.</div>
                     </div>
 
                     <!-- 只有...才... Box -->
@@ -530,7 +529,7 @@
                         <hr style="border:0; border-top:1px dashed #ccc;">
                         <div class="item-content">
                             <div class="btn-group"><button class="audio-btn" onclick="playAudioText(this)">🔊</button></div>
-                            <div class="zy-text" style="font-size:15px;">我(ㄨㄛˇ)的(ㄉㄜ˙)老(ㄌㄠˇ)闆(ㄅㄢˇ)只(ㄓˇ)要(ㄧㄠˋ)我(ㄨㄛˇ)去(ㄑㄩˋ)芝(ㄓ)加(ㄐㄧㄚ)哥(ㄍㄜ)，他(ㄊㄚ)才(ㄘㄞˊ)會(ㄏㄨㄟˋ)開(ㄎㄞ)心(ㄒㄧㄣ)，別(ㄅㄧㄝˊ)人(ㄖㄣˊ)去(ㄑㄩˋ)，他(ㄊㄚ)會(ㄏㄨㄟˋ)不(ㄅㄨˋ)開(ㄎㄞ)心(ㄒㄧㄣ)。</div>
+                            <div class="zy-text" style="font-size:15px;">我(ㄨㄛˇ)的(ㄉㄜ˙)老(ㄌㄠˇ)闆(ㄅㄢˇ)只(ㄓˇ)要(ㄧㄠˋ)我(ㄨㄛˇ)去(ㄑㄩˋ)芝(ㄓ)加(ㄐㄧㄚ)哥(ㄍㄜ)，他(ㄊㄚ)才(ㄘㄞˊ)會(ㄏㄨㄟˋ)開(ㄎㄞ)心(ㄒㄧㄣ)，別(ㄅㄧㄝˊ)人(ㄖˊ)去(ㄑㄩˋ)，他(ㄊㄚ)會(ㄏㄨㄟˋ)不(ㄅㄨˋ)開(ㄎㄞ)心(ㄒㄧㄣ)。</div>
                         </div>
                         <div class="en-trans">My boss is only happy if I go to Chicago; if someone else goes, he won’t be happy.</div>
                     </div>
@@ -555,7 +554,7 @@
                         <hr style="border:0; border-top:1px dashed #ccc;">
                         <div class="item-content">
                             <div class="btn-group"><button class="audio-btn" onclick="playAudioText(this)">🔊</button></div>
-                            <div class="zy-text" style="font-size:15px;">Amy是(ㄕˋ)你(ㄋㄧˇ)太(ㄊㄞˋ)太(tai˙)嗎(ㄇㄚ˙)？才(ㄘㄞˊ)不(ㄅㄨˊ)是(ㄕˋ)，我(ㄨㄛˇ)的(ㄉㄜ˙)太(ㄊㄞˋ)太(tai˙)是(ㄕˋ)Amanda。</div>
+                            <div class="zy-text" style="font-size:15px;">Amy是(ㄕˋ)你(ㄋㄧˇ)太(ㄊㄞˋ)太(ㄊㄞ˙)嗎(ㄇㄚ˙)？才(ㄘㄞˊ)不(ㄅㄨˊ)是(ㄕˋ)，我(ㄨㄛˇ)的(ㄉㄜ˙)太(ㄊㄞˋ)太(ㄊㄞ˙)是(ㄕˋ)Amanda。</div>
                         </div>
                         <div class="en-trans">Is Amy your wife? No way, my wife is Amanda!</div>
                     </div>
@@ -615,64 +614,44 @@
             </div>
         </div>
 
-        <!-- Section 4: Translation Practice -->
+        <!-- Section 4: Homework / Translation Practice -->
         <div class="section" id="sec-3">
-            <h2>4. Translation Practice (翻譯練習)</h2>
+            <h2>4. Homework (翻譯練習)</h2>
+            <p style="color:#666; font-size:15px; margin-bottom:15px;">Translate the following sentences into Chinese using <b>就</b> or <b>才</b>:</p>
             
             <div class="grammar-box">
-                <div style="font-weight:bold; font-size:16px; color:#8C6239; margin-bottom:5px;">1. Who is our new colleague? It’s him.</div>
-                <div class="item-content">
-                    <div class="btn-group"><button class="audio-btn" onclick="playAudioText(this)">🔊</button></div>
-                    <div class="zy-text">誰(ㄕㄟˊ)是(ㄕˋ)我(ㄨㄛˇ)們(ㄇㄣ˙)的(ㄉㄜ˙)新(ㄒㄧㄣ)同(ㄊㄨㄥˊ)事(ㄕˋ)？就(ㄐㄧㄡˋ)是(ㄕˋ)他(ㄊㄚ)。</div>
-                </div>
+                <div class="homework-q">1. Who is our new colleague? It’s him.</div>
+                <textarea class="hw-textarea" placeholder="Write your Chinese answer here..."></textarea>
             </div>
 
             <div class="grammar-box">
-                <div style="font-weight:bold; font-size:16px; color:#8C6239; margin-bottom:5px;">2. My cat is only happy when it eats this kind of food.</div>
-                <div class="item-content">
-                    <div class="btn-group"><button class="audio-btn" onclick="playAudioText(this)">🔊</button></div>
-                    <div class="zy-text">我(ㄨㄛˇ)的(ㄉㄜ˙)貓(ㄇㄠ)只(ㄓˇ)有(ㄧㄡˇ)吃(ㄔ)這(ㄓㄜˋ)種(ㄓㄨㄥˇ)食(ㄕˊ)物(ㄨˋ)，才(ㄘㄞˊ)會(ㄏㄨㄟˋ)開(ㄎㄞ)心(ㄒㄧㄣ)。</div>
-                </div>
+                <div class="homework-q">2. My cat is only happy when it eats this kind of food.</div>
+                <textarea class="hw-textarea" placeholder="Write your Chinese answer here..."></textarea>
             </div>
 
             <div class="grammar-box">
-                <div style="font-weight:bold; font-size:16px; color:#8C6239; margin-bottom:5px;">3. If you like it, I’ll give it to you.</div>
-                <div class="item-content">
-                    <div class="btn-group"><button class="audio-btn" onclick="playAudioText(this)">🔊</button></div>
-                    <div class="zy-text">要(ㄧㄠˋ)是(ㄕˋ)你(ㄋㄧˇ)喜(ㄒㄧˇ)歡(ㄏㄨㄢ)，我(ㄨㄛˇ)就(ㄐㄧㄡˋ)送(ㄙㄨㄥˋ)給(ㄍㄟˇ)你(ㄋㄧˇ)。</div>
-                </div>
+                <div class="homework-q">3. If you like it, I’ll give it to you.</div>
+                <textarea class="hw-textarea" placeholder="Write your Chinese answer here..."></textarea>
             </div>
 
             <div class="grammar-box">
-                <div style="font-weight:bold; font-size:16px; color:#8C6239; margin-bottom:5px;">4. As long as the weather is nice, I go running in the park.</div>
-                <div class="item-content">
-                    <div class="btn-group"><button class="audio-btn" onclick="playAudioText(this)">🔊</button></div>
-                    <div class="zy-text">只(ㄓˇ)要(ㄧㄠˋ)天(ㄊㄧㄢ)氣(ㄑㄧˋ)好(ㄏㄠˇ)，我(ㄨㄛˇ)就(ㄐㄧㄡˋ)去(ㄑㄩˋ)公(ㄍㄨㄥ)園(ㄩㄢˊ)跑(ㄆㄠˇ)步(ㄅㄨˋ)。</div>
-                </div>
+                <div class="homework-q">4. As long as the weather is nice, I go running in the park.</div>
+                <textarea class="hw-textarea" placeholder="Write your Chinese answer here..."></textarea>
             </div>
 
             <div class="grammar-box">
-                <div style="font-weight:bold; font-size:16px; color:#8C6239; margin-bottom:5px;">5. It’s only three o’clock. Why are you going home already?</div>
-                <div class="item-content">
-                    <div class="btn-group"><button class="audio-btn" onclick="playAudioText(this)">🔊</button></div>
-                    <div class="zy-text">現(ㄒㄧㄢˋ)在(ㄗㄞˋ)才(ㄘㄞˊ)三(ㄙㄢ)點(ㄉㄧㄢˇ)，你(ㄋㄧˇ)怎(ㄗㄣˇ)麼(ㄇㄜ˙)就(ㄐㄧㄡˋ)要(ㄧㄠˋ)回(ㄏㄨㄟˊ)家(ㄐㄧㄚ)了(ㄌㄜ˙)？</div>
-                </div>
+                <div class="homework-q">5. It’s only three o’clock. Why are you going home already?</div>
+                <textarea class="hw-textarea" placeholder="Write your Chinese answer here..."></textarea>
             </div>
 
             <div class="grammar-box">
-                <div style="font-weight:bold; font-size:16px; color:#8C6239; margin-bottom:5px;">6. This bubble tea is only 2 dollars USD. So cheap!</div>
-                <div class="item-content">
-                    <div class="btn-group"><button class="audio-btn" onclick="playAudioText(this)">🔊</button></div>
-                    <div class="zy-text">這(ㄓㄜˋ)杯(ㄅㄟ)珍(ㄓㄣ)珠(ㄓㄨ)奶(ㄋㄞˇ)茶(ㄔㄚˊ)才(ㄘㄞˊ)兩(ㄌㄧㄤˇ)美(ㄇㄟˇ)元(ㄩㄢˊ)，好(ㄏㄠˇ)便(ㄆㄧㄢˊ)宜(ㄧˊ)喔(ㄛ)！</div>
-                </div>
+                <div class="homework-q">6. This bubble tea is only 2 dollars USD. So cheap!</div>
+                <textarea class="hw-textarea" placeholder="Write your Chinese answer here..."></textarea>
             </div>
 
             <div class="grammar-box">
-                <div style="font-weight:bold; font-size:16px; color:#8C6239; margin-bottom:5px;">7. A single steak at this restaurant costs 2,000 dollars!</div>
-                <div class="item-content">
-                    <div class="btn-group"><button class="audio-btn" onclick="playAudioText(this)">🔊</button></div>
-                    <div class="zy-text">這(ㄓㄜˋ)家(ㄐㄧㄚ)餐(ㄘㄢ)廳(ㄊㄧㄥ)的(ㄉㄜ˙)一(ㄧˊ)塊(ㄎㄨㄞˋ)牛(ㄋㄧㄡˊ)排(ㄆㄞˊ)就(ㄐㄧㄡˋ)要(ㄧㄠˋ)兩(ㄌㄧㄤˇ)千(ㄑㄧㄢ)美(ㄇㄟˇ)元(ㄩㄢˊ)！</div>
-                </div>
+                <div class="homework-q">7. A single steak at this restaurant costs 2,000 dollars!</div>
+                <textarea class="hw-textarea" placeholder="Write your Chinese answer here..."></textarea>
             </div>
 
         </div>
