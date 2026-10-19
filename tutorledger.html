@@ -35,6 +35,7 @@ table{width:100%;border-collapse:collapse}td,th{padding:7px 4px;border-bottom:1p
 .cal .h{font-size:12px;color:var(--mu)}
 .d{min-height:46px;border:1px solid var(--bd);border-radius:8px;padding:3px;font-size:12px;cursor:pointer;background:var(--bg)}
 .d.on{background:var(--ok);color:#fff;border-color:var(--ok)}
+.d.bk{border:2px dashed var(--ok)}
 .d.pay{outline:2px solid var(--ac)}
 .d small{display:block;font-size:10px}
 .x{color:var(--mu);cursor:pointer;border:0;background:none;font-size:16px}
@@ -105,7 +106,8 @@ function nt(n){return 'NT$'+Math.round(n).toLocaleString()}
 function stu(id){return S.students.find(function(s){return s.id===id})}
 function sname(id){return stu(id)?stu(id).name:'(已刪除)'}
 function paidOf(id){return S.payments.filter(function(p){return p.sid===id}).reduce(function(a,p){return a+p.lessons},0)}
-function usedOf(id){return S.lessons.filter(function(l){return l.sid===id}).length}
+function usedOf(id){var t=today();return S.lessons.filter(function(l){return l.sid===id&&l.date<=t}).length}
+function bookedOf(id){var t=today();return S.lessons.filter(function(l){return l.sid===id&&l.date>t}).length}
 function shift(m,n){var p=m.split('-');return ymOf(new Date(+p[0],+p[1]-1+n,1))}
 function go(v,id){view=v;share=false;editId=null;if(id!==undefined)sid=id;render()}
 function openShare(id){sid=id;view='student';share=true;editId=null;calYm=ymOf(new Date());render();window.scrollTo(0,0)}
@@ -132,14 +134,14 @@ function alloc(){
   return map;
 }
 function home(){
-  var A=alloc(),ml=S.lessons.filter(function(l){return l.date.slice(0,7)===ym});
+  var A=alloc(),td=today(),ml=S.lessons.filter(function(l){return l.date.slice(0,7)===ym&&l.date<=td}),fl=S.lessons.filter(function(l){return l.date.slice(0,7)===ym&&l.date>td}),fut=0;fl.forEach(function(l){fut+=A[l.id]||0});
   var acc=0,unp=0,byA={};
   ml.forEach(function(l){var v=A[l.id];if(v==null){unp++;v=0}acc+=v;var b=byA[l.sid]=byA[l.sid]||{n:0,t:0};b.n++;b.t+=v});
   var ps=S.payments.filter(function(p){return p.date.slice(0,7)===ym});
   var cash=0,byC={},byS={};
   ps.forEach(function(p){var t=p.amount*p.rate;cash+=t;var c=byC[p.cur]=byC[p.cur]||{o:0,t:0};c.o+=p.amount;c.t+=t;var k=p.src||'未指定';byS[k]=(byS[k]||0)+t});
   return '<div class="card"><div class="row" style="justify-content:space-between"><button class="btn g" onclick="ym=shift(ym,-1);render()">‹</button><b>'+ym.replace('-',' 年 ')+' 月</b><button class="btn g" onclick="ym=shift(ym,1);render()">›</button></div>'
-  +'<div class="mu" style="margin-top:10px">本月實際上課收入（依上課堂數，換算台幣）</div><div class="big">'+nt(acc)+'</div><div class="mu">本月上課 '+ml.length+' 堂'+(unp?'・其中 '+unp+' 堂還沒有對應的收款（未計入）':'')+'</div>'
+  +'<div class="mu" style="margin-top:10px">本月實際上課收入（到今天為止已上的課，換算台幣）</div><div class="big">'+nt(acc)+'</div><div class="mu">本月上課 '+ml.length+' 堂'+(unp?'・其中 '+unp+' 堂還沒有對應的收款（未計入）':'')+'</div>'+(fl.length?'<div class="mu">另有 '+fl.length+' 堂已預約、還沒上，預計 '+nt(fut)+'</div>':'')
   +(ml.length?'<table style="margin-top:8px"><tr><th>學生</th><th class="r">堂數</th><th class="r">台幣</th></tr>'+Object.keys(byA).map(function(i){return '<tr><td>'+esc(sname(i))+'</td><td class="r">'+byA[i].n+'</td><td class="r">'+nt(byA[i].t)+'</td></tr>'}).join('')+'</table>':'')+'</div>'
   +'<div class="card"><div class="mu">本月收款入帳（現金，依匯款日期）</div><div class="big" style="font-size:24px">'+nt(cash)+'</div><div class="mu">收款 '+ps.length+' 筆'+(ps.length?'':'（本月沒有收款）')+'</div>'
   +(ps.length?'<table style="margin-top:8px"><tr><th>收款來源</th><th class="r">台幣</th></tr>'+Object.keys(byS).map(function(k){return '<tr><td>'+esc(k)+'</td><td class="r">'+nt(byS[k])+'</td></tr>'}).join('')+'</table><table><tr><th>幣別</th><th class="r">原幣</th><th class="r">台幣</th></tr>'+Object.keys(byC).map(function(c){return '<tr><td>'+c+'</td><td class="r">'+byC[c].o.toLocaleString()+'</td><td class="r">'+nt(byC[c].t)+'</td></tr>'}).join('')+'</table>':'')+'</div>'
@@ -189,8 +191,8 @@ function editPay(id){editId=id;render()}
 function delPay(id){if(confirm('確定刪除這筆收款？')){S.payments=S.payments.filter(function(p){return p.id!==id});if(editId===id)editId=null;save();render()}}
 
 function students(){
-  return dupNote()+'<div class="card"><h2>學生（點選查看堂數與月曆）</h2>'+(S.students.length?S.students.map(function(s){var rem=paidOf(s.id)-usedOf(s.id);
-    return '<div class="st" onclick="calYm=ymOf(new Date());go(\'student\',\''+s.id+'\')"><div><b>'+esc(s.name)+'</b><div class="mu">'+s.cur+'・已匯 '+paidOf(s.id)+' 堂・已上 '+usedOf(s.id)+' 堂</div></div><span class="tag'+(rem>1?' ok':'')+'">'+(rem<0?'已超上 '+(-rem)+' 堂':'剩 '+rem+' 堂')+'</span></div>'}).join(''):'<div class="mu">尚無學生</div>')+'</div>'
+  return dupNote()+'<div class="card"><h2>學生（點選查看堂數與月曆）</h2>'+(S.students.length?S.students.map(function(s){var rem=paidOf(s.id)-usedOf(s.id)-bookedOf(s.id);
+    return '<div class="st" onclick="calYm=ymOf(new Date());go(\'student\',\''+s.id+'\')"><div><b>'+esc(s.name)+'</b><div class="mu">'+s.cur+'・已匯 '+paidOf(s.id)+' 堂・已上 '+usedOf(s.id)+' 堂・已預約 '+bookedOf(s.id)+' 堂</div></div><span class="tag'+(rem>1?' ok':'')+'">'+(rem<0?'已超出匯款 '+(-rem)+' 堂':'未預約 '+rem+' 堂')+'</span></div>'}).join(''):'<div class="mu">尚無學生</div>')+'</div>'
   +'<div class="card"><h2>＋ 新增學生</h2><div class="grid"><div><label>姓名（建議與行事曆活動標題一致）</label><input id="nN"></div><div><label>付款幣別</label><select id="nC"><option>USD</option><option>EUR</option><option>NZD</option><option>TWD</option></select></div></div><div class="mu" style="margin:10px 0 6px">第一筆收款（選填，不填就之後再記）</div><div class="grid"><div><label>金額</label><input type="number" id="nA" step="any"></div><div><label>購買堂數</label><input type="number" id="nL" value="1" min="1"></div><div><label>收款日期</label><input type="date" id="nD" value="'+today()+'"></div><div><label>收款來源</label><select id="nSrc">'+S.sources.map(function(x){return '<option>'+esc(x)+'</option>'}).join('')+'</select></div></div><div class="mu" style="margin-top:6px">匯率先用「設定」頁的預設值，之後可在收款紀錄按「編輯」修改。</div><br><button class="btn" onclick="addStu()">新增</button></div>';
 }
 function addStu(){var n=document.getElementById('nN').value.trim();if(!n)return;
@@ -211,7 +213,7 @@ function mergeStu(){var to=document.getElementById('mT').value;if(!to)return;
 
 function detail(){
   var s=stu(sid);if(!s){view='students';share=false;return students()}
-  var paid=paidOf(sid),used=usedOf(sid),rem=paid-used,pct=paid?Math.min(100,used/paid*100):0;
+  var paid=paidOf(sid),used=usedOf(sid),bk=bookedOf(sid),rem=paid-used-bk,pct=paid?Math.min(100,used/paid*100):0,pct2=paid?Math.min(100-pct,bk/paid*100):0;
   var ls={},ps={};S.lessons.filter(function(l){return l.sid===sid}).forEach(function(l){ls[l.date]=l.id});
   var hist=S.payments.filter(function(x){return x.sid===sid}).sort(function(a,b){return a.date<b.date?1:-1});
   hist.forEach(function(p){ps[p.date]=(ps[p.date]||0)+p.lessons});
@@ -219,16 +221,16 @@ function detail(){
   ['日','一','二','三','四','五','六'].forEach(function(w){cells+='<div class="h">'+w+'</div>'});
   for(var i=0;i<first;i++)cells+='<div></div>';
   for(var d=1;d<=days;d++){var ds=calYm+'-'+String(d).padStart(2,'0');
-    cells+='<div class="d'+(ls[ds]?' on':'')+(ps[ds]?' pay':'')+'"'+(share?'':' onclick="toggleLesson(\''+ds+'\')"')+'>'+d+(ls[ds]?'<small>上課</small>':'')+(ps[ds]?'<small>匯 '+ps[ds]+'堂</small>':'')+'</div>'}
+    cells+='<div class="d'+(ls[ds]?(ds>today()?' bk':' on'):'')+(ps[ds]?' pay':'')+'"'+(share?'':' onclick="toggleLesson(\''+ds+'\')"')+'>'+d+(ls[ds]?'<small>'+(ds>today()?'已預約':'上課')+'</small>':'')+(ps[ds]?'<small>匯 '+ps[ds]+'堂</small>':'')+'</div>'}
   var lessonDates=Object.keys(ls).sort();
   var top=share?'<button class="btn g" onclick="go(\'students\')">‹ 離開學生視圖</button>':'<div class="row"><button class="btn g" onclick="go(\'students\')">‹ 返回</button><button class="btn" onclick="openShare(sid)">📤 學生視圖</button></div>';
   return top+'<div class="card" style="margin-top:10px"><h2>'+esc(s.name)+(share?'':'（'+s.cur+'）')+'</h2>'
-  +'<div class="row" style="justify-content:space-between"><div><div class="mu">已匯</div><b style="font-size:22px">'+paid+'</b> 堂</div><div><div class="mu">已上</div><b style="font-size:22px">'+used+'</b> 堂</div><div><div class="mu">剩餘</div><b class="big">'+rem+'</b> 堂</div></div>'
-  +'<div class="bar"><i style="width:'+pct+'%"></i></div>'+(rem<=1?'<div class="tag">'+(share?'⚠ 堂數快用完囉':'⚠ 堂數快用完，記得提醒續約')+'</div>':'')+'</div>'
+  +'<div class="row" style="justify-content:space-between"><div><div class="mu">已匯</div><b style="font-size:22px">'+paid+'</b> 堂</div><div><div class="mu">已上</div><b style="font-size:22px">'+used+'</b> 堂</div><div><div class="mu">已預約</div><b style="font-size:22px">'+bk+'</b> 堂</div><div><div class="mu">未預約</div><b class="big">'+rem+'</b> 堂</div></div>'
+  +'<div class="bar" style="display:flex"><i style="width:'+pct+'%"></i><i style="width:'+pct2+'%;opacity:.4"></i></div><div class="mu">深綠＝已上　淺綠＝已預約（未來的課）</div>'+(rem<=1?'<div class="tag">'+(share?'⚠ 堂數快用完囉':'⚠ 堂數快用完，記得提醒續約')+'</div>':'')+'</div>'
   +'<div class="card"><div class="row" style="justify-content:space-between"><button class="btn g" onclick="calYm=shift(calYm,-1);render()">‹</button><b>'+calYm.replace('-',' 年 ')+' 月</b><button class="btn g" onclick="calYm=shift(calYm,1);render()">›</button></div>'
-  +(share?'':'<div class="mu" style="margin:6px 0">點日期＝記一堂課（再點一次取消）。紅框＝匯款日。</div>')+'<div class="cal" style="margin-top:8px">'+cells+'</div></div>'
+  +(share?'':'<div class="mu" style="margin:6px 0">點日期＝記一堂課（再點一次取消）。今天（含）以前算「已上」，今天之後算「已預約」（虛線框）。紅框＝匯款日。</div>')+'<div class="cal" style="margin-top:8px">'+cells+'</div></div>'
   +'<div class="card"><h2>匯款紀錄</h2>'+(hist.length?'<table><tr><th>日期</th><th class="r">金額</th><th class="r">堂數</th>'+(share?'<th>方式</th>':'<th class="r">台幣</th><th></th>')+'</tr>'+hist.map(function(x){return '<tr><td>'+x.date+'</td><td class="r">'+x.amount+' '+x.cur+'</td><td class="r">'+x.lessons+'</td>'+(share?'<td>'+esc(x.src||'')+'</td>':'<td class="r">'+nt(x.amount*x.rate)+'<div class="mu">'+esc(x.src||'')+'</div></td><td class="r"><button class="btn s g" onclick="editPay(\''+x.id+'\')">編輯</button> <button class="x" onclick="delPay(\''+x.id+'\')">🗑</button></td>')+'</tr>'}).join('')+'</table>':'<div class="mu">尚無匯款</div>')+'</div>'
-  +'<div class="card"><h2>已上課日期（'+used+' 堂）</h2><div class="mu">'+(lessonDates.length?lessonDates.join('、'):'尚無')+'</div></div>'
+  +'<div class="card"><h2>已上課日期（'+used+' 堂）</h2><div class="mu">'+(function(){var a=lessonDates.filter(function(d){return d<=today()});return a.length?a.join('、'):'尚無'})()+'</div><h2 style="margin-top:12px">已預約（'+bk+' 堂）</h2><div class="mu">'+(function(){var a=lessonDates.filter(function(d){return d>today()});return a.length?a.join('、'):'尚無'})()+'</div></div>'
   +(share?'':payForm(sid,editId&&S.payments.find(function(x){return x.id===editId}))+mergeCard()+'<button class="btn g" onclick="renameStu()">修改姓名</button> <button class="btn g" onclick="delStu()">刪除此學生</button>');
 }
 function toggleLesson(d){
@@ -242,8 +244,8 @@ function delStu(){if(confirm('刪除此學生及其所有收款與上課紀錄�
 /* 匯入 Google 行事曆（.ics） */
 function impView(){
   var t=new Date(),a=ymOf(new Date(t.getFullYear(),t.getMonth()-1,1))+'-01';
-  return '<div class="card"><h2>從 Google 行事曆匯入上課紀錄</h2><div class="mu" style="margin-bottom:8px">1. 在電腦開啟 Google 行事曆 → 設定 → 匯入與匯出 → 匯出，會得到 .zip，解壓縮後選你的上課行事曆 .ics。<br>2. 在下面選檔案與日期範圍。程式會用「活動標題裡的學生姓名」自動配對，你可以逐筆調整再匯入。已記過的同一天不會重複。</div>'
-  +'<div class="grid"><div><label>.ics 檔案</label><input type="file" id="icsF" accept=".ics,text/calendar"></div><div><label>從</label><input type="date" id="iF" value="'+a+'"></div><div><label>到</label><input type="date" id="iT" value="'+today()+'"></div></div><br><button class="btn" onclick="impParse()">讀取行事曆</button></div>'
+  return '<div class="card"><h2>從 Google 行事曆匯入上課紀錄</h2><div class="mu" style="margin-bottom:8px">1. 在電腦開啟 Google 行事曆 → 設定 → 匯入與匯出 → 匯出，會得到 .zip，解壓縮後選你的上課行事曆 .ics。<br>2. 在下面選檔案與日期範圍。程式會用「活動標題裡的學生姓名」自動配對，你可以逐筆調整再匯入。已記過的同一天不會重複。日期範圍預設包含未來約兩個月，今天之後的課會算「已預約」。</div>'
+  +'<div class="grid"><div><label>.ics 檔案</label><input type="file" id="icsF" accept=".ics,text/calendar"></div><div><label>從</label><input type="date" id="iF" value="'+a+'"></div><div><label>到</label><input type="date" id="iT" value="'+ymd(new Date(t.getFullYear(),t.getMonth()+3,0))+'"></div></div><br><button class="btn" onclick="impParse()">讀取行事曆</button></div>'
   +(impRows.length?'<div class="card"><h2>預覽（'+impRows.length+' 個活動）</h2><table>'+impRows.map(function(r,i){return '<tr><td><input type="checkbox" '+(r.on?'checked':'')+' onchange="impRows['+i+'].on=this.checked"></td><td>'+r.date+'<div class="mu">'+esc(r.title)+'</div></td><td><select onchange="impRows['+i+'].sid=this.value;impRows['+i+'].on=!!this.value">'+'<option value="">略過</option>'+S.students.map(function(s){return '<option value="'+s.id+'"'+(s.id===r.sid?' selected':'')+'>'+esc(s.name)+'</option>'}).join('')+'</select></td></tr>'}).join('')+'</table><br><button class="btn" onclick="impGo()">匯入勾選的課</button></div>':'');
 }
 function impParse(){
