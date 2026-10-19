@@ -29,8 +29,7 @@ button{font:inherit;border:0;cursor:pointer;color:var(--ink)}
 .nav{background:var(--blue);border-radius:12px;padding:6px 12px}
 .cal{display:grid;grid-template-columns:repeat(7,1fr);gap:5px}
 .wd{text-align:center;color:var(--soft);font-size:13px}
-.day{aspect-ratio:1/1;min-height:44px;border-radius:14px;background:var(--bg);padding:3px;font-size:14px;display:flex;flex-direction:column;align-items:center;justify-content:flex-start}
-.day.has1{background:var(--yellow)}.day.has2{background:var(--pink)}.day.has3{background:var(--blue)}
+.day{min-height:58px;border-radius:14px;background:var(--bg);padding:3px;font-size:14px;display:flex;flex-direction:column;align-items:center;justify-content:flex-start}
 .day.today{outline:3px dashed var(--pink)}
 .day.sel{outline:3px solid var(--ink)}
 .day small{font-size:11px;line-height:1}
@@ -48,6 +47,19 @@ li.done span{text-decoration:line-through;color:var(--soft)}
 .goal{background:var(--yellow)}.goal:nth-child(2n){background:var(--pink)}.goal:nth-child(3n){background:var(--blue)}
 .hint{color:var(--soft);font-size:14px;margin:6px 0}
 .cheer{margin-top:10px;font-size:14px}
+
+.day.has1,.day.has2,.day.has3{background:var(--card);box-shadow:inset 0 0 0 2px var(--line)}
+.pick{margin-bottom:8px}
+.acc{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin-bottom:4px}
+.acc small{color:var(--soft);min-width:104px}
+.pb{border-radius:12px;padding:3px 9px;font-size:13px;border:2px solid transparent}
+.pb.on{border-color:var(--ink)}
+.chip{display:inline-flex;align-items:center;justify-content:center;width:18px;height:18px;border-radius:50%;font-style:normal;font-size:11px;box-shadow:0 0 0 2px var(--card);flex:none}
+.chips{display:flex;flex-wrap:wrap;gap:2px;justify-content:center;margin-top:2px}
+.chips i{font-size:10px}
+.catstats{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+.cs{background:rgba(255,255,255,.55);border-radius:12px;padding:2px 8px;font-size:12px}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .cs{background:rgba(0,0,0,.25)}}
 </style>
 </head>
 <body>
@@ -65,6 +77,7 @@ li.done span{text-decoration:line-through;color:var(--soft)}
       <div class="stat"><b id="sDays">0</b>有前進的天數</div>
       <div class="stat"><b id="sStreak">0</b>連續前進天數</div>
     </div>
+    <div class="catstats" id="catStats"></div>
   </div>
 
   <div class="grid2">
@@ -77,6 +90,7 @@ li.done span{text-decoration:line-through;color:var(--soft)}
       <div class="cal" id="cal"></div>
       <div class="hint">點日期可以看、也可以記下那天的小步 🐾</div>
       <h2 id="dTitle" style="margin-top:14px"></h2>
+      <div class="hint">先選這一步是哪個帳號，沒選就是 ✨其他</div><div class="pick" id="pickStep"></div>
       <div class="row"><input type="text" id="stepIn" placeholder="今天我做了…（再小都算！）" maxlength="160"><button class="add" id="stepAdd">記下來</button></div>
       <ul id="steps"></ul>
       <div class="cheer" id="cheer"></div>
@@ -85,6 +99,7 @@ li.done span{text-decoration:line-through;color:var(--soft)}
     <div class="card" style="align-self:start">
       <h2>💡 靈感小盒子</h2>
       <div class="hint">腦袋裡冒出來的想法、想做的事，先丟進來～</div>
+      <div class="pick" id="pickIdea"></div>
       <div class="row"><input type="text" id="ideaIn" placeholder="我想做…" maxlength="160"><button class="add" id="ideaAdd">收藏</button></div>
       <ul id="ideas"></ul>
     </div>
@@ -105,6 +120,32 @@ function readLocal(){try{const r=localStorage.getItem(LS);if(r)return JSON.parse
 function normalize(o){return{goals:(o&&o.goals)||[],ideas:(o&&o.ideas)||[],steps:(o&&o.steps)||{},del:(o&&o.del)||[]}}
 function countOf(k){return (S.steps[k]||[]).length}
 
+const ACC=[
+ {id:'a1',name:'華語教學帳號',color:'--pink',plats:['ig','th','mail','yt']},
+ {id:'a2',name:'華語教師帳號',color:'--blue',plats:['ig','th','mail']},
+ {id:'a3',name:'勾針帳號',color:'--yellow',plats:['ig','th']}];
+const AE={a1:'🌸',a2:'🫧',a3:'🧶'};
+const PL={ig:['📷','IG'],th:['🧵','Threads'],mail:['💌','Email'],yt:['🎬','YouTube']};
+const CATS={other:{acc:{color:'--line',name:'其他'},icon:'✨',label:'其他'}};
+ACC.forEach(a=>a.plats.forEach(p=>{CATS[a.id+'-'+p]={acc:a,icon:PL[p][0],label:a.name+' '+PL[p][1]}}));
+const pk={step:'other',idea:'other'};
+function chipHTML(c){const k=CATS[c]||CATS.other;return '<em class="chip" style="background:var('+k.acc.color+')" title="'+k.label+'">'+k.icon+'</em>'}
+function chip(c){const t=document.createElement('template');t.innerHTML=chipHTML(c);return t.content.firstChild}
+function buildPick(el,name){
+  el.innerHTML='';
+  ACC.forEach(a=>{
+    const r=document.createElement('div');r.className='acc';
+    r.innerHTML='<small>'+AE[a.id]+' '+a.name+'</small>';
+    a.plats.forEach(p=>{
+      const id=a.id+'-'+p,b=document.createElement('button');
+      b.className='pb'+(pk[name]===id?' on':'');b.style.background='var('+a.color+')';
+      b.textContent=PL[p][0]+' '+PL[p][1];
+      b.onclick=()=>{pk[name]=pk[name]===id?'other':id;buildPick(el,name)};
+      r.appendChild(b);
+    });
+    el.appendChild(r);
+  });
+}
 function renderCal(){
   $('mTitle').textContent=view.getFullYear()+' 年 '+(view.getMonth()+1)+' 月';
   const c=$('cal');c.innerHTML='';
@@ -116,7 +157,8 @@ function renderCal(){
     const dt=new Date(view.getFullYear(),view.getMonth(),d),k=key(dt),cnt=countOf(k);
     const b=document.createElement('button');
     b.className='day'+(cnt?' has'+Math.min(cnt,3):'')+(k===key(today)?' today':'')+(k===sel?' sel':'');
-    b.innerHTML='<span>'+d+'</span>'+(cnt?'<small>'+(cnt>3?'🌟':'⭐'.repeat(cnt))+'</small>':'');
+    const cs=[...new Set((S.steps[k]||[]).map(x=>x.c||'other'))];
+    b.innerHTML='<span>'+d+'</span>'+(cnt?'<div class="chips">'+cs.slice(0,4).map(chipHTML).join('')+(cs.length>4?'<i>+</i>':'')+'</div>':'');
     b.onclick=()=>{sel=k;render()};
     c.appendChild(b);
   }
@@ -124,6 +166,7 @@ function renderCal(){
 function li(text,opts){
   const e=document.createElement('li');if(opts.cls)e.className=opts.cls;
   const s=document.createElement('span');s.textContent=text;e.appendChild(s);
+  if(opts.pre)e.insertBefore(opts.pre,s);
   (opts.extra||[]).forEach(x=>e.appendChild(x));
   const x=document.createElement('button');x.className='x';x.textContent='✕';x.onclick=opts.del;e.appendChild(x);
   return e;
@@ -133,7 +176,7 @@ function renderSteps(){
   $('dTitle').textContent=(sel===key(today)?'今天':m+'月'+d+'日')+'的小步 🐾';
   const ul=$('steps');ul.innerHTML='';
   const list=S.steps[sel]||[];
-  list.forEach(it=>ul.appendChild(li('🌸 '+it.t,{del:()=>{S.del.push(it.id);S.steps[sel]=list.filter(z=>z.id!==it.id);if(!S.steps[sel].length)delete S.steps[sel];save();render()}})));
+  list.forEach(it=>ul.appendChild(li(it.t,{pre:chip(it.c),del:()=>{S.del.push(it.id);S.steps[sel]=list.filter(z=>z.id!==it.id);if(!S.steps[sel].length)delete S.steps[sel];save();render()}})));
   const n=list.length;
   $('cheer').textContent=n===0?'還沒有紀錄，想到一件小事就記下來吧～':n<3?'已經前進 '+n+' 步，太棒了！':'哇，這天做了 '+n+' 件事，超厲害 🎉';
 }
@@ -147,26 +190,27 @@ function renderIdeas(){
   S.ideas.forEach(i=>{
     const b=document.createElement('button');b.className='ok';b.textContent=i.done?'取消':'做了！';
     b.onclick=()=>{i.done=!i.done;
-      if(i.done){const k=key(new Date());(S.steps[k]=S.steps[k]||[]).push({id:uid(),t:'完成靈感：'+i.t})}
+      if(i.done){const k=key(new Date());(S.steps[k]=S.steps[k]||[]).push({id:uid(),t:'完成靈感：'+i.t,c:i.c||'other'})}
       save();render()};
-    ul.appendChild(li((i.done?'✅ ':'💡 ')+i.t,{cls:i.done?'done':'',extra:[b],del:()=>{S.del.push(i.id);S.ideas=S.ideas.filter(z=>z.id!==i.id);save();render()}}));
+    ul.appendChild(li((i.done?'✅ ':'')+i.t,{pre:chip(i.c),cls:i.done?'done':'',extra:[b],del:()=>{S.del.push(i.id);S.ideas=S.ideas.filter(z=>z.id!==i.id);save();render()}}));
   });
 }
 function renderStats(){
   const y=view.getFullYear(),m=view.getMonth();
-  let total=0,days=0;
-  Object.keys(S.steps).forEach(k=>{const [a,b]=k.split('-').map(Number);if(a===y&&b===m+1){total+=S.steps[k].length;days++}});
+  let total=0,days=0;const cc={};
+  Object.keys(S.steps).forEach(k=>{const [a,b]=k.split('-').map(Number);if(a===y&&b===m+1){total+=S.steps[k].length;days++;S.steps[k].forEach(x=>{const c=x.c||'other';cc[c]=(cc[c]||0)+1})}});
   let streak=0,d=new Date(today);
   if(!countOf(key(d)))d.setDate(d.getDate()-1);
   while(countOf(key(d))){streak++;d.setDate(d.getDate()-1)}
+  $('catStats').innerHTML=Object.keys(cc).map(c=>'<span class="cs">'+chipHTML(c)+' '+(CATS[c]||CATS.other).label+' ×'+cc[c]+'</span>').join('');
   $('sMonth').textContent=total;$('sDays').textContent=days;$('sStreak').textContent=streak;
 }
 function render(){renderCal();renderSteps();renderGoals();renderIdeas();renderStats()}
 
 function addTo(inputId,fn){const v=$(inputId).value.trim();if(!v)return;fn(v);$(inputId).value='';save();render()}
 $('goalAdd').onclick=()=>addTo('goalIn',v=>S.goals.push({id:uid(),t:v}));
-$('ideaAdd').onclick=()=>addTo('ideaIn',v=>S.ideas.unshift({id:uid(),t:v,done:false}));
-$('stepAdd').onclick=()=>addTo('stepIn',v=>{(S.steps[sel]=S.steps[sel]||[]).push({id:uid(),t:v})});
+$('ideaAdd').onclick=()=>addTo('ideaIn',v=>S.ideas.unshift({id:uid(),t:v,done:false,c:pk.idea}));
+$('stepAdd').onclick=()=>addTo('stepIn',v=>{(S.steps[sel]=S.steps[sel]||[]).push({id:uid(),t:v,c:pk.step})});
 [['goalIn','goalAdd'],['ideaIn','ideaAdd'],['stepIn','stepAdd']].forEach(([i,b])=>$(i).addEventListener('keydown',e=>{if(e.key==='Enter'&&!e.isComposing)$(b).click()}));
 $('prev').onclick=()=>{view=new Date(view.getFullYear(),view.getMonth()-1,1);render()};
 $('next').onclick=()=>{view=new Date(view.getFullYear(),view.getMonth()+1,1);render()};
@@ -241,6 +285,7 @@ async function connect(){
 $('syncBtn').onclick=connect;
 if(localStorage.getItem(LK)){$('syncBtn').textContent='☁️ 重新連線同步';msg('點一下按鈕，把最新資料同步過來')}
 
+buildPick($('pickStep'),'step');buildPick($('pickIdea'),'idea');
 S=normalize(readLocal());render();
 
 </script>
