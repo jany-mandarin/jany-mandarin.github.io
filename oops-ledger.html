@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Oops! Mandarin 記帳本</title>
+<style>
+:root{--bg:#faf7f2;--card:#fff;--tx:#2b2622;--mu:#8a8178;--ac:#d9534f;--ac2:#f3d9d7;--ok:#3a8f5c;--bd:#e8e1d6;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#1d1a17;--card:#2a2622;--tx:#f1ece4;--mu:#a59c91;--ac:#ef7a76;--ac2:#4a2d2b;--ok:#6fc08f;--bd:#3d3731}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--tx);font:15px/1.5 -apple-system,"PingFang TC","Noto Sans TC","Microsoft JhengHei",sans-serif}
+main{max-width:760px;margin:0 auto;padding:14px}
+h1{font-size:20px;margin:6px 0 10px}h2{font-size:16px;margin:0 0 8px}
+nav{display:flex;gap:6px;margin-bottom:12px}
+nav button{flex:1;padding:9px 2px;border:1px solid var(--bd);background:var(--card);color:var(--tx);border-radius:10px;font:inherit;cursor:pointer}
+nav button.on{background:var(--ac);color:#fff;border-color:var(--ac)}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:14px;padding:14px;margin-bottom:12px}
+.big{font-size:30px;font-weight:700;color:var(--ac)}
+.mu{color:var(--mu);font-size:13px}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:8px}
+input,select{width:100%;padding:8px;border:1px solid var(--bd);border-radius:8px;background:var(--bg);color:var(--tx);font:inherit}
+input[type=checkbox]{width:auto}
+label{font-size:12px;color:var(--mu);display:block;margin-bottom:2px}
+.btn{padding:9px 14px;border:0;border-radius:10px;background:var(--ac);color:#fff;font:inherit;cursor:pointer}
+.btn.g{background:var(--ac2);color:var(--ac)}
+.btn.s{padding:4px 9px;font-size:12px}
+table{width:100%;border-collapse:collapse}td,th{padding:7px 4px;border-bottom:1px solid var(--bd);text-align:left;font-size:14px;vertical-align:top}th{color:var(--mu);font-weight:500;font-size:12px}
+.r{text-align:right}
+.st{display:flex;justify-content:space-between;align-items:center;padding:11px 4px;border-bottom:1px solid var(--bd);cursor:pointer}
+.tag{padding:2px 9px;border-radius:20px;font-size:12px;background:var(--ac2);color:var(--ac)}
+.tag.ok{background:transparent;border:1px solid var(--ok);color:var(--ok)}
+.bar{height:8px;border-radius:5px;background:var(--bd);overflow:hidden;margin:6px 0}.bar i{display:block;height:100%;background:var(--ok)}
+.cal{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;text-align:center}
+.cal .h{font-size:12px;color:var(--mu)}
+.d{min-height:46px;border:1px solid var(--bd);border-radius:8px;padding:3px;font-size:12px;cursor:pointer;background:var(--bg)}
+.d.on{background:var(--ok);color:#fff;border-color:var(--ok)}
+.d.pay{outline:2px solid var(--ac)}
+.d small{display:block;font-size:10px}
+.x{color:var(--mu);cursor:pointer;border:0;background:none;font-size:16px}
+</style>
+</head>
+<body>
+<main>
+<h1>📒 Oops! Mandarin 記帳本</h1>
+<div id="sync"></div>
+<nav id="nav"></nav>
+<div id="app"></div>
+</main>
+<script>
+var KEY='oops-ledger-v1';
+var S={students:[],payments:[],lessons:[],rates:{USD:32,EUR:35,NZD:19,TWD:1},ratesDate:'',sources:['Preply','PayPal','Wise','BNZ']};
+var view='home',sid=null,share=false,editId=null,q='',impRows=[];
+var ym=ymOf(new Date()),calYm=ymOf(new Date());
+try{var raw=localStorage.getItem(KEY);if(raw)S=Object.assign(S,JSON.parse(raw));}catch(e){}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(S));}catch(e){}G.dirty=true;gSave();schedulePush()}
+/* ===== Google 雲端硬碟同步（drive.file 權限，只存取本程式建立的檔案）===== */
+var G={};try{G=JSON.parse(localStorage.getItem('oops-gmeta'))||{}}catch(e){}
+var tok=null,tokExp=0,tc=null,gMsg='',pushT=null,FN='oops-ledger-data.json';
+function gSave(){try{localStorage.setItem('oops-gmeta',JSON.stringify(G))}catch(e){}}
+function tokOk(){return tok&&Date.now()<tokExp}
+function hdr(){return{Authorization:'Bearer '+tok}}
+function jok(r){if(!r.ok)throw r.status;return r.json()}
+function gErr(e){if(e===401)tok=null;setMsg('同步失敗（'+e+'），資料仍保存在這台裝置')}
+function defaults(){return{students:[],payments:[],lessons:[],rates:{USD:32,EUR:35,NZD:19,TWD:1},ratesDate:'',sources:['Preply','PayPal','Wise','BNZ']}}
+function setMsg(m){gMsg=m;syncBar();if(view==='rates'&&document.getElementById('gSt'))document.getElementById('gSt').textContent='狀態：'+(gMsg||(G.fileId?'已設定':'未連接'))}
+function syncBar(){var e=document.getElementById('sync');if(!e)return;
+  if(share||!G.cid){e.innerHTML='';return}
+  var ok=tokOk();
+  e.innerHTML='<div class="card" style="padding:8px 12px;font-size:13px;'+(ok?'':'cursor:pointer;')+'"'+(ok?'':' onclick="connect()"')+'>☁️ '+(ok?esc(gMsg||'已連接'):(gMsg?esc(gMsg)+'。':'')+'點此登入 Google 以同步'+(G.dirty?'（有尚未同步的變更）':''))+'</div>';
+}
+function loadGis(cb){if(window.google&&google.accounts&&google.accounts.oauth2)return cb();var s=document.createElement('script');s.src='https://accounts.google.com/gsi/client';s.onload=cb;s.onerror=function(){setMsg('無法載入 Google 登入，請在你的 GitHub Pages 網址使用')};document.head.appendChild(s)}
+function connect(){if(!G.cid){alert('請先到「設定」貼上 OAuth 用戶端 ID');return}
+  loadGis(function(){tc=google.accounts.oauth2.initTokenClient({client_id:G.cid,scope:'https://www.googleapis.com/auth/drive.file',callback:onTok,error_callback:function(){setMsg('登入視窗被關閉或被瀏覽器擋住')}});tc.requestAccessToken({prompt:G.fileId?'':'consent'})})}
+function onTok(r){if(r.error){setMsg('登入失敗：'+r.error);return}tok=r.access_token;tokExp=Date.now()+(r.expires_in-60)*1000;initSync()}
+function initSync(){setMsg('連線中…');
+  fetch('https://www.googleapis.com/drive/v3/files?q='+encodeURIComponent("name='"+FN+"' and trashed=false")+'&fields=files(id,modifiedTime)',{headers:hdr()}).then(jok).then(function(j){
+    var f=(j.files||[])[0];if(!f){gCreate();return}
+    G.fileId=f.id;gSave();
+    var empty=!S.students.length&&!S.payments.length&&!S.lessons.length;
+    if(f.modifiedTime===G.mod){if(G.dirty)push();else setMsg('已同步');return}
+    if(empty||(G.mod&&!G.dirty)){pull(f);return}
+    if(confirm('雲端上已有資料，和這台裝置的不同。\n按「確定」＝用雲端資料取代這台裝置的資料\n按「取消」＝用這台裝置的資料覆蓋雲端'))pull(f);else push();
+  }).catch(gErr);
+}
+function pull(f){fetch('https://www.googleapis.com/drive/v3/files/'+f.id+'?alt=media',{headers:hdr()}).then(jok).then(function(d){S=Object.assign(defaults(),d);try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}G.fileId=f.id;G.mod=f.modifiedTime;G.dirty=false;gSave();setMsg('已載入雲端資料');render()}).catch(gErr)}
+function gCreate(){var b='xBOUNDx',body='--'+b+'\r\nContent-Type: application/json; charset=UTF-8\r\n\r\n'+JSON.stringify({name:FN,mimeType:'application/json'})+'\r\n--'+b+'\r\nContent-Type: application/json\r\n\r\n'+JSON.stringify(S)+'\r\n--'+b+'--';
+  fetch('https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart&fields=id,modifiedTime',{method:'POST',headers:Object.assign(hdr(),{'Content-Type':'multipart/related; boundary='+b}),body:body}).then(jok).then(function(j){G.fileId=j.id;G.mod=j.modifiedTime;G.dirty=false;gSave();setMsg('已在雲端硬碟建立檔案並同步');render()}).catch(gErr)}
+function schedulePush(){if(!G.cid||!G.fileId)return;if(!tokOk()){syncBar();return}clearTimeout(pushT);pushT=setTimeout(push,1500)}
+function push(){if(!tokOk()||!G.fileId)return;setMsg('同步中…');
+  fetch('https://www.googleapis.com/upload/drive/v3/files/'+G.fileId+'?uploadType=media&fields=modifiedTime',{method:'PATCH',headers:Object.assign(hdr(),{'Content-Type':'application/json'}),body:JSON.stringify(S)}).then(jok).then(function(j){G.mod=j.modifiedTime;G.dirty=false;gSave();setMsg('已同步 '+new Date().toLocaleTimeString())}).catch(gErr)}
+function syncCard(){return '<div class="card"><h2>☁️ Google 雲端硬碟同步</h2><div class="mu" style="margin-bottom:8px">貼上你的 OAuth 用戶端 ID 後，雲端硬碟會出現 oops-ledger-data.json，每次修改自動儲存，換裝置登入後自動載入。</div><label>OAuth 用戶端 ID</label><input id="gC" value="'+esc(G.cid||'')+'" placeholder="xxxx.apps.googleusercontent.com"><div class="row" style="margin-top:8px"><button class="btn" onclick="gCid()">儲存並連接</button>'+(G.fileId?'<button class="btn g" onclick="forceSync()">立即同步</button><button class="btn g" onclick="gOff()">中斷連接</button>':'')+'</div><div class="mu" id="gSt" style="margin-top:8px">狀態：'+esc(gMsg||(G.fileId?'已設定':'未連接'))+'</div></div>'}
+function gCid(){G.cid=document.getElementById('gC').value.trim();gSave();connect()}
+function forceSync(){if(tokOk()){G.dirty=true;push()}else connect()}
+function gOff(){if(confirm('中斷後不再同步，雲端檔案不會被刪除。')){tok=null;G.fileId=null;G.mod=null;gSave();setMsg('');render()}}
+function dl(){var a=document.createElement('a');a.href=URL.createObjectURL(new Blob([JSON.stringify(S)],{type:'application/json'}));a.download='oops-ledger-'+today()+'.json';a.click()}
+function upl(i){var f=i.files[0];if(!f)return;var r=new FileReader();r.onload=function(){try{S=Object.assign(defaults(),JSON.parse(r.result));save();render();alert('已匯入備份')}catch(e){alert('備份檔格式不正確')}};r.readAsText(f)}
+if(G.cid)loadGis(function(){});setInterval(syncBar,30000);
+function ymOf(d){return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')}
+function ymd(d){return ymOf(d)+'-'+String(d.getDate()).padStart(2,'0')}
+function today(){return ymd(new Date())}
+function uid(){return Date.now().toString(36)+Math.random().toString(36).slice(2,6)}
+function esc(s){return String(s).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
+function nt(n){return 'NT$'+Math.round(n).toLocaleString()}
+function stu(id){return S.students.find(function(s){return s.id===id})}
+function sname(id){return stu(id)?stu(id).name:'(已刪除)'}
+function paidOf(id){return S.payments.filter(function(p){return p.sid===id}).reduce(function(a,p){return a+p.lessons},0)}
+function usedOf(id){return S.lessons.filter(function(l){return l.sid===id}).length}
+function shift(m,n){var p=m.split('-');return ymOf(new Date(+p[0],+p[1]-1+n,1))}
+function go(v,id){view=v;share=false;editId=null;if(id!==undefined)sid=id;render()}
+function openShare(id){sid=id;view='student';share=true;editId=null;calYm=ymOf(new Date());render();window.scrollTo(0,0)}
+var $nav=document.getElementById('nav'),$app=document.getElementById('app');
+function render(){
+  var tabs=[['home','本月收入'],['students','學生'],['import','匯入行事曆'],['rates','設定']];
+  $nav.style.display=share?'none':'flex';
+  syncBar();
+  $nav.innerHTML=tabs.map(function(t){var on=view===t[0]||(view==='student'&&t[0]==='students');return '<button class="'+(on?'on':'')+'" onclick="go(\''+t[0]+'\')">'+t[1]+'</button>'}).join('');
+  $app.innerHTML=view==='home'?home():view==='students'?students():view==='rates'?rates():view==='import'?impView():detail();
+  if(view==='home'||(view==='student'&&!share))bindPay();
+  if(editId){var f=document.getElementById('pForm');if(f)f.scrollIntoView({behavior:'smooth'})}
+}
+/* 每堂課依「先匯先用」對應到收款，算出該堂課的台幣價值 */
+function alloc(){
+  var map={};
+  S.students.forEach(function(s){
+    var pk=S.payments.filter(function(p){return p.sid===s.id}).sort(function(a,b){return a.date<b.date?-1:1}).map(function(p){return{rem:p.lessons,u:p.amount*p.rate/p.lessons}});
+    S.lessons.filter(function(l){return l.sid===s.id}).sort(function(a,b){return a.date<b.date?-1:1}).forEach(function(l){
+      while(pk.length&&pk[0].rem<=0)pk.shift();
+      if(pk.length){pk[0].rem--;map[l.id]=pk[0].u}else map[l.id]=null;
+    });
+  });
+  return map;
+}
+function home(){
+  var A=alloc(),ml=S.lessons.filter(function(l){return l.date.slice(0,7)===ym});
+  var acc=0,unp=0,byA={};
+  ml.forEach(function(l){var v=A[l.id];if(v==null){unp++;v=0}acc+=v;var b=byA[l.sid]=byA[l.sid]||{n:0,t:0};b.n++;b.t+=v});
+  var ps=S.payments.filter(function(p){return p.date.slice(0,7)===ym});
+  var cash=0,byC={},byS={};
+  ps.forEach(function(p){var t=p.amount*p.rate;cash+=t;var c=byC[p.cur]=byC[p.cur]||{o:0,t:0};c.o+=p.amount;c.t+=t;var k=p.src||'未指定';byS[k]=(byS[k]||0)+t});
+  return '<div class="card"><div class="row" style="justify-content:space-between"><button class="btn g" onclick="ym=shift(ym,-1);render()">‹</button><b>'+ym.replace('-',' 年 ')+' 月</b><button class="btn g" onclick="ym=shift(ym,1);render()">›</button></div>'
+  +'<div class="mu" style="margin-top:10px">本月實際上課收入（依上課堂數，換算台幣）</div><div class="big">'+nt(acc)+'</div><div class="mu">本月上課 '+ml.length+' 堂'+(unp?'・其中 '+unp+' 堂還沒有對應的收款（未計入）':'')+'</div>'
+  +(ml.length?'<table style="margin-top:8px"><tr><th>學生</th><th class="r">堂數</th><th class="r">台幣</th></tr>'+Object.keys(byA).map(function(i){return '<tr><td>'+esc(sname(i))+'</td><td class="r">'+byA[i].n+'</td><td class="r">'+nt(byA[i].t)+'</td></tr>'}).join('')+'</table>':'')+'</div>'
+  +'<div class="card"><div class="mu">本月收款入帳（現金，依匯款日期）</div><div class="big" style="font-size:24px">'+nt(cash)+'</div><div class="mu">收款 '+ps.length+' 筆'+(ps.length?'':'（本月沒有收款）')+'</div>'
+  +(ps.length?'<table style="margin-top:8px"><tr><th>收款來源</th><th class="r">台幣</th></tr>'+Object.keys(byS).map(function(k){return '<tr><td>'+esc(k)+'</td><td class="r">'+nt(byS[k])+'</td></tr>'}).join('')+'</table><table><tr><th>幣別</th><th class="r">原幣</th><th class="r">台幣</th></tr>'+Object.keys(byC).map(function(c){return '<tr><td>'+c+'</td><td class="r">'+byC[c].o.toLocaleString()+'</td><td class="r">'+nt(byC[c].t)+'</td></tr>'}).join('')+'</table>':'')+'</div>'
+  +'<div class="card"><h2>收款明細</h2><input id="qS" placeholder="🔍 搜尋學生姓名（搜尋時顯示所有月份）" value="'+esc(q)+'" oninput="q=this.value;document.getElementById(\'plist\').innerHTML=plist()"><div id="plist" style="margin-top:8px">'+plist()+'</div></div>'
+  +payForm(null,editId&&S.payments.find(function(p){return p.id===editId}))+backup();
+}
+function plist(){
+  var k=q.trim().toLowerCase();
+  var rows=S.payments.filter(function(p){return k?sname(p.sid).toLowerCase().indexOf(k)>=0:p.date.slice(0,7)===ym}).sort(function(a,b){return a.date<b.date?1:-1});
+  if(!rows.length)return '<div class="mu">沒有符合的收款紀錄</div>';
+  return '<table><tr><th>日期／學生</th><th class="r">金額</th><th class="r">堂</th><th></th></tr>'+rows.map(function(p){
+    return '<tr><td>'+p.date+'<div><b>'+esc(sname(p.sid))+'</b></div><div class="mu">'+esc(p.src||'未指定')+'</div></td><td class="r">'+p.amount+' '+p.cur+'<div class="mu">@'+p.rate+' → '+nt(p.amount*p.rate)+'</div></td><td class="r">'+p.lessons+'</td><td class="r"><button class="btn s" onclick="openShare(\''+p.sid+'\')">給學生看</button> <button class="btn s g" onclick="editPay(\''+p.id+'\')">編輯</button> <button class="x" onclick="delPay(\''+p.id+'\')">🗑</button></td></tr>'}).join('')+'</table>';
+}
+function payForm(fixed,ed){
+  if(!S.students.length)return '<div class="card mu">請先到「學生」頁新增學生，再記錄收款。</div>';
+  if(ed&&fixed&&ed.sid!==fixed)ed=null;
+  var s0=ed?ed.sid:(fixed||S.students[0].id),cur=ed?ed.cur:stu(s0).cur;
+  return '<div class="card" id="pForm"><h2>'+(ed?'✏️ 修改收款':'＋ 記錄收款')+'</h2><div class="grid">'
+  +'<div><label>學生</label><select id="pS">'+S.students.map(function(s){return '<option value="'+s.id+'"'+(s.id===s0?' selected':'')+'>'+esc(s.name)+'</option>'}).join('')+'</select></div>'
+  +'<div><label>收款日期</label><input type="date" id="pD" value="'+(ed?ed.date:today())+'"></div>'
+  +'<div><label>金額</label><input type="number" id="pA" step="any" value="'+(ed?ed.amount:'')+'" placeholder="例如 300"></div>'
+  +'<div><label>幣別</label><select id="pC">'+['USD','EUR','NZD','TWD'].map(function(c){return '<option'+(c===cur?' selected':'')+'>'+c+'</option>'}).join('')+'</select></div>'
+  +'<div><label>購買堂數（單堂填 1）</label><input type="number" id="pL" value="'+(ed?ed.lessons:1)+'" min="1"></div>'
+  +'<div><label>匯率（1 外幣 = ? 台幣）</label><input type="number" id="pR" step="any" value="'+(ed?ed.rate:'')+'"></div>'
+  +'<div><label>收款來源</label><select id="pSrc">'+S.sources.map(function(x){return '<option'+(ed&&ed.src===x?' selected':'')+'>'+esc(x)+'</option>'}).join('')+'</select></div></div>'
+  +'<div class="mu" id="pPrev" style="margin:8px 0"></div><div class="row"><button class="btn" onclick="addPay()">'+(ed?'儲存修改':'儲存收款')+'</button>'+(ed?'<button class="btn g" onclick="editId=null;render()">取消修改</button>':'')+'</div></div>';
+}
+function bindPay(){
+  var c=document.getElementById('pC');if(!c)return;
+  var upd=function(){var a=+document.getElementById('pA').value,l=+document.getElementById('pL').value||1,rate=+document.getElementById('pR').value;
+    document.getElementById('pPrev').textContent=a&&rate?'≈ '+nt(a*rate)+'，每堂約 '+nt(a*rate/l)+'（'+(a/l).toFixed(1)+' '+c.value+'）':'';};
+  var setRate=function(){document.getElementById('pR').value=S.rates[c.value]||1;upd()};
+  var sel=document.getElementById('pS');
+  sel.onchange=function(){c.value=stu(sel.value).cur;setRate()};
+  c.onchange=setRate;['pA','pL','pR'].forEach(function(i){document.getElementById(i).oninput=upd});
+  if(editId)upd();else setRate();
+}
+function addPay(){
+  var a=+document.getElementById('pA').value,r=+document.getElementById('pR').value,l=+document.getElementById('pL').value,d=document.getElementById('pD').value;
+  if(!(a>0&&r>0&&l>0&&d)){alert('請填寫日期、金額、匯率與堂數');return}
+  var o={sid:document.getElementById('pS').value,date:d,amount:a,cur:document.getElementById('pC').value,lessons:l,rate:r,src:document.getElementById('pSrc').value};
+  if(editId){var p=S.payments.find(function(x){return x.id===editId});if(p)Object.assign(p,o);editId=null}
+  else{o.id=uid();S.payments.push(o)}
+  save();if(view==='home')ym=d.slice(0,7);render();
+}
+function editPay(id){editId=id;render()}
+function delPay(id){if(confirm('確定刪除這筆收款？')){S.payments=S.payments.filter(function(p){return p.id!==id});if(editId===id)editId=null;save();render()}}
+
+function students(){
+  return '<div class="card"><h2>學生（點選查看堂數與月曆）</h2>'+(S.students.length?S.students.map(function(s){var rem=paidOf(s.id)-usedOf(s.id);
+    return '<div class="st" onclick="calYm=ymOf(new Date());go(\'student\',\''+s.id+'\')"><div><b>'+esc(s.name)+'</b><div class="mu">'+s.cur+'・已匯 '+paidOf(s.id)+' 堂・已上 '+usedOf(s.id)+' 堂</div></div><span class="tag'+(rem>1?' ok':'')+'">剩 '+rem+' 堂</span></div>'}).join(''):'<div class="mu">尚無學生</div>')+'</div>'
+  +'<div class="card"><h2>＋ 新增學生</h2><div class="grid"><div><label>姓名（建議與行事曆活動標題一致）</label><input id="nN"></div><div><label>付款幣別</label><select id="nC"><option>USD</option><option>EUR</option><option>NZD</option><option>TWD</option></select></div></div><br><button class="btn" onclick="addStu()">新增</button></div>';
+}
+function addStu(){var n=document.getElementById('nN').value.trim();if(!n)return;S.students.push({id:uid(),name:n,cur:document.getElementById('nC').value});save();render()}
+
+function detail(){
+  var s=stu(sid);if(!s){view='students';share=false;return students()}
+  var paid=paidOf(sid),used=usedOf(sid),rem=paid-used,pct=paid?Math.min(100,used/paid*100):0;
+  var ls={},ps={};S.lessons.filter(function(l){return l.sid===sid}).forEach(function(l){ls[l.date]=l.id});
+  var hist=S.payments.filter(function(x){return x.sid===sid}).sort(function(a,b){return a.date<b.date?1:-1});
+  hist.forEach(function(p){ps[p.date]=(ps[p.date]||0)+p.lessons});
+  var p=calYm.split('-'),first=new Date(+p[0],+p[1]-1,1).getDay(),days=new Date(+p[0],+p[1],0).getDate(),cells='';
+  ['日','一','二','三','四','五','六'].forEach(function(w){cells+='<div class="h">'+w+'</div>'});
+  for(var i=0;i<first;i++)cells+='<div></div>';
+  for(var d=1;d<=days;d++){var ds=calYm+'-'+String(d).padStart(2,'0');
+    cells+='<div class="d'+(ls[ds]?' on':'')+(ps[ds]?' pay':'')+'"'+(share?'':' onclick="toggleLesson(\''+ds+'\')"')+'>'+d+(ls[ds]?'<small>上課</small>':'')+(ps[ds]?'<small>匯 '+ps[ds]+'堂</small>':'')+'</div>'}
+  var lessonDates=Object.keys(ls).sort();
+  var top=share?'<button class="btn g" onclick="go(\'students\')">‹ 離開學生視圖</button>':'<div class="row"><button class="btn g" onclick="go(\'students\')">‹ 返回</button><button class="btn" onclick="openShare(sid)">📤 學生視圖</button></div>';
+  return top+'<div class="card" style="margin-top:10px"><h2>'+esc(s.name)+(share?'':'（'+s.cur+'）')+'</h2>'
+  +'<div class="row" style="justify-content:space-between"><div><div class="mu">已匯</div><b style="font-size:22px">'+paid+'</b> 堂</div><div><div class="mu">已上</div><b style="font-size:22px">'+used+'</b> 堂</div><div><div class="mu">剩餘</div><b class="big">'+rem+'</b> 堂</div></div>'
+  +'<div class="bar"><i style="width:'+pct+'%"></i></div>'+(rem<=1?'<div class="tag">'+(share?'⚠ 堂數快用完囉':'⚠ 堂數快用完，記得提醒續約')+'</div>':'')+'</div>'
+  +'<div class="card"><div class="row" style="justify-content:space-between"><button class="btn g" onclick="calYm=shift(calYm,-1);render()">‹</button><b>'+calYm.replace('-',' 年 ')+' 月</b><button class="btn g" onclick="calYm=shift(calYm,1);render()">›</button></div>'
+  +(share?'':'<div class="mu" style="margin:6px 0">點日期＝記一堂課（再點一次取消）。紅框＝匯款日。</div>')+'<div class="cal" style="margin-top:8px">'+cells+'</div></div>'
+  +'<div class="card"><h2>匯款紀錄</h2>'+(hist.length?'<table><tr><th>日期</th><th class="r">金額</th><th class="r">堂數</th>'+(share?'<th>方式</th>':'<th class="r">台幣</th><th></th>')+'</tr>'+hist.map(function(x){return '<tr><td>'+x.date+'</td><td class="r">'+x.amount+' '+x.cur+'</td><td class="r">'+x.lessons+'</td>'+(share?'<td>'+esc(x.src||'')+'</td>':'<td class="r">'+nt(x.amount*x.rate)+'<div class="mu">'+esc(x.src||'')+'</div></td><td class="r"><button class="btn s g" onclick="editPay(\''+x.id+'\')">編輯</button> <button class="x" onclick="delPay(\''+x.id+'\')">🗑</button></td>')+'</tr>'}).join('')+'</table>':'<div class="mu">尚無匯款</div>')+'</div>'
+  +'<div class="card"><h2>已上課日期（'+used+' 堂）</h2><div class="mu">'+(lessonDates.length?lessonDates.join('、'):'尚無')+'</div></div>'
+  +(share?'':payForm(sid,editId&&S.payments.find(function(x){return x.id===editId}))+'<button class="btn g" onclick="renameStu()">修改姓名</button> <button class="btn g" onclick="delStu()">刪除此學生</button>');
+}
+function toggleLesson(d){
+  var ex=S.lessons.find(function(l){return l.sid===sid&&l.date===d});
+  if(ex)S.lessons=S.lessons.filter(function(l){return l!==ex});else S.lessons.push({id:uid(),sid:sid,date:d});
+  save();render();
+}
+function renameStu(){var n=prompt('新的姓名',stu(sid).name);if(n&&n.trim()){stu(sid).name=n.trim();save();render()}}
+function delStu(){if(confirm('刪除此學生及其所有收款與上課紀錄？')){S.payments=S.payments.filter(function(p){return p.sid!==sid});S.lessons=S.lessons.filter(function(l){return l.sid!==sid});S.students=S.students.filter(function(s){return s.id!==sid});save();go('students')}}
+
+/* 匯入 Google 行事曆（.ics） */
+function impView(){
+  var t=new Date(),a=ymOf(new Date(t.getFullYear(),t.getMonth()-1,1))+'-01';
+  return '<div class="card"><h2>從 Google 行事曆匯入上課紀錄</h2><div class="mu" style="margin-bottom:8px">1. 在電腦開啟 Google 行事曆 → 設定 → 匯入與匯出 → 匯出，會得到 .zip，解壓縮後選你的上課行事曆 .ics。<br>2. 在下面選檔案與日期範圍。程式會用「活動標題裡的學生姓名」自動配對，你可以逐筆調整再匯入。已記過的同一天不會重複。</div>'
+  +'<div class="grid"><div><label>.ics 檔案</label><input type="file" id="icsF" accept=".ics,text/calendar"></div><div><label>從</label><input type="date" id="iF" value="'+a+'"></div><div><label>到</label><input type="date" id="iT" value="'+today()+'"></div></div><br><button class="btn" onclick="impParse()">讀取行事曆</button></div>'
+  +(impRows.length?'<div class="card"><h2>預覽（'+impRows.length+' 個活動）</h2><table>'+impRows.map(function(r,i){return '<tr><td><input type="checkbox" '+(r.on?'checked':'')+' onchange="impRows['+i+'].on=this.checked"></td><td>'+r.date+'<div class="mu">'+esc(r.title)+'</div></td><td><select onchange="impRows['+i+'].sid=this.value;impRows['+i+'].on=!!this.value">'+'<option value="">略過</option>'+S.students.map(function(s){return '<option value="'+s.id+'"'+(s.id===r.sid?' selected':'')+'>'+esc(s.name)+'</option>'}).join('')+'</select></td></tr>'}).join('')+'</table><br><button class="btn" onclick="impGo()">匯入勾選的課</button></div>':'');
+}
+function impParse(){
+  var f=document.getElementById('icsF').files[0];if(!f){alert('請先選擇 .ics 檔案');return}
+  var from=document.getElementById('iF').value,to=document.getElementById('iT').value;
+  var rd=new FileReader();rd.onload=function(){
+    var txt=String(rd.result).replace(/\r?\n[ \t]/g,''),evs=txt.split('BEGIN:VEVENT').slice(1),out=[];
+    evs.forEach(function(ev){
+      ev=ev.split('END:VEVENT')[0];if(/STATUS:CANCELLED/.test(ev)||/\nRECURRENCE-ID/.test(ev)&&false)return;
+      var g=function(n){var m=ev.match(new RegExp('(?:^|\\n)'+n+'[^:\\n]*:([^\\r\\n]*)'));return m?m[1]:''};
+      var title=g('SUMMARY').replace(/\\,/g,',').replace(/\\n/g,' '),ds=g('DTSTART');if(!ds)return;
+      var d0=ics2date(ds);if(!d0)return;
+      var rr=g('RRULE'),ex={};(ev.match(/\nEXDATE[^:\n]*:[^\r\n]*/g)||[]).forEach(function(x){x.split(':')[1].split(',').forEach(function(v){var e=ics2date(v);if(e)ex[ymd(e)]=1})});
+      var dates=[];
+      var fq=(rr.match(/FREQ=(\w+)/)||[])[1],iv=+((rr.match(/INTERVAL=(\d+)/)||[])[1]||1),cn=+((rr.match(/COUNT=(\d+)/)||[])[1]||0),un=(rr.match(/UNTIL=(\d{8})/)||[])[1];
+      if(rr&&(fq==='WEEKLY'||fq==='DAILY')){
+        var step=(fq==='WEEKLY'?7:1)*iv,d=new Date(d0),n=0,lim=un?new Date(+un.slice(0,4),+un.slice(4,6)-1,+un.slice(6,8)):null,end=new Date(to+'T23:59:59');
+        while(n<1500&&(!cn||n<cn)&&d<=end&&(!lim||d<=lim)){dates.push(ymd(d));d=new Date(d.getFullYear(),d.getMonth(),d.getDate()+step,d.getHours(),d.getMinutes());n++}
+      }else dates.push(ymd(d0));
+      dates.forEach(function(x){if(x>=from&&x<=to&&!ex[x]){var low=title.toLowerCase(),m=S.students.find(function(s){return low.indexOf(s.name.toLowerCase())>=0});
+        out.push({date:x,title:title,sid:m?m.id:'',on:!!m})}});
+    });
+    var seen={};impRows=out.filter(function(r){var k=r.date+r.title;if(seen[k])return false;seen[k]=1;return true}).sort(function(a,b){return a.date<b.date?-1:1});
+    if(!impRows.length)alert('這個範圍內沒有找到活動');
+    render();
+  };rd.readAsText(f);
+}
+function ics2date(v){
+  var m=v.match(/^(\d{4})(\d{2})(\d{2})(?:T(\d{2})(\d{2})(\d{2})(Z)?)?/);if(!m)return null;
+  if(m[7])return new Date(Date.UTC(+m[1],+m[2]-1,+m[3],+m[4],+m[5],+m[6]));
+  return new Date(+m[1],+m[2]-1,+m[3],+(m[4]||0),+(m[5]||0));
+}
+function impGo(){
+  var n=0;impRows.forEach(function(r){if(r.on&&r.sid&&!S.lessons.some(function(l){return l.sid===r.sid&&l.date===r.date})){S.lessons.push({id:uid(),sid:r.sid,date:r.date});n++}});
+  save();impRows=[];alert('已匯入 '+n+' 堂課');go('home');
+}
+
+function rates(){
+  return '<div class="card"><h2>目前匯率（1 外幣 = ? 台幣）</h2><div class="mu" style="margin-bottom:8px">請自行輸入（可參考 Wise 或銀行的實際到帳匯率）。收款時會自動帶入，也可逐筆修改；已記錄的收款不會被改動。</div><div class="grid">'
+  +['USD','EUR','NZD'].map(function(c){return '<div><label>'+c+'</label><input type="number" step="any" id="r'+c+'" value="'+S.rates[c]+'"></div>'}).join('')+'</div>'
+  +'<div class="mu" style="margin:8px 0">上次更新：'+(S.ratesDate||'尚未設定')+'</div><button class="btn" onclick="saveRates()">儲存匯率</button></div>'
+  +syncCard()+'<div class="card"><h2>收款來源</h2>'+S.sources.map(function(x,i){return '<div class="st" style="cursor:default"><span>'+esc(x)+'</span><button class="x" onclick="delSrc('+i+')">🗑</button></div>'}).join('')
+  +'<div class="row" style="margin-top:8px"><input id="nS" placeholder="新增來源，例如 Stripe" style="flex:1"><button class="btn" onclick="addSrc()">新增</button></div></div>'+backup();
+}
+function saveRates(){['USD','EUR','NZD'].forEach(function(c){var v=+document.getElementById('r'+c).value;if(v>0)S.rates[c]=v});S.ratesDate=today();save();render()}
+function addSrc(){var v=document.getElementById('nS').value.trim();if(v&&S.sources.indexOf(v)<0){S.sources.push(v);save();render()}}
+function delSrc(i){if(confirm('移除「'+S.sources[i]+'」？已記錄的收款仍會保留這個名稱。')){S.sources.splice(i,1);save();render()}}
+function backup(){return '<div class="card"><h2>備份</h2><div class="mu" style="margin-bottom:8px">資料只存在這個瀏覽器，建議定期複製備份。</div><div class="row"><button class="btn g" onclick="exp()">匯出備份</button><button class="btn g" onclick="imp()">匯入備份</button><button class="btn g" onclick="dl()">下載備份檔</button><label class="btn g" style="margin:0;display:inline-block;font-size:15px;color:var(--ac)">選擇備份檔<input type="file" accept=".json" style="display:none" onchange="upl(this)"></label></div><textarea id="bk" style="display:none;width:100%;height:90px;margin-top:8px"></textarea></div>'}
+function exp(){var t=document.getElementById('bk');t.style.display='block';t.value=JSON.stringify(S);t.select()}
+function imp(){var t=document.getElementById('bk');if(t.style.display!=='block'){t.style.display='block';t.value='';t.placeholder='貼上備份內容後，再按一次「匯入備份」';return}
+  try{S=Object.assign(S,JSON.parse(t.value));save();render()}catch(e){alert('備份內容格式不正確')}}
+render();
+</script>
+</body>
+</html>
