@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>我的小步日記</title>
+<script src="https://accounts.google.com/gsi/client" async defer></script>
+<style>
+:root{--bg:#fffbe6;--card:#ffffff;--yellow:#ffeb99;--pink:#ffc8dd;--blue:#bde0fe;--ink:#5b4b6b;--soft:#9a8aa8;--line:#f3e6ee;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#2b2433;--card:#383043;--yellow:#7a6a2e;--pink:#8a4a63;--blue:#3d5f7f;--ink:#f6eefb;--soft:#c3b3d1;--line:#4a4057}}
+:root[data-theme="dark"]{--bg:#2b2433;--card:#383043;--yellow:#7a6a2e;--pink:#8a4a63;--blue:#3d5f7f;--ink:#f6eefb;--soft:#c3b3d1;--line:#4a4057}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"jf-openhuninn","Noto Sans TC","PingFang TC","Microsoft JhengHei",sans-serif;line-height:1.5}
+.wrap{max-width:980px;margin:0 auto;padding:18px 14px 40px}
+h1{margin:0;font-size:26px}
+.sub{color:var(--soft);font-size:14px;margin-top:2px}
+.card{background:var(--card);border-radius:22px;padding:16px;box-shadow:0 4px 0 var(--line);margin-top:16px}
+.card h2{margin:0 0 10px;font-size:18px}
+.hero{background:linear-gradient(135deg,var(--yellow),var(--pink));border-radius:26px;padding:18px}
+.stats{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
+.stat{flex:1;min-width:100px;background:rgba(255,255,255,.55);border-radius:16px;padding:10px;text-align:center}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .stat{background:rgba(0,0,0,.25)}}
+.stat b{display:block;font-size:24px}
+.grid2{display:grid;grid-template-columns:1.3fr 1fr;gap:16px}
+@media(max-width:760px){.grid2{grid-template-columns:1fr}}
+.calhead{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
+button{font:inherit;border:0;cursor:pointer;color:var(--ink)}
+.nav{background:var(--blue);border-radius:12px;padding:6px 12px}
+.cal{display:grid;grid-template-columns:repeat(7,1fr);gap:5px}
+.wd{text-align:center;color:var(--soft);font-size:13px}
+.day{aspect-ratio:1/1;min-height:44px;border-radius:14px;background:var(--bg);padding:3px;font-size:14px;display:flex;flex-direction:column;align-items:center;justify-content:flex-start}
+.day.has1{background:var(--yellow)}.day.has2{background:var(--pink)}.day.has3{background:var(--blue)}
+.day.today{outline:3px dashed var(--pink)}
+.day.sel{outline:3px solid var(--ink)}
+.day small{font-size:11px;line-height:1}
+.empty{visibility:hidden}
+.row{display:flex;gap:8px;margin-bottom:10px}
+input[type=text]{flex:1;min-width:0;font:inherit;color:var(--ink);background:var(--bg);border:2px solid var(--line);border-radius:14px;padding:9px 12px}
+input[type=text]:focus{outline:none;border-color:var(--pink)}
+.add{background:var(--pink);border-radius:14px;padding:9px 14px;white-space:nowrap}
+ul{list-style:none;margin:0;padding:0}
+li{display:flex;align-items:center;gap:8px;background:var(--bg);border-radius:14px;padding:8px 10px;margin-bottom:6px}
+li span{flex:1;word-break:break-word}
+li.done span{text-decoration:line-through;color:var(--soft)}
+.x{background:none;color:var(--soft);padding:2px 6px}
+.ok{background:var(--yellow);border-radius:10px;padding:2px 8px;font-size:13px}
+.goal{background:var(--yellow)}.goal:nth-child(2n){background:var(--pink)}.goal:nth-child(3n){background:var(--blue)}
+.hint{color:var(--soft);font-size:14px;margin:6px 0}
+.cheer{margin-top:10px;font-size:14px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>🌼 我的小步日記</h1>
+  <div class="sub">看的不是粉絲數，是我做了多少事 ✨</div>
+  <div class="row" style="margin-top:10px;align-items:center"><button class="add" id="syncBtn" style="flex:none">☁️ 連結 Google 同步</button><span class="hint" id="syncMsg" style="margin:0"></span></div>
+
+  <div class="card hero">
+    <h2>📌 我的目標（不要忘記喔）</h2>
+    <div class="row"><input type="text" id="goalIn" placeholder="寫下一個目標…" maxlength="120"><button class="add" id="goalAdd">加上去</button></div>
+    <ul id="goals"></ul>
+    <div class="stats">
+      <div class="stat"><b id="sMonth">0</b>這個月做了幾件事</div>
+      <div class="stat"><b id="sDays">0</b>有前進的天數</div>
+      <div class="stat"><b id="sStreak">0</b>連續前進天數</div>
+    </div>
+  </div>
+
+  <div class="grid2">
+    <div class="card">
+      <div class="calhead">
+        <button class="nav" id="prev">◀</button>
+        <h2 id="mTitle" style="margin:0"></h2>
+        <button class="nav" id="next">▶</button>
+      </div>
+      <div class="cal" id="cal"></div>
+      <div class="hint">點日期可以看、也可以記下那天的小步 🐾</div>
+      <h2 id="dTitle" style="margin-top:14px"></h2>
+      <div class="row"><input type="text" id="stepIn" placeholder="今天我做了…（再小都算！）" maxlength="160"><button class="add" id="stepAdd">記下來</button></div>
+      <ul id="steps"></ul>
+      <div class="cheer" id="cheer"></div>
+    </div>
+
+    <div class="card" style="align-self:start">
+      <h2>💡 靈感小盒子</h2>
+      <div class="hint">腦袋裡冒出來的想法、想做的事，先丟進來～</div>
+      <div class="row"><input type="text" id="ideaIn" placeholder="我想做…" maxlength="160"><button class="add" id="ideaAdd">收藏</button></div>
+      <ul id="ideas"></ul>
+    </div>
+  </div>
+</div>
+
+<script>
+const $=id=>document.getElementById(id);
+const pad=n=>String(n).padStart(2,'0');
+const key=d=>d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate());
+const uid=()=>Math.random().toString(36).slice(2,9);
+const LS='little-steps-v1';
+let S={goals:[],ideas:[],steps:{},del:[]};
+let today=new Date(), view=new Date(today.getFullYear(),today.getMonth(),1), sel=key(today);
+let timer=null;
+
+function readLocal(){try{const r=localStorage.getItem(LS);if(r)return JSON.parse(r)}catch(e){}return null}
+function normalize(o){return{goals:(o&&o.goals)||[],ideas:(o&&o.ideas)||[],steps:(o&&o.steps)||{},del:(o&&o.del)||[]}}
+function countOf(k){return (S.steps[k]||[]).length}
+
+function renderCal(){
+  $('mTitle').textContent=view.getFullYear()+' 年 '+(view.getMonth()+1)+' 月';
+  const c=$('cal');c.innerHTML='';
+  '日一二三四五六'.split('').forEach(w=>{const e=document.createElement('div');e.className='wd';e.textContent=w;c.appendChild(e)});
+  const first=view.getDay();
+  const n=new Date(view.getFullYear(),view.getMonth()+1,0).getDate();
+  for(let i=0;i<first;i++){const e=document.createElement('div');e.className='day empty';c.appendChild(e)}
+  for(let d=1;d<=n;d++){
+    const dt=new Date(view.getFullYear(),view.getMonth(),d),k=key(dt),cnt=countOf(k);
+    const b=document.createElement('button');
+    b.className='day'+(cnt?' has'+Math.min(cnt,3):'')+(k===key(today)?' today':'')+(k===sel?' sel':'');
+    b.innerHTML='<span>'+d+'</span>'+(cnt?'<small>'+(cnt>3?'🌟':'⭐'.repeat(cnt))+'</small>':'');
+    b.onclick=()=>{sel=k;render()};
+    c.appendChild(b);
+  }
+}
+function li(text,opts){
+  const e=document.createElement('li');if(opts.cls)e.className=opts.cls;
+  const s=document.createElement('span');s.textContent=text;e.appendChild(s);
+  (opts.extra||[]).forEach(x=>e.appendChild(x));
+  const x=document.createElement('button');x.className='x';x.textContent='✕';x.onclick=opts.del;e.appendChild(x);
+  return e;
+}
+function renderSteps(){
+  const [y,m,d]=sel.split('-').map(Number);
+  $('dTitle').textContent=(sel===key(today)?'今天':m+'月'+d+'日')+'的小步 🐾';
+  const ul=$('steps');ul.innerHTML='';
+  const list=S.steps[sel]||[];
+  list.forEach(it=>ul.appendChild(li('🌸 '+it.t,{del:()=>{S.del.push(it.id);S.steps[sel]=list.filter(z=>z.id!==it.id);if(!S.steps[sel].length)delete S.steps[sel];save();render()}})));
+  const n=list.length;
+  $('cheer').textContent=n===0?'還沒有紀錄，想到一件小事就記下來吧～':n<3?'已經前進 '+n+' 步，太棒了！':'哇，這天做了 '+n+' 件事，超厲害 🎉';
+}
+function renderGoals(){
+  const ul=$('goals');ul.innerHTML='';
+  S.goals.forEach(g=>ul.appendChild(li('🎯 '+g.t,{cls:'goal',del:()=>{S.del.push(g.id);S.goals=S.goals.filter(z=>z.id!==g.id);save();render()}})));
+  if(!S.goals.length){const p=document.createElement('div');p.className='hint';p.textContent='還沒有目標，先寫一個吧！';ul.appendChild(p)}
+}
+function renderIdeas(){
+  const ul=$('ideas');ul.innerHTML='';
+  S.ideas.forEach(i=>{
+    const b=document.createElement('button');b.className='ok';b.textContent=i.done?'取消':'做了！';
+    b.onclick=()=>{i.done=!i.done;
+      if(i.done){const k=key(new Date());(S.steps[k]=S.steps[k]||[]).push({id:uid(),t:'完成靈感：'+i.t})}
+      save();render()};
+    ul.appendChild(li((i.done?'✅ ':'💡 ')+i.t,{cls:i.done?'done':'',extra:[b],del:()=>{S.del.push(i.id);S.ideas=S.ideas.filter(z=>z.id!==i.id);save();render()}}));
+  });
+}
+function renderStats(){
+  const y=view.getFullYear(),m=view.getMonth();
+  let total=0,days=0;
+  Object.keys(S.steps).forEach(k=>{const [a,b]=k.split('-').map(Number);if(a===y&&b===m+1){total+=S.steps[k].length;days++}});
+  let streak=0,d=new Date(today);
+  if(!countOf(key(d)))d.setDate(d.getDate()-1);
+  while(countOf(key(d))){streak++;d.setDate(d.getDate()-1)}
+  $('sMonth').textContent=total;$('sDays').textContent=days;$('sStreak').textContent=streak;
+}
+function render(){renderCal();renderSteps();renderGoals();renderIdeas();renderStats()}
+
+function addTo(inputId,fn){const v=$(inputId).value.trim();if(!v)return;fn(v);$(inputId).value='';save();render()}
+$('goalAdd').onclick=()=>addTo('goalIn',v=>S.goals.push({id:uid(),t:v}));
+$('ideaAdd').onclick=()=>addTo('ideaIn',v=>S.ideas.unshift({id:uid(),t:v,done:false}));
+$('stepAdd').onclick=()=>addTo('stepIn',v=>{(S.steps[sel]=S.steps[sel]||[]).push({id:uid(),t:v})});
+[['goalIn','goalAdd'],['ideaIn','ideaAdd'],['stepIn','stepAdd']].forEach(([i,b])=>$(i).addEventListener('keydown',e=>{if(e.key==='Enter'&&!e.isComposing)$(b).click()}));
+$('prev').onclick=()=>{view=new Date(view.getFullYear(),view.getMonth()-1,1);render()};
+$('next').onclick=()=>{view=new Date(view.getFullYear(),view.getMonth()+1,1);render()};
+
+
+// ===== Google Drive 同步 =====
+// 把下面這行換成你自己的 OAuth Client ID
+const CID='YOUR_CLIENT_ID.apps.googleusercontent.com';
+const FN='little-steps.json', LK='little-steps-linked';
+const SCOPE='https://www.googleapis.com/auth/drive.appdata';
+let tok=null,tokExp=0,fileId=null,pushing=false,again=false;
+const msg=t=>{$('syncMsg').textContent=t};
+function save(){
+  clearTimeout(timer);
+  timer=setTimeout(()=>{try{localStorage.setItem(LS,JSON.stringify(S))}catch(e){}push()},400);
+}
+function merge(a,b){
+  const del=new Set([...(a.del||[]),...(b.del||[])]);
+  const un=(x,y)=>{const m=new Map();[...y,...x].forEach(i=>{if(!del.has(i.id))m.set(i.id,i)});return[...m.values()]};
+  const steps={};
+  new Set([...Object.keys(a.steps),...Object.keys(b.steps)]).forEach(k=>{const l=un(a.steps[k]||[],b.steps[k]||[]);if(l.length)steps[k]=l});
+  return{goals:un(a.goals,b.goals),ideas:un(a.ideas,b.ideas),steps,del:[...del]};
+}
+async function api(url,opt={}){
+  const r=await fetch(url,{...opt,headers:{Authorization:'Bearer '+tok,...(opt.headers||{})}});
+  if(!r.ok)throw new Error('HTTP '+r.status);
+  return r;
+}
+function getToken(){
+  return new Promise((res,rej)=>{
+    if(tok&&Date.now()<tokExp-60000)return res(tok);
+    if(!window.google||!google.accounts)return rej(new Error('Google 登入元件還沒載入'));
+    google.accounts.oauth2.initTokenClient({client_id:CID,scope:SCOPE,
+      callback:r=>{if(r.error)return rej(new Error(r.error));tok=r.access_token;tokExp=Date.now()+r.expires_in*1000;res(tok)},
+      error_callback:e=>rej(new Error(e.type||'popup'))}).requestAccessToken();
+  });
+}
+async function pull(){
+  const q=encodeURIComponent("name='"+FN+"'");
+  const r=await api('https://www.googleapis.com/drive/v3/files?spaces=appDataFolder&fields=files(id)&q='+q);
+  const f=(await r.json()).files[0];
+  if(f){fileId=f.id;const d=await(await api('https://www.googleapis.com/drive/v3/files/'+f.id+'?alt=media')).json();S=merge(S,normalize(d))}
+  try{localStorage.setItem(LS,JSON.stringify(S))}catch(e){}
+}
+async function push(){
+  if(!localStorage.getItem(LK))return;
+  if(!tok||Date.now()>tokExp-60000){msg('登入已過期，點一下按鈕重新連線（資料已先存在這台裝置）');return}
+  if(pushing){again=true;return}
+  pushing=true;
+  try{
+    const body=JSON.stringify(S);
+    if(fileId){await api('https://www.googleapis.com/upload/drive/v3/files/'+fileId+'?uploadType=media',{method:'PATCH',headers:{'Content-Type':'application/json'},body})}
+    else{
+      const b='xxLITTLESTEPSxx';
+      const mp='--'+b+'\r\nContent-Type: application/json\r\n\r\n'+JSON.stringify({name:FN,parents:['appDataFolder']})+'\r\n--'+b+'\r\nContent-Type: application/json\r\n\r\n'+body+'\r\n--'+b+'--';
+      const r=await api('https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart&fields=id',{method:'POST',headers:{'Content-Type':'multipart/related; boundary='+b},body:mp});
+      fileId=(await r.json()).id;
+    }
+    msg('☁️ 已同步 '+new Date().toLocaleTimeString('zh-TW',{hour:'2-digit',minute:'2-digit'}));
+  }catch(e){msg('同步失敗，資料已先存在這台裝置')}
+  pushing=false;
+  if(again){again=false;push()}
+}
+async function connect(){
+  if(CID.startsWith('YOUR_')){msg('還沒設定 Client ID，請看設定步驟');return}
+  try{
+    msg('連線中…');await getToken();await pull();
+    localStorage.setItem(LK,'1');render();await push();
+    $('syncBtn').textContent='☁️ 已連結 Google';
+  }catch(e){msg('連線失敗：'+e.message)}
+}
+$('syncBtn').onclick=connect;
+if(localStorage.getItem(LK)){$('syncBtn').textContent='☁️ 重新連線同步';msg('點一下按鈕，把最新資料同步過來')}
+
+S=normalize(readLocal());render();
+
+</script>
+</body>
+</html>
