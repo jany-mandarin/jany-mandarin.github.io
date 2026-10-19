@@ -72,14 +72,6 @@
         .grammar-table th { background: #FFF3E0; color: #8C6239; font-weight: bold; }
         .grammar-table tr:nth-child(even) { background: #FAF6F0; }
 
-        /* Compare Box for 就 / 才 / 幾 / 多 */
-        .compare-container { display: flex; flex-direction: column; gap: 15px; margin-top: 15px; }
-        @media (min-width: 768px) {
-            .compare-container { flex-direction: row; }
-        }
-        .compare-box { flex: 1; min-width: 0; background: #fff; border: 1px solid #E6D5B8; padding: 15px; border-radius: 8px; }
-        .compare-title { font-weight: bold; color: #d9534f; font-size: 18px; border-bottom: 2px solid #E6D5B8; padding-bottom: 5px; margin-bottom: 10px; }
-        
         .homework-q { font-size: 16px; font-weight: bold; color: #8C6239; margin-bottom: 8px; }
         .hw-textarea { width: 100%; height: 60px; margin-top: 5px; border-radius: 6px; border: 1px solid #E6D5B8; padding: 10px; font-family: inherit; font-size:16px; box-sizing: border-box; background: #fff; }
         .hw-textarea:focus { border-color: var(--primary); outline: none; box-shadow: 0 0 5px rgba(212, 163, 115, 0.5); }
@@ -160,7 +152,7 @@
             <!-- 1. 以前/以後/剛剛 -->
             <div class="grammar-box" id="wu-1">
                 <div style="font-weight:bold; font-size:16px; color:#8C6239; margin-bottom:5px;">1. 以前 / 以後 / 剛剛</div>
-                <div class="note"><b>💡 Explanation:</b> 「剛剛」只能用在剛才發生的事情。「以前」用在句首表示 <i>in the past</i>；如果要表示做某件事情之前，要放在動詞的後面；「以後」也是如此。用在做某件事情的時候，可以把「以」省略。</div>
+                <div class="note"><b>💡 Explanation:</b> "剛剛" (gāng gāng) can only be used for things that just happened. "以前" (yǐ qián) placed at the beginning of a sentence means "in the past"; when used to express "before doing something", it is placed after the verb. "以後" (yǐ hòu) works the same way for "after doing something". When referring to "when doing something", "以" can be omitted.</div>
                 
                 <div class="item-content">
                     <div class="btn-group">
@@ -185,13 +177,13 @@
                         <div class="en-trans">Normally when I take Chinese class, I don't get up until right before class.</div>
                     </div>
                 </div>
-                <div class="note" style="font-size:13px; color:#666;">*註：這裡的「才」表示 Used when the speaker feels an action happened late, slowly, or with difficulty (later than expected).</div>
+                <div class="note" style="font-size:13px; color:#666;">*Note: Here "才" (cái) indicates that the speaker feels an action happened late, slowly, or later than expected.</div>
             </div>
 
             <!-- 2. 本來 -->
             <div class="grammar-box" id="wu-2">
                 <div style="font-weight:bold; font-size:16px; color:#8C6239; margin-bottom:5px;">2. 本來 (běn lái - Originally / Intended to)</div>
-                <div class="note"><b>💡 Explanation:</b> 「本」是從樹木的根來的，意思是原本有，但結果沒有。</div>
+                <div class="note"><b>💡 Explanation:</b> The original meaning of "本" comes from the root of a tree. It means something was originally planned/intended, but ended up not happening.</div>
                 <div class="item-content">
                     <div class="btn-group">
                         <button class="audio-btn" onclick="playAudioText(this)">🔊</button>
@@ -203,7 +195,7 @@
                         <div class="en-trans">Yesterday I taught one Chinese class. Originally I had two Chinese classes yesterday, but the student's mother's father passed away, so they couldn't take class. They were very sad, and I was very sad too.</div>
                     </div>
                 </div>
-                <div class="note" style="font-size:13px; color:#666;">*註：中文聽到別人的壞消息，不會說「對不起」，而是會說「我很難過」。</div>
+                <div class="note" style="font-size:13px; color:#666;">*Note: When hearing bad news in Chinese, instead of saying "sorry" (對不起), people usually say "I am very sad" (我很難過).</div>
             </div>
 
             <!-- 3. 一直 -->
@@ -225,7 +217,7 @@
             <!-- 4. 球 -->
             <div class="grammar-box" id="wu-4">
                 <div style="font-weight:bold; font-size:16px; color:#8C6239; margin-bottom:5px;">4. 球 (qiú - Scoop [Measure word for ice cream])</div>
-                <div class="note"><b>💡 Explanation:</b> 當作冰淇淋的量詞。</div>
+                <div class="note"><b>💡 Explanation:</b> Used as a measure word for scoops of ice cream.</div>
                 <div class="item-content">
                     <div class="btn-group">
                         <button class="audio-btn" onclick="playAudioText(this)">🔊</button>
@@ -242,7 +234,7 @@
             <!-- 5. 拿筆 -->
             <div class="grammar-box" id="wu-5">
                 <div style="font-weight:bold; font-size:16px; color:#8C6239; margin-bottom:5px;">5. 拿筆 (ná bǐ - Hold a pen / Write with a pen)</div>
-                <div class="note"><b>💡 Explanation:</b> 「拿筆」字面上雖然是拿著筆，但意思是指會不會拿筆寫字。</div>
+                <div class="note"><b>💡 Explanation:</b> Although "拿筆" literally means holding a pen, it is used to mean knowing how to write or draw with a pen.</div>
                 <div class="item-content">
                     <div class="btn-group">
                         <button class="audio-btn" onclick="playAudioText(this)">🔊</button>
@@ -259,7 +251,7 @@
             <!-- 6. 知道/會 -->
             <div class="grammar-box" id="wu-6">
                 <div style="font-weight:bold; font-size:16px; color:#8C6239; margin-bottom:5px;">6. 知道 (zhī dào) vs. 會 (huì)</div>
-                <div class="note"><b>💡 Explanation:</b> 「知道」是指瞭解某件事情；「會」表示擅長某件事情，通常用「不太會」表示不是很擅長。</div>
+                <div class="note"><b>💡 Explanation:</b> "知道" means knowing or understanding a fact/information. "會" means knowing how to do something or being skilled at it. "不太會" is commonly used to express not being very good at something.</div>
                 <div class="item-content">
                     <div class="btn-group">
                         <button class="audio-btn" onclick="playAudioText(this)">🔊</button>
@@ -271,13 +263,13 @@
                         <div class="en-trans">That child couldn't speak much last year, but today can speak many English vocabulary words and sentences.</div>
                     </div>
                 </div>
-                <div class="note" style="font-size:13px; color:#666;">*註：單字 = vocabulary, 句子 = sentence.</div>
+                <div class="note" style="font-size:13px; color:#666;">*Note: 單字 = vocabulary, 句子 = sentence.</div>
             </div>
 
             <!-- 7. 出門/離開/走 -->
             <div class="grammar-box" id="wu-7">
                 <div style="font-weight:bold; font-size:16px; color:#8C6239; margin-bottom:5px;">7. 出門 / 離開 / 走</div>
-                <div class="note"><b>💡 Explanation:</b> 「出門」是表示某人走出自己的家；「離開」是指暫時離開這個地方，短時間內不會回來；「走」是離開的口語化，你可以想像離開就是要走去哪裡。</div>
+                <div class="note"><b>💡 Explanation:</b> "出門" means walking out of one's home. "離開" means temporarily leaving a place with no immediate return. "走" is a colloquial way of saying "to leave", as leaving implies walking away.</div>
                 <div class="item-content">
                     <div class="btn-group">
                         <button class="audio-btn" onclick="playAudioText(this)">🔊</button>
@@ -294,7 +286,7 @@
             <!-- 8. 不要 -->
             <div class="grammar-box" id="wu-8">
                 <div style="font-weight:bold; font-size:16px; color:#8C6239; margin-bottom:5px;">8. 不要 (bú yào - Don't)</div>
-                <div class="note"><b>💡 Explanation:</b> 字面上是指不想要做某事，但中文又有另一層意思是 <i>don't do sth.</i>。</div>
+                <div class="note"><b>💡 Explanation:</b> Literally means "don't want to do something", but in Chinese it also functions as "don't do something".</div>
                 <div class="item-content">
                     <div class="btn-group">
                         <button class="audio-btn" onclick="playAudioText(this)">🔊</button>
@@ -322,7 +314,7 @@
             <!-- 9. 哭 -->
             <div class="grammar-box" id="wu-9">
                 <div style="font-weight:bold; font-size:16px; color:#8C6239; margin-bottom:5px;">9. 哭 (kū - Cry)</div>
-                <div class="note"><b>💡 Character Origin Note:</b> 一個人哭的時候披頭散髮的樣子，所以字的中間有個人。</div>
+                <div class="note"><b>💡 Character Origin Note:</b> Imagine a person crying with disheveled hair, which is why there is a person (人) in the middle of the character.</div>
                 <img src="https://cdn.phototourl.com/member/2026-10-19-0950f194-ee5a-44e5-aa3d-d4597ce9bea4.png" class="vocab-img" alt="哭 character origin">
                 <div class="item-content">
                     <div class="btn-group">
@@ -340,6 +332,7 @@
             <!-- 10. 看不懂/不會唸 -->
             <div class="grammar-box" id="wu-10">
                 <div style="font-weight:bold; font-size:16px; color:#8C6239; margin-bottom:5px;">10. 看不懂 (kàn bù dǒng) / 不會唸 (bú huì niàn)</div>
+                <div class="note"><b>💡 Explanation:</b> "看不懂" means unable to read or understand written characters. "不會唸" means unable to pronounce or read aloud.</div>
                 <div class="item-content">
                     <div class="btn-group">
                         <button class="audio-btn" onclick="playAudioText(this)">🔊</button>
@@ -367,7 +360,7 @@
             <!-- 11. 唸給sb.聽 -->
             <div class="grammar-box" id="wu-11">
                 <div style="font-weight:bold; font-size:16px; color:#8C6239; margin-bottom:5px;">11. 唸給 sb. 聽 (niàn gěi ... tīng - Read aloud to someone)</div>
-                <div class="note"><b>💡 Explanation:</b> 通常唸書就是要讓某人聽到，所以這個算是一個片語，表示唸故事/讀書給某個人聽。</div>
+                <div class="note"><b>💡 Explanation:</b> Since reading out loud is intended for someone to listen to, this phrase functions as a set pattern meaning "to read stories/books aloud to someone".</div>
                 <div class="item-content">
                     <div class="btn-group">
                         <button class="audio-btn" onclick="playAudioText(this)">🔊</button>
@@ -395,6 +388,7 @@
             <!-- 12. 把sb.放在place -->
             <div class="grammar-box" id="wu-12">
                 <div style="font-weight:bold; font-size:16px; color:#8C6239; margin-bottom:5px;">12. 把 sb. 放在 place (bǎ ... fàng zài - Put someone at a place)</div>
+                <div class="note"><b>💡 Explanation:</b> Structure used to specify putting or placing someone/something in a specific location.</div>
                 <div class="item-content">
                     <div class="btn-group">
                         <button class="audio-btn" onclick="playAudioText(this)">🔊</button>
@@ -422,7 +416,7 @@
             <!-- 13. 樓下/大廳 -->
             <div class="grammar-box" id="wu-13">
                 <div style="font-weight:bold; font-size:16px; color:#8C6239; margin-bottom:5px;">13. 樓下 (lóu xià) / 大廳 (dà tīng)</div>
-                <div class="note"><b>💡 Explanation:</b> 「樓下」表示你現在所處的樓層下面；「大廳」是公寓或是飯店的一樓大廳。「廳」這個字裡面有「聽」，表示一個有很多人的公開場合，例如：餐廳、咖啡廳。</div>
+                <div class="note"><b>💡 Explanation:</b> "樓下" refers to the floor below where you currently are. "大廳" is the main first-floor lobby of an apartment or hotel. The character "廳" contains "聽" (listen), representing a public space with many people, such as 餐廳 (restaurant) or 咖啡廳 (cafe).</div>
                 <div class="item-content">
                     <div class="btn-group">
                         <button class="audio-btn" onclick="playAudioText(this)">🔊</button>
@@ -439,6 +433,7 @@
             <!-- 14. 休息 -->
             <div class="grammar-box" id="wu-14">
                 <div style="font-weight:bold; font-size:16px; color:#8C6239; margin-bottom:5px;">14. 休息 (xiū xí - Rest)</div>
+                <div class="note"><b>💡 Explanation:</b> To rest or take a break.</div>
                 <div class="item-content">
                     <div class="btn-group">
                         <button class="audio-btn" onclick="playAudioText(this)">🔊</button>
@@ -461,7 +456,7 @@
             <!-- 1. 給/送 -->
             <div class="grammar-box" id="hw-1">
                 <div style="font-weight:bold; font-size:16px; color:#8C6239; margin-bottom:5px;">1. 給 (gěi) vs. 送 (sòng)</div>
-                <div class="note"><b>💡 Explanation:</b> 「送」這個字更能強調這個東西是免費當作禮物送給你的。</div>
+                <div class="note"><b>💡 Explanation:</b> "送" emphasizes giving something for free as a gift or present.</div>
                 <div class="item-content">
                     <div class="btn-group">
                         <button class="audio-btn" onclick="playAudioText(this)">🔊</button>
@@ -489,7 +484,7 @@
             <!-- 2. 現在 -->
             <div class="grammar-box" id="hw-2">
                 <div style="font-weight:bold; font-size:16px; color:#8C6239; margin-bottom:5px;">2. 現在 (xiàn zài - Right now / Present moment)</div>
-                <div class="note"><b>💡 Explanation:</b> 因為中文沒有時態，所以喜歡用「現在」強調這個當下。</div>
+                <div class="note"><b>💡 Explanation:</b> Since Chinese does not have verb tenses, "現在" is often used to emphasize the present moment or right now.</div>
                 <div class="item-content">
                     <div class="btn-group">
                         <button class="audio-btn" onclick="playAudioText(this)">🔊</button>
@@ -506,6 +501,7 @@
             <!-- 3. 就要xx元 -->
             <div class="grammar-box" id="hw-3">
                 <div style="font-weight:bold; font-size:16px; color:#8C6239; margin-bottom:5px;">3. 就要 xx 元 (jiù yào ... yuán - Costs as much as $XX)</div>
+                <div class="note"><b>💡 Explanation:</b> Used to emphasize that a price is surprisingly high ("costs as much as...").</div>
                 <div class="item-content">
                     <div class="btn-group">
                         <button class="audio-btn" onclick="playAudioText(this)">🔊</button>
@@ -525,7 +521,7 @@
         <div class="section" id="sec-2">
             <h2>3. Lesson 12 (第十二課: 幾 vs 多)</h2>
             
-            <div class="note" style="font-size:15px; margin-bottom:15px;"><b>💡 Overview:</b> 比較「幾」與「多」的用法差異與語感。</div>
+            <div class="note" style="font-size:15px; margin-bottom:15px;"><b>💡 Overview:</b> Comparing the differences in usage and feeling between "幾" (jǐ) and "多" (duō).</div>
 
             <!-- Comparison Table -->
             <table class="grammar-table">
@@ -563,7 +559,7 @@
             <!-- Part 1: 幾 -->
             <div class="grammar-box" id="ls-1">
                 <div style="font-weight:bold; font-size:16px; color:#8C6239; margin-bottom:5px;">1. 幾 (jǐ - A few / several)</div>
-                <div class="note"><b>💡 Explanation:</b> 真的是很少很少。</div>
+                <div class="note"><b>💡 Explanation:</b> Expresses a very small quantity (strictly 1–9, always less than 10).</div>
                 
                 <img src="https://cdn.phototourl.com/member/2026-10-19-f3834186-72a2-4c01-85db-c4cc6be1f4a2.png" class="vocab-img" alt="幾 character diagram">
 
@@ -582,19 +578,19 @@
 
             <!-- Part 2: 多與幾的說明與公式 -->
             <div class="grammar-box" id="ls-2">
-                <div style="font-weight:bold; font-size:16px; color:#8C6239; margin-bottom:5px;">2. 多 與 幾 的白話公式與說明</div>
-                <div class="note"><b>💡 白話公式說明：</b><br>
-                1. 你可以先想像原本的數字，例如 <b>15</b>，把「五」換成「幾」，就是<b>「十幾」</b>。<br>
-                2. <b>三千五百</b>，把「五百」換成「多」，就變成<b>「三千多」</b>。<br>
-                3. 把 <b>4.8 公里</b>換成「多」，就是<b>「四個多公里」</b>。<br>
-                4. 把 <b>1.5 個月</b>換成「多」，就是<b>「一個多月」</b>。「個」位在數字和「多」之間。
+                <div style="font-weight:bold; font-size:16px; color:#8C6239; margin-bottom:5px;">2. Simple Formulas & Explanations for 多 and 幾</div>
+                <div class="note"><b>💡 Simple Formulas:</b><br>
+                1. Start with a base number, e.g., <b>15</b>. Replace the single digit "5" with "幾" (jǐ) to get <b>"十幾"</b> (teens / 10-something).<br>
+                2. For <b>3,500</b>, replace "500" with "多" (duō) to get <b>"三千多"</b> (over 3,000 / 3,000+).<br>
+                3. For <b>4.8 km</b>, use "多" to get <b>"四個多公里"</b> (a little over 4 km).<br>
+                4. For <b>1.5 months</b>, use "多" to get <b>"一個多月"</b> (a little over a month). Notice "個" goes between the number and "多".
                 </div>
 
-                <div class="note"><b>⚠️ 特別注意：</b> 不能說「四個多人」，因為人不能拆成一半、變成零點幾。如果真的要說超過四個人，中文可以說<b>「四個人以上」</b>。</div>
+                <div class="note"><b>⚠️ Important Note:</b> You cannot say "四個多人" because people cannot be split into fractions (0.x). To say "more than 4 people", say <b>"四個人以上"</b> (4 people or more).</div>
 
                 <hr style="border:0; border-top:1px dashed #E6D5B8; margin:15px 0;">
 
-                <div style="font-weight:bold; color:#8C6239; margin-bottom:10px;">💬 實用對話與例句 (Sentences & Practice)</div>
+                <div style="font-weight:bold; color:#8C6239; margin-bottom:10px;">💬 Practical Sentences & Dialogues</div>
 
                 <div class="item-content">
                     <div class="btn-group">
@@ -757,117 +753,7 @@
                         <button class="play-rec-btn" disabled>▶</button>
                     </div>
                     <div style="flex:1;">
-                        <div class="zy-text">阿(ㄚ)泰(ㄊㄞˋ)和(ㄏㄜˋ)語(ㄩˇ)心(ㄒㄧㄣ)是(ㄕˋ)大(ㄉㄚˋ)學(ㄒㄩㄝˊ)同(ㄊㄨㄥˊ)學(ㄒㄩㄝˊ)。以(ㄧˇ)前(ㄑㄧㄢˊ)他(ㄊㄚ)們(ㄇㄣ˙)不(ㄅㄨˋ)認(ㄖㄣˋ)識(ㄕˋ)，一(ㄧˋ)開(ㄎㄞ)始(ㄕˇ)只(ㄓˇ)是(ㄕˋ)在(ㄗㄞˋ)教(ㄐㄧㄠˋ)室(ㄕˋ)說(ㄕㄨㄛ)「你(ㄋㄧˇ)好(ㄏㄠˇ)」。</div>
-                    </div>
-                </div>
-
-                <div class="item-content">
-                    <div class="btn-group">
-                        <button class="audio-btn" onclick="playAudioText(this)">🔊</button>
-                        <button class="audio-btn" onclick="toggleRecord(this)">🎤</button>
-                        <button class="play-rec-btn" disabled>▶</button>
-                    </div>
-                    <div style="flex:1;">
-                        <div class="zy-text">放(ㄈㄤˋ)假(ㄐㄧㄚˋ)的(ㄉㄜ˙)前(ㄑㄧㄢˊ)一(ㄧˋ)天(ㄊㄧㄢ)，下(ㄒㄧㄚˋ)大(ㄉㄚˋ)雨(ㄩˇ)。晚(ㄨㄢˇ)上(ㄕㄤˋ)十(ㄕˊ)點(ㄉㄧㄢˇ)，語(ㄩˇ)心(ㄒㄧㄣ)還(ㄏㄞˊ)在(ㄗㄞˋ)學(ㄒㄩㄝˊ)校(ㄒㄧㄠˋ)，因(ㄧㄣ)為(ㄨㄟˋ)她(ㄊㄚ)今(ㄐㄧㄣ)天(ㄊㄧㄢ)有(ㄧㄡˇ)點(ㄉㄧㄢˇ)感(ㄍㄢˇ)冒(ㄇㄠˋ)想(ㄒㄧㄤˇ)休(ㄒㄧㄡ)息(ㄒㄧˊ)一(ㄧˋ)下(ㄒㄧㄚˋ)，可(ㄎㄜˇ)是(ㄕˋ)她(ㄊㄚ)沒(ㄇㄟˊ)有(ㄧㄡˇ)帶(ㄉㄞˋ)雨(ㄩˇ)傘(ㄙㄢˇ)。</div>
-                    </div>
-                </div>
-
-                <div class="item-content">
-                    <div class="btn-group">
-                        <button class="audio-btn" onclick="playAudioText(this)">🔊</button>
-                        <button class="audio-btn" onclick="toggleRecord(this)">🎤</button>
-                        <button class="play-rec-btn" disabled>▶</button>
-                    </div>
-                    <div style="flex:1;">
-                        <div class="zy-text">阿(ㄚ)泰(ㄊㄞˋ)看(ㄎㄢˋ)到(ㄉㄠˋ)她(ㄊㄚ)，問(ㄨㄣˋ)：「你(ㄋㄧˇ)怎(ㄗㄣˇ)麼(ㄇㄜ˙)還(ㄏㄞˊ)在(ㄗㄞˋ)這(ㄓㄜˋ)裡(ㄌㄧˇ)？」</div>
-                    </div>
-                </div>
-
-                <div class="item-content">
-                    <div class="btn-group">
-                        <button class="audio-btn" onclick="playAudioText(this)">🔊</button>
-                        <button class="audio-btn" onclick="toggleRecord(this)">🎤</button>
-                        <button class="play-rec-btn" disabled>▶</button>
-                    </div>
-                    <div style="flex:1;">
-                        <div class="zy-text">語(ㄩˇ)心(ㄒㄧㄣ)說(ㄕㄨㄛ)：「我(ㄨㄛˇ)本(ㄅㄨˇ)來(ㄌㄞˊ)想(ㄒㄧㄤˇ)坐(ㄗㄨㄛˋ)公(ㄍㄨㄥ)車(ㄔㄜ)回(ㄏㄨㄟˊ)家(ㄐㄧㄚ)，可(ㄎㄜˇ)是(ㄕˋ)雨(ㄩˇ)太(ㄊㄞˋ)大(ㄉㄚˋ)了(ㄌㄜ˙)。」</div>
-                    </div>
-                </div>
-
-                <div class="item-content">
-                    <div class="btn-group">
-                        <button class="audio-btn" onclick="playAudioText(this)">🔊</button>
-                        <button class="audio-btn" onclick="toggleRecord(this)">🎤</button>
-                        <button class="play-rec-btn" disabled>▶</button>
-                    </div>
-                    <div style="flex:1;">
-                        <div class="zy-text">阿(ㄚ)泰(ㄊㄞˋ)說(ㄕㄨㄛ)：「我(ㄨㄛˇ)有(ㄧㄡˇ)雨(ㄩˇ)傘(ㄙㄢˇ)，我(ㄨㄛˇ)送(ㄙㄨㄥˋ)你(ㄋㄧˇ)回(ㄏㄨㄟˊ)家(ㄐㄧㄚ)吧(ㄅㄚ˙)。」</div>
-                    </div>
-                </div>
-
-                <div class="item-content">
-                    <div class="btn-group">
-                        <button class="audio-btn" onclick="playAudioText(this)">🔊</button>
-                        <button class="audio-btn" onclick="toggleRecord(this)">🎤</button>
-                        <button class="play-rec-btn" disabled>▶</button>
-                    </div>
-                    <div style="flex:1;">
-                        <div class="zy-text">風(ㄈㄥ)很(ㄏㄣˇ)大(ㄉㄚˋ)，銘(ㄇㄧㄥˊ)泰(ㄊㄞˋ)用(ㄩㄥˋ)力(ㄌㄧˋ)抓(ㄓㄨㄚ)住(ㄓㄨˋ)雨(ㄩˇ)傘(ㄙㄢˇ)。他(ㄊㄚ)們(ㄇㄣ˙)走(ㄗㄡˇ)了(ㄌㄜ˙)二(ㄦˋ)十(ㄕˊ)分(ㄈㄣ)鐘(ㄓㄨㄥ)才(ㄘㄞˊ)到(ㄉㄠˋ)語(ㄩˇ)心(ㄒㄧㄣ)家(ㄐㄧㄚ)。</div>
-                    </div>
-                </div>
-
-                <div class="item-content">
-                    <div class="btn-group">
-                        <button class="audio-btn" onclick="playAudioText(this)">🔊</button>
-                        <button class="audio-btn" onclick="toggleRecord(this)">🎤</button>
-                        <button class="play-rec-btn" disabled>▶</button>
-                    </div>
-                    <div style="flex:1;">
-                        <div class="zy-text">路(ㄌㄨˋ)上(ㄕㄤˋ)，語(ㄩˇ)心(ㄒㄧㄣ)說(ㄕㄨㄛ)：「我(ㄨㄛˇ)今(ㄐㄧㄣ)天(ㄊㄧㄢ)上(ㄕㄤˋ)課(ㄎㄜˋ)都(ㄉㄡ)聽(ㄊㄧㄥ)不(ㄅㄨˋ)懂(ㄉㄨㄥˇ)。」說(ㄕㄨㄛ)完(ㄨㄢˊ)，她(ㄊㄚ)就(ㄐㄧㄡˋ)哭(ㄎㄨ)了(ㄌㄜ˙)。</div>
-                    </div>
-                </div>
-
-                <div class="item-content">
-                    <div class="btn-group">
-                        <button class="audio-btn" onclick="playAudioText(this)">🔊</button>
-                        <button class="audio-btn" onclick="toggleRecord(this)">🎤</button>
-                        <button class="play-rec-btn" disabled>▶</button>
-                    </div>
-                    <div style="flex:1;">
-                        <div class="zy-text">阿(ㄚ)泰(ㄊㄞˋ)說(ㄕㄨㄛ)：「你(ㄋㄧˇ)不(ㄅㄨˊ)要(ㄧㄠˋ)哭(ㄎㄨ)。以(ㄧˇ)後(ㄏㄡˋ)我(ㄨㄛˇ)們(ㄇㄣ˙)一(ㄧˋ)起(ㄑㄧˇ)念(ㄋㄧㄢˋ)書(ㄕㄨ)，好(ㄏㄠˇ)不(ㄅㄨˋ)好(ㄏㄠˇ)？」</div>
-                    </div>
-                </div>
-
-                <div class="item-content">
-                    <div class="btn-group">
-                        <button class="audio-btn" onclick="playAudioText(this)">🔊</button>
-                        <button class="audio-btn" onclick="toggleRecord(this)">🎤</button>
-                        <button class="play-rec-btn" disabled>▶</button>
-                    </div>
-                    <div style="flex:1;">
-                        <div class="zy-text">語(ㄩˇ)心(ㄒㄧㄣ)笑(ㄒㄧㄠˋ)了(ㄌㄜ˙)：「好(ㄏㄠˇ)！」</div>
-                    </div>
-                </div>
-
-                <div class="item-content">
-                    <div class="btn-group">
-                        <button class="audio-btn" onclick="playAudioText(this)">🔊</button>
-                        <button class="audio-btn" onclick="toggleRecord(this)">🎤</button>
-                        <button class="play-rec-btn" disabled>▶</button>
-                    </div>
-                    <div style="flex:1;">
-                        <div class="zy-text">到(ㄉㄠˋ)家(ㄐㄧㄚ)以(ㄧˇ)後(ㄏㄡˋ)，語(ㄩˇ)心(ㄒㄧㄣ)看(ㄎㄢˋ)到(ㄉㄠˋ)阿(ㄚ)泰(ㄊㄞˋ)的(ㄉㄜ˙)衣(ㄧ)服(ㄈㄨˊ)都(ㄉㄡ)是(ㄕˋ)水(ㄕㄨㄟˇ)，說(ㄕㄨㄛ)：「你(ㄋㄧˇ)換(ㄏㄨㄢˋ)一(ㄧˋ)件(ㄐㄧㄢˋ)我(ㄨㄛˇ)哥(ㄍㄜ)哥(ㄍㄜ˙)的(ㄉㄜ˙)衣(ㄧ)服(ㄈㄨˊ)吧(ㄅㄚ˙)，今(ㄐㄧㄣ)天(ㄊㄧㄢ)夜(ㄧㄝˋ)裡(ㄌㄧˇ)很(ㄏㄣˇ)冷(ㄌㄥˇ)。」</div>
-                    </div>
-                </div>
-
-                <div class="item-content">
-                    <div class="btn-group">
-                        <button class="audio-btn" onclick="playAudioText(this)">🔊</button>
-                        <button class="audio-btn" onclick="toggleRecord(this)">🎤</button>
-                        <button class="play-rec-btn" disabled>▶</button>
-                    </div>
-                    <div style="flex:1;">
-                        <div class="zy-text">放(ㄈㄤˋ)假(ㄐㄧㄚˋ)的(ㄉㄜ˙)時(ㄕˊ)候(ㄏㄡˋ)，他(ㄊㄚ)們(ㄇㄣ˙)就(ㄐㄧㄡˋ)常(ㄔㄤˊ)常(ㄔㄤˊ)一(ㄧˋ)起(ㄑㄧˇ)去(ㄑㄩˋ)圖(ㄊㄨˊ)書(ㄕㄨ)館(ㄍㄨㄢˇ)念(ㄋㄧㄢˋ)書(ㄕㄨ)。</div>
+                        <div class="zy-text">阿(ㄚ)泰(ㄊㄞˋ)和(ㄏㄜˋ)語(ㄩˇ)心(ㄒㄧㄣ)是(ㄕˋ)大(ㄉㄚˋ)學(ㄒㄩㄝˊ)同(ㄊㄨㄥˊ)學(ㄒㄩㄝˊ)。以(ㄧˇ)前(ㄑㄧㄢˊ)他(ㄊㄚ)們(ㄇㄣ˙)不(ㄅㄨˋ)認(ㄖㄣˋ)識(ㄕˋ)，一(ㄧˋ)開(ㄎㄞ)始(ㄕˇ)只(ㄓˇ)是(ㄕˋ)在(ㄗㄞˋ)教(ㄐㄧㄠˋ)室(ㄕˋ)說(ㄕㄨㄛ)「你(ㄋㄧˇ)好(ㄏㄠˇ)」。放(ㄈㄤˋ)假(ㄐㄧㄚˋ)的(ㄉㄜ˙)前(ㄑㄧㄢˊ)一(ㄧˋ)天(ㄊㄧㄢ)，下(ㄒㄧㄚˋ)大(ㄉㄚˋ)雨(ㄩˇ)。晚(ㄨㄢˇ)上(ㄕㄤˋ)十(ㄕˊ)點(ㄉㄧㄢˇ)，語(ㄩˇ)心(ㄒㄧㄣ)還(ㄏㄞˊ)在(ㄗㄞˋ)學(ㄒㄩㄝˊ)校(ㄒㄧㄠˋ)，因(ㄧㄣ)為(ㄨㄟˋ)她(ㄊㄚ)今(ㄐㄧㄣ)天(ㄊㄧㄢ)有(ㄧㄡˇ)點(ㄉㄧㄢˇ)感(ㄍㄢˇ)冒(ㄇㄠˋ)想(ㄒㄧㄤˇ)休(ㄒㄧㄡ)息(ㄒㄧˊ)一(ㄧˋ)下(ㄒㄧㄚˋ)，可(ㄎㄜˇ)是(ㄕˋ)她(ㄊㄚ)沒(ㄇㄟˊ)有(ㄧㄡˇ)帶(ㄉㄞˋ)雨(ㄩˇ)傘(ㄙㄢˇ)。阿(ㄚ)泰(ㄊㄞˋ)看(ㄎㄢˋ)到(ㄉㄠˋ)她(ㄊㄚ)，問(ㄨㄣˋ)：「你(ㄋㄧˇ)怎(ㄗㄣˇ)麼(ㄇㄜ˙)還(ㄏㄞˊ)在(ㄗㄞˋ)這(ㄓㄜˋ)裡(ㄌㄧˇ)？」語(ㄩˇ)心(ㄒㄧㄣ)說(ㄕㄨㄛ)：「我(ㄨㄛˇ)本(ㄅㄨˇ)來(ㄌㄞˊ)想(ㄒㄧㄤˇ)坐(ㄗㄨㄛˋ)公(ㄍㄨㄥ)車(ㄔㄜ)回(ㄏㄨㄟˊ)家(ㄐㄧㄚ)，可(ㄎㄜˇ)是(ㄕˋ)雨(ㄩˇ)太(ㄊㄞˋ)大(ㄉㄚˋ)了(ㄌㄜ˙)。」阿(ㄚ)泰(ㄊㄞˋ)說(ㄕㄨㄛ)：「我(ㄨㄛˇ)有(ㄧㄡˇ)雨(ㄩˇ)傘(ㄙㄢˇ)，我(ㄨㄛˇ)送(ㄙㄨㄥˋ)你(ㄋㄧˇ)回(ㄏㄨㄟˊ)家(ㄐㄧㄚ)吧(ㄅㄚ˙)。」風(ㄈㄥ)很(ㄏㄣˇ)大(ㄉㄚˋ)，銘(ㄇㄧㄥˊ)泰(ㄊㄞˋ)用(ㄩㄥˋ)力(ㄌㄧˋ)抓(ㄓㄨㄚ)住(ㄓㄨˋ)雨(ㄩˇ)傘(ㄙㄢˇ)。他(ㄊㄚ)們(ㄇㄣ˙)走(ㄗㄡˇ)了(ㄌㄜ˙)二(ㄦˋ)十(ㄕˊ)分(ㄈㄣ)鐘(ㄓㄨㄥ)才(ㄘㄞˊ)到(ㄉㄠˋ)語(ㄩˇ)心(ㄒㄧㄣ)家(ㄐㄧㄚ)。路(ㄌㄨˋ)上(ㄕㄤˋ)，語(ㄩˇ)心(ㄒㄧㄣ)說(ㄕㄨㄛ)：「我(ㄨㄛˇ)今(ㄐㄧㄣ)天(ㄊㄧㄢ)上(ㄕㄤˋ)課(ㄎㄜˋ)都(ㄉㄡ)聽(ㄊㄧㄥ)不(ㄅㄨˋ)懂(ㄉㄨㄥˇ)。」說(ㄕㄨㄛ)完(ㄨㄢˊ)，她(ㄊㄚ)就(ㄐㄧㄡˋ)哭(ㄎㄨ)了(ㄌㄜ˙)。阿(ㄚ)泰(ㄊㄞˋ)說(ㄕㄨㄛ)：「你(ㄋㄧˇ)不(ㄅㄨˊ)要(ㄧㄠˋ)哭(ㄎㄨ)。以(ㄧˇ)後(ㄏㄡˋ)我(ㄨㄛˇ)們(ㄇㄣ˙)一(ㄧˋ)起(ㄑㄧˇ)念(ㄋㄧㄢˋ)書(ㄕㄨ)，好(ㄏㄠˇ)不(ㄅㄨˋ)好(ㄏㄠˇ)？」語(ㄩˇ)心(ㄒㄧㄣ)笑(ㄒㄧㄠˋ)了(ㄌㄜ˙)：「好(ㄏㄠˇ)！」到(ㄉㄠˋ)家(ㄐㄧㄚ)以(ㄧˇ)後(ㄏㄡˋ)，語(ㄩˇ)心(ㄒㄧㄣ)看(ㄎㄢˋ)到(ㄉㄠˋ)阿(ㄚ)泰(ㄊㄞˋ)的(ㄉㄜ˙)衣(ㄧ)服(ㄈㄨˊ)都(ㄉㄡ)是(ㄕˋ)水(ㄕㄨㄟˇ)，說(ㄕㄨㄛ)：「你(ㄋㄧˇ)換(ㄏㄨㄢˋ)一(ㄧˋ)件(ㄐㄧㄢˋ)我(ㄨㄛˇ)哥(ㄍㄜ)哥(ㄍㄜ˙)的(ㄉㄜ˙)衣(ㄧ)服(ㄈㄨˊ)吧(ㄅㄚ˙)，今(ㄐㄧㄣ)天(ㄊㄧㄢ)夜(ㄧㄝˋ)裡(ㄌㄧˇ)很(ㄏㄣˇ)冷(ㄌㄥˇ)。」放(ㄈㄤˋ)假(ㄐㄧㄚˋ)的(ㄉㄜ˙)時(ㄕˊ)候(ㄏㄡˋ)，他(ㄊㄚ)們(ㄇㄣ˙)就(ㄐㄧㄡˋ)常(ㄔㄤˊ)常(ㄔㄤˊ)一(ㄧˋ)起(ㄑㄧˇ)去(ㄑㄩˋ)圖(ㄊㄨˊ)書(ㄕㄨ)館(ㄍㄨㄢˇ)念(ㄋㄧㄢˋ)書(ㄕㄨ)。</div>
                     </div>
                 </div>
             </div>
