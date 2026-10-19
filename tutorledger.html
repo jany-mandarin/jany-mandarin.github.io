@@ -125,7 +125,7 @@ function render(){
 function alloc(){
   var map={};
   S.students.forEach(function(s){
-    var pk=S.payments.filter(function(p){return p.sid===s.id}).sort(function(a,b){return a.date<b.date?-1:1}).map(function(p){return{rem:p.lessons,u:p.amount*p.rate/p.lessons}});
+    var pk=S.payments.filter(function(p){return p.sid===s.id}).sort(function(a,b){return a.date<b.date?-1:1}).map(function(p){return{rem:p.lessons,u:(p.amount-(p.gift||0))*p.rate/p.lessons}});
     S.lessons.filter(function(l){return l.sid===s.id}).sort(function(a,b){return a.date<b.date?-1:1}).forEach(function(l){
       while(pk.length&&pk[0].rem<=0)pk.shift();
       if(pk.length){pk[0].rem--;map[l.id]=pk[0].u}else map[l.id]=null;
@@ -135,13 +135,13 @@ function alloc(){
 }
 function home(){
   var A=alloc(),td=today(),ml=S.lessons.filter(function(l){return l.date.slice(0,7)===ym&&l.date<=td}),fl=S.lessons.filter(function(l){return l.date.slice(0,7)===ym&&l.date>td}),fut=0;fl.forEach(function(l){fut+=A[l.id]||0});
-  var acc=0,unp=0,byA={};
+  var gm=S.payments.filter(function(p){return p.date.slice(0,7)===ym&&p.gift>0}).reduce(function(a,p){return a+p.gift*p.rate},0),acc=gm,unp=0,byA={};
   ml.forEach(function(l){var v=A[l.id];if(v==null){unp++;v=0}acc+=v;var b=byA[l.sid]=byA[l.sid]||{n:0,t:0};b.n++;b.t+=v});
   var ps=S.payments.filter(function(p){return p.date.slice(0,7)===ym});
   var cash=0,byC={},byS={};
   ps.forEach(function(p){var t=p.amount*p.rate;cash+=t;var c=byC[p.cur]=byC[p.cur]||{o:0,t:0};c.o+=p.amount;c.t+=t;var k=p.src||'未指定';byS[k]=(byS[k]||0)+t});
-  return '<div class="card"><div class="row" style="justify-content:space-between"><button class="btn g" onclick="ym=shift(ym,-1);render()">‹</button><b>'+ym.replace('-',' 年 ')+' 月</b><button class="btn g" onclick="ym=shift(ym,1);render()">›</button></div>'
-  +'<div class="mu" style="margin-top:10px">本月實際上課收入（到今天為止已上的課，換算台幣）</div><div class="big">'+nt(acc)+'</div><div class="mu">本月上課 '+ml.length+' 堂'+(unp?'・其中 '+unp+' 堂還沒有對應的收款（未計入）':'')+'</div>'+(fl.length?'<div class="mu">另有 '+fl.length+' 堂已預約、還沒上，預計 '+nt(fut)+'</div>':'')
+  return '<div class="card"><div class="row" style="justify-content:space-between"><button class="btn g" onclick="ym=shift(ym,-1);render()">‹</button><b>'+ym.replace('-','年')+'月</b><button class="btn g" onclick="ym=shift(ym,1);render()">›</button></div>'
+  +'<div class="mu" style="margin-top:10px">本月實際上課收入（到今天為止已上的課，換算台幣）</div><div class="big">'+nt(acc)+'</div><div class="mu">本月上課 '+ml.length+' 堂'+(unp?'・其中 '+unp+' 堂還沒有對應的收款（未計入）':'')+'</div>'+(fl.length?'<div class="mu">另有 '+fl.length+' 堂已預約、還沒上，預計 '+nt(fut)+'</div>':'')+(gm?'<div class="mu">含禮金／小費 '+nt(gm)+'</div>':'')
   +(ml.length?'<table style="margin-top:8px"><tr><th>學生</th><th class="r">堂數</th><th class="r">台幣</th></tr>'+Object.keys(byA).map(function(i){return '<tr><td>'+esc(sname(i))+'</td><td class="r">'+byA[i].n+'</td><td class="r">'+nt(byA[i].t)+'</td></tr>'}).join('')+'</table>':'')+'</div>'
   +'<div class="card"><div class="mu">本月收款入帳（現金，依匯款日期）</div><div class="big" style="font-size:24px">'+nt(cash)+'</div><div class="mu">收款 '+ps.length+' 筆'+(ps.length?'':'（本月沒有收款）')+'</div>'
   +(ps.length?'<table style="margin-top:8px"><tr><th>收款來源</th><th class="r">台幣</th></tr>'+Object.keys(byS).map(function(k){return '<tr><td>'+esc(k)+'</td><td class="r">'+nt(byS[k])+'</td></tr>'}).join('')+'</table><table><tr><th>幣別</th><th class="r">原幣</th><th class="r">台幣</th></tr>'+Object.keys(byC).map(function(c){return '<tr><td>'+c+'</td><td class="r">'+byC[c].o.toLocaleString()+'</td><td class="r">'+nt(byC[c].t)+'</td></tr>'}).join('')+'</table>':'')+'</div>'
@@ -153,38 +153,40 @@ function plist(){
   var rows=S.payments.filter(function(p){return k?sname(p.sid).toLowerCase().indexOf(k)>=0:p.date.slice(0,7)===ym}).sort(function(a,b){return a.date<b.date?1:-1});
   if(!rows.length)return '<div class="mu">沒有符合的收款紀錄</div>';
   return '<table><tr><th>日期／學生</th><th class="r">金額</th><th class="r">堂</th><th></th></tr>'+rows.map(function(p){
-    return '<tr><td>'+p.date+'<div><b>'+esc(sname(p.sid))+'</b></div><div class="mu">'+esc(p.src||'未指定')+'</div></td><td class="r">'+p.amount+' '+p.cur+'<div class="mu">@'+p.rate+' → '+nt(p.amount*p.rate)+'</div></td><td class="r">'+p.lessons+'</td><td class="r"><button class="btn s" onclick="openShare(\''+p.sid+'\')">給學生看</button> <button class="btn s g" onclick="editPay(\''+p.id+'\')">編輯</button> <button class="x" onclick="delPay(\''+p.id+'\')">🗑</button></td></tr>'}).join('')+'</table>';
+    return '<tr><td>'+fd(p.date)+'<div><b>'+esc(sname(p.sid))+'</b></div><div class="mu">'+esc(p.src||'未指定')+'</div></td><td class="r">'+p.amount+' '+p.cur+'<div class="mu">@'+p.rate+' → '+nt(p.amount*p.rate)+(p.gift?'・含禮金 '+p.gift:'')+'</div></td><td class="r">'+p.lessons+'</td><td class="r"><button class="btn s" onclick="openShare(\''+p.sid+'\')">給學生看</button> <button class="btn s g" onclick="editPay(\''+p.id+'\')">編輯</button> <button class="x" onclick="delPay(\''+p.id+'\')">🗑</button></td></tr>'}).join('')+'</table>';
 }
 function payForm(fixed,ed){
   if(!S.students.length)return '<div class="card mu">請先到「學生」頁新增學生，再記錄收款。</div>';
   if(ed&&fixed&&ed.sid!==fixed)ed=null;
-  var s0=ed?ed.sid:(fixed||S.students[0].id),cur=ed?ed.cur:stu(s0).cur;
+  var s0=ed?ed.sid:(fixed||S.students[0].id),cur=ed?ed.cur:stu(s0).cur,df=ed?{}:(stu(s0)||{});
   return '<div class="card" id="pForm"><h2>'+(ed?'✏️ 修改收款':'＋ 記錄收款')+'</h2><div class="grid">'
   +'<div><label>學生</label><select id="pS">'+S.students.map(function(s){return '<option value="'+s.id+'"'+(s.id===s0?' selected':'')+'>'+esc(s.name)+'</option>'}).join('')+'</select></div>'
   +'<div><label>收款日期</label><input type="date" id="pD" value="'+(ed?ed.date:today())+'"></div>'
-  +'<div><label>金額</label><input type="number" id="pA" step="any" value="'+(ed?ed.amount:'')+'" placeholder="例如 300"></div>'
+  +'<div><label>金額</label><input type="number" id="pA" step="any" value="'+(ed?ed.amount:(df.defAmt||''))+'" placeholder="例如 300"></div>'
   +'<div><label>幣別</label><select id="pC">'+['USD','EUR','NZD','TWD'].map(function(c){return '<option'+(c===cur?' selected':'')+'>'+c+'</option>'}).join('')+'</select></div>'
-  +'<div><label>購買堂數（單堂填 1）</label><input type="number" id="pL" value="'+(ed?ed.lessons:1)+'" min="1"></div>'
+  +'<div><label>購買堂數（單堂填 1）</label><input type="number" id="pL" value="'+(ed?ed.lessons:(df.defL||1))+'" min="1"></div>'
   +'<div><label>匯率（1 外幣 = ? 台幣）</label><input type="number" id="pR" step="any" value="'+(ed?ed.rate:'')+'"></div>'
-  +'<div><label>收款來源</label><select id="pSrc">'+S.sources.map(function(x){return '<option'+(ed&&ed.src===x?' selected':'')+'>'+esc(x)+'</option>'}).join('')+'</select></div></div>'
+  +'<div><label>其中禮金／小費（選填）</label><input type="number" id="pG" step="any" value="'+(ed&&ed.gift?ed.gift:'')+'" placeholder="不計入課程單價"></div>'
+  +'<div><label>收款來源</label><select id="pSrc">'+S.sources.map(function(x){return '<option'+((ed?ed.src:df.defSrc)===x?' selected':'')+'>'+esc(x)+'</option>'}).join('')+'</select></div></div>'
   +'<div class="mu" id="pPrev" style="margin:8px 0"></div><div class="row"><button class="btn" onclick="addPay()">'+(ed?'儲存修改':'儲存收款')+'</button>'+(ed?'<button class="btn g" onclick="editId=null;render()">取消修改</button>':'')+'</div></div>';
 }
 function bindPay(){
   var c=document.getElementById('pC');if(!c)return;
-  var upd=function(){var a=+document.getElementById('pA').value,l=+document.getElementById('pL').value||1,rate=+document.getElementById('pR').value;
-    document.getElementById('pPrev').textContent=a&&rate?'≈ '+nt(a*rate)+'，每堂約 '+nt(a*rate/l)+'（'+(a/l).toFixed(1)+' '+c.value+'）':'';};
+  var upd=function(){var a=+document.getElementById('pA').value,l=+document.getElementById('pL').value||1,rate=+document.getElementById('pR').value,g=+document.getElementById('pG').value||0;
+    document.getElementById('pPrev').textContent=a&&rate?'≈ '+nt(a*rate)+(g?'（其中禮金 '+nt(g*rate)+'）':'')+'，每堂約 '+nt((a-g)*rate/l)+'（'+((a-g)/l).toFixed(1)+' '+c.value+'）':'';};
   var setRate=function(){document.getElementById('pR').value=S.rates[c.value]||1;upd()};
   var sel=document.getElementById('pS');
-  sel.onchange=function(){c.value=stu(sel.value).cur;setRate()};
-  c.onchange=setRate;['pA','pL','pR'].forEach(function(i){document.getElementById(i).oninput=upd});
+  sel.onchange=function(){var s=stu(sel.value);c.value=s.cur;if(!editId){document.getElementById('pA').value=s.defAmt||'';document.getElementById('pL').value=s.defL||1;if(s.defSrc)document.getElementById('pSrc').value=s.defSrc}setRate()};
+  c.onchange=setRate;['pA','pL','pR','pG'].forEach(function(i){document.getElementById(i).oninput=upd});
   if(editId)upd();else setRate();
 }
 function addPay(){
   var a=+document.getElementById('pA').value,r=+document.getElementById('pR').value,l=+document.getElementById('pL').value,d=document.getElementById('pD').value;
   if(!(a>0&&r>0&&l>0&&d)){alert('請填寫日期、金額、匯率與堂數');return}
-  var o={sid:document.getElementById('pS').value,date:d,amount:a,cur:document.getElementById('pC').value,lessons:l,rate:r,src:document.getElementById('pSrc').value};
+  if((+document.getElementById('pG').value||0)>=a){alert('禮金必須小於收款金額');return}
+  var o={sid:document.getElementById('pS').value,date:d,amount:a,cur:document.getElementById('pC').value,lessons:l,rate:r,src:document.getElementById('pSrc').value,gift:+document.getElementById('pG').value||0};
   if(editId){var p=S.payments.find(function(x){return x.id===editId});if(p)Object.assign(p,o);editId=null}
-  else{o.id=uid();S.payments.push(o)}
+  else{o.id=uid();S.payments.push(o);var st=stu(o.sid);if(st){st.defAmt=a-o.gift;st.defL=l;st.defSrc=o.src}}
   save();if(view==='home')ym=d.slice(0,7);render();
 }
 function editPay(id){editId=id;render()}
@@ -200,7 +202,7 @@ function addStu(){var n=document.getElementById('nN').value.trim();if(!n)return;
   if(dup){alert('已經有「'+dup.name+'」了。同一位學生再次匯款，請點進他的頁面直接「記錄收款」，不用再新增一位。');return}
   var cur=document.getElementById('nC').value,s={id:uid(),name:n,cur:cur};S.students.push(s);
   var a=+document.getElementById('nA').value,l=+document.getElementById('nL').value,d=document.getElementById('nD').value;
-  if(a>0&&l>0&&d)S.payments.push({id:uid(),sid:s.id,date:d,amount:a,cur:cur,lessons:l,rate:S.rates[cur]||1,src:document.getElementById('nSrc').value});
+  if(a>0&&l>0&&d){var sr=document.getElementById('nSrc').value;S.payments.push({id:uid(),sid:s.id,date:d,amount:a,cur:cur,lessons:l,rate:S.rates[cur]||1,src:sr,gift:0});s.defAmt=a;s.defL=l;s.defSrc=sr}
   save();calYm=ymOf(new Date());go('student',s.id)}
 function dupNote(){var seen={},d=false;S.students.forEach(function(s){var k=s.name.toLowerCase();if(seen[k])d=true;seen[k]=1});return d?'<div class="card" style="border-color:var(--ac)">⚠ 發現同名學生。請點進其中一位，到頁面下方用「合併重複學生」把兩筆合成一位，堂數和收款就會正確。</div>':''}
 function mergeCard(){var o=S.students.filter(function(s){return s.id!==sid});if(!o.length)return '';return '<div class="card"><h2>合併重複學生</h2><div class="mu" style="margin-bottom:8px">如果同一位學生被建立了兩次，選另一筆，把這位的收款和上課紀錄合併過去。</div><div class="row"><select id="mT" style="flex:1"><option value="">選擇要合併到…</option>'+o.map(function(s){return '<option value="'+s.id+'">'+esc(s.name)+'（已匯 '+paidOf(s.id)+' 堂・已上 '+usedOf(s.id)+' 堂）</option>'}).join('')+'</select><button class="btn g" onclick="mergeStu()">合併</button></div></div>'}
@@ -227,11 +229,11 @@ function detail(){
   return top+'<div class="card" style="margin-top:10px"><h2>'+esc(s.name)+(share?'':'（'+s.cur+'）')+'</h2>'
   +'<div class="row" style="justify-content:space-between"><div><div class="mu">已匯</div><b style="font-size:22px">'+paid+'</b> 堂</div><div><div class="mu">已上</div><b style="font-size:22px">'+used+'</b> 堂</div><div><div class="mu">已預約</div><b style="font-size:22px">'+bk+'</b> 堂</div><div><div class="mu">未預約</div><b class="big">'+rem+'</b> 堂</div></div>'
   +'<div class="bar" style="display:flex"><i style="width:'+pct+'%"></i><i style="width:'+pct2+'%;opacity:.4"></i></div><div class="mu">深綠＝已上　淺綠＝已預約（未來的課）</div>'+(rem<=1?'<div class="tag">'+(share?'⚠ 堂數快用完囉':'⚠ 堂數快用完，記得提醒續約')+'</div>':'')+'</div>'
-  +'<div class="card"><div class="row" style="justify-content:space-between"><button class="btn g" onclick="calYm=shift(calYm,-1);render()">‹</button><b>'+calYm.replace('-',' 年 ')+' 月</b><button class="btn g" onclick="calYm=shift(calYm,1);render()">›</button></div>'
+  +'<div class="card"><div class="row" style="justify-content:space-between"><button class="btn g" onclick="calYm=shift(calYm,-1);render()">‹</button><b>'+calYm.replace('-','年')+'月</b><button class="btn g" onclick="calYm=shift(calYm,1);render()">›</button></div>'
   +(share?'':'<div class="mu" style="margin:6px 0">點日期＝記一堂課（再點一次取消）。今天（含）以前算「已上」，今天之後算「已預約」（虛線框）。紅框＝匯款日。</div>')+'<div class="cal" style="margin-top:8px">'+cells+'</div></div>'
-  +'<div class="card"><h2>匯款紀錄</h2>'+(hist.length?'<table><tr><th>日期</th><th class="r">金額</th><th class="r">堂數</th>'+(share?'<th>方式</th>':'<th class="r">台幣</th><th></th>')+'</tr>'+hist.map(function(x){return '<tr><td>'+x.date+'</td><td class="r">'+x.amount+' '+x.cur+'</td><td class="r">'+x.lessons+'</td>'+(share?'<td>'+esc(x.src||'')+'</td>':'<td class="r">'+nt(x.amount*x.rate)+'<div class="mu">'+esc(x.src||'')+'</div></td><td class="r"><button class="btn s g" onclick="editPay(\''+x.id+'\')">編輯</button> <button class="x" onclick="delPay(\''+x.id+'\')">🗑</button></td>')+'</tr>'}).join('')+'</table>':'<div class="mu">尚無匯款</div>')+'</div>'
-  +'<div class="card"><h2>已上課日期（'+used+' 堂）</h2><div class="mu">'+(function(){var a=lessonDates.filter(function(d){return d<=today()});return a.length?a.join('、'):'尚無'})()+'</div><h2 style="margin-top:12px">已預約（'+bk+' 堂）</h2><div class="mu">'+(function(){var a=lessonDates.filter(function(d){return d>today()});return a.length?a.join('、'):'尚無'})()+'</div></div>'
-  +(share?'':payForm(sid,editId&&S.payments.find(function(x){return x.id===editId}))+mergeCard()+'<button class="btn g" onclick="renameStu()">修改姓名</button> <button class="btn g" onclick="delStu()">刪除此學生</button>');
+  +'<div class="card"><h2>匯款紀錄</h2>'+(hist.length?'<table><tr><th>日期</th><th class="r">金額</th><th class="r">堂數</th>'+(share?'<th>方式</th>':'<th class="r">台幣</th><th></th>')+'</tr>'+hist.map(function(x){return '<tr><td>'+fd(x.date)+'</td><td class="r">'+x.amount+' '+x.cur+'</td><td class="r">'+x.lessons+'</td>'+(share?'<td>'+esc(x.src||'')+'</td>':'<td class="r">'+nt(x.amount*x.rate)+'<div class="mu">'+esc(x.src||'')+'</div></td><td class="r"><button class="btn s g" onclick="editPay(\''+x.id+'\')">編輯</button> <button class="x" onclick="delPay(\''+x.id+'\')">🗑</button></td>')+'</tr>'}).join('')+'</table>':'<div class="mu">尚無匯款</div>')+'</div>'
+  +'<div class="card"><h2>已上課日期（'+used+' 堂）</h2><div class="mu">'+(function(){var a=lessonDates.filter(function(d){return d<=today()});return a.length?a.map(fd).join('、'):'尚無'})()+'</div><h2 style="margin-top:12px">已預約（'+bk+' 堂）</h2><div class="mu">'+(function(){var a=lessonDates.filter(function(d){return d>today()});return a.length?a.map(fd).join('、'):'尚無'})()+'</div></div>'
+  +(share?'':payForm(sid,editId&&S.payments.find(function(x){return x.id===editId}))+mergeCard()+'<button class="btn g" onclick="renameStu()">修改姓名</button> <button class="btn g" onclick="setAlias()">行事曆名稱</button> <button class="btn g" onclick="delStu()">刪除此學生</button>');
 }
 function toggleLesson(d){
   var ex=S.lessons.find(function(l){return l.sid===sid&&l.date===d});
@@ -242,11 +244,18 @@ function renameStu(){var n=prompt('新的姓名',stu(sid).name);if(n&&n.trim()){
 function delStu(){if(confirm('刪除此學生及其所有收款與上課紀錄？')){S.payments=S.payments.filter(function(p){return p.sid!==sid});S.lessons=S.lessons.filter(function(l){return l.sid!==sid});S.students=S.students.filter(function(s){return s.id!==sid});save();go('students')}}
 
 /* 匯入 Google 行事曆（.ics） */
+var impHid=0;
+function fd(d){return d?String(d).replace(/-/g,'/'):''}
+function impAssign(i,v){var t=impRows[i].title;impRows.forEach(function(r){if(r.title===t){r.sid=v;r.on=!!v}});
+  if(v){var s=stu(v);s.alias=s.alias||[];if(s.alias.indexOf(t)<0&&t.toLowerCase().indexOf(s.name.toLowerCase())<0){s.alias.push(t);save()}}
+  else{S.ignore=S.ignore||[];if(S.ignore.indexOf(t)<0){S.ignore.push(t);save()}}
+  render()}
+function setAlias(){var s=stu(sid);var v=prompt('這位學生在 Google 行事曆上的名稱（可多個，用逗號分隔）',(s.alias||[]).join(', '));if(v!==null){s.alias=v.split(/[,，、]/).map(function(x){return x.trim()}).filter(Boolean);save();render()}}
 function impView(){
   var t=new Date(),a=ymOf(new Date(t.getFullYear(),t.getMonth()-1,1))+'-01';
   return '<div class="card"><h2>從 Google 行事曆匯入上課紀錄</h2><div class="mu" style="margin-bottom:8px">1. 在電腦開啟 Google 行事曆 → 設定 → 匯入與匯出 → 匯出，會得到 .zip，解壓縮後選你的上課行事曆 .ics。<br>2. 在下面選檔案與日期範圍。程式會用「活動標題裡的學生姓名」自動配對，你可以逐筆調整再匯入。已記過的同一天不會重複。日期範圍預設包含未來約兩個月，今天之後的課會算「已預約」。</div>'
-  +'<div class="grid"><div><label>.ics 檔案</label><input type="file" id="icsF" accept=".ics,text/calendar"></div><div><label>從</label><input type="date" id="iF" value="'+a+'"></div><div><label>到</label><input type="date" id="iT" value="'+ymd(new Date(t.getFullYear(),t.getMonth()+3,0))+'"></div></div><br><button class="btn" onclick="impParse()">讀取行事曆</button></div>'
-  +(impRows.length?'<div class="card"><h2>預覽（'+impRows.length+' 個活動）</h2><table>'+impRows.map(function(r,i){return '<tr><td><input type="checkbox" '+(r.on?'checked':'')+' onchange="impRows['+i+'].on=this.checked"></td><td>'+r.date+'<div class="mu">'+esc(r.title)+'</div></td><td><select onchange="impRows['+i+'].sid=this.value;impRows['+i+'].on=!!this.value">'+'<option value="">略過</option>'+S.students.map(function(s){return '<option value="'+s.id+'"'+(s.id===r.sid?' selected':'')+'>'+esc(s.name)+'</option>'}).join('')+'</select></td></tr>'}).join('')+'</table><br><button class="btn" onclick="impGo()">匯入勾選的課</button></div>':'');
+  +'<div class="grid"><div><label>.ics 檔案</label><input type="file" id="icsF" accept=".ics,text/calendar"></div><div><label>從</label><input type="date" id="iF" value="'+a+'"></div><div><label>到</label><input type="date" id="iT" value="'+ymd(new Date(t.getFullYear(),t.getMonth()+3,0))+'"></div></div><br><button class="btn" onclick="impParse()">讀取行事曆</button>'+((S.ignore||[]).length?' <button class="btn g" onclick="S.ignore=[];save();render()">重設已忽略的標題（'+S.ignore.length+'）</button>':'')+'</div>'
+  +(impRows.length?'<div class="card"><h2>預覽（'+impRows.length+' 個新活動）</h2><div class="mu" style="margin-bottom:6px">已自動略過 '+impHid+' 筆（已匯入過或已忽略）。選好學生後，系統會記住這個行事曆名稱，下次自動配對。</div><table>'+impRows.map(function(r,i){return '<tr><td><input type="checkbox" '+(r.on?'checked':'')+' onchange="impRows['+i+'].on=this.checked"></td><td>'+fd(r.date)+'<div class="mu">'+esc(r.title)+'</div></td><td><select onchange="impAssign('+i+',this.value)">'+'<option value="">略過</option>'+S.students.map(function(s){return '<option value="'+s.id+'"'+(s.id===r.sid?' selected':'')+'>'+esc(s.name)+'</option>'}).join('')+'</select></td></tr>'}).join('')+'</table><br><button class="btn" onclick="impGo()">匯入勾選的課</button></div>':'');
 }
 function impParse(){
   var f=document.getElementById('icsF').files[0];if(!f){alert('請先選擇 .ics 檔案');return}
@@ -265,11 +274,11 @@ function impParse(){
         var step=(fq==='WEEKLY'?7:1)*iv,d=new Date(d0),n=0,lim=un?new Date(+un.slice(0,4),+un.slice(4,6)-1,+un.slice(6,8)):null,end=new Date(to+'T23:59:59');
         while(n<1500&&(!cn||n<cn)&&d<=end&&(!lim||d<=lim)){dates.push(ymd(d));d=new Date(d.getFullYear(),d.getMonth(),d.getDate()+step,d.getHours(),d.getMinutes());n++}
       }else dates.push(ymd(d0));
-      dates.forEach(function(x){if(x>=from&&x<=to&&!ex[x]){var low=title.toLowerCase(),m=S.students.find(function(s){return low.indexOf(s.name.toLowerCase())>=0});
+      dates.forEach(function(x){if(x>=from&&x<=to&&!ex[x]){var low=title.toLowerCase(),m=S.students.find(function(s){return [s.name].concat(s.alias||[]).some(function(n){return n&&low.indexOf(n.toLowerCase())>=0})});
         out.push({date:x,title:title,sid:m?m.id:'',on:!!m})}});
     });
-    var seen={};impRows=out.filter(function(r){var k=r.date+r.title;if(seen[k])return false;seen[k]=1;return true}).sort(function(a,b){return a.date<b.date?-1:1});
-    if(!impRows.length)alert('這個範圍內沒有找到活動');
+    var seen={},hid=0;impRows=out.filter(function(r){var k=r.date+r.title;if(seen[k])return false;seen[k]=1;if((S.ignore||[]).indexOf(r.title)>=0||(r.sid&&S.lessons.some(function(l){return l.sid===r.sid&&l.date===r.date}))){hid++;return false}return true}).sort(function(a,b){return a.date<b.date?-1:1});
+    impHid=hid;if(!impRows.length)alert('沒有需要匯入的新活動（已略過 '+hid+' 筆已匯入過或已忽略的活動）');
     render();
   };rd.readAsText(f);
 }
@@ -286,7 +295,7 @@ function impGo(){
 function rates(){
   return '<div class="card"><h2>目前匯率（1 外幣 = ? 台幣）</h2><div class="mu" style="margin-bottom:8px">請自行輸入（可參考 Wise 或銀行的實際到帳匯率）。收款時會自動帶入，也可逐筆修改；已記錄的收款不會被改動。</div><div class="grid">'
   +['USD','EUR','NZD'].map(function(c){return '<div><label>'+c+'</label><input type="number" step="any" id="r'+c+'" value="'+S.rates[c]+'"></div>'}).join('')+'</div>'
-  +'<div class="mu" style="margin:8px 0">上次更新：'+(S.ratesDate||'尚未設定')+'</div><button class="btn" onclick="saveRates()">儲存匯率</button></div>'
+  +'<div class="mu" style="margin:8px 0">上次更新：'+(S.ratesDate?fd(S.ratesDate):'尚未設定')+'</div><button class="btn" onclick="saveRates()">儲存匯率</button></div>'
   +syncCard()+'<div class="card"><h2>收款來源</h2>'+S.sources.map(function(x,i){return '<div class="st" style="cursor:default"><span>'+esc(x)+'</span><button class="x" onclick="delSrc('+i+')">🗑</button></div>'}).join('')
   +'<div class="row" style="margin-top:8px"><input id="nS" placeholder="新增來源，例如 Stripe" style="flex:1"><button class="btn" onclick="addSrc()">新增</button></div></div>'+backup();
 }
