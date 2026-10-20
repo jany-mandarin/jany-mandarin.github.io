@@ -60,6 +60,15 @@ li.done span{text-decoration:line-through;color:var(--soft)}
 .catstats{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
 .cs{background:rgba(255,255,255,.55);border-radius:12px;padding:2px 8px;font-size:12px}
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .cs{background:rgba(0,0,0,.25)}}
+
+.cur{font-size:24px}
+.pickrow{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.emos{display:flex;flex-wrap:wrap;gap:4px;margin-top:6px;max-height:112px;overflow:auto}
+.eb{background:var(--bg);border-radius:10px;font-size:18px;padding:2px 6px;border:2px solid transparent}
+.eb.on{border-color:var(--ink);background:var(--yellow)}
+input.own{flex:none;width:100px;padding:4px 8px}
+.chips em{font-style:normal;font-size:14px;line-height:1.1}
+.em{font-size:20px;flex:none}
 </style>
 </head>
 <body>
@@ -90,7 +99,7 @@ li.done span{text-decoration:line-through;color:var(--soft)}
       <div class="cal" id="cal"></div>
       <div class="hint">點日期可以看、也可以記下那天的小步 🐾</div>
       <h2 id="dTitle" style="margin-top:14px"></h2>
-      <div class="hint">先選這一步是哪個帳號，沒選就是 ✨其他</div><div class="pick" id="pickStep"></div>
+      <div class="hint">挑一個今天的小圖案，日曆上就會長出它 🌸</div><div class="pick" id="pickStep"></div>
       <div class="row"><input type="text" id="stepIn" placeholder="今天我做了…（再小都算！）" maxlength="160"><button class="add" id="stepAdd">記下來</button></div>
       <ul id="steps"></ul>
       <div class="cheer" id="cheer"></div>
@@ -120,31 +129,25 @@ function readLocal(){try{const r=localStorage.getItem(LS);if(r)return JSON.parse
 function normalize(o){return{goals:(o&&o.goals)||[],ideas:(o&&o.ideas)||[],steps:(o&&o.steps)||{},del:(o&&o.del)||[]}}
 function countOf(k){return (S.steps[k]||[]).length}
 
-const ACC=[
- {id:'a1',name:'華語教學帳號',color:'--pink',plats:['ig','th','mail','yt']},
- {id:'a2',name:'華語教師帳號',color:'--blue',plats:['ig','th','mail']},
- {id:'a3',name:'勾針帳號',color:'--yellow',plats:['ig','th']}];
-const AE={a1:'🌸',a2:'🫧',a3:'🧶'};
-const PL={ig:['📷','IG'],th:['🧵','Threads'],mail:['💌','Email'],yt:['🎬','YouTube']};
-const CATS={other:{acc:{color:'--line',name:'其他'},icon:'✨',label:'其他'}};
-ACC.forEach(a=>a.plats.forEach(p=>{CATS[a.id+'-'+p]={acc:a,icon:PL[p][0],label:a.name+' '+PL[p][1]}}));
-const pk={step:'other',idea:'other'};
-function chipHTML(c){const k=CATS[c]||CATS.other;return '<em class="chip" style="background:var('+k.acc.color+')" title="'+k.label+'">'+k.icon+'</em>'}
-function chip(c){const t=document.createElement('template');t.innerHTML=chipHTML(c);return t.content.firstChild}
+const EMO=['🌸','🌼','🌷','🍀','⭐','🌟','✨','💖','💛','💙','🎀','🧸','🍓','🍑','🍋','🍰','🧁','🍪','☕','🌈','☁️','🌙','🐰','🐥','🐱','🐶','🐻','🦋','🐝','🫧','📷','🧵','🧶','🎬','💌','📝','💡','🎉','🪄','🌱','📚','🎧','🎨','🏆'];
+const pk={step:'🌸',idea:'💡'};
+const LEG={ig:'📷',th:'🧵',mail:'💌',yt:'🎬'};
+const emo=x=>x.e||LEG[(x.c||'').split('-')[1]]||'✨';
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+function firstChar(v){v=v.trim();if(!v)return '';try{return[...new Intl.Segmenter().segment(v)][0].segment}catch(e){return Array.from(v)[0]}}
+function chip(e){const s=document.createElement('span');s.className='em';s.textContent=e;return s}
 function buildPick(el,name){
   el.innerHTML='';
-  ACC.forEach(a=>{
-    const r=document.createElement('div');r.className='acc';
-    r.innerHTML='<small>'+AE[a.id]+' '+a.name+'</small>';
-    a.plats.forEach(p=>{
-      const id=a.id+'-'+p,b=document.createElement('button');
-      b.className='pb'+(pk[name]===id?' on':'');b.style.background='var('+a.color+')';
-      b.textContent=PL[p][0]+' '+PL[p][1];
-      b.onclick=()=>{pk[name]=pk[name]===id?'other':id;buildPick(el,name)};
-      r.appendChild(b);
-    });
-    el.appendChild(r);
-  });
+  const top=document.createElement('div');top.className='pickrow';
+  const cur=document.createElement('span');cur.className='cur';cur.textContent=pk[name];
+  const own=document.createElement('input');own.type='text';own.className='own';own.placeholder='自己輸入';own.maxLength=8;
+  own.oninput=()=>{const c=firstChar(own.value);if(c){pk[name]=c;cur.textContent=c;wrap.querySelectorAll('.eb').forEach(x=>x.classList.remove('on'))}};
+  const lab=document.createElement('small');lab.className='hint';lab.style.margin='0';lab.textContent='選好的圖案';
+  top.append(lab,cur,own);
+  const wrap=document.createElement('div');wrap.className='emos';
+  EMO.forEach(e=>{const b=document.createElement('button');b.className='eb'+(pk[name]===e?' on':'');b.textContent=e;
+    b.onclick=()=>{pk[name]=e;cur.textContent=e;own.value='';wrap.querySelectorAll('.eb').forEach(x=>x.classList.toggle('on',x===b))};wrap.appendChild(b)});
+  el.append(top,wrap);
 }
 function renderCal(){
   $('mTitle').textContent=view.getFullYear()+' 年 '+(view.getMonth()+1)+' 月';
@@ -157,8 +160,8 @@ function renderCal(){
     const dt=new Date(view.getFullYear(),view.getMonth(),d),k=key(dt),cnt=countOf(k);
     const b=document.createElement('button');
     b.className='day'+(cnt?' has'+Math.min(cnt,3):'')+(k===key(today)?' today':'')+(k===sel?' sel':'');
-    const cs=[...new Set((S.steps[k]||[]).map(x=>x.c||'other'))];
-    b.innerHTML='<span>'+d+'</span>'+(cnt?'<div class="chips">'+cs.slice(0,4).map(chipHTML).join('')+(cs.length>4?'<i>+</i>':'')+'</div>':'');
+    const cs=[...new Set((S.steps[k]||[]).map(emo))];
+    b.innerHTML='<span>'+d+'</span>'+(cnt?'<div class="chips">'+cs.slice(0,6).map(e=>'<em>'+esc(e)+'</em>').join('')+(cs.length>6?'<i>+</i>':'')+'</div>':'');
     b.onclick=()=>{sel=k;render()};
     c.appendChild(b);
   }
@@ -176,7 +179,7 @@ function renderSteps(){
   $('dTitle').textContent=(sel===key(today)?'今天':m+'月'+d+'日')+'的小步 🐾';
   const ul=$('steps');ul.innerHTML='';
   const list=S.steps[sel]||[];
-  list.forEach(it=>ul.appendChild(li(it.t,{pre:chip(it.c),del:()=>{S.del.push(it.id);S.steps[sel]=list.filter(z=>z.id!==it.id);if(!S.steps[sel].length)delete S.steps[sel];save();render()}})));
+  list.forEach(it=>ul.appendChild(li(it.t,{pre:chip(emo(it)),del:()=>{S.del.push(it.id);S.steps[sel]=list.filter(z=>z.id!==it.id);if(!S.steps[sel].length)delete S.steps[sel];save();render()}})));
   const n=list.length;
   $('cheer').textContent=n===0?'還沒有紀錄，想到一件小事就記下來吧～':n<3?'已經前進 '+n+' 步，太棒了！':'哇，這天做了 '+n+' 件事，超厲害 🎉';
 }
@@ -190,27 +193,27 @@ function renderIdeas(){
   S.ideas.forEach(i=>{
     const b=document.createElement('button');b.className='ok';b.textContent=i.done?'取消':'做了！';
     b.onclick=()=>{i.done=!i.done;
-      if(i.done){const k=key(new Date());(S.steps[k]=S.steps[k]||[]).push({id:uid(),t:'完成靈感：'+i.t,c:i.c||'other'})}
+      if(i.done){const k=key(new Date());(S.steps[k]=S.steps[k]||[]).push({id:uid(),t:'完成靈感：'+i.t,e:emo(i)})}
       save();render()};
-    ul.appendChild(li((i.done?'✅ ':'')+i.t,{pre:chip(i.c),cls:i.done?'done':'',extra:[b],del:()=>{S.del.push(i.id);S.ideas=S.ideas.filter(z=>z.id!==i.id);save();render()}}));
+    ul.appendChild(li((i.done?'✅ ':'')+i.t,{pre:chip(emo(i)),cls:i.done?'done':'',extra:[b],del:()=>{S.del.push(i.id);S.ideas=S.ideas.filter(z=>z.id!==i.id);save();render()}}));
   });
 }
 function renderStats(){
   const y=view.getFullYear(),m=view.getMonth();
   let total=0,days=0;const cc={};
-  Object.keys(S.steps).forEach(k=>{const [a,b]=k.split('-').map(Number);if(a===y&&b===m+1){total+=S.steps[k].length;days++;S.steps[k].forEach(x=>{const c=x.c||'other';cc[c]=(cc[c]||0)+1})}});
+  Object.keys(S.steps).forEach(k=>{const [a,b]=k.split('-').map(Number);if(a===y&&b===m+1){total+=S.steps[k].length;days++;S.steps[k].forEach(x=>{const c=emo(x);cc[c]=(cc[c]||0)+1})}});
   let streak=0,d=new Date(today);
   if(!countOf(key(d)))d.setDate(d.getDate()-1);
   while(countOf(key(d))){streak++;d.setDate(d.getDate()-1)}
-  $('catStats').innerHTML=Object.keys(cc).map(c=>'<span class="cs">'+chipHTML(c)+' '+(CATS[c]||CATS.other).label+' ×'+cc[c]+'</span>').join('');
+  $('catStats').innerHTML=Object.keys(cc).length?'<span class="hint" style="margin:0">本月蒐集：</span>'+Object.keys(cc).map(c=>'<span class="cs">'+esc(c)+' ×'+cc[c]+'</span>').join(''):'';
   $('sMonth').textContent=total;$('sDays').textContent=days;$('sStreak').textContent=streak;
 }
 function render(){renderCal();renderSteps();renderGoals();renderIdeas();renderStats()}
 
 function addTo(inputId,fn){const v=$(inputId).value.trim();if(!v)return;fn(v);$(inputId).value='';save();render()}
 $('goalAdd').onclick=()=>addTo('goalIn',v=>S.goals.push({id:uid(),t:v}));
-$('ideaAdd').onclick=()=>addTo('ideaIn',v=>S.ideas.unshift({id:uid(),t:v,done:false,c:pk.idea}));
-$('stepAdd').onclick=()=>addTo('stepIn',v=>{(S.steps[sel]=S.steps[sel]||[]).push({id:uid(),t:v,c:pk.step})});
+$('ideaAdd').onclick=()=>addTo('ideaIn',v=>S.ideas.unshift({id:uid(),t:v,done:false,e:pk.idea}));
+$('stepAdd').onclick=()=>addTo('stepIn',v=>{(S.steps[sel]=S.steps[sel]||[]).push({id:uid(),t:v,e:pk.step})});
 [['goalIn','goalAdd'],['ideaIn','ideaAdd'],['stepIn','stepAdd']].forEach(([i,b])=>$(i).addEventListener('keydown',e=>{if(e.key==='Enter'&&!e.isComposing)$(b).click()}));
 $('prev').onclick=()=>{view=new Date(view.getFullYear(),view.getMonth()-1,1);render()};
 $('next').onclick=()=>{view=new Date(view.getFullYear(),view.getMonth()+1,1);render()};
@@ -218,7 +221,7 @@ $('next').onclick=()=>{view=new Date(view.getFullYear(),view.getMonth()+1,1);ren
 
 // ===== Google Drive 同步 =====
 // 把下面這行換成你自己的 OAuth Client ID
-const CID='782823954423-5ss4ed8030acgc5pab1clbgjo0o6kth4.apps.googleusercontent.com';
+const CID='YOUR_CLIENT_ID.apps.googleusercontent.com';
 const FN='little-steps.json', LK='little-steps-linked';
 const SCOPE='https://www.googleapis.com/auth/drive.appdata';
 let tok=null,tokExp=0,fileId=null,pushing=false,again=false;
