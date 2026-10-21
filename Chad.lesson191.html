@@ -69,16 +69,20 @@
         .correct-tag { color: #2a9d8f; font-weight: bold; }
         .incorrect-tag { color: #e76f51; font-weight: bold; text-decoration: line-through; }
 
-        /* Interactive Practice Box Style */
+        /* Interactive Practice Box Style matching screenshot */
         .practice-card { background: #FFF9F0; border: 1px solid #E6D5B8; border-radius: 10px; padding: 18px; margin-bottom: 20px; }
-        .practice-title { font-size: 17px; font-weight: bold; color: #8C6239; margin-bottom: 12px; line-height: 1.5; }
+        .practice-title { font-size: 17px; font-weight: bold; color: #4a4a4a; margin-bottom: 12px; line-height: 1.5; }
         .options-group { margin: 10px 0 15px 0; display: flex; gap: 20px; align-items: center; font-size: 16px; }
         .options-group label { cursor: pointer; display: flex; align-items: center; gap: 6px; font-weight: 500; }
-        .check-btn { background: var(--primary); color: white; border: none; padding: 8px 18px; border-radius: 6px; cursor: pointer; font-size: 14px; font-weight: bold; transition: background 0.2s; }
+        .check-btn { background: #D4A373; color: white; border: none; padding: 8px 18px; border-radius: 6px; cursor: pointer; font-size: 15px; font-weight: bold; transition: background 0.2s; }
         .check-btn:hover { background: #B5835A; }
-        .feedback { margin-top: 10px; font-size: 15px; font-weight: bold; display: none; padding: 6px 12px; border-radius: 6px; }
-        .feedback.correct { display: inline-block; color: #2a9d8f; background: #e8f5e9; border: 1px solid #a5d6a7; }
-        .feedback.incorrect { display: inline-block; color: #e76f51; background: #ffebee; border: 1px solid #ffcdd2; }
+        
+        .feedback { margin-top: 12px; display: none; }
+        .status-msg { font-size: 16px; font-weight: bold; margin-bottom: 8px; }
+        .status-msg.red-msg { color: #e76f51; }
+        .status-msg.green-msg { color: #2a9d8f; }
+        
+        .explanation-box { background: #fbf9f5; border-left: 4px solid #D4A373; padding: 10px 14px; font-size: 15px; color: #4a4a4a; border-radius: 4px; margin-top: 8px; line-height: 1.6; }
 
         .homework-q { font-size: 16px; font-weight: bold; color: #8C6239; margin-bottom: 8px; }
         .hw-textarea { width: 100%; height: 60px; margin-top: 5px; border-radius: 6px; border: 1px solid #E6D5B8; padding: 10px; font-family: inherit; font-size:16px; box-sizing: border-box; background: #fff; }
@@ -314,7 +318,7 @@
                 <div class="note"><b>💡 Explanation:</b> We previously used "知道" (know) before learning "記得" (remember / memorize). For memorizing vocabulary, use "記得". The measure word "個" directly following "多少" can sometimes be omitted in spoken questions, but when placed after specific numbers like "兩百多", a measure word like "個" is required.</div>
             </div>
 
-            <!-- Interactive Practice (Radio Options + Check Answer) -->
+            <!-- Interactive Practice (Radio Options + Check Answer + Explanation) -->
             <div class="grammar-box" id="hw-practice">
                 <div style="font-weight:bold; font-size:18px; color:#8C6239; margin-bottom:10px;">Practice (互動練習)</div>
                 <div class="note">Select <b>幾</b> or <b>多</b> for each question, then click <b>Check Answer</b>. (Review previous lesson: <a href="https://jany-mandarin.github.io/Chad.lesson190.html" target="_blank" style="color:#D4A373;">Lesson 190</a>)</div>
@@ -326,18 +330,18 @@
                         <label><input type="radio" name="practice_q1" value="幾"> 幾</label>
                         <label><input type="radio" name="practice_q1" value="多"> 多</label>
                     </div>
-                    <button class="check-btn" onclick="checkAnswer('practice_q1', '多', 'fb_q1')">Check Answer</button>
+                    <button class="check-btn" onclick="checkAnswer('practice_q1', '幾', 'fb_q1', '<b>twenty-something / in his twenties</b> refers to 21–29. Since 1–9 are single-digit numbers, we use <b>幾 (jǐ)</b> after 二十.')">Check Answer</button>
                     <div id="fb_q1" class="feedback"></div>
                 </div>
 
                 <!-- Q2 -->
                 <div class="practice-card">
-                    <div class="practice-title">2) 你看過幾個電影？十 ______ 個。<br><span style="font-size:14px; font-weight:normal; color:#666;">(How many movies have you seen? — Dozens.)</span></div>
+                    <div class="practice-title">2) 你看過幾個電影？十 ______ 個。<br><span style="font-size:14px; font-weight:normal; color:#666;">(How many movies have you seen? — Dozens / Ten-something.)</span></div>
                     <div class="options-group">
                         <label><input type="radio" name="practice_q2" value="幾"> 幾</label>
                         <label><input type="radio" name="practice_q2" value="多"> 多</label>
                     </div>
-                    <button class="check-btn" onclick="checkAnswer('practice_q2', '幾', 'fb_q2')">Check Answer</button>
+                    <button class="check-btn" onclick="checkAnswer('practice_q2', '幾', 'fb_q2', '<b>十幾個</b> means around 11–19. We use <b>幾 (jǐ)</b> to represent an unspecified small number between 1 and 9.')">Check Answer</button>
                     <div id="fb_q2" class="feedback"></div>
                 </div>
 
@@ -348,7 +352,7 @@
                         <label><input type="radio" name="practice_q3" value="幾"> 幾</label>
                         <label><input type="radio" name="practice_q3" value="多"> 多</label>
                     </div>
-                    <button class="check-btn" onclick="checkAnswer('practice_q3', '多', 'fb_q3')">Check Answer</button>
+                    <button class="check-btn" onclick="checkAnswer('practice_q3', '多', 'fb_q3', '<b>一百多本</b> means over a hundred books (100+). For round numbers like 100, 1000, <b>多 (duō)</b> comes right after the number and before the measure word.')">Check Answer</button>
                     <div id="fb_q3" class="feedback"></div>
                 </div>
 
@@ -359,7 +363,7 @@
                         <label><input type="radio" name="practice_q4" value="幾"> 幾</label>
                         <label><input type="radio" name="practice_q4" value="多"> 多</label>
                     </div>
-                    <button class="check-btn" onclick="checkAnswer('practice_q4', '幾', 'fb_q4')">Check Answer</button>
+                    <button class="check-btn" onclick="checkAnswer('practice_q4', '多', 'fb_q4', '<b>十多公里</b> means a little over 10 kilometers. Here <b>多 (duō)</b> expresses a slight excess over 10.')">Check Answer</button>
                     <div id="fb_q4" class="feedback"></div>
                 </div>
 
@@ -370,7 +374,7 @@
                         <label><input type="radio" name="practice_q5" value="幾"> 幾</label>
                         <label><input type="radio" name="practice_q5" value="多"> 多</label>
                     </div>
-                    <button class="check-btn" onclick="checkAnswer('practice_q5', '幾', 'fb_q5')">Check Answer</button>
+                    <button class="check-btn" onclick="checkAnswer('practice_q5', '幾', 'fb_q5', '<b>十幾分</b> refers to minutes between 11 and 19. Since 1–9 minutes are small single-digit numbers, we use <b>幾 (jǐ)</b>.')">Check Answer</button>
                     <div id="fb_q5" class="feedback"></div>
                 </div>
 
@@ -727,7 +731,7 @@
                         <button class="play-rec-btn" disabled>▶</button>
                     </div>
                     <div style="flex:1;">
-                        <div class="zy-text">以(ㄧˇ)菲(ㄈㄟ)去(ㄑㄩˋ)泰(ㄊㄞˋ)國(ㄍㄨㄛˊ)旅(ㄌㄩˇ)行(ㄒㄧㄥˊ)。她(ㄊㄚ)想(ㄒㄧㄤˇ)學(ㄒㄩㄝˊ)泰(ㄊㄞˋ)文(ㄨㄣˊ)，因(ㄧㄣ)為(ㄨㄟˋ)她(ㄊㄚ)覺(ㄐㄩㄝˊ)得(ㄉㄜ˙)語(ㄩˇ)言(ㄧㄢˊ)很(ㄏㄣˇ)有(ㄧㄡˇ)意(ㄧˋ)思(ㄙ˙)。她(ㄊㄚ)的(ㄉㄜ˙)朋(ㄆㄥˊ)友(ㄧㄡˇ)文(ㄨㄣˊ)龍(ㄌㄨㄥˊ)住(ㄓㄨˋ)在(ㄗㄞˋ)泰(ㄊㄞˋ)國(ㄍㄨㄛˊ)，他(ㄊㄚ)們(ㄇㄣ˙)的(ㄉㄜ˙)關(ㄍㄨㄢ)係(ㄒㄧˋ)很(ㄏㄣˇ)好(ㄏㄠˇ)。以(ㄧˇ)菲(ㄈㄟ)到(ㄉㄠˋ)泰(ㄊㄞˋ)國(ㄍㄨㄛˊ)的(ㄉㄜ˙)第(ㄉㄧˋ)一(ㄧˋ)天(ㄊㄧㄢ)，很(ㄏㄣˇ)累(ㄌㄟˋ)。文(ㄨㄣˊ)龍(ㄌㄨㄥˊ)說(ㄕㄨㄛ)：「你(ㄋㄧˇ)應(ㄧㄥ)該(ㄍㄞ)先(ㄒㄧㄢ)休(ㄒㄧㄡ)息(ㄒㄧˊ)。」他(ㄊㄚ)送(ㄙㄨㄥˋ)以(ㄧˇ)菲(ㄈㄟ)一(ㄧˋ)杯(ㄅㄟ)冰(ㄅㄧㄥ)水(ㄕㄨㄟˇ)，以(ㄧˇ)菲(ㄈㄟ)坐(ㄗㄨㄛˋ)著(ㄓㄜ˙)休(ㄒㄧㄡ)息(ㄒㄧˊ)了(ㄌㄜ˙)一(ㄧˋ)個(ㄍㄜ˙)小(ㄒㄧㄠˇ)時(ㄕˊ)。晚(ㄨㄢˇ)上(ㄕㄤˋ)，文(ㄨㄣˊ)龍(ㄌㄨㄥˊ)帶(ㄉㄞˋ)以(ㄧˇ)菲(ㄈㄟ)去(ㄑㄩˋ)吃(ㄔ)飯(ㄈㄢˋ)。以(ㄧˇ)菲(ㄈㄟ)想(ㄒㄧㄤˇ)吃(ㄔ)義(ㄧˋ)大(ㄉㄚˋ)利(ㄌㄧˋ)麵(ㄇㄧㄢˋ)，可(ㄎㄜˇ)是(ㄕˋ)那(ㄋㄚˋ)個(ㄍㄜ˙)義(ㄧˋ)大(ㄉㄚˋ)利(ㄌㄧˋ)麵(ㄇㄧㄢˋ)有(ㄧㄡˇ)牛(ㄋㄧㄡˊ)奶(ㄋㄞˇ)。以(ㄧˇ)菲(ㄈㄟ)對(ㄉㄨㄟˋ)牛(ㄋㄧㄡˊ)奶(ㄋㄞˇ)過(ㄍㄨㄛˋ)敏(ㄇㄧㄣˇ)，所(ㄙㄨㄛˇ)以(ㄧˇ)她(ㄊㄚ)不(ㄅㄨˋ)能(ㄋㄥˊ)吃(ㄔ)。文(ㄨㄣˊ)龍(ㄌㄨㄥˊ)說(ㄕㄨㄛ)：「你(ㄋㄧˇ)應(ㄧㄥ)該(ㄍㄞ)先(ㄒㄧㄢ)問(ㄨㄣˋ)老(ㄌㄠˇ)闆(ㄅㄢˇ)有(ㄧㄡˇ)沒(ㄇㄟˊ)有(ㄧㄡˇ)牛(ㄋㄧㄡˊ)奶(ㄋㄞˇ)。」以(ㄧˇ)菲(ㄈㄟ)用(ㄩㄥˋ)泰(ㄊㄞˋ)文(ㄨㄣˊ)問(ㄨㄣˋ)老(ㄌㄠˇ)闆(ㄅㄢˇ)：「這(ㄓㄜˋ)個(ㄍㄜ˙)有(ㄧㄡˇ)牛(ㄋㄧㄡˊ)奶(ㄋㄞˇ)嗎(ㄇㄚ˙)？」老(ㄌㄠˇ)闆(ㄅㄢˇ)說(ㄕㄨㄛ)：「沒(ㄇㄟˊ)有(ㄧㄡˇ)。」以(ㄧˇ)菲(ㄈㄟ)很(ㄏㄣˇ)高(ㄍㄠ)興(ㄒㄧㄥˋ)，吃(ㄔ)了(ㄌㄜ˙)一(ㄧˋ)大(ㄉㄚˋ)盤(ㄆㄢˊ)義(ㄧˋ)大(ㄉㄚˋ)利(ㄌㄧˋ)麵(ㄇㄧㄢˋ)。最(ㄗㄨㄟˋ)後(ㄏㄡˋ)，文(ㄨㄣˊ)龍(ㄌㄨㄥˊ)送(ㄙㄨㄥˋ)給(ㄍㄟˇ)以(ㄧˇ)菲(ㄈㄟ)一(ㄧˋ)本(ㄅㄣˇ)泰(ㄊㄞˋ)文(ㄨㄣˊ)書(ㄕㄨ)。以(ㄧˇ)菲(ㄈㄟ)拿(ㄋㄚˊ)著(ㄓㄜ˙)書(ㄕㄨ)說(ㄕㄨㄛ)：「謝(ㄒㄧㄝˋ)謝(ㄒㄧㄝ˙)你(ㄋㄧˇ)！我(ㄨㄛˇ)會(ㄏㄨㄟˋ)每(ㄇㄟˇ)天(ㄊㄧㄢ)學(ㄒㄩㄝˊ)泰(ㄊㄞˋ)文(ㄨㄣˊ)。」</div>
+                        <div class="zy-text">以(ㄧˇ)菲(ㄈㄟ)去(ㄑㄩˋ)泰(ㄊㄞˋ)國(ㄍㄨㄛˊ)旅(ㄌㄩˇ)行(ㄒㄧㄥˊ)。她(ㄊㄚ)想(ㄒㄧㄤˇ)學(ㄒㄩㄝˊ)泰(ㄊㄞˋ)文(ㄨㄣˊ)，因(ㄧㄣ)為(ㄨㄟˋ)她(ㄊㄚ)覺(ㄐㄩㄝˊ)得(ㄉㄜ˙)語(ㄩˇ)言(ㄧㄢˊ)很(ㄏㄣˇ)有(ㄧㄡˇ)意(ㄧˋ)思(ㄙ˙)。她(ㄊㄚ)的(ㄉㄜ˙)朋(ㄆㄥˊ)友(ㄧㄡˇ)文(ㄨㄣˊ)龍(ㄌㄨㄥˊ)住(ㄓㄨˋ)在(ㄗㄞˋ)泰(ㄊㄞˋ)國(ㄍㄨㄛˊ)，他(ㄊㄚ)們(ㄇㄣ˙)的(ㄉㄜ˙)關(ㄍㄨㄢ)係(ㄒㄧˋ)很(ㄏㄣˇ)好(ㄏㄠˇ)。以(ㄧˇ)菲(ㄈㄟ)到(ㄉㄠˋ)泰(ㄊㄞˋ)國(ㄍㄨㄛˊ)的(ㄉㄜ˙)第(ㄉㄧˋ)一(ㄧˋ)天(ㄊㄧㄢ)，很(ㄏㄣˇ)累(ㄌㄟˋ)。文(ㄨㄣˊ)龍(ㄌㄨㄥˊ)說(ㄕㄨㄛ)：「你(ㄋㄧˇ)應(ㄧㄥ)該(ㄍㄞ)先(ㄒㄧㄢ)休(ㄒㄧㄡ)息(ㄒㄧˊ)。」他(ㄊㄚ)送(ㄙㄨㄥˋ)以(ㄧˇ)菲(ㄈㄟ)一(ㄧˋ)杯(ㄅㄟ)冰(ㄅㄧㄥ)水(ㄕㄨㄟˇ)，以(ㄧˇ)菲(ㄈㄟ)坐(ㄗㄨㄛˋ)著(ㄓㄜ˙)休(ㄒㄧㄡ)息(ㄒㄧˊ)了(ㄌㄜ˙)一(ㄧˋ)個(ㄍㄜ˙)小(ㄒㄧㄠˇ)時(ㄕˊ)。晚(ㄨㄢˇ)上(ㄕㄤˋ)，文(ㄨㄣˊ)龍(ㄌㄨㄥˊ)帶(ㄉㄞˋ)以(ㄧˇ)菲(ㄈㄟ)去(ㄑㄩˋ)吃(ㄔ)飯(ㄈㄢˋ)。以(ㄧˇ)菲(ㄈㄟ)想(ㄒㄧㄤˇ)吃(ㄔ)義(ㄧˋ)大(ㄉㄚˋ)利(ㄌㄧˋ)麵(ㄇㄧㄢˋ)，可(ㄎㄜˇ)是(ㄕˋ)那(ㄋㄚˋ)個(ㄍㄜ˙)義(ㄧˋ)大(ㄉㄚˋ)利(ㄌㄧˋ)麵(ㄇㄧㄢˋ)有(ㄧㄡˇ)牛(ㄋㄧㄡˊ)奶(ㄋㄞˇ)。以(ㄧˇ)菲(ㄈㄟ)對(ㄉㄨㄟˋ)牛(ㄋㄧㄡˊ)奶(ㄋㄞˇ)過(ㄍㄨㄛˋ)敏(ㄇㄧㄣˇ)，所(ㄙㄨㄛˇ)以(ㄧˇ)她(ㄊㄚ)不(ㄅㄨˋ)能(ㄋㄥˊ)吃(ㄔ)。文(ㄨㄣˊ)龍(ㄌㄨㄥˊ)說(ㄕㄨㄛ)：「你(ㄋㄧˇ)應(ㄧㄥ)該(ㄍㄞ)先(ㄒㄧㄢ)問(ㄨˋ)老(ㄌㄠˇ)闆(ㄅㄢˇ)有(ㄧㄡˇ)沒(ㄇㄟˊ)有(ㄧㄡˇ)牛(ㄋㄧㄡˊ)奶(ㄋㄞˇ)。」以(ㄧˇ)菲(ㄈㄟ)用(ㄩㄥˋ)泰(ㄊㄞˋ)文(ㄨㄣˊ)問(ㄨˋ)老(ㄌㄠˇ)闆(ㄅㄢˇ)：「這(ㄓㄜˋ)個(ㄍㄜ˙)有(ㄧㄡˇ)牛(ㄋㄧㄡˊ)奶(ㄋㄞˇ)嗎(ㄇㄚ˙)？」老(ㄌㄠˇ)闆(ㄅㄢˇ)說(ㄕㄨㄛ)：「沒(ㄇㄟˊ)有(ㄧㄡˇ)。」以(ㄧˇ)菲(ㄈㄟ)很(ㄏㄣˇ)高(ㄍㄠ)興(ㄒㄧㄥˋ)，吃(ㄔ)了(ㄌㄜ˙)一(ㄧˋ)大(ㄉㄚˋ)盤(ㄆㄢˊ)義(ㄧˋ)大(ㄉㄚˋ)利(ㄌㄧˋ)麵(ㄇㄧㄢˋ)。最(ㄗㄨㄟˋ)後(ㄏㄡˋ)，文(ㄨㄣˊ)龍(ㄌㄨㄥˊ)送(ㄙㄨㄥˋ)給(ㄍㄟˇ)以(ㄧˇ)菲(ㄈㄟ)一(ㄧˋ)本(ㄅㄣˇ)泰(ㄊㄞˋ)文(ㄨㄣˊ)書(ㄕㄨ)。以(ㄧˇ)菲(ㄈㄟ)拿(ㄋㄚˊ)著(ㄓㄜ˙)書(ㄕㄨ)說(ㄕㄨㄛ)：「謝(ㄒㄧㄝˋ)謝(ㄒㄧㄝ˙)你(ㄋㄧˇ)！我(ㄨㄛˇ)會(ㄏㄨㄟˋ)每(ㄇㄟˇ)天(ㄊㄧㄢ)學(ㄒㄩㄝˊ)泰(ㄊㄞˋ)文(ㄨㄣˊ)。」</div>
                     </div>
                 </div>
             </div>
@@ -765,20 +769,29 @@
         }
 
         // ====== Interactive Practice Check ======
-        function checkAnswer(qName, correctValue, feedbackId) {
+        function checkAnswer(qName, correctValue, feedbackId, explanationText) {
             const selected = document.querySelector(`input[name="${qName}"]:checked`);
             const feedbackEl = document.getElementById(feedbackId);
+            
             if (!selected) {
-                feedbackEl.className = "feedback incorrect";
-                feedbackEl.innerText = "請先選擇一個答案！ (Please select an answer first!)";
+                feedbackEl.style.display = "block";
+                feedbackEl.innerHTML = `
+                    <div class="status-msg red-msg">⚠️ Please select an answer first! (請先選擇一個答案！)</div>
+                `;
                 return;
             }
+            
+            feedbackEl.style.display = "block";
             if (selected.value === correctValue) {
-                feedbackEl.className = "feedback correct";
-                feedbackEl.innerText = "✅ 正確！ Correct!";
+                feedbackEl.innerHTML = `
+                    <div class="status-msg green-msg">✅ Correct! (答對囉！)</div>
+                    <div class="explanation-box">💡 <b>Explanation:</b> ${explanationText}</div>
+                `;
             } else {
-                feedbackEl.className = "feedback incorrect";
-                feedbackEl.innerText = "❌ 錯誤，再試試看！ Incorrect, try again!";
+                feedbackEl.innerHTML = `
+                    <div class="status-msg red-msg">❌ Incorrect. Try again! (答錯囉，再想想看！)</div>
+                    <div class="explanation-box">💡 <b>Explanation:</b> ${explanationText}</div>
+                `;
             }
         }
 
