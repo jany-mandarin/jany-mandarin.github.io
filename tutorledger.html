@@ -230,14 +230,34 @@ function detail(){
   +'<div class="row" style="justify-content:space-between"><div><div class="mu">已匯</div><b style="font-size:22px">'+paid+'</b> 堂</div><div><div class="mu">已上</div><b style="font-size:22px">'+used+'</b> 堂</div><div><div class="mu">已預約</div><b style="font-size:22px">'+bk+'</b> 堂</div><div><div class="mu">未預約</div><b class="big">'+rem+'</b> 堂</div></div>'
   +'<div class="bar" style="display:flex"><i style="width:'+pct+'%"></i><i style="width:'+pct2+'%;opacity:.4"></i></div><div class="mu">深綠＝已上　淺綠＝已預約（未來的課）</div>'+(rem<=1?'<div class="tag">'+(share?'⚠ 堂數快用完囉':'⚠ 堂數快用完，記得提醒續約')+'</div>':'')+'</div>'
   +'<div class="card"><div class="row" style="justify-content:space-between"><button class="btn g" onclick="calYm=shift(calYm,-1);render()">‹</button><b>'+calYm.replace('-','年')+'月</b><button class="btn g" onclick="calYm=shift(calYm,1);render()">›</button></div>'
-  +(share?'':'<div class="mu" style="margin:6px 0">點日期＝記一堂課（再點一次取消）。今天（含）以前算「已上」，今天之後算「已預約」（虛線框）。紅框＝匯款日。</div>')+'<div class="cal" style="margin-top:8px">'+cells+'</div></div>'
+  +(share?'':'<div class="mu" style="margin:6px 0">點空白日期＝新增一堂課，點已有課的日期＝取消或刪除該堂（也可在下方「上課紀錄」改期）。今天（含）以前算「已上」，今天之後算「已預約」（虛線框）。紅框＝匯款日。</div>')+'<div class="cal" style="margin-top:8px">'+cells+'</div></div>'
   +'<div class="card"><h2>匯款紀錄</h2>'+(hist.length?'<table><tr><th>日期</th><th class="r">金額</th><th class="r">堂數</th>'+(share?'<th>方式</th>':'<th class="r">台幣</th><th></th>')+'</tr>'+hist.map(function(x){return '<tr><td>'+fd(x.date)+'</td><td class="r">'+x.amount+' '+x.cur+'</td><td class="r">'+x.lessons+'</td>'+(share?'<td>'+esc(x.src||'')+'</td>':'<td class="r">'+nt(x.amount*x.rate)+'<div class="mu">'+esc(x.src||'')+'</div></td><td class="r"><button class="btn s g" onclick="editPay(\''+x.id+'\')">編輯</button> <button class="x" onclick="delPay(\''+x.id+'\')">🗑</button></td>')+'</tr>'}).join('')+'</table>':'<div class="mu">尚無匯款</div>')+'</div>'
-  +'<div class="card"><h2>已上課日期（'+used+' 堂）</h2><div class="mu">'+(function(){var a=lessonDates.filter(function(d){return d<=today()});return a.length?a.map(fd).join('、'):'尚無'})()+'</div><h2 style="margin-top:12px">已預約（'+bk+' 堂）</h2><div class="mu">'+(function(){var a=lessonDates.filter(function(d){return d>today()});return a.length?a.map(fd).join('、'):'尚無'})()+'</div></div>'
+  +(share?'<div class="card"><h2>已上課日期（'+used+' 堂）</h2><div class="mu">'+(function(){var a=lessonDates.filter(function(d){return d<=today()});return a.length?a.map(fd).join('、'):'尚無'})()+'</div><h2 style="margin-top:12px">已預約（'+bk+' 堂）</h2><div class="mu">'+(function(){var a=lessonDates.filter(function(d){return d>today()});return a.length?a.map(fd).join('、'):'尚無'})()+'</div></div>':lessonCard())
   +(share?'':payForm(sid,editId&&S.payments.find(function(x){return x.id===editId}))+mergeCard()+'<button class="btn g" onclick="renameStu()">修改姓名</button> <button class="btn g" onclick="setAlias()">行事曆名稱</button> <button class="btn g" onclick="delStu()">刪除此學生</button>');
 }
+function addDays(s,n){var p=s.split('-');return ymd(new Date(+p[0],+p[1]-1,+p[2]+n))}
+function lessonCard(){
+  var t=today(),used=usedOf(sid),bk=bookedOf(sid),ls=S.lessons.filter(function(l){return l.sid===sid}).sort(function(a,b){return a.date<b.date?1:-1});
+  var rows=ls.map(function(l){return '<tr><td>'+fd(l.date)+(l.date>t?' <span class="tag ok">已預約</span>':'')+'</td><td class="r"><button class="btn s g" onclick="moveLesson(\''+l.id+'\')">改期</button> <button class="btn s g" onclick="delLesson(\''+l.id+'\')">'+(l.date>t?'取消':'刪除')+'</button></td></tr>'}).join('');
+  return '<div class="card"><h2>上課紀錄（已上 '+used+' 堂・已預約 '+bk+' 堂）</h2>'
+  +'<div class="grid"><div><label>上課日期</label><input type="date" id="lD" value="'+t+'"></div><div><label>每週重複（堂數，選填）</label><input type="number" id="lN" min="1" value="1"></div></div>'
+  +'<div class="mu" style="margin:6px 0">可以補記已經上完的課，也可以預先排未來的課。堂數大於 1 時，會從這天起每週加一堂。</div><button class="btn" onclick="addLesson()">＋ 新增上課</button>'
+  +(ls.length?'<div style="max-height:320px;overflow:auto;margin-top:10px"><table>'+rows+'</table></div>':'<div class="mu" style="margin-top:10px">尚無上課紀錄</div>')+'</div>';
+}
+function addLesson(){var d=document.getElementById('lD').value,n=Math.max(1,+document.getElementById('lN').value||1);if(!d){alert('請選擇日期');return}
+  var add=0;for(var i=0;i<n;i++){var x=addDays(d,7*i);if(!S.lessons.some(function(l){return l.sid===sid&&l.date===x})){S.lessons.push({id:uid(),sid:sid,date:x});add++}}
+  save();render();if(add<n)alert('有 '+(n-add)+' 堂因為該日已有上課紀錄而略過')}
+function moveLesson(id){var l=S.lessons.find(function(x){return x.id===id});if(!l)return;
+  var v=prompt('改成哪一天？（例如 2026/10/25）',fd(l.date));if(!v)return;
+  var m=v.trim().match(/^(\d{4})[\/\-.](\d{1,2})[\/\-.](\d{1,2})$/);if(!m){alert('日期格式不正確，請輸入像 2026/10/25');return}
+  var nd=m[1]+'-'+m[2].padStart(2,'0')+'-'+m[3].padStart(2,'0');
+  if(isNaN(new Date(nd))){alert('日期不正確');return}
+  if(S.lessons.some(function(x){return x.sid===l.sid&&x.date===nd&&x.id!==id})){alert('這天已經有上課紀錄');return}
+  l.date=nd;save();render()}
+function delLesson(id){var l=S.lessons.find(function(x){return x.id===id});if(l&&confirm('確定'+(l.date>today()?'取消':'刪除')+' '+fd(l.date)+' 這堂課？')){S.lessons=S.lessons.filter(function(x){return x.id!==id});save();render()}}
 function toggleLesson(d){
   var ex=S.lessons.find(function(l){return l.sid===sid&&l.date===d});
-  if(ex)S.lessons=S.lessons.filter(function(l){return l!==ex});else S.lessons.push({id:uid(),sid:sid,date:d});
+  if(ex){delLesson(ex.id);return}S.lessons.push({id:uid(),sid:sid,date:d});
   save();render();
 }
 function renameStu(){var n=prompt('新的姓名',stu(sid).name);if(n&&n.trim()){stu(sid).name=n.trim();save();render()}}
