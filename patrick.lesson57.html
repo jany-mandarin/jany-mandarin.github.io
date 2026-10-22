@@ -35,7 +35,7 @@
         button.control-btn { background: var(--primary); color: white; border: none; padding: 10px 15px; margin: 5px; border-radius: 6px; cursor: pointer; font-size: 14px; font-weight: bold; }
         button.control-btn:hover { background: #B5835A; }
         
-        /* 圓形精美圖示按鈕 (像圖片中那樣風格：左至右 語音、錄音、播放/暫停) */
+        /* 圓形精美圖示按鈕 */
         .icon-btn { background: #f0f0f0; border: none; width: 38px; height: 38px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 2px 4px rgba(0,0,0,0.08); transition: transform 0.1s, background 0.2s; margin-right: 6px; vertical-align: middle; }
         .icon-btn:hover { background: #e0e0e0; transform: scale(1.05); }
         .icon-btn.recording { background: #ff4d4f; animation: pulse 1.5s infinite; }
@@ -53,7 +53,6 @@
         
         .item { margin-bottom: 20px; display: flex; flex-direction: column; border-bottom: 1px dashed #eee; padding-bottom: 15px; }
         
-        /* 按照要求：按鈕在句子的前面，群組橫向排列 */
         .sentence-row { display: flex; align-items: flex-start; gap: 12px; width: 100%; margin-bottom: 6px; }
         .buttons-group { display: flex; align-items: center; gap: 6px; flex-shrink: 0; margin-top: 2px; }
         .text-content { display: flex; flex-direction: column; flex-grow: 1; }
@@ -63,6 +62,8 @@
         .hz-text { font-size: 24px; font-family: sans-serif; line-height: 1.2; }
         
         .en-trans { color: #666; font-size: 15px; font-style: italic; margin-top: 4px; padding-left: 0; }
+        .explanation-sub { color: #777; font-size: 13px; margin-top: 4px; line-height: 1.4; }
+        
         .grammar-box { background: #FFF9F0; border: 1px solid #E6D5B8; border-radius: 8px; padding: 15px; margin: 15px 0; }
         .note { font-size: 14px; color: #555; margin-bottom: 10px; line-height: 1.5; }
         
@@ -155,7 +156,6 @@
             return parsed;
         }
 
-        // 語音合成控制變數，支援播放、暫停與恢復
         let currentUtterance = null;
         let activePlayBtn = null;
 
@@ -177,7 +177,9 @@
                 }
             }
 
-            let cleanText = text.replace(/\(.*?\)/g, '')
+            // 清理文字，移除HTML標籤、括號註解等，確保語音引擎能讀出純中文/英文
+            let cleanText = text.replace(/<[^>]*>/g, '')
+                                .replace(/\(.*?\)/g, '')
                                 .replace(/^[a-zA-Z]:\s*/g, '')
                                 .replace(/^\d+\.\s*/, '');
             
@@ -186,7 +188,7 @@
             utterance.rate = isQuestion ? 0.9 : 0.85;
             
             if (isQuestion) {
-                utterance.pitch = 1.3; // 句尾上揚語調感
+                utterance.pitch = 1.3;
             }
 
             utterance.onstart = () => {
@@ -290,18 +292,18 @@
                     {
                         type: "grammar",
                         subId: "sub-1-0",
-                        title: "1. Usage of '怎麼' (Zěnme)",
-                        note: "Explanation: Difference between 為什麼 (why - stronger/harsher tone) and 怎麼 (how/why - caring tone, wanting to understand the reason with empathy).",
+                        title: "1. Usage of '怎么' (Zěnme)",
+                        note: "Explanation: Difference between 为什么 (why - stronger/harsher tone) and 怎么 (how/why - caring tone, wanting to understand the reason with empathy).",
                         examples: [
-                            { zh: "你(nǐ)怎(zěn)麼(me)不(bù)高(gāo)興(xìng)？", en: "Why are you unhappy?" },
-                            { zh: "今(jīn)天(tiān)怎(zěn)麼(me)這(zhè)麼(me)熱(rè)？<br><small style='color:#777;'>(Note: 这么 means the speaker is exaggerating or describing an extreme degree)</small>", en: "Why is it so hot today?" },
+                            { zh: "你(nǐ)怎(zěn)么(me)不(bù)高(gāo)兴(xìng)？", en: "Why are you unhappy?" },
+                            { zh: "今(jīn)天(tiān)怎(zěn)么(me)這(zhè)麼(me)热(rè)？", en: "Why is it so hot today?", explanation: "Note: 这么 means the speaker is exaggerating or describing an extreme degree" },
                             { zh: "你(nǐ)昨(zuó)天(tiān)怎(zěn)么(me)沒(méi)去(qù)打(dǎ)球(qiú)？", en: "Why didn't you go play ball yesterday?" }
                         ]
                     },
                     {
                         type: "grammar",
                         subId: "sub-1-1",
-                        title: "2. Reduplication of Measure Words (個個 / 件件 / 天天)",
+                        title: "2. Reduplication of Measure Words (个个 / 件件 / 天天)",
                         note: "Explanation: Repeating two measure words together creates an emphatic meaning, equivalent to 'each and every'.",
                         examples: [
                             { zh: "同(tóng)學(xué)們(men)個(gè)個(gè)都(dōu)很(hěn)高(gāo)興(xìng)。", en: "Every single student is very happy." },
@@ -312,12 +314,12 @@
                     {
                         type: "grammar",
                         subId: "sub-1-2",
-                        title: "3. '因為...所以...' (Because... Therefore...)",
+                        title: "3. '因为...所以...' (Because... Therefore...)",
                         note: "Explanation: Chinese can use two connective conjunctions in one sentence, whereas English cannot.",
                         examples: [
-                            { zh: "因(yīn)為(wèi)她(tā)生(shēng)病(bìng)了(le)，所(suǒ)以(yǐ)沒(méi)去(qù)學(xué)校(xiào)。", en: "Because she was sick, she didn't go to school." },
-                            { zh: "因(yīn)為(wèi)他(tā)每(měi)天(tiān)跑(pǎo)步(bù)，所(suǒ)以(yǐ)身(shēn)體(tǐ)很(hěn)好(hǎo)。", en: "Because he runs every day, his health is very good." },
-                            { zh: "因(yīn)為(wèi)昨(zuó)天(tiān)下(xià)雨(yǔ)，所(suǒ)以(yǐ)我(wǒ)們(men)都(dōu)沒(méi)去(qù)打(dǎ)籃(lán)球(qiú)。", en: "Because it rained yesterday, none of us went to play basketball." }
+                            { zh: "因(yīn)为(wèi)她(tā)生(shēng)病(bìng)了(le)，所(suǒ)以(yǐ)没(méi)去(qù)学(xué)校(xiào)。", en: "Because she was sick, she didn't go to school." },
+                            { zh: "因(yīn)为(wèi)他(tā)每(měi)天(tiān)跑(pǎo)步(bù)，所(suǒ)以(yǐ)身(shēn)体(tǐ)很(hěn)好(hǎo)。", en: "Because he runs every day, his health is very good." },
+                            { zh: "因(yīn)为(wèi)昨(zuó)天(tiān)下(xià)雨(yǔ)，所(suǒ)以(yǐ)我(wǒ)们(men)都(dōu)没(méi)去(qù)打(dǎ)籃(lán)球(qiú)。", en: "Because it rained yesterday, none of us went to play basketball." }
                         ]
                     },
                     {
@@ -326,10 +328,8 @@
                         title: "4. Sentence Stress & Pause",
                         note: "Explanation: To distinguish focus, a slight pause is placed after key words to alert the listener.",
                         examples: [
-                            { zh: "誰(shuí)在(zài)房(fáng)間(jiān)學(xué)習(xí)漢(hàn)語(yǔ)？", en: "Who is studying Chinese in the room?" },
-                            { zh: "他(tā)在(zài)房(fáng)間(jiān)學(xué)習(xí)漢(hàn)語(yǔ)。<br><small style='color:#777;'>(Note: Since the asker wants to know WHO, emphasize the person and pause for 1 second after saying '他')</small>", en: "HE... is studying Chinese in the room." },
-                            { zh: "他(tā)在(zài)哪(nǎ)里(lǐ)學(xué)習(xí)漢(hàn)語(yǔ)？", en: "Where is he studying Chinese?" },
-                            { zh: "他(tā)在(zài)房(fáng)間(jiān)學(xué)習(xí)漢(hàn)語(yǔ)。<br><small style='color:#777;'>(Note: Here the focus is the LOCATION, pause for 1 second after saying '房间')</small>", en: "He is in the ROOM... studying Chinese." }
+                            { zh: "他(tā)在(zài)房(fáng)間(jiān)學(xué)習(xí)漢(hàn)語(yǔ)。", en: "HE... is studying Chinese in the room.", explanation: "Note: Since the asker wants to know WHO (谁), emphasize the person (他) and pause for 1 second." },
+                            { zh: "他(tā)在(zài)房(fáng)間(jiān)學(xué)習(xí)漢(hàn)語(yǔ)。", en: "He is in the ROOM... studying Chinese.", explanation: "Note: Here the focus is the LOCATION (哪里), emphasize the location (房间) and pause for 1 second." }
                         ]
                     }
                 ]
@@ -355,10 +355,10 @@
                         title: "2. Usage of '就' (Jiù)",
                         note: "Explanation: Used for emphasis, indicating that the speaker thinks something happened earlier, faster, or better than expected.<br>Pattern: Time + 就 + V.<br>(If ending with 了, it indicates completion and past meaning; without 了, it refers to the future or uncompleted actions)",
                         examples: [
-                            { zh: "同(tóng)學(xué)們(men)七(qī)點(diǎn)半(bàn)就(jiù)來(lái)教(jiāo)室(shì)了(le)。<br><small style='color:#777;'>(Explanation: Usually students arrive around 8 or 9, but they came at 7:30—earlier than expected. 了 indicates completion)</small>", en: "Students came to the classroom as early as 7:30." },
-                            { zh: "我(wǒ)坐(zuò)飛(fēi)機(jī)一(yí)個(gè)半(bàn)小(xiǎo)時(shí)就(jiù)到(dào)北(běi)京(jīng)了(le)。<br><small style='color:#777;'>(Explanation: Usually takes 3 hours, but arrived much faster)</small>", en: "I arrived in Beijing by plane in just an hour and a half." },
-                            { zh: "我(wǒ)二(èr)十(shí)分(fēn)鐘(zhōng)就(jiù)到(dào)。<br><small style='color:#777;'>(Explanation: No 了 means it's in the future. Someone is waiting for you and you are late, assuring them you'll arrive sooner than expected)</small>", en: "I'll be there in just 20 minutes." },
-                            { zh: "我(wǒ)七(qī)點(diǎn)就(jiù)來(lái)公(gōng)司(sī)了(le)。<br><small style='color:#777;'>(Explanation: Usually arrive at 9, but today arrived earlier at 7)</small>", en: "I came to the company as early as 7 o'clock." }
+                            { zh: "同(tóng)學(xué)們(men)七(qī)點(diǎn)半(bàn)就(jiù)來(lái)教(jiāo)室(shì)了(le)。", en: "Students came to the classroom as early as 7:30.", explanation: "Explanation: Usually students arrive around 8 or 9, but they came at 7:30—earlier than expected. 了 indicates completion." },
+                            { zh: "我(wǒ)坐(zuò)飛(fēi)機(jī)一(yí)個(gè)半(bàn)小(xiǎo)時(shí)就(jiù)到(dào)北(běi)京(jīng)了(le)。", en: "I arrived in Beijing by plane in just an hour and a half.", explanation: "Explanation: Usually takes 3 hours, but arrived much faster." },
+                            { zh: "我(wǒ)二(èr)十(shí)分(fēn)鐘(zhōng)就(jiù)到(dào)。", en: "I'll be there in just 20 minutes.", explanation: "Explanation: No 了 means it's in the future. Assuring someone waiting for you that you'll arrive sooner than expected." },
+                            { zh: "我(wǒ)七(qī)点(diǎn)就(jiù)來(lái)公(gōng)司(sī)了(le)。", en: "I came to the company as early as 7 o'clock.", explanation: "Explanation: Usually arrive at 9, but today arrived earlier at 7." }
                         ]
                     },
                     {
@@ -369,7 +369,8 @@
                         examples: [
                             { zh: "我(wǒ)家(jiā)離(lí)學(xué)校(xiào)很(hěn)遠(yuǎn)。", en: "My home is very far from the school." },
                             { zh: "我(wǒ)家(jiā)離(lí) New World 很(hěn)近(jìn)。", en: "My home is very close to New World." },
-                            { zh: "你(nǐ)家(jiā)離(lí)公(gōng)司(sī)幾(jǐ)公(gōng)里(lǐ)？我(wǒ)家(jiā)離(lí)公(gōng)司(sī)一(yì)點(diǎn)五(wǔ)公(gōng)里(lǐ)。", en: "How many kilometers is your home from the company? My home is 1.5 kilometers from the company." },
+                            { zh: "你(nǐ)家(jiā)離(lí)公(gōng)司(sī)幾(jǐ)公(gōng)里(lǐ)？", en: "How many kilometers is your home from the company?" },
+                            { zh: "我(wǒ)家(jiā)離(lí)公(gōng)司(sī)一(yì)點(diǎn)五(wǔ)公(gōng)里(lǐ)。", en: "My home is 1.5 kilometers from the company." },
                             { zh: "今(jīn)天(tiān)離(lí)我(wǒ)的(de)生(shēng)日(rì)還(hái)有(yǒu)一(yí)個(gè)星(xīng)期(qī)。", en: "There is still one week until my birthday today." }
                         ]
                     },
@@ -380,8 +381,8 @@
                         note: "Explanation: Placed at the end of a sentence to either form a question or emphasize a fact.",
                         examples: [
                             { zh: "八(bā)點(diǎn)上(shàng)課(kè)，時(shí)間(jiān)還(hái)早(zǎo)呢(ne)。", en: "Class starts at 8, there's still plenty of time." },
-                            { zh: "醫(yī)院(yuàn)離(lí)我(wǒ)們(men)這(zhè)兒(ér)還(hái)遠(yuǎn)呢(ne)。", en: "The hospital is still very far from here." },
-                            { zh: "坐(zuò)公(gòng)共(gòng)汽(qì)車(chē)要(yào)一(yí)個(gè)多(duō)小(xiǎo)時(shí)呢(ne)！", en: "Taking the bus takes over an hour!" }
+                            { zh: "醫(yī)院(yuàn)離(lí)我(wǒ)們(men)這(zhè)兒(ér)還(hái)远(yuǎn)呢(ne)。", en: "The hospital is still very far from here." },
+                            { zh: "坐(zuò)公(gòng)共(gòng)汽(qì)车(chē)要(yào)一(yí)个(gè)多(duō)小(xiǎo)时(shí)呢(ne)！", en: "Taking the bus takes over an hour!" }
                         ]
                     },
                     {
@@ -407,8 +408,8 @@
                         note: "Explanation: Influenced by English ('OK' / 'right?'), very common in casual speech. Often used by adults reprimanding children ('You must obey, right?') or teachers reminding students.",
                         examples: [
                             { zh: "我(wǒ)們(men)一(yǐ)起(qǐ)去(qù)吃(chī)饭(fàn)，好(hǎo)吗(ma)？", en: "Let's go eat together, shall we?" },
-                            { zh: "你(nǐ)明(míng)天(tiān)下(xià)午(wǔ)给(gěi)我(wǒ)打(dǎ)电(dàn)话(huà)，好(hǎo)吗(ma)？", en: "Call me tomorrow afternoon, okay?" },
-                            { zh: "我(wǒ)们(men)下(xià)午(wǔ)去(qù)看(kàn)电(diàn)影(yǐng)，好(hǎo)吗(ma)？", en: "Let's go watch a movie this afternoon, okay?" }
+                            { zh: "你(nǐ)明(míng)天(tiān)下(xià)午(wǔ)给(gěi)我(wǒ)打(dà)电(dàn)话(huà)，好(hǎo)吗(ma)？", en: "Call me tomorrow afternoon, okay?" },
+                            { zh: "我(wǒ)们(men)下(xià)午(wǔ)去(qù)看(kàn)电(dàn)影(yǐng)，好(hǎo)吗(ma)？", en: "Let's go watch a movie this afternoon, okay?" }
                         ]
                     },
                     {
@@ -418,7 +419,7 @@
                         note: "Explanation: Used to express expecting someone to do something again in the future. (Use 又 for past actions or repeating something you dislike)",
                         examples: [
                             { zh: "你(nǐ)再(zài)看(kàn)看(kàn)这(zhè)本(běn)書(shū)吧(ba)！", en: "Take another look at this book!" },
-                            { zh: "你(nǐ)明(míng)天(tiān)再(zài)给(gěi)我(wǒ)打(dàn)电(dàn)话(huà)吧(ba)。", en: "Call me again tomorrow." },
+                            { zh: "你(nǐ)明(míng)天(tiān)再(zài)給(gěi)我(wǒ)打(dàn)電(diàn)話(huà)吧(ba)。", en: "Call me again tomorrow." },
                             { zh: "我(wǒ)下(xià)次(cì)还(hái)想(xiǎng)再(zài)去(qù)中(zhōng)国(guó)！", en: "I want to go to China again next time!" }
                         ]
                     },
@@ -430,7 +431,7 @@
                         examples: [
                             { zh: "我(wǒ)在(zài)家(jiā)里(lǐ)。", en: "I am at home." },
                             { zh: "我(wǒ)在(zài)吃(chī)飯(fàn)。", en: "I am eating." },
-                            { zh: "我(wǒ)们(men)下(xià)次(cì)要(yào)再(zài)見(jiàn)。", en: "We will see each other again next time." },
+                            { zh: "我(wǒ)們(men)下(xià)次(cì)要(yào)再(zài)見(jiàn)。", en: "We will see each other again next time." },
                             { zh: "我(wǒ)明(míng)天(tiān)會(huì)再(zài)去(qù)那(nà)間(jiān)咖(kā)啡(fēi)館(guǎn)。", en: "I will go to that coffee shop again tomorrow." }
                         ]
                     }
@@ -500,8 +501,11 @@
                                     </div>
                                     <div class="text-content">
                                         <div>${parsePinyin(ex.zh)}</div>
-                                        <div class="en-trans">${ex.en}</div>
-                                    </div>
+                                        <div class="en-trans">${ex.en}</div>`;
+                            if(ex.explanation) {
+                                html += `<div class="explanation-sub">${ex.explanation}</div>`;
+                            }
+                            html += `</div>
                                 </div>
                             </div>`;
                             counter++;
@@ -526,7 +530,7 @@
 
         function toggleEnglish() {
             enVisible = !enVisible;
-            document.querySelectorAll('.en-trans').forEach(el => {
+            document.querySelectorAll('.en-trans, .explanation-sub').forEach(el => {
                 el.style.display = enVisible ? 'block' : 'none';
             });
         }
