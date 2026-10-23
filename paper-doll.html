@@ -64,12 +64,12 @@ const TX={};
 ['眼鏡','眼镜','yǎn jìng'],['太陽眼鏡','太阳眼镜','tài yáng yǎn jìng'],['手錶','手表','shǒu biǎo'],['毛帽','毛帽','máo mào'],['耳環','耳环','ěr huán'],['圍巾','围巾','wéi jīn'],['花髮飾','花发饰','huā fà shì'],['十字項鍊','十字项链','shí zì xiàng liàn'],
 ['隨機搭配','随机搭配','suí jī dā pèi'],['重設','重设','chóng shè']].forEach(([k,s,p])=>TX[k]=[s,p]);
 const ui={s:0,p:0,e:1};
-[['上半身','上半身','shàng bàn shēn'],['下半身','下半身','xià bàn shēn'],['長褲','长裤','cháng kù'],['沒穿','没穿','méi chuān'],['短的外套','短的外套','duǎn de wài tào'],['長的外套','长的外套','cháng de wài tào'],['沒有鬍子','没有胡子','méi yǒu hú zi'],['長髮','长发','cháng fà'],['帽子','帽子','mào zi'],['項鍊','项链','xiàng liàn'],['短髮1','短发1','duǎn fà yī'],['短髮2','短发2','duǎn fà èr'],['短髮3','短发3','duǎn fà sān'],['短髮4','短发4','duǎn fà sì'],['短髮5','短发5','duǎn fà wǔ'],['短髮6','短发6','duǎn fà liù']].forEach(([k,z,p])=>TX[k]=[z,p]);
-const EN={'紙娃娃遊戲':'Paper Doll Game','性別':'Gender','臉形':'Face shape','眼睛':'Eyes','鼻子':'Nose','嘴巴':'Mouth','耳朵':'Ears','髮型':'Hair','鬍子':'Beard','上半身':'Upper body','下半身':'Lower body','外套':'Jacket','鞋子':'Shoes','配件':'Accessories','大小':'Size','顏色':'Color','膚色':'Skin color','女生':'Female','男生':'Male','圓臉':'Round','鵝蛋臉':'Oval','方臉':'Square','瓜子臉':'Heart','光頭':'Bald','短髮1':'Short hair 1','短髮2':'Short hair 2','短髮3':'Short hair 3','短髮4':'Short hair 4','短髮5':'Short hair 5','短髮6':'Short hair 6','長髮':'Long hair','捲髮':'Curly hair','馬尾':'Ponytail','短袖':'Short sleeves','長袖':'Long sleeves','短褲':'Shorts','長褲':'Long pants','短裙':'Short skirt','長裙':'Long skirt','沒穿':'None','短的外套':'Short jacket','長的外套':'Long coat','沒有鬍子':'No beard','嘴巴上':'Mustache','嘴巴下':'Chin beard','眼鏡':'Glasses','太陽眼鏡':'Sunglasses','手錶':'Watch','帽子':'Cap','耳環':'Earrings','圍巾':'Scarf','項鍊':'Necklace','隨機搭配':'Random','重設':'Reset'};
+[['上半身','上半身','shàng bàn shēn'],['下半身','下半身','xià bàn shēn'],['長褲','长裤','cháng kù'],['沒穿','没穿','méi chuān'],['短的外套','短的外套','duǎn de wài tào'],['長的外套','长的外套','cháng de wài tào'],['沒有鬍子','没有胡子','méi yǒu hú zi'],['短直髮','短直发','duǎn zhí fà'],['短捲髮','短卷发','duǎn juǎn fà'],['長捲髮','长卷发','cháng juǎn fà'],['帽子','帽子','mào zi'],['項鍊','项链','xiàng liàn'],['短髮1','短发1','duǎn fà yī'],['短髮2','短发2','duǎn fà èr'],['短髮3','短发3','duǎn fà sān'],['短髮4','短发4','duǎn fà sì'],['短髮5','短发5','duǎn fà wǔ'],['短髮6','短发6','duǎn fà liù']].forEach(([k,z,p])=>TX[k]=[z,p]);
+const EN={'紙娃娃遊戲':'Paper Doll Game','性別':'Gender','臉形':'Face shape','眼睛':'Eyes','鼻子':'Nose','嘴巴':'Mouth','耳朵':'Ears','髮型':'Hair','鬍子':'Beard','上半身':'Upper body','下半身':'Lower body','外套':'Jacket','鞋子':'Shoes','配件':'Accessories','大小':'Size','顏色':'Color','膚色':'Skin color','女生':'Female','男生':'Male','圓臉':'Round','鵝蛋臉':'Oval','方臉':'Square','瓜子臉':'Heart','光頭':'Bald','短髮1':'Short hair 1','短髮2':'Short hair 2','短髮3':'Short hair 3','短髮4':'Short hair 4','短髮5':'Short hair 5','短髮6':'Short hair 6','短直髮':'Short straight hair','長直髮':'Long straight hair','短捲髮':'Short curly hair','長捲髮':'Long curly hair','馬尾':'Ponytail','短袖':'Short sleeves','長袖':'Long sleeves','短褲':'Shorts','長褲':'Long pants','短裙':'Short skirt','長裙':'Long skirt','沒穿':'None','短的外套':'Short jacket','長的外套':'Long coat','沒有鬍子':'No beard','嘴巴上':'Mustache','嘴巴下':'Chin beard','眼鏡':'Glasses','太陽眼鏡':'Sunglasses','手錶':'Watch','帽子':'Cap','耳環':'Earrings','圍巾':'Scarf','項鍊':'Necklace','隨機搭配':'Random','重設':'Reset'};
 try{Object.assign(ui,JSON.parse(localStorage.getItem('pdui')||'{}'))}catch(e){}
 const tx=k=>{const x=TX[k];if(!x)return k;const c=Array.from(ui.s?x[0]:k),p=x[1].split(' ');const zh=ui.p?c.map((ch,i)=>`<ruby>${ch}<rt>${p[i]||''}</rt></ruby>`).join(''):c.join('');return `<span class="zh">${zh}</span>`+(ui.e&&EN[k]?`<span class="en">${EN[k]}</span>`:'');};
 const GEN=[['f','女生'],['m','男生']],FACE=[['round','圓臉'],['oval','鵝蛋臉'],['square','方臉'],['heart','瓜子臉']],
-HAIR=[['none','光頭'],['s1','短髮1'],['s2','短髮2'],['s3','短髮3'],['s4','短髮4'],['s5','短髮5'],['s6','短髮6'],['long','長髮'],['curly','捲髮'],['pony','馬尾']],
+HAIR=[['none','光頭'],['s1','短髮1'],['s2','短髮2'],['s3','短髮3'],['s4','短髮4'],['s5','短髮5'],['s6','短髮6'],['sstraight','短直髮'],['straight','長直髮'],['curly','短捲髮'],['lcurly','長捲髮'],['pony','馬尾']],
 TOP=[['short','短袖'],['long','長袖']],BOT=[['shorts','短褲'],['pants','長褲'],['sskirt','短裙'],['lskirt','長裙']],JK=[['none','沒穿'],['jacket','短的外套'],['coat','長的外套']];
 const BD=[['none','無鬍子'],['mus','嘴巴上'],['goat','嘴巴下']];
 const SK=['#fde3cf','#f5d3b8','#e8b98f','#c98e63','#8d5a3b','#5c3a28'],
@@ -79,7 +79,7 @@ LC=['#c0504d','#e46b6b','#d9588a','#a83a48','#e8967c'],
 CL=['#e46b6b','#f2a65a','#f4d35e','#2ec4a0','#4a7bd6','#8e7cc3','#f2a0c0','#1f3a5f','#444b5a','#f5f5f5'];
 const ACC=[['glasses','眼鏡'],['sun','太陽眼鏡'],['watch','手錶'],['hat','帽子'],['ear','耳環'],['scarf','圍巾'],['neck','項鍊']];
 const SLD={eye:[.6,1.6],nose:[.5,2],mouth:[.5,1.5],ear:[.4,2]};
-const DEF=()=>({g:'f',face:'oval',hair:'long',top:'short',bot:'pants',jk:'none',skin:'#fde3cf',hc:'#2a1d16',ec:'#4a3226',lc:'#c0504d',bd:{mus:0,goat:0},bdc:'#2a1d16',tc:'#f5f5f5',bc:'#4a7bd6',jc:'#1f3a5f',sc:'#f5f5f5',eye:1,nose:1,mouth:1,ear:1,acc:{glasses:0,sun:0,watch:0,hat:0,ear:0,scarf:0,clip:0,neck:0}});
+const DEF=()=>({g:'f',face:'oval',hair:'straight',top:'short',bot:'pants',jk:'none',skin:'#fde3cf',hc:'#2a1d16',ec:'#4a3226',lc:'#c0504d',bd:{mus:0,goat:0},bdc:'#2a1d16',tc:'#f5f5f5',bc:'#4a7bd6',jc:'#1f3a5f',sc:'#f5f5f5',eye:1,nose:1,mouth:1,ear:1,acc:{glasses:0,sun:0,watch:0,hat:0,ear:0,scarf:0,clip:0,neck:0}});
 let s=DEF();
 
 function hair(c){
@@ -88,12 +88,14 @@ function hair(c){
  return {none:['',''],
   s1:['',P('M87 76Q80 30 120 28Q162 30 153 76Q150 52 136 46Q120 58 100 50Q90 58 87 76Z')],
   s2:['',P('M89 62Q88 32 120 32Q152 32 151 62Q142 46 120 46Q98 46 89 62Z')],
-  long:[P('M84 70Q80 28 120 26Q160 28 156 70L164 178Q120 192 76 178Z'),bangs],
+  straight:[P('M84 70Q80 28 120 26Q160 28 156 70L160 190H80Z'),P('M85 80Q80 30 120 27Q160 30 155 80L153 54Q120 46 87 54Z')+P('M85 70Q80 120 82 186L96 186Q92 120 94 70Z')+P('M155 70Q160 120 158 186L144 186Q148 120 146 70Z')],
+  sstraight:[P('M84 70Q80 28 120 26Q160 28 156 70L158 118H82Z'),P('M85 80Q80 30 120 27Q160 30 155 80L153 54Q120 46 87 54Z')+P('M85 70Q80 96 82 118L96 118Q92 96 94 70Z')+P('M155 70Q160 96 158 118L144 118Q148 96 146 70Z')],
   s4:[P('M84 70Q80 28 120 26Q160 28 156 70L158 116Q120 124 82 116Z'),bangs],
   pony:[P('M150 44Q186 50 180 134Q170 98 150 82Z')+`<circle cx="152" cy="52" r="4" fill="#ff8fab"/>`,bangs],
   s3:['',P('M88 72Q84 40 104 32L108 22L118 31L126 20L134 32L144 28Q156 40 152 72Q146 52 120 50Q94 52 88 72Z')],
   s5:['',P('M84 92Q76 34 120 26Q164 34 156 92L150 70Q146 52 134 46Q108 58 90 54L84 92Z')],
   s6:[P('M82 70Q78 28 120 26Q162 28 158 70L166 114Q156 110 152 104Q120 112 88 104Q84 110 74 114Z'),bangs],
+  lcurly:[`<g fill="${c}"><circle cx="120" cy="58" r="42"/><circle cx="96" cy="34" r="18"/><circle cx="144" cy="34" r="18"/><circle cx="82" cy="86" r="18"/><circle cx="76" cy="114" r="18"/><circle cx="80" cy="142" r="17"/><circle cx="88" cy="168" r="15"/><circle cx="158" cy="86" r="18"/><circle cx="164" cy="114" r="18"/><circle cx="160" cy="142" r="17"/><circle cx="152" cy="168" r="15"/></g>`,P('M92 62Q96 44 120 42Q144 44 148 62Q134 52 120 54Q106 52 92 62Z')],
   curly:[`<g fill="${c}"><circle cx="120" cy="58" r="44"/><circle cx="86" cy="90" r="16"/><circle cx="154" cy="90" r="16"/><circle cx="96" cy="34" r="18"/><circle cx="144" cy="34" r="18"/></g>`,P('M92 62Q96 44 120 42Q144 44 148 62Q134 52 120 54Q106 52 92 62Z')]
  }[s.hair];
 }
