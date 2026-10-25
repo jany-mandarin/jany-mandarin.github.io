@@ -57,10 +57,13 @@
         .grammar-box { background: #FFF9F0; border: 1px solid #E6D5B8; border-radius: 8px; padding: 15px; margin: 15px 0; scroll-margin-top: 80px; }
         .note { font-size: 14px; color: #555; margin-bottom: 10px; line-height: 1.5; }
         
-        /* 表格樣式 */
-        .custom-table { width: 100%; border-collapse: collapse; margin: 15px 0; font-size: 14px; background: #fff; }
-        .custom-table th, .custom-table td { border: 1px solid #E6D5B8; padding: 10px; text-align: left; }
-        .custom-table th { background: #F4EAD3; color: #8C6239; }
+        /* 仿照您提供的精美表格樣式 */
+        .custom-table { width: 100%; border-collapse: collapse; margin: 12px 0; font-size: 14px; background: #fff; border-radius: 6px; overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,0.05); }
+        .custom-table th, .custom-table td { border: 1px solid #E6D5B8; padding: 12px; text-align: left; }
+        .custom-table th { background: #F4EAD3; color: #8C6239; font-weight: bold; }
+
+        /* 內嵌圖片樣式 (鑲嵌在說明文字內) */
+        .inline-img { max-width: 250px; width: 100%; height: auto; border-radius: 8px; border: 1px solid #E6D5B8; box-shadow: 0 2px 5px rgba(0,0,0,0.05); display: block; margin: 10px auto; }
 
         /* 錄音播放器獨立換行區塊 */
         .audio-player-container { width: 100%; margin-top: 8px; }
@@ -72,10 +75,6 @@
         .hz-text { font-size: 24px; font-family: sans-serif; line-height: 1.2; }
         
         .en-trans { color: #666; font-size: 15px; font-style: italic; margin-top: 5px; }
-        
-        /* 圖片縮小至 250px 並置中 */
-        .img-container { text-align: center; margin: 15px 0; scroll-margin-top: 80px; }
-        .img-container img { max-width: 250px; width: 100%; height: auto; border-radius: 8px; border: 1px solid #E6D5B8; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
 
         @media (max-width: 900px) {
             .sidebar { transform: translateX(-100%); }
@@ -253,83 +252,59 @@
                         ]
                     },
                     {
-                        type: "html",
-                        content: `<div class="img-container"><img src="https://cdn.phototourl.com/member/2026-10-25-92c0be20-e8b8-41f3-afa9-111d0eabf14f.jpg" alt="疏失情境圖"></div>`
-                    },
-                    {
-                        type: "grammar",
-                        title: "疏(shū)失(shī)详(xiáng)解(jiě)",
-                        note: "情境：常与责任、管理、工作相关。<br>使用地方：职场、行政、医疗、法律、管理。",
-                        examples: [
-                            { zh: "医(yī)院(yuàn)承(chéng)认(rèn)这(zhè)次(cì)的(de)医(yī)疗(liáo)疏(shū)失(shī)，是(shì)因(yīn)为(wèi)人(rén)员(yuán)管(guǎn)理(lǐ)不(bù)好(hǎo)。", en: "The hospital admitted this medical negligence was due to poor personnel management." },
-                            { zh: "因(yīn)为(wèi)主(zhǔ)管(guǎn)的(de)疏(shū)失(shī)造(zào)成(chéng)这(zhè)个(gè)案(àn)子(zǐ)没(méi)办(bàn)法(fǎ)如(rú)期(qī)完(wán)成(chéng)。", en: "Because of the supervisor's negligence, this project could not be completed on schedule." },
-                            { zh: "博(bó)物(wù)馆(guǎn)的(de)人(rén)员(yuán)因(yīn)为(wèi)工(gōng)作(zuò)疏(shū)失(shī)，不(bù)小(xiǎo)心(xīn)把(bǎ)古(gǔ)老(lǎo)的(de)盘(pán)子(zǐ)打(dǎ)破(pò)了(le)。", en: "Due to work negligence, museum staff accidentally broke the ancient plate." }
+                        type: "table",
+                        headers: ["疏失 (Negligence)", "失误 (Mistake)"],
+                        rows: [
+                            ["<b>情境</b>：常与责任、管理、工作相关", "<b>情境</b>：常用在技术或日常结果"],
+                            ["<b>使用地方</b>：职场、行政、医疗、法律、管理", "<b>使用地方</b>：运动、游戏、考试、技术"],
+                            ["<img src='https://cdn.phototourl.com/member/2026-10-25-92c0be20-e8b8-41f3-afa9-111d0eabf14f.jpg' class='inline-img'>", "<img src='https://cdn.phototourl.com/member/2026-10-25-935dd945-f0b7-4bce-ab3c-0aedfd10a72e.jpg' class='inline-img'>"]
                         ]
                     },
                     {
                         type: "grammar",
-                        title: "失(shī)误(wù)详(xiáng)解(jiě)",
-                        note: "解释：失误用在技术不熟、判断错、能力不够状况。<br>情境：常用在技术或日常结果。<br>使用地方：运动、游戏、考试、技术。",
+                        title: "疏(shū)失(shī)与(yǔ)失(shī)误(wù)例(lì)句(jù)",
+                        note: "解释：相关实际例句练习。<br>Explanation: Example sentences.",
                         examples: [
+                            { zh: "医(yī)院(yuàn)承(chéng)认(rèn)这(zhè)次(cì)的(de)医(yī)疗(liáo)疏(shū)失(shī)，是(shì)因(yīn)为(wèi)人(rén)员(yuán)管(guán)理(lǐ)不(bù)好(hǎo)。", en: "The hospital admitted this medical negligence was due to poor personnel management." },
+                            { zh: "因(yīn)为(wèi)主(zhǔ)管(guán)的(de)疏(shū)失(shī)造(zào)成(chéng)这(zhè)个(gè)案(àn)子(zǐ)没(méi)办(bàn)法(fǎ)如(rú)期(qī)完(wán)成(chéng)。", en: "Because of the supervisor's negligence, this project could not be completed on schedule." },
+                            { zh: "博(bó)物(wù)馆(guǎn)的(de)人(rén)员(yuán)因(yīn)为(wèi)工(gōng)作(zuò)疏(shū)失(shī)，不(bù)小(xiǎo)心(xīn)把(bǎ)古(gǔ)老(lǎo)的(de)盘(pán)子(zǐ)打(dǎ)破(pò)了(le)。", en: "Due to work negligence, museum staff accidentally broke the ancient plate." },
                             { zh: "他(tā)在(zài)这(zhè)次(cì)的(de)足(zú)球(qiú)比(bǐ)赛(sài)失(shī)误(wù)，让(ràng)他(tā)的(de)足(zú)球(qiú)队(duì)输(shū)了(le)。", en: "He made a mistake in this football match, causing his team to lose." },
-                            { zh: "他(tā)在(zài)修(xiū)电(diàn)脑(nǎo)的(de)时(shí)候(hòu)犯(fàn)了(le)一(yí)个(gè)小(xiǎo)失(shī)误(wù)，现(xiàn)在(zài)不(bù)能(néng)用(yòng)了(le)。", en: "He made a small mistake while repairing the computer, and now it doesn't work." }
+                            { zh: "他(tā)在(zài)修(xiū)电(diàn)脑(nǎo)的(de)时(sh、shí)候(hòu)犯(fàn)了(le)一(yí)个(gè)小(xiǎo)失(shī)误(wù)，现(xiàn)在(zài)不(bù)能(néng)用(yòng)了(le)。", en: "He made a small mistake while repairing the computer, and now it doesn't work." }
                         ]
-                    },
-                    {
-                        type: "html",
-                        content: `<div class="img-container"><img src="https://cdn.phototourl.com/member/2026-10-25-935dd945-f0b7-4bce-ab3c-0aedfd10a72e.jpg" alt="失誤情境圖"></div>`
                     },
                     {
                         type: "grammar",
                         title: "2. 温(wēn)暖(nuǎn) vs 温(wēn)馨(xīn)",
-                        note: "解释：温暖和温馨的差别。<br>Explanation: Comparison between warm (温暖) and cozy/heartwarming (温馨).",
+                        note: "解释：温暖和温馨的差别。<br>Explanation: Comparison between warm (温暖) and cozy (温馨).",
                         examples: [
-                            { zh: "温(wēn)暖(nuǎn)用(yòng)在(zài)人(rén)、说(shuō)话(huà)、阳(yáng)光(guāng)、东(dōng)西(xī)。", en: "Warm is used for people, speech, sunshine, and objects." }
+                            { zh: "温(wēn)暖(nuǎn)与(yǔ)温(wēn)馨(xīn)的(de)表(biǎo)现(xiàn)方(fāng)式(shì)有(yǒu)所(suǒ)不(bù)同(tóng)。", en: "Warm and cozy have different ways of expression." }
                         ]
                     },
                     {
-                        type: "html",
-                        content: `<div class="img-container"><img src="https://cdn.phototourl.com/member/2026-10-25-4e6d443c-1ca8-4736-ad5f-125ccdcfde25.jpg" alt="溫暖情境圖"></div>`
-                    },
-                    {
-                        type: "grammar",
-                        title: "温(wēn)暖(nuǎn)例(lì)句(jù)",
-                        note: "解释：让人觉得热、觉得舒服或好心。",
-                        examples: [
-                            { zh: "那(nà)个(gè)人(rén)很(hěn)温(wēn)暖(nuǎn)，经(jīng)常(cháng)帮(bāng)助(zhù)人(rén)。", en: "That person is very warm and often helps people." },
-                            { zh: "今(jīn)天(tiān)的(de)太(tài)阳(yáng)很(hěn)温(wēn)暖(nuǎn)、很(hěn)舒(shū)服(fu)。", en: "Today's sun is very warm and comfortable." }
+                        type: "table",
+                        headers: ["温暖 (Warm)", "温馨 (Cozy / Heartwarming)"],
+                        rows: [
+                            ["<b>使用对象</b>：用在人、说话、阳光、东西", "<b>使用对象</b>：用在画面、气氛、空间、关系"],
+                            ["<img src='https://cdn.phototourl.com/member/2026-10-25-4e6d443c-1ca8-4736-ad5f-125ccdcfde25.jpg' class='inline-img'>", "<img src='https://cdn.phototourl.com/member/2026-10-25-ebb8bc6f-11ea-4557-bbea-ef12feabf82e.jpg' class='inline-img'>"],
+                            ["那(nà)个(gè)人(rén)很(hěn)温(wēn)暖(nuǎn)，经(jīng)常(cháng)帮(bāng)助(zhù)人(rén)。<br><i>That person is very warm and often helps people.</i>", "他(tā)们(men)家(jiā)很(hěn)温(wēn)馨(xīn)，常(cháng)常(cháng)大(dà)家(jiā)都(dōu)会(huì)在(zài)一(yì)起(qǐ)念(niàn)书(shū)。<br><i>Their family is very cozy; everyone often studies together.</i>"],
+                            ["今(jīn)天(tiān)的(de)太(tài)阳(yáng)很(hěn)温(wēn)暖(nuǎn)、很(hěn)舒(shū)服(fu)。<br><i>Today's sun is very warm and comfortable.</i>", "一(yì)大(dà)群(qún)企(qǐ)鹅(é)很(hěn)温(wēn)馨(xīn)地(de)在(zài)孵(fū)蛋(dàn)。<br><i>A large group of penguins are incubating eggs cozily.</i>"]
                         ]
-                    },
-                    {
-                        type: "grammar",
-                        title: "温(wēn)馨(xīn)详(xiáng)解(jiě)",
-                        note: "解释：温馨用在画面、气氛、空间、关系。",
-                        examples: [
-                            { zh: "他(tā)们(men)家(jiā)很(hěn)温(wēn)馨(xīn)，常(cháng)常(cháng)大(dà)家(jiā)都(dōu)会(huì)在(zài)一(yì)起(qǐ)念(niàn)书(shū)。", en: "Their family is very cozy; everyone often studies together." },
-                            { zh: "一(yì)大(dà)群(qún)企(qǐ)鹅(é)很(hěn)温(wēn)馨(xīn)地(de)在(zài)孵(fū)蛋(dàn)。", en: "A large group of penguins are incubating eggs cozily." }
-                        ]
-                    },
-                    {
-                        type: "html",
-                        content: `<div class="img-container"><img src="https://cdn.phototourl.com/member/2026-10-25-ebb8bc6f-11ea-4557-bbea-ef12feabf82e.jpg" alt="溫馨情境圖"></div>`
                     },
                     {
                         type: "grammar",
                         title: "3. 毛(máo)骨(gǔ)悚(sǒng)然(rán) vs 心(xīn)惊(jīng)胆(dǎn)颤(chàn)",
-                        note: "解释：毛骨悚然和心惊胆颤的区别。<br>Explanation: Terrifying (毛骨悚然) vs Trembling with fear (心惊胆颤).",
+                        note: "解释：毛骨悚然和心惊胆颤的区别。<br>Explanation: Terrifying vs Trembling with fear.",
                         examples: [
-                            { zh: "毛(máo)骨(gǔ)悚(sǒng)然(rán)是(shì)身(shēn)上(shàng)的(de)毛(máo)紧(jǐn)张(zhāng)害(hài)怕(pà)地(de)站(zhàn)起(qǐ)来(lái)，骨(gǔ)头(tóu)也(yě)觉(jué)得(de)很(hěn)冷(lěng)。", en: "Hair-raising means the hair on the body stands up in tension and fear, and the bones feel cold." },
-                            { zh: "用(yòng)在(zài)：看(kàn)了(le)一(yí)个(gè)鬼(guǐ)片(piàn)或(huò)杀(shā)人(rén)现(xiàn)场(chǎng)。", en: "Used when watching a horror movie or a murder scene." },
-                            { zh: "他(tā)亲(qīn)眼(yǎn)看(kàn)到(dào)那(nà)个(gè)坏(huài)人(rén)拿(ná)刀(dāo)杀(shā)了(le)邻(lín)居(jū)后(hòu)，每(měi)次(cì)想(xiǎng)到(dào)都(dōu)会(huì)让(ràng)他(tā)毛(máo)骨(gǔ)悚(sǒng)然(rán)。", en: "After seeing the bad man kill the neighbor with a knife with his own eyes, every time he thinks about it, it makes his hair stand on end." }
+                            { zh: "毛(máo)骨(gǔ)悚(sǒng)然(rán)与(yǔ)心(xīn)惊(jīng)胆(dǎn)颤(chàn)都(dōu)代(dài)表(biǎo)害(hài)怕(pà)。", en: "Both hair-raising and trembling with fear represent fear." }
                         ]
                     },
                     {
-                        type: "grammar",
-                        title: "心(xīn)惊(jīng)胆(dǎn)颤(chàn) / 心(xīn)惊(jīng)胆(dǎn)战(zhàn)",
-                        note: "解释：内心吓到，胆子都在发抖，很紧张的样子。<br>用在：日常生活中看到可怕的东西，或是要去做一件可怕的事情。",
-                        examples: [
-                            { zh: "他(tā)很(hěn)怕(pà)高(gāo)，每(měi)次(cì)站(zhàn)在(zài)很(hěn)高(gāo)的(de)地(dì)方(fāng)都(dōu)会(huì)让(ràng)他(tā)心(xīn)惊(jīng)胆(dǎn)战(zhàn)。", en: "He is very afraid of heights; every time he stands in a very high place, it makes him tremble with fear." },
-                            { zh: "每(měi)次(cì)做(zuò)错(cuò)事(shì)，他(tā)都(dōu)会(huì)被(bèi)主(zhǔ)管(guǎn)骂(mà)，所(suǒ)以(yǐ)每(měi)次(cì)去(qù)上(shàng)班(bān)，他(tā)都(dōu)会(huì)心(xīn)惊(jīng)胆(dǎn)战(zhàn)。", en: "Every time he makes a mistake, he gets scolded by his supervisor, so every time he goes to work, he feels trembling with fear." }
+                        type: "table",
+                        headers: ["毛骨悚然 (Hair-raising)", "心惊胆颤 / 心惊胆战 (Trembling with fear)"],
+                        rows: [
+                            ["<b>意思</b>：身上的毛紧张害怕地站起来，骨头也觉得很冷", "<b>意思</b>：内心吓到，胆子都在发抖，很紧张的样子"],
+                            ["<b>用在</b>：看了一个鬼片或殺人现场", "<b>用在</b>：日常生活中看到可怕的东西，或是要去办事"],
+                            ["他(tā)亲(qīn)眼(yǎn)看(kàn)到(dào)那(nà)个(gè)坏(huài)人(rén)拿(ná)刀(dāo)杀(shā)了(le)邻(lín)居(jū)后(hòu)，每(měi)次(cì)想(xiǎng)到(dōu)都(dōu)会(huì)让(ràng)他(tā)毛(máo)骨(gǔ)悚(sǒng)然(rán)。", "他(tā)很(hěn)怕(pà)高(gāo)，每(měi)次(cì)站(zhàn)在(zài)很(hěn)高(gāo)的(de)地(dì)方(fāng)都(dōu)会(huì)让(ràng)他(tā)心(xīn)惊(jīng)胆(dǎn)战(zhàn)。<br>每(měi)次(cì)做(zuò)错(cuò)事(shì)，他(tā)都(dōu)会(huì)被(bèi)主(zhǔ)管(guǎn)骂(mà)，上(shàng)班(bān)都(dōu)会(huì)心(xīn)惊(jīng)胆(dǎn)战(zhàn)。"]
                         ]
                     },
                     {
@@ -350,8 +325,16 @@
                         title: "1. 台(tái)湾(wān) / 中(zhōng)国(guó)用(yòng)语(yǔ)",
                         note: "新闻连结：<a href='https://www.rnz.co.nz/news/chinese/728650' target='_blank'>RNZ 新闻连结</a><br>Explanation: Comparison of Taiwanese and Chinese terms.",
                         examples: [
-                            { zh: "台(tái)湾(wān)用(yòng)语(yǔ)：阿(ā)嬤(mā)、讯(xùn)息(xī)、影(yǐng)片(piàn)", en: "Taiwanese terms: Grandma, message, video." },
-                            { zh: "中(zhōng)国(guó)用(yòng)语(yǔ)：奶(nǎi)奶(nai)、信(xìn)息(xī)、视(shì)频(pín)", en: "Chinese terms: Grandma, message, video." }
+                            { zh: "两(liǎng)岸(àn)常(cháng)用(yòng)词(cí)汇(huì)對(duì)照(zhào)。", en: "Comparison of commonly used vocabulary across the Taiwan Strait." }
+                        ]
+                    },
+                    {
+                        type: "table",
+                        headers: ["台湾用語 (Taiwan Terms)", "中国用語 (China Terms)"],
+                        rows: [
+                            ["阿嬤 (ā嬤)", "奶奶 (nǎinai)"],
+                            ["讯息 (xùnxī)", "信息 (xìnxī)"],
+                            ["影片 (yǐngpiàn)", "视频 (shìpín)"]
                         ]
                     },
                     {
@@ -377,23 +360,14 @@
                         title: "4. 黑(hēi)马(mǎ)",
                         note: "解释：原本不被看好，最后却赢了或表现非常好的人。<br>Explanation: Dark horse.",
                         examples: [
-                            { zh: "他(tā)是(shì)公(gōng)司(sī)的(de)黑(hēi)马(mǎ)，平(píng)常(cháng)都(dōu)不(bú)说(shuō)话(huà)，但(dàn)要(yào)做(zuò)事(shì)的(de)时(shí)候(hòu)总(zǒng)是(shì)能(néng)快(kuài)速(sù)处(chǔ)理(lǐ)好(hǎo)。", en: "He is the dark horse of the company, usually quiet, but always handles things quickly when action is needed." }
+                            { zh: "他(tā)是(shì)公(gōng)司(sī)的(de)黑(hēi)马(mǎ)，平(píng)常(cháng)都(dōu)不(bú)说(shuō)话(huà)，但(dàn)要(yào)做(zuò)事(shì)的(de)时(shì)候(hòu)总(zǒng)是(shì)能(néng)快(kuài)速(sù)处(chǔ)理(lǐ)好(hǎo)。", en: "He is the dark horse of the company, usually quiet, but always handles things quickly when action is needed." }
                         ]
                     },
                     {
                         type: "grammar",
                         title: "5. 眷(juàn)",
-                        note: "解释：底下有个目，本意是回头看很思念的意思。<br>造词：眷恋=对于过去的事非常思念到捨不得离开。",
+                        note: "解释：底下有个目，本意是回头看很思念的意思。<br>造词：眷恋=对于过去的事非常思念到捨不得离开。<br>例句：虽然现在爷爷奶奶都不在了，他还是非常眷恋他们曾经住过的房子，每次回去都捨不得离开。<br><br><b>第二个意思</b>：眷也作为以前战后政府提供给所有士兵和他的家人所住的地方。<br>造词：眷村=战后大家住在一起的社区。<br>例句：这个地方以前是眷村，所以房子间靠得很近，大家的关系都很好。<br><br><b>第三个意思</b>：眷属=原本是这些战后的士兵的家人，后来变成在书面语常用来称呼家人的说法。<br>例句：他带着眷属移居国外，展开全新的生活。",
                         examples: [
-                            { zh: "虽(suī)然(rán)现(xiàn)在(zài)爷(yé)爷(ye)奶(nǎi)奶(nai)都(dōu)不(bù)在(zài)了(le)，他(tā)还(hái)是(shì)非(fēi)常(cháng)眷(juàn)恋(liàn)他(tā)们(men)曾(céng)经(jīng)住(zhù)过(guò)的(de)房(fáng)子(zǐ)，每(měi)次(cì)回(huí)去(qù)都(dōu)捨(shě)不(bù)得(de)离(lí)开(kāi)。", en: "Although grandparents are no longer here, he still feels deeply attached to the house they once lived in, hating to leave every time he goes back." }
-                        ]
-                    },
-                    {
-                        type: "grammar",
-                        title: "眷(juàn)的(de)第(dì)二(èr)个(gè)意(yì)思(sī)",
-                        note: "解释：眷也作为以前战后政府提供给所有士兵和他的家人所住的地方。<br>造词：眷村=战后大家住在一起的社区。<br>解释：眷属=原本是这些战后的士兵的家人，后来变成在书面语常用来称呼家人的说法。",
-                        examples: [
-                            { zh: "这(zhè)个(gè)地(dì)方(fāng)以(yǐ)前(qián)是(shì)眷(juàn)村(cūn)，所(suǒ)以(yǐ)房(fáng)子(zǐ)间(jiān)靠(kào)得(de)很(hěn)近(jìn)，大(dà)家(jiā)的(de)关(guān)系(xì)都(dōu)很(hěn)好(hǎo)。", en: "This place used to be a military dependents' village (juancun), so the houses were close together and everyone had a good relationship." },
                             { zh: "他(tā)带(dài)着(zhe)眷(juàn)属(shǔ)移(yí)居(jū)国(guó)外(wài)，展(zhǎn)开(kāi)全(quán)新(xīn)的(de)生(shēng)活(huó)。", en: "He moved abroad with his family, starting a brand-new life." }
                         ]
                     },
@@ -416,7 +390,7 @@
                     },
                     {
                         type: "html",
-                        content: `<div class="img-container"><img src="https://cdn.phototourl.com/member/2026-10-25-db444791-d46f-499e-89cd-34dc973efe28.jpg" alt="乘載情境圖"></div>`
+                        content: `<div class="img-container"><img src="https://cdn.phototourl.com/member/2026-10-25-db444791-d46f-499e-89cd-34dc973efe28.jpg" alt="乘載情境圖" class="inline-img"></div>`
                     },
                     {
                         type: "grammar",
@@ -457,7 +431,7 @@
                     },
                     {
                         type: "html",
-                        content: `<div class="img-container"><img src="https://cdn.phototourl.com/member/2026-10-25-c296e783-e903-4974-9b01-f6af35f90166.png" alt="信件說明圖示"></div>`
+                        content: `<div class="img-container"><img src="https://cdn.phototourl.com/member/2026-10-25-c296e783-e903-4974-9b01-f6af35f90166.png" alt="信件說明圖示" class="inline-img"></div>`
                     },
                     {
                         type: "grammar",
@@ -465,7 +439,7 @@
                         note: "解释：数字大写与寄件地址。<br>Explanation: Traditional Chinese numerals and sender address.",
                         examples: [
                             { zh: "左(zuǒ)边(biān)写(xiě)外(wài)银(yín)贰(èr)拾(shí)元(yuán)", en: "On the left, it writes twenty foreign silver dollars." },
-                            { zh: "正(zhèng)式(shì)文(wén)件(jiàn)数(shù)字(zì)的(de)写(xiě)法(fǎ)：壹(yī)贰(èr)叁(sān)肆(sì)伍(wǔ)陆(liù)柒(qī)捌(bā)玖(jiǔ)拾(shí)", en: "Formal document numeral writing: 1, 2, 3, 4, 5, 6, 7, 8, 9, 10." },
+                            { zh: "正(zhèng)式(shì)文(wén)件(jiàn)数(shì)字(zì)的(de)写(xiě)法(fǎ)：壹(yī)贰(èr)叁(sān)肆(sì)伍(wǔ)陆(liù)柒(qī)捌(bā)玖(jiǔ)拾(shí)", en: "Formal document numeral writing: 1, 2, 3, 4, 5, 6, 7, 8, 9, 10." },
                             { zh: "右(yòu)侧(cè)寄(jì)件(jiàn)人(rén)地(dì)址(zhǐ)：潮(cháo)州(zhōu)宏(hóng)安(ān)寨(zhài)东(dōng)畔(pàn)社(shè)交(jiāo)", en: "On the right, sender address: Chaozhou Hong'an Zhai East Bank Social." }
                         ]
                     }
@@ -482,6 +456,17 @@
             sec.items.forEach((item, iIdx) => {
                 if (item.type === "html") {
                     html += item.content;
+                } else if (item.type === "table") {
+                    html += `<div class="grammar-box" id="item-${sIdx}-${iIdx}">`;
+                    html += `<table class="custom-table"><thead><tr>`;
+                    item.headers.forEach(h => { html += `<th>${h}</th>`; });
+                    html += `</tr></thead><tbody>`;
+                    item.rows.forEach(row => {
+                        html += `<tr>`;
+                        row.forEach(cell => { html += `<td>${cell}</td>`; });
+                        html += `</tr>`;
+                    });
+                    html += `</tbody></table></div>`;
                 } else if (item.type === "grammar") {
                     html += `<div class="grammar-box" id="item-${sIdx}-${iIdx}">
                         <div style="font-weight:bold; font-size:16px; color:#8C6239; margin-bottom:5px;">${parsePinyin(item.title)}</div>`;
@@ -504,19 +489,6 @@
                         });
                     }
                     html += `</div>`;
-                } else if (item.zh) {
-                    html += `
-                    <div class="item" id="item-${sIdx}-${iIdx}">
-                        <div class="item-content">
-                            <button class="icon-btn" onclick="playAudio('${item.zh}')" title="朗读">🔊</button>
-                            <button class="icon-btn rec-btn" onclick="toggleRecord(this, 'rec-${counter}')" title="录音">🎤</button>
-                            <button class="icon-btn play-rec-btn" id="play-rec-rec-${counter}" onclick="playRecording('rec-${counter}')" disabled title="播放自己">▶</button>
-                        </div>
-                        <div class="audio-player-container" id="audio-container-rec-${counter}"></div>
-                        <div style="margin-top:5px;">${parsePinyin(item.zh)}</div>
-                        <div class="en-trans">${item.en}</div>
-                    </div>`;
-                    counter++;
                 }
             });
             html += `</div>`;
