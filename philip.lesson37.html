@@ -58,7 +58,7 @@
         
         /* 表格樣式 */
         .custom-table { width: 100%; border-collapse: collapse; margin: 12px 0; font-size: 14px; background: #fff; border-radius: 6px; overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,0.05); }
-        .custom-table th, .custom-table td { border: 1px solid #E6D5B8; padding: 12px; text-align: left; vertical-align: top; }
+        .custom-table th, .custom-table td { border: 1px solid #E6D5B8; padding: 12px; text-align: left; vertical-align: top; font-size: 14px; }
         .custom-table th { background: #F4EAD3; color: #8C6239; font-weight: bold; text-align: center; }
 
         /* 內嵌圖片樣式 */
@@ -196,7 +196,7 @@
 
                     recorder.start();
                     mediaRecorders[id] = recorder;
-                    btn.innerHTML = "️";
+                    btn.innerHTML = "⏹️";
                     btn.classList.add("recording");
                 } catch (err) {
                     alert("麦克风权限被拒绝或不支持。");
@@ -250,7 +250,7 @@
                             ["<b>情(qíng)境(jìng)</b>", "常(cháng)与(yǔ)责(zé)任(rèn)、管(guán)理(lǐ)、工(gōng)作(zuò)相(xiāng)关(guān)", "常(cháng)用(yòng)在(zài)技(jì)术(shù)或(huò)日(rì)常(cháng)结(jié)果(guǒ)"],
                             ["<b>使(shǐ)用(yòng)地(dì)方(fāng)</b>", "职(zhí)场(chǎng)、行(xíng)政(zhèng)、医(yī)疗(liáo)、法(fǎ)律(lǜ)、管(guán)理(lǐ)", "运(yùn)动(dòng)、游(yóu)戏(xì)、考(kǎo)试(shì)、技(jì)术(shù)"],
                             ["<b>图(tú)示(shì)</b>", "<img src='https://cdn.phototourl.com/member/2026-10-25-92c0be20-e8b8-41f3-afa9-111d0eabf14f.jpg' class='inline-img'>", "<img src='https://cdn.phototourl.com/member/2026-10-25-935dd945-f0b7-4bce-ab3c-0aedfd10a72e.jpg' class='inline-img'>"],
-                            ["<b>例(lì)句(jù)</b>", "医(yī)院(yuàn)承(chéng)认(rèn)这(zhè)次(cì)的(de)医(yī)疗(liáo)疏(shū)失(shī)，是(shì)因(yīn)为(wèi)人(rén)员(yuán)管(guán)理(lǐ)不(bù)好(hǎo)。<br><i>The hospital admitted this medical negligence...</i><br><br>因(yīn)为(wèi)主(zhǔ)管(guǎn)的(de)疏(shū)失(shī)造(zào)成(chéng)这(zhè)个(gè)案(àn)子(zǐ)没(méi)办(bàn)法(fǎ)如(rú)期(qī)完(wán)成(chéng)。<br><i>Because of the supervisor's negligence...</i><br><br>博(bó)物(wù)馆(guǎn)的(de)人(rén)员(yuán)因(yīn)为(wèi)工(gōng)作(zuò)疏(shū)失(shī)，不(bù)小(xiǎo)心(xīn)把(bǎ)古(gǔ)老(lǎo)的(de)盘(pán)子(zǐ)打(dǎ)破(pò)了(le)。<br><i>Due to work negligence, museum staff broke the plate.</i>", "他(tā)在(zài)这(zhè)次(cì)的(de)足(zú)球(qiú)比(bǐ)赛(sài)失(shī)误(wù)，让(ràng)他(tā)的(de)足(zú)球(qiú)队(duì)输(shū)了(le)。<br><i>He made a mistake in this football match...</i><br><br>他(tā)在(zài)修(xiū)电(diàn)脑(nǎo)的(de)时(shí)候(hòu)犯(fàn)了(le)一(yí)个(gè)小(xiǎo)失(shī)误(wù)，现(xiàn)在(zài)不(bù)能(néng)用(yòng)了(le)。<br><i>He made a small mistake while repairing the computer...</i>"]
+                            ["<b>例(lì)句(jù)</b>", "医(yī)院(yuàn)承(chéng)认(rèn)这(zhè)次(cì)的(de)医(yī)疗(liáo)疏(shū)失(shī)，是(shì)因(yīn)为(wèi)人(rén)员(yuán)管(guán)理(lǐ)不(bù)好(hǎo)。<br><i>The hospital admitted this medical negligence...</i><br><br>因(yīn)为(wèi)主(zhǔ)管(guǎn)的(de)疏(shū)失(shī)造(zào)成(chéng)这(zhè)个(gè)案(àn)子(zǐ)没(méi)办(bàn)法(fǎ)如(rú)期(qī)完(wán)成(chéng)。<br><i>Because of the supervisor's negligence...</i><br><br>博(bó)物(wù)馆(guǎn)的(de)人(rén)员(yuán)因(yín)为(wèi)工(gōng)作(zuò)疏(shū)失(shī)，不(bù)小(xiǎo)心(xīn)把(bǎ)古(gǔ)老(lǎo)的(de)盘(pán)子(zǐ)打(dǎ)破(pò)了(le)。<br><i>Due to work negligence, museum staff broke the plate.</i>", "他(tā)在(zài)这(zhè)次(cì)的(de)足(zú)球(qiú)比(bǐ)赛(sài)失(shī)误(wù)，让(ràng)他(tā)的(de)足(zú)球(qiú)队(duì)输(shū)了(le)。<br><i>He made a mistake in this football match...</i><br><br>他(tā)在(zài)修(xiū)电(diàn)脑(nǎo)的(de)时(shí)候(hòu)犯(fàn)了(le)一(yí)个(gè)小(xiǎo)失(shī)误(wù)，现(xiàn)在(zài)不(bù)能(néng)用(yòng)了(le)。<br><i>He made a small mistake while repairing the computer...</i>"]
                         ]
                     },
                     {
@@ -268,7 +268,7 @@
                         rows: [
                             ["<b>解(jiě)释(shì)</b>", "身(shēn)上(shàng)的(de)毛(máo)紧(jǐn)张(zhāng)害(hài)怕(pà)地(de)站(zhàn)起(qǐ)来(lái)，骨(gǔ)头(tóu)也(yě)觉(jué)得(de)很(hěn)冷(lěng)。", "内(nèi)心(xīn)吓(xià)到(dào)，胆(dǎn)子(zǐ)都(dōu)在(zài)发(fā)抖(dǒu)，很(hěn)紧(jǐn)张(zhāng)的(de)样(yàng)子(zi)。"],
                             ["<b>用(yòng)在(zài)</b>", "看(kàn)了(le)一(yí)个(gè)鬼(guǐ)片(piàn)或(huò)杀(shā)人(rén)现(xiàn)场(chǎng)", "日(rì)常(cháng)生(shēng)活(huó)中(zhōng)看(kàn)到(dào)可(kě)怕(pà)的(de)东(dōng)西(xī)，或(huò)是(shì)要(yào)去(qù)做(zuò)一(yí)件(jiàn)可(kě)怕(pà)的(de)事(shì)情(qíng)"],
-                            ["<b>例(lì)句(jù)</b>", "他(tā)亲(qīn)眼(yǎn)看(kàn)到(dào)那(nà)个(gè)坏(huài)人(rén)拿(ná)刀(dāo)杀(shā)了(le)邻(lín)居(jū)后(hòu)，每(měi)次(cì)想(xiǎng)到(dào)都(dōu)会(huì)让(ràng)他(tā)毛(máo)骨(gǔ)悚(sǒng)然(rán)。<br><i>After seeing the bad man kill the neighbor...</i>", "他(tā)很(hěn)怕(pà)高(gāo)，每(měi)次(cì)站(zhàn)在(zài)很(hěn)高(gāo)的(de)地(dì)方(fāng)都(dōu)会(huì)让(ràng)他(tā)心(xīn)惊(jīng)胆(dǎn)战(zhàn)。<br><i>He is very afraid of heights...</i><br><br>每(měi)次(cì)做(zuò)错(cuò)事(shì)，他(tā)都(dōu)会(huì)被(bèi)主(zhǔ)管(guǎn)骂(mà)，所(suǒ)以(yǐ)每(měi)次(cì)去(qù)上(shàng)班(bān)，他(tā)都(dōu)会(huì)心(xīn)惊(jīng)胆(dǎn)战(zhàn)。<br><i>Every time he makes a mistake...</i>"]
+                            ["<b>例(lì)句(jù)</b>", "他(tā)亲(qīn)眼(yǎn)看(kàn)到(dào)那(nà)个(gè)坏(huài)人(rén)拿(ná)刀(dāo)杀(shā)了(le)邻(lín)居(jū)后(hòu)，每(měi)次(cì)想(xiǎng)到(dōu)都(dōu)会(huì)让(ràng)他(tā)毛(máo)骨(gǔ)悚(sǒng)然(rán)。<br><i>After seeing the bad man kill the neighbor...</i>", "他(tā)很(hěn)怕(pà)高(gāo)，每(měi)次(cì)站(zhàn)在(zài)很(hěn)高(gāo)的(de)地(dì)方(fāng)都(dōu)会(huì)让(ràng)他(tā)心(xīn)惊(jīng)胆(dǎn)战(zhàn)。<br><i>He is very afraid of heights...</i><br><br>每(měi)次(cì)他(tā)做(zuò)错(cuò)事(shì)，都(dōu)会(huì)被(bèi)主(zhǔ)管(guǎn)骂(mà)，所(suǒ)以(yǐ)他(tā)每(měi)天(tiān)去(qù)上(shàng)班(bān)时(shí)，都(dōu)会(huì)心(xīn)惊(jīng)胆(dǎn)战(zhàn)。<br><i>Every time he makes a mistake, he gets scolded by his supervisor, so every day when he goes to work, he trembles with fear.</i>"]
                         ]
                     },
                     {
@@ -287,7 +287,7 @@
                     {
                         type: "grammar",
                         title: "新(xīn)闻(wén)连(lián)结(jié)",
-                        note: "新闻连结：<a href='https://www.rnz.co.nz/news/chinese/728650' target='_blank'>RNZ 新闻连结</a><br>Explanation: News article link.",
+                        note: "新闻连结：<a href='https://www.rnz.co.nz/news/chinese/728650' target='_blank'>RNZ 新闻连结</a>",
                         examples: []
                     },
                     {
@@ -300,7 +300,7 @@
                         type: "table",
                         headers: ["台湾用語 (Taiwan Terms)", "中国用語 (China Terms)"],
                         rows: [
-                            ["阿(ā)嬤(mā)", "奶(nǎi)奶(nai)"],
+                            ["阿(ā)嬤(mà)", "奶(nǎi)奶(nai)"],
                             ["讯(xùn)息(xī)", "信(xìn)息(xī)"],
                             ["影(yǐng)片(piàn)", "视(shì)频(pín)"]
                         ]
@@ -328,7 +328,7 @@
                         title: "4. 黑(hēi)马(mǎ)",
                         note: "解释：原本不被看好，最后却赢了或表现非常好的人。<br>Explanation: Dark horse.",
                         examples: [
-                            { zh: "他(tā)是(shì)公(gōng)司(sī)的(de)黑(hēi)马(mǎ)，平(píng)常(cháng)都(dōu)不(bú)说(shuō)话(huà)，但(dàn)要(yào)做(zuò)事(shì)的(de)时(shì)候(hòu)总(zǒng)是(shì)能(néng)快(kuài)速(sù)处(chǔ)理(lǐ)好(hǎo)。", en: "He is the dark horse of the company, usually quiet, but always handles things quickly when action is needed." }
+                            { zh: "他(tā)是(shì)公(gōng)司(sī)的(de)黑(hēi)马(mǎ)，平(píng)常(cháng)都(dōu)不(bú)说(shuō)话(huà)，但(dàn)要(yào)做(zuò)事(shì)的(de)时(sh|shí)候(hòu)总(zǒng)是(shì)能(néng)快(kuài)速(sù)处(chǔ)理(lǐ)好(hǎo)。", en: "He is the dark horse of the company, usually quiet, but always handles things quickly when action is needed." }
                         ]
                     },
                     {
@@ -387,7 +387,7 @@
                     {
                         type: "grammar",
                         title: "11. 信(xìn)件(jiàn)说(shuō)明(míng)",
-                        note: "解释：信件格式与古文称谓說明。<br><img src='https://cdn.phototourl.com/member/2026-10-25-c296e783-e903-4974-9b01-f6af35f90166.png' class='inline-img'><br><b>中(zhōng)间(jiān)说(shuō)明(míng)</b>：写上要寄给谁。家慈=妈妈，家严=爸爸，展=请你把信打开。<br><b>左(zuǒ)侧(cè)说(shuō)明(míng)</b>：写外银贰拾元。正式文件数字的写法：壹(yī)贰(èr)叁(sān)肆(sì)伍(wǔ)陆(liù)柒(qī)捌(bā)玖(jiǔ)拾(shí)。<br><b>右(yòu)侧(cè)说(shuō)明(míng)</b>：寄件人地址：潮州宏安寨东畔社交。<br>Explanation: Letter format explanation.",
+                        note: "解释：信件格式与古文称谓說明。<br><img src='https://cdn.phototourl.com/member/2026-10-25-c296e783-e903-4974-9b01-f6af35f90166.png' class='inline-img'><br><b>中(zhōng)间(jiān)说(shuō)明(míng)</b>：写上要寄给谁。家慈=妈妈，家严=爸爸，展=请你把信打开。<br><b>左(zuǒ)侧(cè)说(shuō)明(míng)</b>：写外银贰拾元。正式文件数字的写法：壹(yī)贰(èr)叁(sān)肆(sì)伍(wǔ)陆(liù)柒(qī)捌(bā)玖(jiǔ)拾(shí)。<br><b>右(yòu)侧(cè)说(shuō)明(míng)</b>：潮(cháo)安(ān)宏(hóng)安(ān)寨(zhài)东(dōng)畔(pàn)社(shè)交(jiāo)。<br>Explanation: Letter format explanation.",
                         examples: []
                     }
                 ]
