@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Patrick's Mandarin Lesson 58</title>
+    <style>
+        :root { --bg: #FDFBF7; --primary: #D4A373; --text: #4a4a4a; --white: #fff; --sidebar-width: 280px; }
+        html { scroll-behavior: smooth; }
+        body { font-family: 'Helvetica Neue', Arial, sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; margin: 0; padding: 0; display: flex; transition: margin-left 0.3s ease; }
+        
+        /* 左側收合大綱導覽列 */
+        .sidebar { width: var(--sidebar-width); background: #FFF9F0; border-right: 1px solid #E6D5B8; height: 100vh; position: fixed; top: 0; left: 0; overflow-y: auto; padding: 20px; box-sizing: border-box; transition: transform 0.3s ease; z-index: 1000; }
+        .sidebar.collapsed { transform: translateX(-100%); }
+        .sidebar h3 { margin-top: 0; color: #8C6239; font-size: 18px; border-bottom: 2px solid var(--primary); padding-bottom: 8px; display: flex; justify-content: space-between; align-items: center; }
+        .sidebar ol { padding-left: 20px; margin: 10px 0; color: #555; }
+        .sidebar li { margin-bottom: 6px; font-size: 14px; }
+        .sidebar .sub-list { padding-left: 15px; margin: 4px 0; list-style-type: circle; }
+        .sidebar .sub-list li { font-size: 13px; margin-bottom: 4px; }
+        .sidebar a { color: #555; text-decoration: none; display: block; }
+        .sidebar a:hover { color: #8C6239; font-weight: bold; }
+        
+        /* 切換按鈕 */
+        .sidebar-toggle { position: fixed; top: 15px; left: 15px; z-index: 1100; background: var(--primary); color: white; border: none; padding: 8px 12px; border-radius: 6px; cursor: pointer; font-size: 14px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+
+        /* 主內容區 */
+        .main-content { margin-left: var(--sidebar-width); width: calc(100% - var(--sidebar-width)); padding: 20px 40px; box-sizing: border-box; max-width: 900px; transition: margin-left 0.3s ease, width 0.3s ease; }
+        .main-content.expanded { margin-left: 0; width: 100%; }
+
+        .header { text-align: center; border-bottom: 2px solid var(--primary); padding-bottom: 10px; margin-bottom: 20px; position: relative; }
+        .top-nav { position: absolute; top: 0; right: 0; display: flex; gap: 15px; font-size: 14px; font-weight: bold; }
+        .top-nav a { color: #8C6239; text-decoration: none; }
+        .top-nav a:hover { text-decoration: underline; }
+        
+        .controls { position: sticky; top: 0; background: var(--bg); padding: 15px; text-align: center; border-bottom: 1px solid #ccc; z-index: 100; margin-bottom: 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
+        button.control-btn { background: var(--primary); color: white; border: none; padding: 10px 15px; margin: 5px; border-radius: 6px; cursor: pointer; font-size: 14px; font-weight: bold; }
+        button.control-btn:hover { background: #B5835A; }
+        
+        /* 圓形精美圖示按鈕 */
+        .icon-btn { background: #f0f0f0; border: none; width: 38px; height: 38px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 2px 4px rgba(0,0,0,0.08); transition: transform 0.1s, background 0.2s; margin-right: 6px; vertical-align: middle; }
+        .icon-btn:hover { background: #e0e0e0; transform: scale(1.05); }
+        .icon-btn.recording { background: #ff4d4f; animation: pulse 1.5s infinite; }
+        .icon-btn.playing { background: #457b9d; }
+        .icon-btn:disabled { background: #e0e0e0; opacity: 0.5; cursor: not-allowed; transform: none; }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(255, 77, 79, 0.4); }
+            70% { box-shadow: 0 0 0 10px rgba(255, 77, 79, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(255, 77, 79, 0); }
+        }
+
+        h2 { color: #8C6239; border-left: 5px solid var(--primary); padding-left: 10px; margin-top: 30px; }
+        .section { margin-bottom: 30px; background: var(--white); padding: 20px; border-radius: 12px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); scroll-margin-top: 80px; }
+        
+        .item { margin-bottom: 20px; display: flex; flex-direction: column; border-bottom: 1px dashed #eee; padding-bottom: 15px; }
+        
+        .sentence-row { display: flex; align-items: flex-start; gap: 12px; width: 100%; margin-bottom: 6px; }
+        .buttons-group { display: flex; align-items: center; gap: 6px; flex-shrink: 0; margin-top: 2px; }
+        .text-content { display: flex; flex-direction: column; flex-grow: 1; }
+        
+        .pinyin-group { display: inline-flex; flex-direction: column; align-items: center; margin-right: 3px; vertical-align: bottom; }
+        .py-text { font-size: 11px; color: #777; line-height: 1; margin-bottom: 2px; }
+        .hz-text { font-size: 24px; font-family: sans-serif; line-height: 1.2; }
+        
+        .en-trans { color: #666; font-size: 15px; font-style: italic; margin-top: 4px; padding-left: 0; }
+        .explanation-sub { color: #777; font-size: 13px; margin-top: 4px; line-height: 1.4; }
+        
+        .grammar-box { background: #FFF9F0; border: 1px solid #E6D5B8; border-radius: 8px; padding: 15px; margin: 15px 0; }
+        .note { font-size: 14px; color: #555; margin-bottom: 10px; line-height: 1.5; }
+        
+        /* 專門表格設計：上方標題/重點字，左側解釋與例句，中間說明 */
+        .custom-table { width: 100%; border-collapse: collapse; margin: 15px 0; background: white; border-radius: 8px; overflow: hidden; border: 1px solid #E6D5B8; }
+        .custom-table th { background: #F4E8D8; color: #8C6239; padding: 12px; font-size: 16px; text-align: left; border-bottom: 2px solid #E6D5B8; }
+        .custom-table td { padding: 12px; border-bottom: 1px solid #eee; vertical-align: top; }
+        .custom-table tr:last-child td { border-bottom: none; }
+        .col-left { width: 35%; border-right: 1px solid #eee; }
+        .col-middle { width: 65%; }
+
+        /* 互動測驗樣式 */
+        .quiz-box { background: #FAF3E0; border: 1px solid #D4A373; border-radius: 8px; padding: 15px; margin: 15px 0; }
+        .quiz-options { display: flex; gap: 10px; margin-top: 8px; flex-wrap: wrap; }
+        .quiz-btn { background: white; border: 1px solid #D4A373; color: #8C6239; padding: 6px 14px; border-radius: 6px; cursor: pointer; font-weight: bold; }
+        .quiz-btn:hover { background: #F4E8D8; }
+        .quiz-result { margin-top: 8px; font-size: 14px; font-weight: bold; }
+        
+        @media (max-width: 900px) {
+            .sidebar { transform: translateX(-100%); }
+            .sidebar.active { transform: translateX(0); }
+            .main-content { margin-left: 0; width: 100%; padding: 20px; }
+        }
+    </style>
+</head>
+<body>
+
+    <button class="sidebar-toggle" onclick="toggleSidebar()">☰ Outline</button>
+
+    <div class="sidebar" id="sidebar">
+        <h3>📖 Outline <button style="background:none; border:none; color:#8C6239; font-weight:bold; cursor:pointer; font-size:16px;" onclick="toggleSidebar()">×</button></h3>
+        <ol>
+            <li>
+                <a href="#sec-0">一、暖身 (Warm-up)</a>
+                <ul class="sub-list">
+                    <li><a href="#sub-0-0">1. 工作 vs 上班</a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="#sec-1">二、第九課 (Lesson 9)</a>
+                <ul class="sub-list">
+                    <li><a href="#sub-1-0">1. 複合動詞 (Compound Verbs)</a></li>
+                    <li><a href="#sub-1-1">2. 互動練習 (Interactive Quiz)</a></li>
+                    <li><a href="#sub-1-2">3. 從 A 到 B</a></li>
+                    <li><a href="#sub-1-3">4. 第 x + 量詞</a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="#sec-2">三、第六課作業本</a>
+                <ul class="sub-list">
+                    <li><a href="#sub-2-0">1. 時間副詞</a></li>
+                    <li><a href="#sub-2-1">2. 大夫 (dài fu)</a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="#sec-3">四、第八課作業本</a>
+                <ul class="sub-list">
+                    <li><a href="#sub-3-0">1. 有點(兒)</a></li>
+                    <li><a href="#sub-3-1">2. 重複字詞</a></li>
+                </ul>
+            </li>
+        </ol>
+    </div>
+
+    <div class="main-content" id="mainContent">
+        <div class="header">
+            <div class="top-nav">
+                <a href="https://jany-mandarin.github.io/patrick.lesson57.html">← Lesson 57</a>
+            </div>
+            <h1>Patrick's Mandarin Lesson 58</h1>
+            <p>Date: 2026/10/28</p>
+        </div>
+
+        <div class="controls">
+            <button class="control-btn" onclick="togglePinyin()">Toggle Pinyin</button>
+            <button class="control-btn" onclick="toggleEnglish()">Toggle English</button>
+        </div>
+
+        <div id="content"></div>
+    </div>
+
+    <script>
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const mainContent = document.getElementById('mainContent');
+            if (window.innerWidth <= 900) {
+                sidebar.classList.toggle('active');
+            } else {
+                sidebar.classList.toggle('collapsed');
+                mainContent.classList.toggle('expanded');
+            }
+        }
+
+        function parsePinyin(text) {
+            const regex = /([一-龥a-zA-Z0-9，。？！、：""''])\((.*?)\)/g;
+            let parsed = text.replace(regex, (match, char, py) => {
+                return `<span class="pinyin-group"><span class="py-text">${py}</span><span class="hz-text">${char}</span></span>`;
+            });
+            return parsed;
+        }
+
+        let currentUtterance = null;
+        let activePlayBtn = null;
+
+        function togglePlayAudio(text, btnId, isQuestion = false) {
+            const btn = document.getElementById(btnId);
+            
+            if (speechSynthesis.speaking) {
+                if (speechSynthesis.paused) {
+                    speechSynthesis.resume();
+                    if(btn) btn.classList.add("playing");
+                    return;
+                } else {
+                    speechSynthesis.cancel();
+                    if(activePlayBtn) activePlayBtn.classList.remove("playing");
+                    if(activePlayBtn === btn) {
+                        activePlayBtn = null;
+                        return;
+                    }
+                }
+            }
+
+            let cleanText = text.replace(/<[^>]*>/g, '')
+                                .replace(/\(.*?\)/g, '')
+                                .replace(/^[a-zA-Z]:\s*/g, '')
+                                .replace(/^\d+\.\s*/, '');
+            
+            const utterance = new SpeechSynthesisUtterance(cleanText);
+            utterance.lang = 'zh-CN';
+            utterance.rate = isQuestion ? 0.9 : 0.85;
+            
+            if (isQuestion) {
+                utterance.pitch = 1.3;
+            }
+
+            utterance.onstart = () => {
+                if(activePlayBtn) activePlayBtn.classList.remove("playing");
+                activePlayBtn = btn;
+                if(btn) btn.classList.add("playing");
+            };
+
+            utterance.onend = () => {
+                if(btn) btn.classList.remove("playing");
+                activePlayBtn = null;
+            };
+
+            utterance.onerror = () => {
+                if(btn) btn.classList.remove("playing");
+                activePlayBtn = null;
+            };
+
+            currentUtterance = utterance;
+            speechSynthesis.speak(utterance);
+        }
+
+        let mediaRecorders = {};
+        let audioUrls = {};
+
+        async function toggleRecord(btn, id) {
+            if (!mediaRecorders[id] || mediaRecorders[id].state === "inactive") {
+                try {
+                    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+                    let chunks = [];
+                    let recorder = new MediaRecorder(stream);
+                    
+                    recorder.ondataavailable = e => chunks.push(e.data);
+                    recorder.onstop = () => {
+                        const blob = new Blob(chunks, { 'type': 'audio/ogg; codecs=opus' });
+                        audioUrls[id] = URL.createObjectURL(blob);
+                        document.getElementById(`play-rec-${id}`).disabled = false;
+                    };
+
+                    recorder.start();
+                    mediaRecorders[id] = recorder;
+                    btn.classList.add("recording");
+                    btn.title = "Recording... Click to stop";
+                } catch (err) {
+                    alert("Microphone access denied or not supported.");
+                }
+            } else {
+                mediaRecorders[id].stop();
+                btn.classList.remove("recording");
+                btn.title = "Record Audio";
+            }
+        }
+
+        function playRecording(id) {
+            if (audioUrls[id]) {
+                const audio = new Audio(audioUrls[id]);
+                audio.play();
+            }
+        }
+
+        const lessonData = [
+            {
+                title: "一、暖身 (Warm-up)",
+                note: "Warm-up chat and vocabulary comparison.",
+                items: [
+                    {
+                        type: "table",
+                        subId: "sub-0-0",
+                        title: "1. 工作 vs 上班",
+                        tableData: [
+                            {
+                                header: "工(gōng)作(zuò) (Work / Job)",
+                                left: "<b>詞性：</b>動詞、名詞<br><b>意思：</b>Profession, tasks, labor itself.<br><br><b>例句：</b><br>1. 我(wǒ)今(jīn)天(tiān)有(yǒu)很(hěn)多(duō)工(gōng)作(zuò)。<br>2. 我(wǒ)的(de)工(gōng)作(zuò)是(shì)老(lǎo)師(shī)。<br>3. 我(wǒ)明(míng)天(tiān)要(yào)去(qù)找(zhǎo)新(xīn)工(gōng)作(zuò)。",
+                                middle: "<b>說明 (Explanation in English):</b><br>• As a noun, it means your profession or job (e.g., being a teacher).<br>• As a verb or noun, it refers to tasks and duties you need to complete.<br>• When looking for employment, you search for a 'new job' (新工作)."
+                            },
+                            {
+                                header: "上(shàng)班(bān) (Go to work / Be on duty)",
+                                left: "<b>詞性：</b>動詞<br><b>意思：</b>To go to the company, start working status.<br><br><b>例句：</b><br>1. 我(wǒ)今(jīn)天(tiān)早(zǎo)上(shàng)九(jiǔ)點(diǎn)去(qù)上(shàng)班(bān)。<br>2. 我(wǒ)現(xiàn)在(zài)在(shàng)上(shàng)班(bān)。<br>3. 我(wǒ)今(jīn)天(tiān)不(bù)用(yòng)上(shàng)班(bān)。",
+                                middle: "<b>說明 (Explanation in English):</b><br>• An action verb describing the daily routine of heading to your workplace or being on duty.<br>• '不用上班' means you don't have to work today (day off)."
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                title: "二、第九課 (Lesson 9)",
+                note: "Compound verbs, directions, and ordinal numbers.",
+                items: [
+                    {
+                        type: "grammar",
+                        subId: "sub-1-0",
+                        title: "1. 複合動詞 (Compound Verbs: Verb + Result/Direction Complement)",
+                        note: "Explanation: In Chinese, single-syllable verbs can be ambiguous. Adding a complement word emphasizes the result, completion, or sensory capture.",
+                        examples: [
+                            { zh: "肯定句：主(zhǔ)詞(cí) + 動(dòng)詞(cí) + 受(shòu)詞(cí) + 了(le)<br><small style='color:#777;'>(Verbs: 看見、看到、找到、聽到、聽懂、做完、做好)</small>", en: "Affirmative: Subject + Verb + Object + 了" },
+                            { zh: "否定句：主(zhǔ)詞(cí) + 沒(méi)(有) + 動(dòng)詞(cí) + 受(shòu)詞(cí) <small style='color:#777;'>(Note: 不要加了)</small><br><small style='color:#777;'>(Verbs: 看見、看到、找到、聽到、聽懂、做完、做好)</small>", en: "Negative: Subject + 没(有) + Verb + Object (Do NOT add 了)" },
+                            { zh: "問(wèn)句(jù)：在(zài)肯定句(jù)的(de)後(hòu)面(miàn)加(jiā)『沒有(méiyǒu)』，但在(zài)日常(rìcháng)生活(shēnghuó)中(zhōng)大(dà)家(jiā)很(hěn)懶(lǎn)得(de)這(zhè)樣(yàng)講(jiǎng)。", en: "Question: Add 没有 at the end of affirmative sentences, though native speakers rarely say it this way in casual speech." }
+                        ]
+                    },
+                    {
+                        type: "table",
+                        title: "Comparison: 看、看見、看到",
+                        tableData: [
+                            {
+                                header: "看 (kàn) vs 看見 (kànjiàn) vs 看到 (kàndào)",
+                                left: "<b>例句：</b><br>1. 看書、看電視、看電影。<br>2. 我(wǒ)在(zài)公(gōng)司(sī)看(kàn)見(jiàn)一(yí)隻(zhī)貓(māo)。<br>3. 我(wǒ)看(kàn)到(dào)一(yí)隻(zhī)貓(māo)在(zài)吃(chī)肉(ròu)。",
+                                middle: "<b>說明 (Explanation in English):</b><br>• <b>看:</b> Purely looking or watching something intentionally.<br>• <b>看見:</b> Emphasizes visual capture or something casually coming into view (objective, scenic).<br>• <b>看到:</b> Emphasizes the result of seeing; native speakers often prefer 看見."
+                            }
+                        ]
+                    },
+                    {
+                        type: "table",
+                        title: "Result Complements: 到 (dào)",
+                        tableData: [
+                            {
+                                header: "V. + 到 (dào) — Emphasizing a successful result",
+                                left: "<b>例句：</b><br>1. 我(wǒ)吃(chī)到(dào)好(hǎo)吃(chī)的(de)西(xī)安(ān)麵(miàn)了(le)。<br>2. 我(wǒ)喝(hē)到(dào)好(hǎo)喝(hē)的(de)紅(hóng)茶(chá)了(le)。<br>3. 我(wǒ)找(zhǎo)到(dào)我(wǒ)的(de)手(shǒu)機(jī)了(le)！！<br>4. 我(wǒ)聽(tīng)到(dào)他(tā)說(shuō)的(de)話(huà)。",
+                                middle: "<b>說明 (Explanation in English):</b><br>• <b>吃到 / 喝到:</b> Suddenly tasting or drinking something exceptionally good and wanting to share.<br>• <b>找到:</b> Successfully locating something you were searching for.<br>• <b>聽到:</b> Catching a sound or speech with your ears."
+                            }
+                        ]
+                    },
+                    {
+                        type: "table",
+                        title: "Comprehension Complements: 懂 (dǒng)",
+                        tableData: [
+                            {
+                                header: "V. + 懂 (dǒng) — Understanding after perception",
+                                left: "<b>例句：</b><br>1. 你(nǐ)看(kàn)懂(dǒng)這(zhè)個(gè)電(diàn)影(yǐng)嗎(ma)？我(wǒ)看(kàn)不(bù)懂(dǒng)。<br>2. 你(nǐ)聽(tīng)懂(dǒng)他(tā)說(shuō)的(de)話(huà)了(le)嗎(ma)？我(wǒ)聽(tīng)不(bù)懂(dǒng)。<br>3. 你(nǐ)聽(tīng)懂(dǒng)他(tā)說(shuō)的(de)中(zhōng)文(wén)了(le)嗎(ma)？我(wǒ)聽(tīng)懂(dǒng)了(le)。",
+                                middle: "<b>說明 (Explanation in English):</b><br>• <b>看懂:</b> Comprehending what you read or watch (movies, books).<br>• <b>聽懂:</b> Comprehending spoken language. Negative form uses 不 (e.g., 听不懂)."
+                            }
+                        ]
+                    },
+                    {
+                        type: "table",
+                        title: "Completion Complements: 好 (hǎo) & 完 (wán)",
+                        tableData: [
+                            {
+                                header: "V. + 好 (hǎo) / 完 (wán)",
+                                left: "<b>例句：</b><br>1. 我(wǒ)做(zuò)好(hǎo)飯(fàn)了(le)，可(kě)以(yǐ)吃(chī)飯(fàn)了(le)。<br>2. 我(wǒ)吃(chī)完(wán)飯(fàn)了(le)。<br>3. 我(wǒ)做(zuò)完(wán)第(dì)六(liù)課(kè)的(de)考(kǎo)試(shì)題(tí)。",
+                                middle: "<b>說明 (Explanation in English):</b><br>• <b>做好:</b> Indicates preparation is complete and ready to begin.<br>• <b>做完 / 吃完:</b> Indicates the action is entirely finished and concluded."
+                            }
+                        ]
+                    },
+                    {
+                        type: "grammar",
+                        subId: "sub-1-1",
+                        title: "互動練習 (Interactive Quiz)",
+                        note: "Test your understanding of compound verbs. Click the options below!",
+                        examples: [
+                            {
+                                zh: "1) 我(wǒ)找(zhǎo) ______ 我(wǒ)的(de)錢(qián)包(bāo)了(le)。<br><div class='quiz-options'><button class='quiz-btn' onclick='checkQuiz(1, "好")'>好</button><button class='quiz-btn' onclick='checkQuiz(1, "到")'>到</button><button class='quiz-btn' onclick='checkQuiz(1, "完")'>完</button></div><div id='quiz-res-1' class='quiz-result'></div>",
+                                en: "I found my wallet."
+                            },
+                            {
+                                zh: "2) 他(tā)沒(méi)有(yǒu)聽(tīng) ______ 老(lǎo)師(shī)的(de)話(huà)。<br><div class='quiz-options'><button class='quiz-btn' onclick='checkQuiz(2, "到")'>到</button><button class='quiz-btn' onclick='checkQuiz(2, "懂")'>懂</button><button class='quiz-btn' onclick='checkQuiz(2, "完")'>完</button></div><div id='quiz-res-2' class='quiz-result'></div>",
+                                en: "He didn't hear / understand the teacher's words."
+                            },
+                            {
+                                zh: "3) 我(wǒ)做(zuò) ______ 海(hǎi)南(nán)雞(jī)飯(fàn)了(le)，一(yì)起(qǐ)吃(chī)飯(fàn)吧(ba)！<br><div class='quiz-options'><button class='quiz-btn' onclick='checkQuiz(3, "好")'>好</button><button class='quiz-btn' onclick='checkQuiz(3, "完")'>完</button><button class='quiz-btn' onclick='checkQuiz(3, "到")'>到</button></div><div id='quiz-res-3' class='quiz-result'></div>",
+                                en: "I have prepared Hainanese chicken rice, let's eat together!"
+                            },
+                            {
+                                zh: "4) 我(wǒ)昨(zuó)天(tiān)在(zài) New World 看(kàn) ______ 我(wǒ)的(de)朋(péng)友(yǒu)。<br><div class='quiz-options'><button class='quiz-btn' onclick='checkQuiz(4, "見")'>見</button><button class='quiz-btn' onclick='checkQuiz(4, "完")'>完</button><button class='quiz-btn' onclick='checkQuiz(4, "好")'>好</button></div><div id='quiz-res-4' class='quiz-result'></div>",
+                                en: "I saw my friend at New World yesterday."
+                            }
+                        ]
+                    },
+                    {
+                        type: "grammar",
+                        subId: "sub-1-2",
+                        title: "2. 從 A 到 B (From A to B)",
+                        note: "Explanation: Used for time, location, or progressive range.",
+                        examples: [
+                            { zh: "从(cóng)早(zǎo)上(shàng)九(jiǔ)点(diǎn)到(dào)下(xià)午(wǔ)五(wǔ)点(diǎn)我(wǒ)在(zài)上(shàng)班(bān)。", en: "I am at work from 9 AM to 5 PM." },
+                            { zh: "从(cóng)北(běi)京(jīng)到(dào)上(shàng)海(hǎi)要(yào)坐(zuò)几(jǐ)个(gè)小(xiǎo)时(shí)的(de)飞(fēi)机(jī)？", en: "How many hours of flight is it from Beijing to Shanghai?" },
+                            { zh: "从(cóng)老(lǎo)人(rén)到(dào)小(xiǎo)孩(hái)都(dōu)喜(xǐ)欢(huan)吃(chī)苹(píng)果(guǒ)。", en: "From the elderly to children, everyone likes eating apples.", explanation: "Note: In Chinese culture, elders are mentioned first out of respect." },
+                            { zh: "从(cóng)小(xiǎo)到(dào)大(dà)我(wǒ)都(dōu)喜(xǐ)欢(huan)吃(chī)肉(ròu)派(pài)。", en: "Ever since I was little, I have loved eating meat pies.", explanation: "Note: '从小到大' means from childhood until now, referring to oneself." },
+                            { zh: "从(cóng)下(xià)星(xīng)期(qī)一(yī)开(kāi)始(shǐ)上(shàng)班(bān)。", en: "Start working from next Monday." }
+                        ]
+                    },
+                    {
+                        type: "grammar",
+                        subId: "sub-1-3",
+                        title: "3. 第 x + 量詞 (Ordinal numbers + Measure words)",
+                        note: "Explanation: Used to order books, people, lessons, pages, or frequencies.",
+                        examples: [
+                            { zh: "第(dì) + 數(shù)字(zì) + 本(běn) + 書(shū)", en: "The Nth book" },
+                            { zh: "第(dì) + 數(shù)字(zì) + 個(gè) + 東(dōng)西(xī) / 人(rén)", en: "The Nth item / person" },
+                            { zh: "第(dì) + 數(shù)字(zì) + 課(kè)", en: "Lesson N" },
+                            { zh: "第(dì) + 數(shù)字(zì) + 頁(yè)", en: "Page N" },
+                            { zh: "第(dì) + 數(shù)字(zì) + 次(cì)", en: "The Nth time" },
+                            { zh: "這(zhè)是(shì)我(wǒ)第(dì)一(yī)次(cì)跳(tiào)舞(wǔ)。", en: "This is my first time dancing." },
+                            { zh: "她(tā)是(shì)我(wǒ)第(dì)一(yī)個(gè)女(nǚ)朋(péng)友(yǒu)。", en: "She is my first girlfriend." },
+                            { zh: "這(zhè)是(shì)我(wǒ)的(de)第(dì)一(yī)本(běn)書(shū)。", en: "This is my first book." }
+                        ]
+                    }
+                ]
+            },
+            {
+                title: "三、第六課作業本",
+                note: "Review of frequency adverbs and traditional medical terms.",
+                items: [
+                    {
+                        type: "table",
+                        title: "1. 時間副詞 (Frequency Adverbs)",
+                        tableData: [
+                            {
+                                header: "常(cháng)常(cháng) (Often)",
+                                left: "<b>例句：</b><br>我(wǒ)常(cháng)常(cháng)吃(chī)海(hǎi)南(nán)雞(jī)飯(fàn)。",
+                                middle: "<b>說明 (Explanation in English):</b><br>• Indicates high frequency of an action (frequently / often)."
+                            },
+                            {
+                                header: "有(yǒu)時(shí)候(hou) (Sometimes)",
+                                left: "<b>例句：</b><br>我(wǒ)有(yǒu)時(shí)候(hou)去(qù)健(jiàn)身(shēn)房(fáng)。",
+                                middle: "<b>說明 (Explanation in English):</b><br>• Indicates moderate or occasional frequency (now and then / sometimes)."
+                            },
+                            {
+                                header: "很(hěn)少(shǎo) (Seldom / Rarely)",
+                                left: "<b>例句：</b><br>1. 我(wǒ)很(hěn)少(shǎo)吃(chī)水(shuǐ)果(guǒ)。<br>2. 他(tā)很(hěn)少(shǎo)有(yǒu)時(shí)間(jiān)休(xiū)息(xī)。",
+                                middle: "<b>說明 (Explanation in English):</b><br>• Indicates low frequency (rarely / seldom does something)."
+                            }
+                        ]
+                    },
+                    {
+                        type: "grammar",
+                        subId: "sub-2-1",
+                        title: "2. 大夫 (dài fu - Doctor)",
+                        note: "Explanation: An ancient Chinese term for physicians. Today, people still use it affectionately, particularly for Traditional Chinese Medicine (TCM) doctors.",
+                        examples: [
+                            { zh: "我(wǒ)的(de)爸(bà)爸(ba)是(shì)大(dài)夫(fu)。", en: "My dad is a doctor." }
+                        ]
+                    }
+                ]
+            },
+            {
+                title: "四、第八課作業本",
+                note: "Polite refusal and reduplication of verbs.",
+                items: [
+                    {
+                        type: "grammar",
+                        subId: "sub-3-0",
+                        title: "1. 有點(兒) (yǒu diǎn(r) - A little bit)",
+                        note: "Explanation: In Chinese culture, people often avoid direct blunt refusals. Saying 有点 + adjective is a polite way to decline or express slight dissatisfaction.",
+                        examples: [
+                            { zh: "那(nà)件(jiàn)白(bái)的(de)有(yǒu)點(diǎn)長(cháng)。", en: "That white piece of clothing is a bit long.", explanation: "Note: Subtext is 'I prefer shorter ones, I don't like this long one'." },
+                            { zh: "這(zhè)件(jiàn)黑(hēi)的(de)有(yǒu)點(diǎn)貴(guì)。", en: "This black one is a bit expensive.", explanation: "Note: Subtext is 'It is too expensive, I don't like it and won't buy it, without sounding overly harsh'." }
+                        ]
+                    },
+                    {
+                        type: "grammar",
+                        subId: "sub-3-1",
+                        title: "2. 重複字詞 (Reduplication of Verbs)",
+                        note: "Explanation: Repeating a verb twice makes the tone softer, casual, and friendly, implying doing something briefly or recreationally.",
+                        examples: [
+                            { zh: "我(wǒ)想(xiǎng)找(zhǎo)時(shí)間(jiān)去(qù)看(kàn)看(kàn)老(lǎo)師(shī)。", en: "I want to find some time to go visit the teacher." },
+                            { zh: "我(wǒ)想(xiǎng)去(qù)運(yùn)動(dòng)運(yùn)動(dòng)。", en: "I want to go work out for a bit." }
+                        ]
+                    }
+                ]
+            }
+        ];
+
+        const container = document.getElementById('content');
+        let counter = 0;
+
+        lessonData.forEach((sec, sIdx) => {
+            let html = `<div class="section" id="sec-${sIdx}"><h2>${sec.title}</h2>`;
+            if(sec.note) html += `<p class="note">${sec.note}</p>`;
+            
+            sec.items.forEach(item => {
+                let anchorAttr = item.subId ? `id="${item.subId}" style="scroll-margin-top: 80px;"` : '';
+                
+                if (item.type === "table") {
+                    html += `<div class="grammar-box" ${anchorAttr}>
+                        <div style="font-weight:bold; font-size:16px; color:#8C6239; margin-bottom:5px;">${item.title}</div>`;
+                    if(item.note) html += `<div class="note">${item.note}</div>`;
+                    
+                    item.tableData.forEach(row => {
+                        html += `
+                        <table class="custom-table">
+                            <thead>
+                                <tr>
+                                    <th colspan="2">🏷️ ${row.header}</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="col-left">${parsePinyin(row.left)}</td>
+                                    <td class="col-middle">${row.middle}</td>
+                                </tr>
+                            </tbody>
+                        </table>`;
+                    });
+                    html += `</div>`;
+                } else if (item.type === "grammar") {
+                    html += `<div class="grammar-box" ${anchorAttr}>
+                        <div style="font-weight:bold; font-size:16px; color:#8C6239; margin-bottom:5px;">${item.title}</div>`;
+                    if(item.note) html += `<div class="note">${item.note}</div>`;
+                    
+                    if (item.examples) {
+                        item.examples.forEach(ex => {
+                            let isQ = ex.isQuestion ? 'true' : 'false';
+                            html += `
+                            <div class="item" style="border:none; margin-top:10px; padding-bottom:0;">
+                                <div class="sentence-row">
+                                    <div class="buttons-group">
+                                        <button class="icon-btn" id="play-btn-${counter}" onclick="togglePlayAudio('${ex.zh}', 'play-btn-${counter}', ${isQ})" title="Listen / Pause">
+                                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#666" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>
+                                        </button>
+                                        <button class="icon-btn" onclick="toggleRecord(this, 'rec-${counter}')" title="Record Audio">
+                                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#e07a5f" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"></path><path d="M19 10v1a7 7 0 0 1-14 0v-1"></path><line x1="12" y1="19" x2="12" y2="23"></line><line x1="8" y1="23" x2="16" y2="23"></line></svg>
+                                        </button>
+                                        <button class="icon-btn" id="play-rec-rec-${counter}" onclick="playRecording('rec-${counter}')" title="Play Mine" disabled>
+                                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#457b9d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                                        </button>
+                                    </div>
+                                    <div class="text-content">
+                                        <div>${parsePinyin(ex.zh)}</div>
+                                        <div class="en-trans">${ex.en}</div>`;
+                            if(ex.explanation) {
+                                html += `<div class="explanation-sub">${ex.explanation}</div>`;
+                            }
+                            html += `</div>
+                                </div>
+                            </div>`;
+                            counter++;
+                        });
+                    }
+                    html += `</div>`;
+                }
+            });
+            html += `</div>`;
+            container.innerHTML += html;
+        });
+
+        function checkQuiz(qNum, selected) {
+            let resDiv = document.getElementById(`quiz-res-${qNum}`);
+            if (qNum === 1) {
+                if (selected === "到") {
+                    resDiv.innerHTML = "<span style='color:green;'>✅ Correct! 『找到』 emphasizes successfully locating something you were searching for.</span>";
+                } else {
+                    resDiv.innerHTML = "<span style='color:red;'>❌ Incorrect. 『好』 means preparation is done, 『完』 means finished. The correct answer is 『到』 (successfully found).</span>";
+                }
+            } else if (qNum === 2) {
+                if (selected === "懂") {
+                    resDiv.innerHTML = "<span style='color:green;'>✅ Correct! 『听懂』 means you heard and understood. (Note: All three can be used with different meanings: 听到 = heard the sound; 听懂 = understood what was said; 听完 = finished listening).</span>";
+                } else {
+                    resDiv.innerHTML = "<span style='color:orange;'>⚠️ Partially correct! 『到』 means you heard the sound, 『完』 means you finished listening. 『懂』 specifically means comprehension!</span>";
+                }
+            } else if (qNum === 3) {
+                if (selected === "好") {
+                    resDiv.innerHTML = "<span style='color:green;'>✅ Correct! 『做好』 indicates that cooking/preparation is complete and ready to eat.</span>";
+                } else {
+                    resDiv.innerHTML = "<span style='color:red;'>❌ Incorrect. 『完』 means completely finished eating, but here we are preparing food. The correct answer is 『好』.</span>";
+                }
+            } else if (qNum === 4) {
+                if (selected === "見") {
+                    resDiv.innerHTML = "<span style='color:green;'>✅ Correct! 『看见』 emphasizes visual capture or casually bumping into someone.</span>";
+                } else {
+                    resDiv.innerHTML = "<span style='color:red;'>❌ Incorrect. 『完』 and 『好』 do not collocate with 看 in this context. The correct answer is 『見』.</span>";
+                }
+            }
+        }
+
+        let pinyinVisible = true;
+        let enVisible = true;
+
+        function togglePinyin() {
+            pinyinVisible = !pinyinVisible;
+            document.querySelectorAll('.py-text').forEach(el => {
+                el.style.display = pinyinVisible ? 'block' : 'none';
+            });
+        }
+
+        function toggleEnglish() {
+            enVisible = !enVisible;
+            document.querySelectorAll('.en-trans, .explanation-sub, .col-middle').forEach(el => {
+                el.style.display = enVisible ? 'block' : 'none';
+            });
+        }
+    </script>
+</body>
+</html>
