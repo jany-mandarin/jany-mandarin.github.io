@@ -34,15 +34,7 @@
         
         .icon-btn { background: #f0f0f0; border: none; width: 38px; height: 38px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 2px 4px rgba(0,0,0,0.08); transition: transform 0.1s, background 0.2s; margin-right: 6px; vertical-align: middle; }
         .icon-btn:hover { background: #e0e0e0; transform: scale(1.05); }
-        .icon-btn.recording { background: #ff4d4f; animation: pulse 1.5s infinite; }
         .icon-btn.playing { background: #457b9d; }
-        .icon-btn:disabled { background: #e0e0e0; opacity: 0.5; cursor: not-allowed; transform: none; }
-
-        @keyframes pulse {
-            0% { box-shadow: 0 0 0 0 rgba(255, 77, 79, 0.4); }
-            70% { box-shadow: 0 0 0 10px rgba(255, 77, 79, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(255, 77, 79, 0); }
-        }
 
         h2 { color: #8C6239; border-left: 5px solid var(--primary); padding-left: 10px; margin-top: 30px; }
         .section { margin-bottom: 30px; background: var(--white); padding: 20px; border-radius: 12px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); scroll-margin-top: 80px; }
@@ -66,8 +58,8 @@
         .custom-table th { background: #F4E8D8; color: #8C6239; padding: 12px; font-size: 16px; text-align: left; border-bottom: 2px solid #E6D5B8; }
         .custom-table td { padding: 12px; border-bottom: 1px solid #eee; vertical-align: top; }
         .custom-table tr:last-child td { border-bottom: none; }
-        .col-left { width: 35%; border-right: 1px solid #eee; }
-        .col-middle { width: 65%; }
+        .col-left { width: 45%; border-right: 1px solid #eee; }
+        .col-middle { width: 55%; }
 
         .quiz-options { display: flex; gap: 10px; margin-top: 8px; flex-wrap: wrap; }
         .quiz-btn { background: white; border: 1px solid #D4A373; color: #8C6239; padding: 6px 14px; border-radius: 6px; cursor: pointer; font-weight: bold; }
@@ -107,7 +99,7 @@
                 <a href="#sec-2">三、第六課作業本</a>
                 <ul class="sub-list">
                     <li><a href="#sub-2-0">1. 時間副詞</a></li>
-                    <li><a href="#sub-2-1">2. 大夫 (dài fu)</a></li>
+                    <li><a href="#sub-2-1">2. 大夫</a></li>
                 </ul>
             </li>
             <li>
@@ -134,7 +126,7 @@
             <button class="control-btn" onclick="toggleEnglish()">Toggle English</button>
         </div>
 
-        <!-- Section 0: Warm-up -->
+        <!-- Section 0: Warm-up (工作 vs 上班 at the top) -->
         <div class="section" id="sec-0">
             <h2>一、暖身 (Warm-up)</h2>
             <p class="note">Warm-up chat and vocabulary comparison.</p>
@@ -142,21 +134,44 @@
                 <div style="font-weight:bold; font-size:16px; color:#8C6239; margin-bottom:5px;">1. 工作 vs 上班</div>
                 
                 <table class="custom-table">
-                    <thead><tr><th colspan="2">🏷️ 工(gōng)作(zuò) (Work / Job)</th></tr></thead>
+                    <thead><tr><th colspan="2">🏷️ 工作 (gōngzuò) - Work / Job</th></tr></thead>
                     <tbody>
                         <tr>
-                            <td class="col-left"><b>詞性：</b>動詞、名詞<br><b>意思：</b>Profession, tasks, labor itself.<br><br><b>例句：</b><br>1. 我<span class="pinyin-group"><span class="py-text">wǒ</span><span class="hz-text">今</span></span><span class="pinyin-group"><span class="py-text">tiān</span><span class="hz-text">天</span></span>有<span class="pinyin-group"><span class="py-text">hěn</span><span class="hz-text">很</span></span>多<span class="pinyin-group"><span class="py-text">gōng</span><span class="hz-text">工</span></span><span class="pinyin-group"><span class="py-text">zuò</span><span class="hz-text">作</span></span>。<br>2. 我<span class="pinyin-group"><span class="py-text">de</span><span class="hz-text">的</span></span><span class="pinyin-group"><span class="py-text">gōng</span><span class="hz-text">工</span></span><span class="pinyin-group"><span class="py-text">zuò</span><span class="hz-text">作</span></span>是<span class="pinyin-group"><span class="py-text">lǎo</span><span class="hz-text">老</span></span><span class="pinyin-group"><span class="py-text">shī</span><span class="hz-text">師</span></span>。<br>3. 我<span class="pinyin-group"><span class="py-text">míng</span><span class="hz-text">明</span></span><span class="pinyin-group"><span class="py-text">tiān</span><span class="hz-text">天</span></span>要<span class="pinyin-group"><span class="py-text">zhǎo</span><span class="hz-text">找</span></span>新<span class="pinyin-group"><span class="py-text">gōng</span><span class="hz-text">工</span></span><span class="pinyin-group"><span class="py-text">zuò</span><span class="hz-text">作</span></span>。</td>
-                            <td class="col-middle"><b>說明 (Explanation in English):</b><br>• As a noun, it means your profession or job (e.g., being a teacher).<br>• As a verb or noun, it refers to tasks and duties you need to complete.<br>• When looking for employment, you search for a 'new job' (新工作).</td>
+                            <td class="col-left">
+                                <b>詞性：</b> 動詞、名詞 (Verb, Noun)<br>
+                                <b>解釋：</b> Job, work, tasks.<br><br>
+                                <b>例句：</b><br>
+                                1. 我今天有很多工作。<br>
+                                2. 我的工作是老師。<br>
+                                3. 我明天要找新工作。
+                            </td>
+                            <td class="col-middle">
+                                <b>說明 (Explanation):</b><br>
+                                • As a noun: Your job or profession (e.g., being a teacher).<br>
+                                • As tasks: Duties you need to do.<br>
+                                • '找新工作' means looking for a new job.
+                            </td>
                         </tr>
                     </tbody>
                 </table>
 
                 <table class="custom-table">
-                    <thead><tr><th colspan="2">🏷️ 上(shàng)班(bān) (Go to work / Be on duty)</th></tr></thead>
+                    <thead><tr><th colspan="2">🏷️ 上班 (shàngbān) - Go to work</th></tr></thead>
                     <tbody>
                         <tr>
-                            <td class="col-left"><b>詞性：</b>動詞<br><b>意思：</b>To go to the company, start working status.<br><br><b>例句：</b><br>1. 我<span class="pinyin-group"><span class="py-text">wǒ</span><span class="hz-text">今</span></span><span class="pinyin-group"><span class="py-text">tiān</span><span class="hz-text">天</span></span>早<span class="pinyin-group"><span class="py-text">shàng</span><span class="hz-text">上</span></span>九<span class="pinyin-group"><span class="py-text">diǎn</span><span class="hz-text">點</span></span>去<span class="pinyin-group"><span class="py-text">shàng</span><span class="hz-text">上</span></span><span class="pinyin-group"><span class="py-text">bān</span><span class="hz-text">班</span></span>。<br>2. 我<span class="pinyin-group"><span class="py-text">xiàn</span><span class="hz-text">現</span></span>在<span class="pinyin-group"><span class="py-text">zài</span><span class="hz-text">在</span></span><span class="pinyin-group"><span class="py-text">shàng</span><span class="hz-text">上</span></span><span class="pinyin-group"><span class="py-text">bān</span><span class="hz-text">班</span></span>。<br>3. 我<span class="pinyin-group"><span class="py-text">jīn</span><span class="hz-text">今</span></span><span class="pinyin-group"><span class="py-text">tiān</span><span class="hz-text">天</span></span>不<span class="pinyin-group"><span class="py-text">yòng</span><span class="hz-text">用</span></span><span class="pinyin-group"><span class="py-text">shàng</span><span class="hz-text">上</span></span><span class="pinyin-group"><span class="py-text">bān</span><span class="hz-text">班</span></span>。</td>
-                            <td class="col-middle"><b>說明 (Explanation in English):</b><br>• An action verb describing the daily routine of heading to your workplace or being on duty.<br>• '不用上班' means you don't have to work today (day off).</td>
+                            <td class="col-left">
+                                <b>詞性：</b> 動詞 (Verb)<br>
+                                <b>解釋：</b> Go to work, start work.<br><br>
+                                <b>例句：</b><br>
+                                1. 我今天早上九點去上班。<br>
+                                2. 我現在在上班。<br>
+                                3. 我今天不用上班。
+                            </td>
+                            <td class="col-middle">
+                                <b>說明 (Explanation):</b><br>
+                                • An action of going to your workplace or being on duty.<br>
+                                • '不用上班' means you don't have to work today (day off).
+                            </td>
                         </tr>
                     </tbody>
                 </table>
@@ -169,31 +184,37 @@
             <p class="note">Compound verbs, directions, and ordinal numbers.</p>
             
             <div class="grammar-box" id="sub-1-0">
-                <div style="font-weight:bold; font-size:16px; color:#8C6239; margin-bottom:5px;">1. 複合動詞 (Compound Verbs: Verb + Result/Direction Complement)</div>
-                <div class="note">Explanation: In Chinese, single-syllable verbs can be ambiguous. Adding a complement word emphasizes the result, completion, or sensory capture.</div>
+                <div style="font-weight:bold; font-size:16px; color:#8C6239; margin-bottom:5px;">1. 複合動詞 (Compound Verbs)</div>
+                <div class="note">Verb + Result / Direction Complement (找 到、聽 懂、做 好)</div>
                 
-                <div class="item">
-                    <div class="sentence-row">
-                        <div class="text-content">
-                            <div>肯定句：主<span class="pinyin-group"><span class="py-text">zhǔ</span><span class="hz-text">詞</span></span> + 動<span class="pinyin-group"><span class="py-text">dòng</span><span class="hz-text">詞</span></span> + 受<span class="pinyin-group"><span class="py-text">shòu</span><span class="hz-text">詞</span></span> + 了</div>
-                            <div class="en-trans">Affirmative: Subject + Verb + Object + 了</div>
-                        </div>
-                    </div>
-                </div>
-                <div class="item">
-                    <div class="sentence-row">
-                        <div class="text-content">
-                            <div>否定句：主<span class="pinyin-group"><span class="py-text">zhǔ</span><span class="hz-text">詞</span></span> + 沒<span class="pinyin-group"><span class="py-text">méi</span><span class="hz-text">有</span></span> + 動<span class="pinyin-group"><span class="py-text">dòng</span><span class="hz-text">詞</span></span> + 受<span class="pinyin-group"><span class="py-text">shòu</span><span class="hz-text">詞</span></span> <small style="color:#777;">(Note: 不要加了)</small></div>
-                            <div class="en-trans">Negative: Subject + 没(有) + Verb + Object (Do NOT add 了)</div>
-                        </div>
-                    </div>
-                </div>
+                <table class="custom-table">
+                    <thead><tr><th colspan="2">🏷️ 複合動詞文法規則 (Grammar Rules)</th></tr></thead>
+                    <tbody>
+                        <tr>
+                            <td class="col-left">
+                                <b>肯定句：</b> 主詞 + 動詞 + 結果 + 受詞 + 了<br>
+                                <b>否定句：</b> 主詞 + 沒有 + 動詞 + 結果 + 受詞 <small style="color:#777;">(不要加了)</small><br><br>
+                                <b>常見動詞結果：</b><br>
+                                • 看見、看到 (see)<br>
+                                • 找到 (find successfully)<br>
+                                • 聽到、聽懂 (hear, understand)<br>
+                                • 做完、做好 (finish, prepare well)
+                            </td>
+                            <td class="col-middle">
+                                <b>說明 (Explanation):</b><br>
+                                • In Chinese, adding a complement after a verb tells the result.<br>
+                                • Affirmative sentences end with '了'.<br>
+                                • Negative sentences use '沒有' and do NOT use '了'.
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
 
             <!-- Quiz Box -->
             <div class="grammar-box" id="sub-1-1">
                 <div style="font-weight:bold; font-size:16px; color:#8C6239; margin-bottom:5px;">2. 互動練習 (Interactive Quiz)</div>
-                <div class="note">Test your understanding of compound verbs. Click the options below!</div>
+                <div class="note">Test your understanding. Click the options below!</div>
                 
                 <div class="item">
                     <div class="text-content">
@@ -237,7 +258,7 @@
 
             <div class="grammar-box" id="sub-1-2">
                 <div style="font-weight:bold; font-size:16px; color:#8C6239; margin-bottom:5px;">3. 從 A 到 B (From A to B)</div>
-                <div class="note">Explanation: Used for time, location, or progressive range.</div>
+                <div class="note">Used for time, location, or range.</div>
                 <div class="item">
                     <div class="text-content">
                         <div>从早上九点到下午五点我在上班。</div>
@@ -253,8 +274,8 @@
             </div>
 
             <div class="grammar-box" id="sub-1-3">
-                <div style="font-weight:bold; font-size:16px; color:#8C6239; margin-bottom:5px;">4. 第 x + 量詞 (Ordinal numbers + Measure words)</div>
-                <div class="note">Explanation: Used to order books, people, lessons, pages, or frequencies.</div>
+                <div style="font-weight:bold; font-size:16px; color:#8C6239; margin-bottom:5px;">4. 第 x + 量詞 (Ordinal numbers)</div>
+                <div class="note">Used to order books, lessons, or times.</div>
                 <div class="item">
                     <div class="text-content">
                         <div>這是我第一次跳舞。</div>
@@ -267,22 +288,22 @@
         <!-- Section 2: Lesson 6 Homework -->
         <div class="section" id="sec-2">
             <h2>三、第六課作業本</h2>
-            <p class="note">Review of frequency adverbs and traditional medical terms.</p>
+            <p class="note">Review of frequency adverbs.</p>
             <div class="grammar-box" id="sub-2-0">
                 <div style="font-weight:bold; font-size:16px; color:#8C6239; margin-bottom:5px;">1. 時間副詞 (Frequency Adverbs)</div>
                 <table class="custom-table">
-                    <thead><tr><th colspan="2">🏷️ 常(cháng)常(cháng) (Often)</th></tr></thead>
+                    <thead><tr><th colspan="2">🏷️ 常常 (chángcháng) - Often</th></tr></thead>
                     <tbody>
                         <tr>
-                            <td class="col-left"><b>例句：</b><br>我常常吃海南雞飯。</td>
-                            <td class="col-middle"><b>說明 (Explanation in English):</b><br>• Indicates high frequency of an action (frequently / often).</td>
+                            <td class="col-left"><b>例句：</b> 我常常吃海南雞飯。</td>
+                            <td class="col-middle"><b>說明：</b> Indicates high frequency (frequently).</td>
                         </tr>
                     </tbody>
                 </table>
             </div>
             <div class="grammar-box" id="sub-2-1">
-                <div style="font-weight:bold; font-size:16px; color:#8C6239; margin-bottom:5px;">2. 大夫 (dài fu - Doctor)</div>
-                <div class="note">Explanation: An ancient Chinese term for physicians. Today, people still use it affectionately, particularly for Traditional Chinese Medicine (TCM) doctors.</div>
+                <div style="font-weight:bold; font-size:16px; color:#8C6239; margin-bottom:5px;">2. 大夫 (dàifu) - Doctor</div>
+                <div class="note">An affectionate term for a physician, especially TCM doctors.</div>
                 <div class="item">
                     <div class="text-content">
                         <div>我的爸爸是大夫。</div>
@@ -295,10 +316,10 @@
         <!-- Section 3: Lesson 8 Homework -->
         <div class="section" id="sec-3">
             <h2>四、第八課作業本</h2>
-            <p class="note">Polite refusal and reduplication of verbs.</p>
+            <p class="note">Polite refusal and reduplication.</p>
             <div class="grammar-box" id="sub-3-0">
-                <div style="font-weight:bold; font-size:16px; color:#8C6239; margin-bottom:5px;">1. 有點(兒) (yǒu diǎn(r) - A little bit)</div>
-                <div class="note">Explanation: In Chinese culture, people often avoid direct blunt refusals. Saying 有点 + adjective is a polite way to decline or express slight dissatisfaction.</div>
+                <div style="font-weight:bold; font-size:16px; color:#8C6239; margin-bottom:5px;">1. 有點(兒) (yǒudiǎnr) - A little bit</div>
+                <div class="note">A polite way to decline or express slight dissatisfaction in Chinese culture.</div>
                 <div class="item">
                     <div class="text-content">
                         <div>那件白的一點長。</div>
@@ -308,7 +329,7 @@
             </div>
             <div class="grammar-box" id="sub-3-1">
                 <div style="font-weight:bold; font-size:16px; color:#8C6239; margin-bottom:5px;">2. 重複字詞 (Reduplication of Verbs)</div>
-                <div class="note">Explanation: Repeating a verb twice makes the tone softer, casual, and friendly, implying doing something briefly or recreationally.</div>
+                <div class="note">Repeating a verb makes the tone softer and casual.</div>
                 <div class="item">
                     <div class="text-content">
                         <div>我想找時間去看看老師。</div>
@@ -335,13 +356,13 @@
             let resDiv = document.getElementById('quiz-res-' + qNum);
             if (qNum === 1) {
                 if (selected === '到') {
-                    resDiv.innerHTML = "<span style='color:green;'>✅ Correct! 『找到』 emphasizes successfully locating something you were searching for.</span>";
+                    resDiv.innerHTML = "<span style='color:green;'>✅ Correct! 『找到』 emphasizes successfully locating something.</span>";
                 } else {
                     resDiv.innerHTML = "<span style='color:red;'>❌ Incorrect. The correct answer is 『到』.</span>";
                 }
             } else if (qNum === 2) {
                 if (selected === '懂') {
-                    resDiv.innerHTML = "<span style='color:green;'>✅ Correct! 『听懂』 means you heard and understood.</span>";
+                    resDiv.innerHTML = "<span style='color:green;'>✅ Correct! 『聽懂』 means you heard and understood.</span>";
                 } else {
                     resDiv.innerHTML = "<span style='color:red;'>❌ Incorrect. The correct answer is 『懂』.</span>";
                 }
