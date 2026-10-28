@@ -571,10 +571,11 @@
             });
         }
 
+        let enElementsVisible = true;
         function toggleEnglish() {
-            enVisible = !enVisible;
+            enElementsVisible = !enElementsVisible;
             document.querySelectorAll('.en-trans, .explanation-sub, .col-middle').forEach(el => {
-                el.style.display = enVisible ? 'block' : 'none';
+                el.style.display = enElementsVisible ? 'block' : 'none';
             });
         }
     </script>
