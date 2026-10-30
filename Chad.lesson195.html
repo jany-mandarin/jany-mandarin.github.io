@@ -55,9 +55,9 @@
         
         /* Tables */
         .custom-table { width: 100%; border-collapse: collapse; margin: 15px 0; background: #fff; border-radius: 8px; overflow: hidden; box-shadow: 0 1px 4px rgba(0,0,0,0.05); }
-        .custom-table th, .custom-table td { border: 1px solid #E6D5B8; padding: 12px; text-align: center; font-size: 15px; }
-        .custom-table th { background-color: #F7EBE1; color: #8C6239; font-weight: bold; }
-        .custom-table td.left-align { text-align: left; }
+        .custom-table th, .custom-table td { border: 1px solid #E6D5B8; padding: 12px; text-align: left; font-size: 14px; line-height: 1.5; }
+        .custom-table th { background-color: #F7EBE1; color: #8C6239; font-weight: bold; text-align: center; }
+        .custom-table td.center { text-align: center; }
 
         /* Bopomofo (Zhuyin) Vertical Formatting */
         .zy-text { display: inline-block; line-height: 2.4; font-size: 18px; }
@@ -75,6 +75,17 @@
         .homework-q { font-size: 16px; font-weight: bold; color: #8C6239; margin-bottom: 8px; }
         .hw-textarea { width: 100%; height: 60px; margin-top: 5px; border-radius: 6px; border: 1px solid #E6D5B8; padding: 10px; font-family: inherit; font-size:16px; box-sizing: border-box; background: #fff; }
         .hw-textarea:focus { border-color: var(--primary); outline: none; box-shadow: 0 0 5px rgba(212, 163, 115, 0.5); }
+
+        /* Quiz Styling */
+        .quiz-card { background: #fff; border: 1px solid #E6D5B8; border-radius: 8px; padding: 15px; margin-bottom: 15px; }
+        .quiz-q { font-weight: bold; color: #8C6239; font-size: 16px; margin-bottom: 10px; }
+        .quiz-opt { display: block; margin: 8px 0; cursor: pointer; font-size: 15px; padding: 8px 12px; border-radius: 6px; border: 1px solid #eee; background: #FAF8F5; transition: background 0.2s; }
+        .quiz-opt:hover { background: #F2E8DC; }
+        .quiz-opt input { margin-right: 8px; }
+        .quiz-btn { background: var(--primary); color: white; border: none; padding: 6px 14px; border-radius: 4px; cursor: pointer; font-weight: bold; margin-top: 8px; }
+        .quiz-feedback { margin-top: 10px; padding: 8px 12px; border-radius: 6px; display: none; font-size: 14px; }
+        .quiz-feedback.correct { background: #E8F5E9; color: #2E7D32; border: 1px solid #C8E6C9; }
+        .quiz-feedback.incorrect { background: #FFEBEE; color: #C62828; border: 1px solid #FFCDD2; }
 
         /* Reading Passage Styling */
         .reading-paragraph { font-size: 18px; line-height: 2.2; margin-bottom: 15px; background: #FFFDF9; padding: 15px; border-radius: 8px; border: 1px solid #E6D5B8; }
@@ -98,7 +109,7 @@
     <div class="sidebar" id="sidebar">
         <h3>📖 Outline <button style="background:none; border:none; color:#8C6239; font-weight:bold; cursor:pointer; font-size:16px;" onclick="toggleSidebar()">×</button></h3>
         <ol>
-            <li><a href="#sec-0">Warm-up (暖身閒聊)</a>
+            <li><a href="#sec-0">Warm-up</a>
                 <ul>
                     <li><a href="#wu-1">1. 萬聖節</a></li>
                     <li><a href="#wu-2">2. 可怕</a></li>
@@ -107,24 +118,23 @@
                     <li><a href="#wu-5">5. 汁</a></li>
                 </ul>
             </li>
-            <li><a href="#sec-1">Homework Review & Extensions (上次作業與延伸)</a>
+            <li><a href="#sec-1">Homework Review & Extensions</a>
                 <ul>
                     <li><a href="#hw-1">1. 前 / 以前 / 後 / 以後</a></li>
-                    <li><a href="#hw-2">2. 練習發音</a></li>
-                    <li><a href="#hw-3">3. 翻譯練習答案</a></li>
+                    <li><a href="#hw-2">2. Pronunciation Practice</a></li>
+                    <li><a href="#hw-3">3. Translation Review Answers</a></li>
                     <li><a href="#hw-4">4. 排隊</a></li>
-                    <li><a href="#hw-5">5. 回答「了嗎?」的方式</a></li>
-                    <li><a href="#hw-6">6. 形容詞 + 地</a></li>
+                    <li><a href="#hw-5">5. How to Answer 「了嗎？」</a></li>
+                    <li><a href="#hw-6">6. Adjective + 地</a></li>
                 </ul>
             </li>
-            <li><a href="#sec-2">Lesson 12 (第十二課)</a>
+            <li><a href="#sec-2">Lesson 12</a>
                 <ul>
-                    <li><a href="#ls-1">1. 季節的說法</a></li>
+                    <li><a href="#ls-1">1. Expressing Seasons</a></li>
                     <li><a href="#ls-2">2. 風景</a></li>
                 </ul>
             </li>
-            <li><a href="#sec-3">Homework (翻譯練習)</a></li>
-            <li><a href="#sec-4">Reading Comprehension (閱讀理解)</a></li>
+            <li><a href="#sec-3">Reading Comprehension</a></li>
         </ol>
     </div>
 
@@ -141,7 +151,7 @@
 
         <!-- Section 1: Warm-up -->
         <div class="section" id="sec-0">
-            <h2>1. Warm-up (暖身閒聊)</h2>
+            <h2>1. Warm-up</h2>
             
             <!-- 1. 萬聖節 -->
             <div class="grammar-box" id="wu-1">
@@ -276,52 +286,48 @@
 
         <!-- Section 2: Homework Review & Extensions -->
         <div class="section" id="sec-1">
-            <h2>2. Homework Review & Extensions (上次作業與延伸)</h2>
+            <h2>2. Homework Review & Extensions</h2>
             
             <!-- 1. 前 / 以前 / 後 / 以後 -->
             <div class="grammar-box" id="hw-1">
-                <div style="font-weight:bold; font-size:16px; color:#8C6239; margin-bottom:5px;">1. 時間與位置對比：前 / 以前 / 後 / 以後</div>
+                <div style="font-weight:bold; font-size:16px; color:#8C6239; margin-bottom:10px;">1. Time & Position Comparison: 前 / 以前 / 後 / 以後</div>
                 
                 <table class="custom-table">
                     <thead>
                         <tr>
-                            <th style="width:20%;">詞彙 (Word)</th>
-                            <th style="width:25%;">解釋 (Meaning)</th>
-                            <th style="width:30%;">使用情境 (Usage Context)</th>
-                            <th style="width:25%;">例句/用法 (Examples)</th>
+                            <th style="width:22%;">Category</th>
+                            <th style="width:19.5%;">前 (qián)</th>
+                            <th style="width:19.5%;">以前 (yǐqián)</th>
+                            <th style="width:19.5%;">後 (hòu)</th>
+                            <th style="width:19.5%;">以後 (yǐhòu)</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
-                            <td><b>前 (Before / In front)</b></td>
-                            <td>可以用在地點，也可以用在時間。</td>
-                            <td><b>不能</b>單獨放在句首！必須放在某個物品、時間或動作的<b>後面</b>（口語用法）。</td>
-                            <td class="left-align">冰箱前、八點前、吃飯前、睡覺前</td>
+                            <td class="center"><b>Meaning</b></td>
+                            <td>Used for both location (in front of) and time (before).</td>
+                            <td>Used ONLY for time.<br>1. In the past<br>2. Before [time/action]</td>
+                            <td>Used for both location (behind) and time (after).</td>
+                            <td>Used ONLY for time.<br>1. In the future<br>2. After [time/action]</td>
                         </tr>
                         <tr>
-                            <td><b>以前 (Before / In the past)</b></td>
-                            <td>只能用在時間。<br>1. In the past<br>2. Before [time/action]</td>
-                            <td>1. 放句首：表示很久以前 (in the past)。<br>2. 放時間/動作後面：表示在該時間/動作之前（書面正式語）。</td>
-                            <td class="left-align">1. 以前，我不會說中文。<br>2. 八點以前、吃飯以前</td>
+                            <td class="center"><b>Usage Context</b></td>
+                            <td><b>Cannot</b> stand alone at the beginning of a sentence. Must be placed <b>AFTER</b> an item, time, or action (spoken style).</td>
+                            <td>1. Start of sentence = "In the past".<br>2. After time/action = "Before..." (formal written style).</td>
+                            <td><b>Cannot</b> stand alone at the beginning of a sentence. Must be placed <b>AFTER</b> an item, time, or action (spoken style).</td>
+                            <td>1. Start of sentence = "In the future".<br>2. After time/action = "After..." (formal written style).</td>
                         </tr>
                         <tr>
-                            <td><b>後 (After / Behind)</b></td>
-                            <td>可以用在地點，也可以用在時間。</td>
-                            <td><b>不能</b>單獨放在句首！必須放在某個物品、時間或動作的<b>後面</b>（口語用法）。</td>
-                            <td class="left-align">房子後、兩天後、吃飯後、下課後</td>
-                        </tr>
-                        <tr>
-                            <td><b>以後 (After / In the future)</b></td>
-                            <td>只能用在時間。<br>1. In the future<br>2. After [time/action]</td>
-                            <td>1. 放句首：表示未來 (in the future)。<br>2. 放時間/動作後面：表示在該時間/動作之後（書面正式語）。</td>
-                            <td class="left-align">1. 以後，我想要學法文。<br>2. 兩天以後、吃飯以後</td>
+                            <td class="center"><b>Examples & Usage</b></td>
+                            <td>• 冰箱前 (in front of fridge)<br>• 八點前 (before 8:00)<br>• 吃飯前 (before eating)<br>• 睡覺前 (before sleeping)</td>
+                            <td>• 以前，我不會說中文。(In the past...)<br>• 八點以前 (before 8:00)<br>• 吃飯以前 (before eating)</td>
+                            <td>• 房子後 (behind house)<br>• 兩天後 (after 2 days)<br>• 吃飯後 (after eating)<br>• 下課後 (after class)</td>
+                            <td>• 以後，我想要學法文。(In the future...)<br>• 兩天以後 (after 2 days)<br>• 吃飯以後 (after eating)</td>
                         </tr>
                     </tbody>
                 </table>
 
-                <div style="font-weight:bold; color:#8C6239; margin-top:15px; margin-bottom:5px;">📌 口語 vs 書面語 對比例句：</div>
-
-                <div class="item-content">
+                <div class="item-content" style="margin-top:15px;">
                     <div class="btn-group">
                         <button class="audio-btn" onclick="playAudioText(this)">🔊</button>
                         <button class="audio-btn" onclick="toggleRecord(this)">🎤</button>
@@ -381,78 +387,69 @@
                     </div>
                 </div>
 
-                <!-- 順序/位置練習 -->
-                <div style="font-weight:bold; color:#8C6239; margin-top:20px; margin-bottom:8px;">🎯 順序與位置練習 (Word Order & Position Practice):</div>
+                <!-- 順序與位置練習：互動式選擇題 -->
+                <div style="font-weight:bold; color:#8C6239; margin-top:25px; margin-bottom:10px; font-size:16px;">🎯 Word Order & Position Practice (Multiple Choice)</div>
                 <div class="note">
-                    <b>💡 Quick Rule:</b><br>
-                    • <b>放句首 (At the start):</b> 「以前」 (In the past) / 「以後」 (In the future)<br>
-                    • <b>放時間/動作後面 (After time/action):</b> [時間/動作] + 前 / 以前 / 後 / 以後
+                    <b>💡 Quick Hint:</b><br>
+                    • <b>At start of sentence:</b> 「以前」 (In the past) / 「以後」 (In the future)<br>
+                    • <b>After time or action:</b> [Time / Action] + 前 / 以前 / 後 / 以後
                 </div>
 
-                <div class="item-content">
-                    <div class="btn-group">
-                        <button class="audio-btn" onclick="playAudioText(this)">🔊</button>
-                        <button class="audio-btn" onclick="toggleRecord(this)">🎤</button>
-                        <button class="play-rec-btn" disabled>▶</button>
-                    </div>
-                    <div style="flex:1;">
-                        <div class="zy-text">1. 三(ㄙㄢ)天(ㄊㄧㄢ)前(ㄑㄧㄢˊ)，我(ㄨㄛˇ)買(ㄇㄞˇ)了(ㄌㄜ˙)一(ㄧˋ)本(ㄅㄣˇ)書(ㄕㄨ)。</div>
-                        <div class="en-trans">Three days ago, I bought a book. (時間「三天」+ 前)</div>
-                    </div>
+                <!-- Quiz 1 -->
+                <div class="quiz-card">
+                    <div class="quiz-q">1. "Three days ago, I bought a book."</div>
+                    <label class="quiz-opt"><input type="radio" name="q1" value="A"> A. 三天前，我買了一本書。</label>
+                    <label class="quiz-opt"><input type="radio" name="q1" value="B"> B. 前三天，我買了一本書。</label>
+                    <label class="quiz-opt"><input type="radio" name="q1" value="C"> C. 三天後，我買了一本書。</label>
+                    <button class="quiz-btn" onclick="checkQuiz('q1', 'A', 'Correct! 「前」 goes AFTER time duration (三天 + 前 = 3 days ago).', 'fb1')">Check Answer</button>
+                    <div class="quiz-feedback" id="fb1"></div>
                 </div>
 
-                <div class="item-content">
-                    <div class="btn-group">
-                        <button class="audio-btn" onclick="playAudioText(this)">🔊</button>
-                        <button class="audio-btn" onclick="toggleRecord(this)">🎤</button>
-                        <button class="play-rec-btn" disabled>▶</button>
-                    </div>
-                    <div style="flex:1;">
-                        <div class="zy-text">2. 以(ㄧˇ)後(ㄏㄡˋ)，我(ㄨㄛˇ)想(ㄒㄧㄤˇ)住(ㄓㄨˋ)在(ㄗㄞˋ)臺(ㄊㄞˊ)北(ㄅㄟˇ)。</div>
-                        <div class="en-trans">In the future, I want to live in Taipei. (句首「以後」= in the future)</div>
-                    </div>
+                <!-- Quiz 2 -->
+                <div class="quiz-card">
+                    <div class="quiz-q">2. "In the future, I want to live in Taipei."</div>
+                    <label class="quiz-opt"><input type="radio" name="q2" value="A"> A. 後，我想住在台北。</label>
+                    <label class="quiz-opt"><input type="radio" name="q2" value="B"> B. 以後，我想住在台北。</label>
+                    <label class="quiz-opt"><input type="radio" name="q2" value="C"> C. 台北以後，我想住。</label>
+                    <button class="quiz-btn" onclick="checkQuiz('q2', 'B', 'Correct! To express "In the future", use 「以後」 placed at the VERY START of the sentence.', 'fb2')">Check Answer</button>
+                    <div class="quiz-feedback" id="fb2"></div>
                 </div>
 
-                <div class="item-content">
-                    <div class="btn-group">
-                        <button class="audio-btn" onclick="playAudioText(this)">🔊</button>
-                        <button class="audio-btn" onclick="toggleRecord(this)">🎤</button>
-                        <button class="play-rec-btn" disabled>▶</button>
-                    </div>
-                    <div style="flex:1;">
-                        <div class="zy-text">3. 吃(ㄔ)飯(ㄈㄢˋ)後(ㄏㄡˋ)，我(ㄨㄛˇ)會(ㄏㄨㄟˋ)洗(ㄒㄧˇ)碗(ㄨㄢˇ)。</div>
-                        <div class="en-trans">After eating meals, I wash the dishes. (動作「吃飯」+ 後)</div>
-                    </div>
+                <!-- Quiz 3 -->
+                <div class="quiz-card">
+                    <div class="quiz-q">3. "After eating meals, I will wash the dishes."</div>
+                    <label class="quiz-opt"><input type="radio" name="q3" value="A"> A. 吃飯後，我會洗碗。</label>
+                    <label class="quiz-opt"><input type="radio" name="q3" value="B"> B. 後吃飯，我會洗碗。</label>
+                    <label class="quiz-opt"><input type="radio" name="q3" value="C"> C. 吃飯前，我會洗碗。</label>
+                    <button class="quiz-btn" onclick="checkQuiz('q3', 'A', 'Correct! 「後」 (after) goes AFTER the action phrase (吃飯 + 後 = after eating).', 'fb3')">Check Answer</button>
+                    <div class="quiz-feedback" id="fb3"></div>
                 </div>
 
-                <div class="item-content">
-                    <div class="btn-group">
-                        <button class="audio-btn" onclick="playAudioText(this)">🔊</button>
-                        <button class="audio-btn" onclick="toggleRecord(this)">🎤</button>
-                        <button class="play-rec-btn" disabled>▶</button>
-                    </div>
-                    <div style="flex:1;">
-                        <div class="zy-text">4. 兩(ㄌㄧㄤˇ)年(ㄋㄧㄢˊ)前(ㄑㄧㄢˊ)，我(ㄨㄛˇ)開(ㄎㄞ)始(ㄕˇ)學(ㄒㄩㄝˊ)中(ㄓㄨㄥ)文(ㄨㄣˊ)。</div>
-                        <div class="en-trans">Two years ago, I started learning Chinese. (時間「兩年」+ 前)</div>
-                    </div>
+                <!-- Quiz 4 -->
+                <div class="quiz-card">
+                    <div class="quiz-q">4. "Two years ago, I started learning Chinese."</div>
+                    <label class="quiz-opt"><input type="radio" name="q4" value="A"> A. 兩年後，我開始學中文。</label>
+                    <label class="quiz-opt"><input type="radio" name="q4" value="B"> B. 前兩年，我開始學中文。</label>
+                    <label class="quiz-opt"><input type="radio" name="q4" value="C"> C. 兩年前，我開始學中文。</label>
+                    <button class="quiz-btn" onclick="checkQuiz('q4', 'C', 'Correct! Time duration comes first, followed by 「前」 (兩年 + 前 = 2 years ago).', 'fb4')">Check Answer</button>
+                    <div class="quiz-feedback" id="fb4"></div>
                 </div>
 
-                <div class="item-content">
-                    <div class="btn-group">
-                        <button class="audio-btn" onclick="playAudioText(this)">🔊</button>
-                        <button class="audio-btn" onclick="toggleRecord(this)">🎤</button>
-                        <button class="play-rec-btn" disabled>▶</button>
-                    </div>
-                    <div style="flex:1;">
-                        <div class="zy-text">5. 以(ㄧˇ)前(ㄑㄧㄢˊ)，我(ㄨㄛˇ)沒(ㄇㄟˊ)去(ㄑㄩˋ)過(ㄍㄨㄛˋ)韓(ㄏㄢˊ)國(ㄍㄨㄛˊ)，明(ㄇㄧㄥˊ)年(ㄋㄧㄢˊ)我(ㄨㄛˇ)要(ㄧㄠˋ)去(ㄑㄩˋ)韓(ㄏㄢˊ)國(ㄍㄨㄛˊ)。</div>
-                        <div class="en-trans">In the past, I've never been to Korea; next year I'm going to Korea. (句首「以前」= in the past)</div>
-                    </div>
+                <!-- Quiz 5 -->
+                <div class="quiz-card">
+                    <div class="quiz-q">5. "In the past, I had never been to Korea; next year I will go to Korea."</div>
+                    <label class="quiz-opt"><input type="radio" name="q5" value="A"> A. 以前，我沒去過韓國，明年我要去韓國。</label>
+                    <label class="quiz-opt"><input type="radio" name="q5" value="B"> B. 前，我沒去過韓國，明年我要去韓國。</label>
+                    <label class="quiz-opt"><input type="radio" name="q5" value="C"> C. 韓國以前，我沒去過，明年我要去韓國。</label>
+                    <button class="quiz-btn" onclick="checkQuiz('q5', 'A', 'Correct! To express "In the past", use 「以前」 at the VERY START of the sentence. 「前」 cannot stand alone at the beginning.', 'fb5')">Check Answer</button>
+                    <div class="quiz-feedback" id="fb5"></div>
                 </div>
+
             </div>
 
             <!-- 2. 練習發音 -->
             <div class="grammar-box" id="hw-2">
-                <div style="font-weight:bold; font-size:16px; color:#8C6239; margin-bottom:5px;">2. 練習發音 (Pronunciation Practice)</div>
+                <div style="font-weight:bold; font-size:16px; color:#8C6239; margin-bottom:5px;">2. Pronunciation Practice (練習發音)</div>
 
                 <div class="item-content">
                     <div class="btn-group">
@@ -491,9 +488,9 @@
                 </div>
             </div>
 
-            <!-- 3. 翻譯練習答案 -->
+            <!-- 3. Translation Review Answers -->
             <div class="grammar-box" id="hw-3">
-                <div style="font-weight:bold; font-size:16px; color:#8C6239; margin-bottom:5px;">3. Translation Review Answers (翻譯練習答案與解析)</div>
+                <div style="font-weight:bold; font-size:16px; color:#8C6239; margin-bottom:5px;">3. Translation Review Answers</div>
 
                 <div style="font-weight:bold; color:#8C6239; margin-top:10px; margin-bottom:5px;">1) Let's try this cake together.</div>
                 <div class="item-content">
@@ -620,11 +617,11 @@
                 </div>
             </div>
 
-            <!-- 5. 回答「了嗎?」的方式 -->
+            <!-- 5. 回答「了嗎？」的方式 -->
             <div class="grammar-box" id="hw-5">
                 <div style="font-weight:bold; font-size:16px; color:#8C6239; margin-bottom:5px;">5. How to Answer Questions Ending in 「了嗎？」</div>
                 <div class="note">
-                    <b>💡 Rule:</b> <b>了口語嗎？</b> asks whether an action has been completed. Thus, you should answer with <b>完成了 (Done)</b>, <b>還沒 (Not yet)</b>, or <b>不想 (Don't want to)</b>. Never answer with "是 / 不是" unless the question does not contain "了".
+                    <b>💡 Rule:</b> <b>「了嗎？」</b> asks whether an action has been completed. Answer with <b>完成了 (Done)</b>, <b>還沒 (Not yet)</b>, or <b>不想 (Don't want to)</b>. Never answer with "是 / 不是" unless the question does not contain "了".
                 </div>
 
                 <div class="item-content">
@@ -646,7 +643,7 @@
                         <button class="play-rec-btn" disabled>▶</button>
                     </div>
                     <div style="flex:1;">
-                        <div class="zy-text">你(ㄋㄧˇ)今(ㄐㄧㄣ)天(ㄊㄧㄢ)去(ㄑㄩˋ)超(ㄔㄠ)市(ㄕˋ)了(ㄌㄜ˙)嗎(ㄇㄚ˙)？ 我(ㄨㄛˇ)去(ㄑㄩˋ)了(ㄌㄜ˙) / 還(ㄏㄞˊ)沒(ㄇㄟˊ)去(ㄑㄩˋ) / 今(ㄐㄧㄣ)天(ㄊㄧㄢ)下(ㄒㄧㄚˋ)雨(ㄩˇ)我(ㄨㄛˇ)不(ㄅㄨˋ)想(ㄒㄧㄤˇ)去(ㄑㄩˋ)。</div>
+                        <div class="zy-text">你(ㄋㄧˇ)今(ㄐㄧㄣ)天(ㄊㄧㄢ)去(ㄑㄩˋ)超(ㄔㄠ)市(ㄕˋ)了(ㄌㄜ˙)嗎(ㄇㄚ˙)？ 我(ㄨㄛˇ)去(ㄑㄩˋ)了(ㄌㄜ˙) / 還(ㄏㄞˊ)沒(ㄇㄟˊ)去(ㄑㄩˋ) / 今(ㄐㄧㄣ)天(ㄊㄧㄢ)下(ㄒㄧㄚˋ)雨(ㄩˇ)我(ㄨㄛˇ)不(ㄅㄨˋ)想(ㄒㄧㄤˋ)去(ㄑㄩˋ)。</div>
                         <div class="en-trans">Q: Did you go to the supermarket today? / A: I went / Not yet / It rained today, I don't want to go.</div>
                     </div>
                 </div>
@@ -668,7 +665,8 @@
             <div class="grammar-box" id="hw-6">
                 <div style="font-weight:bold; font-size:16px; color:#8C6239; margin-bottom:5px;">6. Adjective + 地 + Verb (Adverb Marker)</div>
                 <div class="note">
-                    <b>💡 Explanation:</b> When <b>地</b> is placed after an adjective, it converts the adjective into an adverb, usually placed directly in front of the verb.
+                    <b>💡 Explanation:</b> When <b>地</b> is placed after an adjective, it turns it into an adverb placed in front of a verb.<br>
+                    <b>🎵 Pronunciation Note:</b> When <b>地</b> functions as an adverb marker, its pronunciation changes from <i>dì</i> to <b>ㄉㄜ (de)</b>.
                 </div>
 
                 <div class="item-content">
@@ -710,8 +708,8 @@
                 <table class="custom-table">
                     <thead>
                         <tr>
-                            <th style="width:50%;">口語 (Spoken Daily)</th>
-                            <th style="width:50%;">書面正式語 (Formal Written)</th>
+                            <th style="width:50%;">Spoken Daily (口語)</th>
+                            <th style="width:50%;">Formal Written (書面正式語)</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -770,36 +768,9 @@
 
         </div>
 
-        <!-- Section 4: Homework / Translation Practice -->
+        <!-- Section 4: Reading Comprehension -->
         <div class="section" id="sec-3">
-            <h2>4. Homework (翻譯練習)</h2>
-            <p style="color:#666; font-size:15px; margin-bottom:15px;">Translate the following sentences into Chinese:</p>
-
-            <div class="grammar-box">
-                <div class="homework-q">1. Let's try this cake together.</div>
-                <textarea class="hw-textarea" placeholder="Write your Chinese answer here..."></textarea>
-            </div>
-
-            <div class="grammar-box">
-                <div class="homework-q">2. I need to leave now because it is urgent.</div>
-                <textarea class="hw-textarea" placeholder="Write your Chinese answer here..."></textarea>
-            </div>
-
-            <div class="grammar-box">
-                <div class="homework-q">3. I don't know what to do with this problem.</div>
-                <textarea class="hw-textarea" placeholder="Write your Chinese answer here..."></textarea>
-            </div>
-
-            <div class="grammar-box">
-                <div class="homework-q">4. She always gets nervous before tests.</div>
-                <textarea class="hw-textarea" placeholder="Write your Chinese answer here..."></textarea>
-            </div>
-
-        </div>
-
-        <!-- Section 5: Reading Comprehension -->
-        <div class="section" id="sec-4">
-            <h2>5. Reading Comprehension (閱讀理解)</h2>
+            <h2>4. Reading Comprehension (閱讀理解)</h2>
             <p style="color:#666; font-size:15px; margin-bottom:15px;">Read the passage carefully and answer the questions below:</p>
 
             <div class="reading-paragraph">
@@ -810,7 +781,7 @@
                         <button class="play-rec-btn" disabled>▶</button>
                     </div>
                     <div style="flex:1;">
-                        <div class="zy-text">以(ㄧˇ)前(ㄑㄧㄢˊ)，我(ㄨㄛˇ)覺(ㄐㄩㄝˊ)得(ㄉㄜ˙)萬(ㄨㄢˋ)聖(ㄕㄥˋ)節(ㄐㄧㄝˊ)很(ㄏㄣˇ)可(ㄎㄜˇ)怕(ㄆㄚˋ)。因(ㄧㄣ)為(ㄨㄟˋ)有(ㄧㄡˇ)很(ㄏㄣˇ)多(ㄉㄨㄛ)人(ㄖㄣˊ)穿(ㄔㄨㄢ)奇(ㄑㄧˊ)怪(ㄍㄨㄞˋ)的(ㄉㄜ˙)衣(ㄧ)服(ㄈㄨˊ)，我(ㄨㄛˇ)有(ㄧㄡˇ)一(ㄧˋ)點(ㄉㄧㄢˇ)怕(ㄆㄚˋ)。今(ㄐㄧㄣ)年(ㄋㄧㄢˊ)，我(ㄨㄛˇ)的(ㄉㄜ˙)朋(ㄆㄥˊ)友(ㄧㄡˇ)開(ㄎㄞ)心(ㄒㄧㄣ)地(ㄉㄜ˙)說(ㄕㄨㄛ)：「我(ㄨㄛˇ)們(ㄇㄣ˙)一(ㄧˋ)起(ㄑㄧˇ)去(ㄑㄩˋ)玩(ㄨㄢˊ)吧(ㄅㄚ˙)！」我(ㄨㄛˇ)說(ㄕㄨㄛ)：「好(ㄏㄠˇ)啊(ㄚ˙)～我(ㄨㄛˇ)現(ㄒㄧㄢˋ)在(ㄗㄞˋ)是(ㄕˋ)大(ㄉㄚˋ)人(ㄖㄣˊ)，我(ㄨㄛˇ)可(ㄎㄜˇ)以(ㄧˇ)試(ㄕˋ)試(ㄕˋ)看(ㄎㄢˋ)。」十(ㄕˊ)月(ㄩㄝˋ)是(ㄕˋ)一(ㄧˋ)年(ㄋㄧㄢˊ)中(ㄓㄨㄥ)很(ㄏㄣˇ)好(ㄏㄠˇ)的(ㄉㄜ˙)季(ㄐㄧˋ)節(ㄐㄧㄝˊ)。天(ㄊㄧㄢ)氣(ㄑㄧˋ)不(ㄅㄨˋ)冷(ㄌㄥˇ)也(ㄧㄝˇ)不(ㄅㄨˋ)熱(ㄖㄜˋ)。我(ㄨㄛˇ)們(ㄇㄣ˙)先(ㄒㄧㄢ)去(ㄑㄩˋ)公(ㄍㄨㄥ)園(ㄩㄢˊ)看(ㄎㄢˋ)風(ㄈㄥ)景(ㄐㄧㄥˇ)，樹(ㄕㄨˋ)葉(ㄧㄝˋ)是(ㄕˋ)紅(ㄏㄨㄥˊ)色(ㄙㄜˋ)和(ㄏㄢˋ)黃(ㄏㄨㄤˊ)色(ㄙㄜˋ)的(ㄉㄜ˙)，非(ㄈㄟ)常(ㄔㄤˊ)漂(ㄆㄧㄠˋ)亮(ㄌㄧㄤˋ)。下(ㄒㄧㄚˋ)午(ㄨˇ)五(ㄨˇ)點(ㄉㄧㄢˋ)，我(ㄨㄛˇ)們(ㄇㄣ˙)到(ㄉㄠˋ)了(ㄌㄜ˙)一(ㄧˋ)家(ㄐㄧㄚ)餐(ㄘㄢ)廳(ㄊㄧㄥ)。門(ㄇㄣˊ)口(ㄎㄡˇ)有(ㄧㄡˇ)很(ㄏㄣˇ)多(ㄉㄨㄛ)人(ㄖㄣˊ)在(ㄗㄞˋ)排(ㄆㄞˊ)隊(ㄉㄨㄟˋ)，我(ㄨㄛˇ)有(ㄧㄡˇ)點(ㄉㄧㄢˇ)急(ㄐㄧˊ)。朋(ㄆㄥˊ)友(ㄧㄡˇ)說(ㄕㄨㄛ)：「別(ㄅㄧㄝˊ)急(ㄐㄧˊ)，我(ㄨㄛˇ)們(ㄇㄣ˙)還(ㄏㄞˊ)有(ㄧㄡˇ)時(ㄕˊ)間(ㄐㄧㄢ)。」吃(ㄔ)飯(ㄈㄢˋ)前(ㄑㄧㄢˊ)，我(ㄨㄛˇ)們(ㄇㄣ˙)點(ㄉㄧㄢˋ)了(ㄌㄜ˙)兩(ㄌㄧㄤˇ)杯(ㄅㄟ)葡(ㄆㄨˊ)萄(ㄊㄠˊ)汁(ㄓ)。葡(ㄆㄨˊ)萄(ㄊㄠˊ)汁(ㄓ)很(ㄏㄣˇ)甜(ㄊㄧㄢˊ)，我(ㄨㄛˇ)很(ㄏㄣˇ)喜(ㄒㄧˇ)歡(ㄏㄨㄢ)。吃(ㄔ)飯(ㄈㄢˋ)後(ㄏㄡˋ)，我(ㄨㄛˇ)們(ㄇㄣ˙)去(ㄑㄩˋ)朋(ㄆㄥˊ)友(ㄧㄡˇ)家(ㄐㄧㄚ)。門(ㄇㄣˊ)口(ㄎㄡˇ)有(ㄧㄡˇ)很(ㄏㄣˇ)多(ㄉㄨㄛ)小(ㄒㄧㄠˇ)朋(ㄆㄥˊ)友(ㄧㄡˇ)來(ㄌㄞˊ)要(ㄧㄠˋ)糖(ㄊㄤˊ)果(ㄍㄨㄛˇ)。我(ㄨㄛˇ)應(ㄧㄥ)該(ㄍㄞ)早(ㄗㄠˇ)一(ㄧˋ)點(ㄉㄧㄢˇ)回(ㄏㄨㄟˊ)家(ㄐㄧㄚ)，因(ㄧㄣ)為(ㄨㄟˋ)明(ㄇㄧㄥˊ)天(ㄊㄧㄢ)要(ㄧㄠˋ)上(ㄕㄤˋ)班(ㄅㄢ)。但(ㄉㄢˋ)是(ㄕˋ)我(ㄨㄛˇ)很(ㄏㄣˇ)開(ㄎㄞ)心(ㄒㄧㄣ)。以(ㄧˇ)前(ㄑㄧㄢˊ)我(ㄨㄛˇ)覺(ㄐㄩㄝˊ)得(ㄉㄜ˙)萬(ㄨㄢˋ)聖(ㄕㄥˋ)節(ㄐㄧㄝˊ)很(ㄏㄣˇ)可(ㄎㄜˇ)怕(ㄆㄚˋ)，現(ㄒㄧㄢˋ)在(ㄗㄞˋ)我(ㄨㄛˇ)覺(ㄐㄩㄝˊ)得(ㄉㄜ˙)很(ㄏㄣˇ)有(ㄧㄡˇ)意(ㄧˋ)思(ㄙ˙)。以(ㄧˇ)後(ㄏㄡˋ)，我(ㄨㄛˇ)每(ㄇㄟˇ)年(ㄋㄧㄢˊ)都(ㄉㄡ)想(ㄒㄧㄤˇ)和(ㄏㄢˋ)朋(ㄆㄥˊ)友(ㄧㄡˇ)一(ㄧˋ)起(ㄑㄧˇ)過(ㄍㄨㄛˋ)萬(ㄨㄢˋ)聖(ㄕㄥˋ)節(ㄐㄧㄝˊ)。</div>
+                        <div class="zy-text">以(ㄧˇ)前(ㄑㄧㄢˊ)，我(ㄨㄛˇ)覺(ㄐㄩㄝˊ)得(ㄉㄜ˙)萬(ㄨㄢˋ)聖(ㄕㄥˋ)節(ㄐㄧㄝˊ)很(ㄏㄣˇ)可(ㄎㄜˇ)怕(ㄆㄚˋ)。因(ㄧㄣ)為(ㄨㄟˋ)有(ㄧㄡˇ)很(ㄏㄣˇ)多(ㄉㄨㄛ)人(ㄖㄣˊ)穿(ㄔㄨㄢ)奇(ㄑㄧˊ)怪(ㄍㄨㄞˋ)的(ㄉㄜ˙)衣(ㄧ)服(ㄈㄨˊ)，我(ㄨㄛˇ)有(ㄧㄡˇ)一(ㄧˋ)點(ㄉㄧㄢˇ)怕(ㄆㄚˋ)。今(ㄐㄧㄣ)年(ㄋㄧㄢˊ)，我(ㄨㄛˇ)的(ㄉㄜ˙)朋(ㄆㄥˊ)友(ㄧㄡˇ)開(ㄎㄞ)心(ㄒㄧㄣ)地(ㄉㄜ˙)說(ㄕㄨㄛ)：「我(ㄨㄛˇ)們(ㄇㄣ˙)一(ㄧˋ)起(ㄑㄧˇ)去(ㄑㄩˋ)玩(ㄨㄢˊ)吧(ㄅㄚ˙)！」我(ㄨㄛˇ)說(ㄕㄨㄛ)：「好(ㄏㄠˇ)啊(ㄚ˙)～我(ㄨㄛˇ)現(ㄒㄧㄢˋ)在(ㄗㄞˋ)是(ㄕˋ)大(ㄉㄚˋ)人(ㄖˊ)，我(ㄨㄛˇ)可(ㄎㄜˇ)以(ㄧˇ)試(ㄕˋ)試(ㄕˋ)看(ㄎㄢˋ)。」十(ㄕˊ)月(ㄩㄝˋ)是(ㄕˋ)一(ㄧˋ)年(ㄋㄧㄢˊ)中(ㄓㄨㄥ)很(ㄏㄣˇ)好(ㄏㄠˇ)的(ㄉㄜ˙)季(ㄐㄧˋ)節(ㄐㄧㄝˊ)。天(ㄊㄧㄢ)氣(ㄑㄧˋ)不(ㄅㄨˋ)冷(ㄥˇ)也(ㄧㄝˇ)不(ㄅㄨˋ)熱(ㄖㄜˋ)。我(ㄨㄛˇ)們(ㄇㄣ˙)先(ㄒㄧㄢ)去(ㄑㄩˋ)公(ㄍㄨㄥ)園(ㄩㄢˊ)看(ㄎㄢˋ)風(ㄈㄥ)景(ㄐㄧㄥˇ)，樹(ㄕㄨˋ)葉(ㄧㄝˋ)是(ㄕˋ)紅(ㄏㄨㄥˊ)色(ㄙㄜˋ)和(ㄏㄢˋ)黃(ㄏㄨㄤˊ)色(ㄙㄜˋ)的(ㄉㄜ˙)，非(ㄈㄟ)常(ㄔㄤˊ)漂(ㄆㄧㄠˋ)亮(ㄌㄧㄤˋ)。下(ㄒㄧㄚˋ)午(ㄨˇ)五(ㄨˇ)點(ㄉㄧㄢˋ)，我(ㄨㄛˇ)們(ㄇㄣ˙)到(ㄉㄠˋ)了(ㄌㄜ˙)一(ㄧˋ)家(ㄐㄧㄚ)餐(ㄘㄢ)廳(ㄊㄧㄥ)。門(ㄇㄣˊ)口(ㄎㄡˇ)有(ㄧㄡˇ)很(ㄏㄣˇ)多(ㄉㄨㄛ)人(ㄖㄣˊ)在(ㄗㄞˋ)排(ㄆㄞˊ)隊(ㄉㄨㄟˋ)，我(ㄨㄛˇ)有(ㄧㄡˇ)點(ㄉㄧㄢˇ)急(ㄐㄧˊ)。朋(ㄆㄥˊ)友(ㄧㄡˇ)說(ㄕㄨㄛ)：「別(ㄅㄧㄝˊ)急(ㄐㄧˊ)，我(ㄨㄛˇ)們(ㄇㄣ˙)還(ㄏㄞˊ)有(ㄧㄡˇ)時(ㄕˊ)間(ㄐㄧㄢ)。」吃(ㄔ)飯(ㄈㄢˋ)前(ㄑㄧㄢˊ)，我(ㄨㄛˇ)們(ㄇㄣ˙)點(ㄉㄧㄢˋ)了(ㄌㄜ˙)兩(ㄌㄧㄤˇ)杯(ㄅㄟ)葡(ㄆㄨˊ)萄(ㄊㄠˊ)汁(ㄓ)。葡(ㄆㄨˊ)萄(ㄊㄠˊ)汁(ㄓ)很(ㄏㄣˇ)甜(ㄊㄧㄢˊ)，我(ㄨㄛˇ)很(ㄏㄣˇ)喜(ㄒㄧˇ)歡(ㄏㄨㄢ)。吃(ㄔ)飯(ㄈㄢˋ)後(ㄏㄡˋ)，我(ㄨㄛˇ)們(ㄇㄣ˙)去(ㄑㄩˋ)朋(ㄆㄥˊ)友(ㄧㄡˇ)家(ㄐㄧㄚ)。門(ㄇㄣˊ)口(ㄎㄡˇ)有(ㄧㄡˇ)很(ㄏㄣˇ)多(ㄉㄨㄛ)小(ㄒㄧㄠˇ)朋(ㄆㄥˊ)友(ㄧㄡˇ)來(ㄌㄞˊ)要(ㄧㄠˋ)糖(ㄊㄤˊ)果(ㄍㄨㄛˇ)。我(ㄨㄛˇ)應(ㄧㄥ)該(ㄍㄞ)早(ㄗㄠˇ)一(ㄧˋ)點(ㄉㄧㄢˇ)回(ㄏㄨㄟˊ)家(ㄐㄧㄚ)，因(ㄧㄣ)為(ㄨㄟˋ)明(ㄇㄧㄥˊ)天(ㄊㄧㄢ)要(ㄧㄠˋ)上(ㄕㄤˋ)班(ㄅㄢ)。但(ㄉㄢˋ)是(ㄕˋ)我(ㄨㄛˇ)很(ㄏㄣˇ)開(ㄎㄞ)心(ㄒㄧㄣ)。以(ㄧˇ)前(ㄑㄧㄢˊ)我(ㄨㄛˇ)覺(ㄐㄩㄝˊ)得(ㄉㄜ˙)萬(ㄨㄢˋ)聖(ㄕㄥˋ)節(ㄐㄧㄝˊ)很(ㄏㄣˇ)可(ㄎㄜˇ)怕(ㄆㄚˋ)，現(ㄒㄧㄢˋ)在(ㄗㄞˋ)我(ㄨㄛˇ)覺(ㄐㄩㄝˊ)得(ㄉㄜ˙)很(ㄏㄣˇ)有(ㄧㄡˇ)意(ㄧˋ)思(ㄙ˙)。以(ㄧˇ)後(ㄏㄡˋ)，我(ㄨㄛˇ)每(ㄇㄟˇ)年(ㄋㄧㄢˊ)都(ㄉㄡ)想(ㄒㄧㄤˇ)和(ㄏㄢˋ)朋(ㄆㄥˊ)友(ㄧㄡˇ)一(ㄧˋ)起(ㄑㄧˇ)過(ㄍㄨㄛˋ)萬(ㄨㄢˋ)聖(ㄕㄥˋ)節(ㄐㄧㄝˊ)。</div>
                     </div>
                 </div>
             </div>
@@ -850,6 +821,26 @@
                 sidebar.classList.toggle('collapsed');
                 mainContent.classList.toggle('expanded');
             }
+        }
+
+        // ====== Interactive Quiz Checker ======
+        function checkQuiz(qName, correctVal, exp, feedbackId) {
+            const selected = document.querySelector(`input[name="${qName}"]:checked`);
+            const fb = document.getElementById(feedbackId);
+            if (!selected) {
+                fb.className = "quiz-feedback incorrect";
+                fb.innerHTML = "⚠️ Please select an answer first!";
+                fb.style.display = "block";
+                return;
+            }
+            if (selected.value === correctVal) {
+                fb.className = "quiz-feedback correct";
+                fb.innerHTML = "✅ <b>Correct!</b> " + exp;
+            } else {
+                fb.className = "quiz-feedback incorrect";
+                fb.innerHTML = "❌ <b>Incorrect.</b> Try again! " + exp;
+            }
+            fb.style.display = "block";
         }
 
         // ====== Parse Zhuyin on Load (DOM based) ======
