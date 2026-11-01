@@ -1,0 +1,972 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Chad's Mandarin Lesson 196</title>
+    <style>
+        :root { --bg: #FDFBF7; --primary: #D4A373; --text: #4a4a4a; --white: #fff; --sidebar-width: 280px; }
+        html { scroll-behavior: smooth; }
+        body { font-family: 'Helvetica Neue', Arial, sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; margin: 0; padding: 0; display: flex; transition: margin-left 0.3s ease; }
+        
+        /* Navigation */
+        .top-nav { position: fixed; top: 0; left: 0; width: 100%; background: #FFF9F0; border-bottom: 1px solid #E6D5B8; padding: 10px 20px; box-sizing: border-box; text-align: right; z-index: 1200; display: flex; justify-content: flex-end; align-items: center; }
+        .top-nav a { color: var(--primary); font-weight: bold; text-decoration: none; margin-left: 20px; font-size: 15px; }
+        .top-nav a:hover { text-decoration: underline; color: #8C6239; }
+
+        /* Sidebar */
+        .sidebar { width: var(--sidebar-width); background: #FFF9F0; border-right: 1px solid #E6D5B8; height: 100vh; position: fixed; top: 0; left: 0; overflow-y: auto; padding: 60px 20px 20px 20px; box-sizing: border-box; transition: transform 0.3s ease; z-index: 1000; }
+        .sidebar.collapsed { transform: translateX(-100%); }
+        .sidebar h3 { margin-top: 0; color: #8C6239; font-size: 18px; border-bottom: 2px solid var(--primary); padding-bottom: 8px; display: flex; justify-content: space-between; align-items: center; }
+        .sidebar ol { padding-left: 20px; margin: 10px 0; color: #555; }
+        .sidebar li { margin-bottom: 8px; font-size: 15px; font-weight: bold; color: #8C6239; }
+        .sidebar ul { padding-left: 15px; list-style-type: circle; margin-top: 5px; margin-bottom: 15px; font-weight: normal; }
+        .sidebar ul li { font-size: 13.5px; margin-bottom: 6px; color: #555; }
+        .sidebar a { color: #555; text-decoration: none; display: block; }
+        .sidebar a:hover { color: #D4A373; font-weight: bold; }
+        
+        .sidebar-toggle { position: fixed; top: 50px; left: 15px; z-index: 1100; background: var(--primary); color: white; border: none; padding: 8px 12px; border-radius: 6px; cursor: pointer; font-size: 14px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+
+        /* Main Content */
+        .main-content { margin-top: 40px; margin-left: var(--sidebar-width); width: calc(100% - var(--sidebar-width)); padding: 20px 40px; box-sizing: border-box; max-width: 900px; transition: margin-left 0.3s ease, width 0.3s ease; }
+        .main-content.expanded { margin-left: 0; width: 100%; }
+        .header { text-align: center; border-bottom: 2px solid var(--primary); padding-bottom: 10px; margin-bottom: 20px; margin-top: 20px; }
+        
+        /* Controls */
+        .controls { position: sticky; top: 40px; background: var(--bg); padding: 15px; text-align: center; border-bottom: 1px solid #ccc; z-index: 100; margin-bottom: 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
+        button.control-btn { background: var(--primary); color: white; border: none; padding: 10px 15px; margin: 5px; border-radius: 6px; cursor: pointer; font-size: 14px; font-weight: bold; }
+        button.control-btn:hover { background: #B5835A; }
+        
+        /* Audio Buttons */
+        .btn-group { display: flex; align-items: center; margin-right: 15px; margin-bottom: 5px; flex-shrink: 0; }
+        .audio-btn { background: #f0f0f0; color: #333; font-size: 16px; padding: 8px; border-radius: 50%; width: 35px; height: 35px; display: inline-flex; align-items: center; justify-content: center; border: none; cursor: pointer; margin-right: 5px; flex-shrink:0; }
+        .audio-btn:hover { background: #e0e0e0; }
+        .rec-btn { background: #e07a5f; color: white; font-size: 14px; padding: 6px 12px; border-radius: 20px; border: none; cursor: pointer; display: inline-flex; align-items: center; gap: 5px; margin-right: 5px; }
+        .rec-btn.recording { background: #d90429; animation: pulse 1.5s infinite; }
+        .play-rec-btn { background: #457b9d; color: white; font-size: 14px; padding: 6px 12px; border-radius: 20px; border: none; cursor: pointer; margin-right: 5px; display: inline-flex; align-items: center; justify-content: center; width: 35px; height: 35px;}
+        .play-rec-btn:disabled { background: #ccc; cursor: not-allowed; }
+
+        @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.5; } 100% { opacity: 1; } }
+
+        /* Content Blocks */
+        h2 { color: #8C6239; border-left: 5px solid var(--primary); padding-left: 10px; margin-top: 30px; }
+        .section { margin-bottom: 30px; background: var(--white); padding: 20px; border-radius: 12px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); scroll-margin-top: 130px; }
+        .grammar-box { background: #FFF9F0; border: 1px solid #E6D5B8; border-radius: 8px; padding: 15px; margin: 15px 0; scroll-margin-top: 140px; }
+        .item-content { display: flex; align-items: flex-start; margin-top: 10px; margin-bottom: 10px; flex-wrap: wrap; }
+        
+        /* Tables */
+        .custom-table { width: 100%; border-collapse: collapse; margin: 15px 0; background: #fff; border-radius: 8px; overflow: hidden; box-shadow: 0 1px 4px rgba(0,0,0,0.05); }
+        .custom-table th, .custom-table td { border: 1px solid #E6D5B8; padding: 12px; text-align: left; font-size: 14px; line-height: 1.5; }
+        .custom-table th { background-color: #F7EBE1; color: #8C6239; font-weight: bold; text-align: center; }
+        .custom-table td.center { text-align: center; }
+
+        /* Bopomofo (Zhuyin) Vertical Formatting */
+        .zy-text { display: inline-block; line-height: 2.4; font-size: 18px; }
+        .zy-char-wrap { display: inline-flex; align-items: center; margin-right: 2px; }
+        .zy-char { font-size: 26px; font-family: "DFKai-SB", "BiauKai", serif; }
+        .zy-box { display: inline-flex; flex-direction: column; justify-content: center; position: relative; margin-left: 2px; padding-right: 8px; }
+        .zy-symbols { writing-mode: vertical-rl; text-orientation: upright; font-size: 11px; letter-spacing: -2px; }
+        .zy-tone { position: absolute; right: 0px; top: 50%; transform: translateY(-50%); font-size: 11px; }
+        .zy-neutral { position: absolute; top: -11px; left: 50%; transform: translateX(-50%); font-size: 11px; }
+        
+        .en-trans { color: #666; font-size: 15px; font-style: italic; margin-top: 5px; margin-left: 0; width: 100%; display:block;}
+        .note { font-size: 14px; color: #555; margin-top: 10px; margin-bottom: 10px; line-height: 1.5; background: #fdfaf6; padding: 8px 12px; border-left: 3px solid #D4A373; border-radius: 4px; }
+        .vocab-img { max-width: 100%; height: auto; border-radius: 8px; border: 1px solid #E6D5B8; display: block; margin: 10px 0; max-height: 220px; }
+
+        .homework-q { font-size: 16px; font-weight: bold; color: #8C6239; margin-bottom: 8px; }
+        .hw-textarea { width: 100%; height: 60px; margin-top: 5px; border-radius: 6px; border: 1px solid #E6D5B8; padding: 10px; font-family: inherit; font-size:16px; box-sizing: border-box; background: #fff; }
+        .hw-textarea:focus { border-color: var(--primary); outline: none; box-shadow: 0 0 5px rgba(212, 163, 115, 0.5); }
+
+        /* Quiz Styling */
+        .quiz-card { background: #fff; border: 1px solid #E6D5B8; border-radius: 8px; padding: 15px; margin-bottom: 15px; }
+        .quiz-q { font-weight: bold; color: #8C6239; font-size: 16px; margin-bottom: 10px; }
+        .quiz-opt { display: block; margin: 8px 0; cursor: pointer; font-size: 15px; padding: 8px 12px; border-radius: 6px; border: 1px solid #eee; background: #FAF8F5; transition: background 0.2s; }
+        .quiz-opt:hover { background: #F2E8DC; }
+        .quiz-opt input { margin-right: 8px; }
+        .quiz-btn { background: var(--primary); color: white; border: none; padding: 6px 14px; border-radius: 4px; cursor: pointer; font-weight: bold; margin-top: 8px; }
+        .quiz-feedback { margin-top: 10px; padding: 8px 12px; border-radius: 6px; display: none; font-size: 14px; }
+        .quiz-feedback.correct { background: #E8F5E9; color: #2E7D32; border: 1px solid #C8E6C9; }
+        .quiz-feedback.incorrect { background: #FFEBEE; color: #C62828; border: 1px solid #FFCDD2; }
+
+        /* Reading Passage Styling */
+        .reading-paragraph { font-size: 18px; line-height: 2.2; margin-bottom: 15px; background: #FFFDF9; padding: 15px; border-radius: 8px; border: 1px solid #E6D5B8; }
+
+        @media (max-width: 900px) {
+            .sidebar { transform: translateX(-100%); }
+            .sidebar.active { transform: translateX(0); }
+            .main-content { margin-left: 0; width: 100%; padding: 20px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="top-nav">
+        <a href="https://jany-mandarin.github.io/Chad.html">Index</a>
+        <a href="https://jany-mandarin.github.io/Chad.lesson195.html">Lesson 195</a>
+    </div>
+
+    <button class="sidebar-toggle" onclick="toggleSidebar()">☰ Outline</button>
+
+    <div class="sidebar" id="sidebar">
+        <h3>📖 Outline <button style="background:none; border:none; color:#8C6239; font-weight:bold; cursor:pointer; font-size:16px;" onclick="toggleSidebar()">×</button></h3>
+        <ol>
+            <li><a href="#sec-0">Warm-up</a>
+                <ul>
+                    <li><a href="#wu-1">1. 區分「來」和「去」</a></li>
+                    <li><a href="#wu-2">2. 蔥 / 洋蔥 / 蔥抓餅</a></li>
+                    <li><a href="#wu-3">3. 一半</a></li>
+                </ul>
+            </li>
+            <li><a href="#sec-1">Homework Review & Extensions</a>
+                <ul>
+                    <li><a href="#hw-1">1. 單字複習</a></li>
+                    <li><a href="#hw-2">2. 口語和書面語</a></li>
+                    <li><a href="#hw-3">3. 例句練習</a></li>
+                    <li><a href="#hw-4">4. A 在 B 旁邊</a></li>
+                    <li><a href="#hw-5">5. 過 + 日子 / 節日</a></li>
+                    <li><a href="#hw-6">6. 玩 + 東西</a></li>
+                    <li><a href="#hw-7">7. 同事 / 同學</a></li>
+                    <li><a href="#hw-8">8. 小朋友 / 小孩</a></li>
+                </ul>
+            </li>
+            <li><a href="#sec-2">Lesson 12</a>
+                <ul>
+                    <li><a href="#ls-1">1. 課 (量詞與第幾課)</a></li>
+                    <li><a href="#ls-2">2. 富士山</a></li>
+                </ul>
+            </li>
+            <li><a href="#sec-3">Translation Practice</a></li>
+            <li><a href="#sec-4">Reading Comprehension</a></li>
+        </ol>
+    </div>
+
+    <div class="main-content" id="mainContent">
+        <div class="header">
+            <h1>Chad's Mandarin Lesson 196</h1>
+            <p>Date: <span id="currentDate">2026/11/01</span></p>
+        </div>
+
+        <div class="controls">
+            <button class="control-btn" onclick="toggleZhuyin()">Toggle Bopomofo</button>
+            <button class="control-btn" onclick="toggleEnglish()">Toggle English</button>
+        </div>
+
+        <!-- Section 1: Warm-up -->
+        <div class="section" id="sec-0">
+            <h2>1. Warm-up (暖身)</h2>
+            
+            <!-- 1. 區分來和去 -->
+            <div class="grammar-box" id="wu-1">
+                <div style="font-weight:bold; font-size:16px; color:#8C6239; margin-bottom:5px;">1. 區分「來」和「去」 (Distinguishing 「來」 and 「去」)</div>
+                <div class="note">
+                    <b>💡 Rules & Perspective:</b><br>
+                    • <b>來 (lái - to come):</b> Used when someone/something is moving <b>closer</b> to the speaker's current location.<br>
+                    • <b>去 (qù - to go):</b> Used when someone/something is moving <b>away</b> from the speaker's current location toward another place.
+                </div>
+
+                <div class="item-content">
+                    <div class="btn-group">
+                        <button class="audio-btn" onclick="playAudioText(this)">🔊</button>
+                        <button class="audio-btn" onclick="toggleRecord(this)">🎤</button>
+                        <button class="play-rec-btn" disabled>▶</button>
+                    </div>
+                    <div style="flex:1;">
+                        <div class="zy-text">昨(ㄗㄨㄛˊ)天(ㄊㄧㄢ)有(ㄧㄡˇ)很(ㄏㄣˇ)多(ㄉㄨㄛ)小(ㄒㄧㄠˇ)朋(ㄆㄥˊ)友(ㄧㄡˇ)來(ㄌㄞˊ)我(ㄨㄛˇ)們(ㄇㄣ˙)家(ㄐㄧㄚ)拿(ㄋㄚˊ)糖(ㄊㄤˊ)果(ㄍㄨㄛˇ)。</div>
+                        <div class="en-trans">Yesterday many children came to our house to get candy.</div>
+                    </div>
+                </div>
+
+                <div class="item-content">
+                    <div class="btn-group">
+                        <button class="audio-btn" onclick="playAudioText(this)">🔊</button>
+                        <button class="audio-btn" onclick="toggleRecord(this)">🎤</button>
+                        <button class="play-rec-btn" disabled>▶</button>
+                    </div>
+                    <div style="flex:1;">
+                        <div class="zy-text">我(ㄨㄛˇ)明(ㄇㄧㄥˊ)天(ㄊㄧㄢ)要(ㄧㄠˋ)去(ㄑㄩˋ)台(ㄊㄞˊ)灣(ㄨㄢ)。</div>
+                        <div class="en-trans">I am going to Taiwan tomorrow.</div>
+                    </div>
+                </div>
+
+                <!-- Interactive Practice -->
+                <div style="font-weight:bold; color:#8C6239; margin-top:20px; margin-bottom:10px; font-size:16px;">🎯 Practice: Choose 「來」 or 「去」</div>
+
+                <!-- Quiz 1 -->
+                <div class="quiz-card">
+                    <div class="quiz-q">1) 明天我的哥哥要 ______ 我的家。</div>
+                    <label class="quiz-opt"><input type="radio" name="q1" value="A"> A. 來</label>
+                    <label class="quiz-opt"><input type="radio" name="q1" value="B"> B. 去</label>
+                    <button class="quiz-btn" onclick="checkQuiz('q1', 'A', 'Correct! Your brother is coming toward your house (where you are), so use 「來」.', 'fb1')">Check Answer</button>
+                    <div class="quiz-feedback" id="fb1"></div>
+                </div>
+
+                <!-- Quiz 2 -->
+                <div class="quiz-card">
+                    <div class="quiz-q">2) 我太太的妹妹很喜歡我 ______ 他們家。</div>
+                    <label class="quiz-opt"><input type="radio" name="q2" value="B"> A. 來</label>
+                    <label class="quiz-opt"><input type="radio" name="q2" value="B"> B. 去</label>
+                    <button class="quiz-btn" onclick="checkQuiz('q2', 'B', 'Correct! You are going away from your home to visit their house, so use 「去」.', 'fb2')">Check Answer</button>
+                    <div class="quiz-feedback" id="fb2"></div>
+                </div>
+
+                <!-- Quiz 3 -->
+                <div class="quiz-card">
+                    <div class="quiz-q">3) 明天日本的棒球隊會 ______ 明尼蘇達。</div>
+                    <label class="quiz-opt"><input type="radio" name="q3" value="A"> A. 來</label>
+                    <label class="quiz-opt"><input type="radio" name="q3" value="B"> B. 去</label>
+                    <button class="quiz-btn" onclick="checkQuiz('q3', 'A', 'Correct! Since you currently live in Minnesota, the baseball team is coming to where you are, so use 「來」.', 'fb3')">Check Answer</button>
+                    <div class="quiz-feedback" id="fb3"></div>
+                </div>
+
+                <!-- Quiz 4 -->
+                <div class="quiz-card">
+                    <div class="quiz-q">4) 下個禮拜我會 ______ 台南。</div>
+                    <label class="quiz-opt"><input type="radio" name="q4" value="A"> A. 來</label>
+                    <label class="quiz-opt"><input type="radio" name="q4" value="B"> B. 去</label>
+                    <button class="quiz-btn" onclick="checkQuiz('q4', 'B', 'Correct! From Minnesota, traveling to Tainan is moving away from your current location, so use 「去」.', 'fb4')">Check Answer</button>
+                    <div class="quiz-feedback" id="fb4"></div>
+                </div>
+            </div>
+
+            <!-- 2. 蔥/洋蔥/蔥抓餅 -->
+            <div class="grammar-box" id="wu-2">
+                <div style="font-weight:bold; font-size:16px; color:#8C6239; margin-bottom:5px;">2. 蔥 / 洋蔥 / 蔥抓餅 (Green Onion / Onion / Scallion Pancake)</div>
+                <div class="note">
+                    <b>💡 Fun Etymology Note:</b> The character <b>蔥</b> (cōng - green onion) was phonetically derived from <b>匆</b> (cōng - hurried/busy), which has the "heart" (心) component underneath!
+                </div>
+                <img src="https://cdn.phototourl.com/member/2026-11-01-6bc68ce5-4cde-4245-a401-2cd8e3fd4ea9.png" class="vocab-img" alt="蔥與蔥抓餅">
+
+                <div class="item-content">
+                    <div class="btn-group">
+                        <button class="audio-btn" onclick="playAudioText(this)">🔊</button>
+                        <button class="audio-btn" onclick="toggleRecord(this)">🎤</button>
+                        <button class="play-rec-btn" disabled>▶</button>
+                    </div>
+                    <div style="flex:1;">
+                        <div class="zy-text">味(ㄨㄟˋ)增(ㄗㄥ)湯(ㄊㄤ)裡(ㄌㄧˇ)面(ㄇㄧㄢˋ)有(ㄧㄡˇ)蔥(ㄘㄨㄥ)、豆(ㄉㄡˋ)腐(ㄈㄨˇ)和(ㄏㄢˋ)海(ㄏㄞˇ)帶(ㄉㄞˋ)。</div>
+                        <div class="en-trans">There are green onions, tofu, and kelp inside the miso soup.</div>
+                    </div>
+                </div>
+
+                <div class="item-content">
+                    <div class="btn-group">
+                        <button class="audio-btn" onclick="playAudioText(this)">🔊</button>
+                        <button class="audio-btn" onclick="toggleRecord(this)">🎤</button>
+                        <button class="play-rec-btn" disabled>▶</button>
+                    </div>
+                    <div style="flex:1;">
+                        <div class="zy-text">我(ㄨㄛˇ)非(ㄈㄟ)常(ㄔㄤˊ)喜(ㄒㄧˇ)歡(ㄏㄨㄢ)吃(ㄔ)蔥(ㄘㄨㄥ)抓(ㄓㄨㄚ)餅(ㄅㄧㄥˇ)，每(ㄇㄟˇ)次(ㄘˋ)去(ㄑㄩˋ)台(ㄊㄞˊ)北(ㄅㄟˇ)都(ㄉㄡ)要(ㄧㄠˋ)吃(ㄔ)。</div>
+                        <div class="en-trans">I really like eating scallion pancakes; every time I go to Taipei, I must eat them.</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 3. 一半 -->
+            <div class="grammar-box" id="wu-3">
+                <div style="font-weight:bold; font-size:16px; color:#8C6239; margin-bottom:5px;">3. 一半 (Half)</div>
+                <div class="note">
+                    <b>💡 Usage Note:</b> <b>這樣</b> (zhèyàng) in this context means "in this style / in this way".
+                </div>
+
+                <div class="item-content">
+                    <div class="btn-group">
+                        <button class="audio-btn" onclick="playAudioText(this)">🔊</button>
+                        <button class="audio-btn" onclick="toggleRecord(this)">🎤</button>
+                        <button class="play-rec-btn" disabled>▶</button>
+                    </div>
+                    <div style="flex:1;">
+                        <div class="zy-text">我(ㄨㄛˇ)跟(ㄍㄣ)太(ㄊㄞˋ)太(ㄊㄞ˙)在(ㄗㄞˋ)做(ㄗㄨㄛˋ)披(ㄆㄧ)薩(ㄙㄚˋ)的(ㄉㄜ˙)時(ㄕˊ)候(ㄏㄡˋ)，有(ㄧㄡˇ)時(ㄕˊ)候(ㄏㄡˋ)會(ㄏㄨㄟˋ)一(ㄧˋ)半(ㄅㄢˋ)加(ㄐㄧㄚ)鳳(ㄈㄥˋ)梨(ㄌㄧˊ)，一(ㄧˋ)半(ㄅㄢˋ)不(ㄅㄨˋ)加(ㄐㄧㄚ)鳳(ㄈㄥˋ)梨(ㄌㄧˊ)，因(ㄧㄣ)為(ㄨㄟˋ)我(ㄨㄛˇ)不(ㄅㄨˋ)喜(ㄒㄧˇ)歡(ㄏㄨㄢ)吃(ㄔ)鳳(ㄈㄥˋ)梨(ㄌㄧˊ)披(ㄆㄧ)薩(ㄙㄚˋ)，可(ㄎㄜˇ)是(ㄕˋ)我(ㄨㄛˇ)太(ㄊㄞˋ)太(ㄊㄞ˙)喜(ㄒㄧˇ)歡(ㄏㄨㄢ)，這(ㄓㄜˋ)樣(ㄧㄤˋ)我(ㄨㄛˇ)們(ㄇㄣ˙)都(ㄉㄡ)開(ㄎㄞ)心(ㄒㄧㄣ)。</div>
+                        <div class="en-trans">When my wife and I make pizza, sometimes we put pineapple on one half and no pineapple on the other half, because I don't like pineapple pizza but my wife does—this way, we are both happy.</div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Section 2: Homework Review & Extensions -->
+        <div class="section" id="sec-1">
+            <h2>2. Homework Review & Extensions (上次作業與延伸)</h2>
+            
+            <!-- 1. 單字複習 -->
+            <div class="grammar-box" id="hw-1">
+                <div style="font-weight:bold; font-size:16px; color:#8C6239; margin-bottom:10px;">1. Vocabulary Review (單字複習)</div>
+                
+                <table class="custom-table">
+                    <thead>
+                        <tr>
+                            <th>Vocabulary (單字)</th>
+                            <th>English Meaning (英文意思)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td><b>風(ㄈㄥ)景(ㄐㄧㄥˇ)</b></td><td>Scenery / Landscape</td></tr>
+                        <tr><td><b>季(ㄐㄧˋ)節(ㄐㄧㄝˊ)</b></td><td>Season</td></tr>
+                        <tr><td><b>葡(ㄆㄨˊ)萄(ㄊㄠˊ)</b></td><td>Grapes</td></tr>
+                        <tr><td><b>跑(ㄆㄠˇ)步(ㄅㄨˋ)</b></td><td>To run / Jogging</td></tr>
+                        <tr><td><b>樹(ㄕㄨˋ)葉(ㄧㄝˋ)</b></td><td>Leaves (of trees)</td></tr>
+                        <tr><td><b>竹(ㄓㄨˊ)葉(ㄧㄝˋ)三(ㄙㄢ)明(ㄇㄧㄥˊ)治(ㄓˋ)</b></td><td>Bamboo leaf sandwich (Zongzi / Food wrapped in bamboo leaves)</td></tr>
+                        <tr><td><b>奇(ㄑㄧˊ)怪(ㄍㄨㄞˋ)</b></td><td>Strange / Weird</td></tr>
+                        <tr><td><b>旅(ㄌㄩˇ)行(ㄒㄧㄥˊ)</b></td><td>To travel / Trip</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- 2. 口語和書面語用詞 -->
+            <div class="grammar-box" id="hw-2">
+                <div style="font-weight:bold; font-size:16px; color:#8C6239; margin-bottom:10px;">2. Spoken vs. Written Chinese Terms (口語和書面語用詞)</div>
+                <div class="note">
+                    <b>💡 Explanation:</b> Formal written Chinese (<b>書面語</b>) uses precise words found in books, formal documents, and news. Spoken Chinese (<b>口語</b>) uses simpler, everyday words evolved for ease of speech.
+                </div>
+
+                <table class="custom-table">
+                    <thead>
+                        <tr>
+                            <th style="width:50%;">Spoken Terms (口語)</th>
+                            <th style="width:50%;">Written Terms (書面語)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>爸媽 (Mom and Dad)</td><td>父母 (Parents)</td></tr>
+                        <tr><td>春天 (Spring)</td><td>春季 (Spring season)</td></tr>
+                        <tr><td>夏天 (Summer)</td><td>夏季 (Summer season)</td></tr>
+                        <tr><td>秋天 (Autumn)</td><td>秋季 (Autumn season)</td></tr>
+                        <tr><td>冬天 (Winter)</td><td>冬季 (Winter season)</td></tr>
+                        <tr><td>禮拜 (Week / Day of week)</td><td>星期 (Week / Day of week)</td></tr>
+                        <tr><td>跟 (With / And)</td><td>和 (And)</td></tr>
+                        <tr><td>X 月 X 號 (Date - spoken)</td><td>X 月 X 日 (Date - written)</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- 3. 例句練習 -->
+            <div class="grammar-box" id="hw-3">
+                <div style="font-weight:bold; font-size:16px; color:#8C6239; margin-bottom:5px;">3. Example Sentences (例句練習)</div>
+
+                <div class="item-content">
+                    <div class="btn-group">
+                        <button class="audio-btn" onclick="playAudioText(this)">🔊</button>
+                        <button class="audio-btn" onclick="toggleRecord(this)">🎤</button>
+                        <button class="play-rec-btn" disabled>▶</button>
+                    </div>
+                    <div style="flex:1;">
+                        <div class="zy-text">十(ㄕˊ)月(ㄩㄝˋ)是(ㄕˋ)一(ㄧˋ)年(ㄋㄧㄢˊ)中(ㄓㄨㄥ)最(ㄗㄨㄟˋ)好(ㄏㄠˇ)的(ㄉㄜ˙)季(ㄐㄧˋ)節(ㄐㄧㄝˊ)。</div>
+                        <div class="en-trans">October is the best season of the year.</div>
+                    </div>
+                </div>
+
+                <div class="item-content">
+                    <div class="btn-group">
+                        <button class="audio-btn" onclick="playAudioText(this)">🔊</button>
+                        <button class="audio-btn" onclick="toggleRecord(this)">🎤</button>
+                        <button class="play-rec-btn" disabled>▶</button>
+                    </div>
+                    <div style="flex:1;">
+                        <div class="zy-text">什(ㄕㄣˊ)麼(ㄇㄜ˙)時(ㄕˊ)候(ㄏㄡˋ)去(ㄑㄩˋ)最(ㄗㄨㄟˋ)好(ㄏㄠˇ)？</div>
+                        <div class="en-trans">When is the best time to go?</div>
+                    </div>
+                </div>
+
+                <div class="item-content">
+                    <div class="btn-group">
+                        <button class="audio-btn" onclick="playAudioText(this)">🔊</button>
+                        <button class="audio-btn" onclick="toggleRecord(this)">🎤</button>
+                        <button class="play-rec-btn" disabled>▶</button>
+                    </div>
+                    <div style="flex:1;">
+                        <div class="zy-text">昨(ㄗㄨㄛˊ)天(ㄊㄧㄢ)你(ㄋㄧˇ)給(ㄍㄟˇ)我(ㄨㄛˇ)看(ㄎㄢˋ)這(ㄓㄜˋ)個(ㄍㄜ˙)。</div>
+                        <div class="en-trans">You showed me this yesterday.</div>
+                    </div>
+                </div>
+
+                <div class="item-content">
+                    <div class="btn-group">
+                        <button class="audio-btn" onclick="playAudioText(this)">🔊</button>
+                        <button class="audio-btn" onclick="toggleRecord(this)">🎤</button>
+                        <button class="play-rec-btn" disabled>▶</button>
+                    </div>
+                    <div style="flex:1;">
+                        <div class="zy-text">我(ㄨㄛˇ)的(ㄉㄜ˙)貓(ㄇㄠ)喜(ㄒㄧˇ)歡(ㄏㄨㄢ)冬(ㄉㄨㄥ)天(ㄊㄧㄢ)，因(ㄧㄣ)為(ㄨㄟˋ)他(ㄊㄚ)可(ㄎㄜˇ)以(ㄧˇ)很(ㄏㄣˇ)容(ㄖㄨㄥˊ)易(ㄧˋ)看(ㄎㄢˋ)到(ㄉㄠˋ)外(ㄨㄞˋ)面(ㄇㄧㄢˋ)有(ㄧㄡˇ)很(ㄏㄣˇ)多(ㄉㄨㄛ)小(ㄒㄧㄠˇ)動(ㄉㄨㄥˋ)物(ㄨˋ)。</div>
+                        <div class="en-trans">My cat likes winter because he can easily see many small animals outside.</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 4. A在B旁邊 -->
+            <div class="grammar-box" id="hw-4">
+                <div style="font-weight:bold; font-size:16px; color:#8C6239; margin-bottom:5px;">4. A 在 B 旁邊 (A is next to B)</div>
+
+                <div class="item-content">
+                    <div class="btn-group">
+                        <button class="audio-btn" onclick="playAudioText(this)">🔊</button>
+                        <button class="audio-btn" onclick="toggleRecord(this)">🎤</button>
+                        <button class="play-rec-btn" disabled>▶</button>
+                    </div>
+                    <div style="flex:1;">
+                        <div class="zy-text">這(ㄓㄜˋ)個(ㄍㄜ˙)房(ㄈㄤˊ)子(ㄗ˙)在(ㄗㄞˋ)我(ㄨㄛˇ)家(ㄐㄧㄚ)旁(ㄆㄤˊ)邊(ㄅㄧㄢ)。</div>
+                        <div class="en-trans">This house is next to my house.</div>
+                    </div>
+                </div>
+
+                <div class="item-content">
+                    <div class="btn-group">
+                        <button class="audio-btn" onclick="playAudioText(this)">🔊</button>
+                        <button class="audio-btn" onclick="toggleRecord(this)">🎤</button>
+                        <button class="play-rec-btn" disabled>▶</button>
+                    </div>
+                    <div style="flex:1;">
+                        <div class="zy-text">我(ㄨㄛˇ)的(ㄉㄜ˙)貓(ㄇㄠ)在(ㄗㄞˋ)我(ㄨㄛˇ)旁(ㄆㄤˊ)邊(ㄅㄧㄢ)。</div>
+                        <div class="en-trans">My cat is next to me.</div>
+                    </div>
+                </div>
+
+                <div class="item-content">
+                    <div class="btn-group">
+                        <button class="audio-btn" onclick="playAudioText(this)">🔊</button>
+                        <button class="audio-btn" onclick="toggleRecord(this)">🎤</button>
+                        <button class="play-rec-btn" disabled>▶</button>
+                    </div>
+                    <div style="flex:1;">
+                        <div class="zy-text">這(ㄓㄜˋ)兩(ㄌㄧㄤˇ)棵(ㄎㄜ)樹(ㄕㄨˋ)在(ㄗㄞˋ)我(ㄨㄛˇ)家(ㄐㄧㄚ)旁(ㄆㄤˊ)邊(ㄅㄧㄢ)，一(ㄧˋ)棵(ㄎㄜ)綠(ㄌㄩˋ)色(ㄙㄜˋ)是(ㄕˋ)我(ㄨㄛˇ)的(ㄉㄜ˙)，一(ㄧˋ)棵(ㄎㄜ)紅(ㄏㄨㄥˊ)色(ㄙㄜˋ)是(ㄕˋ)他(ㄊㄚ)的(ㄉㄜ˙)。</div>
+                        <div class="en-trans">These two trees are next to my house; the green one is mine, and the red one is his.</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 5. 過+日子/節日 -->
+            <div class="grammar-box" id="hw-5">
+                <div style="font-weight:bold; font-size:16px; color:#8C6239; margin-bottom:5px;">5. 過 + 日子 / 節日 (Pass time / Celebrate a festival)</div>
+                <div class="note">
+                    <b>💡 Explanation:</b> <b>過</b> (guò) means to pass or spend a period of time, or to celebrate a holiday/festival.
+                </div>
+
+                <div class="item-content">
+                    <div class="btn-group">
+                        <button class="audio-btn" onclick="playAudioText(this)">🔊</button>
+                        <button class="audio-btn" onclick="toggleRecord(this)">🎤</button>
+                        <button class="play-rec-btn" disabled>▶</button>
+                    </div>
+                    <div style="flex:1;">
+                        <div class="zy-text">我(ㄨㄛˇ)跟(ㄍㄣ)朋(ㄆㄥˊ)友(ㄧㄡˇ)一(ㄧˋ)起(ㄑㄧˇ)過(ㄍㄨㄛˋ)萬(ㄨㄢˋ)聖(ㄕㄥˋ)節(ㄐㄧㄝˊ)，我(ㄨㄛˇ)們(ㄇㄣ˙)覺(ㄐㄩㄝˊ)得(ㄉㄜ˙)很(ㄏㄣˇ)開(ㄎㄞ)心(ㄒㄧㄣ)。</div>
+                        <div class="en-trans">I spent/celebrated Halloween with my friends; we felt very happy.</div>
+                    </div>
+                </div>
+
+                <div class="item-content">
+                    <div class="btn-group">
+                        <button class="audio-btn" onclick="playAudioText(this)">🔊</button>
+                        <button class="audio-btn" onclick="toggleRecord(this)">🎤</button>
+                        <button class="play-rec-btn" disabled>▶</button>
+                    </div>
+                    <div style="flex:1;">
+                        <div class="zy-text">我(ㄨㄛˇ)今(ㄐㄧㄣ)天(ㄊㄧㄢ)工(ㄍㄨㄥ)作(ㄗㄨㄛˋ)了(ㄌㄜ˙)十(ㄕˊ)二(ㄦˋ)小(ㄒㄧㄠˇ)時(ㄕˊ)，終(ㄓㄨㄥ)於(ㄩˊ)過(ㄍㄨㄛˋ)了(ㄌㄜ˙)一(ㄧˋ)天(ㄊㄧㄢ)，我(ㄨㄛˇ)要(ㄧㄠˋ)去(ㄑㄩˋ)睡(ㄕㄨㄟˋ)覺(ㄐㄧㄠˋ)了(ㄌㄜ˙)。</div>
+                        <div class="en-trans">I worked for 12 hours today, finally passed a day, I'm going to sleep now.</div>
+                    </div>
+                </div>
+
+                <div class="item-content">
+                    <div class="btn-group">
+                        <button class="audio-btn" onclick="playAudioText(this)">🔊</button>
+                        <button class="audio-btn" onclick="toggleRecord(this)">🎤</button>
+                        <button class="play-rec-btn" disabled>▶</button>
+                    </div>
+                    <div style="flex:1;">
+                        <div class="zy-text">今(ㄐㄧㄣ)天(ㄊㄧㄢ)是(ㄕˋ)十(ㄕˊ)月(ㄩㄝˋ)三(ㄙㄢ)十(ㄕˊ)一(ㄧ)日(ㄖˋ)，我(ㄨㄛˇ)們(ㄇㄣ˙)過(ㄍㄨㄛˋ)了(ㄌㄜ˙)一(ㄧˋ)個(ㄍㄜ˙)月(ㄩㄝˋ)。</div>
+                        <div class="en-trans">Today is October 31st; we have passed one month.</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 6. 玩+東西或不加東西 -->
+            <div class="grammar-box" id="hw-6">
+                <div style="font-weight:bold; font-size:16px; color:#8C6239; margin-bottom:5px;">6. 玩 + 東西 或 不加東西 (Play / Hang out)</div>
+                <div class="note">
+                    <b>💡 Rule:</b> <b>玩</b> without an object means to go out to play/hang out. With a physical object, it means playing with it. You <b>cannot</b> say "玩 + 節日" (cannot play a holiday in your hand).<br>
+                    • <b>玩我的貓:</b> Play with / tease my cat.<br>
+                    • <b>跟我的貓一起玩:</b> Do fun activities together with my cat.
+                </div>
+
+                <div class="item-content">
+                    <div class="btn-group">
+                        <button class="audio-btn" onclick="playAudioText(this)">🔊</button>
+                        <button class="audio-btn" onclick="toggleRecord(this)">🎤</button>
+                        <button class="play-rec-btn" disabled>▶</button>
+                    </div>
+                    <div style="flex:1;">
+                        <div class="zy-text">萬(ㄨㄢˋ)聖(ㄕㄥˋ)節(ㄐㄧㄝˊ)的(ㄉㄜ˙)時(ㄕˊ)候(ㄏㄡˋ)，我(ㄨㄛˇ)跟(ㄍㄣ)朋(ㄆㄥˊ)友(ㄧㄡˇ)一(ㄧˋ)起(ㄑㄧˇ)玩(ㄨㄢˊ)。</div>
+                        <div class="en-trans">During Halloween, I hung out with my friends.</div>
+                    </div>
+                </div>
+
+                <div class="item-content">
+                    <div class="btn-group">
+                        <button class="audio-btn" onclick="playAudioText(this)">🔊</button>
+                        <button class="audio-btn" onclick="toggleRecord(this)">🎤</button>
+                        <button class="play-rec-btn" disabled>▶</button>
+                    </div>
+                    <div style="flex:1;">
+                        <div class="zy-text">很(ㄏㄣˇ)多(ㄉㄨㄛ)人(ㄖㄣˊ)都(ㄉㄡ)喜(ㄒㄧˇ)歡(ㄏㄨㄢ)玩(ㄨㄢˊ)手(ㄕㄡˇ)機(ㄐㄧ)。</div>
+                        <div class="en-trans">Many people like playing on their phones.</div>
+                    </div>
+                </div>
+
+                <div class="item-content">
+                    <div class="btn-group">
+                        <button class="audio-btn" onclick="playAudioText(this)">🔊</button>
+                        <button class="audio-btn" onclick="toggleRecord(this)">🎤</button>
+                        <button class="play-rec-btn" disabled>▶</button>
+                    </div>
+                    <div style="flex:1;">
+                        <div class="zy-text">我(ㄨㄛˇ)喜(ㄒㄧˇ)歡(ㄏㄨㄢ)玩(ㄨㄢˊ)我(ㄨㄛˇ)的(ㄉㄜ˙)貓(ㄇㄠ)。</div>
+                        <div class="en-trans">I like teasing / playing with my cat.</div>
+                    </div>
+                </div>
+
+                <div class="item-content">
+                    <div class="btn-group">
+                        <button class="audio-btn" onclick="playAudioText(this)">🔊</button>
+                        <button class="audio-btn" onclick="toggleRecord(this)">🎤</button>
+                        <button class="play-rec-btn" disabled>▶</button>
+                    </div>
+                    <div style="flex:1;">
+                        <div class="zy-text">我(ㄨㄛˇ)喜(ㄒㄧˇ)歡(ㄏㄨㄢ)跟(ㄍㄣ)我(ㄨㄛˇ)的(ㄉㄜ˙)貓(ㄇㄠ)一(ㄧˋ)起(ㄑㄧˇ)玩(ㄨㄢˊ)。</div>
+                        <div class="en-trans">I like playing together with my cat.</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 7. 同事/同學 -->
+            <div class="grammar-box" id="hw-7">
+                <div style="font-weight:bold; font-size:16px; color:#8C6239; margin-bottom:5px;">7. 同事 / 同學 (Colleague / Classmate)</div>
+
+                <div class="item-content">
+                    <div class="btn-group">
+                        <button class="audio-btn" onclick="playAudioText(this)">🔊</button>
+                        <button class="audio-btn" onclick="toggleRecord(this)">🎤</button>
+                        <button class="play-rec-btn" disabled>▶</button>
+                    </div>
+                    <div style="flex:1;">
+                        <div class="zy-text">我(ㄨㄛˇ)的(ㄉㄜ˙)貓(ㄇㄠ)現(ㄒㄧㄢˋ)在(ㄗㄞˋ)是(ㄕˋ)我(ㄨㄛˇ)的(ㄉㄜ˙)同(ㄊㄨㄥˊ)事(ㄕˋ)。</div>
+                        <div class="en-trans">My cat is now my colleague.</div>
+                    </div>
+                </div>
+
+                <div class="item-content">
+                    <div class="btn-group">
+                        <button class="audio-btn" onclick="playAudioText(this)">🔊</button>
+                        <button class="audio-btn" onclick="toggleRecord(this)">🎤</button>
+                        <button class="play-rec-btn" disabled>▶</button>
+                    </div>
+                    <div style="flex:1;">
+                        <div class="zy-text">他(ㄊㄚ)是(ㄕˋ)我(ㄨㄛˇ)的(ㄉㄜ˙)同(ㄊㄨㄥˊ)學(ㄒㄩㄝˊ)，我(ㄨㄛˇ)們(ㄇㄣ˙)常(ㄔㄤˊ)常(ㄔㄤˊ)一(ㄧˋ)起(ㄑㄧˇ)學(ㄒㄩㄝˊ)中(ㄓㄨㄥ)文(ㄨㄣˊ)。</div>
+                        <div class="en-trans">He is my classmate; we often learn Chinese together.</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 8. 小朋友/小孩 -->
+            <div class="grammar-box" id="hw-8">
+                <div style="font-weight:bold; font-size:16px; color:#8C6239; margin-bottom:5px;">8. 小朋友 / 小孩 (Kids / Children)</div>
+                <div class="note">
+                    <b>💡 Usage Note:</b> <b>小朋友</b> is used affectionately when speaking directly to young children. <b>小孩</b> is a general term for children or one's own offspring.
+                </div>
+
+                <div class="item-content">
+                    <div class="btn-group">
+                        <button class="audio-btn" onclick="playAudioText(this)">🔊</button>
+                        <button class="audio-btn" onclick="toggleRecord(this)">🎤</button>
+                        <button class="play-rec-btn" disabled>▶</button>
+                    </div>
+                    <div style="flex:1;">
+                        <div class="zy-text">小(ㄒㄧㄠˇ)朋(ㄆㄥˊ)友(ㄧㄡˇ)，你(ㄋㄧˇ)不(ㄅㄨˋ)可(ㄎㄜˇ)以(ㄧˇ)吃(ㄔ)太(ㄊㄞˋ)多(ㄉㄨㄛ)糖(ㄊㄤˊ)果(ㄍㄨㄛˇ)喔(ㄛ˙)！</div>
+                        <div class="en-trans">Little kid, you shouldn't eat too much candy!</div>
+                    </div>
+                </div>
+
+                <div class="item-content">
+                    <div class="btn-group">
+                        <button class="audio-btn" onclick="playAudioText(this)">🔊</button>
+                        <button class="audio-btn" onclick="toggleRecord(this)">🎤</button>
+                        <button class="play-rec-btn" disabled>▶</button>
+                    </div>
+                    <div style="flex:1;">
+                        <div class="zy-text">小(ㄒㄧㄠˇ)朋(ㄆㄥˊ)友(ㄧㄡˇ)，你(ㄋㄧˇ)不(ㄅㄨˋ)要(ㄧㄠˋ)哭(ㄎㄨ)，我(ㄨㄛˇ)帶(ㄉㄞˋ)你(ㄋㄧˇ)去(ㄑㄩˋ)買(ㄇㄞˇ)冰(ㄅㄧㄥ)淇(ㄑㄧ)淋(ㄌㄧㄣˊ)。</div>
+                        <div class="en-trans">Little kid, don't cry; I'll take you to buy ice cream.</div>
+                    </div>
+                </div>
+
+                <div class="item-content">
+                    <div class="btn-group">
+                        <button class="audio-btn" onclick="playAudioText(this)">🔊</button>
+                        <button class="audio-btn" onclick="toggleRecord(this)">🎤</button>
+                        <button class="play-rec-btn" disabled>▶</button>
+                    </div>
+                    <div style="flex:1;">
+                        <div class="zy-text">我(ㄨㄛˇ)沒(ㄇㄟˊ)有(ㄧㄡˇ)小(ㄒㄧㄠˇ)孩(ㄏㄞˊ)，因(ㄧㄣ)為(ㄨㄟˋ)我(ㄨㄛˇ)覺(ㄐㄩㄝˊ)得(ㄉㄜ˙)有(ㄧㄡˇ)小(ㄒㄧㄠˇ)孩(ㄏㄞˊ)，會(ㄏㄨㄟˋ)花(ㄏㄨㄚ)很(ㄏㄣˇ)多(ㄉㄨㄛ)錢(ㄑㄧㄢˊ)。</div>
+                        <div class="en-trans">I don't have children, because I think having children costs a lot of money.</div>
+                    </div>
+                </div>
+
+                <div class="item-content">
+                    <div class="btn-group">
+                        <button class="audio-btn" onclick="playAudioText(this)">🔊</button>
+                        <button class="audio-btn" onclick="toggleRecord(this)">🎤</button>
+                        <button class="play-rec-btn" disabled>▶</button>
+                    </div>
+                    <div style="flex:1;">
+                        <div class="zy-text">我(ㄨㄛˇ)的(ㄉㄜ˙)哥(ㄍㄜ)哥(ㄍㄜ˙)有(ㄧㄡˇ)兩(ㄌㄧㄤˇ)個(ㄍㄜ˙)小(ㄒㄧㄠˇ)孩(ㄏㄞˊ)。</div>
+                        <div class="en-trans">My older brother has two children.</div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Section 3: Lesson 12 -->
+        <div class="section" id="sec-2">
+            <h2>3. Lesson 12 (第十二課)</h2>
+            
+            <!-- 1. 課 (量詞與第幾課) -->
+            <div class="grammar-box" id="ls-1">
+                <div style="font-weight:bold; font-size:16px; color:#8C6239; margin-bottom:5px;">1. 課 (Lesson - Measure word & Ordinals)</div>
+                <div class="note">
+                    <b>💡 Rule:</b> <b>課</b> itself is a measure word! Do NOT add "個" in front of it.<br>
+                    • <b>十二課</b> = 12 lessons (quantity)<br>
+                    • <b>第十二課</b> = Lesson 12 (ordinal number)
+                </div>
+
+                <div class="item-content">
+                    <div class="btn-group">
+                        <button class="audio-btn" onclick="playAudioText(this)">🔊</button>
+                        <button class="audio-btn" onclick="toggleRecord(this)">🎤</button>
+                        <button class="play-rec-btn" disabled>▶</button>
+                    </div>
+                    <div style="flex:1;">
+                        <div class="zy-text">我(ㄨㄛˇ)明(ㄇㄧㄥˊ)天(ㄊㄧㄢ)一(ㄧˋ)共(ㄍㄨㄥˋ)要(ㄧㄠˋ)考(ㄎㄠˇ)十(ㄕˊ)二(ㄦˋ)課(ㄎㄜˋ)，我(ㄨㄛˇ)還(ㄏㄞˊ)有(ㄧㄡˇ)十(ㄕˊ)課(ㄎㄜˋ)沒(ㄇㄟˊ)看(ㄎㄢˋ)完(ㄨㄢˊ)，怎(ㄗㄣˇ)麼(ㄇㄜ˙)辦(ㄅㄢˋ)！！</div>
+                        <div class="en-trans">Tomorrow I have to take tests on 12 lessons in total, and I still have 10 lessons unread. What should I do!!</div>
+                    </div>
+                </div>
+
+                <div class="item-content">
+                    <div class="btn-group">
+                        <button class="audio-btn" onclick="playAudioText(this)">🔊</button>
+                        <button class="audio-btn" onclick="toggleRecord(this)">🎤</button>
+                        <button class="play-rec-btn" disabled>▶</button>
+                    </div>
+                    <div style="flex:1;">
+                        <div class="zy-text">我(ㄨㄛˇ)明(ㄇㄧㄥˊ)天(ㄊㄧㄢ)要(ㄧㄠˋ)考(ㄎㄠˇ)第(ㄉㄧˋ)十(ㄕˊ)二(ㄦˋ)課(ㄎㄜˋ)。</div>
+                        <div class="en-trans">Tomorrow I am going to be tested on Lesson 12.</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 2. 富士山 -->
+            <div class="grammar-box" id="ls-2">
+                <div style="font-weight:bold; font-size:16px; color:#8C6239; margin-bottom:5px;">2. 富士山 (Mount Fuji)</div>
+
+                <div class="item-content">
+                    <div class="btn-group">
+                        <button class="audio-btn" onclick="playAudioText(this)">🔊</button>
+                        <button class="audio-btn" onclick="toggleRecord(this)">🎤</button>
+                        <button class="play-rec-btn" disabled>▶</button>
+                    </div>
+                    <div style="flex:1;">
+                        <div class="zy-text">昨(ㄗㄨㄛˊ)天(ㄊㄧㄢ)他(ㄊㄚ)們(ㄇㄣ˙)一(ㄧˋ)家(ㄐㄧㄚ)人(ㄖㄣˊ)去(ㄑㄩˋ)了(ㄌㄜ˙)日(ㄖˋ)本(ㄅㄣˇ)的(ㄉㄜ˙)富(ㄈㄨˋ)士(ㄕˋ)山(ㄕㄢ)。</div>
+                        <div class="en-trans">Yesterday their whole family went to Mount Fuji in Japan.</div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Section 4: Translation Practice -->
+        <div class="section" id="sec-3">
+            <h2>4. Translation Practice (翻譯練習)</h2>
+            <p style="color:#666; font-size:15px; margin-bottom:15px;">Translate the following English sentences into Chinese:</p>
+
+            <div class="grammar-box">
+                <div style="font-weight:bold; color:#8C6239; margin-bottom:5px;">1. You should rest for half an hour.</div>
+                <div class="item-content">
+                    <div class="btn-group">
+                        <button class="audio-btn" onclick="playAudioText(this)">🔊</button>
+                        <button class="audio-btn" onclick="toggleRecord(this)">🎤</button>
+                        <button class="play-rec-btn" disabled>▶</button>
+                    </div>
+                    <div style="flex:1;">
+                        <div class="zy-text">你(ㄋㄧˇ)應(ㄧㄥ)該(ㄍㄞ)休(ㄒㄧㄡ)息(ㄒㄧˊ)半(ㄅㄢˋ)個(ㄍㄜ˙)小(ㄒㄧㄠˇ)時(ㄕˊ)。</div>
+                        <div class="en-trans">Answer: 你應該休息半個小時。</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grammar-box">
+                <div style="font-weight:bold; color:#8C6239; margin-bottom:5px;">2. He already bought a few Scallion pancakes, he still wants to buy ten more.</div>
+                <div class="item-content">
+                    <div class="btn-group">
+                        <button class="audio-btn" onclick="playAudioText(this)">🔊</button>
+                        <button class="audio-btn" onclick="toggleRecord(this)">🎤</button>
+                        <button class="play-rec-btn" disabled>▶</button>
+                    </div>
+                    <div style="flex:1;">
+                        <div class="zy-text">他(ㄊㄚ)已(ㄧˇ)經(ㄐㄧㄥ)買(ㄇㄞˇ)了(ㄌㄜ˙)幾(ㄐㄧˇ)個(ㄍㄜ˙)蔥(ㄘㄨㄥ)抓(ㄓㄨㄚ)餅(ㄅㄧㄥˇ)，他(ㄊㄚ)還(ㄏㄞˊ)想(ㄒㄧㄤˇ)再(ㄗㄞˋ)買(ㄇㄞˇ)十(ㄕˊ)個(ㄍㄜ˙)。</div>
+                        <div class="en-trans">Answer: 他已經買了幾個蔥抓餅，他還想再買十個。</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grammar-box">
+                <div style="font-weight:bold; color:#8C6239; margin-bottom:5px;">3. Which month do you like to travel?</div>
+                <div class="item-content">
+                    <div class="btn-group">
+                        <button class="audio-btn" onclick="playAudioText(this)">🔊</button>
+                        <button class="audio-btn" onclick="toggleRecord(this)">🎤</button>
+                        <button class="play-rec-btn" disabled>▶</button>
+                    </div>
+                    <div style="flex:1;">
+                        <div class="zy-text">你(ㄋㄧˇ)喜(ㄒㄧˇ)歡(ㄏㄨㄢ)幾(ㄐㄧˇ)月(ㄩㄝˋ)去(ㄑㄩˋ)旅(ㄌㄩˇ)行(ㄒㄧㄥˊ)？</div>
+                        <div class="en-trans">Answer: 你喜歡幾月去旅行？</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grammar-box">
+                <div style="font-weight:bold; color:#8C6239; margin-bottom:5px;">4. I think the scenery of Sun Moon Lake is very beautiful.</div>
+                <div class="item-content">
+                    <div class="btn-group">
+                        <button class="audio-btn" onclick="playAudioText(this)">🔊</button>
+                        <button class="audio-btn" onclick="toggleRecord(this)">🎤</button>
+                        <button class="play-rec-btn" disabled>▶</button>
+                    </div>
+                    <div style="flex:1;">
+                        <div class="zy-text">我(ㄨㄛˇ)覺(ㄐㄩㄝˊ)得(ㄉㄜ˙)日(ㄖˋ)月(ㄩㄝˋ)潭(ㄊㄢˊ)的(ㄉㄜ˙)風(ㄈㄥ)景(ㄐㄧㄥˇ)很(ㄏㄣˇ)漂(ㄆㄧㄠˋ)亮(ㄌㄧㄤˋ)。</div>
+                        <div class="en-trans">Answer: 我覺得日月潭的風景漂亮。</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grammar-box">
+                <div style="font-weight:bold; color:#8C6239; margin-bottom:5px;">5. Winter in Minnesota is a snowy season.</div>
+                <div class="item-content">
+                    <div class="btn-group">
+                        <button class="audio-btn" onclick="playAudioText(this)">🔊</button>
+                        <button class="audio-btn" onclick="toggleRecord(this)">🎤</button>
+                        <button class="play-rec-btn" disabled>▶</button>
+                    </div>
+                    <div style="flex:1;">
+                        <div class="zy-text">明(ㄇㄧㄥˊ)尼(ㄋㄧˊ)蘇(ㄙㄨ)達(ㄉㄚˊ)的(ㄉㄜ˙)冬(ㄉㄨㄥ)天(ㄊㄧㄢ)是(ㄕˋ)下(ㄒㄧㄚˋ)雪(ㄒㄩㄝˇ)的(ㄉㄜ˙)季(ㄐㄧˋ)節(ㄐㄧㄝˊ)。</div>
+                        <div class="en-trans">Answer: 明尼蘇達的冬天是下雪的季節。</div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Section 5: Reading Comprehension -->
+        <div class="section" id="sec-4">
+            <h2>5. Reading Comprehension (閱讀理解)</h2>
+            <p style="color:#666; font-size:15px; margin-bottom:15px;">Read the passage carefully and answer the questions below:</p>
+
+            <div class="reading-paragraph">
+                <div class="item-content">
+                    <div class="btn-group">
+                        <button class="audio-btn" onclick="playAudioText(this)">🔊</button>
+                        <button class="audio-btn" onclick="toggleRecord(this)">🎤</button>
+                        <button class="play-rec-btn" disabled>▶</button>
+                    </div>
+                    <div style="flex:1;">
+                        <div class="zy-text">禮(ㄌㄧˇ)拜(ㄅㄞˋ)六(ㄌㄧㄡˋ)早(ㄗㄠˇ)上(ㄕㄤˋ)，星(ㄒㄧㄥ)佑(ㄧㄡˋ)和(ㄏㄢˋ)同(ㄊㄨㄥˊ)學(ㄒㄩㄝˊ)美(ㄇㄟˇ)夏(ㄒㄧㄚˋ)一(ㄧˋ)起(ㄑㄧˇ)去(ㄑㄩˋ)日(ㄖˋ)月(ㄩㄝˋ)潭(ㄊㄢˊ)旅(ㄌㄩˇ)行(ㄒㄧㄥˊ)。天(ㄊㄧㄢ)氣(ㄑㄧˋ)很(ㄏㄣˇ)好(ㄏㄠˇ)，他(ㄊㄚ)們(ㄇㄣ˙)很(ㄏㄣˇ)高(ㄍㄠ)興(ㄒㄧㄥˋ)。路(ㄌㄨˋ)上(ㄕㄤˋ)，美(ㄇㄟˇ)夏(ㄒㄧㄚˋ)看(ㄎㄢˋ)著(ㄓㄜ˙)車(ㄔㄜ)外(ㄨㄞˋ)說(ㄕㄨㄛ)：「你(ㄋㄧˇ)看(ㄎㄢˋ)，外(ㄨㄞˋ)面(ㄇㄧㄢˋ)的(ㄉㄜ˙)風(ㄈㄥ)景(ㄐㄧㄥˇ)好(ㄏㄠˇ)漂(ㄆㄧㄠˋ)亮(ㄌㄧㄤˋ)！」星(ㄒㄧㄥ)佑(ㄧㄡˋ)看(ㄎㄢˋ)過(ㄍㄨㄛˋ)去(ㄑㄩˋ)，樹(ㄕㄨˋ)葉(ㄧㄝˋ)有(ㄧㄡˇ)綠(ㄌㄩˋ)的(ㄉㄜ˙)，也(ㄧㄝˇ)有(ㄧㄡˇ)黃(ㄏㄨㄤˊ)的(ㄉㄜ˙)。他(ㄊㄚ)說(ㄕㄨㄛ)：「秋(ㄑㄧㄡ)天(ㄊㄧㄢ)來(ㄌㄞˊ)了(ㄌㄜ˙)。」到(ㄉㄠˋ)了(ㄌㄜ˙)日(ㄖˋ)月(ㄩㄝˋ)潭(ㄊㄢˊ)，他(ㄊㄚ)們(ㄇㄣ˙)看(ㄎㄢˋ)見(ㄐㄧㄢˋ)湖(ㄏㄨˊ)的(ㄉㄜ˙)一(ㄧˋ)半(ㄅㄢˋ)是(ㄕˋ)藍(ㄌㄢˊ)色(ㄙㄜˋ)的(ㄉㄜ˙)，一(ㄧˋ)半(ㄅㄢˋ)是(ㄕˋ)綠(ㄌㄩˋ)色(ㄙㄜˋ)的(ㄉㄜ˙)山(ㄕㄢ)。湖(ㄏㄨˊ)邊(ㄅㄧㄢ)有(ㄧㄡˇ)很(ㄏㄣˇ)多(ㄉㄨㄛ)小(ㄒㄧㄠˇ)朋(ㄆㄥˊ)友(ㄧㄡˇ)一(ㄧˋ)邊(ㄅㄧㄢ)跑(ㄆㄠˇ)步(ㄅㄨˋ)一(ㄧˋ)邊(ㄅㄧㄢ)玩(ㄨㄢˊ)。一(ㄧˋ)個(ㄍㄜ˙)小(ㄒㄧㄠˇ)孩(ㄏㄞˊ)拿(ㄋㄚˊ)著(ㄓㄜ˙)一(ㄧˋ)串(ㄔㄨㄢˋ)葡(ㄆㄨˊ)萄(ㄊㄠˊ)跑(ㄆㄠˇ)過(ㄍㄨㄛˋ)來(ㄌㄞˊ)說(ㄕㄨㄛ)：「你(ㄋㄧˇ)們(ㄇㄣ˙)要(ㄧㄠˋ)不(ㄅㄨˋ)要(ㄧㄠˋ)吃(ㄔ)？」星(ㄒㄧㄥ)佑(ㄧㄡˋ)和(ㄏㄢˋ)美(ㄇㄟˇ)夏(ㄒㄧㄚˋ)說(ㄕㄨㄛ)：「謝(ㄒㄧㄝˋ)謝(ㄒㄧㄝ˙)你(ㄋㄧˇ)！」中(ㄓㄨㄥ)午(ㄨˇ)，美(ㄇㄟˇ)夏(ㄒㄧㄚˋ)買(ㄇㄞˇ)了(ㄌㄜ˙)蔥(ㄘㄨㄥ)油(ㄧㄡˊ)餅(ㄅㄧㄥˇ)。星(ㄒㄧㄥ)佑(ㄧㄡˋ)吃(ㄔ)完(ㄨㄢˊ)，覺(ㄐㄩㄝˊ)得(ㄉㄜ˙)很(ㄏㄣˇ)好(ㄏㄠˇ)吃(ㄔ)。下(ㄒㄧㄚˋ)午(ㄨˇ)，美(ㄇㄟˇ)夏(ㄒㄧㄚˋ)說(ㄕㄨㄛ)：「我(ㄨㄛˇ)們(ㄇㄣ˙)去(ㄑㄩˋ)那(ㄋㄚˋ)邊(ㄅㄧㄢ)跑(ㄆㄠˇ)步(ㄅㄨˋ)吧(ㄅㄚ˙)！」星(ㄒㄧㄥ)佑(ㄧㄡˋ)說(ㄕㄨㄛ)：「好(ㄏㄠˇ)啊(ㄚ˙)！」他(ㄊㄚ)們(ㄇㄣ˙)跑(ㄆㄠˇ)過(ㄍㄨㄛˋ)一(ㄧˋ)棵(ㄎㄜ)大(ㄉㄚˋ)樹(ㄕㄨˋ)，樹(ㄕㄨˋ)下(ㄒㄧㄚˋ)有(ㄧㄡˇ)很(ㄏㄣˇ)多(ㄉㄨㄛ)葉(ㄧㄝˋ)子(ㄗ˙)。跑(ㄆㄠˇ)完(ㄨㄢˊ)步(ㄅㄨˋ)，他(ㄊㄚ)們(ㄇㄣ˙)坐(ㄗㄨㄛˋ)在(ㄗㄞˋ)湖(ㄏㄨˊ)邊(ㄅㄧㄢ)休(ㄒㄧㄡ)息(ㄒㄧˊ)。美(ㄇㄟˇ)夏(ㄒㄧㄚˋ)說(ㄕㄨㄛ)：「我(ㄨㄛˇ)們(ㄇㄣ˙)明(ㄇㄧㄥˊ)年(ㄋㄧㄢˊ)再(ㄗㄞˋ)來(ㄌㄞˊ)吧(ㄅㄚ˙)。」星(ㄒㄧㄥ)佑(ㄧㄡˋ)說(ㄕㄨㄛ)：「好(ㄏㄠˇ)，我(ㄨㄛˇ)們(ㄇㄣ˙)明(ㄇㄧㄥˊ)年(ㄋㄧㄢˊ)一(ㄧˋ)起(ㄑㄧˇ)來(ㄌㄞˊ)。」</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Reading Questions -->
+            <div class="grammar-box">
+                <div class="homework-q">問題 1. 為什麼星佑覺得現在是秋天?</div>
+                <textarea class="hw-textarea" placeholder="請用中文回答..."></textarea>
+            </div>
+
+            <div class="grammar-box">
+                <div class="homework-q">問題 2. 你覺得為什麼美夏想在湖邊跑步?</div>
+                <textarea class="hw-textarea" placeholder="請用中文回答..."></textarea>
+            </div>
+
+            <div class="grammar-box">
+                <div class="homework-q">問題 3. 日月潭旁邊的小孩人很好嗎?</div>
+                <textarea class="hw-textarea" placeholder="請用中文回答..."></textarea>
+            </div>
+
+            <div class="grammar-box">
+                <div class="homework-q">問題 4. 為什麼美夏最後會說 : 明年再來吧?</div>
+                <textarea class="hw-textarea" placeholder="請用中文回答..."></textarea>
+            </div>
+
+        </div>
+
+    </div>
+
+    <script>
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const mainContent = document.getElementById('mainContent');
+            if (window.innerWidth <= 900) {
+                sidebar.classList.toggle('active');
+            } else {
+                sidebar.classList.toggle('collapsed');
+                mainContent.classList.toggle('expanded');
+            }
+        }
+
+        // ====== Interactive Quiz Checker ======
+        function checkQuiz(qName, correctVal, exp, feedbackId) {
+            const selected = document.querySelector(`input[name="${qName}"]:checked`);
+            const fb = document.getElementById(feedbackId);
+            if (!selected) {
+                fb.className = "quiz-feedback incorrect";
+                fb.innerHTML = "⚠️ Please select an answer first!";
+                fb.style.display = "block";
+                return;
+            }
+            if (selected.value === correctVal) {
+                fb.className = "quiz-feedback correct";
+                fb.innerHTML = "✅ <b>Correct!</b> " + exp;
+            } else {
+                fb.className = "quiz-feedback incorrect";
+                fb.innerHTML = "❌ <b>Incorrect.</b> Try again! " + exp;
+            }
+            fb.style.display = "block";
+        }
+
+        // ====== Parse Zhuyin on Load (DOM based) ======
+        function parseZhuyinDOM() {
+            const regex = /([\u4e00-\u9fa5a-zA-Z0-9])\((.*?)\)/g;
+            document.querySelectorAll('.zy-text').forEach(el => {
+                let html = el.innerHTML;
+                let parsed = html.replace(regex, (match, char, zy) => {
+                    let tone = '';
+                    let symbols = zy;
+                    let isNeutral = false;
+                    
+                    if (zy.includes('ˊ')) { tone = 'ˊ'; symbols = zy.replace('ˊ', ''); }
+                    else if (zy.includes('ˇ')) { tone = 'ˇ'; symbols = zy.replace('ˇ', ''); }
+                    else if (zy.includes('ˋ')) { tone = 'ˋ'; symbols = zy.replace('ˋ', ''); }
+                    else if (zy.includes('˙')) { isNeutral = true; symbols = zy.replace('˙', ''); }
+
+                    let toneHtml = tone ? `<span class="zy-tone">${tone}</span>` : '';
+                    let neutralHtml = isNeutral ? `<span class="zy-neutral">˙</span>` : '';
+
+                    return `<div class="zy-char-wrap"><span class="zy-char">${char}</span><div class="zy-box">${neutralHtml}<span class="zy-symbols">${symbols}</span>${toneHtml}</div></div>`;
+                });
+                el.innerHTML = parsed;
+            });
+        }
+        document.addEventListener("DOMContentLoaded", parseZhuyinDOM);
+
+        // ====== Audio Reading ======
+        let currentUtteranceText = "";
+        function playAudioText(btn) {
+            let container = btn.closest('.item-content');
+            let zyDiv = container.querySelector('.zy-text');
+            if(!zyDiv) return;
+            
+            let chars = zyDiv.querySelectorAll('.zy-char');
+            let cleanText = "";
+            if(chars.length > 0) {
+                chars.forEach(c => cleanText += c.innerText);
+                cleanText = zyDiv.innerText.replace(/[\u3105-\u312Cˊˇˋ˙]/g, '').replace(/\n/g,'').trim();
+            } else {
+                cleanText = zyDiv.innerText.replace(/\(.*?\)/g, '');
+            }
+            
+            // Remove speaker prefixes like A: B: A： B： Q: A: so they are not pronounced
+            cleanText = cleanText.replace(/^[A-Z0-9]+[：:]\s*/gi, '').replace(/\s+[A-Z0-9]+[：:]\s*/gi, ' ').replace(/[A-Z0-9]+[：:]/gi, '');
+            cleanText = cleanText.replace(/\//g, ' ');
+
+            if (speechSynthesis.speaking && currentUtteranceText === cleanText) {
+                if (speechSynthesis.paused) {
+                    speechSynthesis.resume();
+                } else {
+                    speechSynthesis.pause();
+                }
+                return;
+            }
+
+            speechSynthesis.cancel(); 
+            currentUtteranceText = cleanText;
+            const utterance = new SpeechSynthesisUtterance(cleanText);
+            utterance.lang = 'zh-TW';
+            utterance.rate = 0.85;
+            utterance.onend = () => { currentUtteranceText = ""; };
+            speechSynthesis.speak(utterance);
+        }
+
+        // ====== Audio Recording ======
+        let mediaRecorders = {};
+        let recIdCounter = 0;
+        async function toggleRecord(btn) {
+            let container = btn.closest('.item-content');
+            let player = container.querySelector('audio');
+            let playBtn = container.querySelector('.play-rec-btn');
+            
+            if (!btn.dataset.recId) {
+                btn.dataset.recId = "rec-" + recIdCounter++;
+            }
+            let id = btn.dataset.recId;
+
+            if (!player) {
+                player = document.createElement('audio');
+                player.controls = true;
+                player.style.display = 'none';
+                player.style.width = '100%';
+                player.style.marginTop = '10px';
+                container.appendChild(player);
+            }
+
+            if (!mediaRecorders[id] || mediaRecorders[id].state === "inactive") {
+                try {
+                    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+                    let chunks = [];
+                    let recorder = new MediaRecorder(stream);
+                    
+                    recorder.ondataavailable = e => chunks.push(e.data);
+                    recorder.onstop = () => {
+                        const blob = new Blob(chunks, { 'type': 'audio/webm' });
+                        player.src = URL.center || URL.createObjectURL(blob);
+                        player.style.display = 'block';
+                        playBtn.disabled = false;
+                        playBtn.onclick = () => player.play();
+                        stream.getTracks().forEach(track => track.stop());
+                    };
+
+                    recorder.start();
+                    mediaRecorders[id] = recorder;
+                    btn.innerHTML = "⏹️";
+                    btn.classList.add("recording");
+                    player.style.display = 'none';
+                } catch (err) {
+                    alert("Microphone access denied. 請允許瀏覽器使用麥克風。");
+                }
+            } else {
+                mediaRecorders[id].stop();
+                btn.innerHTML = "🎤";
+                btn.classList.remove("recording");
+            }
+        }
+
+        // Toggle visibility
+        let zyVisible = true;
+        let enVisible = true;
+
+        function toggleZhuyin() {
+            zyVisible = !zyVisible;
+            document.querySelectorAll('.zy-box').forEach(el => {
+                el.style.display = zyVisible ? 'inline-flex' : 'none';
+            });
+        }
+
+        function toggleEnglish() {
+            enVisible = !enVisible;
+            document.querySelectorAll('.en-trans').forEach(el => {
+                el.style.display = enVisible ? 'block' : 'none';
+            });
+        }
+    </script>
+</body>
+</html>
