@@ -80,10 +80,14 @@
 
         /* 上排拼音与汉字排版 */
         .pinyin-group { display: inline-flex; flex-direction: column; align-items: center; margin-right: 3px; vertical-align: bottom; }
-        .py-text { font-size: 11px; color: #777; line-height: 1; margin-bottom: 2px; }
+        .py-text { font-size: 11px; color: #777; line-height: 1; margin-bottom: 2px; display: block; }
         .hz-text { font-size: 15px; font-family: 'Helvetica Neue', Arial, sans-serif; line-height: 1.2; font-weight: normal; }
         
-        .en-trans { color: #666; font-size: 15px; font-style: italic; margin-top: 5px; }
+        .en-trans { color: #666; font-size: 15px; font-style: italic; margin-top: 5px; display: block; }
+
+        /* 隐藏拼音与英文的控制类 */
+        body.hide-pinyin .py-text { display: none !important; }
+        body.hide-english .en-trans { display: none !important; }
 
         @media (max-width: 900px) {
             .sidebar { transform: translateX(-100%); }
@@ -338,7 +342,7 @@
                         title: "4. 所幸",
                         note: "解释：等於幸运的是。",
                         examples: [
-                            { zh: "所幸今天没有下雨，因為我没带伞出门。", en: "Fortunately it didn't rain today, because I didn't bring an umbrella when I went out." }
+                            { zh: "所幸今天沒有下雨，因為我没带伞出门。", en: "Fortunately it didn't rain today, because I didn't bring an umbrella when I went out." }
                         ]
                     },
                     {
@@ -412,21 +416,13 @@
             container.innerHTML += html;
         });
 
-        let pinyinVisible = true;
-        let enVisible = true;
-
+        // 修复：改用在 body 上切换 CSS 类名（hide-pinyin / hide-english），100% 稳定可靠不卡死
         function togglePinyin() {
-            pinyinVisible = !pinyinVisible;
-            document.querySelectorAll('.py-text').forEach(el => {
-                el.style.display = pinyinVisible ? 'block' : 'none';
-            });
+            document.body.classList.toggle('hide-pinyin');
         }
 
         function toggleEnglish() {
-            enVisible = !enVisible;
-            document.querySelectorAll('.en-trans').forEach(el => {
-                el.style.display = enVisible ? 'block' : 'none';
-            });
+            document.body.classList.toggle('hide-english');
         }
     </script>
 </body>
