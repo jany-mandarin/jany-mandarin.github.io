@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>菲利普的第38堂中文课</title>
+    <style>
+        :root { --bg: #FDFBF7; --primary: #D4A373; --text: #4a4a4a; --white: #fff; --sidebar-width: 280px; }
+        html { scroll-behavior: smooth; }
+        body { font-family: 'Helvetica Neue', Arial, sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; margin: 0; padding: 0; display: flex; transition: margin-left 0.3s ease; }
+        
+        /* 左侧收合大纲导览列 */
+        .sidebar { width: var(--sidebar-width); background: #FFF9F0; border-right: 1px solid #E6D5B8; height: 100vh; position: fixed; top: 0; left: 0; overflow-y: auto; padding: 20px; box-sizing: border-box; transition: transform 0.3s ease; z-index: 1000; }
+        .sidebar.collapsed { transform: translateX(-100%); }
+        .sidebar h3 { margin-top: 0; color: #8C6239; font-size: 18px; border-bottom: 2px solid var(--primary); padding-bottom: 8px; display: flex; justify-content: space-between; align-items: center; }
+        .sidebar ul { padding-left: 15px; margin: 5px 0 15px 0; list-style-type: disc; }
+        .sidebar li { margin-bottom: 6px; font-size: 13px; }
+        .sidebar .main-menu-item { font-weight: bold; margin-bottom: 4px; font-size: 14px; list-style-type: none; margin-left: -15px; }
+        .sidebar a { color: #555; text-decoration: none; display: block; }
+        .sidebar a:hover { color: #8C6239; font-weight: bold; }
+        
+        /* 切换按钮 */
+        .sidebar-toggle { position: fixed; top: 15px; left: 15px; z-index: 1100; background: var(--primary); color: white; border: none; padding: 8px 12px; border-radius: 6px; cursor: pointer; font-size: 14px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+
+        /* 主内容区 */
+        .main-content { margin-left: var(--sidebar-width); width: calc(100% - var(--sidebar-width)); padding: 20px 40px; box-sizing: border-box; max-width: 950px; transition: margin-left 0.3s ease, width 0.3s ease; }
+        .main-content.expanded { margin-left: 0; width: 100%; }
+
+        /* 顶部导览列 */
+        .top-nav { display: flex; justify-content: flex-end; gap: 20px; padding: 15px 20px; font-size: 15px; font-weight: bold; }
+        .top-nav a { color: var(--primary); text-decoration: none; }
+        .top-nav a:hover { text-decoration: underline; color: #B5835A; }
+
+        .header { text-align: center; border-bottom: 2px solid var(--primary); padding-bottom: 10px; margin-bottom: 20px; }
+        
+        .controls { position: sticky; top: 0; background: var(--bg); padding: 15px; text-align: center; border-bottom: 1px solid #ccc; z-index: 100; margin-bottom: 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); display: flex; justify-content: center; gap: 10px; }
+        button.control-btn { background: var(--primary); color: white; border: none; padding: 10px 15px; border-radius: 6px; cursor: pointer; font-size: 14px; font-weight: bold; }
+        button.control-btn:hover { background: #B5835A; }
+        
+        /* 图示化按钮 */
+        .icon-btn { background: #f8f9fa; border: 1px solid #ddd; border-radius: 50%; width: 38px; height: 38px; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; font-size: 16px; margin-right: 5px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); transition: background 0.2s; }
+        .icon-btn:hover { background: #e9ecef; }
+        .rec-btn.recording { background: #ff4d4f; color: white; animation: pulse 1.5s infinite; border-color: #ff4d4f; }
+        .play-rec-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
+
+        h2 { color: #8C6239; border-left: 5px solid var(--primary); padding-left: 10px; margin-top: 30px; }
+        .section { margin-bottom: 30px; background: var(--white); padding: 20px; border-radius: 12px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
+        .item { margin-bottom: 20px; display: flex; flex-direction: column; border-bottom: 1px dashed #eee; padding-bottom: 15px; }
+        .item-content { display: flex; align-items: center; flex-wrap: wrap; margin-bottom: 5px; gap: 5px; }
+        
+        .grammar-box { background: #FFF9F0; border: 1px solid #E6D5B8; border-radius: 8px; padding: 15px; margin: 15px 0; scroll-margin-top: 80px; }
+        .note { font-size: 15px; color: #555; margin-bottom: 10px; line-height: 1.6; }
+        
+        /* 表格样式统一强制设定 */
+        .custom-table { width: 100%; border-collapse: collapse; margin: 12px 0; background: #fff; border-radius: 6px; overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,0.05); }
+        .custom-table th, .custom-table td { border: 1px solid #E6D5B8; padding: 12px; text-align: left; vertical-align: top; font-size: 15px; color: #4a4a4a; line-height: 1.6; font-family: 'Helvetica Neue', Arial, sans-serif; }
+        .custom-table th { background: #F4EAD3; color: #8C6239; font-weight: bold; text-align: center; font-size: 16px; }
+
+        /* 内嵌图片样式 */
+        .inline-img { max-width: 250px; width: 100%; height: auto; border-radius: 8px; border: 1px solid #E6D5B8; box-shadow: 0 2px 5px rgba(0,0,0,0.05); display: block; margin: 10px auto; }
+
+        /* 录音播放器独立换行区块 */
+        .audio-player-container { width: 100%; margin-top: 8px; }
+        .audio-player-container audio { width: 100%; height: 36px; }
+
+        /* 上排拼音与汉字排版 */
+        .pinyin-group { display: inline-flex; flex-direction: column; align-items: center; margin-right: 3px; vertical-align: bottom; }
+        .py-text { font-size: 11px; color: #777; line-height: 1; margin-bottom: 2px; }
+        .hz-text { font-size: 15px; font-family: 'Helvetica Neue', Arial, sans-serif; line-height: 1.2; font-weight: normal; }
+        
+        .en-trans { color: #666; font-size: 15px; font-style: italic; margin-top: 5px; }
+
+        @media (max-width: 900px) {
+            .sidebar { transform: translateX(-100%); }
+            .sidebar.active { transform: translateX(0); }
+            .main-content { margin-left: 0; width: 100%; padding: 20px; }
+        }
+    </style>
+</head>
+<body>
+
+    <button class="sidebar-toggle" onclick="toggleSidebar()">☰ 目录</button>
+
+    <div class="sidebar" id="sidebar">
+        <h3>📖 目录 (Outline) <button style="background:none; border:none; color:#8C6239; font-weight:bold; cursor:pointer; font-size:16px;" onclick="toggleSidebar()">×</button></h3>
+        <ul style="padding-left: 0; list-style: none;">
+            <li class="main-menu-item"><a href="#sec-0">一、暖身 (Warm-up)</a></li>
+            <ul>
+                <li><a href="#item-0-0">1. 各种受伤的中文</a></li>
+                <li><a href="#item-0-1">2. 紧急处理、紧急包扎</a></li>
+                <li><a href="#item-0-2">3. 脉搏</a></li>
+                <li><a href="#item-0-3">4. 不幸中的大幸</a></li>
+                <li><a href="#item-0-4">5. 炼乳</a></li>
+            </ul>
+            <li class="main-menu-item" style="margin-top: 10px;"><a href="#sec-1">二、上次作业 (Homework Review)</a></li>
+            <ul>
+                <li><a href="#item-1-0">1. 席</a></li>
+                <li><a href="#item-1-1">2. 校方</a></li>
+                <li><a href="#item-1-2">3. 愁眉苦脸</a></li>
+                <li><a href="#item-1-3">4. 所幸</a></li>
+                <li><a href="#item-1-4">5. 最佳人气奖</a></li>
+                <li><a href="#item-1-5">6. 发音练习</a></li>
+            </ul>
+        </ul>
+    </div>
+
+    <div class="main-content" id="mainContent">
+        <div class="top-nav">
+            <a href="https://jany-mandarin.github.io/philip.html">Index</a>
+            <a href="philip_lesson_37.html">第37课</a>
+        </div>
+
+        <div class="header">
+            <h1>菲利普的第38堂中文课</h1>
+            <p>日期：2026/11/1</p>
+        </div>
+
+        <div class="controls">
+            <button class="control-btn" onclick="togglePinyin()">隐藏/显示拼音</button>
+            <button class="control-btn" onclick="toggleEnglish()">隐藏/显示英文</button>
+        </div>
+
+        <div id="content"></div>
+    </div>
+
+    <script>
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const mainContent = document.getElementById('mainContent');
+            if (window.innerWidth <= 900) {
+                sidebar.classList.toggle('active');
+            } else {
+                sidebar.classList.toggle('collapsed');
+                mainContent.classList.toggle('expanded');
+            }
+        }
+
+        function parsePinyin(text) {
+            const regex = /([一-龥a-zA-Z0-9，。？！、：""''()./])\((.*?)\)/g;
+            let parsed = text.replace(regex, (match, char, py) => {
+                return `<span class="pinyin-group"><span class="py-text">${py}</span><span class="hz-text">${char}</span></span>`;
+            });
+            return parsed;
+        }
+
+        let currentUtterance = null;
+        function playAudio(text) {
+            let cleanText = text.replace(/\(.*?\)/g, '');
+            if (speechSynthesis.speaking) {
+                speechSynthesis.cancel();
+                if (currentUtterance === cleanText) {
+                    currentUtterance = null;
+                    return;
+                }
+            }
+            const utterance = new SpeechSynthesisUtterance(cleanText);
+            utterance.lang = 'zh-CN';
+            utterance.rate = 0.85;
+            utterance.onend = () => { currentUtterance = null; };
+            currentUtterance = cleanText;
+            speechSynthesis.speak(utterance);
+        }
+
+        let mediaRecorders = {};
+        let audioUrls = {};
+
+        async function toggleRecord(btn, id) {
+            if (!mediaRecorders[id] || mediaRecorders[id].state === "inactive") {
+                try {
+                    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+                    let chunks = [];
+                    let recorder = new MediaRecorder(stream);
+                    
+                    recorder.ondataavailable = e => chunks.push(e.data);
+                    recorder.onstop = () => {
+                        const blob = new Blob(chunks, { 'type': 'audio/ogg; codecs=opus' });
+                        audioUrls[id] = URL.createObjectURL(blob);
+                        const playerContainer = document.getElementById(`audio-container-${id}`);
+                        playerContainer.innerHTML = `<audio controls src="${audioUrls[id]}"></audio>`;
+                    };
+
+                    recorder.start();
+                    mediaRecorders[id] = recorder;
+                    btn.innerHTML = "⏹️";
+                    btn.classList.add("recording");
+                } catch (err) {
+                    alert("麦克风权限被拒绝或不支持。");
+                }
+            } else {
+                mediaRecorders[id].stop();
+                btn.innerHTML = "🎤";
+                btn.classList.remove("recording");
+            }
+        }
+
+        const lessonData = [
+            {
+                title: "一、暖身 (Warm-up)",
+                items: [
+                    {
+                        type: "table",
+                        headers: ["受伤类型 (Type)", "说明 (Explanation)", "图示 (Image)"],
+                        rows: [
+                            ["<b>外伤</b>", "皮肤上有很明显地受伤，像是手断了也是外伤，不管严重或不严重。", "<img src='https://cdn.phototourl.com/member/2026-11-02-9efcd68a-348d-49ca-a962-a27165c87e2c.png' class='inline-img'>"],
+                            ["<b>内伤</b>", "身体里面器官的受伤，像是一些心臟、内臟等，也可以用在心裡受伤。", "<img src='https://cdn.phototourl.com/member/2026-11-02-8e296f10-9cb0-4a5f-be85-eaf943987cf2.png' class='inline-img'>"],
+                            ["<b>擦伤 / 皮外伤</b>", "就只是皮肤最外面受伤，可能会流血，但不是非常严重，口语叫擦伤，医生叫皮外伤。", "<img src='https://cdn.phototourl.com/member/2026-11-02-5cabffb1-4188-427c-b961-16518040225b.png' class='inline-img'>"],
+                            ["<b>瘀青 / 内出血</b>", "身体里面的血管破了，里面出血，口语叫瘀青，医生会叫内出血。", "<img src='https://cdn.phototourl.com/member/2026-11-02-adfcf27f-e7b8-4db7-8519-06bf028a6159.png' class='inline-img'>"],
+                            ["<b>撞伤</b>", "你的身体去撞到很硬的东西而受伤。", "<img src='https://cdn.phototourl.com/member/2026-11-02-5136b590-0e9b-4407-bef1-99b37a88f014.png' class='inline-img'>"],
+                            ["<b>脱臼</b>", "你的骨头位置跑掉了，医生可以帮你用回去，骨折是断掉。", "<img src='https://cdn.phototourl.com/member/2026-11-02-7daec135-f0ad-48a7-b869-b70588d112cb.png' class='inline-img'>"],
+                            ["<b>脑震荡</b>", "你的头脑撞到很硬的东西，可能会产生的不舒服反应。", "<img src='https://cdn.phototourl.com/member/2026-11-02-74c51b17-f982-49b7-a4ba-027b8cd01153.png' class='inline-img'>"]
+                        ]
+                    },
+                    {
+                        type: "grammar",
+                        title: "1. 各种受伤的中文 (例句练习)",
+                        note: "请跟读以下例句：<br>Explanation: Examples of injuries.",
+                        examples: [
+                            { zh: "我昨天在路上跌倒，因为没看到地上有个凸起物，我的手脚都有明显的擦伤，痛死我了。", en: "Yesterday I fell on the road because I didn't see a bump on the ground. My hands and feet had obvious scrapes, and it hurt like hell." },
+                            { zh: "昨天我的脚撞到桌角，现在有内伤，里面瘀血了。", en: "Yesterday my foot hit the corner of the table. Now I have an internal injury and bruising inside." },
+                            { zh: "那个小孩很喜欢乱跑，结果不小心脱臼了，幸好医生帮他乔回去。", en: "That child likes running around randomly and accidentally dislocated a joint. Fortunately, the doctor popped it back for him." },
+                            { zh: "跌倒去医院的时候，医生都会检查有没有脑震荡。", en: "When going to the hospital after a fall, doctors will always check for a concussion." }
+                        ]
+                    },
+                    {
+                        type: "grammar",
+                        title: "2. 紧急处理、紧急包扎",
+                        note: "解释：受重伤去医院的时候，医护人员都需要很快速地处理病人。包扎是指把受伤的地方包起来，避免再流血。<br>Explanation: Emergency treatment and bandaging.",
+                        examples: [
+                            { zh: "我昨天跌倒了，我赶快自己紧急包扎，先止血。", en: "I fell yesterday, and I quickly gave myself emergency bandaging to stop the bleeding first." }
+                        ]
+                    },
+                    {
+                        type: "grammar",
+                        title: "3. 脉搏",
+                        note: "解释：心脏跳动的次数。<br>Explanation: Pulse.",
+                        examples: [
+                            { zh: "去医院的第一件事是量血压和脉搏。", en: "The first thing when going to the hospital is to measure blood pressure and pulse." }
+                        ]
+                    },
+                    {
+                        type: "grammar",
+                        title: "4. 不幸中的大幸",
+                        note: "解释：在不幸运中唯一幸运的事情。<br>Explanation: A stroke of luck in the midst of misfortune.",
+                        examples: [
+                            { zh: "昨天我在路上跌倒，虽然很痛，可是不幸中的大幸，我不是撞到我的右手和头脑，不然更麻烦。", en: "Yesterday I fell on the road. Although it hurt very much, as a stroke of luck, I didn't hit my right hand or head, otherwise it would have been more troublesome." }
+                        ]
+                    },
+                    {
+                        type: "grammar",
+                        title: "5. 炼乳",
+                        note: "解释：就是人工提炼出来的牛奶，所以有这个名字。<br>Explanation: Condensed milk.",
+                        examples: [
+                            { zh: "越南人喜欢在咖啡里加炼乳，让咖啡变得很甜。", en: "Vietnamese people like to add condensed milk into coffee to make it very sweet." }
+                        ]
+                    }
+                ]
+            },
+            {
+                title: "二、上次作业 (Homework Review)",
+                items: [
+                    {
+                        type: "grammar",
+                        title: "1. 席",
+                        note: "解释：以前大家都是在地上放一块草席或竹席学习，睡觉的时候也是，所以席的意思就变成了位置。<br>Explanation: Mat / Seat / Banquet.",
+                        examples: []
+                    },
+                    {
+                        type: "table",
+                        headers: ["席的类型 (Type)", "说明 (Explanation)", "图示 (Image)"],
+                        rows: [
+                            ["<b>草席 / 竹席</b>", "用草或竹子做成的垫子，以前用来坐或睡。", "<img src='https://cdn.phototourl.com/member/2026-11-02-6ce0bb86-96d1-471e-bfc4-533f11f61e60.png' class='inline-img'>"],
+                            ["<b>宴席 / 筵席 / 酒席</b>", "比较正式的吃饭场合或派对。", "<img src='https://cdn.phototourl.com/member/2026-11-02-6b4d6ba8-833f-4f80-90a7-5cfc73a9f188.png' class='inline-img'>"],
+                            ["<b>席次</b>", "比较正式的场合会用这个字表示座位。", "<img src='https://cdn.phototourl.com/member/2026-11-02-4d2bdab0-f0bc-4fc3-91d5-46fe221f58e3.png' class='inline-img'>"],
+                            ["<b>出席</b>", "参加这个重要的宴席。", "<img src='https://cdn.phototourl.com/member/2026-11-02-96534d87-8513-49e9-85fb-65bd2f47410f.png' class='inline-img'>"],
+                            ["<b>离席</b>", "离开这个重要的宴席。", "<img src='https://cdn.phototourl.com/member/2026-11-02-90cd3a56-f70e-4eed-9dc8-b980cceeefad.png' class='inline-img'>"],
+                            ["<b>缺席</b>", "没有参加这个宴席。", "<img src='https://cdn.phototourl.com/member/2026-11-02-0a132bf8-692d-4ca3-a261-767638f70acf.png' class='inline-img'>"],
+                            ["<b>加一席</b>", "表示有人没有受到邀请，自己前来。", "（无图片）"],
+                            ["<b>天下无不散的筵席</b>", "表示天下一定会有分开的时候，但未来总会有再见面的时候，用在毕业、离職、离开一个地方，可以和大家说的话。", "<img src='https://cdn.phototourl.com/member/2026-11-02-ba51a7e7-c9fd-4e81-90fe-661bc8786045.png' class='inline-img'>"]
+                        ]
+                    },
+                    {
+                        type: "grammar",
+                        title: "席的例句练习",
+                        note: "请跟读以下例句：",
+                        examples: [
+                            { zh: "明天的会议很重要，我一定要出席，不然老闆会不开心。", en: "Tomorrow's meeting is very important. I must attend, otherwise the boss will be unhappy." },
+                            { zh: "明天的开会我要缺席了，不好意思，我家有事。", en: "I have to be absent from tomorrow's meeting. Sorry, I have something to take care of at home." },
+                            { zh: "我要先离席了，你们慢慢聊，继续吃。", en: "I need to leave my seat first. You guys chat slowly and keep eating." },
+                            { zh: "天下无不散的筵席，我相信未来总有一天我们会再见面的，大家不要太难过。", en: "There is no banquet in the world that never ends. I believe one day in the future we will meet again. Everyone don't be too sad." }
+                        ]
+                    },
+                    {
+                        type: "grammar",
+                        title: "2. 校方",
+                        note: "解释：学校称呼自己的方式。<br>Explanation: School authorities.",
+                        examples: [
+                            { zh: "校方表示，他们一定会认真看待这次的疏失，保證下次不会再犯错了。", en: "The school authorities stated that they will definitely take this negligence seriously and guarantee not to make mistakes again next time." }
+                        ]
+                    },
+                    {
+                        type: "grammar",
+                        title: "3. 愁眉苦脸",
+                        note: "解释：从眉毛和脸上看得出来有很多烦恼。<br><img src='https://cdn.phototourl.com/member/2026-11-02-8e0331fb-5722-4451-a1ba-11cd2d0711f6.jpg' class='inline-img'><br>Explanation: Wear a worried/miserable look.",
+                        examples: [
+                            { zh: "他每天都一脸愁眉苦脸，好像很不开心，不知道怎麼了。", en: "Every day he looks worried and miserable, as if he is very unhappy. I wonder what's wrong." }
+                        ]
+                    },
+                    {
+                        type: "grammar",
+                        title: "4. 所幸",
+                        note: "解释：等於幸运的是。<br>Explanation: Fortunately.",
+                        examples: [
+                            { zh: "所幸今天没有下雨，因為我没带伞出门。", en: "Fortunately it didn't rain today, because I didn't bring an umbrella when I went out." }
+                        ]
+                    },
+                    {
+                        type: "grammar",
+                        title: "5. 最佳人气奖",
+                        note: "解释：等於最受欢迎的奖。<br>Explanation: Best popularity award.",
+                        examples: [
+                            { zh: "他常常帮忙大家的忙，大家都很喜欢他，获得最佳人气奖，真是名符其实。", en: "He often helps everyone out, and everyone likes him very much. Winning the Best Popularity Award is truly well-deserved." }
+                        ]
+                    },
+                    {
+                        type: "grammar",
+                        title: "6. 发音练习",
+                        note: "请跟读以下词汇：<br>Explanation: Pronunciation practice.",
+                        examples: [
+                            { zh: "讨(tǎo)论(lùn)", en: "Discuss" },
+                            { zh: "检(jiǎn)讨(tǎo)", en: "Review / Self-criticism" },
+                            { zh: "检(jiǎn)验(yàn)", en: "Inspect / Test" }
+                        ]
+                    }
+                ]
+            }
+        ];
+
+        const container = document.getElementById('content');
+        let counter = 0;
+
+        lessonData.forEach((sec, sIdx) => {
+            let html = `<div class="section" id="sec-${sIdx}"><h2>${sec.title}</h2>`;
+            
+            sec.items.forEach((item, iIdx) => {
+                if (item.type === "html") {
+                    html += item.content;
+                } else if (item.type === "table") {
+                    html += `<div class="grammar-box" id="item-${sIdx}-${iIdx}">`;
+                    html += `<table class="custom-table"><thead><tr>`;
+                    item.headers.forEach(h => { html += `<th>${parsePinyin(h)}</th>`; });
+                    html += `</tr></thead><tbody>`;
+                    item.rows.forEach(row => {
+                        html += `<tr>`;
+                        row.forEach(cell => { html += `<td>${parsePinyin(cell)}</td>`; });
+                        html += `</tr>`;
+                    });
+                    html += `</tbody></table></div>`;
+                } else if (item.type === "grammar") {
+                    html += `<div class="grammar-box" id="item-${sIdx}-${iIdx}">
+                        <div style="font-weight:bold; font-size:16px; color:#8C6239; margin-bottom:5px;">${parsePinyin(item.title)}</div>`;
+                    if(item.note) html += `<div class="note">${parsePinyin(item.note)}</div>`;
+                    
+                    if (item.examples) {
+                        item.examples.forEach(ex => {
+                            html += `
+                            <div class="item" style="border:none; margin-top:10px; padding-bottom:0;">
+                                <div class="item-content">
+                                    <button class="icon-btn" onclick="playAudio('${ex.zh}')" title="朗读">🔊</button>
+                                    <button class="icon-btn rec-btn" onclick="toggleRecord(this, 'rec-${counter}')" title="录音">🎤</button>
+                                    <button class="icon-btn play-rec-btn" id="play-rec-rec-${counter}" onclick="playRecording('rec-${counter}')" disabled title="播放自己">▶</button>
+                                </div>
+                                <div class="audio-player-container" id="audio-container-rec-${counter}"></div>
+                                <div style="margin-top:5px;">${parsePinyin(ex.zh)}</div>
+                                <div class="en-trans">${ex.en}</div>
+                            </div>`;
+                            counter++;
+                        });
+                    }
+                    html += `</div>`;
+                }
+            });
+            html += `</div>`;
+            container.innerHTML += html;
+        });
+
+        let pinyinVisible = true;
+        let enVisible = true;
+
+        function togglePinyin() {
+            pinyinVisible = !pinyinVisible;
+            document.querySelectorAll('.py-text').forEach(el => {
+                el.style.display = pinyinVisible ? 'block' : 'none';
+            });
+        }
+
+        function toggleEnglish() {
+            enVisible = !enVisible;
+            document.querySelectorAll('.en-trans').forEach(el => {
+                el.style.display = enVisible ? 'display' : 'none';
+            });
+        }
+    </script>
+</body>
+</html>
