@@ -1009,7 +1009,7 @@
 
         // ====== Parse Zhuyin on Load (DOM based) ======
         function parseZhuyinDOM() {
-            const regex = /([一-龥a-zA-Z0-9])\((.*?)\)/g;
+            const regex = /([\u4e00-\u9fa5a-zA-Z0-9])\((.*?)\)/g;
             document.querySelectorAll('.zy-text').forEach(el => {
                 let html = el.innerHTML;
                 let parsed = html.replace(regex, (match, char, zy) => {
@@ -1043,12 +1043,12 @@
             let cleanText = "";
             if(chars.length > 0) {
                 chars.forEach(c => cleanText += c.innerText);
-                cleanText = zyDiv.innerText.replace(/[ㄅ-ㄬˊˇˋ˙]/g, '').replace(/
-/g,'').trim();
+                cleanText = zyDiv.innerText.replace(/[\u3105-\u312Cˊˇˋ˙]/g, '').replace(/\n/g,'').trim();
             } else {
                 cleanText = zyDiv.innerText.replace(/\(.*?\)/g, '');
             }
             
+            // Remove speaker prefixes like A: B: A： B： Q: A: so they are not pronounced
             cleanText = cleanText.replace(/^[A-Z0-9]+[：:]\s*/gi, '').replace(/\s+[A-Z0-9]+[：:]\s*/gi, ' ').replace(/[A-Z0-9]+[：:]/gi, '');
             cleanText = cleanText.replace(/\//g, ' ');
 
