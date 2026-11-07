@@ -92,4 +92,254 @@
 </head>
 <body>
 
-    <button
+    <button class="sidebar-toggle" onclick="toggleSidebar()">☰ 目录</button>
+
+    <div class="sidebar" id="sidebar">
+        <h3>📖 目录 (Outline) <button style="background:none; border:none; color:#8C6239; font-weight:bold; cursor:pointer; font-size:16px;" onclick="toggleSidebar()">×</button></h3>
+        <ul style="padding-left: 0; list-style: none;">
+            <li class="main-menu-item"><a href="#sec-0">课程大纲</a></li>
+            <ul>
+                <li><a href="#item-0-0">1. 勿扰</a></li>
+                <li><a href="#item-0-1">2. 急救</a></li>
+                <li><a href="#item-0-2">3. 复训</a></li>
+                <li><a href="#item-0-3">4. 检验与检查</a></li>
+                <li><a href="#item-0-4">5. 食物中毒</a></li>
+                <li><a href="#item-0-5">6. 习惯性脱臼</a></li>
+            </ul>
+        </ul>
+    </div>
+
+    <div class="main-content" id="mainContent">
+        <div class="top-nav">
+            <a href="https://jany-mandarin.github.io/philip.html">Index</a>
+            <a href="philip_lesson_38.html">第38课</a>
+        </div>
+
+        <div class="header">
+            <h1>菲利普的第39堂中文课</h1>
+            <p>日期：2026/11/6</p>
+        </div>
+
+        <div class="controls">
+            <button class="control-btn" onclick="togglePinyin()">隐藏/显示拼音</button>
+            <button class="control-btn" onclick="toggleEnglish()">隐藏/显示英文</button>
+        </div>
+
+        <div id="content"></div>
+    </div>
+
+    <script>
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const mainContent = document.getElementById('mainContent');
+            if (window.innerWidth <= 900) {
+                sidebar.classList.toggle('active');
+            } else {
+                sidebar.classList.toggle('collapsed');
+                mainContent.classList.toggle('expanded');
+            }
+        }
+
+        function parsePinyin(text) {
+            const regex = /([一-龥a-zA-Z0-9，。？！、：""''()./])\((.*?)\)/g;
+            let parsed = text.replace(regex, (match, char, py) => {
+                return `<span class="pinyin-group"><span class="py-text">${py}</span><span class="hz-text">${char}</span></span>`;
+            });
+            return parsed;
+        }
+
+        let currentUtterance = null;
+        function playAudio(text) {
+            let cleanText = text.replace(/\(.*?\)/g, '');
+            if (speechSynthesis.speaking) {
+                speechSynthesis.cancel();
+                if (currentUtterance === cleanText) {
+                    currentUtterance = null;
+                    return;
+                }
+            }
+            const utterance = new SpeechSynthesisUtterance(cleanText);
+            utterance.lang = 'zh-CN';
+            utterance.rate = 0.85;
+            utterance.onend = () => { currentUtterance = null; };
+            currentUtterance = cleanText;
+            speechSynthesis.speak(utterance);
+        }
+
+        let mediaRecorders = {};
+        let audioUrls = {};
+
+        async function toggleRecord(btn, id) {
+            if (!mediaRecorders[id] || mediaRecorders[id].state === "inactive") {
+                try {
+                    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+                    let chunks = [];
+                    let recorder = new MediaRecorder(stream);
+                    
+                    recorder.ondataavailable = e => chunks.push(e.data);
+                    recorder.onstop = () => {
+                        const blob = new Blob(chunks, { 'type': 'audio/ogg; codecs=opus' });
+                        audioUrls[id] = URL.createObjectURL(blob);
+                        const playerContainer = document.getElementById(`audio-container-${id}`);
+                        playerContainer.innerHTML = `<audio controls src="${audioUrls[id]}"></audio>`;
+                    };
+
+                    recorder.start();
+                    mediaRecorders[id] = recorder;
+                    btn.innerHTML = "⏹️";
+                    btn.classList.add("recording");
+                } catch (err) {
+                    alert("麦克风权限被拒绝或不支持。");
+                }
+            } else {
+                mediaRecorders[id].stop();
+                btn.innerHTML = "🎤";
+                btn.classList.remove("recording");
+            }
+        }
+
+        const lessonData = [
+            {
+                title: "",
+                items: [
+                    {
+                        type: "grammar",
+                        title: "1. 勿扰(wù rǎo)",
+                        note: "解释：不要打扰我的意思。<br>Explanation: Do not disturb.",
+                        examples: [
+                            { zh: "我(wǒ)在(zài)睡(shuì)觉(jiào)的(de)时(shí)候(hòu)，手(shǒu)机(jī)常(cháng)常(cháng)开(kāi)勿(wù)扰(rǎo)模(mó)式(shì)，因(yīn)为(wèi)我(wǒ)不(bù)想(xiǎng)有(yǒu)人(rén)打(dǎ)扰(rǎo)我(wǒ)的(de)睡(shuì)眠(mián)时(shí)间(jiān)。", en: "When I'm sleeping, my phone often has Do Not Disturb mode turned on because I don't want anyone to disturb my sleeping time." },
+                            { zh: "我(wǒ)住(zhù)在(zài)酒(jiǔ)店(diàn)的(de)时(shí)候(hòu)，都(dōu)会(huì)在(zài)门(mén)口(kǒu)挂(guà)勿(wù)扰(rǎo)的(de)牌(pái)子(zi)，避(bì)免(miǎn)清(qīng)洁(jié)人(rén)员(yuán)来(lái)我(wǒ)房(fáng)间(jiān)打(dǎ)扫(sǎo)。", en: "When I stay at a hotel, I always hang a Do Not Disturb sign on the door to prevent cleaning staff from coming to clean my room." },
+                            { zh: "他(tā)在(zài)上(shàng)班(bān)的(de)座(zuò)位(wèi)上(shàng)挂(guà)勿(wù)扰(rǎo)的(de)牌(pái)子(zi)，我(wǒ)们(men)不(bù)要(yào)去(qù)吵(chǎo)他(tā)好(hǎo)了(le)。", en: "He hung a Do Not Disturb sign at his seat at work; let's not go bother him." }
+                        ]
+                    },
+                    {
+                        type: "grammar",
+                        title: "2. 急救(jí jiù)",
+                        note: "解释：紧急时候的处理。<br>Explanation: First aid / Emergency treatment.",
+                        examples: [
+                            { zh: "现(xiàn)在(zài)很(hěn)多(duō)地(dì)方(fāng)都(dōu)有(yǒu)开(kāi)设(shè)急(jí)救(jiù)课(kè)程(chéng)，鼓(gǔ)励(lì)大(dà)家(jiā)去(qù)上(shàng)，随(suí)时(shí)帮(bāng)助(zhù)身(shēn)边(biān)受(shòu)伤(shāng)的(de)人(rén)。", en: "Nowadays, many places offer first aid courses, encouraging people to take them so they can help injured people around them at any time." },
+                            { zh: "在(zài)路(lù)上(shàng)出(chū)车(chē)祸(huò)的(de)时(shí)候(hòu)，需(xū)要(yào)有(yǒu)人(rén)帮(bāng)忙(máng)急(jí)救(jiù)，否(fǒu)则(zé)容(róng)易(yì)失(shī)血(xuè)过(guò)多(duō)，马(mǎ)上(shàng)死(sǐ)亡(wáng)。", en: "When a car accident happens on the road, someone is needed to help with first aid; otherwise, it's easy to lose too much blood and die immediately." }
+                        ]
+                    },
+                    {
+                        type: "grammar",
+                        title: "3. 复训(fù xùn)",
+                        note: "解释：再次重复训练的课程。<br>Explanation: Retraining / Recertification course.",
+                        examples: [
+                            { zh: "好(hǎo)几(jǐ)年(nián)前(qián)我(wǒ)有(yǒu)拿(ná)到(dào)急(jí)救(jiù)课(kè)程(chéng)的(de)证(zhèng)照(zhào)，可(kě)是(shì)我(wǒ)已(yǐ)经(jīng)忘(wàng)了(le)差(chà)不(bù)多(duō)，需(xū)要(yào)复(fù)训(xùn)，帮(bāng)我(wǒ)再(zài)恢(huī)复(fù)记(jì)忆(yì)。", en: "Several years ago I got a first aid course certificate, but I've almost forgotten it. I need retraining to help restore my memory." },
+                            { zh: "这(zhè)张(zhāng)证(zhèng)照(zhào)只(zhǐ)有(yǒu)两(liǎng)年(nián)的(de)有(yǒu)效(xiào)时(shí)间(jiān)，两(liǎng)年(nián)后(hòu)必(bì)须(xū)再(zài)复(fù)训(xùn)，才(cái)能(néng)拿(ná)到(dào)新(xīn)的(de)证(zhèng)照(zhào)。", en: "This certificate is only valid for two years. Two years later, I must retrain in order to get a new certificate." }
+                        ]
+                    },
+                    {
+                        type: "grammar",
+                        title: "4. 检验(jiǎn yàn)",
+                        note: "解释：用在医院人员分析食物或产品。<br>Explanation: Inspection / Laboratory testing.",
+                        examples: [
+                            { zh: "我(wǒ)在(zài)超(chāo)市(shì)买(mǎi)到(dào)不(bù)新(xīn)鲜(xiān)的(de)肉(ròu)，中(zhòng)毒(dú)后(hòu)，卫(wèi)生(shēng)署(shǔ)就(jiù)有(yǒu)派(pài)人(rén)去(qù)那(nà)家(jiā)超(chāo)市(shì)检(jiǎn)验(yàn)肉(ròu)。", en: "I bought unfresh meat at the supermarket. After getting poisoned, the Department of Health sent people to that supermarket to test the meat." },
+                            { zh: "蔬(shū)菜(cài)水(shuǐ)果(guǒ)上(shàng)架(jià)去(qù)贩(fàn)售(shòu)的(de)时(shí)候(hòu)，需(xū)要(yào)经(jīng)过(guò)严(yán)格(gé)的(de)检(jiǎn)验(yàn)，避(bì)免(miǎn)让(ràng)人(rén)吃(chī)到(dào)过(guò)多(duō)的(de)农(nóng)药(yào)。", en: "When vegetables and fruits are put on shelves for sale, they need to go through strict inspection to prevent people from consuming too much pesticide." },
+                            { zh: "实(shí)验(yàn)室(shì)的(de)研(yán)究(jiū)人(rén)员(yuán)正(zhèng)在(zài)检(jiǎn)验(yàn)这(zhè)里(lǐ)的(de)水(shuǐ)质(zhì)是(shì)否(fǒu)真(zhēn)的(de)能(néng)喝(hē)。", en: "Researchers in the laboratory are testing whether the water quality here is really drinkable." }
+                        ]
+                    },
+                    {
+                        type: "table",
+                        tableClass: "compare-table",
+                        headers: ["检验(jiǎn yàn)", "检查(jiǎn chá)"],
+                        rows: [
+                            [
+                                "图片(tú piàn)<br><img src='https://cdn.phototourl.com/member/2026-11-07-adf5e983-163a-4464-b66e-b1bbdd527e70.png' class='inline-img'>",
+                                "图片(tú piàn)<br><img src='https://cdn.phototourl.com/member/2026-11-07-9455b83b-2ad4-4b5e-b456-c5f62d89d826.png' class='inline-img'>"
+                            ],
+                            [
+                                "解释(jiě shì)：检验是实验室的人员对人体或动植物或肉类检查。",
+                                "解释(jiě shì)：检查是用在医生用机器检查人哪里不舒服。"
+                            ],
+                            [
+                                "使用情境(shǐ yòng qíng jìng)：用在分析那个东西的各种数值。",
+                                "使用情境(shǐ yòng qíng jìng)：比较广，可以用在很多地方。"
+                            ],
+                            [
+                                "造词(zào cí)：检验肉、检验血液、检验大便、检验尿、检验排泄物",
+                                "造词(zào cí)：检查作业、健康检查"
+                            ]
+                        ]
+                    },
+                    {
+                        type: "grammar",
+                        title: "5. 食物中毒(shí wù zhòng dú)",
+                        note: "解释：吃到不干净的食物而生病。<br>Explanation: Food poisoning.",
+                        examples: [
+                            { zh: "大(dà)概(gài)五(wǔ)年(nián)前(qián)，是(shì)我(wǒ)觉(jué)得(de)我(wǒ)离(lí)死(sǐ)亡(wáng)最(zuì)近(jìn)的(de)一(yí)次(cì)，因(yīn)为(wèi)我(wǒ)在(zài)超(chāo)市(shì)买(mǎi)了(le)不(bù)新(xīn)鲜(xiān)的(de)肉(ròu)，中(zhòng)了(le)弯(wān)曲(qū)杆(gān)菌(jūn)，一(yī)直(zhí)发(fā)烧(shāo)，还(hái)有(yǒu)拉(lā)血(xiě)尿(niào)，超(chāo)级(jí)不(bù)舒(shū)服(fú)的(de)，幸(xìng)好(hǎo)最(zuì)后(hòu)好(hǎo)了(le)。", en: "About five years ago was the time I felt closest to death, because I bought unfresh meat at the supermarket, got infected with Campylobacter, had a persistent fever, and passed bloody urine. It was super uncomfortable, but fortunately I got better in the end." }
+                        ]
+                    },
+                    {
+                        type: "grammar",
+                        title: "6. 习惯性脱臼(xí guàn xìng tuō jiù)",
+                        note: "解释：曾经脱臼过一次，就会一直在脱臼。<br>Explanation: Habitual dislocation.",
+                        examples: [
+                            { zh: "他(tā)小(xiǎo)时(shí)候(hòu)肩(jiān)膀(bǎng)有(yǒu)脱(tuō)臼(jiù)，现(xiàn)在(zài)都(dōu)会(huì)习(xí)惯(guàn)性(xìng)脱(tuō)臼(jiù)，好(hǎo)吓(xià)人(rén)啊(a)！", en: "He had a shoulder dislocation when he was a child, and now he always suffers from habitual dislocation. How frightening!" }
+                        ]
+                    }
+                ]
+            }
+        ];
+
+        const container = document.getElementById('content');
+        let counter = 0;
+
+        lessonData.forEach((sec, sIdx) => {
+            let html = `<div class="section" id="sec-${sIdx}">`;
+            if (sec.title) html += `<h2>${sec.title}</h2>`;
+            
+            sec.items.forEach((item, iIdx) => {
+                if (item.type === "html") {
+                    html += item.content;
+                } else if (item.type === "table") {
+                    let tblClass = item.tableClass ? `custom-table ${item.tableClass}` : "custom-table";
+                    html += `<div class="grammar-box" id="item-${sIdx}-${iIdx}">`;
+                    html += `<table class="${tblClass}"><thead><tr>`;
+                    item.headers.forEach(h => { html += `<th>${parsePinyin(h)}</th>`; });
+                    html += `</tr></thead><tbody>`;
+                    item.rows.forEach(row => {
+                        html += `<tr>`;
+                        row.forEach(cell => { html += `<td>${parsePinyin(cell)}</td>`; });
+                        html += `</tr>`;
+                    });
+                    html += `</tbody></table></div>`;
+                } else if (item.type === "grammar") {
+                    html += `<div class="grammar-box" id="item-${sIdx}-${iIdx}">
+                        <div style="font-weight:bold; font-size:16px; color:#8C6239; margin-bottom:5px;">${parsePinyin(item.title)}</div>`;
+                    if(item.note) html += `<div class="note">${parsePinyin(item.note)}</div>`;
+                    
+                    if (item.examples) {
+                        item.examples.forEach(ex => {
+                            html += `
+                            <div class="item" style="border:none; margin-top:10px; padding-bottom:0;">
+                                <div class="item-content">
+                                    <button class="icon-btn" onclick="playAudio('${ex.zh}')" title="朗读">🔊</button>
+                                    <button class="icon-btn rec-btn" onclick="toggleRecord(this, 'rec-${counter}')" title="录音">🎤</button>
+                                    <button class="icon-btn play-rec-btn" id="play-rec-rec-${counter}" onclick="playRecording('rec-${counter}')" disabled title="播放自己">▶</button>
+                                </div>
+                                <div class="audio-player-container" id="audio-container-rec-${counter}"></div>
+                                <div style="margin-top:5px;">${parsePinyin(ex.zh)}</div>
+                                <div class="en-trans">${ex.en}</div>
+                            </div>`;
+                            counter++;
+                        });
+                    }
+                    html += `</div>`;
+                }
+            });
+            html += `</div>`;
+            container.innerHTML += html;
+        });
+
+        function togglePinyin() {
+            document.body.classList.toggle('hide-pinyin');
+        }
+
+        function toggleEnglish() {
+            document.body.classList.toggle('hide-english');
+        }
+    </script>
+</body>
+</html>
