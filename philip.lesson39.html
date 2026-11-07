@@ -1,344 +1,336 @@
-<!DOCTYPE html>
-<html lang="zh-CN">
-<head>
-    <meta charset="UTF-8">
-    <title>菲利普的第39堂中文课</title>
-    <style>
-        :root { --bg: #FDFBF7; --primary: #D4A373; --text: #4a4a4a; --white: #fff; --sidebar-width: 280px; }
-        html { scroll-behavior: smooth; }
-        body { font-family: 'Helvetica Neue', Arial, sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; margin: 0; padding: 0; display: flex; transition: margin-left 0.3s ease; }
-        
-        /* 左侧收合大纲导览列 */
-        .sidebar { width: var(--sidebar-width); background: #FFF9F0; border-right: 1px solid #E6D5B8; height: 100vh; position: fixed; top: 0; left: 0; overflow-y: auto; padding: 20px; box-sizing: border-box; transition: transform 0.3s ease; z-index: 1000; }
-        .sidebar.collapsed { transform: translateX(-100%); }
-        .sidebar h3 { margin-top: 0; color: #8C6239; font-size: 18px; border-bottom: 2px solid var(--primary); padding-bottom: 8px; display: flex; justify-content: space-between; align-items: center; }
-        .sidebar ul { padding-left: 15px; margin: 5px 0 15px 0; list-style-type: disc; }
-        .sidebar li { margin-bottom: 6px; font-size: 13px; }
-        .sidebar .main-menu-item { font-weight: bold; margin-bottom: 4px; font-size: 14px; list-style-type: none; margin-left: -15px; }
-        .sidebar a { color: #555; text-decoration: none; display: block; }
-        .sidebar a:hover { color: #8C6239; font-weight: bold; }
-        
-        /* 切换按钮 */
-        .sidebar-toggle { position: fixed; top: 15px; left: 15px; z-index: 1100; background: var(--primary); color: white; border: none; padding: 8px 12px; border-radius: 6px; cursor: pointer; font-size: 14px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+  /* 左侧收合大纲导览列 */
+    .sidebar { width: var(--sidebar-width); background: #FFF9F0; border-right: 1px solid #E6D5B8; height: 100vh; position: fixed; top: 0; left: 0; overflow-y: auto; padding: 20px; box-sizing: border-box; transition: transform 0.3s ease; z-index: 1000; }
+    .sidebar.collapsed { transform: translateX(-100%); }
+    .sidebar h3 { margin-top: 0; color: #8C6239; font-size: 18px; border-bottom: 2px solid var(--primary); padding-bottom: 8px; display: flex; justify-content: space-between; align-items: center; }
+    .sidebar ul { padding-left: 15px; margin: 5px 0 15px 0; list-style-type: disc; }
+    .sidebar li { margin-bottom: 6px; font-size: 13px; }
+    .sidebar .main-menu-item { font-weight: bold; margin-bottom: 4px; font-size: 14px; list-style-type: none; margin-left: -15px; }
+    .sidebar a { color: #555; text-decoration: none; display: block; }
+    .sidebar a:hover { color: #8C6239; font-weight: bold; }
+    
+    /* 切换按钮 */
+    .sidebar-toggle { position: fixed; top: 15px; left: 15px; z-index: 1100; background: var(--primary); color: white; border: none; padding: 8px 12px; border-radius: 6px; cursor: pointer; font-size: 14px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
 
-        /* 主内容区 */
-        .main-content { margin-left: var(--sidebar-width); width: calc(100% - var(--sidebar-width)); padding: 20px 40px; box-sizing: border-box; max-width: 1050px; transition: margin-left 0.3s ease, width 0.3s ease; }
-        .main-content.expanded { margin-left: 0; width: 100%; }
+    /* 主内容区 */
+    .main-content { margin-left: var(--sidebar-width); width: calc(100% - var(--sidebar-width)); padding: 20px 40px; box-sizing: border-box; max-width: 1050px; transition: margin-left 0.3s ease, width 0.3s ease; }
+    .main-content.expanded { margin-left: 0; width: 100%; }
 
-        /* 顶部导览列 */
-        .top-nav { display: flex; justify-content: flex-end; gap: 20px; padding: 15px 20px; font-size: 15px; font-weight: bold; }
-        .top-nav a { color: var(--primary); text-decoration: none; }
-        .top-nav a:hover { text-decoration: underline; color: #B5835A; }
+    /* 顶部导览列 */
+    .top-nav { display: flex; justify-content: flex-end; gap: 20px; padding: 15px 20px; font-size: 15px; font-weight: bold; }
+    .top-nav a { color: var(--primary); text-decoration: none; }
+    .top-nav a:hover { text-decoration: underline; color: #B5835A; }
 
-        .header { text-align: center; border-bottom: 2px solid var(--primary); padding-bottom: 10px; margin-bottom: 20px; }
-        
-        .controls { position: sticky; top: 0; background: var(--bg); padding: 15px; text-align: center; border-bottom: 1px solid #ccc; z-index: 100; margin-bottom: 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); display: flex; justify-content: center; gap: 10px; }
-        button.control-btn { background: var(--primary); color: white; border: none; padding: 10px 15px; border-radius: 6px; cursor: pointer; font-size: 14px; font-weight: bold; }
-        button.control-btn:hover { background: #B5835A; }
-        
-        /* 图示化按钮 */
-        .icon-btn { background: #f8f9fa; border: 1px solid #ddd; border-radius: 50%; width: 38px; height: 38px; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; font-size: 16px; margin-right: 5px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); transition: background 0.2s; }
-        .icon-btn:hover { background: #e9ecef; }
-        .rec-btn.recording { background: #ff4d4f; color: white; animation: pulse 1.5s infinite; border-color: #ff4d4f; }
-        .play-rec-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+    .header { text-align: center; border-bottom: 2px solid var(--primary); padding-bottom: 10px; margin-bottom: 20px; }
+    
+    .controls { position: sticky; top: 0; background: var(--bg); padding: 15px; text-align: center; border-bottom: 1px solid #ccc; z-index: 100; margin-bottom: 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); display: flex; justify-content: center; gap: 10px; }
+    button.control-btn { background: var(--primary); color: white; border: none; padding: 10px 15px; border-radius: 6px; cursor: pointer; font-size: 14px; font-weight: bold; }
+    button.control-btn:hover { background: #B5835A; }
+    
+    /* 图示化按钮 */
+    .icon-btn { background: #f8f9fa; border: 1px solid #ddd; border-radius: 50%; width: 38px; height: 38px; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; font-size: 16px; margin-right: 5px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); transition: background 0.2s; }
+    .icon-btn:hover { background: #e9ecef; }
+    .rec-btn.recording { background: #ff4d4f; color: white; animation: pulse 1.5s infinite; border-color: #ff4d4f; }
+    .play-rec-btn:disabled { opacity: 0.4; cursor: not-allowed; }
 
-        @keyframes pulse {
-            0% { opacity: 1; }
-            50% { opacity: 0.5; }
-            100% { opacity: 1; }
-        }
+    @keyframes pulse {
+        0% { opacity: 1; }
+        50% { opacity: 0.5; }
+        100% { opacity: 1; }
+    }
 
-        h2 { color: #8C6239; border-left: 5px solid var(--primary); padding-left: 10px; margin-top: 30px; }
-        .section { margin-bottom: 30px; background: var(--white); padding: 20px; border-radius: 12px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
-        .item { margin-bottom: 20px; display: flex; flex-direction: column; border-bottom: 1px dashed #eee; padding-bottom: 15px; }
-        .item-content { display: flex; align-items: center; flex-wrap: wrap; margin-bottom: 5px; gap: 5px; }
-        
-        .grammar-box { background: #FFF9F0; border: 1px solid #E6D5B8; border-radius: 8px; padding: 15px; margin: 15px 0; scroll-margin-top: 80px; }
-        .note { font-size: 15px; color: #555; margin-bottom: 10px; line-height: 1.6; }
-        
-        /* 表格样式统一强制设定 */
-        .custom-table { width: 100%; border-collapse: collapse; margin: 12px 0; background: #fff; border-radius: 6px; overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,0.05); table-layout: fixed; }
-        .custom-table th, .custom-table td { border: 1px solid #E6D5B8; padding: 12px; text-align: left; vertical-align: top; font-size: 15px; color: #4a4a4a; line-height: 1.6; font-family: 'Helvetica Neue', Arial, sans-serif; word-wrap: break-word; }
-        .custom-table th { background: #F4EAD3; color: #8C6239; font-weight: bold; text-align: center; font-size: 16px; }
+    h2 { color: #8C6239; border-left: 5px solid var(--primary); padding-left: 10px; margin-top: 30px; }
+    .section { margin-bottom: 30px; background: var(--white); padding: 20px; border-radius: 12px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
+    .item { margin-bottom: 20px; display: flex; flex-direction: column; border-bottom: 1px dashed #eee; padding-bottom: 15px; }
+    .item-content { display: flex; align-items: center; flex-wrap: wrap; margin-bottom: 5px; gap: 5px; }
+    
+    .grammar-box { background: #FFF9F0; border: 1px solid #E6D5B8; border-radius: 8px; padding: 15px; margin: 15px 0; scroll-margin-top: 80px; }
+    .note { font-size: 15px; color: #555; margin-bottom: 10px; line-height: 1.6; }
+    
+    /* 表格样式统一强制设定 */
+    .custom-table { width: 100%; border-collapse: collapse; margin: 12px 0; background: #fff; border-radius: 6px; overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,0.05); table-layout: fixed; }
+    .custom-table th, .custom-table td { border: 1px solid #E6D5B8; padding: 12px; text-align: left; vertical-align: top; font-size: 15px; color: #4a4a4a; line-height: 1.6; font-family: 'Helvetica Neue', Arial, sans-serif; word-wrap: break-word; }
+    .custom-table th { background: #F4EAD3; color: #8C6239; font-weight: bold; text-align: center; font-size: 16px; }
 
-        /* 专门针对比较表格的栏位宽度分配（2栏：检验 vs 检查） */
-        .compare-table th:nth-child(1), .compare-table td:nth-child(1) { width: 50%; }
-        .compare-table th:nth-child(2), .compare-table td:nth-child(2) { width: 50%; }
+    /* 检验与检查比较表格样式：三列（对比项目、检验、检查） */
+    .compare-table th:nth-child(1), .compare-table td:nth-child(1) { width: 22%; font-weight: bold; color: #8C6239; background: #FAF3E7; }
+    .compare-table th:nth-child(2), .compare-table td:nth-child(2) { width: 39%; }
+    .compare-table th:nth-child(3), .compare-table td:nth-child(3) { width: 39%; }
 
-        /* 内嵌图片样式 */
-        .inline-img { max-width: 150px; width: 100%; height: auto; border-radius: 8px; border: 1px solid #E6D5B8; box-shadow: 0 2px 5px rgba(0,0,0,0.05); display: block; margin: 5px auto; }
+    /* 内嵌图片样式 */
+    .inline-img { max-width: 140px; width: 100%; height: auto; border-radius: 8px; border: 1px solid #E6D5B8; box-shadow: 0 2px 5px rgba(0,0,0,0.05); display: block; margin: 5px auto; }
 
-        /* 录音播放器独立换行区块 */
-        .audio-player-container { width: 100%; margin-top: 8px; }
-        .audio-player-container audio { width: 100%; height: 36px; }
+    /* 录音播放器独立换行区块 */
+    .audio-player-container { width: 100%; margin-top: 8px; }
+    .audio-player-container audio { width: 100%; height: 36px; }
 
-        /* 上排拼音与汉字排版 */
-        .pinyin-group { display: inline-flex; flex-direction: column; align-items: center; margin-right: 3px; vertical-align: bottom; }
-        .py-text { font-size: 11px; color: #777; line-height: 1; margin-bottom: 2px; display: block; }
-        .hz-text { font-size: 15px; font-family: 'Helvetica Neue', Arial, sans-serif; line-height: 1.2; font-weight: normal; }
-        
-        .en-trans { color: #666; font-size: 15px; font-style: italic; margin-top: 5px; display: block; }
+    /* 上排拼音与汉字排版 */
+    .pinyin-group { display: inline-flex; flex-direction: column; align-items: center; margin-right: 3px; vertical-align: bottom; }
+    .py-text { font-size: 11px; color: #777; line-height: 1; margin-bottom: 2px; display: inline-block; }
+    .hz-text { font-size: 15px; font-family: 'Helvetica Neue', Arial, sans-serif; line-height: 1.2; font-weight: normal; }
+    
+    .en-trans { color: #666; font-size: 15px; font-style: italic; margin-top: 5px; display: block; }
 
-        /* 隐藏拼音与英文的控制类 */
-        body.hide-pinyin .py-text { display: none !important; }
-        body.hide-english .en-trans { display: none !important; }
+    /* 隐藏拼音与英文的控制类 */
+    body.hide-pinyin .py-text { display: none !important; }
+    body.hide-english .en-trans { display: none !important; }
 
-        @media (max-width: 900px) {
-            .sidebar { transform: translateX(-100%); }
-            .sidebar.active { transform: translateX(0); }
-            .main-content { margin-left: 0; width: 100%; padding: 20px; }
-        }
-    </style>
-</head>
-<body>
+    @media (max-width: 900px) {
+        .sidebar { transform: translateX(-100%); }
+        .sidebar.active { transform: translateX(0); }
+        .main-content { margin-left: 0; width: 100%; padding: 20px; }
+    }
+</style>
 
-    <button class="sidebar-toggle" onclick="toggleSidebar()">☰ 目录</button>
 
-    <div class="sidebar" id="sidebar">
-        <h3>📖 目录 (Outline) <button style="background:none; border:none; color:#8C6239; font-weight:bold; cursor:pointer; font-size:16px;" onclick="toggleSidebar()">×</button></h3>
-        <ul style="padding-left: 0; list-style: none;">
-            <li class="main-menu-item"><a href="#sec-0">新课内容 (New Lessons)</a></li>
-            <ul>
-                <li><a href="#item-0-0">1. 勿扰</a></li>
-                <li><a href="#item-0-1">2. 急救</a></li>
-                <li><a href="#item-0-2">3. 复训</a></li>
-                <li><a href="#item-0-3">4. 检验与检查</a></li>
-                <li><a href="#item-0-4">5. 食物中毒</a></li>
-                <li><a href="#item-0-5">6. 习惯性脱臼</a></li>
-            </ul>
+<button class="sidebar-toggle" onclick="toggleSidebar()">☰ 目录</button>
+
+<div class="sidebar" id="sidebar">
+    <h3>📖 目录 (Outline) <button style="background:none; border:none; color:#8C6239; font-weight:bold; cursor:pointer; font-size:16px;" onclick="toggleSidebar()">×</button></h3>
+    <ul style="padding-left: 0; list-style: none;">
+        <li class="main-menu-item"><a href="#sec-0">课程内容</a></li>
+        <ul>
+            <li><a href="#item-0-0">1. 勿扰</a></li>
+            <li><a href="#item-0-1">2. 急救</a></li>
+            <li><a href="#item-0-2">3. 复训</a></li>
+            <li><a href="#item-0-3">4. 检验与检查</a></li>
+            <li><a href="#item-0-4">5. 食物中毒</a></li>
+            <li><a href="#item-0-5">6. 习惯性脱臼</a></li>
         </ul>
+    </ul>
+</div>
+
+<div class="main-content" id="mainContent">
+    <div class="top-nav">
+        <a href="https://jany-mandarin.github.io/philip.html">Index</a>
+        <a href="philip_lesson_38.html">第38课</a>
     </div>
 
-    <div class="main-content" id="mainContent">
-        <div class="top-nav">
-            <a href="https://jany-mandarin.github.io/philip.html">Index</a>
-            <a href="philip_lesson_38.html">第38课</a>
-        </div>
-
-        <div class="header">
-            <h1>菲利普的第39堂中文课</h1>
-            <p>日期：2026/11/6</p>
-        </div>
-
-        <div class="controls">
-            <button class="control-btn" onclick="togglePinyin()">隐藏/显示拼音</button>
-            <button class="control-btn" onclick="toggleEnglish()">隐藏/显示英文</button>
-        </div>
-
-        <div id="content"></div>
+    <div class="header">
+        <h1>菲利普的第39堂中文课</h1>
+        <p>日期：2026/11/6</p>
     </div>
 
-    <script>
-        function toggleSidebar() {
-            const sidebar = document.getElementById('sidebar');
-            const mainContent = document.getElementById('mainContent');
-            if (window.innerWidth <= 900) {
-                sidebar.classList.toggle('active');
-            } else {
-                sidebar.classList.toggle('collapsed');
-                mainContent.classList.toggle('expanded');
-            }
+    <div class="controls">
+        <button class="control-btn" onclick="togglePinyin()">隐藏/显示拼音</button>
+        <button class="control-btn" onclick="toggleEnglish()">隐藏/显示英文</button>
+    </div>
+
+    <div id="content"></div>
+</div>
+
+<script>
+    function toggleSidebar() {
+        const sidebar = document.getElementById('sidebar');
+        const mainContent = document.getElementById('mainContent');
+        if (window.innerWidth <= 900) {
+            sidebar.classList.toggle('active');
+        } else {
+            sidebar.classList.toggle('collapsed');
+            mainContent.classList.toggle('expanded');
         }
+    }
 
-        function parsePinyin(text) {
-            const regex = /([一-龥a-zA-Z0-9，。？！、：""''()./])\((.*?)\)/g;
-            let parsed = text.replace(regex, (match, char, py) => {
-                return `<span class="pinyin-group"><span class="py-text">${py}</span><span class="hz-text">${char}</span></span>`;
-            });
-            return parsed;
-        }
-
-        let currentUtterance = null;
-        function playAudio(text) {
-            let cleanText = text.replace(/\(.*?\)/g, '');
-            if (speechSynthesis.speaking) {
-                speechSynthesis.cancel();
-                if (currentUtterance === cleanText) {
-                    currentUtterance = null;
-                    return;
-                }
-            }
-            const utterance = new SpeechSynthesisUtterance(cleanText);
-            utterance.lang = 'zh-CN';
-            utterance.rate = 0.85;
-            utterance.onend = () => { currentUtterance = null; };
-            currentUtterance = cleanText;
-            speechSynthesis.speak(utterance);
-        }
-
-        let mediaRecorders = {};
-        let audioUrls = {};
-
-        async function toggleRecord(btn, id) {
-            if (!mediaRecorders[id] || mediaRecorders[id].state === "inactive") {
-                try {
-                    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-                    let chunks = [];
-                    let recorder = new MediaRecorder(stream);
-                    
-                    recorder.ondataavailable = e => chunks.push(e.data);
-                    recorder.onstop = () => {
-                        const blob = new Blob(chunks, { 'type': 'audio/ogg; codecs=opus' });
-                        audioUrls[id] = URL.createObjectURL(blob);
-                        const playerContainer = document.getElementById(`audio-container-${id}`);
-                        playerContainer.innerHTML = `<audio controls src="${audioUrls[id]}"></audio>`;
-                    };
-
-                    recorder.start();
-                    mediaRecorders[id] = recorder;
-                    btn.innerHTML = "⏹️";
-                    btn.classList.add("recording");
-                } catch (err) {
-                    alert("麦克风权限被拒绝或不支持。");
-                }
-            } else {
-                mediaRecorders[id].stop();
-                btn.innerHTML = "🎤";
-                btn.classList.remove("recording");
-            }
-        }
-
-        const lessonData = [
-            {
-                title: "新课内容 (New Lessons)",
-                items: [
-                    {
-                        type: "grammar",
-                        title: "1. 勿扰",
-                        note: "解释：不要打扰我的意思。<br>Explanation: Do not disturb.",
-                        examples: [
-                            { zh: "我在睡觉的时候，手机常常开勿扰模式，因为我不想有人打扰我的睡眠时间。", en: "When I'm sleeping, my phone often has Do Not Disturb mode turned on because I don't want anyone to disturb my sleeping time." },
-                            { zh: "我住在酒店的时候，都会在门口挂勿扰的牌子，避免清洁人员来我房间打扫。", en: "When I stay at a hotel, I always hang a Do Not Disturb sign on the door to prevent cleaning staff from coming to clean my room." },
-                            { zh: "他在上班的座位上挂勿扰的牌子，我们不要去吵他好了。", en: "He hung a Do Not Disturb sign at his seat at work; let's not go bother him." }
-                        ]
-                    },
-                    {
-                        type: "grammar",
-                        title: "2. 急救",
-                        note: "解释：紧急时候的处理。<br>Explanation: First aid / Emergency treatment.",
-                        examples: [
-                            { zh: "在路上出车祸的时候，需要有人帮忙急救，否则容易失血过多，马上死亡。", en: "When a car accident happens on the road, someone is needed to help with first aid; otherwise, it's easy to lose too much blood and die immediately." },
-                            { zh: "现在很多地方都有开设急救课程，鼓励大家去上，随时帮助身边的受伤的人。", en: "Nowadays, many places offer first aid courses, encouraging people to take them so they can help injured people around them at any time." }
-                        ]
-                    },
-                    {
-                        type: "grammar",
-                        title: "3. 复训",
-                        note: "解释：再次重复训练的课程。<br>Explanation: Retraining / Recertification course.",
-                        examples: [
-                            { zh: "好几年前我有拿到急救课程的证照，可是我已经忘了差不多，需要复训，帮我再恢复记忆。", en: "Several years ago I got a first aid course certificate, but I've almost forgotten it. I need retraining to help restore my memory." },
-                            { zh: "这张证照只有两年的有效时间，两年后必须再复训，才能拿到新的证照。", en: "This certificate is only valid for two years. Two years later, I must retrain in order to get a new certificate." }
-                        ]
-                    },
-                    {
-                        type: "grammar",
-                        title: "4. 检验",
-                        note: "解释：用在医院人员分析食物或产品。<br>Explanation: Inspection / Laboratory testing.",
-                        examples: [
-                            { zh: "我在超市买到不新鲜的肉，中毒后，卫生署就有派人去那家超市检验肉。", en: "I bought unfresh meat at the supermarket. After getting poisoned, the Department of Health sent people to that supermarket to test the meat." },
-                            { zh: "蔬菜水果上架去贩售的时候，需要经过严格的检验，避免让人吃到过多的农药。", en: "When vegetables and fruits are put on shelves for sale, they need to go through strict inspection to prevent people from consuming too much pesticide." },
-                            { zh: "实验室的研究人员正在检验这里的水质是否真的能喝.", en: "Researchers in the laboratory are testing whether the water quality here is really drinkable." }
-                        ]
-                    },
-                    {
-                        type: "table",
-                        tableClass: "compare-table",
-                        headers: ["检验", "检查"],
-                        rows: [
-                            [
-                                "<img src='https://cdn.phototourl.com/member/2026-11-07-adf5e983-163a-4464-b66e-b1bbdd527e70.png' class='inline-img'>",
-                                "<img src='https://cdn.phototourl.com/member/2026-11-07-9455b83b-2ad4-4b5e-b456-c5f62d89d826.png' class='inline-img'>"
-                            ],
-                            [
-                                "检验是实验室的人员对人体或动植物或肉类检查。",
-                                "检查是用在医生用机器检查人哪里不舒服。"
-                            ],
-                            [
-                                "检验使用情境用在分析那个东西的各种数值。",
-                                "检查使用情境比较广，可以用在很多地方。"
-                            ],
-                            [
-                                "造词：检验肉、检验血液、检验大便、检验尿、检验排泄物",
-                                "造词：检查作业、健康检查"
-                            ]
-                        ]
-                    },
-                    {
-                        type: "grammar",
-                        title: "5. 食物中毒",
-                        note: "解释：吃到不干净的食物而生病。<br>Explanation: Food poisoning.",
-                        examples: [
-                            { zh: "大概五年前，是我觉得我离死亡最近的一次，因为我在超市买了不新鲜的肉，中了弯曲杆菌，一直发烧，还有拉血尿，超级不舒服的，幸好最后好了。", en: "About five years ago was the time I felt closest to death, because I bought unfresh meat at the supermarket, got infected with Campylobacter, had a persistent fever, and passed bloody urine. It was super uncomfortable, but fortunately I got better in the end." }
-                        ]
-                    },
-                    {
-                        type: "grammar",
-                        title: "6. 习惯性脱臼",
-                        note: "解释：曾经脱臼过一次，就会一直在脱臼。<br>Explanation: Habitual dislocation.",
-                        examples: [
-                            { zh: "他小时候肩膀有脱臼，现在都会习惯性脱臼，好吓人啊！", en: "He had a shoulder dislocation when he was a child, and now he always suffers from habitual dislocation. How frightening!" }
-                        ]
-                    }
-                ]
-            }
-        ];
-
-        const container = document.getElementById('content');
-        let counter = 0;
-
-        lessonData.forEach((sec, sIdx) => {
-            let html = `<div class="section" id="sec-${sIdx}"><h2>${sec.title}</h2>`;
-            
-            sec.items.forEach((item, iIdx) => {
-                if (item.type === "html") {
-                    html += item.content;
-                } else if (item.type === "table") {
-                    let tblClass = item.tableClass ? `custom-table ${item.tableClass}` : "custom-table";
-                    html += `<div class="grammar-box" id="item-${sIdx}-${iIdx}">`;
-                    html += `<table class="${tblClass}"><thead><tr>`;
-                    item.headers.forEach(h => { html += `<th>${parsePinyin(h)}</th>`; });
-                    html += `</tr></thead><tbody>`;
-                    item.rows.forEach(row => {
-                        html += `<tr>`;
-                        row.forEach(cell => { html += `<td>${parsePinyin(cell)}</td>`; });
-                        html += `</tr>`;
-                    });
-                    html += `</tbody></table></div>`;
-                } else if (item.type === "grammar") {
-                    html += `<div class="grammar-box" id="item-${sIdx}-${iIdx}">
-                        <div style="font-weight:bold; font-size:16px; color:#8C6239; margin-bottom:5px;">${parsePinyin(item.title)}</div>`;
-                    if(item.note) html += `<div class="note">${parsePinyin(item.note)}</div>`;
-                    
-                    if (item.examples) {
-                        item.examples.forEach(ex => {
-                            html += `
-                            <div class="item" style="border:none; margin-top:10px; padding-bottom:0;">
-                                <div class="item-content">
-                                    <button class="icon-btn" onclick="playAudio('${ex.zh}')" title="朗读">🔊</button>
-                                    <button class="icon-btn rec-btn" onclick="toggleRecord(this, 'rec-${counter}')" title="录音">🎤</button>
-                                    <button class="icon-btn play-rec-btn" id="play-rec-rec-${counter}" onclick="playRecording('rec-${counter}')" disabled title="播放自己">▶</button>
-                                </div>
-                                <div class="audio-player-container" id="audio-container-rec-${counter}"></div>
-                                <div style="margin-top:5px;">${parsePinyin(ex.zh)}</div>
-                                <div class="en-trans">${ex.en}</div>
-                            </div>`;
-                            counter++;
-                        });
-                    }
-                    html += `</div>`;
-                }
-            });
-            html += `</div>`;
-            container.innerHTML += html;
+    function parsePinyin(text) {
+        const regex = /([一-龥a-zA-Z0-9，。？！、：""''()./])\((.*?)\)/g;
+        let parsed = text.replace(regex, (match, char, py) => {
+            return `<span class="pinyin-group"><span class="py-text">${py}</span><span class="hz-text">${char}</span></span>`;
         });
+        return parsed;
+    }
 
-        function togglePinyin() {
-            document.body.classList.toggle('hide-pinyin');
+    let currentUtterance = null;
+    function playAudio(text) {
+        let cleanText = text.replace(/\(.*?\)/g, '');
+        if (speechSynthesis.speaking) {
+            speechSynthesis.cancel();
+            if (currentUtterance === cleanText) {
+                currentUtterance = null;
+                return;
+            }
         }
+        const utterance = new SpeechSynthesisUtterance(cleanText);
+        utterance.lang = 'zh-CN';
+        utterance.rate = 0.85;
+        utterance.onend = () => { currentUtterance = null; };
+        currentUtterance = cleanText;
+        speechSynthesis.speak(utterance);
+    }
 
-        function toggleEnglish() {
-            document.body.classList.toggle('hide-english');
+    let mediaRecorders = {};
+    let audioUrls = {};
+
+    async function toggleRecord(btn, id) {
+        if (!mediaRecorders[id] || mediaRecorders[id].state === "inactive") {
+            try {
+                const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+                let chunks = [];
+                let recorder = new MediaRecorder(stream);
+                
+                recorder.ondataavailable = e => chunks.push(e.data);
+                recorder.onstop = () => {
+                    const blob = new Blob(chunks, { 'type': 'audio/ogg; codecs=opus' });
+                    audioUrls[id] = URL.createObjectURL(blob);
+                    const playerContainer = document.getElementById(`audio-container-${id}`);
+                    playerContainer.innerHTML = `<audio controls src="${audioUrls[id]}"></audio>`;
+                };
+
+                recorder.start();
+                mediaRecorders[id] = recorder;
+                btn.innerHTML = "⏹️";
+                btn.classList.add("recording");
+            } catch (err) {
+                alert("麦克风权限被拒绝或不支持。");
+            }
+        } else {
+            mediaRecorders[id].stop();
+            btn.innerHTML = "🎤";
+            btn.classList.remove("recording");
         }
-    </script>
-</body>
-</html>
+    }
+
+    const lessonData = [
+        {
+            title: "",
+            items: [
+                {
+                    type: "grammar",
+                    title: "1. 勿扰",
+                    note: "解释：不要打扰我的意思。<br>Explanation: Do not disturb.",
+                    examples: [
+                        { zh: "我在睡觉的时候，手机常常开勿扰模式，因为我不想有人打扰我的睡眠时间。", en: "When I'm sleeping, my phone often has Do Not Disturb mode turned on because I don't want anyone to disturb my sleeping time." },
+                        { zh: "我住在酒店的时候，都会在门口挂勿扰的牌子，避免清洁人员来我房间打扫。", en: "When I stay at a hotel, I always hang a Do Not Disturb sign on the door to prevent cleaning staff from coming to clean my room." },
+                        { zh: "他在上班的座位上挂勿扰的牌子，我们不要去吵他好了。", en: "He hung a Do Not Disturb sign at his seat at work; let's not go bother him." }
+                    ]
+                },
+                {
+                    type: "grammar",
+                    title: "2. 急救",
+                    note: "解释：紧急时候的处理。<br>Explanation: First aid / Emergency treatment.",
+                    examples: [
+                        { zh: "现在很多地方都有开设急救课程，鼓励大家去上，随时帮助身边受伤的人。", en: "Now many places offer first aid courses, encouraging people to take them and help injured people around them at any time." },
+                        { zh: "在路上出车祸的时候，需要有人帮忙急救，否则容易失血过多，马上死亡。", en: "When a car accident happens on the road, someone is needed to help with first aid; otherwise, it's easy to lose too much blood and die immediately." }
+                    ]
+                },
+                {
+                    type: "grammar",
+                    title: "3. 复训",
+                    note: "解释：再次重复训练的课程。<br>Explanation: Retraining / Recertification course.",
+                    examples: [
+                        { zh: "好几年前我有拿到急救课程的证照，可是我已经忘了差不多，需要复训，帮我再恢复记忆。", en: "Several years ago I got a first aid course certificate, but I've almost forgotten it. I need retraining to help restore my memory." },
+                        { zh: "这张证照只有两年的有效时间，两年后必须再复训，才能拿到新的证照。", en: "This certificate is only valid for two years. Two years later, I must retrain in order to get a new certificate." }
+                    ]
+                },
+                {
+                    type: "grammar",
+                    title: "4. 检验",
+                    note: "解释：用在医院人员分析食物或产品。<br>Explanation: Inspection / Laboratory testing.",
+                    examples: [
+                        { zh: "我在超市买到不新鲜的肉，中毒后，卫生署就有派人去那家超市检验肉。", en: "I bought unfresh meat at the supermarket. After getting poisoned, the Department of Health sent people to that supermarket to test the meat." },
+                        { zh: "蔬菜水果上架去贩售的时候，需要经过严格的检验，避免让人吃到过多的农药。", en: "When vegetables and fruits are put on shelves for sale, they need to go through strict inspection to prevent people from consuming too much pesticide." },
+                        { zh: "实验室的研究人员正在检验这里的水质是否真的能喝。", en: "Researchers in the laboratory are testing whether the water quality here is really drinkable." }
+                    ]
+                },
+                {
+                    type: "table",
+                    tableClass: "compare-table",
+                    headers: ["对比项目", "检验", "检查"],
+                    rows: [
+                        [
+                            "<b>图片</b>",
+                            "<img src='https://cdn.phototourl.com/member/2026-11-07-adf5e983-163a-4464-b66e-b1bbdd527e70.png' class='inline-img'>",
+                            "<img src='https://cdn.phototourl.com/member/2026-11-07-9455b83b-2ad4-4b5e-b456-c5f62d89d826.png' class='inline-img'>"
+                        ],
+                        [
+                            "<b>解释</b>",
+                            "检验是实验室的人员对人体或动植物或肉类检查。",
+                            "检查是用在医生用机器检查人哪里不舒服。"
+                        ],
+                        [
+                            "<b>使用情境</b>",
+                            "检验使用情境用在分析那个东西的各种数值。",
+                            "检查使用情境比较广，可以用在很多地方。"
+                        ],
+                        [
+                            "<b>造词</b>",
+                            "造词：检验肉、检验血液、检验大便、检验尿、检验排泄物",
+                            "造词：检查作业、健康检查"
+                        ]
+                    ]
+                },
+                {
+                    type: "grammar",
+                    title: "5. 食物中毒",
+                    note: "解释：吃到不干净的食物而生病。<br>Explanation: Food poisoning.",
+                    examples: [
+                        { zh: "大概五年前，是我觉得我离死亡最近的一次，因为我在超市买了不新鮮的肉，中了弯曲杆菌，一直发烧，还有拉血尿，超级不舒服的，幸好最后好了。", en: "About five years ago was the time I felt closest to death, because I bought unfresh meat at the supermarket, got infected with Campylobacter, had a persistent fever, and passed bloody urine. It was super uncomfortable, but fortunately I got better in the end." }
+                    ]
+                },
+                {
+                    type: "grammar",
+                    title: "6. 习惯性脱臼",
+                    note: "解释：曾经脱臼过一次，就会一直在脱臼。<br>Explanation: Habitual dislocation.",
+                    examples: [
+                        { zh: "他小时候肩膀有脱臼，现在都会习惯性脱臼，好吓人啊！", en: "He had a shoulder dislocation when he was a child, and now he always suffers from habitual dislocation. How frightening!" }
+                    ]
+                }
+            ]
+        }
+    ];
+
+    const container = document.getElementById('content');
+    let counter = 0;
+
+    lessonData.forEach((sec, sIdx) => {
+        let html = sec.title ? `<div class="section" id="sec-${sIdx}"><h2>${sec.title}</h2>` : `<div class="section" id="sec-${sIdx}">`;
+        
+        sec.items.forEach((item, iIdx) => {
+            if (item.type === "html") {
+                html += item.content;
+            } else if (item.type === "table") {
+                let tblClass = item.tableClass ? `custom-table ${item.tableClass}` : "custom-table";
+                html += `<div class="grammar-box" id="item-${sIdx}-${iIdx}">`;
+                html += `<table class="${tblClass}"><thead><tr>`;
+                item.headers.forEach(h => { html += `<th>${parsePinyin(h)}</th>`; });
+                html += `</tr></thead><tbody>`;
+                item.rows.forEach(row => {
+                    html += `<tr>`;
+                    row.forEach(cell => { html += `<td>${parsePinyin(cell)}</td>`; });
+                    html += `</tr>`;
+                });
+                html += `</tbody></table></div>`;
+            } else if (item.type === "grammar") {
+                html += `<div class="grammar-box" id="item-${sIdx}-${iIdx}">
+                    <div style="font-weight:bold; font-size:16px; color:#8C6239; margin-bottom:5px;">${parsePinyin(item.title)}</div>`;
+                if(item.note) html += `<div class="note">${parsePinyin(item.note)}</div>`;
+                
+                if (item.examples) {
+                    item.examples.forEach(ex => {
+                        html += `
+                        <div class="item" style="border:none; margin-top:10px; padding-bottom:0;">
+                            <div class="item-content">
+                                <button class="icon-btn" onclick="playAudio('${ex.zh}')" title="朗读">🔊</button>
+                                <button class="icon-btn rec-btn" onclick="toggleRecord(this, 'rec-${counter}')" title="录音">🎤</button>
+                                <button class="icon-btn play-rec-btn" id="play-rec-rec-${counter}" onclick="playRecording('rec-${counter}')" disabled title="播放自己">▶</button>
+                            </div>
+                            <div class="audio-player-container" id="audio-container-rec-${counter}"></div>
+                            <div style="margin-top:5px;">${parsePinyin(ex.zh)}</div>
+                            <div class="en-trans">${ex.en}</div>
+                        </div>`;
+                        counter++;
+                    });
+                }
+                html += `</div>`;
+            }
+        });
+        html += `</div>`;
+        container.innerHTML += html;
+    });
+
+    function togglePinyin() {
+        document.body.classList.toggle('hide-pinyin');
+    }
+
+    function toggleEnglish() {
+        document.body.classList.toggle('hide-english');
+    }
+</script>
