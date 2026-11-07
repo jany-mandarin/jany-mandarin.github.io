@@ -61,12 +61,13 @@
         .custom-table th, .custom-table td { border: 1px solid #E6D5B8; padding: 12px; text-align: left; vertical-align: top; font-size: 15px; color: #4a4a4a; line-height: 1.6; font-family: 'Helvetica Neue', Arial, sans-serif; word-wrap: break-word; }
         .custom-table th { background: #F4EAD3; color: #8C6239; font-weight: bold; text-align: center; font-size: 16px; }
 
-        /* 专门针对比较表格的栏位宽度分配（2栏：检验 vs 检查） */
-        .compare-table th:nth-child(1), .compare-table td:nth-child(1) { width: 50%; }
-        .compare-table th:nth-child(2), .compare-table td:nth-child(2) { width: 50%; }
+        /* 检验与检查对比表格：3栏（项目、检验、检查） */
+        .compare-table th:nth-child(1), .compare-table td:nth-child(1) { width: 22%; font-weight: bold; background: #FAF3E0; }
+        .compare-table th:nth-child(2), .compare-table td:nth-child(2) { width: 39%; }
+        .compare-table th:nth-child(3), .compare-table td:nth-child(3) { width: 39%; }
 
         /* 内嵌图片样式 */
-        .inline-img { max-width: 150px; width: 100%; height: auto; border-radius: 8px; border: 1px solid #E6D5B8; box-shadow: 0 2px 5px rgba(0,0,0,0.05); display: block; margin: 5px auto; }
+        .inline-img { max-width: 140px; width: 100%; height: auto; border-radius: 8px; border: 1px solid #E6D5B8; box-shadow: 0 2px 5px rgba(0,0,0,0.05); display: block; margin: 5px auto; }
 
         /* 录音播放器独立换行区块 */
         .audio-player-container { width: 100%; margin-top: 8px; }
@@ -243,23 +244,27 @@
                     {
                         type: "table",
                         tableClass: "compare-table",
-                        headers: ["检验(jiǎn yàn)", "检查(jiǎn chá)"],
+                        headers: ["项目", "检验(jiǎn yàn)", "检查(jiǎn chá)"],
                         rows: [
                             [
-                                "图片(tú piàn)<br><img src='https://cdn.phototourl.com/member/2026-11-07-adf5e983-163a-4464-b66e-b1bbdd527e70.png' class='inline-img'>",
-                                "图片(tú piàn)<br><img src='https://cdn.phototourl.com/member/2026-11-07-9455b83b-2ad4-4b5e-b456-c5f62d89d826.png' class='inline-img'>"
+                                "图片",
+                                "<img src='https://cdn.phototourl.com/member/2026-11-07-adf5e983-163a-4464-b66e-b1bbdd527e70.png' class='inline-img'>",
+                                "<img src='https://cdn.phototourl.com/member/2026-11-07-9455b83b-2ad4-4b5e-b456-c5f62d89d826.png' class='inline-img'>"
                             ],
                             [
-                                "解释(jiě shì)：检验是实验室的人员对人体或动植物或肉类检查。",
-                                "解释(jiě shì)：检查是用在医生用机器检查人哪里不舒服。"
+                                "解释",
+                                "检验是实验室的人员对人体或动植物或肉类检查。",
+                                "检查是用在医生用机器检查人哪里不舒服。"
                             ],
                             [
-                                "使用情境(shǐ yòng qíng jìng)：用在分析那个东西的各种数值。",
-                                "使用情境(shǐ yòng qíng jìng)：比较广，可以用在很多地方。"
+                                "使用情境",
+                                "用在分析那个东西的各种数值。",
+                                "比较广，可以用在很多地方。"
                             ],
                             [
-                                "造词(zào cí)：检验肉、检验血液、检验大便、检验尿、检验排泄物",
-                                "造词(zào cí)：检查作业、健康检查"
+                                "造词",
+                                "检验(jiǎn yàn)肉(ròu)、检验(jiǎn yàn)血(xuè)液(yè)、检验(jiǎn yàn)大(dà)便(biàn)、检验(jiǎn yàn)尿(niào)、检验(jiǎn yàn)排(pái)泄(xiè)物(wù)",
+                                "检查(jiǎn chá)作(zuò)业(yè)、健(jiàn)康(kāng)检查(jiǎn chá)"
                             ]
                         ]
                     },
@@ -268,7 +273,7 @@
                         title: "5. 食物中毒(shí wù zhòng dú)",
                         note: "解释：吃到不干净的食物而生病。<br>Explanation: Food poisoning.",
                         examples: [
-                            { zh: "大(dà)概(gài)五(wǔ)年(nián)前(qián)，是(shì)我(wǒ)觉(jué)得(de)我(wǒ)离(lí)死(sǐ)亡(wáng)最(zuì)近(jìn)的(de)一(yí)次(cì)，因(yīn)为(wèi)我(wǒ)在(zài)超(chāo)市(shì)买(mǎi)了(le)不(bù)新(xīn)鲜(xiān)的(de)肉(ròu)，中(zhòng)了(le)弯(wān)曲(qū)杆(gān)菌(jūn)，一(yī)直(zhí)发(fā)烧(shāo)，还(hái)有(yǒu)拉(lā)血(xiě)尿(niào)，超(chāo)级(jí)不(bù)舒(shū)服(fú)的(de)，幸(xìng)好(hǎo)最(zuì)后(hòu)好(hǎo)了(le)。", en: "About five years ago was the time I felt closest to death, because I bought unfresh meat at the supermarket, got infected with Campylobacter, had a persistent fever, and passed bloody urine. It was super uncomfortable, but fortunately I got better in the end." }
+                            { zh: "大(dà)概(gài)五(wǔ)年(nián)前(qián)，是(shì)我(wǒ)觉(jué)得(de)我(wǒ)离(lí)死(sǐ)亡(wáng)最(zuì)近(jìn)的(de)一(yí)次(cì)，因(yīn)为(wèi)我(wǒ)在(zài)超(chāo)市(shì)买(mǎi)了(le)不(bù)新(xīn)鲜(xiān)的(de)肉(ròu)，中(zhòng)了(le)弯(wān)曲(qū)杆(gān)菌(jūn)，一(yī)直(zhí)发(fā)烧(shāo)，还(hái)有(yǒu)拉(lā)血(xuè)尿(niào)，超(chāo)级(jí)不(bù)舒(shū)服(fú)的(de)，幸(xìng)好(hǎo)最(zuì)后(hòu)好(hǎo)了(le)。", en: "About five years ago was the time I felt closest to death, because I bought unfresh meat at the supermarket, got infected with Campylobacter, had a persistent fever, and passed bloody urine. It was super uncomfortable, but fortunately I got better in the end." }
                         ]
                     },
                     {
