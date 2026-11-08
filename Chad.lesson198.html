@@ -1,0 +1,1471 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chad's Mandarin Lesson 198 (2026/11/08)</title>
+<style>
+  :root {
+    --bg: #FDFBF7;
+    --primary: #D4A373;
+    --primary-dark: #8C6239;
+    --primary-light: #F4EAD3;
+    --text: #4A4A4A;
+    --white: #FFFFFF;
+    --sidebar-width: 280px;
+    --shadow: 0 4px 12px rgba(140, 98, 57, 0.08);
+    --border-radius: 12px;
+  }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Helvetica Neue', Arial, 'PingFang TC', 'Heiti TC', 'Microsoft JhengHei', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
+
+  /* Top Navigation Bar */
+  .top-nav {
+    background: var(--white);
+    border-bottom: 1px solid var(--primary-light);
+    padding: 12px 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+  }
+  .nav-left, .nav-right { display: flex; align-items: center; gap: 12px; }
+  .nav-btn {
+    background: var(--primary-light);
+    color: var(--primary-dark);
+    border: none;
+    padding: 8px 14px;
+    border-radius: 20px;
+    font-weight: 600;
+    cursor: pointer;
+    text-decoration: none;
+    font-size: 14px;
+    transition: all 0.2s ease;
+  }
+  .nav-btn:hover {
+    background: var(--primary);
+    color: var(--white);
+  }
+  .nav-title {
+    font-weight: bold;
+    color: var(--primary-dark);
+    font-size: 16px;
+  }
+
+  /* Layout Container */
+  .layout-container {
+    display: flex;
+    flex: 1;
+  }
+
+  /* Sidebar */
+  .sidebar {
+    width: var(--sidebar-width);
+    background: var(--white);
+    border-right: 1px solid var(--primary-light);
+    padding: 24px 16px;
+    box-sizing: border-box;
+    position: sticky;
+    top: 57px;
+    height: calc(100vh - 57px);
+    overflow-y: auto;
+    transition: transform 0.3s ease;
+  }
+  .sidebar h3 {
+    color: var(--primary-dark);
+    font-size: 16px;
+    margin-top: 0;
+    margin-bottom: 16px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid var(--primary-light);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .sidebar ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  .sidebar li { margin-bottom: 8px; }
+  .sidebar a {
+    color: var(--text);
+    text-decoration: none;
+    font-size: 14px;
+    display: block;
+    padding: 6px 10px;
+    border-radius: 6px;
+    transition: background 0.2s;
+  }
+  .sidebar a:hover {
+    background: var(--primary-light);
+    color: var(--primary-dark);
+  }
+  .sidebar .sub-menu {
+    padding-left: 14px;
+    margin-top: 4px;
+  }
+  .sidebar .sub-menu a { font-size: 13px; opacity: 0.85; }
+
+  /* Main Content Area */
+  .main-content {
+    flex: 1;
+    max-width: 920px;
+    margin: 0 auto;
+    padding: 32px 24px 60px;
+  }
+
+  /* Header Card */
+  .header-card {
+    background: linear-gradient(135deg, var(--white) 0%, var(--primary-light) 100%);
+    border-radius: var(--border-radius);
+    padding: 28px;
+    margin-bottom: 28px;
+    box-shadow: var(--shadow);
+    border: 1px solid rgba(212, 163, 115, 0.2);
+  }
+  .header-card h1 {
+    margin: 0 0 8px 0;
+    color: var(--primary-dark);
+    font-size: 28px;
+  }
+  .header-card p {
+    margin: 4px 0;
+    color: #666;
+    font-size: 14px;
+  }
+  .control-panel {
+    display: flex;
+    gap: 12px;
+    margin-top: 16px;
+    flex-wrap: wrap;
+  }
+  .toggle-btn {
+    background: var(--white);
+    border: 1px solid var(--primary);
+    color: var(--primary-dark);
+    padding: 6px 16px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 600;
+    transition: all 0.2s;
+  }
+  .toggle-btn.active {
+    background: var(--primary);
+    color: var(--white);
+  }
+
+  /* Section Styles */
+  section {
+    background: var(--white);
+    border-radius: var(--border-radius);
+    padding: 24px;
+    margin-bottom: 28px;
+    box-shadow: var(--shadow);
+    border: 1px solid rgba(0,0,0,0.02);
+  }
+  h2 {
+    color: var(--primary-dark);
+    border-left: 4px solid var(--primary);
+    padding-left: 12px;
+    margin-top: 0;
+    margin-bottom: 20px;
+    font-size: 20px;
+  }
+  h3 {
+    color: #555;
+    font-size: 16px;
+    margin-top: 20px;
+    margin-bottom: 12px;
+  }
+
+  /* Card Item */
+  .item-card {
+    background: var(--bg);
+    border-radius: 10px;
+    padding: 16px 20px;
+    margin-bottom: 16px;
+    border: 1px solid var(--primary-light);
+  }
+  .item-title {
+    font-size: 18px;
+    font-weight: bold;
+    color: var(--primary-dark);
+    margin-bottom: 8px;
+  }
+  .item-explanation {
+    font-size: 14px;
+    color: #444;
+    background: #FFF9F0;
+    padding: 10px 14px;
+    border-radius: 8px;
+    margin: 8px 0 12px 0;
+    border-left: 3px solid var(--primary);
+    line-height: 1.5;
+  }
+  .item-image {
+    max-width: 100%;
+    max-height: 280px;
+    border-radius: 8px;
+    margin: 12px 0;
+    display: block;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  }
+
+  /* Zhuyin Audio Container */
+  .item-content {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
+  .btn-group {
+    display: flex;
+    gap: 4px;
+    margin-top: 4px;
+  }
+  .audio-btn, .play-rec-btn {
+    background: var(--primary-light);
+    border: none;
+    color: var(--primary-dark);
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    transition: transform 0.1s, background 0.2s;
+    flex-shrink: 0;
+  }
+  .audio-btn:hover, .play-rec-btn:hover:not(:disabled) {
+    background: var(--primary);
+    color: var(--white);
+    transform: scale(1.05);
+  }
+  .audio-btn:disabled, .play-rec-btn:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+  }
+  .audio-btn.recording {
+    background: #e74c3c;
+    color: white;
+    animation: pulse 1s infinite;
+  }
+  @keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1); }
+  }
+
+  /* Zhuyin Parser Display */
+  .zy-text {
+    font-size: 20px;
+    line-height: 2.2;
+    color: var(--text);
+  }
+  .zy-char-wrap {
+    display: inline-flex;
+    align-items: center;
+    vertical-align: middle;
+    margin: 0 1px;
+    position: relative;
+  }
+  .zy-char {
+    font-size: 20px;
+    font-family: 'PingFang TC', 'Heiti TC', 'Microsoft JhengHei', sans-serif;
+  }
+  .zy-box {
+    display: inline-flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+    color: #777;
+    margin-left: 2px;
+    line-height: 1.1;
+    height: 24px;
+    user-select: none;
+  }
+  .zy-symbols {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    font-size: 9px;
+    transform: scale(0.9);
+  }
+  .zy-tone {
+    font-size: 10px;
+    font-weight: bold;
+    margin-left: 1px;
+  }
+  .hide-zy .zy-box { display: none !important; }
+
+  /* English Translation Toggle */
+  .en-text {
+    font-size: 14px;
+    color: #666;
+    margin-top: 4px;
+    font-style: italic;
+  }
+  .hide-en .en-text { display: none !important; }
+
+  /* Comparison Tables */
+  .compare-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 16px 0;
+    background: var(--white);
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.03);
+  }
+  .compare-table th, .compare-table td {
+    padding: 12px 14px;
+    border: 1px solid var(--primary-light);
+    text-align: left;
+    vertical-align: top;
+    font-size: 14px;
+  }
+  .compare-table th {
+    background: var(--primary-light);
+    color: var(--primary-dark);
+    font-weight: bold;
+  }
+  .compare-table td.header-col {
+    background: #FAF5EB;
+    font-weight: bold;
+    color: var(--primary-dark);
+    width: 120px;
+  }
+
+  /* Interactive Inputs */
+  textarea.student-input {
+    width: 100%;
+    min-height: 80px;
+    padding: 10px 12px;
+    border: 1px solid var(--primary-light);
+    border-radius: 8px;
+    font-family: inherit;
+    font-size: 14px;
+    box-sizing: border-box;
+    margin-top: 8px;
+    background: #FAF9F6;
+    transition: border-color 0.2s;
+  }
+  textarea.student-input:focus {
+    outline: none;
+    border-color: var(--primary);
+    background: var(--white);
+  }
+
+  /* Reading Passage */
+  .reading-box {
+    background: #FAF6F0;
+    border: 1px solid var(--primary-light);
+    border-radius: 10px;
+    padding: 20px 24px;
+    font-size: 18px;
+    line-height: 2.3;
+    margin-bottom: 20px;
+  }
+
+  /* Answer Comparison Card */
+  .correction-card {
+    background: #FFF;
+    border: 1px solid #FFE6E6;
+    border-radius: 8px;
+    padding: 12px 16px;
+    margin-bottom: 12px;
+  }
+  .correction-wrong {
+    color: #D9534F;
+    text-decoration: line-through;
+    font-size: 15px;
+    margin-bottom: 4px;
+  }
+  .correction-right {
+    color: #2E7D32;
+    font-weight: 500;
+  }
+
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .sidebar { display: none; }
+    .main-content { padding: 16px; }
+    .header-card h1 { font-size: 22px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Top Navigation -->
+<div class="top-nav">
+  <div class="nav-left">
+    <a href="https://jany-mandarin.github.io/Chad.html" class="nav-btn">🏠 Index</a>
+    <a href="https://jany-mandarin.github.io/Chad.lesson197.html" class="nav-btn">⬅ Lesson 197</a>
+    <span class="nav-title">Chad's Mandarin Lesson 198</span>
+  </div>
+  <div class="nav-right">
+    <button class="nav-btn" onclick="toggleSidebar()">☰ Menu</button>
+  </div>
+</div>
+
+<div class="layout-container">
+
+  <!-- Sidebar -->
+  <div class="sidebar" id="sidebar">
+    <h3>📖 Outline</h3>
+    <ul>
+      <li><a href="#sec-1">1. Warm-up (暖身)</a>
+        <div class="sub-menu">
+          <a href="#wu-1">1.1 罰 (Punish/Fine)</a>
+          <a href="#wu-2">1.2 麥克風 (Microphone)</a>
+          <a href="#wu-3">1.3 棒棒糖 (Lollipop)</a>
+          <a href="#wu-4">1.4 什麼國家 (Which Country)</a>
+          <a href="#wu-5">1.5 A在B旁邊 vs A旁邊有B</a>
+        </div>
+      </li>
+      <li><a href="#sec-2">2. Homework Review (上次作業)</a>
+        <div class="sub-menu">
+          <a href="#hw-1">2.1 A 叫 B + V.</a>
+          <a href="#hw-2">2.2 在+V. vs V.+著</a>
+          <a href="#hw-3">2.3 但是 / 可是 / 不過</a>
+          <a href="#hw-4">2.4 去睡覺 vs 睡覺</a>
+          <a href="#hw-5">2.5 Translation Review</a>
+          <a href="#hw-6">2.6 Pronunciation Practice</a>
+        </div>
+      </li>
+      <li><a href="#sec-3">3. Lesson 12 (第十二課)</a>
+        <div class="sub-menu">
+          <a href="#ls-1">3.1 S. + V. + time span + O.</a>
+        </div>
+      </li>
+      <li><a href="#sec-4">4. Homework: Sentence Combining</a></li>
+      <li><a href="#sec-5">5. Reading Comprehension</a></li>
+    </ul>
+  </div>
+
+  <!-- Main Content -->
+  <div class="main-content">
+
+    <!-- Header Card -->
+    <div class="header-card">
+      <h1>Chad's Mandarin Lesson 198</h1>
+      <p>📅 Date: 2026 / 11 / 08</p>
+      <p>🎯 Target Level: A1-A2 | Focus: Duration Structure, Action vs State, Conjunction Nuances</p>
+      
+      <div class="control-panel">
+        <button class="toggle-btn active" id="btn-zy" onclick="toggleZhuyin()">注音 Bopomofo</button>
+        <button class="toggle-btn active" id="btn-en" onclick="toggleEnglish()">English Translation</button>
+      </div>
+    </div>
+
+    <!-- Section 1: Warm-up -->
+    <section id="sec-1">
+      <h2>1. Warm-up (暖身)</h2>
+
+      <!-- 1.1 罰 -->
+      <div class="item-card" id="wu-1">
+        <div class="item-title">1. 罰 (fá - to punish / fine)</div>
+        <div class="item-explanation">
+          <strong>Character Origin Story:</strong><br>
+          You can imagine in ancient times when police caught bad guys, they used a net (𦉴/罒) to capture them, used their mouth (言) to question what bad things they did, and used a knife (刂) to punish them. Therefore, this character means to <strong>punish</strong> or <strong>fine</strong>.
+        </div>
+        
+        <img class="item-image" src="https://cdn.phototourl.com/member/2026-11-08-b4370a6e-9485-4e34-8016-5ed25c47faba.png" alt="罰 character origin">
+
+        <div style="margin: 12px 0;">
+          <strong>Common Sentence Patterns (罰 + V.):</strong>
+          <ul style="margin-top: 4px; padding-left: 20px;">
+            <li>罰(ㄈㄚˊ)站(ㄓㄢˋ) — stand as punishment</li>
+            <li>罰(ㄈㄚˊ)坐(ㄗㄨㄛˋ) — sit as punishment</li>
+            <li>罰(ㄈㄚˊ)寫(ㄒㄧㄝˇ) — write lines as punishment</li>
+            <li>罰(ㄈㄚˊ)錢(ㄑㄧㄢˊ) — pay a fine</li>
+            <li>罰(ㄈㄚˊ)球(ㄑㄧㄡˊ) — penalty kick</li>
+          </ul>
+        </div>
+
+        <h3>Example Sentences:</h3>
+
+        <div class="item-content">
+          <div class="btn-group">
+            <button class="audio-btn" onclick="playAudioText(this)">🔊</button>
+            <button class="audio-btn" onclick="toggleRecord(this)">🎤</button>
+            <button class="play-rec-btn" onclick="playRecord(this)" disabled>▶</button>
+          </div>
+          <div>
+            <div class="zy-text">要(ㄧㄠˋ)是(ㄕˋ)有(ㄧㄡˇ)人(ㄖㄣˊ)寫(ㄒㄧㄝˇ)錯(ㄘㄨㄛˋ)我(ㄨㄛˇ)的(ㄉㄜ˙)名(ㄇㄧㄥˊ)字(ㄗˋ)，我(ㄨㄛˇ)要(ㄧㄠˋ)他(ㄊㄚ)罰(ㄈㄚˊ)寫(ㄒㄧㄝˇ)一(ㄧˋ)百(ㄅㄞˇ)次(ㄘˋ)。</div>
+            <div class="en-text">If someone misspells my name, I will make him write it 100 times as punishment.</div>
+          </div>
+        </div>
+
+        <div class="item-content">
+          <div class="btn-group">
+            <button class="audio-btn" onclick="playAudioText(this)">🔊</button>
+            <button class="audio-btn" onclick="toggleRecord(this)">🎤</button>
+            <button class="play-rec-btn" onclick="playRecord(this)" disabled>▶</button>
+          </div>
+          <div>
+            <div class="zy-text">那(ㄋㄚˋ)個(ㄍㄜ˙)小(ㄒㄧㄠˇ)孩(ㄏㄞˊ)不(ㄅㄨˋ)乖(ㄍㄨㄞ)，老(ㄌㄠˇ)師(ㄕ)要(ㄧㄠˋ)他(ㄊㄚ)罰(ㄈㄚˊ)坐(ㄗㄨㄛˋ)一(ㄧˋ)個(ㄍㄜ˙)鐘(ㄓㄨㄥ)頭(ㄊㄡˊ)。</div>
+            <div class="en-text">That child was misbehaving, so the teacher made him sit as punishment for an hour.</div>
+          </div>
+        </div>
+
+        <div class="item-content">
+          <div class="btn-group">
+            <button class="audio-btn" onclick="playAudioText(this)">🔊</button>
+            <button class="audio-btn" onclick="toggleRecord(this)">🎤</button>
+            <button class="play-rec-btn" onclick="playRecord(this)" disabled>▶</button>
+          </div>
+          <div>
+            <div class="zy-text">老(ㄌㄠˇ)闆(ㄅㄢˇ)說(ㄕㄨㄛ)上(ㄕㄤˋ)班(ㄅㄢ)不(ㄅㄨˋ)認(ㄖㄣˋ)真(ㄓㄣ)，要(ㄧㄠˋ)罰(ㄈㄚˊ)錢(ㄑㄧㄢˊ)一(ㄧˋ)百(ㄅㄞˇ)塊(ㄎㄨㄞˋ)。</div>
+            <div class="en-text">The boss said if you don't work hard at work, you will be fined 100 dollars.</div>
+          </div>
+        </div>
+
+        <div class="item-content">
+          <div class="btn-group">
+            <button class="audio-btn" onclick="playAudioText(this)">🔊</button>
+            <button class="audio-btn" onclick="toggleRecord(this)">🎤</button>
+            <button class="play-rec-btn" onclick="playRecord(this)" disabled>▶</button>
+          </div>
+          <div>
+            <div class="zy-text">那(ㄋㄚˋ)個(ㄍㄜ˙)足(ㄗㄨˊ)球(ㄑㄧㄡˊ)隊(ㄉㄨㄟˋ)在(ㄗㄞˋ)罰(ㄈㄚˊ)球(ㄑㄧㄡˊ)後(ㄏㄡˋ)，贏(ㄧㄥ)了(ㄌㄜ˙)這(ㄓㄜˋ)場(ㄔㄤˇ)比(ㄅㄧˇ)賽(ㄙㄞˋ)。</div>
+            <div class="en-text">That soccer team won the match after the penalty kick.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 1.2 麥克風 -->
+      <div class="item-card" id="wu-2">
+        <div class="item-title">2. 麥克風 (màikèfēng - microphone)</div>
+        <div class="item-content">
+          <div class="btn-group">
+            <button class="audio-btn" onclick="playAudioText(this)">🔊</button>
+            <button class="audio-btn" onclick="toggleRecord(this)">🎤</button>
+            <button class="play-rec-btn" onclick="playRecord(this)" disabled>▶</button>
+          </div>
+          <div>
+            <div class="zy-text">我(ㄨㄛˇ)的(ㄉㄜ˙)貓(ㄇㄠ)喜(ㄒㄧˇ)歡(ㄏㄨㄢ)吃(ㄔ)我(ㄨㄛˇ)的(ㄉㄜ˙)麥(ㄇㄞˋ)克(ㄎㄜˋ)風(ㄈㄥ)，所(ㄙㄨㄛˇ)以(ㄧˇ)我(ㄨㄛˇ)今(ㄐㄧㄣ)天(ㄊㄧㄢ)麥(ㄇㄞˋ)克(ㄎㄜˋ)風(ㄈㄥ)怪(ㄍㄨㄞˋ)怪(ㄍㄨㄞˋ)的(ㄉㄜ˙)。</div>
+            <div class="en-text">My cat likes to eat my microphone, so my microphone is acting weird today.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 1.3 棒棒糖 -->
+      <div class="item-card" id="wu-3">
+        <div class="item-title">3. 棒棒糖 (bàngbàngtáng - lollipop)</div>
+        <img class="item-image" src="https://cdn.phototourl.com/member/2026-11-08-dbeb759c-dbd5-4aad-beab-ac3b49b67a29.png" alt="棒棒糖 Lollipop">
+        <div class="item-content">
+          <div class="btn-group">
+            <button class="audio-btn" onclick="playAudioText(this)">🔊</button>
+            <button class="audio-btn" onclick="toggleRecord(this)">🎤</button>
+            <button class="play-rec-btn" onclick="playRecord(this)" disabled>▶</button>
+          </div>
+          <div>
+            <div class="zy-text">我(ㄨㄛˇ)很(ㄏㄣˇ)喜(ㄒㄧˇ)歡(ㄏㄨㄢ)吃(ㄔ)棒(ㄅㄤˋ)棒(ㄅㄤˋ)糖(ㄊㄤˊ)，可(ㄎㄜˇ)是(ㄕˋ)醫(ㄧ)生(ㄕㄥ)說(ㄕㄨㄛ)不(ㄅㄨˋ)可(ㄎㄜˇ)以(ㄧˇ)吃(ㄔ)太(ㄊㄞˋ)多(ㄉㄨㄛ)。</div>
+            <div class="en-text">I really like eating lollipops, but the doctor said I shouldn't eat too many.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 1.4 什麼國家 -->
+      <div class="item-card" id="wu-4">
+        <div class="item-title">4. 什麼國家 (shénme guójiā - what countries / nationalities)</div>
+        <div class="item-content">
+          <div class="btn-group">
+            <button class="audio-btn" onclick="playAudioText(this)">🔊</button>
+            <button class="audio-btn" onclick="toggleRecord(this)">🎤</button>
+            <button class="play-rec-btn" onclick="playRecord(this)" disabled>▶</button>
+          </div>
+          <div>
+            <div class="zy-text">你(ㄋㄧˇ)有(ㄧㄡˇ)什(ㄕㄣˊ)麼(ㄇㄜ˙)國(ㄍㄨㄛˊ)家(ㄐㄧㄚ)的(ㄉㄜ˙)學(ㄒㄩㄝˊ)生(ㄕㄥ)？我(ㄨㄛˇ)有(ㄧㄡˇ)美(ㄇㄟˇ)國(ㄍㄨㄛˊ)、法(ㄈㄚˇ)國(ㄍㄨㄛˊ)、紐(ㄋㄧㄡˇ)西(ㄒㄧ)蘭(ㄌㄢˊ)、馬(ㄇㄚˇ)來(ㄌㄞˊ)西(ㄒㄧ)亞(ㄧㄚˇ)、菲(ㄈㄟ)律(ㄌㄩˋ)賓(ㄅㄧㄣ)、越(ㄩㄝˋ)南(ㄋㄢˊ)和(ㄏㄢˋ)日(ㄖˋ)本(ㄅㄣˇ)的(ㄉㄜ˙)學(ㄒㄩㄝˊ)生(ㄕㄥ)。</div>
+            <div class="en-text">What countries are your students from? I have students from the US, France, New Zealand, Malaysia, the Philippines, Vietnam, and Japan.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 1.5 A在B旁邊 = A旁邊有B -->
+      <div class="item-card" id="wu-5">
+        <div class="item-title">5. A在B旁邊 = A旁邊有B</div>
+        <div class="item-explanation">
+          <strong>Grammar Equivalent:</strong><br>
+          "A 在 B 旁邊" (A is next to B) communicates location.<br>
+          "B 旁邊有 A" (Next to B, there is A) communicates existence at a place.
+        </div>
+
+        <div class="item-content">
+          <div class="btn-group">
+            <button class="audio-btn" onclick="playAudioText(this)">🔊</button>
+            <button class="audio-btn" onclick="toggleRecord(this)">🎤</button>
+            <button class="play-rec-btn" onclick="playRecord(this)" disabled>▶</button>
+          </div>
+          <div>
+            <div class="zy-text">馬(ㄇㄚˇ)來(ㄌㄞˊ)西(ㄒㄧ)亞(ㄧㄚˇ)式(ㄕˋ)餐(ㄘㄢ)廳(ㄊㄧㄥ)在(ㄗㄞˋ)我(ㄨㄛˇ)的(ㄉㄜ˙)舊(ㄐㄧㄡˋ)公(ㄍㄨㄥ)司(ㄙ)旁(ㄆㄤˊ)邊(ㄅㄧㄢ)，我(ㄨㄛˇ)很(ㄏㄣˇ)少(ㄕㄠˇ)去(ㄑㄩˋ)，因(ㄧㄣ)為(ㄨㄟˋ)那(ㄋㄚˋ)裡(ㄌㄧˇ)的(ㄉㄜ˙)食(ㄕˊ)物(ㄨˋ)很(ㄏㄣˇ)辣(ㄌㄚˋ)。</div>
+            <div class="en-text">The Malaysian restaurant is next to my old company; I rarely go there because the food there is very spicy.</div>
+          </div>
+        </div>
+
+        <div class="item-content">
+          <div class="btn-group">
+            <button class="audio-btn" onclick="playAudioText(this)">🔊</button>
+            <button class="audio-btn" onclick="toggleRecord(this)">🎤</button>
+            <button class="play-rec-btn" onclick="playRecord(this)" disabled>▶</button>
+          </div>
+          <div>
+            <div class="zy-text">我(ㄨㄛˇ)的(ㄉㄜ˙)舊(ㄐㄧㄡˋ)公(ㄍㄨㄥ)司(ㄙ)旁(ㄆㄤˊ)邊(ㄅㄧㄢ)有(ㄧㄡˇ)一(ㄧˋ)家(ㄐㄧㄚ)馬(ㄇㄚˇ)來(ㄌㄞˊ)西(ㄒㄧ)亞(ㄧㄚˇ)式(ㄕˋ)餐(ㄘㄢ)廳(ㄊㄧㄥ)，我(ㄨㄛˇ)很(ㄏㄣˇ)少(ㄕㄠˇ)去(ㄑㄩˋ)，因(ㄧㄣ)為(ㄨㄟˋ)那(ㄋㄚˋ)裡(ㄌㄧˇ)的(ㄉㄜ˙)食(ㄕˊ)物(ㄨˋ)太(ㄊㄞˋ)辣(ㄌㄚˋ)了(ㄌㄜ˙)。</div>
+            <div class="en-text">Next to my old company, there is a Malaysian restaurant; I rarely go there because the food there is too spicy.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 2: Homework Review & Extensions -->
+    <section id="sec-2">
+      <h2>2. Homework Review & Extensions (上次作業)</h2>
+
+      <!-- 2.1 A 叫 B + V. -->
+      <div class="item-card" id="hw-1">
+        <div class="item-title">1. A 叫 B + do sth. (A tells / orders B to do something)</div>
+        <div class="item-explanation">
+          <strong>Grammar Explanation:</strong><br>
+          Used when a person in authority, power, or making a direct command instructs someone else to perform an action.
+        </div>
+        
+        <img class="item-image" src="https://cdn.phototourl.com/member/2026-11-08-2932fc06-06f3-4ad3-913c-48877629510b.png" alt="叫 ordering command">
+
+        <div class="item-content">
+          <div class="btn-group">
+            <button class="audio-btn" onclick="playAudioText(this)">🔊</button>
+            <button class="audio-btn" onclick="toggleRecord(this)">🎤</button>
+            <button class="play-rec-btn" onclick="playRecord(this)" disabled>▶</button>
+          </div>
+          <div>
+            <div class="zy-text">我(ㄨㄛˇ)的(ㄉㄜ˙)老(ㄌㄠˇ)闆(ㄅㄢˇ)叫(ㄐㄧㄠˋ)我(ㄨㄛˇ)臨(ㄌㄧㄣˊ)時(ㄕˊ)去(ㄑㄩˋ)墨(ㄇㄛˋ)西(ㄒㄧ)哥(ㄍㄜ)上(ㄕㄤˋ)班(ㄅㄢ)。</div>
+            <div class="en-text">My boss told me last-minute to go work in Mexico.</div>
+          </div>
+        </div>
+
+        <div class="item-content">
+          <div class="btn-group">
+            <button class="audio-btn" onclick="playAudioText(this)">🔊</button>
+            <button class="audio-btn" onclick="toggleRecord(this)">🎤</button>
+            <button class="play-rec-btn" onclick="playRecord(this)" disabled>▶</button>
+          </div>
+          <div>
+            <div class="zy-text">我(ㄨㄛˇ)的(ㄉㄜ˙)貓(ㄇㄠ)叫(ㄐㄧㄠˋ)我(ㄨㄛˇ)去(ㄑㄩˋ)買(ㄇㄞˇ)魚(ㄩˊ)。</div>
+            <div class="en-text">My cat ordered me to go buy fish.</div>
+          </div>
+        </div>
+
+        <div class="item-content">
+          <div class="btn-group">
+            <button class="audio-btn" onclick="playAudioText(this)">🔊</button>
+            <button class="audio-btn" onclick="toggleRecord(this)">🎤</button>
+            <button class="play-rec-btn" onclick="playRecord(this)" disabled>▶</button>
+          </div>
+          <div>
+            <div class="zy-text">我(ㄨㄛˇ)的(ㄉㄜ˙)老(ㄌㄠˇ)婆(ㄆㄛˊ)叫(ㄐㄧㄠˋ)我(ㄨㄛˇ)買(ㄇㄞˇ)冰(ㄅㄧㄥ)淇(ㄑㄧ)淋(ㄌㄧㄣ)回(ㄏㄨㄟˊ)來(ㄌㄞˊ)。</div>
+            <div class="en-text">My wife told me to buy ice cream and bring it home.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2.2 在+v. vs v.+著 -->
+      <div class="item-card" id="hw-2">
+        <div class="item-title">2. 在 + V. (Action in Progress) vs V. + 著 (Continuous State)</div>
+        
+        <table class="compare-table">
+          <thead>
+            <tr>
+              <th style="width: 15%;">Aspect</th>
+              <th style="width: 42.5%;">在 + V. (Dynamic Action)</th>
+              <th style="width: 42.5%;">V. + 著 (Static State)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="header-col">Explanation</td>
+              <td>Expresses an action currently in progress right now (<strong>Dynamic Action</strong>).</td>
+              <td>Expresses an ongoing, continuous result or state (<strong>Static State</strong>). Functions similarly to a state in simple present tense.</td>
+            </tr>
+            <tr>
+              <td class="header-col">Image</td>
+              <td><img src="https://cdn.phototourl.com/member/2026-11-08-045e646f-ad52-472c-afc5-9ecd4ce6c0f5.png" alt="在+V Action" style="max-width: 100%; border-radius:6px;"></td>
+              <td><img src="https://cdn.phototourl.com/member/2026-11-08-36f6ad25-0444-435f-a9e7-9c9a55bbf314.png" alt="V+著 State" style="max-width: 100%; border-radius:6px;"></td>
+            </tr>
+            <tr>
+              <td class="header-col">Examples</td>
+              <td>
+                <div class="item-content">
+                  <div class="btn-group">
+                    <button class="audio-btn" onclick="playAudioText(this)">🔊</button>
+                    <button class="audio-btn" onclick="toggleRecord(this)">🎤</button>
+                    <button class="play-rec-btn" onclick="playRecord(this)" disabled>▶</button>
+                  </div>
+                  <div>
+                    <div class="zy-text">我(ㄨㄛˇ)在(ㄗㄞˋ)穿(ㄔㄨㄢ)衣(ㄧ)服(ㄈㄨˊ)。</div>
+                    <div class="en-text">I am putting on clothes.</div>
+                  </div>
+                </div>
+
+                <div class="item-content">
+                  <div class="btn-group">
+                    <button class="audio-btn" onclick="playAudioText(this)">🔊</button>
+                    <button class="audio-btn" onclick="toggleRecord(this)">🎤</button>
+                    <button class="play-rec-btn" onclick="playRecord(this)" disabled>▶</button>
+                  </div>
+                  <div>
+                    <div class="zy-text">我(ㄨㄛˇ)在(ㄗㄞˋ)戴(ㄉㄞˋ)帽(ㄇㄠˋ)子(ㄗ˙)。</div>
+                    <div class="en-text">I am putting on a hat.</div>
+                  </div>
+                </div>
+
+                <div class="item-content">
+                  <div class="btn-group">
+                    <button class="audio-btn" onclick="playAudioText(this)">🔊</button>
+                    <button class="audio-btn" onclick="toggleRecord(this)">🎤</button>
+                    <button class="play-rec-btn" onclick="playRecord(this)" disabled>▶</button>
+                  </div>
+                  <div>
+                    <div class="zy-text">我(ㄨㄛˇ)在(ㄗㄞˋ)跑(ㄆㄠˇ)步(ㄅㄨˋ)。</div>
+                    <div class="en-text">I am running.</div>
+                  </div>
+                </div>
+              </td>
+              <td>
+                <div class="item-content">
+                  <div class="btn-group">
+                    <button class="audio-btn" onclick="playAudioText(this)">🔊</button>
+                    <button class="audio-btn" onclick="toggleRecord(this)">🎤</button>
+                    <button class="play-rec-btn" onclick="playRecord(this)" disabled>▶</button>
+                  </div>
+                  <div>
+                    <div class="zy-text">我(ㄨㄛˇ)穿(ㄔㄨㄢ)著(ㄓㄜ˙)紅(ㄏㄨㄥˊ)色(ㄙㄜˋ)衣(ㄧ)服(ㄈㄨˊ)。</div>
+                    <div class="en-text">I am wearing red clothes.</div>
+                  </div>
+                </div>
+
+                <div class="item-content">
+                  <div class="btn-group">
+                    <button class="audio-btn" onclick="playAudioText(this)">🔊</button>
+                    <button class="audio-btn" onclick="toggleRecord(this)">🎤</button>
+                    <button class="play-rec-btn" onclick="playRecord(this)" disabled>▶</button>
+                  </div>
+                  <div>
+                    <div class="zy-text">他(ㄊㄚ)戴(ㄉㄞˋ)著(ㄓㄜ˙)帽(ㄇㄠˋ)子(ㄗ˙)。</div>
+                    <div class="en-text">He is wearing a hat.</div>
+                  </div>
+                </div>
+
+                <div class="item-content">
+                  <div class="btn-group">
+                    <button class="audio-btn" onclick="playAudioText(this)">🔊</button>
+                    <button class="audio-btn" onclick="toggleRecord(this)">🎤</button>
+                    <button class="play-rec-btn" onclick="playRecord(this)" disabled>▶</button>
+                  </div>
+                  <div>
+                    <div class="zy-text">他(ㄊㄚ)拿(ㄋㄚˊ)著(ㄓㄜ˙)一(ㄧˋ)個(ㄍㄜ˙)箱(ㄒㄧㄤ)子(ㄗ˙)。</div>
+                    <div class="en-text">He is holding a box.</div>
+                  </div>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- 2.3 但是 / 可是 / 不過 -->
+      <div class="item-card" id="hw-3">
+        <div class="item-title">3. Conjunction Comparison: 但是 vs 可是 vs 不過</div>
+        
+        <table class="compare-table">
+          <thead>
+            <tr>
+              <th style="width: 18%;">Dimension</th>
+              <th style="width: 27.3%;">但是 (dànshì)</th>
+              <th style="width: 27.3%;">可是 (kěshì)</th>
+              <th style="width: 27.3%;">不過 (búguò)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="header-col">Tone Intensity</td>
+              <td><strong>Strongest (最強烈)</strong></td>
+              <td><strong>Medium (中等)</strong></td>
+              <td><strong>Most Gentle (最委婉)</strong></td>
+            </tr>
+            <tr>
+              <td class="header-col">Usage Scenario</td>
+              <td>Formal occasions, objective statements, strong contrast. Used in writing or formal speeches.</td>
+              <td>Daily spoken language, casual conversations, making excuses, or complaining.</td>
+              <td>Gentle transition, adding supplementary notes, softening tone (like "however/though").</td>
+            </tr>
+            <tr>
+              <td class="header-col">English Meaning</td>
+              <td>But / However (Strong, formal)</td>
+              <td>But / However (Casual, conversational)</td>
+              <td>However / Though / Mind you (Polite)</td>
+            </tr>
+            <tr>
+              <td class="header-col">Examples</td>
+              <td>
+                <div class="item-content">
+                  <div class="btn-group">
+                    <button class="audio-btn" onclick="playAudioText(this)">🔊</button>
+                    <button class="audio-btn" onclick="toggleRecord(this)">🎤</button>
+                    <button class="play-rec-btn" onclick="playRecord(this)" disabled>▶</button>
+                  </div>
+                  <div>
+                    <div class="zy-text">這(ㄓㄜˋ)個(ㄍㄜ˙)女(ㄋㄩˇ)生(ㄕㄥ)很(ㄏㄣˇ)漂(ㄆㄧㄠˋ)亮(ㄌㄧㄤˋ)，但(ㄉㄢˋ)是(ㄕˋ)我(ㄨㄛˇ)不(ㄅㄨˋ)喜(ㄒㄧˇ)歡(ㄏㄨㄢ)她(ㄊㄚ)。</div>
+                    <div class="en-text">This girl is very pretty, BUT I don't like her.</div>
+                  </div>
+                </div>
+
+                <div class="item-content">
+                  <div class="btn-group">
+                    <button class="audio-btn" onclick="playAudioText(this)">🔊</button>
+                    <button class="audio-btn" onclick="toggleRecord(this)">🎤</button>
+                    <button class="play-rec-btn" onclick="playRecord(this)" disabled>▶</button>
+                  </div>
+                  <div>
+                    <div class="zy-text">這(ㄓㄜˋ)家(ㄐㄧㄚ)公(ㄍㄨㄥ)司(ㄙ)很(ㄏㄣˇ)好(ㄏㄠˇ)，但(ㄉㄢˋ)是(ㄕˋ)老(ㄌㄠˇ)闆(ㄅㄢˇ)給(ㄍㄟˇ)我(ㄨㄛˇ)的(ㄉㄜ˙)錢(ㄑㄧㄢˊ)太(ㄊㄞˋ)少(ㄕㄠˇ)了(ㄌㄜ˙)。</div>
+                    <div class="en-text">This company is very good, BUT the boss pays me too little money.</div>
+                  </div>
+                </div>
+              </td>
+              <td>
+                <div class="item-content">
+                  <div class="btn-group">
+                    <button class="audio-btn" onclick="playAudioText(this)">🔊</button>
+                    <button class="audio-btn" onclick="toggleRecord(this)">🎤</button>
+                    <button class="play-rec-btn" onclick="playRecord(this)" disabled>▶</button>
+                  </div>
+                  <div>
+                    <div class="zy-text">我(ㄨㄛˇ)很(ㄏㄣˇ)想(ㄒㄧㄤˇ)幫(ㄅㄤ)你(ㄋㄧˇ)，可(ㄎㄜˇ)是(ㄕˋ)我(ㄨㄛˇ)沒(ㄇㄟˊ)有(ㄧㄡˇ)時(ㄕˊ)間(ㄐㄧㄢ)，好(ㄏㄠˇ)意(ㄧˋ)思(ㄙ˙)。</div>
+                    <div class="en-text">I really want to help you, but I don't have time, sorry.</div>
+                  </div>
+                </div>
+
+                <div class="item-content">
+                  <div class="btn-group">
+                    <button class="audio-btn" onclick="playAudioText(this)">🔊</button>
+                    <button class="audio-btn" onclick="toggleRecord(this)">🎤</button>
+                    <button class="play-rec-btn" onclick="playRecord(this)" disabled>▶</button>
+                  </div>
+                  <div>
+                    <div class="zy-text">我(ㄨㄛˇ)很(ㄏㄣˇ)喜(ㄒㄧˇ)歡(ㄏㄨㄢ)這(ㄓㄜˋ)件(ㄐㄧㄢˋ)衣(ㄧ)服(ㄈㄨˊ)，可(ㄎㄜˇ)是(ㄕˋ)...我(ㄨㄛˇ)沒(ㄇㄟˊ)有(ㄧㄡˇ)很(ㄏㄣˇ)多(ㄉㄨㄛ)錢(ㄑㄧㄢˊ)，不(ㄅㄨˋ)好(ㄏㄠˇ)意(ㄧˋ)思(ㄙ˙)。</div>
+                    <div class="en-text">I really like this piece of clothing, but... I don't have much money, sorry.</div>
+                  </div>
+                </div>
+              </td>
+              <td>
+                <div class="item-content">
+                  <div class="btn-group">
+                    <button class="audio-btn" onclick="playAudioText(this)">🔊</button>
+                    <button class="audio-btn" onclick="toggleRecord(this)">🎤</button>
+                    <button class="play-rec-btn" onclick="playRecord(this)" disabled>▶</button>
+                  </div>
+                  <div>
+                    <div class="zy-text">這(ㄓㄜˋ)家(ㄐㄧㄚ)咖(ㄎㄚ)啡(ㄈㄟ)廳(ㄊㄧㄥ)很(ㄏㄣˇ)好(ㄏㄠˇ)，不(ㄅㄨˋ)過(ㄍㄨㄛˋ)位(ㄨㄟˋ)子(ㄗ˙)有(ㄧㄡˇ)點(ㄉㄧㄢˇ)少(ㄕㄠˇ)。</div>
+                    <div class="en-text">This café is great, though seating is a bit limited.</div>
+                  </div>
+                </div>
+
+                <div class="item-content">
+                  <div class="btn-group">
+                    <button class="audio-btn" onclick="playAudioText(this)">🔊</button>
+                    <button class="audio-btn" onclick="toggleRecord(this)">🎤</button>
+                    <button class="play-rec-btn" onclick="playRecord(this)" disabled>▶</button>
+                  </div>
+                  <div>
+                    <div class="zy-text">台(ㄊㄞˊ)灣(ㄨㄢ)很(ㄏㄣˇ)好(ㄏㄠˇ)，不(ㄅㄨˋ)過(ㄍㄨㄛˋ)有(ㄧㄡˇ)點(ㄉㄧㄢˇ)太(ㄊㄞˋ)熱(ㄖㄜˋ)了(ㄌㄜ˙)。</div>
+                    <div class="en-text">Taiwan is wonderful, though it's a bit too hot.</div>
+                  </div>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- 2.4 去睡覺 vs 睡覺 -->
+      <div class="item-card" id="hw-4">
+        <div class="item-title">4. 去睡覺 (Go to sleep / Head to bed) vs 睡覺 (Sleep)</div>
+        <div class="item-explanation">
+          <strong>Grammar Nuance:</strong><br>
+          <strong>去睡覺:</strong> Emphasizes the physical motion or action of heading off to bed.<br>
+          <strong>睡覺:</strong> Simply refers to the state or act of sleeping itself.
+        </div>
+
+        <div class="item-content">
+          <div class="btn-group">
+            <button class="audio-btn" onclick="playAudioText(this)">🔊</button>
+            <button class="audio-btn" onclick="toggleRecord(this)">🎤</button>
+            <button class="play-rec-btn" onclick="playRecord(this)" disabled>▶</button>
+          </div>
+          <div>
+            <div class="zy-text">她(ㄊㄚ)現(ㄒㄧㄢˋ)在(ㄗㄞˋ)在(ㄗㄞˋ)睡(ㄕㄨㄟˋ)覺(ㄐㄧㄠˋ)，我(ㄨㄛˇ)們(ㄇㄣ˙)不(ㄅㄨˋ)可(ㄎㄜˇ)以(ㄧˇ)大(ㄉㄚˋ)聲(ㄕㄥ)說(ㄕㄨㄛ)話(ㄏㄨㄚˋ)。</div>
+            <div class="en-text">She is sleeping right now; we cannot talk loudly.</div>
+          </div>
+        </div>
+
+        <div class="item-content">
+          <div class="btn-group">
+            <button class="audio-btn" onclick="playAudioText(this)">🔊</button>
+            <button class="audio-btn" onclick="toggleRecord(this)">🎤</button>
+            <button class="play-rec-btn" onclick="playRecord(this)" disabled>▶</button>
+          </div>
+          <div>
+            <div class="zy-text">你(ㄋㄧˇ)看(ㄎㄢˋ)起(ㄑㄧˇ)來(ㄌㄞˊ)太(ㄊㄞˋ)累(ㄌㄟˋ)了(ㄌㄜ˙)，快(ㄎㄨㄞˋ)去(ㄑㄩˋ)睡(ㄕㄨㄟˋ)覺(ㄐㄧㄠˋ)。</div>
+            <div class="en-text">You look too tired, go to sleep quickly!</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2.5 Translation Practice Review -->
+      <div class="item-card" id="hw-5">
+        <div class="item-title">5. Translation Practice Answers & Correction Breakdown</div>
+
+        <!-- Correction 1 -->
+        <div class="correction-card">
+          <p><strong>1) English:</strong> My boss told me last-minute to go on a business trip to Mexico, but I don't want to go.</p>
+          <div class="correction-wrong">❌ 我 的 老 闆 對 我 說 臨 時 去 墨 西 哥 出 差 ， 不 過 我 不 想 去 。</div>
+          <div class="correction-right">
+            <div class="item-content" style="margin:0;">
+              <div class="btn-group">
+                <button class="audio-btn" onclick="playAudioText(this)">🔊</button>
+                <button class="audio-btn" onclick="toggleRecord(this)">🎤</button>
+                <button class="play-rec-btn" onclick="playRecord(this)" disabled>▶</button>
+              </div>
+              <div>
+                <div class="zy-text">✅ 我(ㄨㄛˇ)的(ㄉㄜ˙)老(ㄌㄠˇ)闆(ㄅㄢˇ)叫(ㄐㄧㄠˋ)我(ㄨㄛˇ)臨(ㄌㄧㄣˊ)時(ㄕˊ)去(ㄑㄩˋ)墨(ㄇㄛˋ)西(ㄒㄧ)哥(ㄍㄜ)出(ㄔㄨ)差(ㄔㄞ)，不(ㄅㄨˋ)過(ㄍㄨㄛˋ)我(ㄨㄛˇ)不(ㄅㄨˋ)想(ㄒㄧㄤˇ)去(ㄑㄩˋ)。</div>
+              </div>
+            </div>
+          </div>
+          <div class="item-explanation" style="margin-top:8px;">
+            <strong>Grammar Key:</strong> Use <strong>叫 (jiào)</strong> when someone in authority tells or orders someone to do something.
+          </div>
+        </div>
+
+        <!-- Correction 2 -->
+        <div class="correction-card">
+          <p><strong>2) English:</strong> You've already slept for 12 hours. Are you still going to sleep?</p>
+          <div class="correction-wrong">❌ 你 已 經 睡 了 十 二 個 鐘 頭 了 。 你 還 要 去 睡 嗎 ？</div>
+          <div class="correction-right">
+            <div class="item-content" style="margin:0;">
+              <div class="btn-group">
+                <button class="audio-btn" onclick="playAudioText(this)">🔊</button>
+                <button class="audio-btn" onclick="toggleRecord(this)">🎤</button>
+                <button class="play-rec-btn" onclick="playRecord(this)" disabled>▶</button>
+              </div>
+              <div>
+                <div class="zy-text">✅ 你(ㄋㄧˇ)已(ㄧˇ)經(ㄐㄧㄥ)睡(ㄕㄨㄟˋ)了(ㄌㄜ˙)十(ㄕˊ)二(ㄦˋ)個(ㄍㄜ˙)鐘(ㄓㄨㄥ)頭(ㄊㄡˊ)了(ㄌㄜ˙)。你(ㄋㄧˇ)還(ㄏㄞˊ)要(ㄧㄠˋ)再(ㄗㄞˋ)睡(ㄕㄨㄟˋ)嗎(ㄇㄚ˙)？</div>
+              </div>
+            </div>
+          </div>
+          <div class="item-explanation" style="margin-top:8px;">
+            <strong>Grammar Key:</strong> Use <strong>再 (zài)</strong> to indicate continuing or repeating an action further ("still sleep more?").
+          </div>
+        </div>
+
+        <!-- Correction 3 -->
+        <div class="correction-card">
+          <p><strong>3) English:</strong> I don't want to answer my boss's call because he'll probably give me a lot of work to do.</p>
+          <div class="correction-wrong">❌ 我 不 想 接 我 老 闆 的 電 話 ， 因 為 他 可 能 給 我 很 多 工 作 。</div>
+          <div class="correction-right">
+            <div class="item-content" style="margin:0;">
+              <div class="btn-group">
+                <button class="audio-btn" onclick="playAudioText(this)">🔊</button>
+                <button class="audio-btn" onclick="toggleRecord(this)">🎤</button>
+                <button class="play-rec-btn" onclick="playRecord(this)" disabled>▶</button>
+              </div>
+              <div>
+                <div class="zy-text">✅ 我(ㄨㄛˇ)不(ㄅㄨˋ)想(ㄒㄧㄤˇ)接(ㄐㄧㄝ)我(ㄨㄛˇ)老(ㄌㄠˇ)闆(ㄅㄢˇ)的(ㄉㄜ˙)電(ㄉㄧㄢˋ)話(ㄏㄨㄚˋ)，因(ㄧㄣ)為(ㄨㄟˋ)他(ㄊㄚ)可(ㄎㄜˇ)能(ㄋㄥˊ)要(ㄧㄠˋ)給(ㄍㄟˇ)我(ㄨㄛˇ)很(ㄏㄣˇ)多(ㄉㄨㄛ)工(ㄍㄨㄥ)作(ㄗㄨㄛˋ)。</div>
+              </div>
+            </div>
+          </div>
+          <div class="item-explanation" style="margin-top:8px;">
+            <strong>Grammar Key:</strong> Add <strong>要 (yào)</strong> to express the modal intention / future action ("is going to give me...").
+          </div>
+        </div>
+
+        <!-- Correction 4 -->
+        <div class="correction-card">
+          <p><strong>4) English:</strong> Traveling during this season is wonderful because the weather is neither too cold nor too hot.</p>
+          <div class="correction-wrong">❌ 這 個 季 節 在 （ 著 ？ ） 旅 行 的 時 候 ， 因 為 天 氣 不 冷 也 不 熱 。</div>
+          <div class="correction-right">
+            <div class="item-content" style="margin:0;">
+              <div class="btn-group">
+                <button class="audio-btn" onclick="playAudioText(this)">🔊</button>
+                <button class="audio-btn" onclick="toggleRecord(this)">🎤</button>
+                <button class="play-rec-btn" onclick="playRecord(this)" disabled>▶</button>
+              </div>
+              <div>
+                <div class="zy-text">✅ 這(ㄓㄜˋ)個(ㄍㄜ˙)季(ㄐㄧˋ)節(ㄐㄧㄝˊ)去(ㄑㄩˋ)旅(ㄌㄩˇ)行(ㄒㄧㄥˊ)超(ㄔㄠ)好(ㄏㄠˇ)的(ㄉㄜ˙)，因(ㄧㄣ)為(ㄨㄟˋ)天(ㄊㄧㄢ)氣(ㄑㄧˋ)不(ㄅㄨˋ)冷(ㄌㄥˇ)也(ㄧㄝˇ)不(ㄅㄨˋ)熱(ㄖㄜˋ)。</div>
+              </div>
+            </div>
+          </div>
+          <div class="item-explanation" style="margin-top:8px;">
+            <strong>Grammar Key:</strong> Express "Traveling during this season is wonderful" as <strong>這個季節去旅行超好的</strong>.
+          </div>
+        </div>
+      </div>
+
+      <!-- 2.6 Pronunciation Practice -->
+      <div class="item-card" id="hw-6">
+        <div class="item-title">6. Pronunciation Practice (發音練習)</div>
+        
+        <table class="compare-table">
+          <thead>
+            <tr>
+              <th style="width: 30%;">Word</th>
+              <th style="width: 30%;">Pinyin / English</th>
+              <th style="width: 40%;">Audio & Recording</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><div class="zy-text">終(ㄓㄨㄥ)於(ㄩˊ)</div></td>
+              <td>zhōngyú (finally)</td>
+              <td>
+                <div class="item-content" style="margin:0;">
+                  <div class="btn-group">
+                    <button class="audio-btn" onclick="playAudioText(this)">🔊</button>
+                    <button class="audio-btn" onclick="toggleRecord(this)">🎤</button>
+                    <button class="play-rec-btn" onclick="playRecord(this)" disabled>▶</button>
+                  </div>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td><div class="zy-text">季(ㄐㄧˋ)節(ㄐㄧㄝˊ)</div></td>
+              <td>jìjié (season)</td>
+              <td>
+                <div class="item-content" style="margin:0;">
+                  <div class="btn-group">
+                    <button class="audio-btn" onclick="playAudioText(this)">🔊</button>
+                    <button class="audio-btn" onclick="toggleRecord(this)">🎤</button>
+                    <button class="play-rec-btn" onclick="playRecord(this)" disabled>▶</button>
+                  </div>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td><div class="zy-text">換(ㄏㄨㄢˋ)</div></td>
+              <td>huàn (to change / switch)</td>
+              <td>
+                <div class="item-content" style="margin:0;">
+                  <div class="btn-group">
+                    <button class="audio-btn" onclick="playAudioText(this)">🔊</button>
+                    <button class="audio-btn" onclick="toggleRecord(this)">🎤</button>
+                    <button class="play-rec-btn" onclick="playRecord(this)" disabled>▶</button>
+                  </div>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td><div class="zy-text">接(ㄐㄧㄝ)電(ㄉㄧㄢˋ)話(ㄏㄨㄚˋ)</div></td>
+              <td>jiē diànhuà (answer phone)</td>
+              <td>
+                <div class="item-content" style="margin:0;">
+                  <div class="btn-group">
+                    <button class="audio-btn" onclick="playAudioText(this)">🔊</button>
+                    <button class="audio-btn" onclick="toggleRecord(this)">🎤</button>
+                    <button class="play-rec-btn" onclick="playRecord(this)" disabled>▶</button>
+                  </div>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Section 3: Lesson 12 -->
+    <section id="sec-3">
+      <h2>3. Lesson 12 (第十二課)</h2>
+
+      <div class="item-card" id="ls-1">
+        <div class="item-title">Structure: Subject + Verb + (time span) + Object</div>
+        <div class="item-explanation">
+          <strong>Grammar Structure:</strong><br>
+          In Chinese, when emphasizing <em>how long</em> an action has been performed, the <strong>time span (duration)</strong> is placed directly between the <strong>Verb</strong> and the <strong>Object</strong>.<br><br>
+          💡 <strong>Review Note:</strong> For the distinction between <strong>就 (jiù - earlier than expected)</strong> and <strong>才 (cái - later than expected)</strong>, you can review <a href="https://jany-mandarin.github.io/Chad.lesson188.html#ls-1" target="_blank" style="color:var(--primary-dark); font-weight:bold;">Lesson 188 Grammar Notes</a>.
+        </div>
+
+        <h3>Example Sentences:</h3>
+
+        <div class="item-content">
+          <div class="btn-group">
+            <button class="audio-btn" onclick="playAudioText(this)">🔊</button>
+            <button class="audio-btn" onclick="toggleRecord(this)">🎤</button>
+            <button class="play-rec-btn" onclick="playRecord(this)" disabled>▶</button>
+          </div>
+          <div>
+            <div class="zy-text">我(ㄨㄛˇ)已(ㄧˇ)經(ㄐㄧㄥ)讀(ㄉㄨˊ)了(ㄌㄜ˙)三(ㄙㄢ)個(ㄍㄜ˙)小(ㄒㄧㄠˇ)時(ㄕˊ)的(ㄉㄜ˙)書(ㄕㄨ)了(ㄌㄜ˙)。</div>
+            <div class="en-text">I have already studied for three hours.</div>
+          </div>
+        </div>
+
+        <div class="item-content">
+          <div class="btn-group">
+            <button class="audio-btn" onclick="playAudioText(this)">🔊</button>
+            <button class="audio-btn" onclick="toggleRecord(this)">🎤</button>
+            <button class="play-rec-btn" onclick="playRecord(this)" disabled>▶</button>
+          </div>
+          <div>
+            <div class="zy-text">我(ㄨㄛˇ)們(ㄇㄣ˙)是(ㄕˋ)三(ㄙㄢ)點(ㄉㄧㄢˇ)見(ㄐㄧㄢˋ)面(ㄇㄧㄢˋ)，我(ㄨㄛˇ)晚(ㄨㄢˇ)了(ㄌㄜ˙)五(ㄨˇ)分(ㄈㄣ)鐘(ㄓㄨㄥ)，他(ㄊㄚ)等(ㄉㄥˇ)了(ㄌㄜ˙)三(ㄙㄢ)分(ㄈㄣ)鐘(ㄓㄨㄥ)就(ㄐㄧㄡˋ)走(ㄗㄡˇ)了(ㄌㄜ˙)，好(ㄏㄠˇ)早(ㄗㄠˇ)就(ㄐㄧㄡˋ)走(ㄗㄡˇ)了(ㄌㄜ˙)！！</div>
+            <div class="en-text">We were supposed to meet at 3 o'clock. I was 5 minutes late, and he left after waiting just 3 minutes. He left so early!! (Note: 就 indicates earlier than expected)</div>
+          </div>
+        </div>
+
+        <div class="item-content">
+          <div class="btn-group">
+            <button class="audio-btn" onclick="playAudioText(this)">🔊</button>
+            <button class="audio-btn" onclick="toggleRecord(this)">🎤</button>
+            <button class="play-rec-btn" onclick="playRecord(this)" disabled>▶</button>
+          </div>
+          <div>
+            <div class="zy-text">我(ㄨㄛˇ)已(ㄧˇ)經(ㄐㄧㄥ)住(ㄓㄨˋ)在(ㄗㄞˋ)這(ㄓㄜˋ)個(ㄍㄜ˙)家(ㄐㄧㄚ)五(ㄨˇ)年(ㄋㄧㄢˊ)了(ㄌㄜ˙)！！</div>
+            <div class="en-text">I have already lived in this house for five years!!</div>
+          </div>
+        </div>
+
+        <div class="item-content">
+          <div class="btn-group">
+            <button class="audio-btn" onclick="playAudioText(this)">🔊</button>
+            <button class="audio-btn" onclick="toggleRecord(this)">🎤</button>
+            <button class="play-rec-btn" onclick="playRecord(this)" disabled>▶</button>
+          </div>
+          <div>
+            <div class="zy-text">我(ㄨㄛˇ)們(ㄇㄣ˙)已(ㄧˇ)經(ㄐㄧㄥ)走(ㄗㄡˇ)了(ㄌㄜ˙)二(ㄦˋ)十(ㄕˊ)分(ㄈㄣ)鐘(ㄓㄨㄥ)，還(ㄏㄞˊ)沒(ㄇㄟˊ)到(ㄉㄠˋ)嗎(ㄇㄚ˙)？我(ㄨㄛˇ)好(ㄏㄠˇ)累(ㄌㄟˋ)喔(ㄛ)！！</div>
+            <div class="en-text">We have already walked for twenty minutes, aren't we there yet? I'm so tired!!</div>
+          </div>
+        </div>
+
+        <div class="item-content">
+          <div class="btn-group">
+            <button class="audio-btn" onclick="playAudioText(this)">🔊</button>
+            <button class="audio-btn" onclick="toggleRecord(this)">🎤</button>
+            <button class="play-rec-btn" onclick="playRecord(this)" disabled>▶</button>
+          </div>
+          <div>
+            <div class="zy-text">我(ㄨㄛˇ)已(ㄧˇ)經(ㄐㄧㄥ)上(ㄕㄤˋ)了(ㄌㄜ˙)十(ㄕˊ)二(ㄦˋ)小(ㄒㄧㄠˇ)時(ㄕˊ)的(ㄉㄜ˙)班(ㄅㄢ)，累(ㄌㄟˋ)死(ㄙˇ)我(ㄨㄛˇ)了(ㄌㄜ˙)！！</div>
+            <div class="en-text">I have already worked a twelve-hour shift, I'm exhausted!!</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 4: Sentence Combining Homework -->
+    <section id="sec-4">
+      <h2>4. Homework: Sentence Combining (語句結合)</h2>
+      <div class="item-explanation">
+        <strong>Task Instructions:</strong><br>
+        Combine the two short sentences into one sentence using the <strong>S. + V. + (time span) + O.</strong> structure.
+      </div>
+
+      <div class="item-card">
+        <p><strong>1. 我畫畫，畫了兩天了！</strong></p>
+        <textarea class="student-input" placeholder="Type your combined sentence here..."></textarea>
+      </div>
+
+      <div class="item-card">
+        <p><strong>2. 他學中文，學了一年！</strong></p>
+        <textarea class="student-input" placeholder="Type your combined sentence here..."></textarea>
+      </div>
+
+      <div class="item-card">
+        <p><strong>3. 我太太看電視，看了五個鐘頭。</strong></p>
+        <textarea class="student-input" placeholder="Type your combined sentence here..."></textarea>
+      </div>
+
+      <div class="item-card">
+        <p><strong>4. 爸爸的工作是開車的，開了十年了。</strong></p>
+        <textarea class="student-input" placeholder="Type your combined sentence here..."></textarea>
+      </div>
+    </section>
+
+    <!-- Section 5: Reading Comprehension -->
+    <section id="sec-5">
+      <h2>5. Reading Comprehension (閱讀理解)</h2>
+
+      <div class="reading-box">
+        <div class="item-content" style="margin-bottom: 12px;">
+          <div class="btn-group">
+            <button class="audio-btn" onclick="playAudioText(this)">🔊</button>
+            <button class="audio-btn" onclick="toggleRecord(this)">🎤</button>
+            <button class="play-rec-btn" onclick="playRecord(this)" disabled>▶</button>
+          </div>
+          <span style="font-size: 14px; font-weight: bold; color: var(--primary-dark);">Read & Listen to the Story</span>
+        </div>
+
+        <div class="zy-text">
+          國(ㄍㄨㄛˊ)龍(ㄌㄨㄥˊ)和(ㄏㄢˋ)清(ㄑㄧㄥ)德(ㄉㄜˊ)是(ㄕˋ)好(ㄏㄠˇ)朋(ㄆㄥˊ)友(ㄧㄡˇ)。他(ㄊㄚ)們(ㄇㄣ˙)住(ㄓㄨˋ)在(ㄗㄞˋ)同(ㄊㄨㄥˊ)一(ㄧˋ)個(ㄍㄜ˙)城(ㄔㄥˊ)市(ㄕˋ)，常(ㄔㄤˊ)常(ㄔㄤˊ)一(ㄧˋ)起(ㄑㄧˇ)去(ㄑㄩˋ)公(ㄍㄨㄥ)園(ㄩㄢˊ)。今(ㄐㄧㄣ)天(ㄊㄧㄢ)天(ㄊㄧㄢ)氣(ㄑㄧˋ)很(ㄏㄣˇ)好(ㄏㄠˇ)，是(ㄕˋ)一(ㄧˋ)年(ㄋㄧㄢˊ)裡(ㄌㄧˇ)最(ㄗㄨㄟˋ)好(ㄏㄠˇ)的(ㄉㄜ˙)季(ㄐㄧˋ)節(ㄐㄧㄝˊ)。<br><br>
+
+          早(ㄗㄠˇ)上(ㄕㄤˋ)，國(ㄍㄨㄛˊ)龍(ㄌㄨㄥˊ)帶(ㄉㄞˋ)著(ㄓㄜ˙)一(ㄧˋ)本(ㄅㄣˇ)書(ㄕㄨ)和(ㄏㄢˋ)一(ㄧˋ)支(ㄓ)小(ㄒㄧㄠˇ)麥(ㄇㄞˋ)克(ㄎㄜˋ)風(ㄈㄥ)去(ㄑㄩˋ)公(ㄍㄨㄥ)園(ㄩㄢˊ)。清(ㄑㄧㄥ)德(ㄉㄜˊ)看(ㄎㄢˋ)到(ㄉㄠˋ)了(ㄌㄜ˙)，開(ㄎㄞ)心(ㄒㄧㄣ)地(ㄉㄜ˙)問(ㄨㄣˋ)：「你(ㄋㄧˇ)要(ㄧㄠˋ)做(ㄗㄨㄛˋ)什(ㄕㄣˊ)麼(ㄇㄜ˙)？」<br><br>
+
+          國(ㄍㄨㄛˊ)龍(ㄌㄨㄥˊ)說(ㄕㄨㄛ)：「我(ㄨㄛˇ)想(ㄒㄧㄤˇ)唱(ㄔㄤˋ)歌(ㄍㄜ)給(ㄍㄟˇ)你(ㄋㄧˇ)聽(ㄊㄧㄥ)！」<br><br>
+
+          他(ㄊㄚ)們(ㄇㄣ˙)走(ㄗㄡˇ)到(ㄉㄠˋ)樹(ㄕㄨˋ)下(ㄒㄧㄚˋ)。國(ㄍㄨㄛˊ)龍(ㄌㄨㄥˊ)坐(ㄗㄨㄛˋ)在(ㄗㄞˋ)草(ㄘㄠˇ)地(ㄉㄧˋ)上(ㄕㄤˋ)，清(ㄑㄧㄥ)德(ㄉㄜˊ)坐(ㄗㄨㄛˋ)在(ㄗㄞˋ)他(ㄊㄚ)的(ㄉㄜ˙)旁(ㄆㄤˊ)邊(ㄅㄧㄢ)。清(ㄑㄧㄥ)德(ㄉㄜˊ)手(ㄕㄡˇ)上(ㄕㄤˋ)拿(ㄋㄚˊ)著(ㄓㄜ˙)一(ㄧˋ)支(ㄓ)棒(ㄅㄤˋ)棒(ㄅㄤˋ)糖(ㄊㄤˊ)，紅(ㄏㄨㄥˊ)色(ㄙㄜˋ)的(ㄉㄜ˙)，很(ㄏㄣˇ)漂(ㄆㄧㄠˋ)亮(ㄌㄧㄤˋ)。<br><br>
+
+          國(ㄍㄨㄛˊ)龍(ㄌㄨㄥˊ)拿(ㄋㄚˊ)起(ㄑㄧˇ)麥(ㄇㄞˋ)克(ㄎㄜˋ)風(ㄈㄥ)，開(ㄎㄞ)始(ㄕˇ)唱(ㄔㄤˋ)歌(ㄍㄜ)。他(ㄊㄚ)唱(ㄔㄤˋ)得(ㄉㄜ˙)很(ㄏㄣˇ)認(ㄖㄣˋ)真(ㄓㄣ)，但(ㄉㄢˋ)是(ㄕˋ)聲(ㄕㄥ)音(ㄧㄣ)有(ㄧㄡˇ)一(ㄧˋ)點(ㄉㄧㄢˇ)小(ㄒㄧㄠˇ)。清(ㄑㄧㄥ)德(ㄉㄜˊ)叫(ㄐㄧㄠˋ)國(ㄍㄨㄛˊ)龍(ㄌㄨㄥˊ)大(ㄉㄚˋ)聲(ㄕㄥ)唱(ㄔㄤˋ)。「可(ㄎㄜˇ)是(ㄕˋ)我(ㄨㄛˇ)怕(ㄅㄚˋ)別(ㄅㄧㄝˊ)人(ㄖㄣˊ)聽(ㄊㄧㄥ)到(ㄉㄠˋ)。」國(ㄍㄨㄛˊ)龍(ㄌㄨㄥˊ)小(ㄒㄧㄠˇ)聲(ㄕㄥ)說(ㄕㄨㄛ)。「沒(ㄇㄟˊ)關(ㄍㄨㄢ)係(ㄒㄧ˙)，這(ㄓㄜˋ)裡(ㄌㄧˇ)只(ㄓˇ)有(ㄧㄡˇ)我(ㄨㄛˇ)們(ㄇㄣ˙)兩(ㄌㄧㄤˇ)個(ㄍㄜ˙)人(ㄖㄣˊ)。」清(ㄑㄧㄥ)德(ㄉㄜˊ)說(ㄕㄨㄛ)。<br><br>
+
+          國(ㄍㄨㄛˊ)龍(ㄌㄨㄥˊ)在(ㄗㄞˋ)唱(ㄔㄤˋ)歌(ㄍㄜ)的(ㄉㄜ˙)時(ㄕˊ)候(ㄏㄡˋ)，清(ㄑㄧㄥ)德(ㄉㄜˊ)一(ㄧˋ)直(ㄓˊ)吃(ㄔ)著(ㄓㄜ˙)棒(ㄅㄤˋ)棒(ㄅㄤˋ)糖(ㄊㄤˊ)，一(ㄧˋ)邊(ㄅㄧㄢ)聽(ㄊㄧㄥ)一(ㄧˋ)邊(ㄅㄧㄢ)開(ㄎㄞ)心(ㄒㄧㄣ)地(ㄉㄜ˙)看(ㄎㄢˋ)著(ㄓㄜ˙)他(ㄊㄚ)。國(ㄍㄨㄛˊ)龍(ㄌㄨㄥˊ)唱(ㄔㄤˋ)了(ㄌㄜ˙)一(ㄧˋ)個(ㄍㄜ˙)鐘(ㄓㄨㄥ)頭(ㄊㄡˊ)的(ㄉㄜ˙)歌(ㄍㄜ)，唱(ㄔㄤˋ)完(ㄨㄢˊ)以(ㄧˇ)後(ㄏㄡˋ)他(ㄊㄚ)很(ㄏㄣˇ)累(ㄌㄟˋ)，不(ㄅㄨˋ)過(ㄍㄨㄛˋ)他(ㄊㄚ)很(ㄏㄣˇ)開(ㄎㄞ)心(ㄒㄧㄣ)。<br><br>
+
+          後(ㄏㄡˋ)來(ㄌㄞˊ)，清(ㄑㄧㄥ)德(ㄉㄜˊ)拿(ㄋㄚˊ)起(ㄑㄧˇ)一(ㄧˋ)個(ㄍㄜ˙)球(ㄑㄧㄡˊ)，丟(ㄉㄧㄡ)給(ㄍㄟˇ)國(ㄍㄨㄛˊ)龍(ㄌㄨㄥˊ)。國(ㄍㄨㄛˊ)龍(ㄌㄨㄥˊ)接(ㄐㄧㄝ)住(ㄓㄨˋ)了(ㄌㄜ˙)球(ㄑㄧㄡˊ)。他(ㄊㄚ)想(ㄒㄧㄤˇ)了(ㄌㄜ˙)想(ㄒㄧㄤˇ)，換(ㄏㄨㄢˋ)了(ㄌㄜ˙)一(ㄧˋ)首(ㄕㄡˇ)歌(ㄍㄜ)，這(ㄓㄜˋ)一(ㄧˋ)次(ㄘˋ)唱(ㄔㄤˋ)得(ㄉㄜ˙)更(ㄍㄥˋ)好(ㄏㄠˇ)了(ㄌㄜ˙)。<br><br>
+
+          最(ㄗㄨㄟˋ)後(ㄏㄡˋ)，國(ㄍㄨㄛˊ)龍(ㄌㄨㄥˊ)終(ㄓㄨㄥ)於(ㄩˊ)唱(ㄔㄤˋ)完(ㄨㄢˊ)歌(ㄍㄜ)。他(ㄊㄚ)們(ㄇㄣ˙)一(ㄧˋ)起(ㄑㄧˇ)坐(ㄗㄨㄛˋ)在(ㄗㄞˋ)樹(ㄕㄨˋ)下(ㄒㄧㄚˋ)，看(ㄎㄢˋ)著(ㄓㄜ˙)天(ㄊㄧㄢ)空(ㄎㄨㄥ)。清(ㄑㄧㄥ)德(ㄉㄜˊ)說(ㄕㄨㄛ)：「下(ㄒㄧㄚˋ)次(ㄘˋ)我(ㄨㄛˇ)們(ㄇㄣ˙)再(ㄗㄞˋ)來(ㄌㄞˊ)吧(ㄅㄚ˙)！」國(ㄍㄨㄛˊ)龍(ㄌㄨㄥˊ)很(ㄏㄣˇ)開(ㄎㄞ)心(ㄒㄧㄣ)地(ㄉㄜ˙)說(ㄕㄨㄛ)：「好(ㄏㄠˇ)！下(ㄒㄧㄚˋ)次(ㄘˋ)我(ㄨㄛˇ)要(ㄧㄠˋ)帶(ㄉㄞˋ)一(ㄧˋ)支(ㄓ)更(ㄍㄥˋ)大(ㄉㄚˋ)的(ㄉㄜ˙)麥(ㄇㄞˋ)克(ㄎㄜˋ)風(ㄈㄥ)！」
+        </div>
+
+        <div class="en-text" style="margin-top: 16px; border-top: 1px solid var(--primary-light); padding-top: 12px;">
+          <strong>English Translation:</strong><br>
+          Guolong and Qingde are good friends. They live in the same city and often go to the park together. Today the weather is great; it's the best season of the year.<br>
+          In the morning, Guolong brought a book and a small microphone to the park. Qingde saw him and asked happily, "What are you going to do?"<br>
+          Guolong said, "I want to sing for you!"<br>
+          They walked under a tree. Guolong sat on the grass, and Qingde sat next to him. Qingde was holding a lollipop in his hand—a red one, very pretty.<br>
+          Guolong picked up the microphone and started singing. He sang very earnestly, but his voice was a bit quiet. Qingde told Guolong to sing louder. "But I'm afraid others will hear," Guolong whispered. "It's okay, there are only two of us here," Qingde said.<br>
+          While Guolong was singing, Qingde kept eating his lollipop, listening and watching him happily. Guolong sang for an hour. After finishing, he was tired, but he was very happy.<br>
+          Later, Qingde picked up a ball and threw it to Guolong. Guolong caught the ball. He thought for a moment, changed to another song, and sang even better this time.<br>
+          Finally, Guolong finished singing. They sat together under the tree, looking at the sky. Qingde said, "Let me come again next time!" Guolong said happily, "Okay! Next time I'll bring an even bigger microphone!"
+        </div>
+      </div>
+
+      <!-- Comprehension Questions -->
+      <div class="item-card">
+        <p><strong>問題 1. 他們去公園做什麼？</strong> (What did they go to the park to do?)</p>
+        <textarea class="student-input" placeholder="Type your answer here..."></textarea>
+      </div>
+
+      <div class="item-card">
+        <p><strong>問題 2. 誰帶麥克風去唱歌？</strong> (Who brought a microphone to sing?)</p>
+        <textarea class="student-input" placeholder="Type your answer here..."></textarea>
+      </div>
+
+      <div class="item-card">
+        <p><strong>問題 3. 國龍為什麼一開始唱很小聲？</strong> (Why did Guolong sing quietly at first?)</p>
+        <textarea class="student-input" placeholder="Type your answer here..."></textarea>
+      </div>
+
+      <div class="item-card">
+        <p><strong>問題 4. 你覺得清德是一個好朋友嗎？</strong> (Do you think Qingde is a good friend? Why?)</p>
+        <textarea class="student-input" placeholder="Type your answer here..."></textarea>
+      </div>
+    </section>
+
+  </div>
+</div>
+
+<script>
+  // Zhuyin Parser Script
+  function parseZhuyinDOM() {
+    const textNodes = [];
+    function walk(node) {
+      if (node.nodeType === 3) {
+        if (node.nodeValue.trim() !== '') textNodes.push(node);
+      } else if (node.nodeType === 1 && !['SCRIPT', 'STYLE', 'TEXTAREA'].includes(node.tagName)) {
+        node.childNodes.forEach(walk);
+      }
+    }
+    document.querySelectorAll('.zy-text').forEach(walk);
+
+    textNodes.forEach(node => {
+      const text = node.nodeValue;
+      const regex = /([一-龥A-Za-z0-9\s，。！？「」『』：；、（）—…])(?:\(([ㄅ-ㄬˊˇˋ˙]+)\))?/g;
+      let match;
+      let hasMatch = false;
+      const fragment = document.createDocumentFragment();
+
+      while ((match = regex.exec(text)) !== null) {
+        hasMatch = true;
+        const char = match[1];
+        const zy = match[2];
+
+        if (zy) {
+          const wrap = document.createElement('span');
+          wrap.className = 'zy-char-wrap';
+
+          const charSpan = document.createElement('span');
+          charSpan.className = 'zy-char';
+          charSpan.textContent = char;
+          wrap.appendChild(charSpan);
+
+          const zyBox = document.createElement('div');
+          zyBox.className = 'zy-box';
+
+          let mainSymbols = zy.replace(/[ˊˇˋ˙]/g, '');
+          let toneSymbol = zy.match(/[ˊˇˋ˙]/);
+          let toneChar = toneSymbol ? toneSymbol[0] : '';
+          let isNeutral = zy.includes('˙');
+
+          let neutralHtml = isNeutral ? '<span class="zy-tone">˙</span>' : '';
+          let toneHtml = (!isNeutral && toneChar) ? `<span class="zy-tone">${toneChar}</span>` : '';
+
+          let symbolsHtml = `<span class="zy-symbols">${mainSymbols.split('').map(s => `<span>${s}</span>`).join('')}</span>`;
+
+          zyBox.innerHTML = `${neutralHtml}${symbolsHtml}${toneHtml}`;
+          wrap.appendChild(zyBox);
+          fragment.appendChild(wrap);
+        } else {
+          fragment.appendChild(document.createTextNode(char));
+        }
+      }
+
+      if (hasMatch && node.parentNode) {
+        node.parentNode.replaceChild(fragment, node);
+      }
+    });
+  }
+
+  // Toggle Bopomofo
+  function toggleZhuyin() {
+    document.body.classList.toggle('hide-zy');
+    document.getElementById('btn-zy').classList.toggle('active');
+  }
+
+  // Toggle English
+  function toggleEnglish() {
+    document.body.classList.toggle('hide-en');
+    document.getElementById('btn-en').classList.toggle('active');
+  }
+
+  // Toggle Sidebar Menu
+  function toggleSidebar() {
+    const sidebar = document.getElementById('sidebar');
+    if (sidebar.style.display === 'none') {
+      sidebar.style.display = 'block';
+    } else {
+      sidebar.style.display = 'none';
+    }
+  }
+
+  // Text-To-Speech Player
+  function playAudioText(btn) {
+    const container = btn.closest('.item-content');
+    if (!container) return;
+    const zyDiv = container.querySelector('.zy-text');
+    if (!zyDiv) return;
+
+    let cleanText = '';
+    const chars = zyDiv.querySelectorAll('.zy-char');
+    if (chars.length > 0) {
+      chars.forEach(c => cleanText += c.innerText);
+    } else {
+      cleanText = zyDiv.innerText.replace(/[ㄅ-ㄬˊˇˋ˙]/g, '').replace(/\([^)]*\)/g, '').trim();
+    }
+
+    if (!cleanText) return;
+
+    window.speechSynthesis.cancel();
+    const utterance = new SpeechSynthesisUtterance(cleanText);
+    utterance.lang = 'zh-TW';
+    utterance.rate = 0.85;
+
+    btn.style.background = 'var(--primary)';
+    btn.style.color = '#fff';
+
+    utterance.onend = () => {
+      btn.style.background = '';
+      btn.style.color = '';
+    };
+
+    window.speechSynthesis.speak(utterance);
+  }
+
+  // Audio Recording Logic
+  let mediaRecorder;
+  let audioChunks = [];
+  let currentRecordingBtn = null;
+
+  async function toggleRecord(btn) {
+    if (currentRecordingBtn && currentRecordingBtn !== btn) {
+      stopRecording(currentRecordingBtn);
+    }
+
+    if (btn.classList.contains('recording')) {
+      stopRecording(btn);
+    } else {
+      startRecording(btn);
+    }
+  }
+
+  async function startRecording(btn) {
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+      mediaRecorder = new MediaRecorder(stream);
+      audioChunks = [];
+
+      mediaRecorder.ondataavailable = event => {
+        audioChunks.push(event.data);
+      };
+
+      mediaRecorder.onstop = () => {
+        const audioBlob = new Blob(audioChunks, { type: 'audio/wav' });
+        const audioUrl = URL.createObjectURL(audioBlob);
+        const container = btn.closest('.btn-group');
+        const playBtn = container.querySelector('.play-rec-btn');
+        if (playBtn) {
+          playBtn.dataset.audioUrl = audioUrl;
+          playBtn.disabled = false;
+        }
+      };
+
+      mediaRecorder.start();
+      btn.classList.add('recording');
+      btn.innerText = '⏹';
+      currentRecordingBtn = btn;
+    } catch (err) {
+      alert('Microphone access denied or not supported in local file mode.');
+    }
+  }
+
+  function stopRecording(btn) {
+    if (mediaRecorder && mediaRecorder.state !== 'inactive') {
+      mediaRecorder.stop();
+      mediaRecorder.stream.getTracks().forEach(track => track.stop());
+    }
+    btn.classList.remove('recording');
+    btn.innerText = '🎤';
+    currentRecordingBtn = null;
+  }
+
+  function playRecord(btn) {
+    const url = btn.dataset.audioUrl;
+    if (url) {
+      const audio = new Audio(url);
+      btn.style.background = 'var(--primary)';
+      btn.style.color = '#fff';
+      audio.onended = () => {
+        btn.style.background = '';
+        btn.style.color = '';
+      };
+      audio.play();
+    }
+  }
+
+  // Initialize Zhuyin DOM on Load
+  window.addEventListener('DOMContentLoaded', () => {
+    parseZhuyinDOM();
+  });
+</script>
+</body>
+</html>
