@@ -2,7 +2,8 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Chad's Mandarin Lesson 197</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chad's Mandarin Lesson 198</title>
     <style>
         :root { --bg: #FDFBF7; --primary: #D4A373; --text: #4a4a4a; --white: #fff; --sidebar-width: 280px; }
         html { scroll-behavior: smooth; }
@@ -36,14 +37,31 @@
         button.control-btn { background: var(--primary); color: white; border: none; padding: 10px 15px; margin: 5px; border-radius: 6px; cursor: pointer; font-size: 14px; font-weight: bold; }
         button.control-btn:hover { background: #B5835A; }
         
-        /* Audio Buttons */
-        .btn-group { display: flex; align-items: center; margin-right: 15px; margin-bottom: 5px; flex-shrink: 0; }
-        .audio-btn { background: #f0f0f0; color: #333; font-size: 16px; padding: 8px; border-radius: 50%; width: 35px; height: 35px; display: inline-flex; align-items: center; justify-content: center; border: none; cursor: pointer; margin-right: 5px; flex-shrink:0; }
-        .audio-btn:hover { background: #e0e0e0; }
-        .rec-btn { background: #e07a5f; color: white; font-size: 14px; padding: 6px 12px; border-radius: 20px; border: none; cursor: pointer; display: inline-flex; align-items: center; gap: 5px; margin-right: 5px; }
-        .rec-btn.recording { background: #d90429; animation: pulse 1.5s infinite; }
-        .play-rec-btn { background: #457b9d; color: white; font-size: 14px; padding: 6px 12px; border-radius: 20px; border: none; cursor: pointer; margin-right: 5px; display: inline-flex; align-items: center; justify-content: center; width: 35px; height: 35px;}
-        .play-rec-btn:disabled { background: #ccc; cursor: not-allowed; }
+        /* Audio Circle Buttons (Lesson 197 Style) */
+        .btn-group { display: flex; align-items: center; margin-right: 15px; margin-bottom: 5px; flex-shrink: 0; gap: 8px; }
+        .audio-btn, .rec-btn, .play-rec-btn { 
+            background: #EFEFEF; 
+            color: #4A4A4A; 
+            font-size: 16px; 
+            border-radius: 50%; 
+            width: 42px; 
+            height: 42px; 
+            display: inline-flex; 
+            align-items: center; 
+            justify-content: center; 
+            border: none; 
+            cursor: pointer; 
+            transition: all 0.2s ease;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+            padding: 0;
+            line-height: 1;
+        }
+        .audio-btn:hover { background: #E2E2E2; transform: scale(1.05); }
+        .rec-btn:hover { background: #E2E2E2; transform: scale(1.05); }
+        .rec-btn.recording { background: #FFD1D1; color: #D90429; animation: pulse 1.5s infinite; }
+        .play-rec-btn { background: #EFEFEF; color: #4A4A4A; }
+        .play-rec-btn:enabled:hover { background: #E2E2E2; transform: scale(1.05); }
+        .play-rec-btn:disabled { background: #F5F5F5; color: #CCC; cursor: not-allowed; box-shadow: none; }
 
         @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.5; } 100% { opacity: 1; } }
 
@@ -96,7 +114,7 @@
             .main-content { margin-left: 0; width: 100%; padding: 20px; }
         }
     </style>
-
+</head>
 <body>
 
     <div class="top-nav">
@@ -115,7 +133,7 @@
                     <li><a href="#wu-2">2. 麥克風</a></li>
                     <li><a href="#wu-3">3. 棒棒糖</a></li>
                     <li><a href="#wu-4">4. 什麼國家</a></li>
-                    <li><a href="#wu-5">5. A在B旁邊 = A旁邊有B</a></li>
+                    <li><a href="#wu-5">5. A在B旁邊 = B旁邊有A</a></li>
                 </ul>
             </li>
             <li><a href="#sec-1">Homework Review & Extensions</a>
@@ -155,7 +173,7 @@
 
             <!-- 1. 罰 -->
             <div id="wu-1" class="grammar-box">
-                <h3>1. 罰 (fá - to punish / fine)</h3>
+                <h3>1. 罰 (to punish / fine)</h3>
                 <div class="note">
                     <b>Explanation:</b> You can imagine in ancient times when police caught bad guys, they used a net (𦉴/罒) to capture them, used their mouth (言) to question what bad things they did, and used a knife (刂) to punish them. Therefore, this character means to punish or fine.
                 </div>
@@ -175,7 +193,7 @@
                 <div class="item-content">
                     <div class="btn-group">
                         <button class="audio-btn" onclick="playAudioText(this)">🔊</button>
-                        <button class="rec-btn" onclick="toggleRecord(this)">🎤 Record</button>
+                        <button class="rec-btn" onclick="toggleRecord(this)">🎤</button>
                         <button class="play-rec-btn" disabled>▶️</button>
                     </div>
                     <div>
@@ -187,7 +205,7 @@
                 <div class="item-content">
                     <div class="btn-group">
                         <button class="audio-btn" onclick="playAudioText(this)">🔊</button>
-                        <button class="rec-btn" onclick="toggleRecord(this)">🎤 Record</button>
+                        <button class="rec-btn" onclick="toggleRecord(this)">🎤</button>
                         <button class="play-rec-btn" disabled>▶️</button>
                     </div>
                     <div>
@@ -199,7 +217,7 @@
                 <div class="item-content">
                     <div class="btn-group">
                         <button class="audio-btn" onclick="playAudioText(this)">🔊</button>
-                        <button class="rec-btn" onclick="toggleRecord(this)">🎤 Record</button>
+                        <button class="rec-btn" onclick="toggleRecord(this)">🎤</button>
                         <button class="play-rec-btn" disabled>▶️</button>
                     </div>
                     <div>
@@ -211,7 +229,7 @@
                 <div class="item-content">
                     <div class="btn-group">
                         <button class="audio-btn" onclick="playAudioText(this)">🔊</button>
-                        <button class="rec-btn" onclick="toggleRecord(this)">🎤 Record</button>
+                        <button class="rec-btn" onclick="toggleRecord(this)">🎤</button>
                         <button class="play-rec-btn" disabled>▶️</button>
                     </div>
                     <div>
@@ -223,11 +241,11 @@
 
             <!-- 2. 麥克風 -->
             <div id="wu-2" class="grammar-box">
-                <h3>2. 麥克風 (màikèfēng - microphone)</h3>
+                <h3>2. 麥克風 (microphone)</h3>
                 <div class="item-content">
                     <div class="btn-group">
                         <button class="audio-btn" onclick="playAudioText(this)">🔊</button>
-                        <button class="rec-btn" onclick="toggleRecord(this)">🎤 Record</button>
+                        <button class="rec-btn" onclick="toggleRecord(this)">🎤</button>
                         <button class="play-rec-btn" disabled>▶️</button>
                     </div>
                     <div>
@@ -239,12 +257,12 @@
 
             <!-- 3. 棒棒糖 -->
             <div id="wu-3" class="grammar-box">
-                <h3>3. 棒棒糖 (bàngbàngtáng - lollipop)</h3>
+                <h3>3. 棒棒糖 (lollipop)</h3>
                 <img src="https://cdn.phototourl.com/member/2026-11-08-dbeb759c-dbd5-4aad-beab-ac3b49b67a29.png" alt="棒棒糖" class="vocab-img">
                 <div class="item-content">
                     <div class="btn-group">
                         <button class="audio-btn" onclick="playAudioText(this)">🔊</button>
-                        <button class="rec-btn" onclick="toggleRecord(this)">🎤 Record</button>
+                        <button class="rec-btn" onclick="toggleRecord(this)">🎤</button>
                         <button class="play-rec-btn" disabled>▶️</button>
                     </div>
                     <div>
@@ -256,11 +274,11 @@
 
             <!-- 4. 什麼國家 -->
             <div id="wu-4" class="grammar-box">
-                <h3>4. 什麼國家 (shénme guójiā - what countries / nationalities)</h3>
+                <h3>4. 什麼國家 (what countries / nationalities)</h3>
                 <div class="item-content">
                     <div class="btn-group">
                         <button class="audio-btn" onclick="playAudioText(this)">🔊</button>
-                        <button class="rec-btn" onclick="toggleRecord(this)">🎤 Record</button>
+                        <button class="rec-btn" onclick="toggleRecord(this)">🎤</button>
                         <button class="play-rec-btn" disabled>▶️</button>
                     </div>
                     <div>
@@ -270,9 +288,9 @@
                 </div>
             </div>
 
-            <!-- 5. A在B旁邊 = A旁邊有B -->
+            <!-- 5. A在B旁邊 = B旁邊有A -->
             <div id="wu-5" class="grammar-box">
-                <h3>5. A在B旁邊 = A旁邊有B</h3>
+                <h3>5. A在B旁邊 = B旁邊有A</h3>
                 <div class="note">
                     <b>Explanation:</b><br>
                     "A 在 B 旁邊" (A is next to B) communicates location.<br>
@@ -282,7 +300,7 @@
                 <div class="item-content">
                     <div class="btn-group">
                         <button class="audio-btn" onclick="playAudioText(this)">🔊</button>
-                        <button class="rec-btn" onclick="toggleRecord(this)">🎤 Record</button>
+                        <button class="rec-btn" onclick="toggleRecord(this)">🎤</button>
                         <button class="play-rec-btn" disabled>▶️</button>
                     </div>
                     <div>
@@ -294,7 +312,7 @@
                 <div class="item-content">
                     <div class="btn-group">
                         <button class="audio-btn" onclick="playAudioText(this)">🔊</button>
-                        <button class="rec-btn" onclick="toggleRecord(this)">🎤 Record</button>
+                        <button class="rec-btn" onclick="toggleRecord(this)">🎤</button>
                         <button class="play-rec-btn" disabled>▶️</button>
                     </div>
                     <div>
@@ -320,7 +338,7 @@
                 <div class="item-content">
                     <div class="btn-group">
                         <button class="audio-btn" onclick="playAudioText(this)">🔊</button>
-                        <button class="rec-btn" onclick="toggleRecord(this)">🎤 Record</button>
+                        <button class="rec-btn" onclick="toggleRecord(this)">🎤</button>
                         <button class="play-rec-btn" disabled>▶️</button>
                     </div>
                     <div>
@@ -332,7 +350,7 @@
                 <div class="item-content">
                     <div class="btn-group">
                         <button class="audio-btn" onclick="playAudioText(this)">🔊</button>
-                        <button class="rec-btn" onclick="toggleRecord(this)">🎤 Record</button>
+                        <button class="rec-btn" onclick="toggleRecord(this)">🎤</button>
                         <button class="play-rec-btn" disabled>▶️</button>
                     </div>
                     <div>
@@ -344,11 +362,11 @@
                 <div class="item-content">
                     <div class="btn-group">
                         <button class="audio-btn" onclick="playAudioText(this)">🔊</button>
-                        <button class="rec-btn" onclick="toggleRecord(this)">🎤 Record</button>
+                        <button class="rec-btn" onclick="toggleRecord(this)">🎤</button>
                         <button class="play-rec-btn" disabled>▶️</button>
                     </div>
                     <div>
-                        <span class="zy-text">我(ㄨㄛˇ)的(ㄉㄜ˙)老(ㄌㄠˇ)婆(ㄆㄛˊ)叫(ㄐㄧㄠˋ)我(ㄨㄛˇ)買(ㄇㄞˇ)冰(ㄅㄧㄥ)淇(ㄑㄧ)淋(ㄌㄧㄣ)回(ㄏㄨㄟˊ)來(ㄌㄞˊ)。</span>
+                        <span class="zy-text">我(ㄨㄛˇ)的(ㄉㄜ˙)老(ㄌㄠˊ)婆(ㄆㄛˊ)叫(ㄐㄧㄠˋ)我(ㄨㄛˇ)買(ㄇㄞˇ)冰(ㄅㄧㄥ)淇(ㄑㄧ)淋(ㄌㄧㄣ)回(ㄏㄨㄟˊ)來(ㄌㄞˊ)。</span>
                         <span class="en-trans">My wife told me to buy ice cream and bring it home.</span>
                     </div>
                 </div>
@@ -383,7 +401,7 @@
                                 <div class="item-content">
                                     <div class="btn-group">
                                         <button class="audio-btn" onclick="playAudioText(this)">🔊</button>
-                                        <button class="rec-btn" onclick="toggleRecord(this)">🎤 Record</button>
+                                        <button class="rec-btn" onclick="toggleRecord(this)">🎤</button>
                                         <button class="play-rec-btn" disabled>▶️</button>
                                     </div>
                                     <div>
@@ -395,7 +413,7 @@
                                 <div class="item-content">
                                     <div class="btn-group">
                                         <button class="audio-btn" onclick="playAudioText(this)">🔊</button>
-                                        <button class="rec-btn" onclick="toggleRecord(this)">🎤 Record</button>
+                                        <button class="rec-btn" onclick="toggleRecord(this)">🎤</button>
                                         <button class="play-rec-btn" disabled>▶️</button>
                                     </div>
                                     <div>
@@ -407,7 +425,7 @@
                                 <div class="item-content">
                                     <div class="btn-group">
                                         <button class="audio-btn" onclick="playAudioText(this)">🔊</button>
-                                        <button class="rec-btn" onclick="toggleRecord(this)">🎤 Record</button>
+                                        <button class="rec-btn" onclick="toggleRecord(this)">🎤</button>
                                         <button class="play-rec-btn" disabled>▶️</button>
                                     </div>
                                     <div>
@@ -420,7 +438,7 @@
                                 <div class="item-content">
                                     <div class="btn-group">
                                         <button class="audio-btn" onclick="playAudioText(this)">🔊</button>
-                                        <button class="rec-btn" onclick="toggleRecord(this)">🎤 Record</button>
+                                        <button class="rec-btn" onclick="toggleRecord(this)">🎤</button>
                                         <button class="play-rec-btn" disabled>▶️</button>
                                     </div>
                                     <div>
@@ -432,7 +450,7 @@
                                 <div class="item-content">
                                     <div class="btn-group">
                                         <button class="audio-btn" onclick="playAudioText(this)">🔊</button>
-                                        <button class="rec-btn" onclick="toggleRecord(this)">🎤 Record</button>
+                                        <button class="rec-btn" onclick="toggleRecord(this)">🎤</button>
                                         <button class="play-rec-btn" disabled>▶️</button>
                                     </div>
                                     <div>
@@ -444,7 +462,7 @@
                                 <div class="item-content">
                                     <div class="btn-group">
                                         <button class="audio-btn" onclick="playAudioText(this)">🔊</button>
-                                        <button class="rec-btn" onclick="toggleRecord(this)">🎤 Record</button>
+                                        <button class="rec-btn" onclick="toggleRecord(this)">🎤</button>
                                         <button class="play-rec-btn" disabled>▶️</button>
                                     </div>
                                     <div>
@@ -466,17 +484,17 @@
                     <thead>
                         <tr>
                             <th style="width: 18%;">Dimension</th>
-                            <th style="width: 27.3%;">但是 (dànshì)</th>
-                            <th style="width: 27.3%;">可是 (kěshì)</th>
-                            <th style="width: 27.3%;">不過 (búguò)</th>
+                            <th style="width: 27.3%;">但是</th>
+                            <th style="width: 27.3%;">可是</th>
+                            <th style="width: 27.3%;">不過</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
                             <td><b>Tone Intensity</b></td>
-                            <td><b>Strongest (最強烈)</b></td>
-                            <td><b>Medium (中等)</b></td>
-                            <td><b>Most Gentle (最委婉)</b></td>
+                            <td><b>Strongest</b></td>
+                            <td><b>Medium</b></td>
+                            <td><b>Most Gentle (Most polite / Most subtle)</b></td>
                         </tr>
                         <tr>
                             <td><b>Usage Scenario</b></td>
@@ -496,7 +514,7 @@
                                 <div class="item-content">
                                     <div class="btn-group">
                                         <button class="audio-btn" onclick="playAudioText(this)">🔊</button>
-                                        <button class="rec-btn" onclick="toggleRecord(this)">🎤 Record</button>
+                                        <button class="rec-btn" onclick="toggleRecord(this)">🎤</button>
                                         <button class="play-rec-btn" disabled>▶️</button>
                                     </div>
                                     <div>
@@ -508,7 +526,7 @@
                                 <div class="item-content">
                                     <div class="btn-group">
                                         <button class="audio-btn" onclick="playAudioText(this)">🔊</button>
-                                        <button class="rec-btn" onclick="toggleRecord(this)">🎤 Record</button>
+                                        <button class="rec-btn" onclick="toggleRecord(this)">🎤</button>
                                         <button class="play-rec-btn" disabled>▶️</button>
                                     </div>
                                     <div>
@@ -521,7 +539,7 @@
                                 <div class="item-content">
                                     <div class="btn-group">
                                         <button class="audio-btn" onclick="playAudioText(this)">🔊</button>
-                                        <button class="rec-btn" onclick="toggleRecord(this)">🎤 Record</button>
+                                        <button class="rec-btn" onclick="toggleRecord(this)">🎤</button>
                                         <button class="play-rec-btn" disabled>▶️</button>
                                     </div>
                                     <div>
@@ -533,7 +551,7 @@
                                 <div class="item-content">
                                     <div class="btn-group">
                                         <button class="audio-btn" onclick="playAudioText(this)">🔊</button>
-                                        <button class="rec-btn" onclick="toggleRecord(this)">🎤 Record</button>
+                                        <button class="rec-btn" onclick="toggleRecord(this)">🎤</button>
                                         <button class="play-rec-btn" disabled>▶️</button>
                                     </div>
                                     <div>
@@ -546,7 +564,7 @@
                                 <div class="item-content">
                                     <div class="btn-group">
                                         <button class="audio-btn" onclick="playAudioText(this)">🔊</button>
-                                        <button class="rec-btn" onclick="toggleRecord(this)">🎤 Record</button>
+                                        <button class="rec-btn" onclick="toggleRecord(this)">🎤</button>
                                         <button class="play-rec-btn" disabled>▶️</button>
                                     </div>
                                     <div>
@@ -558,7 +576,7 @@
                                 <div class="item-content">
                                     <div class="btn-group">
                                         <button class="audio-btn" onclick="playAudioText(this)">🔊</button>
-                                        <button class="rec-btn" onclick="toggleRecord(this)">🎤 Record</button>
+                                        <button class="rec-btn" onclick="toggleRecord(this)">🎤</button>
                                         <button class="play-rec-btn" disabled>▶️</button>
                                     </div>
                                     <div>
@@ -584,7 +602,7 @@
                 <div class="item-content">
                     <div class="btn-group">
                         <button class="audio-btn" onclick="playAudioText(this)">🔊</button>
-                        <button class="rec-btn" onclick="toggleRecord(this)">🎤 Record</button>
+                        <button class="rec-btn" onclick="toggleRecord(this)">🎤</button>
                         <button class="play-rec-btn" disabled>▶️</button>
                     </div>
                     <div>
@@ -596,7 +614,7 @@
                 <div class="item-content">
                     <div class="btn-group">
                         <button class="audio-btn" onclick="playAudioText(this)">🔊</button>
-                        <button class="rec-btn" onclick="toggleRecord(this)">🎤 Record</button>
+                        <button class="rec-btn" onclick="toggleRecord(this)">🎤</button>
                         <button class="play-rec-btn" disabled>▶️</button>
                     </div>
                     <div>
@@ -616,14 +634,14 @@
                     <div class="item-content">
                         <div class="btn-group">
                             <button class="audio-btn" onclick="playAudioText(this)">🔊</button>
-                            <button class="rec-btn" onclick="toggleRecord(this)">🎤 Record</button>
+                            <button class="rec-btn" onclick="toggleRecord(this)">🎤</button>
                             <button class="play-rec-btn" disabled>▶️</button>
                         </div>
                         <div>
                             <span class="zy-text">✅ 我(ㄨㄛˇ)的(ㄉㄜ˙)老(ㄌㄠˇ)闆(ㄅㄢˇ)叫(ㄐㄧㄠˋ)我(ㄨㄛˇ)臨(ㄌㄧㄣˊ)時(ㄕˊ)去(ㄑㄩˋ)墨(ㄇㄛˋ)西(ㄒㄧ)哥(ㄍㄜ)出(ㄔㄨ)差(ㄔㄞ)，不(ㄅㄨˊ)過(ㄍㄨㄛˋ)我(ㄨㄛˇ)不(ㄅㄨˋ)想(ㄒㄧㄤˇ)去(ㄑㄩˋ)。</span>
                         </div>
                     </div>
-                    <div class="note" style="margin-top:6px;"><b>Grammar Key:</b> Use <b>叫 (jiào)</b> when someone in authority tells or orders someone to do something. Note <b>不(ㄅㄨˊ)過(ㄍㄨㄛˋ)</b> tone sandhi.</div>
+                    <div class="note" style="margin-top:6px;"><b>Grammar Key:</b> Use <b>叫</b> when someone in authority tells or orders someone to do something.</div>
                 </div>
 
                 <div style="background:#fff; border:1px solid #ffe6e6; border-radius:8px; padding:12px; margin-bottom:12px;">
@@ -632,14 +650,14 @@
                     <div class="item-content">
                         <div class="btn-group">
                             <button class="audio-btn" onclick="playAudioText(this)">🔊</button>
-                            <button class="rec-btn" onclick="toggleRecord(this)">🎤 Record</button>
+                            <button class="rec-btn" onclick="toggleRecord(this)">🎤</button>
                             <button class="play-rec-btn" disabled>▶️</button>
                         </div>
                         <div>
                             <span class="zy-text">✅ 你(ㄋㄧˇ)已(ㄧˇ)經(ㄐㄧㄥ)睡(ㄕㄨㄟˋ)了(ㄌㄜ˙)十(ㄕˊ)二(ㄦˋ)個(ㄍㄜ˙)鐘(ㄓㄨㄥ)頭(ㄊㄡˊ)了(ㄌㄜ˙)。你(ㄋㄧˇ)還(ㄏㄞˊ)要(ㄧㄠˋ)再(ㄗㄞˋ)睡(ㄕㄨㄟˋ)嗎(ㄇㄚ˙)？</span>
                         </div>
                     </div>
-                    <div class="note" style="margin-top:6px;"><b>Grammar Key:</b> Use <b>再 (zài)</b> to indicate continuing or repeating an action further ("still sleep more?").</div>
+                    <div class="note" style="margin-top:6px;"><b>Grammar Key:</b> Use <b>再</b> to indicate continuing or repeating an action further ("still sleep more?").</div>
                 </div>
 
                 <div style="background:#fff; border:1px solid #ffe6e6; border-radius:8px; padding:12px; margin-bottom:12px;">
@@ -648,14 +666,14 @@
                     <div class="item-content">
                         <div class="btn-group">
                             <button class="audio-btn" onclick="playAudioText(this)">🔊</button>
-                            <button class="rec-btn" onclick="toggleRecord(this)">🎤 Record</button>
+                            <button class="rec-btn" onclick="toggleRecord(this)">🎤</button>
                             <button class="play-rec-btn" disabled>▶️</button>
                         </div>
                         <div>
                             <span class="zy-text">✅ 我(ㄨㄛˇ)不(ㄅㄨˋ)想(ㄒㄧㄤˇ)接(ㄐㄧㄝ)我(ㄨㄛˇ)老(ㄌㄠˇ)闆(ㄅㄢˇ)的(ㄉㄜ˙)電(ㄉㄧㄢˋ)話(ㄏㄨㄚˋ)，因(ㄧㄣ)為(ㄨㄟˋ)他(ㄊㄚ)可(ㄎㄜˇ)能(ㄋㄥˊ)要(ㄧㄠˋ)給(ㄍㄟˇ)我(ㄨㄛˇ)很(ㄏㄣˇ)多(ㄉㄨㄛ)工(ㄍㄨㄥ)作(ㄗㄨㄛˋ)。</span>
                         </div>
                     </div>
-                    <div class="note" style="margin-top:6px;"><b>Grammar Key:</b> Add <b>要 (yào)</b> to express the modal intention / future action ("is going to give me...").</div>
+                    <div class="note" style="margin-top:6px;"><b>Grammar Key:</b> Add <b>要</b> to express the modal intention / future action ("is going to give me...").</div>
                 </div>
 
                 <div style="background:#fff; border:1px solid #ffe6e6; border-radius:8px; padding:12px; margin-bottom:12px;">
@@ -664,14 +682,14 @@
                     <div class="item-content">
                         <div class="btn-group">
                             <button class="audio-btn" onclick="playAudioText(this)">🔊</button>
-                            <button class="rec-btn" onclick="toggleRecord(this)">🎤 Record</button>
+                            <button class="rec-btn" onclick="toggleRecord(this)">🎤</button>
                             <button class="play-rec-btn" disabled>▶️</button>
                         </div>
                         <div>
                             <span class="zy-text">✅ 這(ㄓㄜˋ)個(ㄍㄜ˙)季(ㄐㄧˋ)節(ㄐㄧㄝˊ)去(ㄑㄩˋ)旅(ㄌㄩˇ)行(ㄒㄧㄥˊ)超(ㄔㄠ)好(ㄏㄠˇ)的(ㄉㄜ˙)，因(ㄧㄣ)為(ㄨㄟˋ)天(ㄊㄧㄢ)氣(ㄑㄧˋ)不(ㄅㄨˋ)冷(ㄌㄥˇ)也(ㄧㄝˇ)不(ㄅㄨˊ)熱(ㄖㄜˋ)。</span>
                         </div>
                     </div>
-                    <div class="note" style="margin-top:6px;"><b>Grammar Key:</b> Express "Traveling during this season is wonderful" as <b>這個季節去旅行超好的</b>. Note <b>不(ㄅㄨˊ)熱(ㄖㄜˋ)</b> tone sandhi.</div>
+                    <div class="note" style="margin-top:6px;"><b>Grammar Key:</b> Express "Traveling during this season is wonderful" as <b>這個季節去旅行超好的</b>.</div>
                 </div>
             </div>
 
@@ -682,19 +700,19 @@
                     <thead>
                         <tr>
                             <th style="width: 30%;">Word</th>
-                            <th style="width: 30%;">Pinyin / English</th>
+                            <th style="width: 30%;">English</th>
                             <th style="width: 40%;">Audio & Recording</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
                             <td><span class="zy-text">終(ㄓㄨㄥ)於(ㄩˊ)</span></td>
-                            <td>zhōngyú (finally)</td>
+                            <td>finally</td>
                             <td>
                                 <div class="item-content" style="margin:0;">
                                     <div class="btn-group">
                                         <button class="audio-btn" onclick="playAudioText(this)">🔊</button>
-                                        <button class="rec-btn" onclick="toggleRecord(this)">🎤 Record</button>
+                                        <button class="rec-btn" onclick="toggleRecord(this)">🎤</button>
                                         <button class="play-rec-btn" disabled>▶️</button>
                                     </div>
                                 </div>
@@ -702,12 +720,12 @@
                         </tr>
                         <tr>
                             <td><span class="zy-text">季(ㄐㄧˋ)節(ㄐㄧㄝˊ)</span></td>
-                            <td>jìjié (season)</td>
+                            <td>season</td>
                             <td>
                                 <div class="item-content" style="margin:0;">
                                     <div class="btn-group">
                                         <button class="audio-btn" onclick="playAudioText(this)">🔊</button>
-                                        <button class="rec-btn" onclick="toggleRecord(this)">🎤 Record</button>
+                                        <button class="rec-btn" onclick="toggleRecord(this)">🎤</button>
                                         <button class="play-rec-btn" disabled>▶️</button>
                                     </div>
                                 </div>
@@ -715,12 +733,12 @@
                         </tr>
                         <tr>
                             <td><span class="zy-text">換(ㄏㄨㄢˋ)</span></td>
-                            <td>huàn (to change / switch)</td>
+                            <td>to change / switch</td>
                             <td>
                                 <div class="item-content" style="margin:0;">
                                     <div class="btn-group">
                                         <button class="audio-btn" onclick="playAudioText(this)">🔊</button>
-                                        <button class="rec-btn" onclick="toggleRecord(this)">🎤 Record</button>
+                                        <button class="rec-btn" onclick="toggleRecord(this)">🎤</button>
                                         <button class="play-rec-btn" disabled>▶️</button>
                                     </div>
                                 </div>
@@ -728,12 +746,12 @@
                         </tr>
                         <tr>
                             <td><span class="zy-text">接(ㄐㄧㄝ)電(ㄉㄧㄢˋ)話(ㄏㄨㄚˋ)</span></td>
-                            <td>jiē diànhuà (answer phone)</td>
+                            <td>answer phone</td>
                             <td>
                                 <div class="item-content" style="margin:0;">
                                     <div class="btn-group">
                                         <button class="audio-btn" onclick="playAudioText(this)">🔊</button>
-                                        <button class="rec-btn" onclick="toggleRecord(this)">🎤 Record</button>
+                                        <button class="rec-btn" onclick="toggleRecord(this)">🎤</button>
                                         <button class="play-rec-btn" disabled>▶️</button>
                                     </div>
                                 </div>
@@ -760,7 +778,7 @@
                 <div class="item-content">
                     <div class="btn-group">
                         <button class="audio-btn" onclick="playAudioText(this)">🔊</button>
-                        <button class="rec-btn" onclick="toggleRecord(this)">🎤 Record</button>
+                        <button class="rec-btn" onclick="toggleRecord(this)">🎤</button>
                         <button class="play-rec-btn" disabled>▶️</button>
                     </div>
                     <div>
@@ -772,7 +790,7 @@
                 <div class="item-content">
                     <div class="btn-group">
                         <button class="audio-btn" onclick="playAudioText(this)">🔊</button>
-                        <button class="rec-btn" onclick="toggleRecord(this)">🎤 Record</button>
+                        <button class="rec-btn" onclick="toggleRecord(this)">🎤</button>
                         <button class="play-rec-btn" disabled>▶️</button>
                     </div>
                     <div>
@@ -784,7 +802,7 @@
                 <div class="item-content">
                     <div class="btn-group">
                         <button class="audio-btn" onclick="playAudioText(this)">🔊</button>
-                        <button class="rec-btn" onclick="toggleRecord(this)">🎤 Record</button>
+                        <button class="rec-btn" onclick="toggleRecord(this)">🎤</button>
                         <button class="play-rec-btn" disabled>▶️</button>
                     </div>
                     <div>
@@ -796,7 +814,7 @@
                 <div class="item-content">
                     <div class="btn-group">
                         <button class="audio-btn" onclick="playAudioText(this)">🔊</button>
-                        <button class="rec-btn" onclick="toggleRecord(this)">🎤 Record</button>
+                        <button class="rec-btn" onclick="toggleRecord(this)">🎤</button>
                         <button class="play-rec-btn" disabled>▶️</button>
                     </div>
                     <div>
@@ -808,7 +826,7 @@
                 <div class="item-content">
                     <div class="btn-group">
                         <button class="audio-btn" onclick="playAudioText(this)">🔊</button>
-                        <button class="rec-btn" onclick="toggleRecord(this)">🎤 Record</button>
+                        <button class="rec-btn" onclick="toggleRecord(this)">🎤</button>
                         <button class="play-rec-btn" disabled>▶️</button>
                     </div>
                     <div>
@@ -855,7 +873,7 @@
                 <div class="item-content" style="margin-bottom: 12px;">
                     <div class="btn-group">
                         <button class="audio-btn" onclick="playAudioText(this)">🔊</button>
-                        <button class="rec-btn" onclick="toggleRecord(this)">🎤 Record</button>
+                        <button class="rec-btn" onclick="toggleRecord(this)">🎤</button>
                         <button class="play-rec-btn" disabled>▶️</button>
                     </div>
                     <span style="font-size: 15px; font-weight: bold; color: #8C6239;">Read & Listen to the Story</span>
@@ -868,7 +886,7 @@
 
                     國(ㄍㄨㄛˊ)龍(ㄌㄨㄥˊ)說(ㄕㄨㄛ)：「我(ㄨㄛˇ)想(ㄒㄧㄤˇ)唱(ㄔㄤˋ)歌(ㄍㄜ)給(ㄍㄟˇ)你(ㄋㄧˇ)聽(ㄊㄧㄥ)！」<br><br>
 
-                    他(ㄊㄚ)們(ㄇㄣ˙)走(ㄗㄡˇ)到(ㄉㄠˋ)樹(ㄕㄨˋ)下(ㄒㄧㄚˋ)。國(ㄍㄨㄛˊ)龍(ㄌㄨㄥˊ)坐(ㄗㄨㄛˋ)在(ㄗㄞˋ)草(ㄘㄠˇ)地(ㄉㄧˋ)上(ㄕㄤˋ)，清(ㄑㄧㄥ)德(ㄉㄜˊ)坐(ㄗㄨˋ)在(ㄗㄞˋ)他(ㄊㄚ)的(ㄉㄜ˙)旁(ㄆㄤˊ)邊(ㄅㄧㄢ)。清(ㄑㄧㄥ)德(ㄉㄜˊ)手(ㄕㄡˇ)上(ㄕㄤˋ)拿(ㄋㄚˊ)著(ㄓㄜ˙)一(ㄧˋ)支(ㄓ)棒(ㄅㄤˋ)棒(ㄅㄤˋ)糖(ㄊㄤˊ)，紅(ㄏㄨㄥˊ)色(ㄙㄜˋ)的(ㄉㄜ˙)，很(ㄏㄣˇ)漂(ㄆㄧㄠˋ)亮(ㄌㄧㄤˋ)。<br><br>
+                    他(ㄊㄚ)們(ㄇㄣ˙)走(ㄗㄡˇ)到(ㄉㄠˋ)樹(ㄕㄨˋ)下(ㄒㄧㄚˋ)。國(ㄍㄨㄛˊ)龍(ㄌㄨㄥˊ)坐(ㄗㄨˋ)在(ㄗㄞˋ)草(ㄘㄠˇ)地(ㄉㄧˋ)上(ㄕㄤˋ)，清(ㄑㄧㄥ)德(ㄉㄜˊ)坐(ㄗㄨˋ)在(ㄗㄞˋ)他(ㄊㄚ)的(ㄉㄜ˙)旁(ㄆㄤˊ)邊(ㄅㄧㄢ)。清(ㄑㄧㄥ)德(ㄉㄜˊ)手(ㄕㄡˇ)上(ㄕˋ)拿(ㄋㄚˊ)著(ㄓㄜ˙)一(ㄧˋ)支(ㄓ)棒(ㄅㄤˋ)棒(ㄅㄤˋ)糖(ㄊㄤˊ)，紅(ㄏㄨㄥˊ)色(ㄙㄜˋ)的(ㄉㄜ˙)，很(ㄏㄣˇ)漂(ㄆㄧㄠˋ)亮(ㄌㄧㄤˋ)。<br><br>
 
                     國(ㄍㄨㄛˊ)龍(ㄌㄨㄥˊ)拿(ㄋㄚˊ)起(ㄑㄧˇ)麥(ㄇㄞˋ)克(ㄎㄜˋ)風(ㄈㄥ)，開(ㄎㄞ)始(ㄕˇ)唱(ㄔㄤˋ)歌(ㄍㄜ)。他(ㄊㄚ)唱(ㄔㄤˋ)得(ㄉㄜ˙)很(ㄏㄣˇ)認(ㄖㄣˋ)真(ㄓㄣ)，但(ㄉㄢˋ)是(ㄕˋ)聲(ㄕㄥ)音(ㄧㄣ)有(ㄧㄡˇ)一(ㄧˋ)點(ㄉㄧㄢˇ)小(ㄒㄧㄠˇ)。清(ㄑㄧㄥ)德(ㄉㄜˊ)叫(ㄐㄧㄠˋ)國(ㄍㄨㄛˊ)龍(ㄌㄨㄥˊ)大(ㄉㄚˋ)聲(ㄕㄥ)唱(ㄔㄤˋ)。「可(ㄎㄜˇ)是(ㄕˋ)我(ㄨㄛˇ)怕(ㄅㄚˋ)別(ㄅㄧㄝˊ)人(ㄖㄣˊ)聽(ㄊㄧㄥ)到(ㄉㄠˋ)。」國(ㄍㄨㄛˊ)龍(ㄌㄨㄥˊ)小(ㄒㄧㄠˇ)聲(ㄕㄥ)說(ㄕㄨㄛ)。「沒(ㄇㄟˊ)關(ㄍㄨㄢ)係(ㄒㄧ˙)，這(ㄓㄜˋ)裡(ㄌㄧˇ)只(ㄓˇ)有(ㄧㄡˇ)我(ㄨㄛˇ)們(ㄇㄣ˙)兩(ㄌㄧㄤˇ)個(ㄍㄜ˙)人(ㄖㄣˊ)。」清(ㄑㄧㄥ)德(ㄉㄜˊ)說(ㄕㄨㄛ)。<br><br>
 
@@ -876,7 +894,7 @@
 
                     後(ㄏㄡˋ)來(ㄌㄞˊ)，清(ㄑㄧㄥ)德(ㄉㄜˊ)拿(ㄋㄚˊ)起(ㄑㄧˇ)一(ㄧˊ)個(ㄍㄜ˙)球(ㄑㄧㄡˊ)，丟(ㄉㄧㄡ)給(ㄍㄟˇ)國(ㄍㄨㄛˊ)龍(ㄌㄨㄥˊ)。國(ㄍㄨㄛˊ)龍(ㄌㄨㄥˊ)接(ㄐㄧㄝ)住(ㄓㄨˋ)了(ㄌㄜ˙)球(ㄑㄧㄡˊ)。他(ㄊㄚ)想(ㄒㄧㄤˇ)了(ㄌㄜ˙)想(ㄒㄧㄤˇ)，換(ㄏㄨㄢˋ)了(ㄌㄜ˙)一(ㄧˋ)首(ㄕㄡˇ)歌(ㄍㄜ)，這(ㄓㄜˋ)一(ㄧˊ)次(ㄘˋ)唱(ㄔㄤˋ)得(ㄉㄜ˙)更(ㄍㄥˋ)好(ㄏㄠˇ)了(ㄌㄜ˙)。<br><br>
 
-                    最(ㄗㄨㄟˋ)後(ㄏㄡˋ)，國(ㄍㄨㄛˊ)龍(ㄌㄨㄥˊ)終(ㄓㄨㄥ)於(ㄩˊ)唱(ㄔㄤˋ)完(ㄨㄢˊ)歌(ㄍㄜ)。他(ㄊㄚ)們(ㄇㄣ˙)一(ㄧˋ)起(ㄑㄧˇ)坐(ㄗㄨㄛˋ)在(ㄗㄞˋ)樹(ㄕㄨˋ)下(ㄒㄧㄚˋ)，看(ㄎㄢˋ)著(ㄓㄜ˙)天(ㄊㄧㄢ)空(ㄎㄨㄥ)。清(ㄑㄧㄥ)德(ㄉㄜˊ)說(ㄕㄨㄛ)：「下(ㄒㄧㄚˋ)次(ㄘˋ)我(ㄨㄛˇ)們(ㄇㄣ˙)再(ㄗㄞˋ)來(ㄌㄞˊ)吧(ㄅㄚ˙)！」國(ㄍㄨㄛˊ)龍(ㄌㄨㄥˊ)很(ㄏㄣˇ)開(ㄎㄞ)心(ㄒㄧㄣ)地(ㄉㄜ˙)說(ㄕㄨㄛ)：「好(ㄏㄠˇ)！下(ㄒㄧㄚˋ)次(ㄘˋ)我(ㄨㄛˇ)要(ㄧㄠˋ)帶(ㄉㄞˋ)一(ㄧˋ)支(ㄓ)更(ㄍㄥˋ)大(ㄉㄚˋ)的(ㄉㄜ˙)麥(ㄇㄞˋ)克(ㄎㄜˋ)风(ㄈㄥ)！」
+                    最(ㄗㄨㄟˋ)後(ㄏㄡˋ)，國(ㄍㄨㄛˊ)龍(ㄌㄨㄥˊ)終(ㄓㄨㄥ)於(ㄩˊ)唱(ㄔㄤˋ)完(ㄨㄢˊ)歌(ㄍㄜ)。他(ㄊㄚ)們(ㄇㄣ˙)一(ㄧˋ)起(ㄑㄧˇ)坐(ㄗㄨˋ)在(ㄗㄞˋ)樹(ㄕㄨˋ)下(ㄒㄧㄚˋ)，看(ㄎㄢˋ)著(ㄓㄜ˙)天(ㄊㄧㄢ)空(ㄎㄨㄥ)。清(ㄑㄧㄥ)德(ㄉㄜˊ)說(ㄕㄨㄛ)：「下(ㄒㄧㄚˋ)次(ㄘˋ)我(ㄨㄛˇ)們(ㄇㄣ˙)再(ㄗㄞˋ)來(ㄌㄞˊ)吧(ㄅㄚ˙)！」國(ㄍㄨㄛˊ)龍(ㄌㄨㄥˊ)很(ㄏㄣˇ)開(ㄎㄞ)心(ㄒㄧㄣ)地(ㄉㄜ˙)說(ㄕㄨㄛ)：「好(ㄏㄠˇ)！下(ㄒㄧㄚˋ)次(ㄘˋ)我(ㄨㄛˇ)要(ㄧㄠˋ)帶(ㄉㄞˋ)一(ㄧˋ)支(ㄓ)更(ㄍㄥˋ)大(ㄉㄚˋ)的(ㄉㄜ˙)麥(ㄇㄞˋ)克(ㄎㄜˋ)風(ㄈㄥ)！」
                 </span>
 
                 <div class="en-trans" style="margin-top:15px; border-top:1px solid #E6D5B8; padding-top:10px;">
@@ -894,29 +912,29 @@
 
             <!-- Questions -->
             <div class="quiz-card">
-                <div class="homework-q">問題 1. 他們去公園做什麼？ (What did they go to the park to do?)</div>
+                <div class="homework-q">問題 1. 他們去公園做什麼？</div>
                 <textarea class="hw-textarea" placeholder="Type your answer here..."></textarea>
             </div>
 
             <div class="quiz-card">
-                <div class="homework-q">問題 2. 誰帶麥克風去唱歌？ (Who brought a microphone to sing?)</div>
+                <div class="homework-q">問題 2. 誰帶麥克風去唱歌？</div>
                 <textarea class="hw-textarea" placeholder="Type your answer here..."></textarea>
             </div>
 
             <div class="quiz-card">
-                <div class="homework-q">問題 3. 國龍為什麼一開始唱很小聲？ (Why did Guolong sing quietly at first?)</div>
+                <div class="homework-q">問題 3. 國龍為什麼一開始唱很小聲？</div>
                 <textarea class="hw-textarea" placeholder="Type your answer here..."></textarea>
             </div>
 
             <div class="quiz-card">
-                <div class="homework-q">問題 4. 你覺得清德是一個好朋友嗎？ (Do you think Qingde is a good friend? Why?)</div>
+                <div class="homework-q">問題 4. 你覺得清德是一個好朋友嗎？</div>
                 <textarea class="hw-textarea" placeholder="Type your answer here..."></textarea>
             </div>
         </div>
 
     </div>
 
-<script>
+    <script>
         function toggleSidebar() {
             const sidebar = document.getElementById('sidebar');
             const mainContent = document.getElementById('mainContent');
@@ -926,26 +944,6 @@
                 sidebar.classList.toggle('collapsed');
                 mainContent.classList.toggle('expanded');
             }
-        }
-
-        // ====== Interactive Quiz Checker ======
-        function checkQuiz(qName, correctVal, exp, feedbackId) {
-            const selected = document.querySelector(`input[name="${qName}"]:checked`);
-            const fb = document.getElementById(feedbackId);
-            if (!selected) {
-                fb.className = "quiz-feedback incorrect";
-                fb.innerHTML = "⚠️ Please select an answer first!";
-                fb.style.display = "block";
-                return;
-            }
-            if (selected.value === correctVal) {
-                fb.className = "quiz-feedback correct";
-                fb.innerHTML = "✅ <b>Correct!</b> " + exp;
-            } else {
-                fb.className = "quiz-feedback incorrect";
-                fb.innerHTML = "❌ <b>Incorrect.</b> Try again! " + exp;
-            }
-            fb.style.display = "block";
         }
 
         // ====== Parse Zhuyin on Load (DOM based) ======
@@ -973,11 +971,15 @@
         }
         document.addEventListener("DOMContentLoaded", parseZhuyinDOM);
 
-        // ====== Audio Reading ======
+        // ====== Audio Reading (Fixed to support table rows) ======
         let currentUtteranceText = "";
         function playAudioText(btn) {
             let container = btn.closest('.item-content');
-            let zyDiv = container.querySelector('.zy-text');
+            let zyDiv = container ? container.querySelector('.zy-text') : null;
+            if (!zyDiv) {
+                let tr = btn.closest('tr');
+                if (tr) zyDiv = tr.querySelector('.zy-text');
+            }
             if(!zyDiv) return;
             
             let chars = zyDiv.querySelectorAll('.zy-char');
@@ -989,7 +991,6 @@
                 cleanText = zyDiv.innerText.replace(/\(.*?\)/g, '');
             }
             
-            // Remove speaker prefixes like A: B: A： B： Q: A: so they are not pronounced
             cleanText = cleanText.replace(/^[A-Z0-9]+[：:]\s*/gi, '').replace(/\s+[A-Z0-9]+[：:]\s*/gi, ' ').replace(/[A-Z0-9]+[：:]/gi, '');
             cleanText = cleanText.replace(/\//g, ' ');
 
@@ -1011,13 +1012,14 @@
             speechSynthesis.speak(utterance);
         }
 
-        // ====== Audio Recording ======
+        // ====== Audio Recording (Fixed to support table rows) ======
         let mediaRecorders = {};
         let recIdCounter = 0;
         async function toggleRecord(btn) {
             let container = btn.closest('.item-content');
-            let player = container.querySelector('audio');
-            let playBtn = container.querySelector('.play-rec-btn');
+            let targetParent = container || btn.closest('td') || btn.parentElement;
+            let player = targetParent.querySelector('audio');
+            let playBtn = targetParent.querySelector('.play-rec-btn');
             
             if (!btn.dataset.recId) {
                 btn.dataset.recId = "rec-" + recIdCounter++;
@@ -1030,7 +1032,7 @@
                 player.style.display = 'none';
                 player.style.width = '100%';
                 player.style.marginTop = '10px';
-                container.appendChild(player);
+                targetParent.appendChild(player);
             }
 
             if (!mediaRecorders[id] || mediaRecorders[id].state === "inactive") {
@@ -1042,7 +1044,7 @@
                     recorder.ondataavailable = e => chunks.push(e.data);
                     recorder.onstop = () => {
                         const blob = new Blob(chunks, { 'type': 'audio/webm' });
-                        player.src = URL.center || URL.createObjectURL(blob);
+                        player.src = URL.createObjectURL(blob);
                         player.style.display = 'block';
                         playBtn.disabled = false;
                         playBtn.onclick = () => player.play();
