@@ -36,7 +36,6 @@
         button.control-btn { background: var(--primary); color: white; border: none; padding: 12px 24px; margin: 6px; border-radius: 8px; cursor: pointer; font-size: 15px; font-weight: bold; box-shadow: 0 2px 4px rgba(0,0,0,0.08); transition: background 0.2s; }
         button.control-btn:hover { background: #B5835A; }
         
-        /* 圓形精美圖示按鈕 (聽音檔、錄音、播放錄音) 放在句子前面 */
         .sentence-row { display: flex; align-items: center; gap: 15px; width: 100%; margin-bottom: 6px; }
         .buttons-group { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
         .icon-btn { background: #f0f0f0; border: none; width: 40px; height: 40px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 2px 4px rgba(0,0,0,0.08); transition: transform 0.1s, background 0.2s; }
@@ -70,7 +69,7 @@
         
         .custom-table { width: 100%; border-collapse: collapse; margin: 15px 0; background: white; border-radius: 8px; overflow: hidden; border: 1px solid #E6D5B8; }
         .custom-table th { background: #F4E8D8; color: #8C6239; padding: 12px; font-size: 16px; text-align: left; border-bottom: 2px solid #E6D5B8; }
-        .custom-table td { padding: 12px; border-bottom: 1px solid #eee; vertical-align: top; }
+        .custom-table td { padding: 12px; border-bottom: 1px solid #eee; vertical-align: middle; }
         .custom-table tr:last-child td { border-bottom: none; }
         
         .lesson-img { max-width: 100%; border-radius: 8px; margin: 10px 0; border: 1px solid #E6D5B8; }
@@ -360,14 +359,14 @@
                         image: "https://cdn.phototourl.com/member/2026-11-11-0bec36a8-f5a9-4f15-a791-e4017f17d76c.png",
                         tableHeaders: ["中文 (Chinese)", "英文 (English)"],
                         tableRows: [
-                            ["水 (shuǐ)", "Water"],
-                            ["海 (hǎi)", "Sea / Ocean"],
-                            ["洗 (xǐ)", "To wash"],
-                            ["没 (méi)", "Have not / Not"],
-                            ["冰 (bīng)", "Ice"],
-                            ["冬 (dōng)", "Winter"],
-                            ["热 (rè)", "Hot"],
-                            ["火锅 (huǒguō)", "Hot pot"]
+                            ["水(shuǐ)", "Water"],
+                            ["海(hǎi)", "Sea / Ocean"],
+                            ["洗(xǐ)", "To wash"],
+                            ["没(méi)", "Have not / Not"],
+                            ["冰(bīng)", "Ice"],
+                            ["冬(dōng)", "Winter"],
+                            ["热(rè)", "Hot"],
+                            ["火锅(huǒguō)", "Hot pot"]
                         ]
                     }
                 ]
@@ -425,10 +424,33 @@
                     html += `<table class="custom-table"><thead><tr>`;
                     item.tableHeaders.forEach(th => { html += `<th>${th}</th>`; });
                     html += `</tr></thead><tbody>`;
+                    
                     item.tableRows.forEach(row => {
-                        html += `<tr>`;
-                        row.forEach(cell => { html += `<td>${parsePinyin(cell)}</td>`; });
-                        html += `</tr>`;
+                        let zhCell = row[0];
+                        let enCell = row[1];
+                        let btnId = `play-btn-${counter}`;
+                        let recId = `rec-${counter}`;
+                        
+                        html += `<tr>
+                            <td>
+                                <div style="display: flex; align-items: center; gap: 12px;">
+                                    <div class="buttons-group">
+                                        <button class="icon-btn" id="${btnId}" onclick="togglePlayAudio('${zhCell}', '${btnId}')" title="Listen Audio" style="width: 34px; height: 34px;">
+                                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#666" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>
+                                        </button>
+                                        <button class="icon-btn" onclick="toggleRecord(this, '${recId}')" title="Record Audio" style="width: 34px; height: 34px;">
+                                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#e07a5f" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"></path><path d="M19 10v1a7 7 0 0 1-14 0v-1"></path><line x1="12" y1="19" x2="12" y2="23"></line><line x1="8" y1="23" x2="16" y2="23"></line></svg>
+                                        </button>
+                                        <button class="icon-btn" id="play-rec-${recId}" onclick="playRecording('${recId}')" title="Play Mine" disabled style="width: 34px; height: 34px;">
+                                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#457b9d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                                        </button>
+                                    </div>
+                                    <div style="font-size: 20px;">${parsePinyin(zhCell)}</div>
+                                </div>
+                            </td>
+                            <td>${enCell}</td>
+                        </tr>`;
+                        counter++;
                     });
                     html += `</tbody></table></div>`;
                 }
