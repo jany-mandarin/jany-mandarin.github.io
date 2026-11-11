@@ -1,480 +1,538 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Patrick's Mandarin Lesson 59</title>
-    <style>
-        :root { --bg: #FDFBF7; --primary: #D4A373; --text: #4a4a4a; --white: #fff; --sidebar-width: 280px; }
-        html { scroll-behavior: smooth; }
-        body { font-family: 'Helvetica Neue', Arial, sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; margin: 0; padding: 0; display: flex; transition: margin-left 0.3s ease; }
-        
-        .sidebar { width: var(--sidebar-width); background: #FFF9F0; border-right: 1px solid #E6D5B8; height: 100vh; position: fixed; top: 0; left: 0; overflow-y: auto; padding: 20px; box-sizing: border-box; transition: transform 0.3s ease; z-index: 1000; }
-        .sidebar.collapsed { transform: translateX(-100%); }
-        .sidebar h3 { margin-top: 0; color: #8C6239; font-size: 18px; border-bottom: 2px solid var(--primary); padding-bottom: 8px; display: flex; justify-content: space-between; align-items: center; }
-        .sidebar ol { padding-left: 20px; margin: 10px 0; color: #555; }
-        .sidebar li { margin-bottom: 6px; font-size: 14px; }
-        .sidebar .sub-list { padding-left: 15px; margin: 4px 0; list-style-type: circle; }
-        .sidebar .sub-list li { font-size: 13px; margin-bottom: 4px; }
-        .sidebar a { color: #555; text-decoration: none; display: block; }
-        .sidebar a:hover { color: #8C6239; font-weight: bold; }
-        
-        .sidebar-toggle { background: var(--primary); color: white; border: none; padding: 10px 16px; border-radius: 8px; cursor: pointer; font-size: 15px; font-weight: bold; box-shadow: 0 2px 5px rgba(0,0,0,0.1); display: inline-flex; align-items: center; gap: 6px; margin-bottom: 20px; }
-        .sidebar-toggle:hover { background: #B5835A; }
+    /* Top Navigation */
+    .top-nav { position: fixed; top: 0; left: 0; width: 100%; background: #FFF9F0; border-bottom: 1px solid #E6D5B8; padding: 10px 20px; box-sizing: border-box; text-align: right; z-index: 1200; display: flex; justify-content: flex-end; align-items: center; }
+    .top-nav a { color: var(--primary); font-weight: bold; text-decoration: none; margin-left: 20px; font-size: 15px; }
+    .top-nav a:hover { text-decoration: underline; color: #8C6239; }
 
-        .main-content { margin-left: var(--sidebar-width); width: calc(100% - var(--sidebar-width)); padding: 30px 50px; box-sizing: border-box; max-width: 950px; transition: margin-left 0.3s ease, width 0.3s ease; }
-        .main-content.expanded { margin-left: 0; width: 100%; }
+    /* Sidebar */
+    .sidebar { width: var(--sidebar-width); background: #FFF9F0; border-right: 1px solid #E6D5B8; height: 100vh; position: fixed; top: 0; left: 0; overflow-y: auto; padding: 60px 20px 20px 20px; box-sizing: border-box; transition: transform 0.3s ease; z-index: 1000; }
+    .sidebar.collapsed { transform: translateX(-100%); }
+    .sidebar h3 { margin-top: 0; color: #8C6239; font-size: 18px; border-bottom: 2px solid var(--primary); padding-bottom: 8px; display: flex; justify-content: space-between; align-items: center; }
+    .sidebar ol { padding-left: 20px; margin: 10px 0; color: #555; }
+    .sidebar li { margin-bottom: 8px; font-size: 15px; font-weight: bold; color: #8C6239; }
+    .sidebar ul { padding-left: 15px; list-style-type: circle; margin-top: 5px; margin-bottom: 15px; font-weight: normal; }
+    .sidebar ul li { font-size: 13.5px; margin-bottom: 6px; color: #555; }
+    .sidebar a { color: #555; text-decoration: none; display: block; }
+    .sidebar a:hover { color: #D4A373; font-weight: bold; }
+    
+    .sidebar-toggle { position: fixed; top: 50px; left: 15px; z-index: 1100; background: var(--primary); color: white; border: none; padding: 8px 12px; border-radius: 6px; cursor: pointer; font-size: 14px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
 
-        .top-nav-right { display: flex; justify-content: flex-end; gap: 20px; font-size: 16px; font-weight: bold; margin-bottom: 15px; }
-        .top-nav-right a { color: #8C6239; text-decoration: none; }
-        .top-nav-right a:hover { text-decoration: underline; }
+    /* Main Content */
+    .main-content { margin-top: 40px; margin-left: var(--sidebar-width); width: calc(100% - var(--sidebar-width)); padding: 20px 40px; box-sizing: border-box; max-width: 900px; transition: margin-left 0.3s ease, width 0.3s ease; }
+    .main-content.expanded { margin-left: 0; width: 100%; }
+    .header { text-align: center; border-bottom: 2px solid var(--primary); padding-bottom: 10px; margin-bottom: 20px; margin-top: 20px; }
+    
+    /* Controls */
+    .controls { position: sticky; top: 40px; background: var(--bg); padding: 15px; text-align: center; border-bottom: 1px solid #ccc; z-index: 100; margin-bottom: 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
+    button.control-btn { background: var(--primary); color: white; border: none; padding: 10px 15px; margin: 5px; border-radius: 6px; cursor: pointer; font-size: 14px; font-weight: bold; }
+    button.control-btn:hover { background: #B5835A; }
+    
+    /* Audio Circle Buttons */
+    .btn-group { display: flex; align-items: center; margin-right: 15px; margin-bottom: 5px; flex-shrink: 0; gap: 8px; }
+    .audio-btn, .rec-btn, .play-rec-btn { 
+        background: #EFEFEF; 
+        color: #4A4A4A; 
+        font-size: 16px; 
+        border-radius: 50%; 
+        width: 42px; 
+        height: 42px; 
+        display: inline-flex; 
+        align-items: center; 
+        justify-content: center; 
+        border: none; 
+        cursor: pointer; 
+        transition: all 0.2s ease;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+        padding: 0;
+        line-height: 1;
+    }
+    .audio-btn:hover { background: #E2E2E2; transform: scale(1.05); }
+    .rec-btn:hover { background: #E2E2E2; transform: scale(1.05); }
+    .rec-btn.recording { background: #FFD1D1; color: #D90429; animation: pulse 1.5s infinite; }
+    .play-rec-btn { background: #EFEFEF; color: #4A4A4A; }
+    .play-rec-btn:enabled:hover { background: #E2E2E2; transform: scale(1.05); }
+    .play-rec-btn:disabled { background: #F5F5F5; color: #CCC; cursor: not-allowed; box-shadow: none; }
 
-        .header { text-align: center; margin-bottom: 30px; position: relative; }
-        .header h1 { font-size: 36px; color: #333; margin: 10px 0; font-weight: bold; }
-        .header p { color: #555; font-size: 16px; margin: 5px 0 20px 0; }
-        
-        .controls-box { background: rgba(253, 251, 247, 0.95); backdrop-filter: blur(5px); border: 1px solid #E6D5B8; border-radius: 12px; padding: 15px; text-align: center; margin-bottom: 30px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); position: sticky; top: 15px; z-index: 900; }
-        button.control-btn { background: var(--primary); color: white; border: none; padding: 12px 24px; margin: 6px; border-radius: 8px; cursor: pointer; font-size: 15px; font-weight: bold; box-shadow: 0 2px 4px rgba(0,0,0,0.08); transition: background 0.2s; }
-        button.control-btn:hover { background: #B5835A; }
-        
-        .sentence-row { display: flex; align-items: center; gap: 15px; width: 100%; margin-bottom: 6px; }
-        .buttons-group { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
-        .icon-btn { background: #f0f0f0; border: none; width: 40px; height: 40px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 2px 4px rgba(0,0,0,0.08); transition: transform 0.1s, background 0.2s; }
-        .icon-btn:hover { background: #e0e0e0; transform: scale(1.05); }
-        .icon-btn.recording { background: #ff4d4f; animation: pulse 1.5s infinite; }
-        .icon-btn.playing { background: #457b9d; }
-        .icon-btn:disabled { background: #e0e0e0; opacity: 0.5; cursor: not-allowed; transform: none; }
+    @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.5; } 100% { opacity: 1; } }
 
-        @keyframes pulse {
-            0% { box-shadow: 0 0 0 0 rgba(255, 77, 79, 0.4); }
-            70% { box-shadow: 0 0 0 10px rgba(255, 77, 79, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(255, 77, 79, 0); }
-        }
+    /* Content Blocks */
+    h2 { color: #8C6239; border-left: 5px solid var(--primary); padding-left: 10px; margin-top: 30px; }
+    .section { margin-bottom: 30px; background: var(--white); padding: 20px; border-radius: 12px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); scroll-margin-top: 130px; }
+    .grammar-box { background: #FFF9F0; border: 1px solid #E6D5B8; border-radius: 8px; padding: 15px; margin: 15px 0; scroll-margin-top: 140px; }
+    .item-content { display: flex; align-items: flex-start; margin-top: 10px; margin-bottom: 10px; flex-wrap: wrap; }
+    
+    /* Pinyin Formatting */
+    .pinyin-group { display: inline-flex; flex-direction: column; align-items: center; margin-right: 3px; vertical-align: bottom; }
+    .py-text { font-size: 11px; color: #777; line-height: 1; margin-bottom: 2px; }
+    .hz-text { font-size: 24px; font-family: sans-serif; line-height: 1.2; }
 
-        .text-content { display: flex; flex-direction: column; flex-grow: 1; }
+    .en-trans { color: #666; font-size: 15px; font-style: italic; margin-top: 5px; margin-left: 0; width: 100%; display: block; }
+    .note { font-size: 14px; color: #555; margin-top: 10px; margin-bottom: 10px; line-height: 1.5; background: #fdfaf6; padding: 8px 12px; border-left: 3px solid #D4A373; border-radius: 4px; }
+    .vocab-img { max-width: 100%; height: auto; border-radius: 8px; border: 1px solid #E6D5B8; display: block; margin: 10px 0; max-height: 220px; }
 
-        h2 { color: #8C6239; border-left: 5px solid var(--primary); padding-left: 10px; margin-top: 30px; }
-        .section { margin-bottom: 30px; background: var(--white); padding: 25px; border-radius: 12px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); scroll-margin-top: 40px; }
-        
-        .item { margin-bottom: 20px; display: flex; flex-direction: column; border-bottom: 1px dashed #eee; padding-bottom: 15px; }
-        .item:last-child { border-bottom: none; padding-bottom: 0; }
-        
-        .pinyin-group { display: inline-flex; flex-direction: column; align-items: center; margin-right: 2px; vertical-align: bottom; }
-        .py-text { font-size: 11px; color: #777; line-height: 1; margin-bottom: 2px; }
-        .hz-text { font-size: 24px; font-family: sans-serif; line-height: 1.2; }
-        
-        .en-trans { color: #666; font-size: 15px; font-style: italic; margin-top: 4px; }
-        
-        .grammar-box { background: #FFF9F0; border: 1px solid #E6D5B8; border-radius: 8px; padding: 20px; margin: 20px 0; }
-        .note { font-size: 15px; color: #555; margin-bottom: 12px; line-height: 1.6; }
-        
-        .custom-table { width: 100%; border-collapse: collapse; margin: 15px 0; background: white; border-radius: 8px; overflow: hidden; border: 1px solid #E6D5B8; }
-        .custom-table th { background: #F4E8D8; color: #8C6239; padding: 12px; font-size: 16px; text-align: left; border-bottom: 2px solid #E6D5B8; }
-        .custom-table td { padding: 12px; border-bottom: 1px solid #eee; vertical-align: middle; }
-        .custom-table tr:last-child td { border-bottom: none; }
-        
-        .lesson-img { max-width: 100%; border-radius: 8px; margin: 10px 0; border: 1px solid #E6D5B8; }
+    .custom-table { width: 100%; border-collapse: collapse; margin: 15px 0; background: white; border-radius: 8px; overflow: hidden; border: 1px solid #E6D5B8; }
+    .custom-table th { background: #F4E8D8; color: #8C6239; padding: 12px; font-size: 16px; text-align: left; border-bottom: 2px solid #E6D5B8; }
+    .custom-table td { padding: 12px; border-bottom: 1px solid #eee; vertical-align: middle; }
+    .custom-table tr:last-child td { border-bottom: none; }
 
-        @media (max-width: 900px) {
-            .sidebar { transform: translateX(-100%); }
-            .sidebar.active { transform: translateX(0); }
-            .main-content { margin-left: 0; width: 100%; padding: 20px; }
-        }
-    </style>
-</head>
-<body>
+    @media (max-width: 900px) {
+        .sidebar { transform: translateX(-100%); }
+        .sidebar.active { transform: translateX(0); }
+        .main-content { margin-left: 0; width: 100%; padding: 20px; }
+    }
+</style>
 
-    <div class="sidebar" id="sidebar">
-        <h3>📖 Outline <button style="background:none; border:none; color:#8C6239; font-weight:bold; cursor:pointer; font-size:18px;" onclick="toggleSidebar()">×</button></h3>
-        <ol>
-            <li>
-                <a href="#sec-1">一、第十課 (Lesson 10)</a>
-                <ul class="sub-list">
-                    <li><a href="#sub-1-1">1. 不要...了 / 別...了</a></li>
-                    <li><a href="#sub-1-2">2. A 对 B + adj.</a></li>
-                    <li><a href="#sub-1-3">3. 正在 (zhèngzài)</a></li>
-                    <li><a href="#sub-1-4">4. 洗 (xǐ)</a></li>
-                </ul>
-            </li>
-            <li>
-                <a href="#sec-2">二、第十一課 (Lesson 11)</a>
-                <ul class="sub-list">
-                    <li><a href="#sub-2-1">1. S. + V. + 的 + N.</a></li>
-                    <li><a href="#sub-2-2">2. A + 比 + B + adj.</a></li>
-                    <li><a href="#sub-2-3">3. A + 没有 + B + adj.</a></li>
-                    <li><a href="#sub-2-4">4. A + 比 + B + adj. + num-M</a></li>
-                    <li><a href="#sub-2-5">5. 可能 (kěnéng)</a></li>
-                    <li><a href="#sub-2-6">6. 中文字表 (Vocabulary)</a></li>
-                </ul>
-            </li>
-        </ol>
+
+<div class="top-nav">
+    <a href="https://jany-mandarin.github.io/patrick.html">Index</a>
+    <a href="https://jany-mandarin.github.io/patrick.lesson58.html">Lesson 58</a>
+</div>
+
+<button class="sidebar-toggle" onclick="toggleSidebar()">☰ Outline</button>
+
+<div class="sidebar" id="sidebar">
+    <h3>📖 Outline <button style="background:none; border:none; color:#8C6239; font-weight:bold; cursor:pointer; font-size:16px;" onclick="toggleSidebar()">×</button></h3>
+    <ol>
+        <li><a href="#sec-1">一、第十課 (Lesson 10)</a>
+            <ul>
+                <li><a href="#sub-1-1">1. 不要...了 / 別...了</a></li>
+                <li><a href="#sub-1-2">2. A 对 B + adj.</a></li>
+                <li><a href="#sub-1-3">3. 正在</a></li>
+                <li><a href="#sub-1-4">4. 洗</a></li>
+            </ul>
+        </li>
+        <li><a href="#sec-2">二、第十一課 (Lesson 11)</a>
+            <ul>
+                <li><a href="#sub-2-1">1. S. + V. + 的 + N.</a></li>
+                <li><a href="#sub-2-2">2. A + 比 + B + adj.</a></li>
+                <li><a href="#sub-2-3">3. A + 没有 + B + adj.</a></li>
+                <li><a href="#sub-2-4">4. A + 比 + B + adj. + num-M</a></li>
+                <li><a href="#sub-2-5">5. 可能</a></li>
+                <li><a href="#sub-2-6">6. 中文字表</a></li>
+            </ul>
+        </li>
+    </ol>
+</div>
+
+<div class="main-content" id="mainContent">
+    <div class="header">
+        <h1>Patrick's Mandarin Lesson 59</h1>
+        <p>Date: 2026/11/11</p>
     </div>
 
-    <div class="main-content" id="mainContent">
-        <div class="top-nav-right">
-            <a href="https://jany-mandarin.github.io/patrick.html">Index</a>
-            <a href="https://jany-mandarin.github.io/patrick.lesson58.html">Lesson 58</a>
-        </div>
-
-        <button class="sidebar-toggle" onclick="toggleSidebar()">☰ Outline</button>
-
-        <div class="header">
-            <h1>Patrick's Mandarin Lesson 59</h1>
-            <p>Date: 2026/11/11</p>
-        </div>
-
-        <div class="controls-box">
-            <button class="control-btn" onclick="togglePinyin()">Toggle Pinyin</button>
-            <button class="control-btn" onclick="toggleEnglish()">Toggle English</button>
-        </div>
-
-        <div id="content"></div>
+    <div class="controls">
+        <button class="control-btn" onclick="togglePinyin()">Toggle Pinyin</button>
+        <button class="control-btn" onclick="toggleEnglish()">Toggle English</button>
     </div>
 
-    <script>
-        function toggleSidebar() {
-            const sidebar = document.getElementById('sidebar');
-            const mainContent = document.getElementById('mainContent');
-            if (window.innerWidth <= 900) {
-                sidebar.classList.toggle('active');
-            } else {
-                sidebar.classList.toggle('collapsed');
-                mainContent.classList.toggle('expanded');
-            }
-        }
+    <!-- Section 1: Lesson 10 -->
+    <div class="section" id="sec-1">
+        <h2>一、第十課</h2>
 
-        function parsePinyin(text) {
-            const regex = /([一-龥a-zA-Z0-9，。？！、：""''])\((.*?)\)/g;
-            let parsed = text.replace(regex, (match, char, py) => {
-                return `<span class="pinyin-group"><span class="py-text">${py}</span><span class="hz-text">${char}</span></span>`;
-            });
-            return parsed;
-        }
-
-        let currentUtterance = null;
-        let activePlayBtn = null;
-
-        function togglePlayAudio(text, btnId) {
-            const btn = document.getElementById(btnId);
+        <div id="sub-1-1" class="grammar-box">
+            <h3>1. 不要...了 / 別...了</h3>
+            <div class="note"><b>Explanation:</b> 不要就是這兩個字念快一點就會變成別了，意思是制止某人做某事，或是不要讓某人做某事</div>
+            <img src="https://cdn.phototourl.com/member/2026-11-11-19e908b4-2414-4b7c-972a-3d3ce4613736.png" class="vocab-img">
             
-            if (speechSynthesis.speaking) {
-                if (speechSynthesis.paused) {
-                    speechSynthesis.resume();
-                    if(btn) btn.classList.add("playing");
-                    return;
-                } else {
-                    speechSynthesis.cancel();
-                    if(activePlayBtn) activePlayBtn.classList.remove("playing");
-                    if(activePlayBtn === btn) {
-                        activePlayBtn = null;
-                        return;
-                    }
-                }
-            }
+            <div class="item-content">
+                <div class="btn-group">
+                    <button class="audio-btn" onclick="playAudioText(this)">🔊</button>
+                    <button class="rec-btn" onclick="toggleRecord(this)">🎤</button>
+                    <button class="play-rec-btn" disabled>▶️</button>
+                </div>
+                <div>别(bié)玩(wán)手(shǒu)机(jī)了(le)！<span class="en-trans">Stop playing on your phone!</span></div>
+            </div>
+            <div class="item-content">
+                <div class="btn-group">
+                    <button class="audio-btn" onclick="playAudioText(this)">🔊</button>
+                    <button class="rec-btn" onclick="toggleRecord(this)">🎤</button>
+                    <button class="play-rec-btn" disabled>▶️</button>
+                </div>
+                <div>别(bié)睡(shuì)觉(jiào)了(le)！<span class="en-trans">Stop sleeping!</span></div>
+            </div>
+            <div class="item-content">
+                <div class="btn-group">
+                    <button class="audio-btn" onclick="playAudioText(this)">🔊</button>
+                    <button class="rec-btn" onclick="toggleRecord(this)">🎤</button>
+                    <button class="play-rec-btn" disabled>▶️</button>
+                </div>
+                <div>别(bié)看(kàn)电(diàn)视(shì)了(le)！<span class="en-trans">Stop watching TV!</span></div>
+            </div>
+            <div class="item-content">
+                <div class="btn-group">
+                    <button class="audio-btn" onclick="playAudioText(this)">🔊</button>
+                    <button class="rec-btn" onclick="toggleRecord(this)">🎤</button>
+                    <button class="play-rec-btn" disabled>▶️</button>
+                </div>
+                <div>别(bié)看(kàn)书(shū)了(le)！<span class="en-trans">Stop reading books!</span></div>
+            </div>
+        </div>
 
-            let cleanText = text.replace(/<[^>]*>/g, '')
-                                .replace(/\(.*?\)/g, '')
-                                .replace(/^[a-zA-Z]:\s*/g, '')
-                                .replace(/^\d+\.\s*/, '');
+        <div id="sub-1-2" class="grammar-box">
+            <h3>2. A對B+adj.</h3>
+            <div class="note"><b>Explanation:</b> 表示a怎麼對待b，這是單向的，如果這裡是放和，就是雙向的</div>
+            <div class="item-content">
+                <div class="btn-group"><button class="audio-btn" onclick="playAudioText(this)">🔊</button><button class="rec-btn" onclick="toggleRecord(this)">🎤</button><button class="play-rec-btn" disabled>▶️</button></div>
+                <div>跑(pǎo)步(bù)对(duì)身(shēn)体(tǐ)很(hěn)好(hǎo)。<span class="en-trans">Running is very good for health.</span></div>
+            </div>
+            <div class="item-content">
+                <div class="btn-group"><button class="audio-btn" onclick="playAudioText(this)">🔊</button><button class="rec-btn" onclick="toggleRecord(this)">🎤</button><button class="play-rec-btn" disabled>▶️</button></div>
+                <div>老(lǎo)师(shī)对(duì)学(xué)生(shēng)非(fēi)常(cháng)好(hǎo)。<span class="en-trans">The teacher is extremely good to the students.</span></div>
+            </div>
+            <div class="item-content">
+                <div class="btn-group"><button class="audio-btn" onclick="playAudioText(this)">🔊</button><button class="rec-btn" onclick="toggleRecord(this)">🎤</button><button class="play-rec-btn" disabled>▶️</button></div>
+                <div>我(wǒ)的(de)公(gōng)司(sī)對(duì)我(wǒ)不(bù)好(hǎo)。<span class="en-trans">My company is not good to me.</span></div>
+            </div>
+            <div class="item-content">
+                <div class="btn-group"><button class="audio-btn" onclick="playAudioText(this)">🔊</button><button class="rec-btn" onclick="toggleRecord(this)">🎤</button><button class="play-rec-btn" disabled>▶️</button></div>
+                <div>我(wǒ)對(duì)我(wǒ)的(de)女(nǚ)友(yǒu)非(fēi)常(cháng)好(hǎo)。<span class="en-trans">I am very good to my girlfriend.</span></div>
+            </div>
+        </div>
+
+        <div id="sub-1-3" class="grammar-box">
+            <h3>3. 正在</h3>
+            <div class="note"><b>Explanation:</b> 表示某個人現在此時此刻正在做某件事情</div>
+            <div class="item-content">
+                <div class="btn-group"><button class="audio-btn" onclick="playAudioText(this)">🔊</button><button class="rec-btn" onclick="toggleRecord(this)">🎤</button><button class="play-rec-btn" disabled>▶️</button></div>
+                <div>我(wǒ)正(zhèng)在(zài)上(shàng)中(zhōng)文(wén)課(kè)。<span class="en-trans">I am having a Chinese class right now.</span></div>
+            </div>
+            <div class="item-content">
+                <div class="btn-group"><button class="audio-btn" onclick="playAudioText(this)">🔊</button><button class="rec-btn" onclick="toggleRecord(this)">🎤</button><button class="play-rec-btn" disabled>▶️</button></div>
+                <div>哥(gē)哥(ge)正(zhèng)在(zài)玩(wán)電(diàn)腦(nǎo)，沒(méi)時(shí)間(jiān)幫(bāng)助(zhù)我(wǒ)。<span class="en-trans">Older brother is playing on the computer, no time to help me.</span></div>
+            </div>
+        </div>
+
+        <div id="sub-1-4" class="grammar-box">
+            <h3>4. 洗</h3>
+            <div class="note"><b>Explanation:</b> 廣泛用在用水清洗了某個東西</div>
+            <div class="item-content">
+                <div class="btn-group"><button class="audio-btn" onclick="playAudioText(this)">🔊</button><button class="rec-btn" onclick="toggleRecord(this)">🎤</button><button class="play-rec-btn" disabled>▶️</button></div>
+                <div>那(nà)件(jiàn)白(bái)色(sè)的(de)衣(yī)服(fu)我(wǒ)帮(bāng)你(nǐ)洗(xǐ)了(le)，在(zài)外(wài)面(miàn)呢(ne)。<span class="en-trans">I helped you wash that white clothing, it's outside.</span></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Section 2: Lesson 11 -->
+    <div class="section" id="sec-2">
+        <h2>二、第十一課</h2>
+
+        <div id="sub-2-1" class="grammar-box">
+            <h3>1. S.+V.+的+N.</h3>
+            <div class="note"><b>Explanation:</b> 中文習慣把解釋的東西放在名詞前面，英文則是放在名詞的後面</div>
+            <div class="item-content">
+                <div class="btn-group"><button class="audio-btn" onclick="playAudioText(this)">🔊</button><button class="rec-btn" onclick="toggleRecord(this)">🎤</button><button class="play-rec-btn" disabled>▶️</button></div>
+                <div>這(zhè)是(shì)我(wǒ)新(xīn)买(mǎi)的(de)衣(yī)服(fu)。<span class="en-trans">This is the clothes I newly bought.</span></div>
+            </div>
+            <div class="item-content">
+                <div class="btn-group"><button class="audio-btn" onclick="playAudioText(this)">🔊</button><button class="rec-btn" onclick="toggleRecord(this)">🎤</button><button class="play-rec-btn" disabled>▶️</button></div>
+                <div>這(zhè)是(shì)我(wǒ)妈(mā)妈(ma)做(zuò)的(de)饭(fàn)。<span class="en-trans">This is the meal my mom made.</span></div>
+            </div>
+            <div class="item-content">
+                <div class="btn-group"><button class="audio-btn" onclick="playAudioText(this)">🔊</button><button class="rec-btn" onclick="toggleRecord(this)">🎤</button><button class="play-rec-btn" disabled>▶️</button></div>
+                <div>和(hé)你(nǐ)一(yì)起(qǐ)看(kàn)电(diàn)视(shì)的(de)人(rén)是(shì)誰(shuí)？<span class="en-trans">Who is the person watching TV with you?</span></div>
+            </div>
+            <div class="item-content">
+                <div class="btn-group"><button class="audio-btn" onclick="playAudioText(this)">🔊</button><button class="rec-btn" onclick="toggleRecord(this)">🎤</button><button class="play-rec-btn" disabled>▶️</button></div>
+                <div>這(zhè)是(shì)我(wǒ)昨(zuó)天(tiān)買(mǎi)的(de)炒(chǎo)飯(fàn)。<span class="en-trans">This is the fried rice I bought yesterday.</span></div>
+            </div>
+            <div class="item-content">
+                <div class="btn-group"><button class="audio-btn" onclick="playAudioText(this)">🔊</button><button class="rec-btn" onclick="toggleRecord(this)">🎤</button><button class="play-rec-btn" disabled>▶️</button></div>
+                <div>這(zhè)是(shì)我(wǒ)做(zuò)的(de)海(hǎi)南(nán)雞(jī)飯(fàn)。<span class="en-trans">This is the Hainanese chicken rice I made.</span></div>
+            </div>
+            <div class="item-content">
+                <div class="btn-group"><button class="audio-btn" onclick="playAudioText(this)">🔊</button><button class="rec-btn" onclick="toggleRecord(this)">🎤</button><button class="play-rec-btn" disabled>▶️</button></div>
+                <div>這(zhè)是(shì)我(wǒ)女友(nǚyǒu)買(mǎi)的(de)杯(bēi)子(zi)。<span class="en-trans">This is the cup my girlfriend bought.</span></div>
+            </div>
+        </div>
+
+        <div id="sub-2-2" class="grammar-box">
+            <h3>2. A+比+B+adj.</h3>
+            <div class="item-content">
+                <div class="btn-group"><button class="audio-btn" onclick="playAudioText(this)">🔊</button><button class="rec-btn" onclick="toggleRecord(this)">🎤</button><button class="play-rec-btn" disabled>▶️</button></div>
+                <div>我(wǒ)比(bǐ)哥(gē)哥(ge)高(gāo)<span class="en-trans">I am taller than older brother</span></div>
+            </div>
+            <div class="item-content">
+                <div class="btn-group"><button class="audio-btn" onclick="playAudioText(this)">🔊</button><button class="rec-btn" onclick="toggleRecord(this)">🎤</button><button class="play-rec-btn" disabled>▶️</button></div>
+                <div>今(jīn)天(tiān)比(bǐ)昨(zuó)天(tiān)热(rè)<span class="en-trans">Today is hotter than yesterday</span></div>
+            </div>
+            <div class="item-content">
+                <div class="btn-group"><button class="audio-btn" onclick="playAudioText(this)">🔊</button><button class="rec-btn" onclick="toggleRecord(this)">🎤</button><button class="play-rec-btn" disabled>▶️</button></div>
+                <div>今(jīn)天(tiān)的(de)西(xī)瓜(guā)比(bǐ)昨(zuó)天(tiān)便(biàn)宜(yi)。<span class="en-trans">Today's watermelon is cheaper than yesterday's.</span></div>
+            </div>
+        </div>
+
+        <div id="sub-2-3" class="grammar-box">
+            <h3>3. A+沒有+B+adj.</h3>
+            <div class="item-content">
+                <div class="btn-group"><button class="audio-btn" onclick="playAudioText(this)">🔊</button><button class="rec-btn" onclick="toggleRecord(this)">🎤</button><button class="play-rec-btn" disabled>▶️</button></div>
+                <div>哥(gē)哥(ge)沒(méi)有(yǒu)姊(jiě)姊(jie)高(gāo)。<span class="en-trans">Older brother is not as tall as older sister.</span></div>
+            </div>
+            <div class="item-content">
+                <div class="btn-group"><button class="audio-btn" onclick="playAudioText(this)">🔊</button><button class="rec-btn" onclick="toggleRecord(this)">🎤</button><button class="play-rec-btn" disabled>▶️</button></div>
+                <div>今(jīn)天(tiān)沒(méi)有(yǒu)昨(zuó)天(tiān)熱(rè)。<span class="en-trans">Today is not as hot as yesterday.</span></div>
+            </div>
+            <div class="item-content">
+                <div class="btn-group"><button class="audio-btn" onclick="playAudioText(this)">🔊</button><button class="rec-btn" onclick="toggleRecord(this)">🎤</button><button class="play-rec-btn" disabled>▶️</button></div>
+                <div>西(xī)瓜(guā)沒(méi)有(yǒu)蘋(píng)果(guǒ)便(biàn)宜(yi)。<span class="en-trans">Watermelon is not as cheap as apple.</span></div>
+            </div>
+        </div>
+
+        <div id="sub-2-4" class="grammar-box">
+            <h3>4. A+比+B.+adj.+num-M</h3>
+            <div class="item-content">
+                <div class="btn-group"><button class="audio-btn" onclick="playAudioText(this)">🔊</button><button class="rec-btn" onclick="toggleRecord(this)">🎤</button><button class="play-rec-btn" disabled>▶️</button></div>
+                <div>西(xī)瓜(guā)比(bǐ)苹(píng)果(guǒ)贵(guì)两(liǎng)块(kuài)钱(qián)。<span class="en-trans">Watermelon is 2 yuan more expensive than apple.</span></div>
+            </div>
+            <div class="item-content">
+                <div class="btn-group"><button class="audio-btn" onclick="playAudioText(this)">🔊</button><button class="rec-btn" onclick="toggleRecord(this)">🎤</button><button class="play-rec-btn" disabled>▶️</button></div>
+                <div>我(wǒ)的(de)學(xué)習(xí)比(bǐ)他(tā)好(hǎo)一(yì)点(diǎn)。<span class="en-trans">My study is a bit better than his.</span></div>
+            </div>
+            <div class="item-content">
+                <div class="btn-group"><button class="audio-btn" onclick="playAudioText(this)">🔊</button><button class="rec-btn" onclick="toggleRecord(this)">🎤</button><button class="play-rec-btn" disabled>▶️</button></div>
+                <div>今(jīn)天(tiān)比(bǐ)昨(zuó)天(tiān)热(rè)得(de)多(duō)。<span class="en-trans">Today is much hotter than yesterday.</span></div>
+            </div>
+            <div class="item-content">
+                <div class="btn-group"><button class="audio-btn" onclick="playAudioText(this)">🔊</button><button class="rec-btn" onclick="toggleRecord(this)">🎤</button><button class="play-rec-btn" disabled>▶️</button></div>
+                <div>他(tā)比(bǐ)我(wǒ)們(men)老(lǎo)師(shī)小(xiǎo)兩(liǎng)岁(suì)。<span class="en-trans">He is 2 years younger than our teacher.</span></div>
+            </div>
+            <div class="item-content">
+                <div class="btn-group"><button class="audio-btn" onclick="playAudioText(this)">🔊</button><button class="rec-btn" onclick="toggleRecord(this)">🎤</button><button class="play-rec-btn" disabled>▶️</button></div>
+                <div>我(wǒ)哥(gē)比(bǐ)我(wǒ)大(dà)兩(liǎng)岁(suì)。<span class="en-trans">My older brother is 2 years older than me.</span></div>
+            </div>
+        </div>
+
+        <div id="sub-2-5" class="grammar-box">
+            <h3>5. 可能</h3>
+            <div class="item-content">
+                <div class="btn-group"><button class="audio-btn" onclick="playAudioText(this)">🔊</button><button class="rec-btn" onclick="toggleRecord(this)">🎤</button><button class="play-rec-btn" disabled>▶️</button></div>
+                <div>明(míng)天(tiān)可(kě)能(néng)會(huì)下(xià)雨(yǔ)。<span class="en-trans">It might rain tomorrow.</span></div>
+            </div>
+            <div class="item-content">
+                <div class="btn-group"><button class="audio-btn" onclick="playAudioText(this)">🔊</button><button class="rec-btn" onclick="toggleRecord(this)">🎤</button><button class="play-rec-btn" disabled>▶️</button></div>
+                <div>他(tā)可(kě)能(néng)知(zhī)道(dào)這(zhè)件(jiàn)事(shì)情(qing)了(le)。<span class="en-trans">He probably knows about this matter.</span></div>
+            </div>
+            <div class="item-content">
+                <div class="btn-group"><button class="audio-btn" onclick="playAudioText(this)">🔊</button><button class="rec-btn" onclick="toggleRecord(this)">🎤</button><button class="play-rec-btn" disabled>▶️</button></div>
+                <div>可(kě)能(néng)我(wǒ)明(míng)天(tiān)不(bù)來(lái)上(shàng)班(bān)了(le)。<span class="en-trans">I might not come to work tomorrow.</span></div>
+            </div>
+            <div class="item-content">
+                <div class="btn-group"><button class="audio-btn" onclick="playAudioText(this)">🔊</button><button class="rec-btn" onclick="toggleRecord(this)">🎤</button><button class="play-rec-btn" disabled>▶️</button></div>
+                <div>你(nǐ)可(kě)能(néng)不(bù)認(rèn)識(shi)他(tā)。<span class="en-trans">You probably don't know him.</span></div>
+            </div>
+        </div>
+
+        <div id="sub-2-6" class="grammar-box">
+            <h3>6. 中文字表</h3>
+            <img src="https://cdn.phototourl.com/member/2026-11-11-0bec36a8-f5a9-4f15-a791-e4017f17d76c.png" class="vocab-img">
             
-            const utterance = new SpeechSynthesisUtterance(cleanText);
-            utterance.lang = 'zh-CN';
-            utterance.rate = 0.85;
+            <table class="custom-table">
+                <thead>
+                    <tr>
+                        <th>中文 (Chinese)</th>
+                        <th>英文 (English)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            <div style="display: flex; align-items: center; gap: 10px;">
+                                <div class="btn-group" style="margin:0;"><button class="audio-btn" onclick="playAudioText(this)" style="width:34px;height:34px;font-size:14px;">🔊</button><button class="rec-btn" onclick="toggleRecord(this)" style="width:34px;height:34px;font-size:14px;">🎤</button><button class="play-rec-btn" disabled style="width:34px;height:34px;font-size:14px;">▶️</button></div>
+                                <span>水(shuǐ)</span>
+                            </div>
+                        </td>
+                        <td>Water</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div style="display: flex; align-items: center; gap: 10px;">
+                                <div class="btn-group" style="margin:0;"><button class="audio-btn" onclick="playAudioText(this)" style="width:34px;height:34px;font-size:14px;">🔊</button><button class="rec-btn" onclick="toggleRecord(this)" style="width:34px;height:34px;font-size:14px;">🎤</button><button class="play-rec-btn" disabled style="width:34px;height:34px;font-size:14px;">▶️</button></div>
+                                <span>海(hǎi)</span>
+                            </div>
+                        </td>
+                        <td>Sea</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div style="display: flex; align-items: center; gap: 10px;">
+                                <div class="btn-group" style="margin:0;"><button class="audio-btn" onclick="playAudioText(this)" style="width:34px;height:34px;font-size:14px;">🔊</button><button class="rec-btn" onclick="toggleRecord(this)" style="width:34px;height:34px;font-size:14px;">🎤</button><button class="play-rec-btn" disabled style="width:34px;height:34px;font-size:14px;">▶️</button></div>
+                                <span>洗(xǐ)</span>
+                            </div>
+                        </td>
+                        <td>To wash</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div style="display: flex; align-items: center; gap: 10px;">
+                                <div class="btn-group" style="margin:0;"><button class="audio-btn" onclick="playAudioText(this)" style="width:34px;height:34px;font-size:14px;">🔊</button><button class="rec-btn" onclick="toggleRecord(this)" style="width:34px;height:34px;font-size:14px;">🎤</button><button class="play-rec-btn" disabled style="width:34px;height:34px;font-size:14px;">▶️</button></div>
+                                <span>没(méi)</span>
+                            </div>
+                        </td>
+                        <td>Not / Have not</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div style="display: flex; align-items: center; gap: 10px;">
+                                <div class="btn-group" style="margin:0;"><button class="audio-btn" onclick="playAudioText(this)" style="width:34px;height:34px;font-size:14px;">🔊</button><button class="rec-btn" onclick="toggleRecord(this)" style="width:34px;height:34px;font-size:14px;">🎤</button><button class="play-rec-btn" disabled style="width:34px;height:34px;font-size:14px;">▶️</button></div>
+                                <span>冰(bīng)</span>
+                            </div>
+                        </td>
+                        <td>Ice</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div style="display: flex; align-items: center; gap: 10px;">
+                                <div class="btn-group" style="margin:0;"><button class="audio-btn" onclick="playAudioText(this)" style="width:34px;height:34px;font-size:14px;">🔊</button><button class="rec-btn" onclick="toggleRecord(this)" style="width:34px;height:34px;font-size:14px;">🎤</button><button class="play-rec-btn" disabled style="width:34px;height:34px;font-size:14px;">▶️</button></div>
+                                <span>冬(dōng)</span>
+                            </div>
+                        </td>
+                        <td>Winter</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div style="display: flex; align-items: center; gap: 10px;">
+                                <div class="btn-group" style="margin:0;"><button class="audio-btn" onclick="playAudioText(this)" style="width:34px;height:34px;font-size:14px;">🔊</button><button class="rec-btn" onclick="toggleRecord(this)" style="width:34px;height:34px;font-size:14px;">🎤</button><button class="play-rec-btn" disabled style="width:34px;height:34px;font-size:14px;">▶️</button></div>
+                                <span>热(rè)</span>
+                            </div>
+                        </td>
+                        <td>Hot</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div style="display: flex; align-items: center; gap: 10px;">
+                                <div class="btn-group" style="margin:0;"><button class="audio-btn" onclick="playAudioText(this)" style="width:34px;height:34px;font-size:14px;">🔊</button><button class="rec-btn" onclick="toggleRecord(this)" style="width:34px;height:34px;font-size:14px;">🎤</button><button class="play-rec-btn" disabled style="width:34px;height:34px;font-size:14px;">▶️</button></div>
+                                <span>火锅(huǒguō)</span>
+                            </div>
+                        </td>
+                        <td>Hot pot</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
 
-            utterance.onstart = () => {
-                if(activePlayBtn) activePlayBtn.classList.remove("playing");
-                activePlayBtn = btn;
-                if(btn) btn.classList.add("playing");
-            };
-
-            utterance.onend = () => {
-                if(btn) btn.classList.remove("playing");
-                activePlayBtn = null;
-            };
-
-            utterance.onerror = () => {
-                if(btn) btn.classList.remove("playing");
-                activePlayBtn = null;
-            };
-
-            currentUtterance = utterance;
-            speechSynthesis.speak(utterance);
+<script>
+    function toggleSidebar() {
+        const sidebar = document.getElementById('sidebar');
+        const mainContent = document.getElementById('mainContent');
+        if (window.innerWidth <= 900) {
+            sidebar.classList.toggle('active');
+        } else {
+            sidebar.classList.toggle('collapsed');
+            mainContent.classList.toggle('expanded');
         }
+    }
 
-        let mediaRecorders = {};
-        let audioUrls = {};
-
-        async function toggleRecord(btn, id) {
-            if (!mediaRecorders[id] || mediaRecorders[id].state === "inactive") {
-                try {
-                    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-                    let chunks = [];
-                    let recorder = new MediaRecorder(stream);
-                    
-                    recorder.ondataavailable = e => chunks.push(e.data);
-                    recorder.onstop = () => {
-                        const blob = new Blob(chunks, { 'type': 'audio/ogg; codecs=opus' });
-                        audioUrls[id] = URL.createObjectURL(blob);
-                        document.getElementById(`play-rec-${id}`).disabled = false;
-                    };
-
-                    recorder.start();
-                    mediaRecorders[id] = recorder;
-                    btn.classList.add("recording");
-                    btn.title = "Recording... Click to stop";
-                } catch (err) {
-                    alert("Microphone access denied or not supported.");
-                }
-            } else {
-                mediaRecorders[id].stop();
-                btn.classList.remove("recording");
-                btn.title = "Record Audio";
+    // Parse Pinyin formatting
+    function parsePinyinDOM() {
+        const regex = /([\u4e00-\u9fa5a-zA-Z0-9，。？！、：""''])(\((.*?)\))/g;
+        // Simplified parser for text nodes or specific inline strings containing (pinyin)
+        document.querySelectorAll('.grammar-box div, .grammar-box h3, .custom-table td span').forEach(el => {
+            if (el.children.length === 0 && el.innerText.includes('(')) {
+                let html = el.innerHTML;
+                let parsed = html.replace(/([一-龥a-zA-Z0-9，。？！、：""''])\((.*?)\)/g, (match, char, py) => {
+                    return `<span class="pinyin-group"><span class="py-text">${py}</span><span class="hz-text">${char}</span></span>`;
+                });
+                el.innerHTML = parsed;
             }
-        }
-
-        function playRecording(id) {
-            if (audioUrls[id]) {
-                const audio = new Audio(audioUrls[id]);
-                audio.play();
-            }
-        }
-
-        const lessonData = [
-            {
-                title: "一、第十課 (Lesson 10)",
-                items: [
-                    {
-                        type: "grammar",
-                        subId: "sub-1-1",
-                        title: "1. 不要...了 / 別...了",
-                        note: "<b>Explanation:</b> 「不要」(bùyào) when spoken quickly becomes 「别」(bié). It is used to stop someone from doing something or tell someone not to do an action.",
-                        image: "https://cdn.phototourl.com/member/2026-11-11-19e908b4-2414-4b7c-972a-3d3ce4613736.png",
-                        examples: [
-                            { zh: "别(bié)玩(wán)手(shǒu)机(jī)了(le)！", en: "Stop playing on your phone!" },
-                            { zh: "别(bié)睡(shuì)觉(jiào)了(le)！", en: "Stop sleeping! / Wake up!" },
-                            { zh: "别(bié)看(kàn)电(diàn)视(shì)了(le)！", en: "Stop watching TV!" },
-                            { zh: "别(bié)看(kàn)书(shū)了(le)！", en: "Stop reading books!" }
-                        ]
-                    },
-                    {
-                        type: "grammar",
-                        subId: "sub-1-2",
-                        title: "2. A 对 B + adj.",
-                        note: "<b>Explanation:</b> Shows how A treats B (one-way attitude or treatment). If you use 「和」(hé), it means a mutual, two-way relationship.",
-                        examples: [
-                            { zh: "跑(pǎo)步(bù)对(duì)身(shēn)体(tǐ)很(hěn)好(hǎo)。", en: "Running is very good for health." },
-                            { zh: "老(lǎo)师(shī)对(duì)学(xué)生(shēng)非(fēi)常(cháng)好(hǎo)。", en: "The teacher is extremely good to the students." },
-                            { zh: "我(wǒ)的(de)公(gōng)司(sī)对(duì)我(wǒ)不(bù)好(hǎo)。", en: "My company is not good to me." },
-                            { zh: "我(wǒ)对(duì)我(wǒ)的(de)女(nǚ)友(yǒu)非(fēi)常(cháng)好(hǎo)。", en: "I am very good to my girlfriend." }
-                        ]
-                    },
-                    {
-                        type: "grammar",
-                        subId: "sub-1-3",
-                        title: "3. 正在 (zhèngzài)",
-                        note: "<b>Explanation:</b> Indicates that an action is currently happening right at this moment.",
-                        examples: [
-                            { zh: "我(wǒ)正(zhèng)在(zài)上(shàng)中(zhōng)文(wén)课(kè)。", en: "I am having a Chinese class right now." },
-                            { zh: "哥(gē)哥(ge)正(zhèng)在(zài)玩(wán)电(diàn)脑(nǎo)，没(méi)时(shí)间(jiān)帮(bāng)助(zhù)我(wǒ)。", en: "Older brother is playing on the computer right now, so he has no time to help me." }
-                        ]
-                    },
-                    {
-                        type: "grammar",
-                        subId: "sub-1-4",
-                        title: "4. 洗 (xǐ)",
-                        note: "<b>Explanation:</b> Broadly used for washing or cleaning something with water.",
-                        examples: [
-                            { zh: "那(nà)件(jiàn)白(bái)色(sè)的(de)衣(yī)服(fu)我(wǒ)帮(bāng)你(nǐ)洗(xǐ)了(le)，在(zài)外(wài)面(miàn)呢(ne)。", en: "I helped you wash that white piece of clothing; it's outside." }
-                        ]
-                    }
-                ]
-            },
-            {
-                title: "二、第十一課 (Lesson 11)",
-                items: [
-                    {
-                        type: "grammar",
-                        subId: "sub-2-1",
-                        title: "1. S. + V. + 的 + N.",
-                        note: "<b>Explanation:</b> In Chinese, descriptive phrases or relative clauses are placed <i>before</i> the noun they modify, whereas in English they usually go after.",
-                        examples: [
-                            { zh: "這(zhè)是(shì)我(wǒ)新(xīn)买(mǎi)的(de)衣(yī)服(fu)。", en: "This is the clothes I newly bought." },
-                            { zh: "這(zhè)是(shì)我(wǒ)妈(mā)妈(ma)做(zuò)的(de)饭(fàn)。", en: "This is the meal my mom made." },
-                            { zh: "和(hé)你(nǐ)一(yì)起(qǐ)看(kàn)电(diàn)视(shì)的(de)人(rén)是(shì)谁(shuí)？", en: "Who is the person watching TV together with you?" },
-                            { zh: "這(zhè)是(shì)我(wǒ)昨(zuó)天(tiān)买(mǎi)的(de)炒(chǎo)饭(fàn)。", en: "This is the fried rice I bought yesterday." },
-                            { zh: "這(zhè)是(shì)我(wǒ)做(zuò)的(de)海(hǎi)南(nán)鸡(jī)饭(fàn)。", en: "This is the Hainanese chicken rice I made." },
-                            { zh: "這(zhè)是(shì)我(wǒ)女(nǚ)友(yǒu)买(mǎi)的(de)杯(bēi)子(zi)。", en: "This is the cup my girlfriend bought." }
-                        ]
-                    },
-                    {
-                        type: "grammar",
-                        subId: "sub-2-2",
-                        title: "2. A + 比 + B + adj.",
-                        note: "<b>Explanation:</b> Comparative structure meaning A is more [adj.] than B.",
-                        examples: [
-                            { zh: "我(wǒ)比(bǐ)哥(gē)哥(ge)高(gāo)。", en: "I am taller than older brother." },
-                            { zh: "今(jīn)天(tiān)比(bǐ)昨(zuó)天(tiān)热(rè)。", en: "Today is hotter than yesterday." },
-                            { zh: "今(jīn)天(tiān)的(de)西(xī)瓜(guā)比(bǐ)昨(zuó)天(tiān)便(biàn)宜(yi)。", en: "Today's watermelon is cheaper than yesterday's." }
-                        ]
-                    },
-                    {
-                        type: "grammar",
-                        subId: "sub-2-3",
-                        title: "3. A + 没有 + B + adj.",
-                        note: "<b>Explanation:</b> Negative comparison meaning A is not as [adj.] as B.",
-                        examples: [
-                            { zh: "哥(gē)哥(ge)没(méi)有(yǒu)姐(jiě)姐(jie)高(gāo)。", en: "Older brother is not as tall as older sister." },
-                            { zh: "今(jīn)天(tiān)没(méi)有(yǒu)昨(zuó)天(tiān)热(rè)。", en: "Today is not as hot as yesterday." },
-                            { zh: "西(xī)瓜(guā)没(méi)有(yǒu)苹(píng)果(guǒ)便(biàn)宜(yi)。", en: "Watermelon is not as cheap as apple." }
-                        ]
-                    },
-                    {
-                        type: "grammar",
-                        subId: "sub-2-4",
-                        title: "4. A + 比 + B + adj. + num-M",
-                        note: "<b>Explanation:</b> Comparative structure with a specific measurement or degree difference.",
-                        examples: [
-                            { zh: "西(xī)瓜(guā)比(bǐ)苹(píng)果(guǒ)贵(guì)两(liǎng)块(kuài)钱(qián)。", en: "Watermelon is 2 yuan more expensive than apple." },
-                            { zh: "我(wǒ)的(de)学(xué)习(xí)比(bǐ)他(tā)好(hǎo)一(yì)点(diǎn)。", en: "My studies are a bit better than his." },
-                            { zh: "今(jīn)天(tiān)比(bǐ)昨(zuó)天(tiān)热(rè)得(de)多(duō)。", en: "Today is much hotter than yesterday." },
-                            { zh: "他(tā)比(bǐ)我(wǒ)们(men)老(lǎo)师(shī)小(xiǎo)两(liǎng)岁(suì)。", en: "He is 2 years younger than our teacher." },
-                            { zh: "我(wǒ)哥(gē)比(bǐ)我(wǒ)大(dà)两(liǎng)岁(suì)。", en: "My older brother is 2 years older than me." }
-                        ]
-                    },
-                    {
-                        type: "grammar",
-                        subId: "sub-2-5",
-                        title: "5. 可能 (kěnéng)",
-                        note: "<b>Explanation:</b> Expresses probability or possibility (maybe / probably).",
-                        examples: [
-                            { zh: "明(míng)天(tiān)可(kě)能(néng)会(huì)下(xià)雨(yǔ)。", en: "It might rain tomorrow." },
-                            { zh: "他(tā)可(kě)能(néng)知(zhī)道(dào)这(zhè)件(jiàn)事(shì)情(qing)了(le)。", en: "He probably already knows about this matter." },
-                            { zh: "可(kě)能(néng)我(wǒ)明(míng)天(tiān)不(bù)来(lái)上(shàng)班(bān)了(le)。", en: "I might not come to work tomorrow." },
-                            { zh: "你(nǐ)可(kě)能(néng)不(bù)认(rèn)识(shi)他(tā)。", en: "You probably don't know him." }
-                        ]
-                    },
-                    {
-                        type: "table",
-                        subId: "sub-2-6",
-                        title: "6. 中文字表 (Chinese Vocabulary)",
-                        image: "https://cdn.phototourl.com/member/2026-11-11-0bec36a8-f5a9-4f15-a791-e4017f17d76c.png",
-                        tableHeaders: ["中文 (Chinese)", "英文 (English)"],
-                        tableRows: [
-                            ["水(shuǐ)", "Water"],
-                            ["海(hǎi)", "Sea / Ocean"],
-                            ["洗(xǐ)", "To wash"],
-                            ["没(méi)", "Have not / Not"],
-                            ["冰(bīng)", "Ice"],
-                            ["冬(dōng)", "Winter"],
-                            ["热(rè)", "Hot"],
-                            ["火锅(huǒguō)", "Hot pot"]
-                        ]
-                    }
-                ]
-            }
-        ];
-
-        const container = document.getElementById('content');
-        let counter = 0;
-
-        lessonData.forEach((sec, sIdx) => {
-            let html = `<div class="section"><h2>${sec.title}</h2>`;
-            
-            sec.items.forEach(item => {
-                let anchorAttr = item.subId ? `id="${item.subId}" style="scroll-margin-top: 40px;"` : '';
-                
-                if (item.type === "grammar") {
-                    html += `<div class="grammar-box" ${anchorAttr}>
-                        <div style="font-weight:bold; font-size:17px; color:#8C6239; margin-bottom:8px;">${item.title}</div>`;
-                    if(item.note) html += `<div class="note">${item.note}</div>`;
-                    if(item.image) html += `<img src="${item.image}" class="lesson-img" alt="Lesson Image">`;
-                    
-                    if (item.examples) {
-                        item.examples.forEach(ex => {
-                            let btnId = `play-btn-${counter}`;
-                            let recId = `rec-${counter}`;
-                            html += `
-                            <div class="item">
-                                <div class="sentence-row">
-                                    <div class="buttons-group">
-                                        <button class="icon-btn" id="${btnId}" onclick="togglePlayAudio('${ex.zh}', '${btnId}')" title="Listen Audio">
-                                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#666" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>
-                                        </button>
-                                        <button class="icon-btn" onclick="toggleRecord(this, '${recId}')" title="Record Audio">
-                                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#e07a5f" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"></path><path d="M19 10v1a7 7 0 0 1-14 0v-1"></path><line x1="12" y1="19" x2="12" y2="23"></line><line x1="8" y1="23" x2="16" y2="23"></line></svg>
-                                        </button>
-                                        <button class="icon-btn" id="play-rec-${recId}" onclick="playRecording('${recId}')" title="Play Mine" disabled>
-                                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#457b9d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
-                                        </button>
-                                    </div>
-                                    <div class="text-content">
-                                        <div style="font-size:24px; margin-bottom:4px;">${parsePinyin(ex.zh)}</div>
-                                        <div class="en-trans">${ex.en}</div>
-                                    </div>
-                                </div>
-                            </div>`;
-                            counter++;
-                        });
-                    }
-                    html += `</div>`;
-                } else if (item.type === "table") {
-                    html += `<div class="grammar-box" ${anchorAttr}>
-                        <div style="font-weight:bold; font-size:17px; color:#8C6239; margin-bottom:8px;">${item.title}</div>`;
-                    if(item.image) html += `<img src="${item.image}" class="lesson-img" alt="Vocabulary Image">`;
-                    
-                    html += `<table class="custom-table"><thead><tr>`;
-                    item.tableHeaders.forEach(th => { html += `<th>${th}</th>`; });
-                    html += `</tr></thead><tbody>`;
-                    
-                    item.tableRows.forEach(row => {
-                        let zhCell = row[0];
-                        let enCell = row[1];
-                        let btnId = `play-btn-${counter}`;
-                        let recId = `rec-${counter}`;
-                        
-                        html += `<tr>
-                            <td>
-                                <div style="display: flex; align-items: center; gap: 12px;">
-                                    <div class="buttons-group">
-                                        <button class="icon-btn" id="${btnId}" onclick="togglePlayAudio('${zhCell}', '${btnId}')" title="Listen Audio" style="width: 34px; height: 34px;">
-                                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#666" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>
-                                        </button>
-                                        <button class="icon-btn" onclick="toggleRecord(this, '${recId}')" title="Record Audio" style="width: 34px; height: 34px;">
-                                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#e07a5f" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"></path><path d="M19 10v1a7 7 0 0 1-14 0v-1"></path><line x1="12" y1="19" x2="12" y2="23"></line><line x1="8" y1="23" x2="16" y2="23"></line></svg>
-                                        </button>
-                                        <button class="icon-btn" id="play-rec-${recId}" onclick="playRecording('${recId}')" title="Play Mine" disabled style="width: 34px; height: 34px;">
-                                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#457b9d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
-                                        </button>
-                                    </div>
-                                    <div style="font-size: 20px;">${parsePinyin(zhCell)}</div>
-                                </div>
-                            </td>
-                            <td>${enCell}</td>
-                        </tr>`;
-                        counter++;
-                    });
-                    html += `</tbody></table></div>`;
-                }
-            });
-            html += `</div>`;
-            container.innerHTML += html;
         });
+    }
+    document.addEventListener("DOMContentLoaded", parsePinyinDOM);
 
-        let pinyinVisible = true;
-        let enVisible = true;
+    // TTS Audio
+    let currentUtteranceText = "";
+    function playAudioText(btn) {
+        let container = btn.closest('.item-content');
+        if (!container) container = btn.closest('tr');
+        if (!container) return;
 
-        function togglePinyin() {
-            pinyinVisible = !pinyinVisible;
-            document.querySelectorAll('.py-text').forEach(el => {
-                el.style.display = pinyinVisible ? 'block' : 'none';
-            });
+        let textNode = container.querySelector('.pinyin-group') || container.querySelector('span') || container;
+        let cleanText = textNode.innerText.replace(/[a-zA-Z0-9，。？！、：()]/g, '').trim();
+        if(!cleanText) {
+            cleanText = container.innerText.replace(/[🔊🎤▶️]/g, '').replace(/\(.*?\)/g, '').trim();
         }
 
-        function toggleEnglish() {
-            enVisible = !enVisible;
-            document.querySelectorAll('.en-trans').forEach(el => {
-                el.style.display = enVisible ? 'block' : 'none';
-            });
+        if (speechSynthesis.speaking && currentUtteranceText === cleanText) {
+            if (speechSynthesis.paused) { speechSynthesis.resume(); } 
+            else { speechSynthesis.pause(); }
+            return;
         }
-    </script>
-</body>
-</html>
+
+        speechSynthesis.cancel();
+        currentUtteranceText = cleanText;
+        const utterance = new SpeechSynthesisUtterance(cleanText);
+        utterance.lang = 'zh-CN';
+        utterance.rate = 0.85;
+        utterance.onend = () => { currentUtteranceText = ""; };
+        speechSynthesis.speak(utterance);
+    }
+
+    // Recording Audio
+    let mediaRecorders = {};
+    let recIdCounter = 0;
+    async function toggleRecord(btn) {
+        let targetParent = btn.closest('.item-content') || btn.closest('td') || btn.parentElement;
+        let player = targetParent.querySelector('audio');
+        let playBtn = targetParent.querySelector('.play-rec-btn');
+        
+        if (!btn.dataset.recId) {
+            btn.dataset.recId = "rec-" + recIdCounter++;
+        }
+        let id = btn.dataset.recId;
+
+        if (!player) {
+            player = document.createElement('audio');
+            player.controls = true;
+            player.style.display = 'none';
+            player.style.width = '100%';
+            player.style.marginTop = '10px';
+            targetParent.appendChild(player);
+        }
+
+        if (!mediaRecorders[id] || mediaRecorders[id].state === "inactive") {
+            try {
+                const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+                let chunks = [];
+                let recorder = new MediaRecorder(stream);
+                
+                recorder.ondataavailable = e => chunks.push(e.data);
+                recorder.onstop = () => {
+                    const blob = new Blob(chunks, { 'type': 'audio/webm' });
+                    player.src = URL.createObjectURL(blob);
+                    player.style.display = 'block';
+                    playBtn.disabled = false;
+                    playBtn.onclick = () => player.play();
+                    stream.getTracks().forEach(track => track.stop());
+                };
+
+                recorder.start();
+                mediaRecorders[id] = recorder;
+                btn.innerHTML = "⏹️";
+                btn.classList.add("recording");
+            } catch (err) {
+                alert("Microphone access denied.");
+            }
+        } else {
+            mediaRecorders[id].stop();
+            btn.innerHTML = "🎤";
+            btn.classList.remove("recording");
+        }
+    }
+
+    // Toggle visibility
+    let pinyinVisible = true;
+    let enVisible = true;
+
+    function togglePinyin() {
+        pinyinVisible = !pinyinVisible;
+        document.querySelectorAll('.py-text').forEach(el => {
+            el.style.display = pinyinVisible ? 'block' : 'none';
+        });
+    }
+
+    function toggleEnglish() {
+        enVisible = !enVisible;
+        document.querySelectorAll('.en-trans').forEach(el => {
+            el.style.display = enVisible ? 'block' : 'none';
+        });
+    }
+</script>
