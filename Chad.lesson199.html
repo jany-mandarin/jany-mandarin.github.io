@@ -1,979 +1,155 @@
 <!DOCTYPE html>
-<html lang="zh-TW">
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Chad Lesson 199 - Oops! Mandarin</title>
-  <style>
-    :root {
-      --bg-color: #FDFBF7;
-      --card-bg: #FFF9F0;
-      --main-color: #D4A373;
-      --main-dark: #B58352;
-      --text-color: #8C6239;
-      --text-dark: #5C3D22;
-      --border-color: #E6D5C3;
-      --accent-color: #E76F51;
-      --sidebar-width: 260px;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chad's Mandarin Lesson 199</title>
+    <style>
+        :root { --bg: #FDFBF7; --primary: #D4A373; --text: #4a4a4a; --white: #fff; --sidebar-width: 280px; }
+        html { scroll-behavior: smooth; }
+        body { font-family: 'Helvetica Neue', Arial, sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; margin: 0; padding: 0; display: flex; transition: margin-left 0.3s ease; }
+        
+        /* Navigation */
+        .top-nav { position: fixed; top: 0; left: 0; width: 100%; background: #FFF9F0; border-bottom: 1px solid #E6D5B8; padding: 10px 20px; box-sizing: border-box; text-align: right; z-index: 1200; display: flex; justify-content: flex-end; align-items: center; }
+        .top-nav a { color: var(--primary); font-weight: bold; text-decoration: none; margin-left: 20px; font-size: 15px; }
+        .top-nav a:hover { text-decoration: underline; color: #8C6239; }
 
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+        /* Sidebar */
+        .sidebar { width: var(--sidebar-width); background: #FFF9F0; border-right: 1px solid #E6D5B8; height: 100vh; position: fixed; top: 0; left: 0; overflow-y: auto; padding: 60px 20px 20px 20px; box-sizing: border-box; transition: transform 0.3s ease; z-index: 1000; }
+        .sidebar.collapsed { transform: translateX(-100%); }
+        .sidebar h3 { margin-top: 0; color: #8C6239; font-size: 18px; border-bottom: 2px solid var(--primary); padding-bottom: 8px; display: flex; justify-content: space-between; align-items: center; }
+        .sidebar ol { padding-left: 20px; margin: 10px 0; color: #555; }
+        .sidebar li { margin-bottom: 8px; font-size: 15px; font-weight: bold; color: #8C6239; }
+        .sidebar ul { padding-left: 15px; list-style-type: circle; margin-top: 5px; margin-bottom: 15px; font-weight: normal; }
+        .sidebar ul li { font-size: 13.5px; margin-bottom: 6px; color: #555; }
+        .sidebar a { color: #555; text-decoration: none; display: block; }
+        .sidebar a:hover { color: #D4A373; font-weight: bold; }
+        
+        .sidebar-toggle { position: fixed; top: 50px; left: 15px; z-index: 1100; background: var(--primary); color: white; border: none; padding: 8px 12px; border-radius: 6px; cursor: pointer; font-size: 14px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
 
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-      background-color: var(--bg-color);
-      color: var(--text-dark);
-      line-height: 1.8;
-      display: flex;
-      min-height: 100vh;
-    }
+        /* Main Content */
+        .main-content { margin-top: 40px; margin-left: var(--sidebar-width); width: calc(100% - var(--sidebar-width)); padding: 20px 40px; box-sizing: border-box; max-width: 900px; transition: margin-left 0.3s ease, width 0.3s ease; }
+        .main-content.expanded { margin-left: 0; width: 100%; }
+        .header { text-align: center; border-bottom: 2px solid var(--primary); padding-bottom: 10px; margin-bottom: 20px; margin-top: 20px; }
+        
+        /* Controls */
+        .controls { position: sticky; top: 40px; background: var(--bg); padding: 15px; text-align: center; border-bottom: 1px solid #ccc; z-index: 100; margin-bottom: 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
+        button.control-btn { background: var(--primary); color: white; border: none; padding: 10px 15px; margin: 5px; border-radius: 6px; cursor: pointer; font-size: 14px; font-weight: bold; }
+        button.control-btn:hover { background: #B5835A; }
+        
+        /* Audio Circle Buttons */
+        .btn-group { display: flex; align-items: center; margin-right: 15px; margin-bottom: 5px; flex-shrink: 0; gap: 8px; }
+        .audio-btn, .rec-btn, .play-rec-btn { 
+            background: #EFEFEF; 
+            color: #4A4A4A; 
+            font-size: 16px; 
+            border-radius: 50%; 
+            width: 42px; 
+            height: 42px; 
+            display: inline-flex; 
+            align-items: center; 
+            justify-content: center; 
+            border: none; 
+            cursor: pointer; 
+            transition: all 0.2s ease;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+            padding: 0;
+            line-height: 1;
+        }
+        .audio-btn:hover { background: #E2E2E2; transform: scale(1.05); }
+        .rec-btn:hover { background: #E2E2E2; transform: scale(1.05); }
+        .rec-btn.recording { background: #FFD1D1; color: #D90429; animation: pulse 1.5s infinite; }
+        .play-rec-btn { background: #EFEFEF; color: #4A4A4A; }
+        .play-rec-btn:enabled:hover { background: #E2E2E2; transform: scale(1.05); }
+        .play-rec-btn:disabled { background: #F5F5F5; color: #CCC; cursor: not-allowed; box-shadow: none; }
 
-    /* Ruby & Zhuyin Styles */
-    ruby {
-      ruby-position: over;
-      font-size: 1.25rem;
-      font-weight: 500;
-      margin: 0 2px;
-    }
+        @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.5; } 100% { opacity: 1; } }
 
-    rt {
-      font-size: 0.65rem;
-      color: var(--text-color);
-      font-weight: normal;
-    }
+        /* Content Blocks */
+        h2 { color: #8C6239; border-left: 5px solid var(--primary); padding-left: 10px; margin-top: 30px; }
+        .section { margin-bottom: 30px; background: var(--white); padding: 20px; border-radius: 12px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); scroll-margin-top: 130px; }
+        .grammar-box { background: #FFF9F0; border: 1px solid #E6D5B8; border-radius: 8px; padding: 15px; margin: 15px 0; scroll-margin-top: 140px; }
+        .item-content { display: flex; align-items: flex-start; margin-top: 10px; margin-bottom: 10px; flex-wrap: wrap; }
+        
+        /* Bopomofo (Zhuyin) Vertical Formatting */
+        .zy-text { display: inline-block; line-height: 2.4; font-size: 18px; }
+        .zy-char-wrap { display: inline-flex; align-items: center; margin-right: 2px; }
+        .zy-char { font-size: 26px; font-family: "DFKai-SB", "BiauKai", serif; }
+        .zy-box { display: inline-flex; flex-direction: column; justify-content: center; position: relative; margin-left: 2px; padding-right: 8px; }
+        .zy-symbols { writing-mode: vertical-rl; text-orientation: upright; font-size: 11px; letter-spacing: -2px; }
+        .zy-tone { position: absolute; right: 0px; top: 50%; transform: translateY(-50%); font-size: 11px; }
+        .zy-neutral { position: absolute; top: -11px; left: 50%; transform: translateX(-50%); font-size: 11px; }
+        
+        .en-trans { color: #666; font-size: 15px; font-style: italic; margin-top: 5px; margin-left: 0; width: 100%; display:block;}
+        .note { font-size: 14px; color: #555; margin-top: 10px; margin-bottom: 10px; line-height: 1.5; background: #fdfaf6; padding: 8px 12px; border-left: 3px solid #D4A373; border-radius: 4px; }
+        .vocab-img { max-width: 100%; height: auto; border-radius: 8px; border: 1px solid #E6D5B8; display: block; margin: 10px 0; max-height: 220px; }
 
-    body.hide-zhuyin rt {
-      display: none !important;
-    }
+        .homework-q { font-size: 16px; font-weight: bold; color: #8C6239; margin-bottom: 8px; }
+        .hw-textarea { width: 100%; height: 60px; margin-top: 5px; border-radius: 6px; border: 1px solid #E6D5B8; padding: 10px; font-family: inherit; font-size:16px; box-sizing: border-box; background: #fff; }
+        .hw-textarea:focus { border-color: var(--primary); outline: none; box-shadow: 0 0 5px rgba(212, 163, 115, 0.5); }
 
-    body.hide-english .en-text,
-    body.hide-english .explanation-en {
-      display: none !important;
-    }
+        .quiz-card { background: #fff; border: 1px solid #E6D5B8; border-radius: 8px; padding: 15px; margin-bottom: 15px; }
+        .reading-paragraph { font-size: 18px; line-height: 2.2; margin-bottom: 15px; background: #FFFDF9; padding: 15px; border-radius: 8px; border: 1px solid #E6D5B8; }
 
-    /* Top Navigation Bar */
-    .top-nav {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 60px;
-      background-color: #FFFFFF;
-      border-bottom: 1px solid var(--border-color);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0 20px;
-      z-index: 1000;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.03);
-    }
-
-    .nav-title {
-      font-size: 1.1rem;
-      font-weight: bold;
-      color: var(--text-dark);
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .sidebar-toggle-btn {
-      background: none;
-      border: none;
-      font-size: 1.4rem;
-      color: var(--text-dark);
-      cursor: pointer;
-      padding: 5px;
-    }
-
-    .nav-controls {
-      display: flex;
-      gap: 10px;
-    }
-
-    .toggle-btn {
-      background-color: var(--card-bg);
-      border: 1px solid var(--main-color);
-      color: var(--text-color);
-      padding: 6px 14px;
-      border-radius: 20px;
-      cursor: pointer;
-      font-size: 0.85rem;
-      font-weight: 600;
-      transition: all 0.2s ease;
-    }
-
-    .toggle-btn:hover {
-      background-color: var(--main-color);
-      color: #FFFFFF;
-    }
-
-    /* Sidebar Index */
-    .sidebar {
-      position: fixed;
-      top: 60px;
-      left: 0;
-      bottom: 0;
-      width: var(--sidebar-width);
-      background-color: #FFFFFF;
-      border-right: 1px solid var(--border-color);
-      padding: 20px;
-      overflow-y: auto;
-      transition: transform 0.3s ease;
-      z-index: 999;
-    }
-
-    .sidebar.collapsed {
-      transform: translateX(-100%);
-    }
-
-    .sidebar h3 {
-      font-size: 1rem;
-      color: var(--text-color);
-      margin-bottom: 15px;
-      border-bottom: 2px solid var(--border-color);
-      padding-bottom: 5px;
-    }
-
-    .sidebar ul {
-      list-style: none;
-    }
-
-    .sidebar li {
-      margin-bottom: 12px;
-    }
-
-    .sidebar a {
-      color: var(--text-dark);
-      text-decoration: none;
-      font-size: 0.95rem;
-      transition: color 0.2s;
-      display: block;
-    }
-
-    .sidebar a:hover {
-      color: var(--main-dark);
-      font-weight: bold;
-    }
-
-    /* Main Container */
-    .main-wrapper {
-      flex: 1;
-      margin-top: 60px;
-      margin-left: var(--sidebar-width);
-      padding: 30px 20px;
-      max-width: 900px;
-      transition: margin-left 0.3s ease;
-    }
-
-    .main-wrapper.expanded {
-      margin-left: 0;
-    }
-
-    /* Card & Section Styles */
-    .section-block {
-      background-color: #FFFFFF;
-      border: 1px solid var(--border-color);
-      border-radius: 12px;
-      padding: 25px;
-      margin-bottom: 30px;
-      box-shadow: 0 3px 8px rgba(0,0,0,0.02);
-    }
-
-    .section-header {
-      font-size: 1.4rem;
-      color: var(--text-dark);
-      border-bottom: 2px solid var(--main-color);
-      padding-bottom: 8px;
-      margin-bottom: 20px;
-    }
-
-    .item-title {
-      font-size: 1.2rem;
-      color: var(--main-dark);
-      margin-top: 15px;
-      margin-bottom: 10px;
-      font-weight: bold;
-    }
-
-    .explanation-box {
-      background-color: var(--card-bg);
-      border-left: 4px solid var(--main-color);
-      padding: 12px 16px;
-      border-radius: 0 8px 8px 0;
-      margin-bottom: 15px;
-      font-size: 0.95rem;
-      color: var(--text-dark);
-    }
-
-    .image-container {
-      margin: 15px 0;
-      text-align: center;
-    }
-
-    .image-container img {
-      max-width: 100%;
-      max-height: 320px;
-      border-radius: 8px;
-      border: 1px solid var(--border-color);
-      box-shadow: 0 2px 6px rgba(0,0,0,0.05);
-    }
-
-    /* Sentence Row & Three Buttons */
-    .sentence-row {
-      display: flex;
-      align-items: flex-start;
-      justify-content: space-between;
-      gap: 15px;
-      padding: 12px;
-      border-bottom: 1px dashed var(--border-color);
-    }
-
-    .sentence-row:last-child {
-      border-bottom: none;
-    }
-
-    .sentence-content {
-      flex: 1;
-    }
-
-    .en-text {
-      display: block;
-      font-size: 0.9rem;
-      color: #7F8C8D;
-      margin-top: 4px;
-    }
-
-    /* Audio Button Group */
-    .btn-group {
-      display: flex;
-      gap: 6px;
-      align-items: center;
-      flex-shrink: 0;
-      margin-top: 4px;
-    }
-
-    .icon-btn {
-      width: 34px;
-      height: 34px;
-      border-radius: 50%;
-      border: 1px solid var(--border-color);
-      background-color: #FFFFFF;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 0.9rem;
-      transition: all 0.2s ease;
-    }
-
-    .icon-btn:hover {
-      background-color: var(--card-bg);
-      border-color: var(--main-color);
-    }
-
-    .icon-btn.recording {
-      background-color: var(--accent-color);
-      color: #FFFFFF;
-      animation: pulse 1.2s infinite;
-    }
-
-    .icon-btn:disabled {
-      opacity: 0.4;
-      cursor: not-allowed;
-    }
-
-    @keyframes pulse {
-      0% { transform: scale(1); }
-      50% { transform: scale(1.08); }
-      100% { transform: scale(1); }
-    }
-
-    /* Reading Comprehension Paragraphs & Questions */
-    .article-box {
-      background-color: var(--card-bg);
-      padding: 20px;
-      border-radius: 10px;
-      border: 1px solid var(--border-color);
-      margin-bottom: 25px;
-    }
-
-    .article-paragraph {
-      margin-bottom: 15px;
-      line-height: 2.2;
-    }
-
-    .question-list {
-      list-style: none;
-    }
-
-    .question-item {
-      padding: 10px 0;
-      border-bottom: 1px solid var(--border-color);
-      font-size: 1.05rem;
-    }
-
-    /* Responsive Mobile Layout */
-    @media (max-width: 768px) {
-      .sidebar {
-        transform: translateX(-100%);
-      }
-      .sidebar.active {
-        transform: translateX(0);
-      }
-      .main-wrapper {
-        margin-left: 0;
-        padding: 15px;
-      }
-    }
-  </style>
+        @media (max-width: 900px) {
+            .sidebar { transform: translateX(-100%); }
+            .sidebar.active { transform: translateX(0); }
+            .main-content { margin-left: 0; width: 100%; padding: 20px; }
+        }
+    </style>
 </head>
 <body>
 
-  <!-- Top Navigation Bar -->
-  <header class="top-nav">
-    <div class="nav-title">
-      <button class="sidebar-toggle-btn" onclick="toggleSidebar()">☰</button>
-      <span>Chad Lesson 199</span>
+    <div class="top-nav">
+        <a href="https://jany-mandarin.github.io/Chad.html">Index</a>
+        <a href="https://jany-mandarin.github.io/Chad.lesson198.html">Lesson 198</a>
     </div>
-    <div class="nav-controls">
-      <button class="toggle-btn" onclick="toggleZhuyin()">Toggle Bopomofo</button>
-      <button class="toggle-btn" onclick="toggleEnglish()">Toggle English</button>
+
+    <button class="sidebar-toggle" onclick="toggleSidebar()">☰ Outline</button>
+
+    <div class="sidebar" id="sidebar">
+        <h3>📖 Outline <button style="background:none; border:none; color:#8C6239; font-weight:bold; cursor:pointer; font-size:16px;" onclick="toggleSidebar()">×</button></h3>
+        <ol>
+            <li><a href="#sec-0">Warm-up</a>
+                <ul>
+                    <li><a href="#wu-1">1. 中華航空</a></li>
+                    <li><a href="#wu-2">2. 空姐 / 空少</a></li>
+                    <li><a href="#wu-3">3. 菜單</a></li>
+                </ul>
+            </li>
+            <li><a href="#sec-1">Homework Review & Extensions</a>
+                <ul>
+                    <li><a href="#hw-1">1. 畫畫</a></li>
+                    <li><a href="#hw-2">2. S. + 已經 + V. + (time span) + 的 + O. + 了</a></li>
+                    <li><a href="#hw-3">3. 同</a></li>
+                    <li><a href="#hw-4">4. 丟球 / 接住球</a></li>
+                </ul>
+            </li>
+            <li><a href="#sec-2">Lesson 12</a>
+                <ul>
+                    <li><a href="#ls-1">1. 多久了?</a></li>
+                    <li><a href="#ls-2">2. 半天</a></li>
+                    <li><a href="#ls-3">3. 一天</a></li>
+                </ul>
+            </li>
+            <li><a href="#sec-3">Reading Comprehension</a></li>
+        </ol>
     </div>
-  </header>
 
-  <!-- Sidebar Outline -->
-  <nav class="sidebar" id="sidebar">
-    <h3 class="zhuyin-content">目(ㄇㄨˋ)錄(ㄌㄨˋ) (Index)</h3>
-    <ul>
-      <li><a href="#section-1" class="zhuyin-content">一(ㄧ)、暖(ㄋㄨㄢˇ)身(ㄕㄣ)</a></li>
-      <li><a href="#section-2" class="zhuyin-content">二(ㄦˋ)、上(ㄕㄤˋ)次(ㄘˋ)作(ㄗㄨㄛˋ)業(ㄧㄝˋ)</a></li>
-      <li><a href="#section-3" class="zhuyin-content">三(ㄙㄢ)、第(ㄉㄧˋ)十(ㄕˊ)二(ㄦˋ)課(ㄎㄜˋ)</a></li>
-      <li><a href="#section-4" class="zhuyin-content">四(ㄙˋ)、閱(ㄩㄝˋ)讀(ㄉㄨˊ)理(ㄌㄧˇ)解(ㄐㄧㄝˇ)</a></li>
-    </ul>
-  </nav>
-
-  <!-- Main Content Container -->
-  <main class="main-wrapper" id="mainWrapper">
-
-    <!-- Section 1: Warm-up -->
-    <section class="section-block" id="section-1">
-      <h2 class="section-header zhuyin-content">一(ㄧ)、暖(ㄋㄨㄢˇ)身(ㄕㄣ) (Warm-up)</h2>
-
-      <!-- Item 1 -->
-      <div class="item-title zhuyin-content">1. 中(ㄓㄨㄥ)華(ㄏㄨㄚˊ)航(ㄏㄤˊ)空(ㄎㄨㄥ) (China Airlines)</div>
-      
-      <div class="image-container">
-        <img src="https://cdn.phototourl.com/member/2026-11-11-99b9989d-12b4-4fed-aa01-5058fd6b6e8b.png" alt="China Airlines">
-      </div>
-
-      <div class="explanation-box">
-        <div class="explanation-en">
-          <strong>Explanation:</strong> 航 (háng) can be a verb or a noun. In ancient times, it meant a boat moving forward: the left side "舟" means a boat, and the right side "亢" shows a person standing and moving forward. Today, it refers to traveling by boat, plane, or spaceship.
-        </div>
-      </div>
-
-      <div class="sentence-row">
-        <div class="sentence-content">
-          <div class="zhuyin-content">我(ㄨㄛˇ)上(ㄕㄤˋ)次(ㄘˋ)搭(ㄉㄚ)中(ㄓㄨㄥ)華(ㄏㄨㄚˊ)航(ㄏㄤˊ)空(ㄎㄨㄥ)的(˙ㄉㄜ)飛(ㄈㄟ)機(ㄐㄧ)，我(ㄨㄛˇ)點(ㄉㄧㄢˇ)了(˙ㄌㄜ)一(ㄧˋ)杯(ㄅㄟ)珍(ㄓㄨ)珠(ㄓㄨ)奶(ㄋㄞˇ)茶(ㄔㄚˊ)。</div>
-          <span class="en-text">Last time I took a China Airlines flight, I ordered a glass of boba milk tea.</span>
-        </div>
-        <div class="btn-group" data-text="我上次搭中華航空的飛機，我點了一杯珍珠奶茶。">
-          <button class="icon-btn" onclick="speakFromGroup(this)">🔊</button>
-          <button class="icon-btn" onclick="startRecord(this)">🎤</button>
-          <button class="icon-btn play-btn" onclick="playRecord(this)" disabled>▶️</button>
-        </div>
-      </div>
-
-      <!-- Item 2 -->
-      <div class="item-title zhuyin-content">2. 空(ㄎㄨㄥ)姐(ㄐㄧㄝˇ) / 空(ㄎㄨㄥ)少(ㄕㄠˋ) (Flight Attendant - Female / Male)</div>
-
-      <div class="explanation-box">
-        <div class="explanation-en">
-          <strong>Note:</strong> 少 in 空少 is pronounced with 4th tone (ㄕㄠˋ, shào), which is used for young male job titles. Do NOT confuse it with 3rd tone (ㄕㄠˇ, shǎo), which means "less" or "missing".
-        </div>
-      </div>
-
-      <div class="sentence-row">
-        <div class="sentence-content">
-          <div class="zhuyin-content">我(ㄨㄛˇ)在(ㄗㄞˋ)中(ㄓㄨㄥ)華(ㄏㄨㄚˊ)航(ㄏㄤˊ)空(ㄎㄨㄥ)上(ㄕㄤˋ)跟(ㄍㄣ)空(ㄎㄨㄥ)姐(ㄐㄧㄝˇ)說(ㄕㄨㄛ)：請(ㄑㄧㄥˇ)問(ㄨㄣˋ)你(ㄋㄧˇ)們(˙ㄇㄣ)有(ㄧㄡˇ)珍(ㄓㄨ)珠(ㄓㄨ)奶(ㄋㄞˇ)茶(ㄔㄚˊ)嗎(˙ㄇㄚ)?</div>
-          <span class="en-text">I asked the flight attendant on China Airlines: "Excuse me, do you have boba milk tea?"</span>
-        </div>
-        <div class="btn-group" data-text="我在中華航空上跟空姐說：請問你們有珍珠奶茶嗎?">
-          <button class="icon-btn" onclick="speakFromGroup(this)">🔊</button>
-          <button class="icon-btn" onclick="startRecord(this)">🎤</button>
-          <button class="icon-btn play-btn" onclick="playRecord(this)" disabled>▶️</button>
-        </div>
-      </div>
-
-      <div class="sentence-row">
-        <div class="sentence-content">
-          <div class="zhuyin-content">中(ㄓㄨㄥ)華(ㄏㄨㄚˊ)航(ㄏㄤˊ)空(ㄎㄨㄥ)的(˙ㄉㄜ)空(ㄎㄨㄥ)少(ㄕㄠˋ)和(ㄏㄢˋ)機(ㄐㄧ)師(ㄕ)都(ㄉㄡ)很(ㄏㄣˇ)帥(ㄕㄨㄞˋ)。</div>
-          <span class="en-text">The male flight attendants and pilots of China Airlines are all very handsome.</span>
-        </div>
-        <div class="btn-group" data-text="中華航空的空少和機師都很帥。">
-          <button class="icon-btn" onclick="speakFromGroup(this)">🔊</button>
-          <button class="icon-btn" onclick="startRecord(this)">🎤</button>
-          <button class="icon-btn play-btn" onclick="playRecord(this)" disabled>▶️</button>
-        </div>
-      </div>
-
-      <!-- Item 3 -->
-      <div class="item-title zhuyin-content">3. 菜(ㄘㄞˋ)單(ㄉㄢ) (Menu)</div>
-
-      <div class="sentence-row">
-        <div class="sentence-content">
-          <div class="zhuyin-content">我(ㄨㄛˇ)在(ㄗㄞˋ)飛(ㄈㄟ)機(ㄐㄧ)上(ㄕㄤˋ)的(˙ㄉㄜ)菜(ㄘㄞˋ)單(ㄉㄢ)看(ㄎㄢˋ)到(ㄉㄠˋ)珍(ㄓㄨ)珠(ㄓㄨ)奶(ㄋㄞˇ)茶(ㄔㄚˊ)，我(ㄨㄛˇ)就(ㄐㄧㄡˋ)點(ㄉㄧㄢˇ)了(˙ㄌㄜ)！ 真(ㄓㄣ)好(ㄏㄠˇ)喝(ㄏㄜ)！</div>
-          <span class="en-text">I saw boba milk tea on the plane's menu, so I ordered it! It's so delicious!</span>
-        </div>
-        <div class="btn-group" data-text="我在飛機上的菜單看到珍珠奶茶，我就點了！真好喝！">
-          <button class="icon-btn" onclick="speakFromGroup(this)">🔊</button>
-          <button class="icon-btn" onclick="startRecord(this)">🎤</button>
-          <button class="icon-btn play-btn" onclick="playRecord(this)" disabled>▶️</button>
-        </div>
-      </div>
-    </section>
-
-    <!-- Section 2: Homework Review -->
-    <section class="section-block" id="section-2">
-      <h2 class="section-header zhuyin-content">二(ㄦˋ)、上(ㄕㄤˋ)次(ㄘˋ)作(ㄗㄨㄛˋ)業(ㄧㄝˋ) (Homework Review)</h2>
-
-      <!-- Item 1 -->
-      <div class="item-title zhuyin-content">1. 畫(ㄏㄨㄚˋ)畫(ㄏㄨㄚˋ) (To draw / Painting)</div>
-
-      <div class="explanation-box">
-        <div class="explanation-en">
-          <strong>Explanation:</strong> The character 畫 (huà) has two meanings: a verb (to draw/paint) and a noun (a painting or picture). Therefore, in 畫畫, the first 畫 is the verb "to draw", and the second 畫 is the noun "picture".
-        </div>
-      </div>
-
-      <div class="sentence-row">
-        <div class="sentence-content">
-          <div class="zhuyin-content">他(ㄊㄚ)已(ㄧˇ)經(ㄐㄧㄥ)畫(ㄏㄨㄚˋ)了(˙ㄌㄜ)兩(ㄌㄧㄤˇ)個(˙ㄍㄜ)小(ㄒㄧㄠˇ)時(ㄕˊ)的(˙ㄉㄜ)畫(ㄏㄨㄚˋ)了(˙ㄌㄜ)。</div>
-          <span class="en-text">He has been painting for two hours already.</span>
-        </div>
-        <div class="btn-group" data-text="他已經畫了兩個小時的畫了。">
-          <button class="icon-btn" onclick="speakFromGroup(this)">🔊</button>
-          <button class="icon-btn" onclick="startRecord(this)">🎤</button>
-          <button class="icon-btn play-btn" onclick="playRecord(this)" disabled>▶️</button>
-        </div>
-      </div>
-
-      <div class="sentence-row">
-        <div class="sentence-content">
-          <div class="zhuyin-content">桌(ㄓㄨㄛ)上(ㄕㄤˋ)的(˙ㄉㄜ)畫(ㄏㄨㄚˋ)真(ㄓㄣ)的(˙ㄉㄜ)很(ㄏㄣˇ)漂(ㄆㄧㄠˋ)亮(ㄌㄧㄤˋ)。</div>
-          <span class="en-text">The painting on the table is really beautiful.</span>
-        </div>
-        <div class="btn-group" data-text="桌上的畫真的很漂亮。">
-          <button class="icon-btn" onclick="speakFromGroup(this)">🔊</button>
-          <button class="icon-btn" onclick="startRecord(this)">🎤</button>
-          <button class="icon-btn play-btn" onclick="playRecord(this)" disabled>▶️</button>
-        </div>
-      </div>
-
-      <div class="sentence-row">
-        <div class="sentence-content">
-          <div class="zhuyin-content">我(ㄨㄛˇ)畫(ㄏㄨㄚˋ)了(˙ㄌㄜ)一(ㄧˋ)隻(ㄓ)豬(ㄓㄨ)。</div>
-          <span class="en-text">I drew a pig.</span>
-        </div>
-        <div class="btn-group" data-text="我畫了一隻豬。">
-          <button class="icon-btn" onclick="speakFromGroup(this)">🔊</button>
-          <button class="icon-btn" onclick="startRecord(this)">🎤</button>
-          <button class="icon-btn play-btn" onclick="playRecord(this)" disabled>▶️</button>
-        </div>
-      </div>
-
-      <!-- Item 2 -->
-      <div class="item-title zhuyin-content">2. S. + 已(ㄧˇ)經(ㄐㄧㄥ) + V. + (time span) + 的(˙ㄉㄜ) + O. + 了(˙ㄌㄜ)</div>
-
-      <div class="explanation-box">
-        <div class="explanation-en">
-          <strong>Grammar Pattern:</strong> Used to express that an action has been taking place for a specific period of time with an object. <br>
-          <em>Formula: Subject + 已經 (already) + Verb + Time duration + 的 + Object + 了.</em>
-        </div>
-      </div>
-
-      <div class="sentence-row">
-        <div class="sentence-content">
-          <div class="zhuyin-content">爸(ㄅㄚˋ)爸(˙ㄅㄚ)已(ㄧˇ)經(ㄐㄧㄥ)開(ㄎㄞ)了(˙ㄌㄜ)十(ㄕˊ)年(ㄋㄧㄢˊ)的(˙ㄉㄜ)車(ㄔㄜ)了(˙ㄌㄜ)。</div>
-          <span class="en-text">Dad has been driving for 10 years already.</span>
-        </div>
-        <div class="btn-group" data-text="爸爸已經開了十年的車了。">
-          <button class="icon-btn" onclick="speakFromGroup(this)">🔊</button>
-          <button class="icon-btn" onclick="startRecord(this)">🎤</button>
-          <button class="icon-btn play-btn" onclick="playRecord(this)" disabled>▶️</button>
-        </div>
-      </div>
-
-      <div class="sentence-row">
-        <div class="sentence-content">
-          <div class="zhuyin-content">我(ㄨㄛˇ)已(ㄧˇ)經(ㄐㄧㄥ)上(ㄕㄤˋ)了(˙ㄌㄜ)五(ㄨˇ)年(ㄋㄧㄢˊ)的(˙ㄉㄜ)班(ㄅㄢ)了(˙ㄌㄜ)。</div>
-          <span class="en-text">I have been working for 5 years already.</span>
-        </div>
-        <div class="btn-group" data-text="我已經上了五年的班了。">
-          <button class="icon-btn" onclick="speakFromGroup(this)">🔊</button>
-          <button class="icon-btn" onclick="startRecord(this)">🎤</button>
-          <button class="icon-btn play-btn" onclick="playRecord(this)" disabled>▶️</button>
-        </div>
-      </div>
-
-      <div class="sentence-row">
-        <div class="sentence-content">
-          <div class="zhuyin-content">這(ㄓㄜˋ)是(ㄕˋ)我(ㄨㄛˇ)住(ㄓㄨˋ)了(˙ㄌㄜ)六(ㄌㄧㄡˋ)年(ㄋㄧㄢˊ)的(˙ㄉㄜ)家(ㄐㄧㄚ)了(˙ㄌㄜ)。</div>
-          <span class="en-text">This is the home I have lived in for six years already.</span>
-        </div>
-        <div class="btn-group" data-text="這是我住了六年的家了。">
-          <button class="icon-btn" onclick="speakFromGroup(this)">🔊</button>
-          <button class="icon-btn" onclick="startRecord(this)">🎤</button>
-          <button class="icon-btn play-btn" onclick="playRecord(this)" disabled>▶️</button>
-        </div>
-      </div>
-
-      <div class="sentence-row">
-        <div class="sentence-content">
-          <div class="zhuyin-content">我(ㄨㄛˇ)已(ㄧˇ)經(ㄐㄧㄥ)喝(ㄏㄜ)了(˙ㄌㄜ)一(ㄧˋ)個(˙ㄍㄜ)鐘(ㄓㄨㄥ)頭(ㄊㄡˊ)半(ㄅㄢˋ)的(˙ㄉㄜ)咖(ㄎㄚ)啡(ㄈㄟ)了(˙ㄌㄜ)。因(ㄧㄣ)為(ㄨㄟˋ)這(ㄓㄜˋ)杯(ㄅㄟ)咖(ㄎㄚ)啡(ㄈㄟ)很(ㄏㄣˇ)冰(ㄅㄧㄥ)，所(ㄙㄨㄛˇ)以(ㄧˇ)我(ㄨㄛˇ)慢(ㄇㄢˋ)慢(ㄇㄢˋ)喝(ㄏㄜ)。</div>
-          <span class="en-text">I have been drinking coffee for an hour and a half already. Because this coffee is very cold, I am drinking it slowly.</span>
-        </div>
-        <div class="btn-group" data-text="我已經喝了一個鐘頭半的咖啡了。因為這杯咖啡很冰，所以我慢慢喝。">
-          <button class="icon-btn" onclick="speakFromGroup(this)">🔊</button>
-          <button class="icon-btn" onclick="startRecord(this)">🎤</button>
-          <button class="icon-btn play-btn" onclick="playRecord(this)" disabled>▶️</button>
-        </div>
-      </div>
-
-      <div class="sentence-row">
-        <div class="sentence-content">
-          <div class="zhuyin-content">孩(ㄏㄞˊ)子(˙ㄗ)已(ㄧˇ)經(ㄐㄧㄥ)在(ㄗㄞˋ)外(ㄨㄞˋ)面(ㄇㄧㄢˋ)玩(ㄨㄢˊ)了(˙ㄌㄜ)半(ㄅㄢˋ)天(ㄊㄧㄢ)了(˙ㄌㄜ)。</div>
-          <span class="en-text">The children have been playing outside for half a day already.</span>
-        </div>
-        <div class="btn-group" data-text="孩子已經在外面玩了半天了。">
-          <button class="icon-btn" onclick="speakFromGroup(this)">🔊</button>
-          <button class="icon-btn" onclick="startRecord(this)">🎤</button>
-          <button class="icon-btn play-btn" onclick="playRecord(this)" disabled>▶️</button>
-        </div>
-      </div>
-
-      <div class="sentence-row">
-        <div class="sentence-content">
-          <div class="zhuyin-content">我(ㄨㄛˇ)已(ㄧˇ)經(ㄐㄧㄥ)學(ㄒㄩㄝˊ)了(˙ㄌㄜ)十(ㄕˊ)九(ㄐㄧㄡˇ)個(˙ㄍㄜ)月(ㄩㄝˋ)的(˙ㄉㄜ)中(ㄓㄨㄥ)文(ㄨㄣˊ)了(˙ㄌㄜ)。</div>
-          <span class="en-text">I have been learning Chinese for 19 months already.</span>
-        </div>
-        <div class="btn-group" data-text="我已經學了十九個月的中文了。">
-          <button class="icon-btn" onclick="speakFromGroup(this)">🔊</button>
-          <button class="icon-btn" onclick="startRecord(this)">🎤</button>
-          <button class="icon-btn play-btn" onclick="playRecord(this)" disabled>▶️</button>
-        </div>
-      </div>
-
-      <div class="sentence-row">
-        <div class="sentence-content">
-          <div class="zhuyin-content">他(ㄊㄚ)們(˙ㄇㄣ)已(ㄧˇ)經(ㄐㄧㄥ)說(ㄕㄨㄛ)了(˙ㄌㄜ)半(ㄅㄢˋ)個(˙ㄍㄜ)鐘(ㄓㄨㄥ)頭(ㄊㄡˊ)的(˙ㄉㄜ)話(ㄏㄨㄚˋ)了(˙ㄌㄜ)。</div>
-          <span class="en-text">They have been talking for half an hour already.</span>
-        </div>
-        <div class="btn-group" data-text="他們已經說了半個鐘頭的話了。">
-          <button class="icon-btn" onclick="speakFromGroup(this)">🔊</button>
-          <button class="icon-btn" onclick="startRecord(this)">🎤</button>
-          <button class="icon-btn play-btn" onclick="playRecord(this)" disabled>▶️</button>
-        </div>
-      </div>
-
-      <!-- Item 3 -->
-      <div class="item-title zhuyin-content">3. 同(ㄊㄨㄥˊ) (Same)</div>
-
-      <div class="explanation-box">
-        <div class="explanation-en">
-          <strong>Explanation:</strong> 同 (tóng) means "same". For example, 同事 (colleague) means people doing the same job in a company, and 同學 (classmate) means people studying together. Therefore, 同樣 means 一樣 (the same).
-        </div>
-      </div>
-
-      <div class="sentence-row">
-        <div class="sentence-content">
-          <div class="zhuyin-content">他(ㄊㄚ)們(˙ㄇㄣ)住(ㄓㄨˋ)在(ㄗㄞˋ)同(ㄊㄨㄥˊ)一(ㄧˊ)個(˙ㄍㄜ)城(ㄔㄥˊ)市(ㄕˋ)。</div>
-          <span class="en-text">They live in the same city.</span>
-        </div>
-        <div class="btn-group" data-text="他們住在同一個城市。">
-          <button class="icon-btn" onclick="speakFromGroup(this)">🔊</button>
-          <button class="icon-btn" onclick="startRecord(this)">🎤</button>
-          <button class="icon-btn play-btn" onclick="playRecord(this)" disabled>▶️</button>
-        </div>
-      </div>
-
-      <div class="sentence-row">
-        <div class="sentence-content">
-          <div class="zhuyin-content">他(ㄊㄚ)們(˙ㄇㄣ)在(ㄗㄞˋ)看(ㄎㄢˋ)同(ㄊㄨㄥˊ)一(ㄧˋ)本(ㄅㄣˇ)書(ㄕㄨ)，因(ㄧㄣ)為(ㄨㄟˋ)那(ㄋㄚˋ)本(ㄅㄣˇ)書(ㄕㄨ)很(ㄏㄣˇ)好(ㄏㄠˇ)看(ㄎㄢˋ)。</div>
-          <span class="en-text">They are reading the same book because that book is very good.</span>
-        </div>
-        <div class="btn-group" data-text="他們在看同一本書，因為那本書很好看。">
-          <button class="icon-btn" onclick="speakFromGroup(this)">🔊</button>
-          <button class="icon-btn" onclick="startRecord(this)">🎤</button>
-          <button class="icon-btn play-btn" onclick="playRecord(this)" disabled>▶️</button>
-        </div>
-      </div>
-
-      <div class="sentence-row">
-        <div class="sentence-content">
-          <div class="zhuyin-content">他(ㄊㄚ)們(˙ㄇㄣ)都(ㄉㄡ)喜(ㄒㄧˇ)歡(ㄏㄨㄢ)同(ㄊㄨㄥˊ)一(ㄧˋ)隻(ㄓ)貓(ㄇㄠ)，因(ㄧㄣ)為(ㄨㄟˋ)那(ㄋㄚˋ)隻(ㄓ)貓(ㄇㄠ)很(ㄏㄣˇ)可(ㄎㄜˇ)愛(ㄞˋ)。</div>
-          <span class="en-text">They both like the same cat because that cat is very cute.</span>
-        </div>
-        <div class="btn-group" data-text="他們都喜歡同一隻貓，因為那隻貓很可愛。">
-          <button class="icon-btn" onclick="speakFromGroup(this)">🔊</button>
-          <button class="icon-btn" onclick="startRecord(this)">🎤</button>
-          <button class="icon-btn play-btn" onclick="playRecord(this)" disabled>▶️</button>
-        </div>
-      </div>
-
-      <!-- Item 4 -->
-      <div class="item-title zhuyin-content">4. 丟(ㄉㄧㄡ)球(ㄑㄧㄡˊ) / 接(ㄐㄧㄝ)住(ㄓㄨˋ)球(ㄑㄧㄡˊ) (Throw a ball / Catch a ball)</div>
-
-      <div class="image-container">
-        <img src="https://cdn.phototourl.com/member/2026-11-11-803bf7f2-d83f-4a9e-8a88-815fec12bece.png" alt="Throw and Catch Ball">
-      </div>
-
-      <div class="sentence-row">
-        <div class="sentence-content">
-          <div class="zhuyin-content">他(ㄊㄚ)丟(ㄉㄧㄡ)球(ㄑㄧㄡˊ)丟(ㄉㄧㄡ)得(˙ㄉㄜ)很(ㄏㄣˇ)快(ㄎㄨㄞˋ)，我(ㄨㄛˇ)常(ㄔㄤˊ)常(ㄔㄤˊ)接(ㄐㄧㄝ)不(ㄅㄨˋ)住(ㄓㄨˋ)。</div>
-          <span class="en-text">He throws the ball very fast, so I often cannot catch it.</span>
-        </div>
-        <div class="btn-group" data-text="他丟球丟得很快，我常常接不住。">
-          <button class="icon-btn" onclick="speakFromGroup(this)">🔊</button>
-          <button class="icon-btn" onclick="startRecord(this)">🎤</button>
-          <button class="icon-btn play-btn" onclick="playRecord(this)" disabled>▶️</button>
-        </div>
-      </div>
-
-      <div class="sentence-row">
-        <div class="sentence-content">
-          <div class="zhuyin-content">爸(ㄅㄚˋ)爸(˙ㄅㄚ)丟(ㄉㄧㄡ)球(ㄑㄧㄡˊ)給(ㄍㄟˇ)我(ㄨㄛˇ)，我(ㄨㄛˇ)接(ㄐㄧㄝ)住(ㄓㄨˋ)了(˙ㄌㄜ)，我(ㄨㄛˇ)非(ㄈㄟ)常(ㄔㄤˊ)高(ㄍㄠ)興(ㄒㄧㄥˋ)。</div>
-          <span class="en-text">Dad threw the ball to me, and I caught it. I am very happy.</span>
-        </div>
-        <div class="btn-group" data-text="爸爸丟球給我，我接住了，我非常高興。">
-          <button class="icon-btn" onclick="speakFromGroup(this)">🔊</button>
-          <button class="icon-btn" onclick="startRecord(this)">🎤</button>
-          <button class="icon-btn play-btn" onclick="playRecord(this)" disabled>▶️</button>
-        </div>
-      </div>
-    </section>
-
-    <!-- Section 3: Lesson 12 -->
-    <section class="section-block" id="section-3">
-      <h2 class="section-header zhuyin-content">三(ㄙㄢ)、第(ㄉㄧˋ)十(ㄕˊ)二(ㄦˋ)課(ㄎㄜˋ) (Lesson 12)</h2>
-
-      <!-- Item 1 -->
-      <div class="item-title zhuyin-content">1. 多(ㄉㄨㄛ)久(ㄐㄧㄡˇ)了(˙ㄌㄜ)？ (How long has it been?)</div>
-
-      <div class="explanation-box">
-        <div class="explanation-en">
-          <strong>Explanation:</strong> Used to ask about the time duration of an action or state.
-        </div>
-      </div>
-
-      <div class="sentence-row">
-        <div class="sentence-content">
-          <div class="zhuyin-content">你(ㄋㄧˇ)跟(ㄍㄣ)你(ㄋㄧˇ)太(ㄊㄞˋ)太(˙ㄊㄞ)在(ㄗㄞˋ)一(ㄧˋ)起(ㄑㄧˇ)多(ㄉㄨㄛ)久(ㄐㄧㄡˇ)了(˙ㄌㄜ)？ 我(ㄨㄛˇ)跟(ㄍㄣ)我(ㄨㄛˇ)太(ㄊㄞˋ)太(˙ㄊㄞ)已(ㄧˇ)經(ㄐㄧㄥ)在(ㄗㄞˋ)一(ㄧˋ)起(ㄑㄧˇ)九(ㄐㄧㄡˇ)年(ㄋㄧㄢˊ)多(ㄉㄨㄛ)了(˙ㄌㄜ)！</div>
-          <span class="en-text">How long have you and your wife been together? My wife and I have been together for over nine years already!</span>
-        </div>
-        <div class="btn-group" data-text="你跟你太太在一起多久了？我跟我太太已經在一起九年多了！">
-          <button class="icon-btn" onclick="speakFromGroup(this)">🔊</button>
-          <button class="icon-btn" onclick="startRecord(this)">🎤</button>
-          <button class="icon-btn play-btn" onclick="playRecord(this)" disabled>▶️</button>
-        </div>
-      </div>
-
-      <div class="sentence-row">
-        <div class="sentence-content">
-          <div class="zhuyin-content">你(ㄋㄧˇ)在(ㄗㄞˋ)家(ㄐㄧㄚ)教(ㄐㄧㄠ)中(ㄓㄨㄥ)文(ㄨㄣˊ)多(ㄉㄨㄛ)久(ㄐㄧㄡˇ)了(˙ㄌㄜ)？ 我(ㄨㄛˇ)已(ㄧˇ)經(ㄐㄧㄥ)在(ㄗㄞˋ)家(ㄐㄧㄚ)教(ㄐㄧㄠ)中(ㄓㄨㄥ)文(ㄨㄣˊ)兩(ㄌㄧㄤˇ)年(ㄋㄧㄢˊ)多(ㄉㄨㄛ)了(˙ㄌㄜ)。</div>
-          <span class="en-text">How long have you been tutoring Chinese at home? I have been tutoring Chinese at home for over two years already.</span>
-        </div>
-        <div class="btn-group" data-text="你在家教中文多久了？我已經在家教中文兩年多了。">
-          <button class="icon-btn" onclick="speakFromGroup(this)">🔊</button>
-          <button class="icon-btn" onclick="startRecord(this)">🎤</button>
-          <button class="icon-btn play-btn" onclick="playRecord(this)" disabled>▶️</button>
-        </div>
-      </div>
-
-      <!-- Item 2 -->
-      <div class="item-title zhuyin-content">2. 半(ㄅㄢˋ)天(ㄊㄧㄢ) (Half a day / A long time)</div>
-
-      <div class="explanation-box">
-        <div class="explanation-en">
-          <strong>Explanation:</strong> Has two meanings: literally "half a day" (12 hours), or idiomatically "a very long time".
-        </div>
-      </div>
-
-      <div class="sentence-row">
-        <div class="sentence-content">
-          <div class="zhuyin-content">我(ㄨㄛˇ)說(ㄕㄨㄛ)了(˙ㄌㄜ)半(ㄅㄢˋ)天(ㄊㄧㄢ)，他(ㄊㄚ)還(ㄏㄞˊ)是(ㄕˋ)不(ㄅㄨˋ)懂(ㄉㄨㄥˇ)。</div>
-          <span class="en-text">I talked for a long time, but he still didn't understand.</span>
-        </div>
-        <div class="btn-group" data-text="我說了半天，他還是不懂。">
-          <button class="icon-btn" onclick="speakFromGroup(this)">🔊</button>
-          <button class="icon-btn" onclick="startRecord(this)">🎤</button>
-          <button class="icon-btn play-btn" onclick="playRecord(this)" disabled>▶️</button>
-        </div>
-      </div>
-
-      <div class="sentence-row">
-        <div class="sentence-content">
-          <div class="zhuyin-content">他(ㄊㄚ)都(ㄉㄡ)去(ㄑㄩˋ)外(ㄨㄞˋ)面(ㄇㄧㄢˋ)玩(ㄨㄢˊ)半(ㄅㄢˋ)天(ㄊㄧㄢ)了(˙ㄌㄜ)，怎(ㄗㄣˇ)麼(˙ㄇㄜ)還(ㄏㄞˊ)沒(ㄇㄟˊ)回(ㄏㄨㄟˊ)來(ㄌㄞˊ)？</div>
-          <span class="en-text">He has been out playing for half a day already; why hasn't he come back yet?</span>
-        </div>
-        <div class="btn-group" data-text="他都去外面玩半天了，怎麼還沒回來？">
-          <button class="icon-btn" onclick="speakFromGroup(this)">🔊</button>
-          <button class="icon-btn" onclick="startRecord(this)">🎤</button>
-          <button class="icon-btn play-btn" onclick="playRecord(this)" disabled>▶️</button>
-        </div>
-      </div>
-
-      <!-- Item 3 -->
-      <div class="item-title zhuyin-content">3. 一(ㄧˋ)天(ㄊㄧㄢ) (One whole day)</div>
-
-      <div class="explanation-box">
-        <div class="explanation-en">
-          <strong>Explanation:</strong> Refers to one full day or all day long.
-        </div>
-      </div>
-
-      <div class="sentence-row">
-        <div class="sentence-content">
-          <div class="zhuyin-content">我(ㄨㄛˇ)的(˙ㄉㄜ)貓(ㄇㄠ)今(ㄐㄧㄣ)天(ㄊㄧㄢ)玩(ㄨㄢˊ)了(˙ㄌㄜ)一(ㄧˋ)天(ㄊㄧㄢ)，非(ㄈㄟ)常(ㄔㄤˊ)累(ㄌㄟˋ)了(˙ㄌㄜ)！ 他(ㄊㄚ)現(ㄒㄧㄢˋ)在(ㄗㄞˋ)在(ㄗㄞˋ)睡(ㄕㄨㄟˋ)覺(ㄐㄧㄠˋ)。</div>
-          <span class="en-text">My cat played all day today and is very tired! He is sleeping now.</span>
-        </div>
-        <div class="btn-group" data-text="我的貓今天玩了一天，非常累了！他現在在睡覺。">
-          <button class="icon-btn" onclick="speakFromGroup(this)">🔊</button>
-          <button class="icon-btn" onclick="startRecord(this)">🎤</button>
-          <button class="icon-btn play-btn" onclick="playRecord(this)" disabled>▶️</button>
-        </div>
-      </div>
-    </section>
-
-    <!-- Section 4: Reading Comprehension -->
-    <section class="section-block" id="section-4">
-      <h2 class="section-header zhuyin-content">四(ㄙˋ)、閱(ㄩㄝˋ)讀(ㄉㄨˊ)理(ㄌㄧˇ)解(ㄐㄧㄝˇ) (Reading Comprehension)</h2>
-
-      <div class="article-box">
-        <div class="article-paragraph">
-          <div class="zhuyin-content">思(ㄙ)婷(ㄊㄧㄥˊ)是(ㄕˋ)空(ㄎㄨㄥ)姐(ㄐㄧㄝˇ)。她(ㄊㄚ)的(˙ㄉㄜ)工(ㄍㄨㄥ)作(ㄗㄨㄛˋ)很(ㄏㄣˇ)忙(ㄇㄤˊ)，常(ㄔㄤˊ)常(ㄔㄤˊ)出(ㄔㄨ)差(ㄔㄞ)。今(ㄐㄧㄣ)天(ㄊㄧㄢ)早(ㄗㄠˇ)上(ㄕㄤˋ)，她(ㄊㄚ)已(ㄧˇ)經(ㄐㄧㄥ)起(ㄑㄧˇ)床(ㄔㄨㄤˊ)了(˙ㄌㄜ)，正(ㄓㄥˋ)要(ㄧㄠˋ)去(ㄑㄩˋ)機(ㄐㄧ)場(ㄔㄤˇ)，公(ㄍㄨㄥ)司(ㄙ)臨(ㄌㄧㄣˊ)時(ㄕˊ)打(ㄉㄚˇ)電(ㄉㄧㄢˋ)話(ㄏㄨㄚˋ)給(ㄍㄟˇ)她(ㄊㄚ)：「今(ㄐㄧㄣ)天(ㄊㄧㄢ)要(ㄧㄠˋ)去(ㄑㄩˋ)東(ㄉㄨㄥ)京(ㄐㄧㄥ)，可(ㄎㄜˇ)以(ㄧˇ)嗎(˙ㄇㄚ)？」思(ㄙ)婷(ㄊㄧㄥˊ)說(ㄕㄨㄛ)：「可(ㄎㄜˇ)以(ㄧˇ)，我(ㄨㄛˇ)馬(ㄇㄚˇ)上(ㄕㄤˋ)去(ㄑㄩˋ)。」</div>
-          <span class="en-text">Si-Ting is a flight attendant. Her job is very busy, and she often goes on business trips. This morning, she had already gotten up and was about to go to the airport when her company suddenly called her: "Can you go to Tokyo today?" Si-Ting said: "Yes, I'll go right away."</span>
+    <div class="main-content" id="mainContent">
+        <div class="header">
+            <h1>Chad's Mandarin Lesson 199</h1>
+            <p>Date: <span id="currentDate">2026/11/11</span></p>
         </div>
 
-        <div class="article-paragraph">
-          <div class="zhuyin-content">在(ㄗㄞˋ)機(ㄐㄧ)場(ㄔㄤˇ)，她(ㄊㄚ)遇(ㄩˋ)到(ㄉㄠˋ)同(ㄊㄨㄥˊ)事(ㄕˋ)超(ㄔㄠ)明(ㄇㄧㄥˊ)。超(ㄔㄠ)明(ㄇㄧㄥˊ)是(ㄕˋ)空(ㄎㄨㄥ)少(ㄕㄠˋ)，他(ㄊㄚ)和(ㄏㄢˋ)思(ㄙ)婷(ㄊㄧㄥˊ)是(ㄕˋ)同(ㄊㄨㄥˊ)一(ㄧˋ)班(ㄅㄢ)飛(ㄈㄟ)機(ㄐㄧ)的(˙ㄉㄜ)人(ㄖㄣˊ)。他(ㄊㄚ)說(ㄕㄨㄛ)：「我(ㄨㄛˇ)們(˙ㄇㄣ)要(ㄧㄠˋ)飛(ㄈㄟ)半(ㄅㄢˋ)天(ㄊㄧㄢ)，你(ㄋㄧˇ)要(ㄧㄠˋ)休(ㄒㄧㄡ)息(˙ㄒㄧ)一(ㄧˊ)下(ㄒㄧㄚˋ)嗎(˙ㄇㄚ)？」思(ㄙ)婷(ㄊㄧㄥˊ)說(ㄕㄨㄛ)：「好(ㄏㄠˇ)，我(ㄨㄛˇ)等(ㄉㄥˇ)一(ㄧˋ)下(ㄒㄧㄚˋ)再(ㄗㄞˋ)休(ㄒㄧㄡ)息(˙ㄒㄧ)。」</div>
-          <span class="en-text">At the airport, she bumped into her colleague Chao-Ming. Chao-Ming is a male flight attendant, and he and Si-Ting are on the same flight. He said: "We are going to fly for half a day, do you want to rest a bit?" Si-Ting said: "Okay, I will rest later."</span>
+        <div class="controls">
+            <button class="control-btn" onclick="toggleZhuyin()">Toggle Bopomofo</button>
+            <button class="control-btn" onclick="toggleEnglish()">Toggle English</button>
         </div>
 
-        <div class="article-paragraph">
-          <div class="zhuyin-content">飛(ㄈㄟ)機(ㄐㄧ)上(ㄕㄤˋ)，有(ㄧㄡˇ)一(ㄧˋ)個(˙ㄍㄜ)小(ㄒㄧㄠˇ)朋(ㄆㄥˊ)友(ㄧㄡˇ)很(ㄏㄣˇ)急(ㄐㄧˊ)，他(ㄊㄚ)說(ㄕㄨㄛ)：「我(ㄨㄛˇ)要(ㄧㄠˋ)吃(ㄔ)東(ㄉㄨㄥ)西(˙ㄒㄧ)！」思(ㄙ)婷(ㄊㄧㄥˊ)馬(ㄇㄚˇ)上(ㄕㄤˋ)拿(ㄋㄚˊ)菜(ㄘㄞˋ)單(ㄉㄢ)給(ㄍㄟˇ)他(ㄊㄚ)看(ㄎㄢˋ)。小(ㄒㄧㄠˇ)朋(ㄆㄥˊ)友(ㄧㄡˇ)看(ㄎㄢˋ)了(˙ㄌㄜ)很(ㄏㄣˇ)久(ㄐㄧㄡˇ)，然(ㄖㄢˊ)後(ㄏㄡˋ)說(ㄕㄨㄛ)：「我(ㄨㄛˇ)要(ㄧㄠˋ)一(ㄧˋ)個(˙ㄍㄜ)棒(ㄅㄤˋ)棒(ㄅㄤˋ)糖(ㄊㄤˊ)。」思(ㄙ)婷(ㄊㄧㄥˊ)笑(ㄒㄧㄠˋ)了(˙ㄌㄜ)：「好(ㄏㄠˇ)，我(ㄨㄛˇ)送(ㄙㄨㄥˋ)你(ㄋㄧˇ)一(ㄧˋ)個(˙ㄍㄜ)。」</div>
-          <span class="en-text">On the plane, a child was very impatient and said: "I want to eat something!" Si-Ting immediately brought him the menu. The child looked at it for a long time and then said: "I want a lollipop." Si-Ting smiled: "Okay, I will give you one."</span>
-        </div>
+        <!-- Section 0: Warm-up -->
+        <div class="section" id="sec-0">
+            <h2><span class="zy-text">一(ㄧ)、暖(ㄋㄨㄢˇ)身(ㄕㄣ)</span> (Warm-up)</h2>
 
-        <div class="article-paragraph">
-          <div class="zhuyin-content">後(ㄏㄡˋ)來(ㄌㄞˊ)，一(ㄧˋ)位(ㄨㄟˋ)先(ㄒㄧㄢ)生(˙ㄕㄥ)說(ㄕㄨㄛ)他(ㄊㄚ)對(ㄉㄨㄟˋ)花(ㄏㄨㄚ)生(ㄕㄥ)過(ㄍㄨㄛˋ)敏(ㄇㄧㄣˇ)。思(ㄙ)婷(ㄊㄧㄥˊ)很(ㄏㄣˇ)緊(ㄐㄧㄣˇ)張(ㄓㄤ)，她(ㄊㄚ)想(ㄒㄧㄤˇ)：「怎(ㄗㄣˇ)麼(˙ㄇㄜ)辦(ㄅㄢˋ)？」她(ㄊㄚ)急(ㄐㄧˊ)忙(ㄇㄤˊ)把(ㄅㄚˇ)那(ㄋㄚˋ)一(ㄧˋ)盤(ㄆㄢˊ)點(ㄉㄧㄢˇ)心(˙ㄒㄧㄣ)拿(ㄋㄚˊ)走(ㄗㄡˇ)。先(ㄒㄧㄢ)生(˙ㄕㄥ)說(ㄕㄨㄛ)：「謝(ㄒㄧㄝˋ)謝(˙ㄒㄧㄝ)你(ㄋㄧˇ)，你(ㄋㄧˇ)真(ㄓㄣ)好(ㄏㄠˇ)。」</div>
-          <span class="en-text">Later, a gentleman said he was allergic to peanuts. Si-Ting was very nervous and thought: "What should I do?" She hurriedly took that plate of snacks away. The gentleman said: "Thank you, you are so kind."</span>
-        </div>
-
-        <div class="article-paragraph">
-          <div class="zhuyin-content">飛(ㄈㄟ)機(ㄐㄧ)到(ㄉㄠˋ)東(ㄉㄨㄥ)京(ㄐㄧㄥ)了(˙ㄌㄜ)。思(ㄙ)婷(ㄊㄧㄥˊ)已(ㄧˇ)經(ㄐㄧㄥ)很(ㄏㄣˇ)累(ㄌㄟˋ)了(˙ㄌㄜ)，但(ㄉㄢˋ)是(ㄕˋ)她(ㄊㄚ)很(ㄏㄣˇ)開(ㄎㄞ)心(ㄒㄧㄣ)。她(ㄊㄚ)和(ㄏㄢˋ)超(ㄔㄠ)明(ㄇㄧㄥˊ)一(ㄧˋ)起(ㄑㄧˇ)離(ㄌㄧˊ)開(ㄎㄞ)機(ㄐㄧ)場(ㄔㄤˇ)，看(ㄎㄢˋ)見(ㄐㄧㄢˋ)外(ㄨㄞˋ)面(ㄇㄧㄢˋ)的(˙ㄉㄜ)風(ㄈㄥ)景(ㄐㄧㄥˇ)很(ㄏㄣˇ)漂(ㄆㄧㄠˋ)亮(ㄌㄧㄤˋ)。超(ㄔㄠ)明(ㄇㄧㄥˊ)說(ㄕㄨㄛ)：「我(ㄨㄛˇ)們(˙ㄇㄣ)的(˙ㄉㄜ)工(ㄍㄨㄥ)作(ㄗㄨㄛˋ)關(ㄍㄨㄢ)係(ㄒㄧˋ)很(ㄏㄣˇ)好(ㄏㄠˇ)，很(ㄏㄣˇ)高(ㄍㄠ)興(ㄒㄧˋ)和(ㄏㄢˋ)你(ㄋㄧˇ)一(ㄧˋ)起(ㄑㄧˇ)工(ㄍㄨㄥ)作(ㄗㄨㄛˋ)。」</div>
-          <span class="en-text">The plane arrived in Tokyo. Si-Ting was already very tired, but she was very happy. She and Chao-Ming left the airport together and saw the scenery outside was beautiful. Chao-Ming said: "We have a great working relationship, I'm happy to work with you."</span>
-        </div>
-
-        <div class="article-paragraph">
-          <div class="zhuyin-content">第(ㄉㄧˋ)二(ㄦˋ)天(ㄊㄧㄢ)，他(ㄊㄚ)們(˙ㄇㄣ)休(ㄒㄧㄡ)息(˙ㄒㄧ)一(ㄧˋ)天(ㄊㄧㄢ)。思(ㄙ)婷(ㄊㄧㄥˊ)早(ㄗㄠˇ)上(ㄕㄤˋ)去(ㄑㄩˋ)跑(ㄆㄠˇ)步(ㄅㄨˋ)，然(ㄖㄢˊ)後(ㄏㄡˋ)去(ㄑㄩˋ)超(ㄔㄠ)市(ㄕˋ)買(ㄇㄞˇ)葡(ㄆㄨˊ)萄(˙ㄊㄠ)。她(ㄊㄚ)拿(ㄋㄚˊ)著(˙ㄓㄜ)葡(ㄆㄨˊ)萄(˙ㄊㄠ)去(ㄑㄩˋ)收(ㄕㄡ)銀(ㄧㄣˊ)台(ㄊㄞˊ)付(ㄈㄨˋ)錢(ㄑㄧㄢˊ)，心(ㄒㄧㄣ)裡(ㄌㄧˇ)想(ㄒㄧㄤˇ)：「這(ㄓㄜˋ)次(ㄘˋ)的(˙ㄉㄜ)出(ㄔㄨ)差(ㄔㄞ)，真(ㄓㄣ)的(˙ㄉㄜ)是(ㄕˋ)一(ㄧˋ)次(ㄘˋ)很(ㄏㄣˇ)好(ㄏㄠˇ)的(˙ㄉㄜ)旅(ㄌㄩˇ)行(ㄒㄧㄥˊ)。」</div>
-          <span class="en-text">The next day, they took a rest day. Si-Ting went running in the morning, and then went to the supermarket to buy grapes. Holding the grapes, she went to the checkout counter to pay, thinking to herself: "This business trip was really a wonderful journey."</span>
-        </div>
-      </div>
-
-      <!-- Reading Questions (NO English translations!) -->
-      <div class="item-title zhuyin-content">問(ㄨㄣˋ)題(ㄊㄧˊ) (Questions)</div>
-      <ul class="question-list">
-        <li class="question-item sentence-row">
-          <div class="sentence-content">
-            <div class="zhuyin-content">1. 思(ㄙ)婷(ㄊㄧㄥˊ)是(ㄕˋ)做(ㄗㄨㄛˋ)什(ㄕㄣˊ)麼(˙ㄇㄜ)工(ㄍㄨㄥ)作(ㄗㄨㄛˋ)的(˙ㄉㄜ)？</div>
-          </div>
-          <div class="btn-group" data-text="思婷是做什麼工作的？">
-            <button class="icon-btn" onclick="speakFromGroup(this)">🔊</button>
-            <button class="icon-btn" onclick="startRecord(this)">🎤</button>
-            <button class="icon-btn play-btn" onclick="playRecord(this)" disabled>▶️</button>
-          </div>
-        </li>
-        <li class="question-item sentence-row">
-          <div class="sentence-content">
-            <div class="zhuyin-content">2. 公(ㄍㄨㄥ)司(ㄙ)為(ㄨㄟˋ)什(ㄕㄣˊ)麼(˙ㄇㄜ)打(ㄉㄚˇ)電(ㄉㄧㄢˋ)話(ㄏㄨㄚˋ)給(ㄍㄟˇ)思(ㄙ)婷(ㄊㄧㄥˊ)？</div>
-          </div>
-          <div class="btn-group" data-text="公司為什麼打電話給思婷？">
-            <button class="icon-btn" onclick="speakFromGroup(this)">🔊</button>
-            <button class="icon-btn" onclick="startRecord(this)">🎤</button>
-            <button class="icon-btn play-btn" onclick="playRecord(this)" disabled>▶️</button>
-          </div>
-        </li>
-        <li class="question-item sentence-row">
-          <div class="sentence-content">
-            <div class="zhuyin-content">3. 超(ㄔㄠ)明(ㄇㄧㄥˊ)是(ㄕˋ)誰(ㄕㄟˊ)？ 他(ㄊㄚ)和(ㄏㄢˋ)思(ㄙ)婷(ㄊㄧㄥˊ)是(ㄕˋ)什(ㄕㄣˊ)麼(˙ㄇㄜ)關(ㄍㄨㄢ)係(ㄒㄧˋ)？</div>
-          </div>
-          <div class="btn-group" data-text="超明是誰？他和思婷是什麼關係？">
-            <button class="icon-btn" onclick="speakFromGroup(this)">🔊</button>
-            <button class="icon-btn" onclick="startRecord(this)">🎤</button>
-            <button class="icon-btn play-btn" onclick="playRecord(this)" disabled>▶️</button>
-          </div>
-        </li>
-        <li class="question-item sentence-row">
-          <div class="sentence-content">
-            <div class="zhuyin-content">4. 飛(ㄈㄟ)機(ㄐㄧ)上(ㄕㄤˋ)的(˙ㄉㄜ)小(ㄒㄧㄠˇ)朋(ㄆㄥˊ)友(ㄧㄡˇ)最(ㄗㄨㄟˋ)後(ㄏㄡˋ)要(ㄧㄠˋ)什(ㄕㄣˊ)麼(˙ㄇㄜ)？</div>
-          </div>
-          <div class="btn-group" data-text="飛機上的小朋友最後要什麼？">
-            <button class="icon-btn" onclick="speakFromGroup(this)">🔊</button>
-            <button class="icon-btn" onclick="startRecord(this)">🎤</button>
-            <button class="icon-btn play-btn" onclick="playRecord(this)" disabled>▶️</button>
-          </div>
-        </li>
-        <li class="question-item sentence-row">
-          <div class="sentence-content">
-            <div class="zhuyin-content">5. 誰(ㄕㄟˊ)對(ㄉㄨㄟˋ)花(ㄏㄨㄚ)生(ㄕㄥ)過(ㄍㄨㄛˋ)敏(ㄇㄧㄣˇ)？ 思(ㄙ)婷(ㄊㄧㄥˊ)為(ㄨㄟˋ)什(ㄕㄣˊ)麼(˙ㄇㄜ)很(ㄏㄣˇ)緊(ㄐㄧㄣˇ)張(ㄓㄤ)？</div>
-          </div>
-          <div class="btn-group" data-text="誰對花生過敏？思婷為什麼很緊張？">
-            <button class="icon-btn" onclick="speakFromGroup(this)">🔊</button>
-            <button class="icon-btn" onclick="startRecord(this)">🎤</button>
-            <button class="icon-btn play-btn" onclick="playRecord(this)" disabled>▶️</button>
-          </div>
-        </li>
-        <li class="question-item sentence-row">
-          <div class="sentence-content">
-            <div class="zhuyin-content">6. 第(ㄉㄧˋ)二(ㄦˋ)天(ㄊㄧㄢ)，思(ㄙ)婷(ㄊㄧㄥˊ)和(ㄏㄢˋ)超(ㄔㄠ)明(ㄇㄧㄥˊ)做(ㄗㄨㄛˋ)了(˙ㄌㄜ)什(ㄕㄣˊ)麼(˙ㄇㄜ)事(ㄕˋ)？</div>
-          </div>
-          <div class="btn-group" data-text="第二天，思婷和超明做了什麼事？">
-            <button class="icon-btn" onclick="speakFromGroup(this)">🔊</button>
-            <button class="icon-btn" onclick="startRecord(this)">🎤</button>
-            <button class="icon-btn play-btn" onclick="playRecord(this)" disabled>▶️</button>
-          </div>
-        </li>
-        <li class="question-item sentence-row">
-          <div class="sentence-content">
-            <div class="zhuyin-content">7. 如(ㄖㄨˊ)果(ㄍㄨㄛˇ)你(ㄋㄧˇ)在(ㄗㄞˋ)飛(ㄈㄟ)機(ㄐㄧ)上(ㄕㄤˋ)很(ㄏㄣˇ)緊(ㄐㄧㄣˇ)張(ㄓㄤ)，你(ㄋㄧˇ)會(ㄏㄨㄟˋ)怎(ㄗㄣˇ)麼(˙ㄇㄜ)辦(ㄅㄢˋ)？</div>
-          </div>
-          <div class="btn-group" data-text="如果你在飛機上很緊張，你會怎麼辦？">
-            <button class="icon-btn" onclick="speakFromGroup(this)">🔊</button>
-            <button class="icon-btn" onclick="startRecord(this)">🎤</button>
-            <button class="icon-btn play-btn" onclick="playRecord(this)" disabled>▶️</button>
-          </div>
-        </li>
-      </ul>
-    </section>
-
-  </main>
-
-  <!-- JavaScript Engines & Logic -->
-  <script>
-    // 1. Zhuyin Parsing Engine: converts 漢字(注音) to <ruby>漢字<rt>注音</rt></ruby>
-    function parseZhuyin() {
-      const elements = document.querySelectorAll('.zhuyin-content');
-      const zhuyinRegex = /([\u4e00-\u9fa5])\(([\u3100-\u312F\u02CA\u02C5\u02C7\u02CB\u02D9]+)\)/g;
-      
-      elements.forEach(el => {
-        let text = el.innerHTML;
-        let formatted = text.replace(zhuyinRegex, '<ruby>$1<rt>$2</rt></ruby>');
-        el.innerHTML = formatted;
-      });
-    }
-
-    // 2. Control Toggles
-    function toggleZhuyin() {
-      document.body.classList.toggle('hide-zhuyin');
-    }
-
-    function toggleEnglish() {
-      document.body.classList.toggle('hide-english');
-    }
-
-    function toggleSidebar() {
-      const sidebar = document.getElementById('sidebar');
-      const mainWrapper = document.getElementById('mainWrapper');
-      sidebar.classList.toggle('active');
-      sidebar.classList.toggle('collapsed');
-      mainWrapper.classList.toggle('expanded');
-    }
-
-    // 3. Audio TTS Pronunciation (zh-TW, 0.85 rate)
-    function speakFromGroup(btn) {
-      const btnGroup = btn.parentElement;
-      const text = btnGroup.dataset.text;
-      if ('speechSynthesis' in window) {
-        window.speechSynthesis.cancel();
-        const utterance = new SpeechSynthesisUtterance(text);
-        utterance.lang = 'zh-TW';
-        utterance.rate = 0.85;
-        window.speechSynthesis.speak(utterance);
-      } else {
-        alert('Your browser does not support Web Speech API.');
-      }
-    }
-
-    // 4. Student Audio Recording & Playback Engine
-    let mediaRecorder = null;
-    let audioChunks = [];
-    let currentAudio = null;
-
-    function startRecord(btn) {
-      const btnGroup = btn.parentElement;
-      const playBtn = btnGroup.querySelector('.play-btn');
-
-      if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
-        navigator.mediaDevices.getUserMedia({ audio: true })
-          .then(stream => {
-            mediaRecorder = new MediaRecorder(stream);
-            audioChunks = [];
-
-            mediaRecorder.ondataavailable = e => {
-              audioChunks.push(e.data);
-            };
-
-            mediaRecorder.onstop = () => {
-              const audioBlob = new Blob(audioChunks, { type: 'audio/mp3' });
-              const audioUrl = URL.createObjectURL(audioBlob);
-              btnGroup.dataset.audioUrl = audioUrl;
-              playBtn.disabled = false;
-              playBtn.style.opacity = '1';
-            };
-
-            mediaRecorder.start();
-            btn.classList.add('recording');
-            btn.onclick = function() { stopRecord(this); };
-          })
-          .catch(err => {
-            alert('Could not access microphone: ' + err.message);
-          });
-      } else {
-        alert('Microphone access is not supported in your browser.');
-      }
-    }
-
-    function stopRecord(btn) {
-      if (mediaRecorder && mediaRecorder.state !== 'inactive') {
-        mediaRecorder.stop();
-        mediaRecorder.stream.getTracks().forEach(track => track.stop());
-        btn.classList.remove('recording');
-        btn.onclick = function() { startRecord(this); };
-      }
-    }
-
-    function playRecord(btn) {
-      const btnGroup = btn.parentElement;
-      const audioUrl = btnGroup.dataset.audioUrl;
-      if (audioUrl) {
-        if (currentAudio) {
-          currentAudio.pause();
-        }
-        currentAudio = new Audio(audioUrl);
-        currentAudio.play();
-      }
-    }
-
-    // Auto-initialize Zhuyin engine on page load
-    window.addEventListener('DOMContentLoaded', () => {
-      parseZhuyin();
-    });
-  </script>
-</body>
-</html>
+            <!-- 1. 中華航空 -->
+            <div id="wu-1" class="grammar-box">
