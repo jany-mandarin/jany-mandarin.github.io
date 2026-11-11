@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Patrick's Mandarin Lessons</title>
+    <style>
+        :root { --bg: #FDFBF7; --primary: #D4A373; --text: #4a4a4a; --white: #fff; --highlight: #8C6239; }
+        body { font-family: 'Helvetica Neue', Arial, sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; max-width: 650px; margin: 0 auto; padding: 40px 20px 30px 20px; }
+        h1 { color: var(--highlight); border-bottom: 2px solid var(--primary); padding-bottom: 15px; margin-bottom: 20px; text-align: center; }
+        .profile { font-size: 16px; margin-bottom: 30px; color: #555; text-align: center; }
+        
+        /* 課程卡片的外觀設定 */
+        .menu { display: flex; flex-direction: column; gap: 20px; }
+        .menu-item { background: var(--white); padding: 20px; border-radius: 12px; text-decoration: none; color: var(--text); border: 2px solid transparent; transition: all 0.2s; display: block; box-shadow: 0 3px 8px rgba(0,0,0,0.05); }
+        .menu-item:hover { background: #FFF9F0; border-color: var(--primary); transform: translateY(-3px); box-shadow: 0 6px 12px rgba(0,0,0,0.1); }
+        
+        /* 卡片標題與最新標籤 */
+        .lesson-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px dashed #eee; padding-bottom: 10px; margin-bottom: 10px; }
+        .lesson-title { font-size: 20px; font-weight: bold; color: var(--highlight); margin: 0; }
+        .new-badge { background: #E74C3C; color: white; font-size: 12px; padding: 3px 8px; border-radius: 20px; font-weight: bold; letter-spacing: 1px; }
+        
+        /* 大綱列表設定 */
+        .outline { margin: 0; padding-left: 20px; font-size: 14.5px; color: #555; }
+        .outline li { margin-bottom: 6px; }
+        .outline strong { color: #664d34; }
+    </style>
+</head>
+<body>
+
+    <h1>👨‍🎓 Patrick's Mandarin Lessons</h1>
+    
+    <div class="profile">
+        Welcome back, Patrick! Please select a lesson below. <br>
+        <span style="font-size: 14px; color: #888;">(Newest lessons are at the top, and all history is preserved)</span>
+    </div>
+
+    <div class="menu">
+        
+        <!-- Lesson 58 (最新的一課放在最上面) -->
+        <a href="patrick.lesson58.html" class="menu-item">
+            <div class="lesson-header">
+                <div class="lesson-title">🌟 Lesson 58: Warm-up, Lesson 9 & Workbooks</div>
+                <div class="new-badge">NEW</div>
+            </div>
+            <ul class="outline">
+                <li><strong>Warm-up:</strong> 工作 / 上班。</li>
+                <li><strong>Lesson 9 Focus:</strong> 複合動詞、從 A 到 B、第 + 數字 + 量詞。</li>
+                <li><strong>Workbooks:</strong> 時間副詞、大夫、有點(兒)、重複字詞。</li>
+            </ul>
+        </a>
+
+        <!-- Lesson 57 -->
+        <a href="patrick.lesson57.html" class="menu-item">
+            <div class="lesson-header">
+                <div class="lesson-title">📖 Lesson 57: Warm-up & Lessons 6-8</div>
+            </div>
+            <ul class="outline">
+                <li><strong>Warm-up:</strong> 天氣、溫度、工作、頁數。</li>
+                <li><strong>Core Lessons Focus:</strong> 怎麼、量詞重疊、因為...所以...、還、就、離、呢、好嗎？、再。</li>
+            </ul>
+        </a>
+
+        <!-- Lesson 56 -->
+        <a href="patrick.lesson56.html" class="menu-item">
+            <div class="lesson-header">
+                <div class="lesson-title">📖 Lesson 56: Warm-up & Lesson 5 Core Grammar</div>
+            </div>
+            <ul class="outline">
+                <li><strong>Warm-up:</strong> 句型比較（你去哪裡 vs 你吃什麼）、月餅、地道、幫、一些。</li>
+                <li><strong>Lesson 5 Focus:</strong> 就、還好 / 還行、有點兒、以後、想、多 / 少、對...不好 / 好。</li>
+            </ul>
+        </a>
+
+    </div>
+
+</body>
+</html>
