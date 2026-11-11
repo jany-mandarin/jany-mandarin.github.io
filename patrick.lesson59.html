@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Patrick's Mandarin Lesson 59</title>
+    <style>
+        :root { --bg: #FDFBF7; --primary: #D4A373; --text: #4a4a4a; --white: #fff; --sidebar-width: 280px; }
+        html { scroll-behavior: smooth; }
+        body { font-family: 'Helvetica Neue', Arial, sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; margin: 0; padding: 0; display: flex; transition: margin-left 0.3s ease; }
+        
+        .sidebar { width: var(--sidebar-width); background: #FFF9F0; border-right: 1px solid #E6D5B8; height: 100vh; position: fixed; top: 0; left: 0; overflow-y: auto; padding: 20px; box-sizing: border-box; transition: transform 0.3s ease; z-index: 1000; }
+        .sidebar.collapsed { transform: translateX(-100%); }
+        .sidebar h3 { margin-top: 0; color: #8C6239; font-size: 18px; border-bottom: 2px solid var(--primary); padding-bottom: 8px; display: flex; justify-content: space-between; align-items: center; }
+        .sidebar ol { padding-left: 20px; margin: 10px 0; color: #555; }
+        .sidebar li { margin-bottom: 6px; font-size: 14px; }
+        .sidebar .sub-list { padding-left: 15px; margin: 4px 0; list-style-type: circle; }
+        .sidebar .sub-list li { font-size: 13px; margin-bottom: 4px; }
+        .sidebar a { color: #555; text-decoration: none; display: block; }
+        .sidebar a:hover { color: #8C6239; font-weight: bold; }
+        
+        .sidebar-toggle { position: fixed; top: 15px; left: 15px; z-index: 1100; background: var(--primary); color: white; border: none; padding: 8px 12px; border-radius: 6px; cursor: pointer; font-size: 14px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+
+        .main-content { margin-left: var(--sidebar-width); width: calc(100% - var(--sidebar-width)); padding: 20px 40px; box-sizing: border-box; max-width: 900px; transition: margin-left 0.3s ease, width 0.3s ease; }
+        .main-content.expanded { margin-left: 0; width: 100%; }
+
+        .header { text-align: center; border-bottom: 2px solid var(--primary); padding-bottom: 10px; margin-bottom: 20px; position: relative; }
+        .top-nav { position: absolute; top: 0; right: 0; display: flex; gap: 15px; font-size: 14px; font-weight: bold; }
+        .top-nav a { color: #8C6239; text-decoration: none; }
+        .top-nav a:hover { text-decoration: underline; }
+        
+        .controls { position: sticky; top: 0; background: var(--bg); padding: 15px; text-align: center; border-bottom: 1px solid #ccc; z-index: 100; margin-bottom: 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
+        button.control-btn { background: var(--primary); color: white; border: none; padding: 10px 15px; margin: 5px; border-radius: 6px; cursor: pointer; font-size: 14px; font-weight: bold; }
+        button.control-btn:hover { background: #B5835A; }
+        
+        .icon-btn { background: #f0f0f0; border: none; width: 38px; height: 38px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 2px 4px rgba(0,0,0,0.08); transition: transform 0.1s, background 0.2s; margin-right: 6px; vertical-align: middle; }
+        .icon-btn:hover { background: #e0e0e0; transform: scale(1.05); }
+        .icon-btn.playing { background: #457b9d; }
+
+        h2 { color: #8C6239; border-left: 5px solid var(--primary); padding-left: 10px; margin-top: 30px; }
+        .section { margin-bottom: 30px; background: var(--white); padding: 20px; border-radius: 12px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); scroll-margin-top: 80px; }
+        
+        .item { margin-bottom: 20px; display: flex; flex-direction: column; border-bottom: 1px dashed #eee; padding-bottom: 15px; }
+        .sentence-row { display: flex; align-items: flex-start; gap: 12px; width: 100%; margin-bottom: 6px; }
+        .buttons-group { display: flex; align-items: center; gap: 6px; flex-shrink: 0; margin-top: 2px; }
+        .text-content { display: flex; flex-direction: column; flex-grow: 1; }
+        
+        .pinyin-group { display: inline-flex; flex-direction: column; align-items: center; margin-right: 3px; vertical-align: bottom; }
+        .py-text { font-size: 11px; color: #777; line-height: 1; margin-bottom: 2px; }
+        .hz-text { font-size: 24px; font-family: sans-serif; line-height: 1.2; }
+        
+        .en-trans { color: #666; font-size: 15px; font-style: italic; margin-top: 4px; }
+        .explanation-sub { color: #777; font-size: 13px; margin-top: 4px; line-height: 1.4; }
+        
+        .grammar-box { background: #FFF9F0; border: 1px solid #E6D5B8; border-radius: 8px; padding: 15px; margin: 15px 0; }
+        .note { font-size: 14px; color: #555; margin-bottom: 10px; line-height: 1.5; }
+        
+        .custom-table { width: 100%; border-collapse: collapse; margin: 15px 0; background: white; border-radius: 8px; overflow: hidden; border: 1px solid #E6D5B8; }
+        .custom-table th { background: #F4E8D8; color: #8C6239; padding: 12px; font-size: 16px; text-align: left; border-bottom: 2px solid #E6D5B8; }
+        .custom-table td { padding: 12px; border-bottom: 1px solid #eee; vertical-align: top; }
+        .custom-table tr:last-child td { border-bottom: none; }
+        
+        .lesson-img { max-width: 100%; border-radius: 8px; margin: 10px 0; border: 1px solid #E6D5B8; }
+
+        @media (max-width: 900px) {
+            .sidebar { transform: translateX(-100%); }
+            .sidebar.active { transform: translateX(0); }
+            .main-content { margin-left: 0; width: 100%; padding: 20px; }
+        }
+    </style>
+</head>
+<body>
+
+    <button class="sidebar-toggle" onclick="toggleSidebar()">☰ Outline</button>
+
+    <div class="sidebar" id="sidebar">
+        <h3>📖 Outline <button style="background:none; border:none; color:#8C6239; font-weight:bold; cursor:pointer; font-size:16px;" onclick="toggleSidebar()">×</button></h3>
+        <ol>
+            <li>
+                <a href="#sec-1">一、第十課 (Lesson 10)</a>
+                <ul class="sub-list">
+                    <li><a href="#sub-1-1">1. 不要...了 / 別...了</a></li>
+                    <li><a href="#sub-1-2">2. A 对 B + adj.</a></li>
+                    <li><a href="#sub-1-3">3. 正在 (zhèngzài)</a></li>
+                    <li><a href="#sub-1-4">4. 洗 (xǐ)</a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="#sec-2">二、第十一課 (Lesson 11)</a>
+                <ul class="sub-list">
+                    <li><a href="#sub-2-1">1. S. + V. + 的 + N.</a></li>
+                    <li><a href="#sub-2-2">2. A + 比 + B + adj.</a></li>
+                    <li><a href="#sub-2-3">3. A + 没有 + B + adj.</a></li>
+                    <li><a href="#sub-2-4">4. A + 比 + B + adj. + num-M</a></li>
+                    <li><a href="#sub-2-5">5. 可能 (kěnéng)</a></li>
+                    <li><a href="#sub-2-6">6. 中文字表 (Vocabulary)</a></li>
+                </ul>
+            </li>
+        </ol>
+    </div>
+
+    <div class="main-content" id="mainContent">
+        <div class="header">
+            <div class="top-nav">
+                <a href="https://jany-mandarin.github.io/patrick.lesson58.html">← Lesson 58</a>
+            </div>
+            <h1>Patrick's Mandarin Lesson 59</h1>
+            <p>Date: 2026/11/11</p>
+        </div>
+
+        <div class="controls">
+            <button class="control-btn" onclick="togglePinyin()">Toggle Pinyin</button>
+            <button class="control-btn" onclick="toggleEnglish()">Toggle English</button>
+        </div>
+
+        <!-- Section 1: Lesson 10 -->
+        <div class="section" id="sec-1">
+            <h2>一、第十課 (Lesson 10)</h2>
+            
+            <div class="grammar-box" id="sub-1-1">
+                <div style="font-weight:bold; font-size:16px; color:#8C6239; margin-bottom:5px;">1. 不要...了 / 別...了</div>
+                <div class="note"><b>Explanation:</b> 「不要」 (bùyào) when spoken quickly becomes 「别」 (bié). It is used to stop someone from doing something or tell someone not to do an action.</div>
+                <img src="https://cdn.phototourl.com/member/2026-11-11-19e908b4-2414-4b7c-972a-3d3ce4613736.png" class="lesson-img" alt="Lesson 10 Image">
+                
+                <div class="item">
+                    <div class="sentence-row">
+                        <div class="buttons-group">
+                            <button class="icon-btn" onclick="togglePlayAudio('别玩手机了！', 'p1')" title="Listen"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#666" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path></svg></button>
+                        </div>
+                        <div class="text-content">
+                            <div>别<span class="pinyin-group"><span class="py-text">bié</span><span class="hz-text">别</span></span>玩<span class="pinyin-group"><span class="py-text">wán</span><span class="hz-text">玩</span></span>手<span class="pinyin-group"><span class="py-text">shǒu</span><span class="hz-text">手</span></span>机<span class="pinyin-group"><span class="py-text">jī</span><span class="hz-text">机</span></span>了<span class="pinyin-group"><span class="py-text">le</span><span class="hz-text">了</span></span>！</div>
+                            <div class="en-trans">Stop playing on your phone!</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="item">
+                    <div class="sentence-row">
+                        <div class="buttons-group">
+                            <button class="icon-btn" onclick="togglePlayAudio('别睡觉了！', 'p2')" title="Listen"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#666" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path></svg></button>
+                        </div>
+                        <div class="text-content">
+                            <div>别<span class="pinyin-group"><span class="py-text">bié</span><span class="hz-text">别</span></span>睡<span class="pinyin-group"><span class="py-text">shuì</span><span class="hz-text">睡</span></span>觉<span class="pinyin-group"><span class="py-text">jiào</span><span class="hz-text">觉</span></span>了<span class="pinyin-group"><span class="py-text">le</span><span class="hz-text">了</span></span>！</div>
+                            <div class="en-trans">Stop sleeping! / Wake up!</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="item">
+                    <div class="sentence-row">
+                        <div class="buttons-group">
+                            <button class="icon-btn" onclick="togglePlayAudio('别看电视了！', 'p3')" title="Listen"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#666" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path></svg></button>
+                        </div>
+                        <div class="text-content">
+                            <div>别<span class="pinyin-group"><span class="py-text">bié</span><span class="hz-text">别</span></span>看<span class="pinyin-group"><span class="py-text">kàn</span><span class="hz-text">看</span></span>电<span class="pinyin-group"><span class="py-text">diàn</span><span class="hz-text">电</span></span>视<span class="pinyin-group"><span class="py-text">shì</span><span class="hz-text">视</span></span>了<span class="pinyin-group"><span class="py-text">le</span><span class="hz-text">了</span></span>！</div>
+                            <div class="en-trans">Stop watching TV!</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="item">
+                    <div class="sentence-row">
+                        <div class="buttons-group">
+                            <button class="icon-btn" onclick="togglePlayAudio('别看书了！', 'p4')" title="Listen"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#666" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path></svg></button>
+                        </div>
+                        <div class="text-content">
+                            <div>别<span class="pinyin-group"><span class="py-text">bié</span><span class="hz-text">别</span></span>看<span class="pinyin-group"><span class="py-text">kàn</span><span class="hz-text">看</span></span>书<span class="pinyin-group"><span class="py-text">shū</span><span class="hz-text">书</span></span>了<span class="pinyin-group"><span class="py-text">le</span><span class="hz-text">了</span></span>！</div>
+                            <div class="en-trans">Stop reading books!</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grammar-box" id="sub-1-2">
+                <div style="font-weight:bold; font-size:16px; color:#8C6239; margin-bottom:5px;">2. A 对 B + adj.</div>
+                <div class="note"><b>Explanation:</b> Shows how A treats B (one-way attitude or treatment). If you use 「和」 (hé), it means a mutual, two-way relationship.</div>
+                
+                <div class="item">
+                    <div class="sentence-row">
+                        <div class="text-content">
+                            <div>跑步对身体很好。</div>
+                            <div class="en-trans">Running is very good for health.</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="item">
+                    <div class="sentence-row">
+                        <div class="text-content">
+                            <div>老师对学生非常好。</div>
+                            <div class="en-trans">The teacher is extremely good to the students.</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="item">
+                    <div class="sentence-row">
+                        <div class="text-content">
+                            <div>我的公司对我不好。</div>
+                            <div class="en-trans">My company is not good to me.</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="item">
+                    <div class="sentence-row">
+                        <div class="text-content">
+                            <div>我对我的女友非常好。</div>
+                            <div class="en-trans">I am very good to my girlfriend.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grammar-box" id="sub-1-3">
+                <div style="font-weight:bold; font-size:16px; color:#8C6239; margin-bottom:5px;">3. 正在 (zhèngzài)</div>
+                <div class="note"><b>Explanation:</b> Indicates that an action is currently happening right at this moment.</div>
+                
+                <div class="item">
+                    <div class="sentence-row">
+                        <div class="text-content">
+                            <div>我正在上中文课。</div>
+                            <div class="en-trans">I am having a Chinese class right now.</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="item">
+                    <div class="sentence-row">
+                        <div class="text-content">
+                            <div>哥哥正在玩电脑，没时间帮助我。</div>
+                            <div class="en-trans">Older brother is playing on the computer right now, so he has no time to help me.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grammar-box" id="sub-1-4">
+                <div style="font-weight:bold; font-size:16px; color:#8C6239; margin-bottom:5px;">4. 洗 (xǐ)</div>
+                <div class="note"><b>Explanation:</b> Broadly used for washing or cleaning something with water.</div>
+                
+                <div class="item">
+                    <div class="sentence-row">
+                        <div class="text-content">
+                            <div>那件白色的衣服我帮你洗了，在外面呢。</div>
+                            <div class="en-trans">I helped you wash that white piece of clothing; it's outside.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 2: Lesson 11 -->
+        <div class="section" id="sec-2">
+            <h2>二、第十一課 (Lesson 11)</h2>
+            
+            <div class="grammar-box" id="sub-2-1">
+                <div style="font-weight:bold; font-size:16px; color:#8C6239; margin-bottom:5px;">1. S. + V. + 的 + N.</div>
+                <div class="note"><b>Explanation:</b> In Chinese, descriptive phrases or relative clauses are placed <i>before</i> the noun they modify, whereas in English they usually go after.</div>
+                
+                <div class="item">
+                    <div class="text-content">
+                        <div>這是我新买的衣服。</div>
+                        <div class="en-trans">This is the clothes I newly bought.</div>
+                    </div>
+                </div>
+                <div class="item">
+                    <div class="text-content">
+                        <div>這是我妈妈做的饭。</div>
+                        <div class="en-trans">This is the meal my mom made.</div>
+                    </div>
+                </div>
+                <div class="item">
+                    <div class="text-content">
+                        <div>和你一起看电视的人是谁？</div>
+                        <div class="en-trans">Who is the person watching TV together with you?</div>
+                    </div>
+                </div>
+                <div class="item">
+                    <div class="text-content">
+                        <div>這是我昨天买的炒饭。</div>
+                        <div class="en-trans">This is the fried rice I bought yesterday.</div>
+                    </div>
+                </div>
+                <div class="item">
+                    <div class="text-content">
+                        <div>這是我做的海南鸡饭。</div>
+                        <div class="en-trans">This is the Hainanese chicken rice I made.</div>
+                    </div>
+                </div>
+                <div class="item">
+                    <div class="text-content">
+                        <div>這是我女友买的杯子。</div>
+                        <div class="en-trans">This is the cup my girlfriend bought.</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grammar-box" id="sub-2-2">
+                <div style="font-weight:bold; font-size:16px; color:#8C6239; margin-bottom:5px;">2. A + 比 + B + adj.</div>
+                <div class="note"><b>Explanation:</b> Comparative structure meaning A is more [adj.] than B.</div>
+                <div class="item"><div class="text-content"><div>我比哥哥高。</div><div class="en-trans">I am taller than older brother.</div></div></div>
+                <div class="item"><div class="text-content"><div>今天比昨天热。</div><div class="en-trans">Today is hotter than yesterday.</div></div></div>
+                <div class="item"><div class="text-content"><div>今天的西瓜比昨天便宜。</div><div class="en-trans">Today's watermelon is cheaper than yesterday's.</div></div></div>
+            </div>
+
+            <div class="grammar-box" id="sub-2-3">
+                <div style="font-weight:bold; font-size:16px; color:#8C6239; margin-bottom:5px;">3. A + 没有 + B + adj.</div>
+                <div class="note"><b>Explanation:</b> Negative comparison meaning A is not as [adj.] as B.</div>
+                <div class="item"><div class="text-content"><div>哥哥没有姐姐高。</div><div class="en-trans">Older brother is not as tall as older sister.</div></div></div>
+                <div class="item"><div class="text-content"><div>今天没有昨天热。</div><div class="en-trans">Today is not as hot as yesterday.</div></div></div>
+                <div class="item"><div class="text-content"><div>西瓜没有苹果便宜。</div><div class="en-trans">Watermelon is not as cheap as apple.</div></div></div>
+            </div>
+
+            <div class="grammar-box" id="sub-2-4">
+                <div style="font-weight:bold; font-size:16px; color:#8C6239; margin-bottom:5px;">4. A + 比 + B + adj. + num-M</div>
+                <div class="note"><b>Explanation:</b> Comparative structure with a specific measurement or degree difference.</div>
+                <div class="item"><div class="text-content"><div>西瓜比苹果贵两块钱。</div><div class="en-trans">Watermelon is 2 yuan more expensive than apple.</div></div></div>
+                <div class="item"><div class="text-content"><div>我的学习比他好一点。</div><div class="en-trans">My studies are a bit better than his.</div></div></div>
+                <div class="item"><div class="text-content"><div>今天比昨天热得多。</div><div class="en-trans">Today is much hotter than yesterday.</div></div></div>
+                <div class="item"><div class="text-content"><div>他比我们老师小两岁。</div><div class="en-trans">He is 2 years younger than our teacher.</div></div></div>
+                <div class="item"><div class="text-content"><div>我哥比我大两岁。</div><div class="en-trans">My older brother is 2 years older than me.</div></div></div>
+            </div>
+
+            <div class="grammar-box" id="sub-2-5">
+                <div style="font-weight:bold; font-size:16px; color:#8C6239; margin-bottom:5px;">5. 可能 (kěnéng)</div>
+                <div class="note"><b>Explanation:</b> Expresses probability or possibility (maybe / probably).</div>
+                <div class="item"><div class="text-content"><div>明天可能会下雨。</div><div class="en-trans">It might rain tomorrow.</div></div></div>
+                <div class="item"><div class="text-content"><div>他可能知道这件事情了。</div><div class="en-trans">He probably already knows about this matter.</div></div></div>
+                <div class="item"><div class="text-content"><div>可能我明天不来上班了。</div><div class="en-trans">I might not come to work tomorrow.</div></div></div>
+                <div class="item"><div class="text-content"><div>你可能不认识他。</div><div class="en-trans">You probably don't know him.</div></div></div>
+            </div>
+
+            <div class="grammar-box" id="sub-2-6">
+                <div style="font-weight:bold; font-size:16px; color:#8C6239; margin-bottom:5px;">6. 中文字表 (Chinese Vocabulary)</div>
+                <img src="https://cdn.phototourl.com/member/2026-11-11-0bec36a8-f5a9-4f15-a791-e4017f17d76c.png" class="lesson-img" alt="Chinese Characters Image">
+                
+                <table class="custom-table">
+                    <thead>
+                        <tr>
+                            <th>中文 (Chinese)</th>
+                            <th>英文 (English)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>水 (shuǐ)</td><td>Water</td></tr>
+                        <tr><td>海 (hǎi)</td><td>Sea / Ocean</td></tr>
+                        <tr><td>洗 (xǐ)</td><td>To wash</td></tr>
+                        <tr><td>没 (méi)</td><td>Have not / Not</td></tr>
+                        <tr><td>冰 (bīng)</td><td>Ice</td></tr>
+                        <tr><td>冬 (dōng)</td><td>Winter</td></tr>
+                        <tr><td>热 (rè)</td><td>Hot</td></tr>
+                        <tr><td>火锅 (huǒguō)</td><td>Hot pot</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const mainContent = document.getElementById('mainContent');
+            if (window.innerWidth <= 900) {
+                sidebar.classList.toggle('active');
+            } else {
+                sidebar.classList.toggle('collapsed');
+                mainContent.classList.toggle('expanded');
+            }
+        }
+
+        function togglePlayAudio(text, id) {
+            if (speechSynthesis.speaking) {
+                speechSynthesis.cancel();
+            }
+            const utterance = new SpeechSynthesisUtterance(text);
+            utterance.lang = 'zh-CN';
+            utterance.rate = 0.85;
+            speechSynthesis.speak(utterance);
+        }
+
+        let pinyinVisible = true;
+        let enVisible = true;
+
+        function togglePinyin() {
+            pinyinVisible = !pinyinVisible;
+            document.querySelectorAll('.py-text').forEach(el => {
+                el.style.display = pinyinVisible ? 'block' : 'none';
+            });
+        }
+
+        function toggleEnglish() {
+            enVisible = !enVisible;
+            document.querySelectorAll('.en-trans').forEach(el => {
+                el.style.display = enVisible ? 'block' : 'none';
+            });
+        }
+    </script>
+</body>
+</html>
