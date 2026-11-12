@@ -53,7 +53,7 @@ body.nopy rt{display:none}body.noen .en{display:none}
 </style>
 </head>
 <body>
-<div class="top"><a href="index.html">Index</a><a href="https://jany-mandarin.github.io/patrick.lesson57.html">Lesson 57</a></div>
+<div class="top"><a href="https://jany-mandarin.github.io/patrick.html">Index</a><a href="https://jany-mandarin.github.io/patrick.lesson57.html">Lesson 57</a></div>
 <button class="tog" onclick="toggleSidebar()">☰ Outline</button>
 <div class="sidebar" id="sb">
 <h3>📖 Outline</h3>
@@ -184,100 +184,4 @@ body.nopy rt{display:none}body.noen .en{display:none}
 </table></div></div>
 
 <div class="box" id="c2"><h3>2. 大夫 (dài fu)</h3>
-<img class="img" src="https://cdn.phototourl.com/member/2026-10-28-2d408bc6-97e6-4d71-954b-b17520f563fa.png" alt="大夫">
-<div class="note"><b>💡 Explanation:</b> 大夫 is an old way to call a doctor. Some people still say it today, and it often means a doctor of Chinese medicine. <b>Note: here 大 is read "dài", not "dà".</b></div>
-<div class="ex"><div><b class="zh">我的爸爸是大夫{wǒ de bà ba shì dài fu}。</b><i class="en">My father is a doctor.</i></div></div></div>
-</div>
-
-<!-- 四 -->
-<div class="section" id="s4">
-<h2>4. Workbook 8 第八课作业本</h2>
-<div class="box" id="d1"><h3>1. 有点(儿) yǒu diǎn(r)</h3>
-<div class="note"><b>💡 Explanation:</b> In Chinese culture, people often do not say "I don't like it" directly. They say 有点 + adjective to politely say no.</div>
-<div class="ex"><div><b class="zh">那件白的有点长{nà jiàn bái de yǒu diǎn cháng}。</b><i class="en">That white one is a little long.</i></div></div>
-<div class="note">This means: I like shorter ones. I don't like long ones.</div>
-<div class="ex"><div><b class="zh">这件黑的有点贵{zhè jiàn hēi de yǒu diǎn guì}。</b><i class="en">This black one is a little expensive.</i></div></div>
-<div class="note">This means: it is too expensive, I don't like it, I don't want to buy it, but we don't say it so directly.</div></div>
-
-<div class="box" id="d2"><h3>2. Repeated words 重复字词</h3>
-<div class="note"><b>💡 Explanation:</b> Chinese likes to say a verb twice. It makes the action lighter and softer ("a little"), and it also sounds cute.</div>
-<div class="ex"><div><b class="zh">我想找时间去看看老师{wǒ xiǎng zhǎo shí jiān qù kàn kan lǎo shī}。</b><i class="en">I want to find time to go see my teacher.</i></div></div>
-<div class="ex"><div><b class="zh">我想去运动运动{wǒ xiǎng qù yùn dòng yùn dong}。</b><i class="en">I want to go exercise a bit.</i></div></div></div>
-</div>
-</main>
-
-<script>
-function toggleSidebar(){const s=document.getElementById('sb'),m=document.getElementById('main');
- if(innerWidth<=900)s.classList.toggle('active');else{s.classList.toggle('collapsed');m.classList.toggle('expanded')}}
-
-/* ---- Quiz data ---- */
-const QUIZ=[
-{s:"我找{wǒ zhǎo}__我的钱包了{wǒ de qián bāo le}。",en:"I found my wallet.",o:[
- {c:"好",p:"hǎo",ok:0,w:"找好 is not natural here. 好 means “ready”, but with 找 the result is that you FOUND it."},
- {c:"到",p:"dào",ok:1,w:"找到 = found it! 到 shows the result of looking."},
- {c:"完",p:"wán",ok:0,w:"找完 means you finished searching. It does not say you found the wallet."}]},
-{s:"他没有听{tā méi yǒu tīng}__老师的话{lǎo shī de huà}。",en:"He didn't ... the teacher's words.",all:1,o:[
- {c:"到",p:"dào",ok:1,w:"没听到: the sound did not reach him (too noisy, too far away). He didn't HEAR it."},
- {c:"懂",p:"dǒng",ok:1,w:"没听懂: he heard it, but he didn't UNDERSTAND it."},
- {c:"完",p:"wán",ok:1,w:"没听完: he didn't FINISH listening (he left early or stopped)."}]},
-{s:"我做{wǒ zuò}__海南鸡饭了{hǎi nán jī fàn le}，一起吃饭吧{yì qǐ chī fàn ba}！",en:"I made Hainanese chicken rice. Let's eat together!",o:[
- {c:"好",p:"hǎo",ok:1,w:"做好 = it is ready, so we can eat now."},
- {c:"完",p:"wán",ok:0,w:"做完 means the cooking is finished, but it doesn't say the food is ready to eat. 做好 fits “let's eat” better."},
- {c:"到",p:"dào",ok:0,w:"做到 means “manage to do / achieve”, not cooking a dish."}]},
-{s:"我昨天在{wǒ zuó tiān zài}New World看{kàn}__我的朋友{wǒ de péng you}。",en:"Yesterday I saw my friend at New World.",o:[
- {c:"见",p:"jiàn",ok:1,w:"看见 = you saw someone by chance. It is a simple picture: “I saw my friend”."},
- {c:"完",p:"wán",ok:0,w:"看完 means you finished watching something (a movie), not seeing a person."},
- {c:"好",p:"hǎo",ok:0,w:"看好 is not used for seeing a friend."}]}
-];
-const qz=document.getElementById('quiz');
-QUIZ.forEach((q,i)=>{
- const d=document.createElement('div');d.className='q';
- d.innerHTML=`<div><b>${i+1})</b> <span class="zh" style="display:inline">${q.s.replace('__','<span class="blank">&nbsp;</span>')}</span><span class="en">${q.en}</span></div><div class="opts"></div><div class="res"></div>`;
- const os=d.querySelector('.opts'),res=d.querySelector('.res');
- q.o.forEach(o=>{const b=document.createElement('button');b.className='opt';b.innerHTML=`<span class="zh" style="display:inline">${o.c}{${o.p}}</span>`.replace(/(.)\{/,'$1{');
-  b.onclick=()=>{
-   d.querySelector('.blank').textContent=o.c;
-   os.querySelectorAll('.opt').forEach(x=>x.classList.remove('ok','bad'));
-   b.classList.add(o.ok?'ok':'bad');
-   let h=`<div class="fb ${o.ok?'ok':'bad'}">${o.ok?'✅ ':'❌ '}${o.ok&&q.all?'Correct! ':o.ok?'Correct! ':'Not quite. '}${o.w}</div>`;
-   if(q.all)h=`<div class="fb ok">✅ All three are correct, but the meanings are different:<br>`+q.o.map(x=>`• <b>${x.c}</b>: ${x.w}`).join('<br>')+`</div>`;
-   else if(!o.ok){h+=`<div class="fb">👉 Try another option!</div>`}
-   res.innerHTML=h;
-  };os.appendChild(b)});
- qz.appendChild(d);
-});
-
-/* ---- Audio buttons (read from raw text before pinyin is built) ---- */
-let curBtn=null;
-document.querySelectorAll('.ex').forEach(ex=>{
- const z=ex.querySelector('.zh');if(!z)return;
- const t=z.textContent.replace(/\{[^}]*\}/g,'');
- const b=document.createElement('button');b.className='ab';b.textContent='🔊';
- b.onclick=()=>{
-  if(curBtn===b){ // same button: pause / resume
-   if(speechSynthesis.paused){speechSynthesis.resume();b.textContent='⏸'}
-   else{speechSynthesis.pause();b.textContent='▶'}
-   return}
-  speechSynthesis.cancel();
-  if(curBtn){curBtn.textContent='🔊'}
-  const u=new SpeechSynthesisUtterance(t);u.lang='zh-CN';u.rate=.85;
-  const done=()=>{if(curBtn===b){b.textContent='🔊';curBtn=null}};
-  u.onend=done;u.onerror=done;
-  curBtn=b;b.textContent='⏸';speechSynthesis.speak(u)};
- ex.prepend(b);
-});
-
-/* ---- Pinyin builder: 汉字{pin yin} → <ruby> ---- */
-const RE=/([\u4e00-\u9fff]+)\{([^}]*)\}/g;
-function build(txt){const f=document.createDocumentFragment();let last=0,m;RE.lastIndex=0;
- while((m=RE.exec(txt))){if(m.index>last)f.append(txt.slice(last,m.index));
-  const ps=m[2].trim().split(/\s+/);
-  [...m[1]].forEach((c,i)=>{const r=document.createElement('ruby');r.append(c);const rt=document.createElement('rt');rt.textContent=ps[i]||'';r.append(rt);f.append(r)});
-  last=RE.lastIndex}
- if(last<txt.length)f.append(txt.slice(last));return f}
-const w=document.createTreeWalker(document.getElementById('main'),NodeFilter.SHOW_TEXT),ns=[];
-while(w.nextNode())ns.push(w.currentNode);
-ns.forEach(n=>{if(n.nodeValue.includes('{'))n.replaceWith(build(n.nodeValue))});
-</script>
-</body>
-</html>
+<img class="img" src="
