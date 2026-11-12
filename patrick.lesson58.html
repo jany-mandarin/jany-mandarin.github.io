@@ -12,16 +12,18 @@ body{font-family:'Helvetica Neue',Arial,sans-serif;background:var(--bg);color:#4
 .top a{color:var(--p);font-weight:bold;text-decoration:none;margin-left:20px;font-size:15px}
 .sidebar{width:var(--sb);background:#FFF9F0;border-right:1px solid var(--line);height:100vh;position:fixed;top:0;left:0;overflow-y:auto;padding:60px 20px 20px;box-sizing:border-box;z-index:1000;transition:transform .3s}
 .sidebar.collapsed{transform:translateX(-100%)}
-.sidebar h3{margin:0;color:var(--d);border-bottom:2px solid var(--p);padding-bottom:8px}
+.sidebar h3{margin:0;color:var(--d);border-bottom:2px solid var(--p);padding-bottom:8px;display:flex;justify-content:space-between;align-items:center;}
 .sidebar ol{padding-left:20px}.sidebar li{margin-bottom:8px;font-weight:bold;color:var(--d)}
 .sidebar ul{padding-left:15px;list-style:circle;font-weight:normal}.sidebar ul li{font-size:14px;margin-bottom:4px;color:#555}
 .sidebar a{color:inherit;text-decoration:none}.sidebar a:hover{color:var(--p)}
-.tog{position:fixed;top:50px;left:15px;z-index:1100;background:var(--p);color:#fff;border:0;padding:8px 12px;border-radius:6px;cursor:pointer}
-main{margin:40px 0 0 var(--sb);width:calc(100% - var(--sb));max-width:960px;padding:20px 40px;box-sizing:border-box;transition:.3s}
+.tog{position:fixed;top:10px;left:15px;z-index:1300;background:var(--p);color:#fff;border:0;padding:8px 12px;border-radius:6px;cursor:pointer;font-weight:bold;box-shadow:0 2px 4px rgba(0,0,0,0.1);}
+.tog:hover{background:#B5835A;}
+main{margin:50px 0 0 var(--sb);width:calc(100% - var(--sb));max-width:960px;padding:20px 40px;box-sizing:border-box;transition:.3s}
 main.expanded{margin-left:0;width:100%}
 .header{text-align:center;border-bottom:2px solid var(--p);margin:20px 0}
-.controls{position:sticky;top:40px;background:var(--bg);padding:12px;text-align:center;border-bottom:1px solid #ccc;z-index:100;margin-bottom:20px}
-.cb{background:var(--p);color:#fff;border:0;padding:10px 15px;margin:4px;border-radius:6px;cursor:pointer;font-weight:bold}
+.controls{position:sticky;top:50px;background:rgba(253, 251, 247, 0.95);backdrop-filter:blur(5px);padding:12px;text-align:center;border-bottom:1px solid #ccc;z-index:1100;margin-bottom:20px;box-shadow:0 2px 4px rgba(0,0,0,0.05);border-radius:8px;}
+.cb{background:var(--p);color:#fff;border:0;padding:10px 15px;margin:4px;border-radius:6px;cursor:pointer;font-weight:bold;box-shadow:0 2px 4px rgba(0,0,0,0.08);}
+.cb:hover{background:#B5835A;}
 h2{color:var(--d);border-left:5px solid var(--p);padding-left:10px}
 .section{background:#fff;padding:20px;border-radius:12px;box-shadow:0 2px 5px rgba(0,0,0,.05);margin-bottom:30px;scroll-margin-top:130px}
 .box{background:#FFF9F0;border:1px solid var(--line);border-radius:8px;padding:15px;margin:15px 0;scroll-margin-top:140px}
@@ -56,7 +58,7 @@ body.nopy rt{display:none}body.noen .en{display:none}
 <div class="top"><a href="https://jany-mandarin.github.io/patrick.html">Index</a><a href="https://jany-mandarin.github.io/patrick.lesson57.html">Lesson 57</a></div>
 <button class="tog" onclick="toggleSidebar()">☰ Outline</button>
 <div class="sidebar" id="sb">
-<h3>📖 Outline</h3>
+<h3>📖 Outline <button style="background:none; border:none; color:#8C6239; font-weight:bold; cursor:pointer; font-size:16px;" onclick="toggleSidebar()">×</button></h3>
 <ol>
 <li><a href="#s1">Warm-up 暖身</a><ul><li><a href="#a1">工作 / 上班</a></li></ul></li>
 <li><a href="#s2">Lesson 9 第九课</a><ul><li><a href="#b1">Compound verbs 复合动词</a></li><li><a href="#b2">从 A 到 B</a></li><li><a href="#b3">第 + number + measure word</a></li></ul></li>
@@ -113,7 +115,7 @@ body.nopy rt{display:none}body.noen .en{display:none}
 
 <div class="tw"><table>
 <tr><th colspan="3">V. + 到 : emphasizes a result</th></tr>
-<tr><td><b>吃到{chī dào}</b></td><td>Suddenly eat something very tasty and want to share.</td><td><div class="ex"><div><b class="zh">我吃到好吃的西安面了{wǒ chī dào hǎo chī de xī ān miàn le}。</b><i class="en">I ate delicious Xi'an noodles!</i></div></div></td></tr>
+<tr><td><b>吃到{chī dào}</b></td><td>Suddenly eat something very tasty and want to share.</td><td><div class="ex"><div><b class="zh">我吃到好吃的西安面了{wǒ chī dào hǎo hī de xī ān miàn le}。</b><i class="en">I ate delicious Xi'an noodles!</i></div></div></td></tr>
 <tr><td><b>喝到{hē dào}</b></td><td>Suddenly drink something very tasty and want to share.</td><td><div class="ex"><div><b class="zh">我喝到好喝的红茶了{wǒ hē dào hǎo hē de hóng chá le}。</b><i class="en">I drank delicious black tea!</i></div></div></td></tr>
 <tr><td><b>找到{zhǎo dào}</b></td><td>Suddenly find something you were looking for.</td><td><div class="ex"><div><b class="zh">我找到我的手机了{wǒ zhǎo dào wǒ de shǒu jī le}！！</b><i class="en">I found my phone!!</i></div></div></td></tr>
 <tr><td><b>听到{tīng dào}</b></td><td>You hear a sound that something makes, so we always add 到.</td><td><div class="ex"><div><b class="zh">我听到他说的话了{wǒ tīng dào tā shuō de huà le}。</b><i class="en">I heard what he said.</i></div></div></td></tr>
@@ -184,4 +186,143 @@ body.nopy rt{display:none}body.noen .en{display:none}
 </table></div></div>
 
 <div class="box" id="c2"><h3>2. 大夫 (dài fu)</h3>
-<img class="img" src="
+<img class="img" src="https://cdn.phototourl.com/member/2026-10-28-2d408bc6-97e6-4d71-954b-b17520f563fa.png" alt="大夫">
+<div class="note"><b>💡 Explanation:</b> 大夫 is an old way to call a doctor. Some people still say it today, and it often means a doctor of Chinese medicine. <b>Note: here 大 is read "dài", not "dà".</b></div>
+<div class="ex"><div><b class="zh">我的爸爸是大夫{wǒ de bà ba shì dài fu}。</b><i class="en">My father is a doctor.</i></div></div></div>
+</div>
+
+<!-- 四 -->
+<div class="section" id="s4">
+<h2>4. Workbook 8 第八课作业本</h2>
+<div class="box" id="d1"><h3>1. 有点(儿) yǒu diǎn(r)</h3>
+<div class="note"><b>💡 Explanation:</b> In Chinese culture, people often do not say "I don't like it" directly. They say 有点 + adjective to politely say no.</div>
+<div class="ex"><div><b class="zh">那件白的有点长{nà jiàn bái de yǒu diǎn cháng}。</b><i class="en">That white one is a little long.</i></div></div>
+<div class="note">This means: I like shorter ones. I don't like long ones.</div>
+<div class="ex"><div><b class="zh">这件黑的有点贵{zhè jiàn hēi de yǒu diǎn guì}。</b><i class="en">This black one is a little expensive.</i></div></div>
+<div class="note">This means: it is too expensive, I don't like it, I don't want to buy it, but we don't say it so directly.</div></div>
+
+<div class="box" id="d2"><h3>2. Repeated words 重复字词</h3>
+<div class="note"><b>💡 Explanation:</b> Chinese likes to say a verb twice. It makes the action lighter and softer ("a little"), and it also sounds cute.</div>
+<div class="ex"><div><b class="zh">我想找时间去看看老师{wǒ xiǎng zhǎo shí jiān qù kàn kan lǎo shī}。</b><i class="en">I want to find time to go see my teacher.</i></div></div>
+<div class="ex"><div><b class="zh">我想去运动运动{wǒ xiǎng qù yùn dòng yùn dong}。</b><i class="en">I want to go exercise a bit.</i></div></div></div>
+</div>
+</main>
+
+<script>
+function toggleSidebar(){
+ const s=document.getElementById('sb'),m=document.getElementById('main');
+ if(window.innerWidth<=900){
+  s.classList.toggle('active');
+ }else{
+  s.classList.toggle('collapsed');
+  m.classList.toggle('expanded');
+ }
+}
+
+/* ---- Pinyin builder helper ---- */
+const RE=/([\u4e00-\u9fff]+)\{([^}]*)\}/g;
+function parsePinyin(txt){
+ const f=document.createDocumentFragment();let last=0,m;RE.lastIndex=0;
+ while((m=RE.exec(txt))){if(m.index>last)f.append(txt.slice(last,m.index));
+  const ps=m[2].trim().split(/\s+/);
+  [...m[1]].forEach((c,i)=>{const r=document.createElement('ruby');r.append(c);const rt=document.createElement('rt');rt.textContent=ps[i]||'';r.append(rt);f.append(r)});
+  last=RE.lastIndex}
+ if(last<txt.length)f.append(txt.slice(last));return f;
+}
+
+/* ---- Quiz data ---- */
+const QUIZ=[
+{s:"我找{wǒ zhǎo}__我的钱包了{wǒ de qián bāo le}。",en:"I found my wallet.",o:[
+ {c:"好",p:"hǎo",ok:0,w:"找好 is not natural here. 好 means “ready”, but with 找 the result is that you FOUND it."},
+ {c:"到",p:"dào",ok:1,w:"找到 = found it! 到 shows the result of looking."},
+ {c:"完",p:"wán",ok:0,w:"找完 means you finished searching. It does not say you found the wallet."}]},
+{s:"他没有听{tā méi yǒu tīng}__老师的话{lǎo shī de huà}。",en:"He didn't ... the teacher's words.",all:1,o:[
+ {c:"到",p:"dào",ok:1,w:"没听到: the sound did not reach him (too noisy, too far away). He didn't HEAR it."},
+ {c:"懂",p:"dǒng",ok:1,w:"没听懂: he heard it, but he didn't UNDERSTAND it."},
+ {c:"完",p:"wán",ok:1,w:"没听完: he didn't FINISH listening (he left early or stopped)."}]},
+{s:"我做{wǒ zuò}__海南鸡饭了{hǎi nán jī fàn le}，一起吃饭吧{yì qǐ chī fàn ba}！",en:"I made Hainanese chicken rice. Let's eat together!",o:[
+ {c:"好",p:"hǎo",ok:1,w:"做好 = it is ready, so we can eat now."},
+ {c:"完",p:"wán",ok:0,w:"做完 means the cooking is finished, but it doesn't say the food is ready to eat. 做好 fits “let's eat” better."},
+ {c:"到",p:"dào",ok:0,w:"做到 means “manage to do / achieve”, not cooking a dish."}]},
+{s:"我昨天在{wǒ zuó tiān zài}New World看{kàn}__我的朋友{wǒ de péng you}。",en:"Yesterday I saw my friend at New World.",o:[
+ {c:"见",p:"jiàn",ok:1,w:"看见 = you saw someone by chance. It is a simple picture: “I saw my friend”."},
+ {c:"完",p:"wán",ok:0,w:"看完 means you finished watching something (a movie), not seeing a person."},
+ {c:"好",p:"hǎo",ok:0,w:"看好 is not used for seeing a friend."}]}
+];
+
+const qz=document.getElementById('quiz');
+QUIZ.forEach((q,i)=>{
+ const d=document.createElement('div');d.className='q';
+ 
+ const topDiv = document.createElement('div');
+ const bSpan = document.createElement('span');
+ bSpan.innerHTML = `<b>${i+1})</b> `;
+ topDiv.appendChild(bSpan);
+
+ const zhSpan = document.createElement('span');
+ zhSpan.className = 'zh';
+ zhSpan.style.display = 'inline';
+ zhSpan.appendChild(parsePinyin(q.s.replace('__','<span class="blank">&nbsp;</span>')));
+ topDiv.appendChild(zhSpan);
+
+ const enSpan = document.createElement('span');
+ enSpan.className = 'en';
+ enSpan.textContent = q.en;
+ topDiv.appendChild(enSpan);
+
+ d.appendChild(topDiv);
+
+ const os=document.createElement('div'); os.className='opts';
+ const res=document.createElement('div'); res.className='res';
+
+ q.o.forEach(o=>{
+  const b=document.createElement('button');
+  b.className='opt';
+  b.appendChild(parsePinyin(`${o.c}{${o.p}}`));
+  b.onclick=()=>{
+   const blankEl = d.querySelector('.blank');
+   blankEl.textContent = '';
+   blankEl.appendChild(document.createTextNode(o.c));
+
+   os.querySelectorAll('.opt').forEach(x=>x.classList.remove('ok','bad'));
+   b.classList.add(o.ok?'ok':'bad');
+   let h=`<div class="fb ${o.ok?'ok':'bad'}">${o.ok?'✅ ':'❌ '}${o.ok&&q.all?'Correct! ':o.ok?'Correct! ':'Not quite. '}${o.w}</div>`;
+   if(q.all)h=`<div class="fb ok">✅ All three are correct, but the meanings are different:<br>`+q.o.map(x=>`• <b>${x.c}</b>: ${x.w}`).join('<br>')+`</div>`;
+   else if(!o.ok){h+=`<div class="fb">👉 Try another option!</div>`}
+   res.innerHTML=h;
+  };
+  os.appendChild(b);
+ });
+
+ d.appendChild(os);
+ d.appendChild(res);
+ qz.appendChild(d);
+});
+
+/* ---- Audio buttons ---- */
+let curBtn=null;
+document.querySelectorAll('.ex').forEach(ex=>{
+ const z=ex.querySelector('.zh');if(!z)return;
+ const t=z.textContent.replace(/\{[^}]*\}/g,'');
+ const b=document.createElement('button');b.className='ab';b.textContent='🔊';
+ b.onclick=()=>{
+  if(curBtn===b){
+   if(speechSynthesis.paused){speechSynthesis.resume();b.textContent='⏸'}
+   else{speechSynthesis.pause();b.textContent='▶'}
+   return}
+  speechSynthesis.cancel();
+  if(curBtn){curBtn.textContent='🔊'}
+  const u=new SpeechSynthesisUtterance(t);u.lang='zh-CN';u.rate=.85;
+  const done=()=>{if(curBtn===b){b.textContent='🔊';curBtn=null}};
+  u.onend=done;u.onerror=done;
+  curBtn=b;b.textContent='⏸';speechSynthesis.speak(u)};
+ ex.prepend(b);
+});
+
+/* ---- Pinyin builder for entire main container on load ---- */
+const w=document.createTreeWalker(document.getElementById('main'),NodeFilter.SHOW_TEXT),ns=[];
+while(w.nextNode())ns.push(w.currentNode);
+ns.forEach(n=>{if(n.nodeValue.includes('{'))n.replaceWith(parsePinyin(n.nodeValue))});
+</script>
+</body>
+</html>
