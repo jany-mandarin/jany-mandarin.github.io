@@ -219,7 +219,7 @@ function toggleSidebar(){
  }
 }
 
-/* ---- Pinyin builder helper ---- */
+/* ---- Pinyin builder helper (supports words in {pinyin}) ---- */
 const RE=/([\u4e00-\u9fff]+)\{([^}]*)\}/g;
 function parsePinyin(txt){
  const f=document.createDocumentFragment();let last=0,m;RE.lastIndex=0;
@@ -230,24 +230,60 @@ function parsePinyin(txt){
  if(last<txt.length)f.append(txt.slice(last));return f;
 }
 
-/* ---- Quiz data with structured sentence parts (s1, blank, s2) ---- */
+/* ---- Quiz data with fully tokenized pinyin for every phrase ---- */
 const QUIZ=[
-{s1:"我找", p1:"wǒ zhǎo", s2:"我的钱包了", p2:"wǒ de qián bāo le", en:"I found my wallet.", o:[
- {c:"好",p:"hǎo",ok:0,w:"找好 is not natural here. 好 means “ready”, but with 找 the result is that you FOUND it."},
- {c:"到",p:"dào",ok:1,w:"找到 = found it! 到 shows the result of looking."},
- {c:"完",p:"wán",ok:0,w:"找完 means you finished searching. It does not say you found the wallet."}]},
-{s1:"他没有听", p1:"tā méi yǒu tīng", s2:"老师的话", p2:"lǎo shī de huà", en:"He didn't ... the teacher's words.", all:1, o:[
- {c:"到",p:"dào",ok:1,w:"没听到: the sound did not reach him (too noisy, too far away). He didn't HEAR it."},
- {c:"懂",p:"dǒng",ok:1,w:"没听懂: he heard it, but he didn't UNDERSTAND it."},
- {c:"完",p:"wán",ok:1,w:"没听完: he didn't FINISH listening (he left early or stopped)."}]},
-{s1:"我做", p1:"wǒ zuò", s2:"海南鸡饭了，一起吃饭吧", p2:"hǎi nán jī fàn le，yì qǐ chī fàn ba", en:"I made Hainanese chicken rice. Let's eat together!", o:[
- {c:"好",p:"hǎo",ok:1,w:"做好 = it is ready, so we can eat now."},
- {c:"完",p:"wán",ok:0,w:"做完 means the cooking is finished, but it doesn't say the food is ready to eat. 做好 fits “let's eat” better."},
- {c:"做到",p:"zuò dào",ok:0,w:"做到 means “manage to do / achieve”, not cooking a dish."}]},
-{s1:"我昨天在New World看", p1:"wǒ zuó tiān zài New World kàn", s2:"我的朋友", p2:"wǒ de péng you", en:"Yesterday I saw my friend at New World.", o:[
- {c:"见",p:"jiàn",ok:1,w:"看见 = you saw someone by chance. It is a simple picture: “I saw my friend”."},
- {c:"完",p:"wán",ok:0,w:"看完 means you finished watching something (a movie), not seeing a person."},
- {c:"好",p:"hǎo",ok:0,w:"看好 is not used for seeing a friend."}]}
+{
+ parts: [
+  {zh: "我找{wǒ zhǎo}"},
+  {blank: true},
+  {zh: "我{wǒ}的{de}钱{qián}包{bāo}了{le}。"}
+ ],
+ en:"I found my wallet.",
+ o:[
+  {c:"好",p:"hǎo",ok:0,w:"找好 is not natural here. 好 means “ready”, but with 找 the result is that you FOUND it."},
+  {c:"到",p:"dào",ok:1,w:"找到 = found it! 到 shows the result of looking."},
+  {c:"完",p:"wán",ok:0,w:"找完 means you finished searching. It does not say you found the wallet."}
+ ]
+},
+{
+ parts: [
+  {zh: "他{tā}没{méi}有{yǒu}听{tīng}"},
+  {blank: true},
+  {zh: "老{lǎo}师{shī}的{de}话{huà}。"}
+ ],
+ en:"He didn't ... the teacher's words.", all:1,
+ o:[
+  {c:"到",p:"dào",ok:1,w:"没听到: the sound did not reach him (too noisy, too far away). He didn't HEAR it."},
+  {c:"懂",p:"dǒng",ok:1,w:"没听懂: he heard it, but he didn't UNDERSTAND it."},
+  {c:"完",p:"wán",ok:1,w:"没听完: he didn't FINISH listening (he left early or stopped)."}
+ ]
+},
+{
+ parts: [
+  {zh: "我{wǒ}做{zuò}"},
+  {blank: true},
+  {zh: "海{hǎi}南{nán}鸡{jī}饭{fàn}了{le}，一{yì}起{qǐ}吃{chī}饭{fàn}吧{ba}！"}
+ ],
+ en:"I made Hainanese chicken rice. Let's eat together!",
+ o:[
+  {c:"好",p:"hǎo",ok:1,w:"做好 = it is ready, so we can eat now."},
+  {c:"完",p:"wán",ok:0,w:"做完 means the cooking is finished, but it doesn't say the food is ready to eat. 做好 fits “let's eat” better."},
+  {c:"做到",p:"zuò dào",ok:0,w:"做到 means “manage to do / achieve”, not cooking a dish."}
+ ]
+},
+{
+ parts: [
+  {zh: "我{wǒ}昨{zuó}天{tiān}在{zài} New World 看{kàn}"},
+  {blank: true},
+  {zh: "我{wǒ}的{de}朋{péng}友{you}。"}
+ ],
+ en:"Yesterday I saw my friend at New World.",
+ o:[
+  {c:"见",p:"jiàn",ok:1,w:"看见 = you saw someone by chance. It is a simple picture: “I saw my friend”."},
+  {c:"完",p:"wán",ok:0,w:"看完 means you finished watching something (a movie), not seeing a person."},
+  {c:"好",p:"hǎo",ok:0,w:"看好 is not used for seeing a friend."}
+ ]
+}
 ];
 
 const qz=document.getElementById('quiz');
@@ -263,17 +299,16 @@ QUIZ.forEach((q,i)=>{
  zhSpan.className = 'zh';
  zhSpan.style.display = 'inline';
 
- // Part 1
- zhSpan.appendChild(parsePinyin(q.s1 + '{' + q.p1 + '}'));
-
- // Blank element
- const blankSpan = document.createElement('span');
- blankSpan.className = 'blank';
- blankSpan.innerHTML = '&nbsp;';
- zhSpan.appendChild(blankSpan);
-
- // Part 2
- zhSpan.appendChild(parsePinyin(q.s2 + '{' + q.p2 + '}'));
+ q.parts.forEach(part => {
+  if(part.blank){
+   const blankSpan = document.createElement('span');
+   blankSpan.className = 'blank';
+   blankSpan.innerHTML = '&nbsp;';
+   zhSpan.appendChild(blankSpan);
+  } else if(part.zh){
+   zhSpan.appendChild(parsePinyin(part.zh));
+  }
+ });
 
  topDiv.appendChild(zhSpan);
 
