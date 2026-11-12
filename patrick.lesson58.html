@@ -12,18 +12,18 @@ body{font-family:'Helvetica Neue',Arial,sans-serif;background:var(--bg);color:#4
 .top a{color:var(--p);font-weight:bold;text-decoration:none;margin-left:20px;font-size:15px}
 .sidebar{width:var(--sb);background:#FFF9F0;border-right:1px solid var(--line);height:100vh;position:fixed;top:0;left:0;overflow-y:auto;padding:60px 20px 20px;box-sizing:border-box;z-index:1000;transition:transform .3s}
 .sidebar.collapsed{transform:translateX(-100%)}
-.sidebar h3{margin:0;color:var(--d);border-bottom:2px solid var(--p);padding-bottom:8px;display:flex;justify-content:space-between;align-items:center;}
+.sidebar h3{margin:0;color:var(--d);border-bottom:2px solid var(--p);padding-bottom:8px;display:flex;justify-content:space-between;align-items:center}
 .sidebar ol{padding-left:20px}.sidebar li{margin-bottom:8px;font-weight:bold;color:var(--d)}
 .sidebar ul{padding-left:15px;list-style:circle;font-weight:normal}.sidebar ul li{font-size:14px;margin-bottom:4px;color:#555}
 .sidebar a{color:inherit;text-decoration:none}.sidebar a:hover{color:var(--p)}
-.tog{position:fixed;top:10px;left:15px;z-index:1300;background:var(--p);color:#fff;border:0;padding:8px 12px;border-radius:6px;cursor:pointer;font-weight:bold;box-shadow:0 2px 4px rgba(0,0,0,0.1);}
-.tog:hover{background:#B5835A;}
+.tog{position:fixed;top:10px;left:15px;z-index:1300;background:var(--p);color:#fff;border:0;padding:8px 12px;border-radius:6px;cursor:pointer;font-weight:bold;box-shadow:0 2px 4px rgba(0,0,0,0.1)}
+.tog:hover{background:#B5835A}
 main{margin:50px 0 0 var(--sb);width:calc(100% - var(--sb));max-width:960px;padding:20px 40px;box-sizing:border-box;transition:.3s}
 main.expanded{margin-left:0;width:100%}
 .header{text-align:center;border-bottom:2px solid var(--p);margin:20px 0}
-.controls{position:sticky;top:50px;background:rgba(253, 251, 247, 0.95);backdrop-filter:blur(5px);padding:12px;text-align:center;border-bottom:1px solid #ccc;z-index:1100;margin-bottom:20px;box-shadow:0 2px 4px rgba(0,0,0,0.05);border-radius:8px;}
-.cb{background:var(--p);color:#fff;border:0;padding:10px 15px;margin:4px;border-radius:6px;cursor:pointer;font-weight:bold;box-shadow:0 2px 4px rgba(0,0,0,0.08);}
-.cb:hover{background:#B5835A;}
+.controls{position:sticky;top:50px;background:rgba(253, 251, 247, 0.95);backdrop-filter:blur(5px);padding:12px;text-align:center;border-bottom:1px solid #ccc;z-index:900;margin-bottom:20px;box-shadow:0 2px 4px rgba(0,0,0,0.05);border-radius:8px}
+.cb{background:var(--p);color:#fff;border:0;padding:10px 15px;margin:4px;border-radius:6px;cursor:pointer;font-weight:bold;box-shadow:0 2px 4px rgba(0,0,0,0.08)}
+.cb:hover{background:#B5835A}
 h2{color:var(--d);border-left:5px solid var(--p);padding-left:10px}
 .section{background:#fff;padding:20px;border-radius:12px;box-shadow:0 2px 5px rgba(0,0,0,.05);margin-bottom:30px;scroll-margin-top:130px}
 .box{background:#FFF9F0;border:1px solid var(--line);border-radius:8px;padding:15px;margin:15px 0;scroll-margin-top:140px}
@@ -58,7 +58,7 @@ body.nopy rt{display:none}body.noen .en{display:none}
 <div class="top"><a href="https://jany-mandarin.github.io/patrick.html">Index</a><a href="https://jany-mandarin.github.io/patrick.lesson57.html">Lesson 57</a></div>
 <button class="tog" onclick="toggleSidebar()">☰ Outline</button>
 <div class="sidebar" id="sb">
-<h3>📖 Outline <button style="background:none; border:none; color:#8C6239; font-weight:bold; cursor:pointer; font-size:16px;" onclick="toggleSidebar()">×</button></h3>
+<h3>📖 Outline <button style="background:none;border:none;color:#8C6239;font-weight:bold;cursor:pointer;font-size:16px" onclick="toggleSidebar()">×</button></h3>
 <ol>
 <li><a href="#s1">Warm-up 暖身</a><ul><li><a href="#a1">工作 / 上班</a></li></ul></li>
 <li><a href="#s2">Lesson 9 第九课</a><ul><li><a href="#b1">Compound verbs 复合动词</a></li><li><a href="#b2">从 A 到 B</a></li><li><a href="#b3">第 + number + measure word</a></li></ul></li>
@@ -101,7 +101,7 @@ body.nopy rt{display:none}body.noen .en{display:none}
 <tr><th>Type</th><th>Pattern</th><th>Example</th></tr>
 <tr><td><b>Positive 肯定句</b></td><td>Subject + Verb + Object + <b>了{le}</b></td><td><div class="ex"><div><b class="zh">我找到我的手机了{wǒ zhǎo dào wǒ de shǒu jī le}。</b><i class="en">I found my phone.</i></div></div></td></tr>
 <tr><td><b>Negative 否定句</b></td><td>Subject + <b>没(有)</b> + Verb + Object<br>(do NOT add 了)</td><td><div class="ex"><div><b class="zh">我没找到我的手机{wǒ méi zhǎo dào wǒ de shǒu jī}。</b><i class="en">I didn't find my phone.</i></div></div></td></tr>
-<tr><td><b>Question 问句</b></td><td>Positive sentence + <b>没有</b> at the end.<br>It is long, so in daily life people are lazy and shorten it.</td><td>
+<tr><td><b>Question 问句</b></td><td>Positive sentence + <b>沒有</b> at the end.<br>It is long, so in daily life people are lazy and shorten it.</td><td>
 <div class="ex"><div><b class="zh">你找到你的手机了没有{nǐ zhǎo dào nǐ de shǒu jī le méi yǒu}？</b><i class="en">Did you find your phone? (full form)</i></div></div>
 <div class="ex"><div><b class="zh">你找到你的手机了吗{nǐ zhǎo dào nǐ de shǒu jī le ma}？</b><i class="en">Did you find your phone? (easier, everyday)</i></div></div></td></tr>
 </table></div>
@@ -115,7 +115,7 @@ body.nopy rt{display:none}body.noen .en{display:none}
 
 <div class="tw"><table>
 <tr><th colspan="3">V. + 到 : emphasizes a result</th></tr>
-<tr><td><b>吃到{chī dào}</b></td><td>Suddenly eat something very tasty and want to share.</td><td><div class="ex"><div><b class="zh">我吃到好吃的西安面了{wǒ chī dào hǎo hī de xī ān miàn le}。</b><i class="en">I ate delicious Xi'an noodles!</i></div></div></td></tr>
+<tr><td><b>吃到{chī dào}</b></td><td>Suddenly eat something very tasty and want to share.</td><td><div class="ex"><div><b class="zh">我吃到好吃的西安面了{wǒ chī dào hǎo chī de xī ān miàn le}。</b><i class="en">I ate delicious Xi'an noodles!</i></div></div></td></tr>
 <tr><td><b>喝到{hē dào}</b></td><td>Suddenly drink something very tasty and want to share.</td><td><div class="ex"><div><b class="zh">我喝到好喝的红茶了{wǒ hē dào hǎo hē de hóng chá le}。</b><i class="en">I drank delicious black tea!</i></div></div></td></tr>
 <tr><td><b>找到{zhǎo dào}</b></td><td>Suddenly find something you were looking for.</td><td><div class="ex"><div><b class="zh">我找到我的手机了{wǒ zhǎo dào wǒ de shǒu jī le}！！</b><i class="en">I found my phone!!</i></div></div></td></tr>
 <tr><td><b>听到{tīng dào}</b></td><td>You hear a sound that something makes, so we always add 到.</td><td><div class="ex"><div><b class="zh">我听到他说的话了{wǒ tīng dào tā shuō de huà le}。</b><i class="en">I heard what he said.</i></div></div></td></tr>
@@ -230,21 +230,21 @@ function parsePinyin(txt){
  if(last<txt.length)f.append(txt.slice(last));return f;
 }
 
-/* ---- Quiz data ---- */
+/* ---- Quiz data with structured sentence parts (s1, blank, s2) ---- */
 const QUIZ=[
-{s:"我找{wǒ zhǎo}__我的钱包了{wǒ de qián bāo le}。",en:"I found my wallet.",o:[
+{s1:"我找", p1:"wǒ zhǎo", s2:"我的钱包了", p2:"wǒ de qián bāo le", en:"I found my wallet.", o:[
  {c:"好",p:"hǎo",ok:0,w:"找好 is not natural here. 好 means “ready”, but with 找 the result is that you FOUND it."},
  {c:"到",p:"dào",ok:1,w:"找到 = found it! 到 shows the result of looking."},
  {c:"完",p:"wán",ok:0,w:"找完 means you finished searching. It does not say you found the wallet."}]},
-{s:"他没有听{tā méi yǒu tīng}__老师的话{lǎo shī de huà}。",en:"He didn't ... the teacher's words.",all:1,o:[
+{s1:"他没有听", p1:"tā méi yǒu tīng", s2:"老师的话", p2:"lǎo shī de huà", en:"He didn't ... the teacher's words.", all:1, o:[
  {c:"到",p:"dào",ok:1,w:"没听到: the sound did not reach him (too noisy, too far away). He didn't HEAR it."},
  {c:"懂",p:"dǒng",ok:1,w:"没听懂: he heard it, but he didn't UNDERSTAND it."},
  {c:"完",p:"wán",ok:1,w:"没听完: he didn't FINISH listening (he left early or stopped)."}]},
-{s:"我做{wǒ zuò}__海南鸡饭了{hǎi nán jī fàn le}，一起吃饭吧{yì qǐ chī fàn ba}！",en:"I made Hainanese chicken rice. Let's eat together!",o:[
+{s1:"我做", p1:"wǒ zuò", s2:"海南鸡饭了，一起吃饭吧", p2:"hǎi nán jī fàn le，yì qǐ chī fàn ba", en:"I made Hainanese chicken rice. Let's eat together!", o:[
  {c:"好",p:"hǎo",ok:1,w:"做好 = it is ready, so we can eat now."},
  {c:"完",p:"wán",ok:0,w:"做完 means the cooking is finished, but it doesn't say the food is ready to eat. 做好 fits “let's eat” better."},
- {c:"到",p:"dào",ok:0,w:"做到 means “manage to do / achieve”, not cooking a dish."}]},
-{s:"我昨天在{wǒ zuó tiān zài}New World看{kàn}__我的朋友{wǒ de péng you}。",en:"Yesterday I saw my friend at New World.",o:[
+ {c:"做到",p:"zuò dào",ok:0,w:"做到 means “manage to do / achieve”, not cooking a dish."}]},
+{s1:"我昨天在New World看", p1:"wǒ zuó tiān zài New World kàn", s2:"我的朋友", p2:"wǒ de péng you", en:"Yesterday I saw my friend at New World.", o:[
  {c:"见",p:"jiàn",ok:1,w:"看见 = you saw someone by chance. It is a simple picture: “I saw my friend”."},
  {c:"完",p:"wán",ok:0,w:"看完 means you finished watching something (a movie), not seeing a person."},
  {c:"好",p:"hǎo",ok:0,w:"看好 is not used for seeing a friend."}]}
@@ -262,7 +262,19 @@ QUIZ.forEach((q,i)=>{
  const zhSpan = document.createElement('span');
  zhSpan.className = 'zh';
  zhSpan.style.display = 'inline';
- zhSpan.appendChild(parsePinyin(q.s.replace('__','<span class="blank">&nbsp;</span>')));
+
+ // Part 1
+ zhSpan.appendChild(parsePinyin(q.s1 + '{' + q.p1 + '}'));
+
+ // Blank element
+ const blankSpan = document.createElement('span');
+ blankSpan.className = 'blank';
+ blankSpan.innerHTML = '&nbsp;';
+ zhSpan.appendChild(blankSpan);
+
+ // Part 2
+ zhSpan.appendChild(parsePinyin(q.s2 + '{' + q.p2 + '}'));
+
  topDiv.appendChild(zhSpan);
 
  const enSpan = document.createElement('span');
@@ -281,8 +293,7 @@ QUIZ.forEach((q,i)=>{
   b.appendChild(parsePinyin(`${o.c}{${o.p}}`));
   b.onclick=()=>{
    const blankEl = d.querySelector('.blank');
-   blankEl.textContent = '';
-   blankEl.appendChild(document.createTextNode(o.c));
+   blankEl.textContent = o.c;
 
    os.querySelectorAll('.opt').forEach(x=>x.classList.remove('ok','bad'));
    b.classList.add(o.ok?'ok':'bad');
