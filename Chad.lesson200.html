@@ -1140,11 +1140,28 @@
             }
             if(!zyDiv) return;
             
-            let chars = zyDiv.querySelectorAll('.zy-char');
+            let wraps = zyDiv.querySelectorAll('.zy-char-wrap');
             let cleanText = "";
-            if(chars.length > 0) {
+            if (wraps.length > 0) {
                 let strArr = [];
-                chars.forEach(c => strArr.push(c.innerText));
+                wraps.forEach(w => {
+                    let charEl = w.querySelector('.zy-char');
+                    let symEl = w.querySelector('.zy-symbols');
+                    let toneEl = w.querySelector('.zy-tone');
+                    let neuEl = w.querySelector('.zy-neutral');
+                    if (!charEl) return;
+
+                    let ch = charEl.innerText;
+                    let zy = (neuEl ? '˙' : '') + (symEl ? symEl.innerText : '') + (toneEl ? toneEl.innerText : '');
+
+                    // 台灣發音與破音字修正（傳給語音引擎的同音字替換，不影響畫面顯示）
+                    if (ch === '和' && zy === 'ㄏㄢˋ') {
+                        ch = '漢';
+                    } else if (ch === '吐' && zy === 'ㄊㄨˋ') {
+                        ch = '兔';
+                    }
+                    strArr.push(ch);
+                });
                 cleanText = strArr.join('');
             } else {
                 cleanText = zyDiv.innerText.replace(/\(.*?\)/g, '');
@@ -1153,9 +1170,10 @@
             cleanText = cleanText.replace(/^[A-Z0-9]+[：:]\s*/gi, '').replace(/\s+[A-Z0-9]+[：:]\s*/gi, ' ').replace(/[A-Z0-9]+[：:]/gi, '');
             cleanText = cleanText.replace(/\//g, ' ');
 
-            // Ensure TTS pronounces "在家 教中文" correctly
+            // Ensure TTS pronounces specific words correctly
             cleanText = cleanText.replace(/在家教中文/g, '在家 教中文');
             cleanText = cleanText.replace(/在家教/g, '在家 教');
+            cleanText = cleanText.replace(/吐了/g, '兔了');
 
             if (speechSynthesis.speaking && currentUtteranceText === cleanText) {
                 if (speechSynthesis.paused) {
