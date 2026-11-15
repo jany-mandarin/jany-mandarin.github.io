@@ -1,0 +1,957 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chad's Mandarin Lesson 201</title>
+    <style>
+        :root { --bg: #FDFBF7; --primary: #D4A373; --text: #4a4a4a; --white: #fff; --sidebar-width: 280px; }
+        html { scroll-behavior: smooth; }
+        body { font-family: 'Helvetica Neue', Arial, sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; margin: 0; padding: 0; display: flex; transition: margin-left 0.3s ease; }
+        
+        /* Navigation */
+        .top-nav { position: fixed; top: 0; left: 0; width: 100%; background: #FFF9F0; border-bottom: 1px solid #E6D5B8; padding: 10px 20px; box-sizing: border-box; text-align: right; z-index: 1200; display: flex; justify-content: flex-end; align-items: center; }
+        .top-nav a { color: var(--primary); font-weight: bold; text-decoration: none; margin-left: 20px; font-size: 15px; }
+        .top-nav a:hover { text-decoration: underline; color: #8C6239; }
+
+        /* Sidebar */
+        .sidebar { width: var(--sidebar-width); background: #FFF9F0; border-right: 1px solid #E6D5B8; height: 100vh; position: fixed; top: 0; left: 0; overflow-y: auto; padding: 60px 20px 20px 20px; box-sizing: border-box; transition: transform 0.3s ease; z-index: 1000; }
+        .sidebar.collapsed { transform: translateX(-100%); }
+        .sidebar h3 { margin-top: 0; color: #8C6239; font-size: 18px; border-bottom: 2px solid var(--primary); padding-bottom: 8px; display: flex; justify-content: space-between; align-items: center; }
+        .sidebar ol { padding-left: 20px; margin: 10px 0; color: #555; }
+        .sidebar li { margin-bottom: 8px; font-size: 15px; font-weight: bold; color: #8C6239; }
+        .sidebar ul { padding-left: 15px; list-style-type: circle; margin-top: 5px; margin-bottom: 15px; font-weight: normal; }
+        .sidebar ul li { font-size: 13.5px; margin-bottom: 6px; color: #555; }
+        .sidebar a { color: #555; text-decoration: none; display: block; }
+        .sidebar a:hover { color: #D4A373; font-weight: bold; }
+        
+        .sidebar-toggle { position: fixed; top: 50px; left: 15px; z-index: 1100; background: var(--primary); color: white; border: none; padding: 8px 12px; border-radius: 6px; cursor: pointer; font-size: 14px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+
+        /* Main Content */
+        .main-content { margin-top: 40px; margin-left: var(--sidebar-width); width: calc(100% - var(--sidebar-width)); padding: 20px 40px; box-sizing: border-box; max-width: 900px; transition: margin-left 0.3s ease, width 0.3s ease; }
+        .main-content.expanded { margin-left: 0; width: 100%; }
+        .header { text-align: center; border-bottom: 2px solid var(--primary); padding-bottom: 10px; margin-bottom: 20px; margin-top: 20px; }
+        
+        /* Controls */
+        .controls { position: sticky; top: 40px; background: var(--bg); padding: 15px; text-align: center; border-bottom: 1px solid #ccc; z-index: 100; margin-bottom: 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
+        button.control-btn { background: var(--primary); color: white; border: none; padding: 10px 15px; margin: 5px; border-radius: 6px; cursor: pointer; font-size: 14px; font-weight: bold; }
+        button.control-btn:hover { background: #B5835A; }
+        
+        /* Audio Circle Buttons */
+        .btn-group { display: flex; align-items: center; margin-right: 15px; margin-bottom: 5px; flex-shrink: 0; gap: 8px; }
+        .audio-btn, .rec-btn, .play-rec-btn { 
+            background: #EFEFEF; 
+            color: #4A4A4A; 
+            font-size: 16px; 
+            border-radius: 50%; 
+            width: 42px; 
+            height: 42px; 
+            display: inline-flex; 
+            align-items: center; 
+            justify-content: center; 
+            border: none; 
+            cursor: pointer; 
+            transition: all 0.2s ease;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+            padding: 0;
+            line-height: 1;
+        }
+        .audio-btn:hover { background: #E2E2E2; transform: scale(1.05); }
+        .rec-btn:hover { background: #E2E2E2; transform: scale(1.05); }
+        .rec-btn.recording { background: #FFD1D1; color: #D90429; animation: pulse 1.5s infinite; }
+        .play-rec-btn { background: #EFEFEF; color: #4A4A4A; }
+        .play-rec-btn:enabled:hover { background: #E2E2E2; transform: scale(1.05); }
+        .play-rec-btn:disabled { background: #F5F5F5; color: #CCC; cursor: not-allowed; box-shadow: none; }
+
+        @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.5; } 100% { opacity: 1; } }
+
+        /* Content Blocks */
+        h2 { color: #8C6239; border-left: 5px solid var(--primary); padding-left: 10px; margin-top: 30px; }
+        .section { margin-bottom: 30px; background: var(--white); padding: 20px; border-radius: 12px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); scroll-margin-top: 130px; }
+        .grammar-box { background: #FFF9F0; border: 1px solid #E6D5B8; border-radius: 8px; padding: 15px; margin: 15px 0; scroll-margin-top: 140px; }
+        .item-content { display: flex; align-items: flex-start; margin-top: 10px; margin-bottom: 10px; flex-wrap: wrap; }
+        
+        /* Bopomofo (Zhuyin) Vertical Formatting */
+        .zy-text { display: inline-block; line-height: 2.4; font-size: 18px; }
+        .zy-char-wrap { display: inline-flex; align-items: center; margin-right: 2px; }
+        .zy-char { font-size: 26px; font-family: "DFKai-SB", "BiauKai", serif; }
+        .zy-box { display: inline-flex; flex-direction: column; justify-content: center; position: relative; margin-left: 2px; padding-right: 8px; }
+        .zy-symbols { writing-mode: vertical-rl; text-orientation: upright; font-size: 11px; letter-spacing: -2px; }
+        .zy-tone { position: absolute; right: 0px; top: 50%; transform: translateY(-50%); font-size: 11px; }
+        .zy-neutral { position: absolute; top: -11px; left: 50%; transform: translateX(-50%); font-size: 11px; }
+        
+        .en-trans { color: #666; font-size: 15px; font-style: italic; margin-top: 5px; margin-left: 0; width: 100%; display:block;}
+        .note { font-size: 14px; color: #555; margin-top: 10px; margin-bottom: 10px; line-height: 1.5; background: #fdfaf6; padding: 8px 12px; border-left: 3px solid #D4A373; border-radius: 4px; }
+        .vocab-img { max-width: 100%; height: auto; border-radius: 8px; border: 1px solid #E6D5B8; display: block; margin: 10px 0; max-height: 220px; }
+
+        .hw-review-block { background: #fff; border: 1px solid #E6D5B8; border-radius: 8px; padding: 12px 15px; margin: 12px 0; }
+        .wrong-line { color: #B54848; font-size: 16px; margin: 6px 0; }
+
+        .homework-q { font-size: 17px; font-weight: bold; color: #8C6239; margin-bottom: 8px; }
+        .hw-textarea { width: 100%; height: 60px; margin-top: 5px; border-radius: 6px; border: 1px solid #E6D5B8; padding: 10px; font-family: inherit; font-size:16px; box-sizing: border-box; background: #fff; }
+        .hw-textarea:focus { border-color: var(--primary); outline: none; box-shadow: 0 0 5px rgba(212, 163, 115, 0.5); }
+
+        .quiz-card { background: #fff; border: 1px solid #E6D5B8; border-radius: 8px; padding: 15px; margin-bottom: 15px; }
+        .reading-paragraph { font-size: 18px; line-height: 2.2; margin-bottom: 15px; background: #FFFDF9; padding: 15px; border-radius: 8px; border: 1px solid #E6D5B8; }
+
+        @media (max-width: 900px) {
+            .sidebar { transform: translateX(-100%); }
+            .sidebar.active { transform: translateX(0); }
+            .main-content { margin-left: 0; width: 100%; padding: 20px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="top-nav">
+        <a href="https://jany-mandarin.github.io/Chad.html">Index</a>
+        <a href="https://jany-mandarin.github.io/Chad.lesson200.html">Lesson 200</a>
+    </div>
+
+    <button class="sidebar-toggle" onclick="toggleSidebar()">☰ Outline</button>
+
+    <div class="sidebar" id="sidebar">
+        <h3>📖 Outline <button style="background:none; border:none; color:#8C6239; font-weight:bold; cursor:pointer; font-size:16px;" onclick="toggleSidebar()">×</button></h3>
+        <ol>
+            <li><a href="#sec-0">Warm-up</a>
+                <ul>
+                    <li><a href="#wu-1">1. 月經</a></li>
+                    <li><a href="#wu-2">2. 蒙古</a></li>
+                    <li><a href="#wu-3">3. 簡體字</a></li>
+                    <li><a href="#wu-4">4. X 前 / 的時候</a></li>
+                </ul>
+            </li>
+            <li><a href="#sec-1">Homework Review & Extensions</a>
+                <ul>
+                    <li><a href="#hw-1">1. 翻譯練習作業</a></li>
+                    <li><a href="#hw-2">2. 鹽</a></li>
+                    <li><a href="#hw-3">3. 過</a></li>
+                    <li><a href="#hw-4">4. 不錯</a></li>
+                </ul>
+            </li>
+            <li><a href="#sec-2">Supplementary</a>
+                <ul>
+                    <li><a href="#sup-1">1. 活</a></li>
+                    <li><a href="#sup-2">2. 最好的 / 最喜歡的</a></li>
+                    <li><a href="#sup-3">3. 紅蘿蔔</a></li>
+                    <li><a href="#sup-4">4. 不 + adj.</a></li>
+                    <li><a href="#sup-5">5. 安心</a></li>
+                    <li><a href="#sup-6">6. 半夜</a></li>
+                </ul>
+            </li>
+            <li><a href="#sec-3">Translation Practice</a></li>
+            <li><a href="#sec-4">Reading Comprehension</a></li>
+        </ol>
+    </div>
+
+    <div class="main-content" id="mainContent">
+        <div class="header">
+            <h1>Chad's Mandarin Lesson 201</h1>
+            <p>Date: <span id="currentDate">2026/11/15</span></p>
+        </div>
+
+        <div class="controls">
+            <button class="control-btn" onclick="toggleZhuyin()">Toggle Bopomofo</button>
+            <button class="control-btn" onclick="toggleEnglish()">Toggle English</button>
+        </div>
+
+        <!-- Section 0: Warm-up -->
+        <div class="section" id="sec-0">
+            <h2>Warm-up</h2>
+
+            <!-- 1. 月經 -->
+            <div id="wu-1" class="grammar-box">
+                <h3><span class="zy-text">1. 月(ㄩㄝˋ)經(ㄐㄧㄥ)</span> (Period / Menstruation)</h3>
+                <div class="note">
+                    <b>Explanation:</b> Because a woman goes through this once every month (月 = month, 經 = experience / pass through), it is called 月經.
+                </div>
+
+                <div class="item-content">
+                    <div class="btn-group">
+                        <button class="audio-btn" onclick="playAudioText(this)">🔊</button>
+                        <button class="rec-btn" onclick="toggleRecord(this)">🎤</button>
+                        <button class="play-rec-btn" disabled>▶️</button>
+                    </div>
+                    <div>
+                        <span class="zy-text">最(ㄗㄨㄟˋ)近(ㄐㄧㄣˋ)我(ㄨㄛˇ)的(ㄉㄜ˙)月(ㄩㄝˋ)經(ㄐㄧㄥ)來(ㄌㄞˊ)，我(ㄨㄛˇ)很(ㄏㄣˇ)不(ㄅㄨˋ)舒(ㄕㄨ)服(ㄈㄨˊ)，昨(ㄗㄨㄛˊ)天(ㄊㄧㄢ)頭(ㄊㄡˊ)很(ㄏㄣˇ)痛(ㄊㄨㄥˋ)。</span>
+                        <span class="en-trans">Recently I got my period, and I feel very uncomfortable. Yesterday I had a bad headache.</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 2. 蒙古 -->
+            <div id="wu-2" class="grammar-box">
+                <h3><span class="zy-text">2. 蒙(ㄇㄥˊ)古(ㄍㄨˇ)</span> (Mongolia)</h3>
+
+                <div class="item-content">
+                    <div class="btn-group">
+                        <button class="audio-btn" onclick="playAudioText(this)">🔊</button>
+                        <button class="rec-btn" onclick="toggleRecord(this)">🎤</button>
+                        <button class="play-rec-btn" disabled>▶️</button>
+                    </div>
+                    <div>
+                        <span class="zy-text">昨(ㄗㄨㄛˊ)天(ㄊㄧㄢ)我(ㄨㄛˇ)們(ㄇㄣ˙)吃(ㄔ)蒙(ㄇㄥˊ)古(ㄍㄨˇ)牛(ㄋㄧㄡˊ)肉(ㄖㄡˋ)麵(ㄇㄧㄢˋ)，我(ㄨㄛˇ)覺(ㄐㄩㄝˊ)得(ㄉㄜ˙)還(ㄏㄞˊ)好(ㄏㄠˇ)，可(ㄎㄜˇ)是(ㄕˋ)我(ㄨㄛˇ)太(ㄊㄞˋ)太(ㄊㄞ˙)很(ㄏㄣˇ)喜(ㄒㄧˇ)歡(ㄏㄨㄢ)。</span>
+                        <span class="en-trans">Yesterday we ate Mongolian beef noodles. I thought they were just okay, but my wife really liked them.</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 3. 簡體字 -->
+            <div id="wu-3" class="grammar-box">
+                <h3><span class="zy-text">3. 簡(ㄐㄧㄢˇ)體(ㄊㄧˇ)字(ㄗˋ)</span> (Simplified Chinese Characters)</h3>
+                <div class="note">
+                    <b>Review:</b> You can review this topic here: <a href="https://jany-mandarin.github.io/Chad.lesson189.html#wu-2" target="_blank" style="color:#8C6239; font-weight:bold;">Lesson 189 - 簡體字</a>
+                </div>
+
+                <div class="item-content">
+                    <div class="btn-group">
+                        <button class="audio-btn" onclick="playAudioText(this)">🔊</button>
+                        <button class="rec-btn" onclick="toggleRecord(this)">🎤</button>
+                        <button class="play-rec-btn" disabled>▶️</button>
+                    </div>
+                    <div>
+                        <span class="zy-text">昨(ㄗㄨㄛˊ)天(ㄊㄧㄢ)我(ㄨㄛˇ)們(ㄇㄣ˙)去(ㄑㄩˋ)的(ㄉㄜ˙)中(ㄓㄨㄥ)式(ㄕˋ)餐(ㄘㄢ)廳(ㄊㄧㄥ)，有(ㄧㄡˇ)很(ㄏㄣˇ)多(ㄉㄨㄛ)簡(ㄐㄧㄢˇ)體(ㄊㄧˇ)字(ㄗˋ)，我(ㄨㄛˇ)用(ㄩㄥˋ)手(ㄕㄡˇ)機(ㄐㄧ)查(ㄔㄚˊ)。</span>
+                        <span class="en-trans">The Chinese restaurant we went to yesterday had a lot of simplified characters, so I looked them up on my phone.</span>
+                    </div>
+                </div>
+
+                <div class="item-content">
+                    <div class="btn-group">
+                        <button class="audio-btn" onclick="playAudioText(this)">🔊</button>
+                        <button class="rec-btn" onclick="toggleRecord(this)">🎤</button>
+                        <button class="play-rec-btn" disabled>▶️</button>
+                    </div>
+                    <div>
+                        <span class="zy-text">我(ㄨㄛˇ)看(ㄎㄢˋ)到(ㄉㄠˋ)蔥(ㄘㄨㄥ)油(ㄧㄡˊ)餅(ㄅㄧㄥˇ)的(ㄉㄜ˙)簡(ㄐㄧㄢˇ)體(ㄊㄧˇ)字(ㄗˋ)，和(ㄏㄢˋ)繁(ㄈㄢˊ)體(ㄊㄧˇ)字(ㄗˋ)有(ㄧㄡˇ)點(ㄉㄧㄢˇ)像(ㄒㄧㄤˋ)。</span>
+                        <span class="en-trans">I saw the simplified characters for scallion pancake, and they look a bit like the traditional characters.</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 4. X前 / 的時候 -->
+            <div id="wu-4" class="grammar-box">
+                <h3><span class="zy-text">4. X 前(ㄑㄧㄢˊ) / 的(ㄉㄜ˙)時(ㄕˊ)候(ㄏㄡ˙)</span> (Before X / When...)</h3>
+                <div class="note">
+                    <b>Review:</b> You can review this grammar pattern here: <a href="https://jany-mandarin.github.io/Chad.lesson195.html#hw-1" target="_blank" style="color:#8C6239; font-weight:bold;">Lesson 195 - 前 / 的時候</a>
+                </div>
+
+                <div class="item-content">
+                    <div class="btn-group">
+                        <button class="audio-btn" onclick="playAudioText(this)">🔊</button>
+                        <button class="rec-btn" onclick="toggleRecord(this)">🎤</button>
+                        <button class="play-rec-btn" disabled>▶️</button>
+                    </div>
+                    <div>
+                        <span class="zy-text">那(ㄋㄚˋ)家(ㄐㄧㄚ)餐(ㄘㄢ)廳(ㄊㄧㄥ)中(ㄓㄨㄥ)午(ㄨˇ)十(ㄕˊ)二(ㄦˋ)點(ㄉㄧㄢˇ)前(ㄑㄧㄢˊ)，就(ㄐㄧㄡˋ)有(ㄧㄡˇ)很(ㄏㄣˇ)多(ㄉㄨㄛ)人(ㄖㄣˊ)。</span>
+                        <span class="en-trans">That restaurant already has a lot of people before 12:00 noon.</span>
+                    </div>
+                </div>
+
+                <div class="item-content">
+                    <div class="btn-group">
+                        <button class="audio-btn" onclick="playAudioText(this)">🔊</button>
+                        <button class="rec-btn" onclick="toggleRecord(this)">🎤</button>
+                        <button class="play-rec-btn" disabled>▶️</button>
+                    </div>
+                    <div>
+                        <span class="zy-text">那(ㄋㄚˋ)家(ㄐㄧㄚ)餐(ㄘㄢ)廳(ㄊㄧㄥ)在(ㄗㄞˋ)十(ㄕˊ)一(ㄧ)點(ㄉㄧㄢˇ)的(ㄉㄜ˙)時(ㄕˊ)候(ㄏㄡ˙)，就(ㄐㄧㄡˋ)有(ㄧㄡˇ)很(ㄏㄣˇ)多(ㄉㄨㄛ)人(ㄖㄣˊ)，我(ㄨㄛˇ)覺(ㄐㄩㄝˊ)得(ㄉㄜ˙)那(ㄋㄚˋ)家(ㄐㄧㄚ)餐(ㄘㄢ)廳(ㄊㄧㄥ)很(ㄏㄣˇ)有(ㄧㄡˇ)名(ㄇㄧㄥˊ)。</span>
+                        <span class="en-trans">That restaurant already has a lot of people at 11:00; I think that restaurant is very famous.</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 1: Homework Review & Extensions -->
+        <div class="section" id="sec-1">
+            <h2>Homework Review & Extensions</h2>
+
+            <!-- 1. 翻譯練習作業 -->
+            <div id="hw-1" class="grammar-box">
+                <h3><span class="zy-text">1. 翻(ㄈㄢ)譯(ㄧˋ)練(ㄌㄧㄢˋ)習(ㄒㄧˊ)作(ㄗㄨㄛˋ)業(ㄧㄝˋ)</span> (Translation Homework Review)</h3>
+
+                <!-- Q1 -->
+                <div class="hw-review-block">
+                    <div class="homework-q">1. The sausage is very salty, so I can’t eat too much at once.</div>
+                    <div class="wrong-line">❌ 錯誤：這個香腸很鹹，所以我就不會吃很多。</div>
+                    <div class="item-content">
+                        <div class="btn-group">
+                            <button class="audio-btn" onclick="playAudioText(this)">🔊</button>
+                            <button class="rec-btn" onclick="toggleRecord(this)">🎤</button>
+                            <button class="play-rec-btn" disabled>▶️</button>
+                        </div>
+                        <div>
+                            <span class="zy-text">✅ 正(ㄓㄥˋ)確(ㄑㄩㄝˋ)：這(ㄓㄜˋ)個(ㄍㄜ˙)香(ㄒㄧㄤ)腸(ㄔㄤˊ)很(ㄏㄣˇ)鹹(ㄒㄧㄢˊ)，所(ㄙㄨㄛˇ)以(ㄧˇ)我(ㄨㄛˇ)就(ㄐㄧㄡˋ)不(ㄅㄨˊ)會(ㄏㄨㄟˋ)吃(ㄔ)太(ㄊㄞˋ)多(ㄉㄨㄛ)。</span>
+                        </div>
+                    </div>
+                    <div class="note">
+                        <b>Note:</b> "太...了" (too...) is used in positive sentences (e.g., 太鹹了 = too salty). In a negative sentence like this, use <b>不會吃太多</b> (won't eat too much) without 了.
+                    </div>
+                </div>
+
+                <!-- Q2 -->
+                <div class="hw-review-block">
+                    <div class="homework-q">2. This shop is in the city center, so it’s convenient to take the MRT.</div>
+                    <div class="wrong-line">❌ 錯誤：這家店在市區，所以搭捷運很方便。</div>
+                    <div class="item-content">
+                        <div class="btn-group">
+                            <button class="audio-btn" onclick="playAudioText(this)">🔊</button>
+                            <button class="rec-btn" onclick="toggleRecord(this)">🎤</button>
+                            <button class="play-rec-btn" disabled>▶️</button>
+                        </div>
+                        <div>
+                            <span class="zy-text">✅ 正(ㄓㄥˋ)確(ㄑㄩㄝˋ)：這(ㄓㄜˋ)家(ㄐㄧㄚ)店(ㄉㄧㄢˋ)在(ㄗㄞˋ)市(ㄕˋ)區(ㄑㄩ)，所(ㄙㄨㄛˇ)以(ㄧˇ)搭(ㄉㄚ)捷(ㄐㄧㄝˊ)運(ㄩㄣˋ)去(ㄑㄩˋ)很(ㄏㄣˇ)方(ㄈㄤ)便(ㄅㄧㄢˋ)。</span>
+                        </div>
+                    </div>
+                    <div class="note">
+                        <b>Note:</b> Add <b>去</b> (to go) after 搭捷運 to emphasize the action of going to that shop.
+                    </div>
+                </div>
+
+                <!-- Q3 -->
+                <div class="hw-review-block">
+                    <div class="homework-q">3. He is very young, but he is already the owner of three companies.</div>
+                    <div class="wrong-line">❌ 錯誤：他很輕，可是他已經有三個公司。</div>
+                    <div class="item-content">
+                        <div class="btn-group">
+                            <button class="audio-btn" onclick="playAudioText(this)">🔊</button>
+                            <button class="rec-btn" onclick="toggleRecord(this)">🎤</button>
+                            <button class="play-rec-btn" disabled>▶️</button>
+                        </div>
+                        <div>
+                            <span class="zy-text">✅ 正(ㄓㄥˋ)確(ㄑㄩㄝˋ)：他(ㄊㄚ)很(ㄏㄣˇ)年(ㄋㄧㄢˊ)輕(ㄑㄧㄥ)，可(ㄎㄜˇ)是(ㄕˋ)他(ㄊㄚ)已(ㄧˇ)經(ㄐㄧㄥ)有(ㄧㄡˇ)三(ㄙㄢ)個(ㄍㄜ˙)公(ㄍㄨㄥ)司(ㄙ)了(ㄌㄜ˙)。</span>
+                        </div>
+                    </div>
+                    <div class="note">
+                        <b>Note:</b> Use <b>年輕</b> (young) for a person's age (輕 alone means light in weight), and add <b>了</b> at the end to match 已經 (already).
+                    </div>
+                </div>
+
+                <!-- Q4 -->
+                <div class="hw-review-block">
+                    <div class="homework-q">4. I like plain yogurt, not the sweetened kind.</div>
+                    <div class="item-content">
+                        <div class="btn-group">
+                            <button class="audio-btn" onclick="playAudioText(this)">🔊</button>
+                            <button class="rec-btn" onclick="toggleRecord(this)">🎤</button>
+                            <button class="play-rec-btn" disabled>▶️</button>
+                        </div>
+                        <div>
+                            <span class="zy-text">✅ 正(ㄓㄥˋ)確(ㄑㄩㄝˋ)：我(ㄨㄛˇ)喜(ㄒㄧˇ)歡(ㄏㄨㄢ)吃(ㄔ)原(ㄩㄢˊ)味(ㄨㄟˋ)的(ㄉㄜ˙)優(ㄧㄡ)格(ㄍㄜˊ)，不(ㄅㄨˋ)喜(ㄒㄧˇ)歡(ㄏㄨㄢ)吃(ㄔ)甜(ㄊㄧㄢˊ)的(ㄉㄜ˙)。</span>
+                        </div>
+                    </div>
+                    <div class="item-content">
+                        <div class="btn-group">
+                            <button class="audio-btn" onclick="playAudioText(this)">🔊</button>
+                            <button class="rec-btn" onclick="toggleRecord(this)">🎤</button>
+                            <button class="play-rec-btn" disabled>▶️</button>
+                        </div>
+                        <div>
+                            <span class="zy-text">✅ 正(ㄓㄥˋ)確(ㄑㄩㄝˋ)：我(ㄨㄛˇ)喜(ㄒㄧˇ)歡(ㄏㄨㄢ)吃(ㄔ)原(ㄩㄢˊ)味(ㄨㄟˋ)的(ㄉㄜ˙)優(ㄧㄡ)格(ㄍㄜˊ)，不(ㄅㄨˋ)喜(ㄒㄧˇ)歡(ㄏㄨㄢ)加(ㄐㄧㄚ)糖(ㄊㄤˊ)的(ㄉㄜ˙)。</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Q5 -->
+                <div class="hw-review-block">
+                    <div class="homework-q">5. I’m in a hurry. Can you be a little faster?</div>
+                    <div class="item-content">
+                        <div class="btn-group">
+                            <button class="audio-btn" onclick="playAudioText(this)">🔊</button>
+                            <button class="rec-btn" onclick="toggleRecord(this)">🎤</button>
+                            <button class="play-rec-btn" disabled>▶️</button>
+                        </div>
+                        <div>
+                            <span class="zy-text">✅ 正(ㄓㄥˋ)確(ㄑㄩㄝˋ)：我(ㄨㄛˇ)很(ㄏㄣˇ)急(ㄐㄧˊ)，你(ㄋㄧˇ)可(ㄎㄜˇ)以(ㄧˇ)快(ㄎㄨㄞˋ)一(ㄧˋ)點(ㄉㄧㄢˇ)嗎(ㄇㄚ˙)？</span>
+                        </div>
+                    </div>
+                    <div class="note">
+                        <b>Note:</b> This sentence is super useful! You can say it when you need to use the restroom, when talking to a taxi driver, or in any situation where you are in a hurry.
+                    </div>
+                </div>
+            </div>
+
+            <!-- 2. 鹽 -->
+            <div id="hw-2" class="grammar-box">
+                <h3><span class="zy-text">2. 鹽(ㄧㄢˊ)</span> (Salt)</h3>
+                <img src="https://cdn.phototourl.com/member/2026-11-15-1c5b4560-f629-4031-99ca-d7370f804bd6.png" alt="鹽" class="vocab-img">
+                <div class="note">
+                    <b>Explanation:</b> You can imagine someone keeping their salt inside a jar (皿 at the bottom) and watching it strictly so nobody takes it away.
+                </div>
+
+                <div class="item-content">
+                    <div class="btn-group">
+                        <button class="audio-btn" onclick="playAudioText(this)">🔊</button>
+                        <button class="rec-btn" onclick="toggleRecord(this)">🎤</button>
+                        <button class="play-rec-btn" disabled>▶️</button>
+                    </div>
+                    <div>
+                        <span class="zy-text">你(ㄋㄧˇ)放(ㄈㄤˋ)太(ㄊㄞˋ)多(ㄉㄨㄛ)鹽(ㄧㄢˊ)了(ㄌㄜ˙)，這(ㄓㄜˋ)碗(ㄨㄢˇ)麵(ㄇㄧㄢˋ)太(ㄊㄞˋ)鹹(ㄒㄧㄢˊ)了(ㄌㄜ˙)。</span>
+                        <span class="en-trans">You put too much salt in; this bowl of noodles is too salty.</span>
+                    </div>
+                </div>
+
+                <div class="item-content">
+                    <div class="btn-group">
+                        <button class="audio-btn" onclick="playAudioText(this)">🔊</button>
+                        <button class="rec-btn" onclick="toggleRecord(this)">🎤</button>
+                        <button class="play-rec-btn" disabled>▶️</button>
+                    </div>
+                    <div>
+                        <span class="zy-text">這(ㄓㄜˋ)碗(ㄨㄢˇ)湯(ㄊㄤ)都(ㄉㄡ)沒(ㄇㄟˊ)有(ㄧㄡˇ)味(ㄨㄟˋ)道(ㄉㄠˋ)，你(ㄋㄧˇ)是(ㄕˋ)不(ㄅㄨˊ)是(ㄕˋ)忘(ㄨㄤˋ)記(ㄐㄧˋ)放(ㄈㄤˋ)鹽(ㄧㄢˊ)？對(ㄉㄨㄟˋ)耶(ㄧㄝ˙)！我(ㄨㄛˇ)忘(ㄨㄤˋ)了(ㄌㄜ˙)！！</span>
+                        <span class="en-trans">This bowl of soup has no flavor at all—did you forget to put in salt? Oh yeah! I forgot!!</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 3. 過 -->
+            <div id="hw-3" class="grammar-box">
+                <h3><span class="zy-text">3. 過(ㄍㄨㄛˋ)</span> (To spend / pass time)</h3>
+                <div class="note">
+                    <b>Explanation:</b> Means to spend or pass a period of time. You can review more here: <a href="https://jany-mandarin.github.io/Chad.lesson196.html#hw-5" target="_blank" style="color:#8C6239; font-weight:bold;">Lesson 196 - 過</a>
+                </div>
+
+                <div class="item-content">
+                    <div class="btn-group">
+                        <button class="audio-btn" onclick="playAudioText(this)">🔊</button>
+                        <button class="rec-btn" onclick="toggleRecord(this)">🎤</button>
+                        <button class="play-rec-btn" disabled>▶️</button>
+                    </div>
+                    <div>
+                        <span class="zy-text">我(ㄨㄛˇ)覺(ㄐㄩㄝˊ)得(ㄉㄜ˙)周(ㄓㄡ)末(ㄇㄛˋ)就(ㄐㄧㄡˋ)應(ㄧㄥ)該(ㄍㄞ)這(ㄓㄜˋ)樣(ㄧㄤˋ)過(ㄍㄨㄛˋ)。</span>
+                        <span class="en-trans">I think weekends should be spent just like this.</span>
+                    </div>
+                </div>
+
+                <div class="item-content">
+                    <div class="btn-group">
+                        <button class="audio-btn" onclick="playAudioText(this)">🔊</button>
+                        <button class="rec-btn" onclick="toggleRecord(this)">🎤</button>
+                        <button class="play-rec-btn" disabled>▶️</button>
+                    </div>
+                    <div>
+                        <span class="zy-text">這(ㄓㄜˋ)個(ㄍㄜ˙)周(ㄓㄡ)末(ㄇㄛˋ)我(ㄨㄛˇ)過(ㄍㄨㄛˋ)得(ㄉㄜ˙)很(ㄏㄣˇ)舒(ㄕㄨ)服(ㄈㄨˊ)，因(ㄧㄣ)為(ㄨㄟˋ)我(ㄨㄛˇ)睡(ㄕㄨㄟˋ)了(ㄌㄜ˙)很(ㄏㄣˇ)久(ㄐㄧㄡˇ)。</span>
+                        <span class="en-trans">I spent this weekend very comfortably because I slept for a long time.</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 4. 不錯 -->
+            <div id="hw-4" class="grammar-box">
+                <h3><span class="zy-text">4. 不(ㄅㄨˊ)錯(ㄘㄨㄛˋ)</span> (Pretty good / Not bad)</h3>
+                <div class="note">
+                    <b>Explanation:</b> Used to describe something (or the weather) that is pretty good, nice, or acceptable.
+                </div>
+
+                <div class="item-content">
+                    <div class="btn-group">
+                        <button class="audio-btn" onclick="playAudioText(this)">🔊</button>
+                        <button class="rec-btn" onclick="toggleRecord(this)">🎤</button>
+                        <button class="play-rec-btn" disabled>▶️</button>
+                    </div>
+                    <div>
+                        <span class="zy-text">今(ㄐㄧㄣ)天(ㄊㄧㄢ)天(ㄊㄧㄢ)氣(ㄑㄧˋ)不(ㄅㄨˊ)錯(ㄘㄨㄛˋ)，很(ㄏㄣˇ)舒(ㄕㄨ)服(ㄈㄨˊ)，沒(ㄇㄟˊ)有(ㄧㄡˇ)下(ㄒㄧㄚˋ)雨(ㄩˇ)也(ㄧㄝˇ)不(ㄅㄨˊ)會(ㄏㄨㄟˋ)太(ㄊㄞˋ)熱(ㄖㄜˋ)。</span>
+                        <span class="en-trans">The weather today is pretty nice and comfortable—it's not raining and not too hot.</span>
+                    </div>
+                </div>
+
+                <div class="item-content">
+                    <div class="btn-group">
+                        <button class="audio-btn" onclick="playAudioText(this)">🔊</button>
+                        <button class="rec-btn" onclick="toggleRecord(this)">🎤</button>
+                        <button class="play-rec-btn" disabled>▶️</button>
+                    </div>
+                    <div>
+                        <span class="zy-text">這(ㄓㄜˋ)件(ㄐㄧㄢˋ)衣(ㄧ)服(ㄈㄨˊ)不(ㄅㄨˊ)錯(ㄘㄨㄛˋ)，穿(ㄔㄨㄢ)起(ㄑㄧˇ)來(ㄌㄞˊ)很(ㄏㄣˇ)舒(ㄕㄨ)服(ㄈㄨˊ)。</span>
+                        <span class="en-trans">This piece of clothing is pretty nice; it feels very comfortable to wear.</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 2: Supplementary -->
+        <div class="section" id="sec-2">
+            <h2>Supplementary</h2>
+
+            <!-- 1. 活 -->
+            <div id="sup-1" class="grammar-box">
+                <h3><span class="zy-text">1. 活(ㄏㄨㄛˊ)</span> (To live / Alive)</h3>
+                <img src="https://cdn.phototourl.com/member/2026-11-15-920b9f4d-25ea-4f39-b300-3ac849544d9b.png" alt="活" class="vocab-img">
+                <div class="note">
+                    <b>Explanation:</b> You can imagine life flowing like water (氵 on the left), and being able to speak (舌 on the right) shows that someone is alive—so this character means "to live" or "alive."
+                </div>
+
+                <div class="item-content">
+                    <div class="btn-group">
+                        <button class="audio-btn" onclick="playAudioText(this)">🔊</button>
+                        <button class="rec-btn" onclick="toggleRecord(this)">🎤</button>
+                        <button class="play-rec-btn" disabled>▶️</button>
+                    </div>
+                    <div>
+                        <span class="zy-text">我(ㄨㄛˇ)的(ㄉㄜ˙)貓(ㄇㄠ)已(ㄧˇ)經(ㄐㄧㄥ)活(ㄏㄨㄛˊ)了(ㄌㄜ˙)八(ㄅㄚ)年(ㄋㄧㄢˊ)，應(ㄧㄥ)該(ㄍㄞ)可(ㄎㄜˇ)以(ㄧˇ)活(ㄏㄨㄛˊ)到(ㄉㄠˋ)二(ㄦˋ)十(ㄕˊ)歲(ㄙㄨㄟˋ)。</span>
+                        <span class="en-trans">My cat has already lived for 8 years; he should be able to live to 20 years old.</span>
+                    </div>
+                </div>
+
+                <div class="item-content">
+                    <div class="btn-group">
+                        <button class="audio-btn" onclick="playAudioText(this)">🔊</button>
+                        <button class="rec-btn" onclick="toggleRecord(this)">🎤</button>
+                        <button class="play-rec-btn" disabled>▶️</button>
+                    </div>
+                    <div>
+                        <span class="zy-text">他(ㄊㄚ)每(ㄇㄟˇ)天(ㄊㄧㄢ)都(ㄉㄡ)活(ㄏㄨㄛˊ)得(ㄉㄜ˙)很(ㄏㄣˇ)快(ㄎㄨㄞˋ)樂(ㄌㄜˋ)，因(ㄧㄣ)為(ㄨㄟˋ)每(ㄇㄟˇ)天(ㄊㄧㄢ)都(ㄉㄡ)可(ㄎㄜˇ)以(ㄧˇ)看(ㄎㄢˋ)到(ㄉㄠˋ)漂(ㄆㄧㄠˋ)亮(ㄌㄧㄤˋ)的(ㄉㄜ˙)太(ㄊㄞˋ)太(ㄊㄞ˙)和(ㄏㄢˋ)很(ㄏㄣˇ)帥(ㄕㄨㄞˋ)的(ㄉㄜ˙)貓(ㄇㄠ)。</span>
+                        <span class="en-trans">He lives happily every day because every day he gets to see his beautiful wife and very handsome cat.</span>
+                    </div>
+                </div>
+
+                <div class="item-content">
+                    <div class="btn-group">
+                        <button class="audio-btn" onclick="playAudioText(this)">🔊</button>
+                        <button class="rec-btn" onclick="toggleRecord(this)">🎤</button>
+                        <button class="play-rec-btn" disabled>▶️</button>
+                    </div>
+                    <div>
+                        <span class="zy-text">我(ㄨㄛˇ)不(ㄅㄨˋ)想(ㄒㄧㄤˇ)活(ㄏㄨㄛˊ)了(ㄌㄜ˙)！！我(ㄨㄛˇ)想(ㄒㄧㄤˇ)要(ㄧㄠˋ)去(ㄑㄩˋ)死(ㄙˇ)！！</span>
+                        <span class="en-trans">I don't want to live anymore!! I want to die!!</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 2. 最好的 / 最喜歡的 -->
+            <div id="sup-2" class="grammar-box">
+                <h3><span class="zy-text">2. 最(ㄗㄨㄟˋ)好(ㄏㄠˇ)的(ㄉㄜ˙) / 最(ㄗㄨㄟˋ)喜(ㄒㄧˇ)歡(ㄏㄨㄢ)的(ㄉㄜ˙)</span> (Best / Favorite)</h3>
+                <div class="note">
+                    <b>Explanation:</b> 好 means "good," so 最好的 means "best." 喜歡 means "like," so 最喜歡的 means "favorite."
+                </div>
+
+                <div class="item-content">
+                    <div class="btn-group">
+                        <button class="audio-btn" onclick="playAudioText(this)">🔊</button>
+                        <button class="rec-btn" onclick="toggleRecord(this)">🎤</button>
+                        <button class="play-rec-btn" disabled>▶️</button>
+                    </div>
+                    <div>
+                        <span class="zy-text">我(ㄨㄛˇ)最(ㄗㄨㄟˋ)喜(ㄒㄧˇ)歡(ㄏㄨㄢ)的(ㄉㄜ˙)美(ㄇㄟˇ)式(ㄕˋ)足(ㄗㄨˊ)球(ㄑㄧㄡˊ)隊(ㄉㄨㄟˋ)現(ㄒㄧㄢˋ)在(ㄗㄞˋ)在(ㄗㄞˋ)威(ㄨㄟ)斯(ㄙ)康(ㄎㄤ)辛(ㄒㄧㄣ)。</span>
+                        <span class="en-trans">My favorite American football team is in Wisconsin right now.</span>
+                    </div>
+                </div>
+
+                <div class="item-content">
+                    <div class="btn-group">
+                        <button class="audio-btn" onclick="playAudioText(this)">🔊</button>
+                        <button class="rec-btn" onclick="toggleRecord(this)">🎤</button>
+                        <button class="play-rec-btn" disabled>▶️</button>
+                    </div>
+                    <div>
+                        <span class="zy-text">我(ㄨㄛˇ)最(ㄗㄨㄟˋ)喜(ㄒㄧˇ)歡(ㄏㄨㄢ)吃(ㄔ)的(ㄉㄜ˙)冰(ㄅㄧㄥ)淇(ㄑㄧˊ)淋(ㄌㄧㄣˊ)是(ㄕˋ)原(ㄩㄢˊ)味(ㄨㄟˋ)冰(ㄅㄧㄥ)淇(ㄑㄧˊ)淋(ㄌㄧㄣˊ)。</span>
+                        <span class="en-trans">My favorite ice cream to eat is plain (vanilla/original) ice cream.</span>
+                    </div>
+                </div>
+
+                <div class="item-content">
+                    <div class="btn-group">
+                        <button class="audio-btn" onclick="playAudioText(this)">🔊</button>
+                        <button class="rec-btn" onclick="toggleRecord(this)">🎤</button>
+                        <button class="play-rec-btn" disabled>▶️</button>
+                    </div>
+                    <div>
+                        <span class="zy-text">他(ㄊㄚ)是(ㄕˋ)我(ㄨㄛˇ)最(ㄗㄨㄟˋ)好(ㄏㄠˇ)的(ㄉㄜ˙)朋(ㄆㄥˊ)友(ㄧㄡˇ)。</span>
+                        <span class="en-trans">He is my best friend.</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 3. 紅蘿蔔 -->
+            <div id="sup-3" class="grammar-box">
+                <h3><span class="zy-text">3. 紅(ㄏㄨㄥˊ)蘿(ㄌㄨㄛˊ)蔔(ㄅㄛ˙)</span> (Carrot)</h3>
+                <img src="https://cdn.phototourl.com/member/2026-11-15-31724659-d321-4a74-9487-2609db5e5737.jpg" alt="紅蘿蔔" class="vocab-img">
+                <div class="note">
+                    <b>Explanation:</b> You can imagine someone using a net (罒 on top of 蘿) to catch a bird (隹) that is stealing radishes/carrots (蘿蔔), crawling low on the ground to catch it.
+                </div>
+
+                <div class="item-content">
+                    <div class="btn-group">
+                        <button class="audio-btn" onclick="playAudioText(this)">🔊</button>
+                        <button class="rec-btn" onclick="toggleRecord(this)">🎤</button>
+                        <button class="play-rec-btn" disabled>▶️</button>
+                    </div>
+                    <div>
+                        <span class="zy-text">我(ㄨㄛˇ)很(ㄏㄣˇ)喜(ㄒㄧˇ)歡(ㄏㄨㄢ)吃(ㄔ)紅(ㄏㄨㄥˊ)蘿(ㄌㄨㄛˊ)蔔(ㄅㄛ˙)。</span>
+                        <span class="en-trans">I really like eating carrots.</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 4. 不 + adj. -->
+            <div id="sup-4" class="grammar-box">
+                <h3><span class="zy-text">4. 不(ㄅㄨˋ) + adj.</span> (Negating Adjectives)</h3>
+                <div class="note">
+                    <b>Explanation:</b> You can put 不 directly before an adjective to make it negative (not + adjective).
+                </div>
+
+                <div class="item-content">
+                    <div class="btn-group">
+                        <button class="audio-btn" onclick="playAudioText(this)">🔊</button>
+                        <button class="rec-btn" onclick="toggleRecord(this)">🎤</button>
+                        <button class="play-rec-btn" disabled>▶️</button>
+                    </div>
+                    <div>
+                        <span class="zy-text">我(ㄨㄛˇ)覺(ㄐㄩㄝˊ)得(ㄉㄜ˙)很(ㄏㄣˇ)多(ㄉㄨㄛ)美(ㄇㄟˇ)國(ㄍㄨㄛˊ)老(ㄌㄠˇ)人(ㄖㄣˊ)不(ㄅㄨˋ)健(ㄐㄧㄢˋ)康(ㄎㄤ)，因(ㄧㄣ)為(ㄨㄟˋ)在(ㄗㄞˋ)美(ㄇㄟˇ)國(ㄍㄨㄛˊ)看(ㄎㄢˋ)醫(ㄧ)生(ㄕㄥ)很(ㄏㄣˇ)貴(ㄍㄨㄟˋ)。</span>
+                        <span class="en-trans">I think many elderly Americans are not healthy because seeing a doctor in the US is very expensive.</span>
+                    </div>
+                </div>
+
+                <div class="item-content">
+                    <div class="btn-group">
+                        <button class="audio-btn" onclick="playAudioText(this)">🔊</button>
+                        <button class="rec-btn" onclick="toggleRecord(this)">🎤</button>
+                        <button class="play-rec-btn" disabled>▶️</button>
+                    </div>
+                    <div>
+                        <span class="zy-text">這(ㄓㄜˋ)份(ㄈㄣˋ)牛(ㄋㄧㄡˊ)排(ㄆㄞˊ)不(ㄅㄨˋ)便(ㄅㄧㄢˋ)宜(ㄧˊ)，謝(ㄒㄧㄝˋ)謝(ㄒㄧㄝ˙)你(ㄋㄧˇ)請(ㄑㄧㄥˇ)我(ㄨㄛˇ)吃(ㄔ)。</span>
+                        <span class="en-trans">This steak is not cheap; thank you for treating me to it.</span>
+                    </div>
+                </div>
+
+                <div class="item-content">
+                    <div class="btn-group">
+                        <button class="audio-btn" onclick="playAudioText(this)">🔊</button>
+                        <button class="rec-btn" onclick="toggleRecord(this)">🎤</button>
+                        <button class="play-rec-btn" disabled>▶️</button>
+                    </div>
+                    <div>
+                        <span class="zy-text">我(ㄨㄛˇ)昨(ㄗㄨㄛˊ)天(ㄊㄧㄢ)睡(ㄕㄨㄟˋ)不(ㄅㄨˋ)好(ㄏㄠˇ)，因(ㄧㄣ)為(ㄨㄟˋ)我(ㄨㄛˇ)的(ㄉㄜ˙)貓(ㄇㄠ)一(ㄧˋ)直(ㄓˊ)跳(ㄊㄧㄠˋ)來(ㄌㄞˊ)跳(ㄊㄧㄠˋ)去(ㄑㄩˋ)。</span>
+                        <span class="en-trans">I didn't sleep well yesterday because my cat kept jumping around.</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 5. 安心 -->
+            <div id="sup-5" class="grammar-box">
+                <h3><span class="zy-text">5. 安(ㄢ)心(ㄒㄧㄣ)</span> (At ease / Relieved)</h3>
+                <div class="note">
+                    <b>Explanation:</b> 安心 is more formal/written, while in daily conversation people usually say 放心. Both mean feeling calm, relieved, and not worried. (Class reference post: <a href="https://www.instagram.com/p/DcDBGKsEfvI/?img_index=1" target="_blank" style="color:#8C6239; font-weight:bold;">Instagram Example</a>)
+                </div>
+
+                <div class="item-content">
+                    <div class="btn-group">
+                        <button class="audio-btn" onclick="playAudioText(this)">🔊</button>
+                        <button class="rec-btn" onclick="toggleRecord(this)">🎤</button>
+                        <button class="play-rec-btn" disabled>▶️</button>
+                    </div>
+                    <div>
+                        <span class="zy-text">這(ㄓㄜˋ)是(ㄕˋ)貓(ㄇㄠ)可(ㄎㄜˇ)以(ㄧˇ)放(ㄈㄤˋ)心(ㄒㄧㄣ)吃(ㄔ)的(ㄉㄜ˙)食(ㄕˊ)物(ㄨˋ)。</span>
+                        <span class="en-trans">This is food that cats can eat without worry.</span>
+                    </div>
+                </div>
+
+                <div class="item-content">
+                    <div class="btn-group">
+                        <button class="audio-btn" onclick="playAudioText(this)">🔊</button>
+                        <button class="rec-btn" onclick="toggleRecord(this)">🎤</button>
+                        <button class="play-rec-btn" disabled>▶️</button>
+                    </div>
+                    <div>
+                        <span class="zy-text">這(ㄓㄜˋ)是(ㄕˋ)貓(ㄇㄠ)可(ㄎㄜˇ)以(ㄧˇ)安(ㄢ)心(ㄒㄧㄣ)吃(ㄔ)的(ㄉㄜ˙)食(ㄕˊ)物(ㄨˋ)。</span>
+                        <span class="en-trans">This is food that cats can safely eat with peace of mind.</span>
+                    </div>
+                </div>
+
+                <div class="item-content">
+                    <div class="btn-group">
+                        <button class="audio-btn" onclick="playAudioText(this)">🔊</button>
+                        <button class="rec-btn" onclick="toggleRecord(this)">🎤</button>
+                        <button class="play-rec-btn" disabled>▶️</button>
+                    </div>
+                    <div>
+                        <span class="zy-text">你(ㄋㄧˇ)去(ㄑㄩˋ)非(ㄈㄟ)洲(ㄓㄡ)旅(ㄌㄩˇ)行(ㄒㄧㄥˊ)要(ㄧㄠˋ)小(ㄒㄧㄠˇ)心(ㄒㄧㄣ)！請(ㄑㄧㄥˇ)放(ㄈㄤˋ)心(ㄒㄧㄣ)，我(ㄨㄛˇ)會(ㄏㄨㄟˋ)非(ㄈㄟ)常(ㄔㄤˊ)小(ㄒㄧㄠˇ)心(ㄒㄧㄣ)的(ㄉㄜ˙)。</span>
+                        <span class="en-trans">Be careful when you travel to Africa! Please don't worry, I will be very careful.</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 6. 半夜 -->
+            <div id="sup-6" class="grammar-box">
+                <h3><span class="zy-text">6. 半(ㄅㄢˋ)夜(ㄧㄝˋ)</span> (Midnight / Middle of the night)</h3>
+
+                <div class="item-content">
+                    <div class="btn-group">
+                        <button class="audio-btn" onclick="playAudioText(this)">🔊</button>
+                        <button class="rec-btn" onclick="toggleRecord(this)">🎤</button>
+                        <button class="play-rec-btn" disabled>▶️</button>
+                    </div>
+                    <div>
+                        <span class="zy-text">我(ㄨㄛˇ)的(ㄉㄜ˙)貓(ㄇㄠ)從(ㄘㄨㄥˊ)白(ㄅㄞˊ)天(ㄊㄧㄢ)睡(ㄕㄨㄟˋ)到(ㄉㄠˋ)半(ㄅㄢˋ)夜(ㄧㄝˋ)，他(ㄊㄚ)每(ㄇㄟˇ)天(ㄊㄧㄢ)都(ㄉㄡ)過(ㄍㄨㄛˋ)得(ㄉㄜ˙)很(ㄏㄣˇ)舒(ㄕㄨ)服(ㄈㄨˊ)。</span>
+                        <span class="en-trans">My cat sleeps from daytime until the middle of the night; he lives very comfortably every day.</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 3: Translation Practice -->
+        <div class="section" id="sec-3">
+            <h2>Translation Practice</h2>
+
+            <div class="quiz-card">
+                <div class="homework-q">1. When I stir-fry vegetables, I only add a little salt.</div>
+                <textarea class="hw-textarea" placeholder="Type your translation here..."></textarea>
+            </div>
+
+            <div class="quiz-card">
+                <div class="homework-q">2. My grandmother lived to be ninety. She was always happy.</div>
+                <textarea class="hw-textarea" placeholder="Type your translation here..."></textarea>
+            </div>
+
+            <div class="quiz-card">
+                <div class="homework-q">3. On weekends, I often go shopping in the city center with my wife.</div>
+                <textarea class="hw-textarea" placeholder="Type your translation here..."></textarea>
+            </div>
+
+            <div class="quiz-card">
+                <div class="homework-q">4. I think the original flavor cake is the best. You don’t need to add cream.</div>
+                <textarea class="hw-textarea" placeholder="Type your translation here..."></textarea>
+            </div>
+
+            <div class="quiz-card">
+                <div class="homework-q">5. This bowl of noodles is too salty. Next time, please add less soy sauce.</div>
+                <textarea class="hw-textarea" placeholder="Type your translation here..."></textarea>
+            </div>
+        </div>
+
+        <!-- Section 4: Reading Comprehension -->
+        <div class="section" id="sec-4">
+            <h2>Reading Comprehension</h2>
+
+            <div class="reading-paragraph">
+                <div class="item-content" style="margin-bottom: 12px;">
+                    <div class="btn-group">
+                        <button class="audio-btn" onclick="playAudioText(this)">🔊</button>
+                        <button class="rec-btn" onclick="toggleRecord(this)">🎤</button>
+                        <button class="play-rec-btn" disabled>▶️</button>
+                    </div>
+                    <span style="font-size: 15px; font-weight: bold; color: #8C6239;">Read & Listen to the Story</span>
+                </div>
+
+                <span class="zy-text">
+                    家(ㄐㄧㄚ)豪(ㄏㄠˊ)和(ㄏㄢˋ)雅(ㄧㄚˇ)婷(ㄊㄧㄥˊ)是(ㄕˋ)大(ㄉㄚˋ)學(ㄒㄩㄝˊ)同(ㄊㄨㄥˊ)學(ㄒㄩㄝˊ)，現(ㄒㄧㄢˋ)在(ㄗㄞˋ)他(ㄊㄚ)們(ㄇㄣ˙)都(ㄉㄡ)在(ㄗㄞˋ)台(ㄊㄞˊ)南(ㄋㄢˊ)工(ㄍㄨㄥ)作(ㄗㄨㄛˋ)。家(ㄐㄧㄚ)豪(ㄏㄠˊ)從(ㄘㄨㄥˊ)蒙(ㄇㄥˊ)古(ㄍㄨˇ)來(ㄌㄞˊ)的(ㄉㄜ˙)，他(ㄊㄚ)的(ㄉㄜ˙)中(ㄓㄨㄥ)文(ㄨㄣˊ)很(ㄏㄣˇ)不(ㄅㄨˊ)錯(ㄘㄨㄛˋ)，但(ㄉㄢˋ)是(ㄕˋ)他(ㄊㄚ)還(ㄏㄞˊ)是(ㄕˋ)很(ㄏㄣˇ)怕(ㄆㄚˋ)看(ㄎㄢˋ)簡(ㄐㄧㄢˇ)體(ㄊㄧˇ)字(ㄗˋ)。雅(ㄧㄚˇ)婷(ㄊㄧㄥˊ)說(ㄕㄨㄛ)：「你(ㄋㄧˇ)放(ㄈㄤˋ)心(ㄒㄧㄣ)，我(ㄨㄛˇ)教(ㄐㄧㄠ)你(ㄋㄧˇ)認(ㄖㄣˋ)字(ㄗˋ)。」<br><br>
+
+                    上(ㄕㄤˋ)個(ㄍㄜ˙)月(ㄩㄝˋ)的(ㄉㄜ˙)一(ㄧˋ)天(ㄊㄧㄢ)半(ㄅㄢˋ)夜(ㄧㄝˋ)，雅(ㄧㄚˇ)婷(ㄊㄧㄥˊ)打(ㄉㄚˇ)電(ㄉㄧㄢˋ)話(ㄏㄨㄚˋ)給(ㄍㄟˇ)家(ㄐㄧㄚ)豪(ㄏㄠˊ)。她(ㄊㄚ)的(ㄉㄜ˙)聲(ㄕㄥ)音(ㄧㄣ)很(ㄏㄣˇ)急(ㄐㄧˊ)：「我(ㄨㄛˇ)的(ㄉㄜ˙)月(ㄩㄝˋ)經(ㄐㄧㄥ)來(ㄌㄞˊ)了(ㄌㄜ˙)，肚(ㄉㄨˋ)子(ㄗ˙)很(ㄏㄣˇ)痛(ㄊㄨㄥˋ)。」家(ㄐㄧㄚ)豪(ㄏㄠˊ)馬(ㄇㄚˇ)上(ㄕㄤˋ)騎(ㄑㄧˊ)車(ㄔㄜ)去(ㄑㄩˋ)她(ㄊㄚ)家(ㄐㄧㄚ)，還(ㄏㄞˊ)帶(ㄉㄞˋ)了(ㄌㄜ˙)熱(ㄖㄜˋ)水(ㄕㄨㄟˇ)和(ㄏㄢˋ)藥(ㄧㄠˋ)。雅(ㄧㄚˇ)婷(ㄊㄧㄥˊ)吃(ㄔ)了(ㄌㄜ˙)藥(ㄧㄠˋ)，休(ㄒㄧㄡ)息(ㄒㄧ˙)一(ㄧˊ)下(ㄒㄧㄚˋ)，就(ㄐㄧㄡˋ)覺(ㄐㄩㄝˊ)得(ㄉㄜ˙)舒(ㄕㄨ)服(ㄈㄨˊ)多(ㄉㄨㄛ)了(ㄌㄜ˙)。家(ㄐㄧㄚ)豪(ㄏㄠˊ)說(ㄕㄨㄛ)：「你(ㄋㄧˇ)不(ㄅㄨˊ)要(ㄧㄠˋ)急(ㄐㄧˊ)，慢(ㄇㄢˋ)慢(ㄇㄢˋ)來(ㄌㄞˊ)，我(ㄨㄛˇ)會(ㄏㄨㄟˋ)在(ㄗㄞˋ)你(ㄋㄧˇ)旁(ㄆㄤˊ)邊(ㄅㄧㄢ)。」<br><br>
+
+                    周(ㄓㄡ)末(ㄇㄛˋ)的(ㄉㄜ˙)時(ㄕˊ)候(ㄏㄡ˙)，他(ㄊㄚ)們(ㄇㄣ˙)一(ㄧˋ)起(ㄑㄧˇ)去(ㄑㄩˋ)市(ㄕˋ)區(ㄑㄩ)吃(ㄔ)飯(ㄈㄢˋ)。那(ㄋㄚˋ)家(ㄐㄧㄚ)餐(ㄘㄢ)廳(ㄊㄧㄥ)離(ㄌㄧˊ)雅(ㄧㄚˇ)婷(ㄊㄧㄥˊ)家(ㄐㄧㄚ)很(ㄏㄣˇ)接(ㄐㄧㄝ)近(ㄐㄧㄣˋ)，走(ㄗㄡˇ)路(ㄌㄨˋ)只(ㄓˇ)要(ㄧㄠˋ)十(ㄕˊ)分(ㄈㄣ)鐘(ㄓㄨㄥ)。雅(ㄧㄚˇ)婷(ㄊㄧㄥˊ)說(ㄕㄨㄛ)：「我(ㄨㄛˇ)去(ㄑㄩˋ)過(ㄍㄨㄛˋ)這(ㄓㄜˋ)裡(ㄌㄧˇ)很(ㄏㄣˇ)多(ㄉㄨㄛ)次(ㄘˋ)，他(ㄊㄚ)們(ㄇㄣ˙)的(ㄉㄜ˙)湯(ㄊㄤ)很(ㄏㄣˇ)好(ㄏㄠˇ)喝(ㄏㄜ)。」家(ㄐㄧㄚ)豪(ㄏㄠˊ)點(ㄉㄧㄢˇ)了(ㄌㄜ˙)一(ㄧˋ)碗(ㄨㄢˇ)麵(ㄇㄧㄢˋ)，他(ㄊㄚ)喝(ㄏㄜ)了(ㄌㄜ˙)一(ㄧˋ)口(ㄎㄡˇ)湯(ㄊㄤ)，說(ㄕㄨㄛ)：「這(ㄓㄜˋ)個(ㄍㄜ˙)湯(ㄊㄤ)有(ㄧㄡˇ)點(ㄉㄧㄢˇ)鹹(ㄒㄧㄢˊ)，下(ㄒㄧㄚˋ)次(ㄘˋ)我(ㄨㄛˇ)要(ㄧㄠˋ)請(ㄑㄧㄥˇ)老(ㄌㄠˇ)闆(ㄅㄢˇ)少(ㄕㄠˇ)放(ㄈㄤˋ)一(ㄧˋ)點(ㄉㄧㄢˇ)鹽(ㄧㄢˊ)。」雅(ㄧㄚˇ)婷(ㄊㄧㄥˊ)很(ㄏㄣˇ)高(ㄍㄠ)興(ㄒㄧㄥˋ)，她(ㄊㄚ)覺(ㄐㄩㄝˊ)得(ㄉㄜ˙)家(ㄐㄧㄚ)豪(ㄏㄠˊ)說(ㄕㄨㄛ)話(ㄏㄨㄚˋ)的(ㄉㄜ˙)樣(ㄧㄤˋ)子(ㄗ˙)像(ㄒㄧㄤˋ)一(ㄧˊ)個(ㄍㄜ˙)小(ㄒㄧㄠˇ)朋(ㄆㄥˊ)友(ㄧㄡˇ)。<br><br>
+
+                    吃(ㄔ)完(ㄨㄢˊ)飯(ㄈㄢˋ)以(ㄧˇ)後(ㄏㄡˋ)，他(ㄊㄚ)們(ㄇㄣ˙)走(ㄗㄡˇ)到(ㄉㄠˋ)餐(ㄘㄢ)廳(ㄊㄧㄥ)前(ㄑㄧㄢˊ)面(ㄇㄧㄢˋ)的(ㄉㄜ˙)一(ㄧˊ)個(ㄍㄜ˙)小(ㄒㄧㄠˇ)公(ㄍㄨㄥ)園(ㄩㄢˊ)。家(ㄐㄧㄚ)豪(ㄏㄠˊ)說(ㄕㄨㄛ)：「我(ㄨㄛˇ)的(ㄉㄜ˙)爺(ㄧㄝˊ)爺(ㄧㄝ˙)在(ㄗㄞˋ)蒙(ㄇㄥˊ)古(ㄍㄨˇ)活(ㄏㄨㄛˊ)到(ㄉㄠˋ)九(ㄐㄧㄡˇ)十(ㄕˊ)歲(ㄙㄨㄟˋ)，他(ㄊㄚ)每(ㄇㄟˇ)天(ㄊㄧㄢ)都(ㄉㄡ)喝(ㄏㄜ)一(ㄧˋ)杯(ㄅㄟ)牛(ㄋㄧㄡˊ)奶(ㄋㄞˇ)。」雅(ㄧㄚˇ)婷(ㄊㄧㄥˊ)說(ㄕㄨㄛ)：「我(ㄨㄛˇ)也(ㄧㄝˇ)喜(ㄒㄧˇ)歡(ㄏㄨㄢ)牛(ㄋㄧㄡˊ)奶(ㄋㄞˇ)！」他(ㄊㄚ)們(ㄇㄣ˙)又(ㄧㄡˋ)說(ㄕㄨㄛ)到(ㄉㄠˋ)最(ㄗㄨㄟˋ)喜(ㄒㄧˇ)歡(ㄏㄨㄢ)的(ㄉㄜ˙)水(ㄕㄨㄟˇ)果(ㄍㄨㄛˇ)。家(ㄐㄧㄚ)豪(ㄏㄠˊ)最(ㄗㄨㄟˋ)喜(ㄒㄧˇ)歡(ㄏㄨㄢ)的(ㄉㄜ˙)水(ㄕㄨㄟˇ)果(ㄍㄨㄛˇ)是(ㄕˋ)香(ㄒㄧㄤ)蕉(ㄐㄧㄠ)，雅(ㄧㄚˇ)婷(ㄊㄧㄥˊ)最(ㄗㄨㄟˋ)喜(ㄒㄧˇ)歡(ㄏㄨㄢ)的(ㄉㄜ˙)菜(ㄘㄞˋ)是(ㄕˋ)紅(ㄏㄨㄥˊ)蘿(ㄌㄨㄛˊ)蔔(ㄅㄛ˙)。<br><br>
+
+                    天(ㄊㄧㄢ)氣(ㄑㄧˋ)很(ㄏㄣˇ)好(ㄏㄠˇ)，風(ㄈㄥ)也(ㄧㄝˇ)不(ㄅㄨˊ)大(ㄉㄚˋ)。雅(ㄧㄚˇ)婷(ㄊㄧㄥˊ)說(ㄕㄨㄛ)：「我(ㄨㄛˇ)去(ㄑㄩˋ)過(ㄍㄨㄛˋ)蒙(ㄇㄥˊ)古(ㄍㄨˇ)的(ㄉㄜ˙)草(ㄘㄠˇ)原(ㄩㄢˊ)，那(ㄋㄚˋ)裡(ㄌㄧˇ)的(ㄉㄜ˙)草(ㄘㄠˇ)很(ㄏㄣˇ)高(ㄍㄠ)，很(ㄏㄣˇ)漂(ㄆㄧㄠˋ)亮(ㄌㄧㄤˋ)。」家(ㄐㄧㄚ)豪(ㄏㄠˊ)說(ㄕㄨㄛ)：「真(ㄓㄣ)的(ㄉㄜ˙)嗎(ㄇㄚ˙)？下(ㄒㄧㄚˋ)次(ㄘˋ)我(ㄨㄛˇ)帶(ㄉㄞˋ)你(ㄋㄧˇ)去(ㄑㄩˋ)！」他(ㄊㄚ)們(ㄇㄣ˙)都(ㄉㄡ)很(ㄏㄣˇ)高(ㄍㄠ)興(ㄒㄧㄥˋ)。這(ㄓㄜˋ)個(ㄍㄜ˙)周(ㄓㄡ)末(ㄇㄛˋ)過(ㄍㄨㄛˋ)得(ㄉㄜ˙)很(ㄏㄣˇ)不(ㄅㄨˊ)錯(ㄘㄨㄛˋ)。
+                </span>
+            </div>
+
+            <!-- Reading Questions (Plain Chinese + Textarea Only) -->
+            <div class="quiz-card">
+                <div class="homework-q">問題一、家豪說「我會在你旁邊」，你覺得他是一個怎麼樣的朋友？</div>
+                <textarea class="hw-textarea" placeholder="Type your answer here..."></textarea>
+            </div>
+
+            <div class="quiz-card">
+                <div class="homework-q">問題二、家豪覺得湯有點鹹，但他沒有說「不好吃」。你覺得他為什麼這樣說？</div>
+                <textarea class="hw-textarea" placeholder="Type your answer here..."></textarea>
+            </div>
+
+            <div class="quiz-card">
+                <div class="homework-q">問題三、雅婷說家豪「像一個小朋友」。你覺得她是喜歡這樣的家豪，還是不喜歡？</div>
+                <textarea class="hw-textarea" placeholder="Type your answer here..."></textarea>
+            </div>
+
+            <div class="quiz-card">
+                <div class="homework-q">問題四、要是雅婷和家豪真的一起去蒙古，你覺得他們會做什麼？</div>
+                <textarea class="hw-textarea" placeholder="Type your answer here..."></textarea>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const mainContent = document.getElementById('mainContent');
+            if (window.innerWidth <= 900) {
+                sidebar.classList.toggle('active');
+            } else {
+                sidebar.classList.toggle('collapsed');
+                mainContent.classList.toggle('expanded');
+            }
+        }
+
+        // ====== Parse Zhuyin on Load (DOM based) ======
+        function parseZhuyinDOM() {
+            const regex = /([\u4e00-\u9fa5a-zA-Z0-9])\((.*?)\)/g;
+            document.querySelectorAll('.zy-text').forEach(el => {
+                let html = el.innerHTML;
+                let parsed = html.replace(regex, (match, char, zy) => {
+                    let tone = '';
+                    let symbols = zy;
+                    let isNeutral = false;
+                    
+                    if (zy.includes('ˊ')) { tone = 'ˊ'; symbols = zy.replace('ˊ', ''); }
+                    else if (zy.includes('ˇ')) { tone = 'ˇ'; symbols = zy.replace('ˇ', ''); }
+                    else if (zy.includes('ˋ')) { tone = 'ˋ'; symbols = zy.replace('ˋ', ''); }
+                    else if (zy.includes('˙')) { isNeutral = true; symbols = zy.replace('˙', ''); }
+
+                    let toneHtml = tone ? `<span class="zy-tone">${tone}</span>` : '';
+                    let neutralHtml = isNeutral ? `<span class="zy-neutral">˙</span>` : '';
+
+                    return `<div class="zy-char-wrap"><span class="zy-char">${char}</span><div class="zy-box">${neutralHtml}<span class="zy-symbols">${symbols}</span>${toneHtml}</div></div>`;
+                });
+                el.innerHTML = parsed;
+            });
+        }
+        document.addEventListener("DOMContentLoaded", parseZhuyinDOM);
+
+        // ====== Audio Reading ======
+        let currentUtteranceText = "";
+        function playAudioText(btn) {
+            let container = btn.closest('.item-content');
+            let zyDiv = container ? container.querySelector('.zy-text') : null;
+            
+            // Support single whole reading passage block
+            if (!zyDiv && container && container.parentElement) {
+                zyDiv = container.parentElement.querySelector('.zy-text');
+            }
+            if (!zyDiv) {
+                let tr = btn.closest('tr');
+                if (tr) zyDiv = tr.querySelector('.zy-text');
+            }
+            if (!zyDiv) {
+                let rp = btn.closest('.reading-paragraph');
+                if (rp) zyDiv = rp.querySelector('.zy-text');
+            }
+            if(!zyDiv) return;
+            
+            let wraps = zyDiv.querySelectorAll('.zy-char-wrap');
+            let cleanText = "";
+            if (wraps.length > 0) {
+                let strArr = [];
+                wraps.forEach(w => {
+                    let charEl = w.querySelector('.zy-char');
+                    let symEl = w.querySelector('.zy-symbols');
+                    let toneEl = w.querySelector('.zy-tone');
+                    let neuEl = w.querySelector('.zy-neutral');
+                    if (!charEl) return;
+
+                    let ch = charEl.innerText;
+                    let zy = (neuEl ? '˙' : '') + (symEl ? symEl.innerText : '') + (toneEl ? toneEl.innerText : '');
+
+                    // 台灣發音與破音字修正（傳給語音引擎的同音字替換，不影響畫面顯示）
+                    if (ch === '和' && zy === 'ㄏㄢˋ') {
+                        ch = '漢';
+                    } else if (ch === '吐' && zy === 'ㄊㄨˋ') {
+                        ch = '兔';
+                    } else if (ch === '教' && zy === 'ㄐㄧㄠ') {
+                        ch = '交';
+                    }
+                    strArr.push(ch);
+                });
+                cleanText = strArr.join('');
+            } else {
+                cleanText = zyDiv.innerText.replace(/\(.*?\)/g, '');
+            }
+            
+            cleanText = cleanText.replace(/^[A-Z0-9]+[：:]\s*/gi, '').replace(/\s+[A-Z0-9]+[：:]\s*/gi, ' ').replace(/[A-Z0-9]+[：:]/gi, '');
+            cleanText = cleanText.replace(/\//g, ' ');
+
+            // Ensure TTS pronounces specific words correctly
+            cleanText = cleanText.replace(/在家教中文/g, '在家 教中文');
+            cleanText = cleanText.replace(/在家教/g, '在家 教');
+            cleanText = cleanText.replace(/吐了/g, '兔了');
+
+            if (speechSynthesis.speaking && currentUtteranceText === cleanText) {
+                if (speechSynthesis.paused) {
+                    speechSynthesis.resume();
+                } else {
+                    speechSynthesis.pause();
+                }
+                return;
+            }
+
+            speechSynthesis.cancel(); 
+            currentUtteranceText = cleanText;
+            const utterance = new SpeechSynthesisUtterance(cleanText);
+            utterance.lang = 'zh-TW';
+            utterance.rate = 0.85;
+            utterance.onend = () => { currentUtteranceText = ""; };
+            speechSynthesis.speak(utterance);
+        }
+
+        // ====== Audio Recording ======
+        let mediaRecorders = {};
+        let recIdCounter = 0;
+        async function toggleRecord(btn) {
+            let container = btn.closest('.item-content');
+            let targetParent = container || btn.closest('td') || btn.parentElement;
+            let player = targetParent.querySelector('audio');
+            let playBtn = targetParent.querySelector('.play-rec-btn');
+            
+            if (!btn.dataset.recId) {
+                btn.dataset.recId = "rec-" + recIdCounter++;
+            }
+            let id = btn.dataset.recId;
+
+            if (!player) {
+                player = document.createElement('audio');
+                player.controls = true;
+                player.style.display = 'none';
+                player.style.width = '100%';
+                player.style.marginTop = '10px';
+                targetParent.appendChild(player);
+            }
+
+            if (!mediaRecorders[id] || mediaRecorders[id].state === "inactive") {
+                try {
+                    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+                    let chunks = [];
+                    let recorder = new MediaRecorder(stream);
+                    
+                    recorder.ondataavailable = e => chunks.push(e.data);
+                    recorder.onstop = () => {
+                        const blob = new Blob(chunks, { 'type': 'audio/webm' });
+                        player.src = URL.createObjectURL(blob);
+                        player.style.display = 'block';
+                        playBtn.disabled = false;
+                        playBtn.onclick = () => player.play();
+                        stream.getTracks().forEach(track => track.stop());
+                    };
+
+                    recorder.start();
+                    mediaRecorders[id] = recorder;
+                    btn.innerHTML = "⏹️";
+                    btn.classList.add("recording");
+                    player.style.display = 'none';
+                } catch (err) {
+                    alert("Microphone access denied. 請允許瀏覽器使用麥克風。");
+                }
+            } else {
+                mediaRecorders[id].stop();
+                btn.innerHTML = "🎤";
+                btn.classList.remove("recording");
+            }
+        }
+
+        // Toggle visibility
+        let zyVisible = true;
+        let enVisible = true;
+
+        function toggleZhuyin() {
+            zyVisible = !zyVisible;
+            document.querySelectorAll('.zy-box').forEach(el => {
+                el.style.display = zyVisible ? 'inline-flex' : 'none';
+            });
+        }
+
+        function toggleEnglish() {
+            enVisible = !enVisible;
+            document.querySelectorAll('.en-trans').forEach(el => {
+                el.style.display = enVisible ? 'block' : 'none';
+            });
+        }
+    </script>
+</body>
+</html>
