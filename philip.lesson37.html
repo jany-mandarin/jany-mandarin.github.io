@@ -25,12 +25,12 @@
         .main-content { margin-left: var(--sidebar-width); width: calc(100% - var(--sidebar-width)); padding: 20px 40px; box-sizing: border-box; max-width: 950px; transition: margin-left 0.3s ease, width 0.3s ease; }
         .main-content.expanded { margin-left: 0; width: 100%; }
 
-        /* 頂部導覽列 */
-        .top-nav { display: flex; justify-content: flex-end; gap: 20px; padding: 15px 20px; font-size: 15px; font-weight: bold; }
+        /* 右上角固定導覽列（已改為統一的純文字乾淨格式） */
+        .top-nav { position: fixed; top: 15px; right: 25px; z-index: 1050; display: flex; gap: 15px; font-size: 15px; font-weight: bold; }
         .top-nav a { color: var(--primary); text-decoration: none; }
         .top-nav a:hover { text-decoration: underline; color: #B5835A; }
 
-        .header { text-align: center; border-bottom: 2px solid var(--primary); padding-bottom: 10px; margin-bottom: 20px; }
+        .header { text-align: center; border-bottom: 2px solid var(--primary); padding-bottom: 10px; margin-bottom: 20px; margin-top: 20px; }
         
         .controls { position: sticky; top: 0; background: var(--bg); padding: 15px; text-align: center; border-bottom: 1px solid #ccc; z-index: 100; margin-bottom: 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); display: flex; justify-content: center; gap: 10px; }
         button.control-btn { background: var(--primary); color: white; border: none; padding: 10px 15px; border-radius: 6px; cursor: pointer; font-size: 14px; font-weight: bold; }
@@ -119,12 +119,13 @@
         </ul>
     </div>
 
-    <div class="main-content" id="mainContent">
-        <div class="top-nav">
-            <a href="https://jany-mandarin.github.io/philip.html">Index</a>
-            <a href="philip_lesson_36.html">第36课</a>
-        </div>
+    <!-- 右上角固定導覽列 -->
+    <div class="top-nav">
+        <a href="https://jany-mandarin.github.io/philip.html">Index</a>
+        <a href="https://jany-mandarin.github.io/philip.lesson36.html">第36堂</a>
+    </div>
 
+    <div class="main-content" id="mainContent">
         <div class="header">
             <h1>菲利普的第37堂中文课</h1>
             <p>日期：2026/10/25</p>
@@ -415,7 +416,7 @@
                     });
                     html += `</tbody></table></div>`;
                 } else if (item.type === "grammar") {
-                    html	+= `<div class="grammar-box" id="item-${sIdx}-${iIdx}">
+                    html += `<div class="grammar-box" id="item-${sIdx}-${iIdx}">
                         <div style="font-weight:bold; font-size:16px; color:#8C6239; margin-bottom:5px;">${parsePinyin(item.title)}</div>`;
                     if(item.note) html += `<div class="note">${parsePinyin(item.note)}</div>`;
                     
@@ -455,7 +456,7 @@
         function toggleEnglish() {
             enVisible = !enVisible;
             document.querySelectorAll('.en-trans').forEach(el => {
-                el.style.display = enVisible ? 'display' : 'none';
+                el.style.display = enVisible ? 'block' : 'none';
             });
         }
     </script>
