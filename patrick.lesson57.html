@@ -2,45 +2,49 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Patrick's Mandarin Lesson 57</title>
     <style>
         :root { --bg: #FDFBF7; --primary: #D4A373; --text: #4a4a4a; --white: #fff; --sidebar-width: 280px; }
         html { scroll-behavior: smooth; }
         body { font-family: 'Helvetica Neue', Arial, sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; margin: 0; padding: 0; display: flex; transition: margin-left 0.3s ease; }
-        
-        /* 左側收合大綱導覽列 */
-        .sidebar { width: var(--sidebar-width); background: #FFF9F0; border-right: 1px solid #E6D5B8; height: 100vh; position: fixed; top: 0; left: 0; overflow-y: auto; padding: 20px; box-sizing: border-box; transition: transform 0.3s ease; z-index: 1000; }
+
+        /* Navigation */
+        .top-nav { position: fixed; top: 0; left: 0; width: 100%; background: #FFF9F0; border-bottom: 1px solid #E6D5B8; padding: 10px 20px; box-sizing: border-box; text-align: right; z-index: 1200; display: flex; justify-content: flex-end; align-items: center; }
+        .top-nav a { color: var(--primary); font-weight: bold; text-decoration: none; margin-left: 20px; font-size: 15px; }
+        .top-nav a:hover { text-decoration: underline; color: #8C6239; }
+
+        /* Sidebar */
+        .sidebar { width: var(--sidebar-width); background: #FFF9F0; border-right: 1px solid #E6D5B8; height: 100vh; position: fixed; top: 0; left: 0; overflow-y: auto; padding: 60px 20px 20px 20px; box-sizing: border-box; transition: transform 0.3s ease; z-index: 1000; }
         .sidebar.collapsed { transform: translateX(-100%); }
         .sidebar h3 { margin-top: 0; color: #8C6239; font-size: 18px; border-bottom: 2px solid var(--primary); padding-bottom: 8px; display: flex; justify-content: space-between; align-items: center; }
         .sidebar ol { padding-left: 20px; margin: 10px 0; color: #555; }
-        .sidebar li { margin-bottom: 6px; font-size: 14px; }
-        .sidebar .sub-list { padding-left: 15px; margin: 4px 0; list-style-type: circle; }
-        .sidebar .sub-list li { font-size: 13px; margin-bottom: 4px; }
+        .sidebar li { margin-bottom: 8px; font-size: 15px; font-weight: bold; color: #8C6239; }
+        .sidebar ul { padding-left: 15px; list-style-type: circle; margin-top: 5px; margin-bottom: 15px; font-weight: normal; }
+        .sidebar ul li { font-size: 13.5px; margin-bottom: 6px; color: #555; }
         .sidebar a { color: #555; text-decoration: none; display: block; }
-        .sidebar a:hover { color: #8C6239; font-weight: bold; }
-        
-        /* 切換按鈕 */
-        .sidebar-toggle { position: fixed; top: 15px; left: 15px; z-index: 1100; background: var(--primary); color: white; border: none; padding: 8px 12px; border-radius: 6px; cursor: pointer; font-size: 14px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        .sidebar a:hover { color: #D4A373; font-weight: bold; }
 
-        /* 主內容區 */
-        .main-content { margin-left: var(--sidebar-width); width: calc(100% - var(--sidebar-width)); padding: 20px 40px; box-sizing: border-box; max-width: 900px; transition: margin-left 0.3s ease, width 0.3s ease; }
+        .sidebar-toggle { position: fixed; top: 50px; left: 15px; z-index: 1100; background: var(--primary); color: white; border: none; padding: 8px 12px; border-radius: 6px; cursor: pointer; font-size: 14px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+
+        /* Main Content */
+        .main-content { margin-top: 40px; margin-left: var(--sidebar-width); width: calc(100% - var(--sidebar-width)); padding: 20px 40px; box-sizing: border-box; max-width: 900px; transition: margin-left 0.3s ease, width 0.3s ease; }
         .main-content.expanded { margin-left: 0; width: 100%; }
+        .header { text-align: center; border-bottom: 2px solid var(--primary); padding-bottom: 10px; margin-bottom: 20px; margin-top: 20px; }
 
-        .header { text-align: center; border-bottom: 2px solid var(--primary); padding-bottom: 10px; margin-bottom: 20px; position: relative; }
-        .top-nav { position: absolute; top: 0; right: 0; display: flex; gap: 15px; font-size: 14px; font-weight: bold; }
-        .top-nav a { color: #8C6239; text-decoration: none; }
-        .top-nav a:hover { text-decoration: underline; }
-        
-        .controls { position: sticky; top: 0; background: var(--bg); padding: 15px; text-align: center; border-bottom: 1px solid #ccc; z-index: 100; margin-bottom: 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
-        button.control-btn { background: var(--primary); color: white; border: none; padding: 10px 15px; margin: 5px; border-radius: 6px; cursor: pointer; font-size: 14px; font-weight: bold; }
+        /* Controls */
+        .controls { position: sticky; top: 40px; background: rgba(253, 251, 247, 0.95); backdrop-filter: blur(5px); padding: 15px; text-align: center; border-bottom: 1px solid #ccc; z-index: 900; margin-bottom: 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); border-radius: 8px; }
+        button.control-btn { background: var(--primary); color: white; border: none; padding: 10px 15px; margin: 5px; border-radius: 6px; cursor: pointer; font-size: 14px; font-weight: bold; box-shadow: 0 2px 4px rgba(0,0,0,0.08); }
         button.control-btn:hover { background: #B5835A; }
-        
-        /* 圓形精美圖示按鈕 */
-        .icon-btn { background: #f0f0f0; border: none; width: 38px; height: 38px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 2px 4px rgba(0,0,0,0.08); transition: transform 0.1s, background 0.2s; margin-right: 6px; vertical-align: middle; }
-        .icon-btn:hover { background: #e0e0e0; transform: scale(1.05); }
-        .icon-btn.recording { background: #ff4d4f; animation: pulse 1.5s infinite; }
-        .icon-btn.playing { background: #457b9d; }
-        .icon-btn:disabled { background: #e0e0e0; opacity: 0.5; cursor: not-allowed; transform: none; }
+
+        /* Sentence Row & Audio Circle Buttons */
+        .sentence-row { display: flex; align-items: flex-start; gap: 15px; width: 100%; margin-bottom: 10px; }
+        .buttons-group { display: flex; align-items: center; gap: 8px; flex-shrink: 0; margin-top: 2px; }
+        .icon-btn { background: #EFEFEF; color: #4A4A4A; width: 40px; height: 40px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; border: none; cursor: pointer; box-shadow: 0 1px 3px rgba(0,0,0,0.08); transition: transform 0.1s, background 0.2s; font-size: 15px; }
+        .icon-btn:hover { background: #E2E2E2; transform: scale(1.05); }
+        .icon-btn.recording { background: #ff4d4f; color: white; animation: pulse 1.5s infinite; }
+        .icon-btn.playing { background: #457b9d; color: white; }
+        .icon-btn:disabled { background: #F5F5F5; color: #CCC; cursor: not-allowed; box-shadow: none; transform: none; }
 
         @keyframes pulse {
             0% { box-shadow: 0 0 0 0 rgba(255, 77, 79, 0.4); }
@@ -48,25 +52,24 @@
             100% { box-shadow: 0 0 0 0 rgba(255, 77, 79, 0); }
         }
 
-        h2 { color: #8C6239; border-left: 5px solid var(--primary); padding-left: 10px; margin-top: 30px; }
-        .section { margin-bottom: 30px; background: var(--white); padding: 20px; border-radius: 12px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); scroll-margin-top: 80px; }
-        
-        .item { margin-bottom: 20px; display: flex; flex-direction: column; border-bottom: 1px dashed #eee; padding-bottom: 15px; }
-        
-        .sentence-row { display: flex; align-items: flex-start; gap: 12px; width: 100%; margin-bottom: 6px; }
-        .buttons-group { display: flex; align-items: center; gap: 6px; flex-shrink: 0; margin-top: 2px; }
         .text-content { display: flex; flex-direction: column; flex-grow: 1; }
-        
-        .pinyin-group { display: inline-flex; flex-direction: column; align-items: center; margin-right: 3px; vertical-align: bottom; }
+
+        /* Content Blocks */
+        h2 { color: #8C6239; border-left: 5px solid var(--primary); padding-left: 10px; margin-top: 30px; }
+        .section { margin-bottom: 30px; background: var(--white); padding: 25px; border-radius: 12px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); scroll-margin-top: 130px; }
+        .grammar-box { background: #FFF9F0; border: 1px solid #E6D5B8; border-radius: 8px; padding: 20px; margin: 20px 0; scroll-margin-top: 140px; }
+
+        .pinyin-group { display: inline-flex; flex-direction: column; align-items: center; margin-right: 2px; vertical-align: bottom; }
         .py-text { font-size: 11px; color: #777; line-height: 1; margin-bottom: 2px; }
         .hz-text { font-size: 24px; font-family: sans-serif; line-height: 1.2; }
-        
-        .en-trans { color: #666; font-size: 15px; font-style: italic; margin-top: 4px; padding-left: 0; }
-        .explanation-sub { color: #777; font-size: 13px; margin-top: 4px; line-height: 1.4; }
-        
-        .grammar-box { background: #FFF9F0; border: 1px solid #E6D5B8; border-radius: 8px; padding: 15px; margin: 15px 0; }
-        .note { font-size: 14px; color: #555; margin-bottom: 10px; line-height: 1.5; }
-        
+
+        .en-trans { color: #666; font-size: 15px; font-style: italic; margin-top: 4px; display: block; }
+        .explanation-sub { color: #777; font-size: 13px; margin-top: 4px; line-height: 1.4; display: block; }
+        .note { font-size: 15px; color: #555; margin-bottom: 12px; line-height: 1.6; background: #fdfaf6; padding: 10px 14px; border-left: 3px solid #D4A373; border-radius: 4px; }
+
+        .wrong-line { color: #B54848; font-size: 16px; margin: 6px 0; }
+        .correct-label { font-weight: bold; color: #2a7a4a; }
+
         @media (max-width: 900px) {
             .sidebar { transform: translateX(-100%); }
             .sidebar.active { transform: translateX(0); }
@@ -76,44 +79,49 @@
 </head>
 <body>
 
+    <div class="top-nav">
+        <a href="https://jany-mandarin.github.io/patrick.html">Index</a>
+        <a href="https://jany-mandarin.github.io/patrick.lesson56.html">Lesson 56</a>
+    </div>
+
     <button class="sidebar-toggle" onclick="toggleSidebar()">☰ Outline</button>
 
     <div class="sidebar" id="sidebar">
         <h3>📖 Outline <button style="background:none; border:none; color:#8C6239; font-weight:bold; cursor:pointer; font-size:16px;" onclick="toggleSidebar()">×</button></h3>
         <ol>
             <li>
-                <a href="#sec-0">Warm-up</a>
+                <a href="#sec-1">Warm-up</a>
                 <ul class="sub-list">
-                    <li><a href="#sub-0-0">1. Weather & Temperature</a></li>
-                    <li><a href="#sub-0-1">2. Work</a></li>
-                    <li><a href="#sub-0-2">3. Page Numbers</a></li>
+                    <li><a href="#sub-1-1">1. Weather &amp; Temperature</a></li>
+                    <li><a href="#sub-1-2">2. Work</a></li>
+                    <li><a href="#sub-1-3">3. Page Numbers</a></li>
                 </ul>
             </li>
             <li>
-                <a href="#sec-1">Lesson 6</a>
+                <a href="#sec-2">Lesson 6</a>
                 <ul class="sub-list">
-                    <li><a href="#sub-1-0">1. Usage of '怎么'</a></li>
-                    <li><a href="#sub-1-1">2. Reduplication of Measure Words</a></li>
-                    <li><a href="#sub-1-2">3. '因为...所以...'</a></li>
-                    <li><a href="#sub-1-3">4. Sentence Stress & Pause</a></li>
+                    <li><a href="#sub-2-1">1. Usage of '怎么'</a></li>
+                    <li><a href="#sub-2-2">2. Reduplication of Measure Words</a></li>
+                    <li><a href="#sub-2-3">3. '因为...所以...'</a></li>
+                    <li><a href="#sub-2-4">4. Sentence Stress &amp; Pause</a></li>
                 </ul>
             </li>
             <li>
-                <a href="#sec-2">Lesson 7</a>
+                <a href="#sec-3">Lesson 7</a>
                 <ul class="sub-list">
-                    <li><a href="#sub-2-0">1. Usage of '还'</a></li>
-                    <li><a href="#sub-2-1">2. Usage of '就'</a></li>
-                    <li><a href="#sub-2-2">3. Usage of '离'</a></li>
-                    <li><a href="#sub-2-3">4. Usage of '呢'</a></li>
-                    <li><a href="#sub-2-4">5. Question Intonation</a></li>
+                    <li><a href="#sub-3-1">1. Usage of '还'</a></li>
+                    <li><a href="#sub-3-2">2. Usage of '就'</a></li>
+                    <li><a href="#sub-3-3">3. Usage of '离'</a></li>
+                    <li><a href="#sub-3-4">4. Usage of '呢'</a></li>
+                    <li><a href="#sub-3-5">5. Question Intonation</a></li>
                 </ul>
             </li>
             <li>
-                <a href="#sec-3">Lesson 8</a>
+                <a href="#sec-4">Lesson 8</a>
                 <ul class="sub-list">
-                    <li><a href="#sub-3-0">1. Usage of '好吗?'</a></li>
-                    <li><a href="#sub-3-1">2. Usage of '再'</a></li>
-                    <li><a href="#sub-3-2">3. Difference: 在 vs 再</a></li>
+                    <li><a href="#sub-4-1">1. Usage of '好吗?'</a></li>
+                    <li><a href="#sub-4-2">2. Usage of '再'</a></li>
+                    <li><a href="#sub-4-3">3. Difference: 在 vs 再</a></li>
                 </ul>
             </li>
         </ol>
@@ -121,9 +129,6 @@
 
     <div class="main-content" id="mainContent">
         <div class="header">
-            <div class="top-nav">
-                <a href="https://jany-mandarin.github.io/patrick.lesson56.html">← Lesson 56</a>
-            </div>
             <h1>Patrick's Mandarin Lesson 57</h1>
             <p>Date: 2026/10/7</p>
         </div>
@@ -149,7 +154,7 @@
         }
 
         function parsePinyin(text) {
-            const regex = /([一-龥a-zA-Z0-9，。？！、：""''])\((.*?)\)/g;
+            const regex = /([一-龥a-zA-Z0-9，。？！、：""''()./])\((.*?)\)/g;
             let parsed = text.replace(regex, (match, char, py) => {
                 return `<span class="pinyin-group"><span class="py-text">${py}</span><span class="hz-text">${char}</span></span>`;
             });
@@ -159,51 +164,47 @@
         let currentUtterance = null;
         let activePlayBtn = null;
 
-        function togglePlayAudio(text, btnId, isQuestion = false) {
+        function togglePlayAudio(text, btnId, isQuestion) {
             const btn = document.getElementById(btnId);
-            
+
             if (speechSynthesis.speaking) {
                 if (speechSynthesis.paused) {
                     speechSynthesis.resume();
-                    if(btn) btn.classList.add("playing");
+                    if (btn) btn.classList.add("playing");
                     return;
                 } else {
                     speechSynthesis.cancel();
-                    if(activePlayBtn) activePlayBtn.classList.remove("playing");
-                    if(activePlayBtn === btn) {
+                    if (activePlayBtn) activePlayBtn.classList.remove("playing");
+                    if (activePlayBtn === btn) {
                         activePlayBtn = null;
                         return;
                     }
                 }
             }
 
-            // 清理文字，移除HTML標籤、括號註解等，確保語音引擎能讀出純中文/英文
             let cleanText = text.replace(/<[^>]*>/g, '')
                                 .replace(/\(.*?\)/g, '')
                                 .replace(/^[a-zA-Z]:\s*/g, '')
                                 .replace(/^\d+\.\s*/, '');
-            
+
             const utterance = new SpeechSynthesisUtterance(cleanText);
             utterance.lang = 'zh-CN';
             utterance.rate = isQuestion ? 0.9 : 0.85;
-            
-            if (isQuestion) {
-                utterance.pitch = 1.3;
-            }
+            if (isQuestion) utterance.pitch = 1.3;
 
             utterance.onstart = () => {
-                if(activePlayBtn) activePlayBtn.classList.remove("playing");
+                if (activePlayBtn) activePlayBtn.classList.remove("playing");
                 activePlayBtn = btn;
-                if(btn) btn.classList.add("playing");
+                if (btn) btn.classList.add("playing");
             };
 
             utterance.onend = () => {
-                if(btn) btn.classList.remove("playing");
+                if (btn) btn.classList.remove("playing");
                 activePlayBtn = null;
             };
 
             utterance.onerror = () => {
-                if(btn) btn.classList.remove("playing");
+                if (btn) btn.classList.remove("playing");
                 activePlayBtn = null;
             };
 
@@ -220,32 +221,32 @@
                     const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
                     let chunks = [];
                     let recorder = new MediaRecorder(stream);
-                    
+
                     recorder.ondataavailable = e => chunks.push(e.data);
                     recorder.onstop = () => {
-                        const blob = new Blob(chunks, { 'type': 'audio/ogg; codecs=opus' });
+                        const blob = new Blob(chunks, { 'type': 'audio/webm' });
                         audioUrls[id] = URL.createObjectURL(blob);
-                        document.getElementById(`play-rec-${id}`).disabled = false;
+                        let playRecBtn = document.getElementById(`play-rec-${id}`);
+                        if (playRecBtn) {
+                            playRecBtn.disabled = false;
+                            playRecBtn.onclick = () => {
+                                const audio = new Audio(audioUrls[id]);
+                                audio.play();
+                            };
+                        }
                     };
 
                     recorder.start();
                     mediaRecorders[id] = recorder;
+                    btn.innerHTML = "⏹️";
                     btn.classList.add("recording");
-                    btn.title = "Recording... Click to stop";
                 } catch (err) {
                     alert("Microphone access denied or not supported.");
                 }
             } else {
                 mediaRecorders[id].stop();
+                btn.innerHTML = "🎤";
                 btn.classList.remove("recording");
-                btn.title = "Record Audio";
-            }
-        }
-
-        function playRecording(id) {
-            if (audioUrls[id]) {
-                const audio = new Audio(audioUrls[id]);
-                audio.play();
             }
         }
 
@@ -256,7 +257,7 @@
                 items: [
                     {
                         type: "grammar",
-                        subId: "sub-0-0",
+                        subId: "sub-1-1",
                         title: "1. Weather & Temperature",
                         examples: [
                             { zh: "今(jīn)天(tiān)幾(jǐ)度(dù)？", en: "What is the temperature today?" },
@@ -265,9 +266,9 @@
                     },
                     {
                         type: "grammar",
-                        subId: "sub-0-1",
+                        subId: "sub-1-2",
                         title: "2. Work",
-                        note: "Explanation: '工作' (gōngzuò) has multiple meanings in Chinese, such as work items, work content, tasks, etc.",
+                        note: "<b>Explanation:</b> '工作' (gōngzuò) has multiple meanings in Chinese, such as work items, work content, tasks, etc.",
                         examples: [
                             { zh: "你(nǐ)今(jīn)天(tiān)有(yǒu)很(hěn)多(duō)工(gōng)作(zuò)嗎(ma)？", en: "Do you have a lot of work today?" },
                             { zh: "對(duì)，我(wǒ)今(jīn)天(tiān)很(hěn)忙(máng)，有(yǒu)很(hěn)多(duō)工(gōng)作(zuò)。", en: "Yes, I am very busy today and have a lot of work." }
@@ -275,7 +276,7 @@
                     },
                     {
                         type: "grammar",
-                        subId: "sub-0-2",
+                        subId: "sub-1-3",
                         title: "3. Page Numbers",
                         examples: [
                             { zh: "第(dì)五(wǔ)十(shí)頁(yè)", en: "Page 50" },
@@ -291,9 +292,9 @@
                 items: [
                     {
                         type: "grammar",
-                        subId: "sub-1-0",
+                        subId: "sub-2-1",
                         title: "1. Usage of '怎么' (Zěnme)",
-                        note: "Explanation: Difference between 为什么 (why - stronger/harsher tone) and 怎么 (how/why - caring tone, wanting to understand the reason with empathy).",
+                        note: "<b>Explanation:</b> Difference between 为什么 (why - stronger/harsher tone) and 怎么 (how/why - caring tone, wanting to understand the reason with empathy).",
                         examples: [
                             { zh: "你(nǐ)怎(zěn)么(me)不(bù)高(gāo)兴(xìng)？", en: "Why are you unhappy?" },
                             { zh: "今(jīn)天(tiān)怎(zěn)么(me)這(zhè)麼(me)热(rè)？", en: "Why is it so hot today?", explanation: "Note: 这么 means the speaker is exaggerating or describing an extreme degree" },
@@ -302,9 +303,9 @@
                     },
                     {
                         type: "grammar",
-                        subId: "sub-1-1",
+                        subId: "sub-2-2",
                         title: "2. Reduplication of Measure Words (个个 / 件件 / 天天)",
-                        note: "Explanation: Repeating two measure words together creates an emphatic meaning, equivalent to 'each and every'.",
+                        note: "<b>Explanation:</b> Repeating two measure words together creates an emphatic meaning, equivalent to 'each and every'.",
                         examples: [
                             { zh: "同(tóng)學(xué)們(men)個(gè)個(gè)都(dōu)很(hěn)高(gāo)興(xìng)。", en: "Every single student is very happy." },
                             { zh: "這(zhè)個(gè)商(shāng)店(diàn)的(de)衣(yī)服(fu)件(jiàn)件(jiàn)都(dōu)很(hěn)漂(piào)亮(liàng)。", en: "Every piece of clothing in this store is very beautiful." },
@@ -313,9 +314,9 @@
                     },
                     {
                         type: "grammar",
-                        subId: "sub-1-2",
+                        subId: "sub-2-3",
                         title: "3. '因为...所以...' (Because... Therefore...)",
-                        note: "Explanation: Chinese can use two connective conjunctions in one sentence, whereas English cannot.",
+                        note: "<b>Explanation:</b> Chinese can use two connective conjunctions in one sentence, whereas English cannot.",
                         examples: [
                             { zh: "因(yīn)为(wèi)她(tā)生(shēng)病(bìng)了(le)，所(suǒ)以(yǐ)没(méi)去(qù)学(xué)校(xiào)。", en: "Because she was sick, she didn't go to school." },
                             { zh: "因(yīn)为(wèi)他(tā)每(měi)天(tiān)跑(pǎo)步(bù)，所(suǒ)以(yǐ)身(shēn)体(tǐ)很(hěn)好(hǎo)。", en: "Because he runs every day, his health is very good." },
@@ -324,9 +325,9 @@
                     },
                     {
                         type: "grammar",
-                        subId: "sub-1-3",
+                        subId: "sub-2-4",
                         title: "4. Sentence Stress & Pause",
-                        note: "Explanation: To distinguish focus, a slight pause is placed after key words to alert the listener.",
+                        note: "<b>Explanation:</b> To distinguish focus, a slight pause is placed after key words to alert the listener.",
                         examples: [
                             { zh: "他(tā)在(zài)房(fáng)間(jiān)學(xué)習(xí)漢(hàn)語(yǔ)。", en: "HE... is studying Chinese in the room.", explanation: "Note: Since the asker wants to know WHO (谁), emphasize the person (他) and pause for 1 second." },
                             { zh: "他(tā)在(zài)房(fáng)間(jiān)學(xué)習(xí)漢(hàn)語(yǔ)。", en: "He is in the ROOM... studying Chinese.", explanation: "Note: Here the focus is the LOCATION (哪里), emphasize the location (房间) and pause for 1 second." }
@@ -340,9 +341,9 @@
                 items: [
                     {
                         type: "grammar",
-                        subId: "sub-2-0",
+                        subId: "sub-3-1",
                         title: "1. Usage of '還' (Hái)",
-                        note: "Explanation: Means 'still'. 還沒 means 'not yet' (an action hasn't been completed yet).",
+                        note: "<b>Explanation:</b> Means 'still'. 還沒 means 'not yet' (an action hasn't been completed yet).",
                         examples: [
                             { zh: "八(bā)點(diǎn)了(le)，他(tā)還(hái)在(zài)睡(shuì)覺(jiào)。", en: "It's 8 o'clock, and he is still sleeping." },
                             { zh: "你(nǐ)怎(zěn)么(me)還(hái)沒(méi)吃(chī)飯(fàn)？", en: "Why haven't you eaten yet?" },
@@ -351,21 +352,21 @@
                     },
                     {
                         type: "grammar",
-                        subId: "sub-2-1",
+                        subId: "sub-3-2",
                         title: "2. Usage of '就' (Jiù)",
-                        note: "Explanation: Used for emphasis, indicating that the speaker thinks something happened earlier, faster, or better than expected.<br>Pattern: Time + 就 + V.<br>(If ending with 了, it indicates completion and past meaning; without 了, it refers to the future or uncompleted actions)",
+                        note: "<b>Explanation:</b> Used for emphasis, indicating that the speaker thinks something happened earlier, faster, or better than expected.<br>Pattern: Time + 就 + V.<br>(If ending with 了, it indicates completion and past meaning; without 了, it refers to the future or uncompleted actions)",
                         examples: [
-                            { zh: "同(tóng)學(xué)們(men)七(qī)點(diǎn)半(bàn)就(jiù)來(lái)教(jiāo)室(shì)了(le)。", en: "Students came to the classroom as early as 7:30.", explanation: "Explanation: Usually students arrive around 8 or 9, but they came at 7:30—earlier than expected. 了 indicates completion." },
-                            { zh: "我(wǒ)坐(zuò)飛(fēi)機(jī)一(yí)個(gè)半(bàn)小(xiǎo)時(shí)就(jiù)到(dào)北(běi)京(jīng)了(le)。", en: "I arrived in Beijing by plane in just an hour and a half.", explanation: "Explanation: Usually takes 3 hours, but arrived much faster." },
-                            { zh: "我(wǒ)二(èr)十(shí)分(fēn)鐘(zhōng)就(jiù)到(dào)。", en: "I'll be there in just 20 minutes.", explanation: "Explanation: No 了 means it's in the future. Assuring someone waiting for you that you'll arrive sooner than expected." },
-                            { zh: "我(wǒ)七(qī)点(diǎn)就(jiù)來(lái)公(gōng)司(sī)了(le)。", en: "I came to the company as early as 7 o'clock.", explanation: "Explanation: Usually arrive at 9, but today arrived earlier at 7." }
+                            { zh: "同(tóng)學(xué)們(men)七(qī)點(diǎn)半(bàn)就(jiù)來(lái)教(jiāo)室(shì)了(le)。", en: "Students came to the classroom as early as 7:30.", explanation: "Usually students arrive around 8 or 9, but they came at 7:30—earlier than expected. 了 indicates completion." },
+                            { zh: "我(wǒ)坐(zuò)飛(fēi)機(jī)一(yí)個(gè)半(bàn)小(xiǎo)時(shí)就(jiù)到(dào)北(běi)京(jīng)了(le)。", en: "I arrived in Beijing by plane in just an hour and a half.", explanation: "Usually takes 3 hours, but arrived much faster." },
+                            { zh: "我(wǒ)二(èr)十(shí)分(fēn)鐘(zhōng)就(jiù)到(dào)。", en: "I'll be there in just 20 minutes.", explanation: "No 了 means it's in the future. Assuring someone waiting for you that you'll arrive sooner than expected." },
+                            { zh: "我(wǒ)七(qī)点(diǎn)就(jiù)來(lái)公(gōng)司(sī)了(le)。", en: "I came to the company as early as 7 o'clock.", explanation: "Usually arrive at 9, but today arrived earlier at 7." }
                         ]
                     },
                     {
                         type: "grammar",
-                        subId: "sub-2-2",
+                        subId: "sub-3-3",
                         title: "3. Usage of '離' (Lí)",
-                        note: "Explanation: Originally means to separate. Pattern: A 離 B + Adj. Imagine two things getting further apart.",
+                        note: "<b>Explanation:</b> Originally means to separate. Pattern: A 離 B + Adj. Imagine two things getting further apart.",
                         examples: [
                             { zh: "我(wǒ)家(jiā)離(lí)學(xué)校(xiào)很(hěn)遠(yuǎn)。", en: "My home is very far from the school." },
                             { zh: "我(wǒ)家(jiā)離(lí) New World 很(hěn)近(jìn)。", en: "My home is very close to New World." },
@@ -376,9 +377,9 @@
                     },
                     {
                         type: "grammar",
-                        subId: "sub-2-3",
+                        subId: "sub-3-4",
                         title: "4. Usage of '呢' (Ne)",
-                        note: "Explanation: Placed at the end of a sentence to either form a question or emphasize a fact.",
+                        note: "<b>Explanation:</b> Placed at the end of a sentence to either form a question or emphasize a fact.",
                         examples: [
                             { zh: "八(bā)點(diǎn)上(shàng)課(kè)，時(shí)間(jiān)還(hái)早(zǎo)呢(ne)。", en: "Class starts at 8, there's still plenty of time." },
                             { zh: "醫(yī)院(yuàn)離(lí)我(wǒ)們(men)這(zhè)兒(ér)還(hái)远(yuǎn)呢(ne)。", en: "The hospital is still very far from here." },
@@ -387,9 +388,9 @@
                     },
                     {
                         type: "grammar",
-                        subId: "sub-2-4",
+                        subId: "sub-3-5",
                         title: "5. Question Intonation (Rising Tone)",
-                        note: "Explanation: Influenced by Western languages, sometimes the tone at the end of a sentence rises to form a question in casual conversations among friends.",
+                        note: "<b>Explanation:</b> Influenced by Western languages, sometimes the tone at the end of a sentence rises to form a question in casual conversations among friends.",
                         examples: [
                             { zh: "你(nǐ)姓(xìng)張(zhāng)？", en: "Your surname is Zhang?", isQuestion: true },
                             { zh: "他(tā)不(bù)喜(xǐ)歡(huan)喝(hē)啤(pí)酒(jiǔ)？", en: "He doesn't like drinking beer?", isQuestion: true }
@@ -403,9 +404,9 @@
                 items: [
                     {
                         type: "grammar",
-                        subId: "sub-3-0",
+                        subId: "sub-4-1",
                         title: "1. Usage of '好嗎?' (Hǎo ma?)",
-                        note: "Explanation: Influenced by English ('OK' / 'right?'), very common in casual speech. Often used by adults reprimanding children ('You must obey, right?') or teachers reminding students.",
+                        note: "<b>Explanation:</b> Influenced by English ('OK' / 'right?'), very common in casual speech. Often used by adults reprimanding children ('You must obey, right?') or teachers reminding students.",
                         examples: [
                             { zh: "我(wǒ)們(men)一(yǐ)起(qǐ)去(qù)吃(chī)饭(fàn)，好(hǎo)吗(ma)？", en: "Let's go eat together, shall we?" },
                             { zh: "你(nǐ)明(míng)天(tiān)下(xià)午(wǔ)给(gěi)我(wǒ)打(dà)电(dàn)话(huà)，好(hǎo)吗(ma)？", en: "Call me tomorrow afternoon, okay?" },
@@ -414,9 +415,9 @@
                     },
                     {
                         type: "grammar",
-                        subId: "sub-3-1",
+                        subId: "sub-4-2",
                         title: "2. Usage of '再' (Zài)",
-                        note: "Explanation: Used to express expecting someone to do something again in the future. (Use 又 for past actions or repeating something you dislike)",
+                        note: "<b>Explanation:</b> Used to express expecting someone to do something again in the future. (Use 又 for past actions or repeating something you dislike)",
                         examples: [
                             { zh: "你(nǐ)再(zài)看(kàn)看(kàn)这(zhè)本(běn)書(shū)吧(ba)！", en: "Take another look at this book!" },
                             { zh: "你(nǐ)明(míng)天(tiān)再(zài)給(gěi)我(wǒ)打(dàn)電(diàn)話(huà)吧(ba)。", en: "Call me again tomorrow." },
@@ -425,9 +426,9 @@
                     },
                     {
                         type: "grammar",
-                        subId: "sub-3-2",
+                        subId: "sub-4-3",
                         title: "3. Difference: 在 (Zài) vs 再 (Zài)",
-                        note: "Explanation: Both sound identical (zài) but have different uses.<br>• 在: Used for locations (at/in) or ongoing actions (doing sth right now).<br>• 再: Used for expecting future actions or repeating something next time.",
+                        note: "<b>Explanation:</b> Both sound identical (zài) but have different uses.<br>• 在: Used for locations (at/in) or ongoing actions (doing sth right now).<br>• 再: Used for expecting future actions or repeating something next time.",
                         examples: [
                             { zh: "我(wǒ)在(zài)家(jiā)里(lǐ)。", en: "I am at home." },
                             { zh: "我(wǒ)在(zài)吃(chī)飯(fàn)。", en: "I am eating." },
@@ -443,39 +444,32 @@
         let counter = 0;
 
         lessonData.forEach((sec, sIdx) => {
-            let html = `<div class="section" id="sec-${sIdx}"><h2>${sec.title}</h2>`;
-            if(sec.note) html += `<p class="note">${sec.note}</p>`;
-            
+            let html = `<div class="section" id="sec-${sIdx + 1}"><h2>${sec.title}</h2>`;
+            if (sec.note) html += `<p class="note">${sec.note}</p>`;
+
             sec.items.forEach(item => {
-                let anchorAttr = item.subId ? `id="${item.subId}" style="scroll-margin-top: 80px;"` : '';
+                let anchorAttr = item.subId ? `id="${item.subId}"` : '';
+
                 if (item.type === "grammar") {
                     html += `<div class="grammar-box" ${anchorAttr}>
-                        <div style="font-weight:bold; font-size:16px; color:#8C6239; margin-bottom:5px;">${item.title}</div>`;
-                    if(item.note) html += `<div class="note">${item.note}</div>`;
-                    
+                        <div style="font-weight:bold; font-size:17px; color:#8C6239; margin-bottom:8px;">${item.title}</div>`;
+                    if (item.note) html += `<div class="note">${item.note}</div>`;
+
                     if (item.wrong && item.correct) {
+                        html += `<div class="wrong-line">❌ ${item.wrong}</div>`;
+                        let btnId = `play-btn-${counter}`;
+                        let recId = `rec-${counter}`;
                         html += `
                         <div class="item">
                             <div class="sentence-row">
-                                <div>❌ </div>
-                                <div class="text-content"><span>${item.wrong}</span></div>
-                            </div>
-                        </div>
-                        <div class="item">
-                            <div class="sentence-row">
                                 <div class="buttons-group">
-                                    <button class="icon-btn" id="play-btn-${counter}" onclick="togglePlayAudio('${item.correct}', 'play-btn-${counter}')" title="Listen / Pause">
-                                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#666" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>
-                                    </button>
-                                    <button class="icon-btn" onclick="toggleRecord(this, 'rec-${counter}')" title="Record Audio">
-                                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#e07a5f" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"></path><path d="M19 10v1a7 7 0 0 1-14 0v-1"></path><line x1="12" y1="19" x2="12" y2="23"></line><line x1="8" y1="23" x2="16" y2="23"></line></svg>
-                                    </button>
-                                    <button class="icon-btn" id="play-rec-rec-${counter}" onclick="playRecording('rec-${counter}')" title="Play Mine" disabled>
-                                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#457b9d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
-                                    </button>
+                                    <button class="icon-btn" id="${btnId}" onclick="togglePlayAudio('${item.correct}', '${btnId}')" title="Listen Audio">🔊</button>
+                                    <button class="icon-btn" onclick="toggleRecord(this, '${recId}')" title="Record Audio">🎤</button>
+                                    <button class="icon-btn" id="play-rec-${recId}" title="Play Mine" disabled>▶️</button>
                                 </div>
                                 <div class="text-content">
-                                    <div>✅ <span style="margin-left:8px;">${parsePinyin(item.correct)}</span></div>
+                                    <div><span class="correct-label">✅</span> ${parsePinyin(item.correct)}</div>
+                                    ${item.correctEn ? `<div class="en-trans">${item.correctEn}</div>` : ''}
                                 </div>
                             </div>
                         </div>`;
@@ -484,28 +478,22 @@
 
                     if (item.examples) {
                         item.examples.forEach(ex => {
+                            let btnId = `play-btn-${counter}`;
+                            let recId = `rec-${counter}`;
                             let isQ = ex.isQuestion ? 'true' : 'false';
                             html += `
-                            <div class="item" style="border:none; margin-top:10px; padding-bottom:0;">
+                            <div class="item">
                                 <div class="sentence-row">
                                     <div class="buttons-group">
-                                        <button class="icon-btn" id="play-btn-${counter}" onclick="togglePlayAudio('${ex.zh}', 'play-btn-${counter}', ${isQ})" title="Listen / Pause">
-                                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#666" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>
-                                        </button>
-                                        <button class="icon-btn" onclick="toggleRecord(this, 'rec-${counter}')" title="Record Audio">
-                                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#e07a5f" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"></path><path d="M19 10v1a7 7 0 0 1-14 0v-1"></path><line x1="12" y1="19" x2="12" y2="23"></line><line x1="8" y1="23" x2="16" y2="23"></line></svg>
-                                        </button>
-                                        <button class="icon-btn" id="play-rec-rec-${counter}" onclick="playRecording('rec-${counter}')" title="Play Mine" disabled>
-                                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#457b9d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
-                                        </button>
+                                        <button class="icon-btn" id="${btnId}" onclick="togglePlayAudio('${ex.zh.replace(/'/g, "\\'")}', '${btnId}', ${isQ})" title="Listen Audio">🔊</button>
+                                        <button class="icon-btn" onclick="toggleRecord(this, '${recId}')" title="Record Audio">🎤</button>
+                                        <button class="icon-btn" id="play-rec-${recId}" title="Play Mine" disabled>▶️</button>
                                     </div>
                                     <div class="text-content">
-                                        <div>${parsePinyin(ex.zh)}</div>
-                                        <div class="en-trans">${ex.en}</div>`;
-                            if(ex.explanation) {
-                                html += `<div class="explanation-sub">${ex.explanation}</div>`;
-                            }
-                            html += `</div>
+                                        <div style="font-size:24px; margin-bottom:4px;">${parsePinyin(ex.zh)}</div>
+                                        <div class="en-trans">${ex.en}</div>
+                                        ${ex.explanation ? `<div class="explanation-sub">${ex.explanation}</div>` : ''}
+                                    </div>
                                 </div>
                             </div>`;
                             counter++;

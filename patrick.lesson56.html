@@ -2,67 +2,74 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Patrick's Mandarin Lesson 56</title>
     <style>
         :root { --bg: #FDFBF7; --primary: #D4A373; --text: #4a4a4a; --white: #fff; --sidebar-width: 280px; }
         html { scroll-behavior: smooth; }
         body { font-family: 'Helvetica Neue', Arial, sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; margin: 0; padding: 0; display: flex; transition: margin-left 0.3s ease; }
-        
-        /* 左側收合大綱導覽列 */
-        .sidebar { width: var(--sidebar-width); background: #FFF9F0; border-right: 1px solid #E6D5B8; height: 100vh; position: fixed; top: 0; left: 0; overflow-y: auto; padding: 20px; box-sizing: border-box; transition: transform 0.3s ease; z-index: 1000; }
+
+        /* Navigation */
+        .top-nav { position: fixed; top: 0; left: 0; width: 100%; background: #FFF9F0; border-bottom: 1px solid #E6D5B8; padding: 10px 20px; box-sizing: border-box; text-align: right; z-index: 1200; display: flex; justify-content: flex-end; align-items: center; }
+        .top-nav a { color: var(--primary); font-weight: bold; text-decoration: none; margin-left: 20px; font-size: 15px; }
+        .top-nav a:hover { text-decoration: underline; color: #8C6239; }
+
+        /* Sidebar */
+        .sidebar { width: var(--sidebar-width); background: #FFF9F0; border-right: 1px solid #E6D5B8; height: 100vh; position: fixed; top: 0; left: 0; overflow-y: auto; padding: 60px 20px 20px 20px; box-sizing: border-box; transition: transform 0.3s ease; z-index: 1000; }
         .sidebar.collapsed { transform: translateX(-100%); }
         .sidebar h3 { margin-top: 0; color: #8C6239; font-size: 18px; border-bottom: 2px solid var(--primary); padding-bottom: 8px; display: flex; justify-content: space-between; align-items: center; }
         .sidebar ol { padding-left: 20px; margin: 10px 0; color: #555; }
-        .sidebar li { margin-bottom: 8px; font-size: 14px; }
+        .sidebar li { margin-bottom: 8px; font-size: 15px; font-weight: bold; color: #8C6239; }
+        .sidebar ul { padding-left: 15px; list-style-type: circle; margin-top: 5px; margin-bottom: 15px; font-weight: normal; }
+        .sidebar ul li { font-size: 13.5px; margin-bottom: 6px; color: #555; }
         .sidebar a { color: #555; text-decoration: none; display: block; }
-        .sidebar a:hover { color: #8C6239; font-weight: bold; }
-        
-        /* 切換按鈕 */
-        .sidebar-toggle { position: fixed; top: 15px; left: 15px; z-index: 1100; background: var(--primary); color: white; border: none; padding: 8px 12px; border-radius: 6px; cursor: pointer; font-size: 14px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        .sidebar a:hover { color: #D4A373; font-weight: bold; }
 
-        /* 主內容區 */
-        .main-content { margin-left: var(--sidebar-width); width: calc(100% - var(--sidebar-width)); padding: 20px 40px; box-sizing: border-box; max-width: 900px; transition: margin-left 0.3s ease, width 0.3s ease; }
+        .sidebar-toggle { position: fixed; top: 50px; left: 15px; z-index: 1100; background: var(--primary); color: white; border: none; padding: 8px 12px; border-radius: 6px; cursor: pointer; font-size: 14px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+
+        /* Main Content */
+        .main-content { margin-top: 40px; margin-left: var(--sidebar-width); width: calc(100% - var(--sidebar-width)); padding: 20px 40px; box-sizing: border-box; max-width: 900px; transition: margin-left 0.3s ease, width 0.3s ease; }
         .main-content.expanded { margin-left: 0; width: 100%; }
+        .header { text-align: center; border-bottom: 2px solid var(--primary); padding-bottom: 10px; margin-bottom: 20px; margin-top: 20px; }
 
-        .header { text-align: center; border-bottom: 2px solid var(--primary); padding-bottom: 10px; margin-bottom: 20px; }
-        
-        .controls { position: sticky; top: 0; background: var(--bg); padding: 15px; text-align: center; border-bottom: 1px solid #ccc; z-index: 100; margin-bottom: 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
-        button.control-btn { background: var(--primary); color: white; border: none; padding: 10px 15px; margin: 5px; border-radius: 6px; cursor: pointer; font-size: 14px; font-weight: bold; }
+        /* Controls */
+        .controls { position: sticky; top: 40px; background: rgba(253, 251, 247, 0.95); backdrop-filter: blur(5px); padding: 15px; text-align: center; border-bottom: 1px solid #ccc; z-index: 900; margin-bottom: 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); border-radius: 8px; }
+        button.control-btn { background: var(--primary); color: white; border: none; padding: 10px 15px; margin: 5px; border-radius: 6px; cursor: pointer; font-size: 14px; font-weight: bold; box-shadow: 0 2px 4px rgba(0,0,0,0.08); }
         button.control-btn:hover { background: #B5835A; }
-        
-        .audio-btn { background: #f0f0f0; color: #333; font-size: 14px; padding: 6px 12px; border-radius: 20px; border: none; cursor: pointer; display: inline-flex; align-items: center; gap: 5px; margin-right: 8px; }
-        .audio-btn:hover { background: #e0e0e0; }
-        
-        .rec-btn { background: #e07a5f; color: white; font-size: 14px; padding: 6px 12px; border-radius: 20px; border: none; cursor: pointer; display: inline-flex; align-items: center; gap: 5px; margin-right: 5px; }
-        .rec-btn:hover { background: #cc6b50; }
-        .rec-btn.recording { background: #d90429; animation: pulse 1.5s infinite; }
-        
-        .play-rec-btn { background: #457b9d; color: white; font-size: 14px; padding: 6px 12px; border-radius: 20px; border: none; cursor: pointer; display: inline-flex; align-items: center; gap: 5px; }
-        .play-rec-btn:hover { background: #1d3557; }
-        .play-rec-btn:disabled { background: #ccc; cursor: not-allowed; }
+
+        /* Sentence Row & Audio Circle Buttons */
+        .sentence-row { display: flex; align-items: flex-start; gap: 15px; width: 100%; margin-bottom: 10px; }
+        .buttons-group { display: flex; align-items: center; gap: 8px; flex-shrink: 0; margin-top: 2px; }
+        .icon-btn { background: #EFEFEF; color: #4A4A4A; width: 40px; height: 40px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; border: none; cursor: pointer; box-shadow: 0 1px 3px rgba(0,0,0,0.08); transition: transform 0.1s, background 0.2s; font-size: 15px; }
+        .icon-btn:hover { background: #E2E2E2; transform: scale(1.05); }
+        .icon-btn.recording { background: #ff4d4f; color: white; animation: pulse 1.5s infinite; }
+        .icon-btn.playing { background: #457b9d; color: white; }
+        .icon-btn:disabled { background: #F5F5F5; color: #CCC; cursor: not-allowed; box-shadow: none; transform: none; }
 
         @keyframes pulse {
-            0% { opacity: 1; }
-            50% { opacity: 0.5; }
-            100% { opacity: 1; }
+            0% { box-shadow: 0 0 0 0 rgba(255, 77, 79, 0.4); }
+            70% { box-shadow: 0 0 0 10px rgba(255, 77, 79, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(255, 77, 79, 0); }
         }
 
+        .text-content { display: flex; flex-direction: column; flex-grow: 1; }
+
+        /* Content Blocks */
         h2 { color: #8C6239; border-left: 5px solid var(--primary); padding-left: 10px; margin-top: 30px; }
-        .section { margin-bottom: 30px; background: var(--white); padding: 20px; border-radius: 12px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); scroll-margin-top: 80px; }
-        .item { margin-bottom: 20px; display: flex; flex-direction: column; border-bottom: 1px dashed #eee; padding-bottom: 15px; }
-        .item-content { display: flex; align-items: flex-start; flex-wrap: wrap; margin-bottom: 5px; gap: 10px; }
-        
-        /* 上排拼音與簡體字排版 */
-        .pinyin-group { display: inline-flex; flex-direction: column; align-items: center; margin-right: 3px; vertical-align: bottom; }
+        .section { margin-bottom: 30px; background: var(--white); padding: 25px; border-radius: 12px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); scroll-margin-top: 130px; }
+        .grammar-box { background: #FFF9F0; border: 1px solid #E6D5B8; border-radius: 8px; padding: 20px; margin: 20px 0; scroll-margin-top: 140px; }
+
+        .pinyin-group { display: inline-flex; flex-direction: column; align-items: center; margin-right: 2px; vertical-align: bottom; }
         .py-text { font-size: 11px; color: #777; line-height: 1; margin-bottom: 2px; }
         .hz-text { font-size: 24px; font-family: sans-serif; line-height: 1.2; }
-        
-        .en-trans { color: #666; font-size: 15px; font-style: italic; margin-top: 5px; }
-        .grammar-box { background: #FFF9F0; border: 1px solid #E6D5B8; border-radius: 8px; padding: 15px; margin: 15px 0; }
-        .wrong { color: #D9534F; font-size: 18px; font-weight: bold;}
-        .correct { color: #5CB85C; font-size: 18px; font-weight: bold;}
-        .note { font-size: 14px; color: #555; margin-bottom: 10px; line-height: 1.5; }
-        
+
+        .en-trans { color: #666; font-size: 15px; font-style: italic; margin-top: 4px; display: block; }
+        .explanation-sub { color: #777; font-size: 13px; margin-top: 4px; line-height: 1.4; display: block; }
+        .note { font-size: 15px; color: #555; margin-bottom: 12px; line-height: 1.6; background: #fdfaf6; padding: 10px 14px; border-left: 3px solid #D4A373; border-radius: 4px; }
+
+        .wrong-line { color: #B54848; font-size: 16px; margin: 6px 0; }
+        .correct-label { font-weight: bold; color: #2a7a4a; }
+
         @media (max-width: 900px) {
             .sidebar { transform: translateX(-100%); }
             .sidebar.active { transform: translateX(0); }
@@ -72,14 +79,42 @@
 </head>
 <body>
 
+    <div class="top-nav">
+        <a href="https://jany-mandarin.github.io/patrick.html">Index</a>
+    </div>
+
     <button class="sidebar-toggle" onclick="toggleSidebar()">☰ Outline</button>
 
     <div class="sidebar" id="sidebar">
         <h3>📖 Outline <button style="background:none; border:none; color:#8C6239; font-weight:bold; cursor:pointer; font-size:16px;" onclick="toggleSidebar()">×</button></h3>
         <ol>
-            <li><a href="#sec-0">Warm-up Chat & Useful Vocabulary</a></li>
-            <li><a href="#sec-1">Lesson 5 Core Grammar</a></li>
-            <li><a href="#sec-2">Stress Practice</a></li>
+            <li>
+                <a href="#sec-1">Warm-up Chat &amp; Useful Vocabulary</a>
+                <ul class="sub-list">
+                    <li><a href="#sub-1-1">1. 你去哪里？ vs 你吃什么？</a></li>
+                    <li><a href="#sub-1-2">2. 月饼 (Mooncake)</a></li>
+                    <li><a href="#sub-1-3">3. 过 (Guò)</a></li>
+                    <li><a href="#sub-1-4">4. 再 (Zài)</a></li>
+                    <li><a href="#sub-1-5">5. 地道 (Dìdao)</a></li>
+                    <li><a href="#sub-1-6">6. 帮 (Bāng)</a></li>
+                    <li><a href="#sub-1-7">7. 一些 (Yīxiē)</a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="#sec-2">Lesson 5 Core Grammar</a>
+                <ul class="sub-list">
+                    <li><a href="#sub-2-1">1. 就 (Jiù)</a></li>
+                    <li><a href="#sub-2-2">2. 还 / 还好 / 还行</a></li>
+                    <li><a href="#sub-2-3">3. 有点儿 / 有点</a></li>
+                    <li><a href="#sub-2-4">4. 以后</a></li>
+                    <li><a href="#sub-2-5">5. 想</a></li>
+                    <li><a href="#sub-2-6">6. 少 + V / 多 + V</a></li>
+                    <li><a href="#sub-2-7">7. A 对 B 不好 / 好</a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="#sec-3">Stress Practice</a>
+            </li>
         </ol>
     </div>
 
@@ -110,26 +145,65 @@
         }
 
         function parsePinyin(text) {
-            const regex = /([\u4e00-\u9fa5a-zA-Z0-9，。？！、：""''])\((.*?)\)/g;
+            const regex = /([一-龥a-zA-Z0-9，。？！、：""''()./])\((.*?)\)/g;
             let parsed = text.replace(regex, (match, char, py) => {
                 return `<span class="pinyin-group"><span class="py-text">${py}</span><span class="hz-text">${char}</span></span>`;
             });
             return parsed;
         }
 
-        function playAudio(text) {
-            let cleanText = text.replace(/\(.*?\)/g, '')
+        let currentUtterance = null;
+        let activePlayBtn = null;
+
+        function togglePlayAudio(text, btnId, isQuestion) {
+            const btn = document.getElementById(btnId);
+
+            if (speechSynthesis.speaking) {
+                if (speechSynthesis.paused) {
+                    speechSynthesis.resume();
+                    if (btn) btn.classList.add("playing");
+                    return;
+                } else {
+                    speechSynthesis.cancel();
+                    if (activePlayBtn) activePlayBtn.classList.remove("playing");
+                    if (activePlayBtn === btn) {
+                        activePlayBtn = null;
+                        return;
+                    }
+                }
+            }
+
+            let cleanText = text.replace(/<[^>]*>/g, '')
+                                .replace(/\(.*?\)/g, '')
                                 .replace(/^[a-zA-Z]:\s*/g, '')
-                                .replace(/^\d+\.\s*/, '')
-                                .replace(/[^\u4e00-\u9fa5，。？！]/g, '');
+                                .replace(/^\d+\.\s*/, '');
+
             const utterance = new SpeechSynthesisUtterance(cleanText);
             utterance.lang = 'zh-CN';
-            utterance.rate = 0.85;
+            utterance.rate = isQuestion ? 0.9 : 0.85;
+            if (isQuestion) utterance.pitch = 1.3;
+
+            utterance.onstart = () => {
+                if (activePlayBtn) activePlayBtn.classList.remove("playing");
+                activePlayBtn = btn;
+                if (btn) btn.classList.add("playing");
+            };
+
+            utterance.onend = () => {
+                if (btn) btn.classList.remove("playing");
+                activePlayBtn = null;
+            };
+
+            utterance.onerror = () => {
+                if (btn) btn.classList.remove("playing");
+                activePlayBtn = null;
+            };
+
+            currentUtterance = utterance;
             speechSynthesis.speak(utterance);
         }
 
         let mediaRecorders = {};
-        let audioChunks = {};
         let audioUrls = {};
 
         async function toggleRecord(btn, id) {
@@ -138,32 +212,32 @@
                     const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
                     let chunks = [];
                     let recorder = new MediaRecorder(stream);
-                    
+
                     recorder.ondataavailable = e => chunks.push(e.data);
                     recorder.onstop = () => {
-                        const blob = new Blob(chunks, { 'type': 'audio/ogg; codecs=opus' });
+                        const blob = new Blob(chunks, { 'type': 'audio/webm' });
                         audioUrls[id] = URL.createObjectURL(blob);
-                        document.getElementById(`play-rec-${id}`).disabled = false;
+                        let playRecBtn = document.getElementById(`play-rec-${id}`);
+                        if (playRecBtn) {
+                            playRecBtn.disabled = false;
+                            playRecBtn.onclick = () => {
+                                const audio = new Audio(audioUrls[id]);
+                                audio.play();
+                            };
+                        }
                     };
 
                     recorder.start();
                     mediaRecorders[id] = recorder;
-                    btn.innerText = "🛑 Stop";
+                    btn.innerHTML = "⏹️";
                     btn.classList.add("recording");
                 } catch (err) {
                     alert("Microphone access denied or not supported.");
                 }
             } else {
                 mediaRecorders[id].stop();
-                btn.innerText = "🎤 Record";
+                btn.innerHTML = "🎤";
                 btn.classList.remove("recording");
-            }
-        }
-
-        function playRecording(id) {
-            if (audioUrls[id]) {
-                const audio = new Audio(audioUrls[id]);
-                audio.play();
             }
         }
 
@@ -174,55 +248,63 @@
                 items: [
                     {
                         type: "grammar",
+                        subId: "sub-1-1",
                         title: "1. Question Comparison: 你去哪里？ vs 你吃什么？",
-                        note: "Explanation: Because the pronunciation of 去 (qù) and 吃 (chī) sounds very similar, listening carefully to what follows is crucial to avoid misunderstandings.",
+                        note: "<b>Explanation:</b> Because the pronunciation of 去 (qù) and 吃 (chī) sounds very similar, listening carefully to what follows is crucial to avoid misunderstandings.",
                         wrong: "你去什么？",
                         correct: "你(nǐ)去(qù)哪(nǎ)里(lǐ)？ / 你(nǐ)吃(chī)什(shén)么(me)？",
-                        en: "Where are you going? / What are you eating?"
+                        correctEn: "Where are you going? / What are you eating?"
                     },
                     {
+                        type: "grammar",
+                        subId: "sub-1-2",
                         title: "2. Vocabulary: 月饼 (yuèbǐng - Mooncake)",
-                        items: [
+                        examples: [
                             { zh: "a: 我(wǒ)回(huí)家(jiā)吃(chī)了(le)很(hěn)多(duō)月(yuè)饼(bǐng)，你(nǐ)吃(chī)过(guò)月(yuè)饼(bǐng)吗(ma)？", en: "A: I went home and ate a lot of mooncakes. Have you ever eaten mooncakes?" },
                             { zh: "b: 我(wǒ)家(jiā)也(yě)有(yǒu)很(hěn)多(duō)月(yuè)饼(bǐng)，我(wǒ)喜(xǐ)欢(huan)月(yuè)饼(bǐng)。", en: "B: My family also has many mooncakes, I like mooncakes." }
                         ]
                     },
                     {
                         type: "grammar",
+                        subId: "sub-1-3",
                         title: "3. Usage of '过' (Guò)",
-                        note: "Explanation: Used to indicate having experienced or tried something. Sometimes it also means 'several'.",
+                        note: "<b>Explanation:</b> Used to indicate having experienced or tried something. Sometimes it also means 'several'.",
                         examples: [
                             { zh: "在(zài)那(nà)个(gè)波(bō)兰(lán)饭(fàn)馆(guǎn)，有(yǒu)些(xiē)东(dōng)西(xī)我(wǒ)也(yě)没(méi)吃(chī)过(guò)。", en: "At that Polish restaurant, there are some things I haven't tried yet." }
                         ]
                     },
                     {
                         type: "grammar",
+                        subId: "sub-1-4",
                         title: "4. Usage of '再' (Zài)",
-                        note: "Explanation: Usually placed before a verb to express wanting to do an action again.",
+                        note: "<b>Explanation:</b> Usually placed before a verb to express wanting to do an action again.",
                         examples: [
                             { zh: "我(wǒ)想(xiǎng)再(zài)去(qù)那(nà)里(lǐ)。", en: "I want to go there again." }
                         ]
                     },
                     {
                         type: "grammar",
+                        subId: "sub-1-5",
                         title: "5. Usage of '地道' (Dìdao)",
-                        note: "Explanation: Usually used to describe something very authentic or true to local culture.",
+                        note: "<b>Explanation:</b> Usually used to describe something very authentic or true to local culture.",
                         examples: [
                             { zh: "那(nà)个(gè)波(bō)兰(lán)饭(fàn)馆(guǎn)很(hěn)地(dì)道(dao)。", en: "That Polish restaurant is very authentic." }
                         ]
                     },
                     {
                         type: "grammar",
+                        subId: "sub-1-6",
                         title: "6. Usage of '帮' (Bāng)",
-                        note: "Explanation: Usually used when doing something to help someone else.",
+                        note: "<b>Explanation:</b> Usually used when doing something to help someone else.",
                         examples: [
                             { zh: "每(měi)次(cì)我(wǒ)的(de)奶(nǎi)奶(nai)去(qù)饭(fàn)馆(guǎn)，都(dōu)会(huì)帮(bāng)大(dà)家(jiā)买(mǎi)伏(fú)特(tè)加(jiā)。", en: "Every time my grandma goes to the restaurant, she helps everyone buy vodka." }
                         ]
                     },
                     {
                         type: "grammar",
+                        subId: "sub-1-7",
                         title: "7. Usage of '一些' (Yīxiē)",
-                        note: "Explanation: Means 'a few' or 'some' (indicating a small quantity).<br><small style='color:#777;'>(Note: 月 means moon; 饼 is commonly used for desserts/pastries, like biscuits/cookies)</small>",
+                        note: "<b>Explanation:</b> Means 'a few' or 'some' (indicating a small quantity).<br><small style='color:#777;'>(Note: 月 means moon; 饼 is commonly used for desserts/pastries, like biscuits/cookies)</small>",
                         examples: [
                             { zh: "我(wǒ)家(jiā)有(yǒu)一(yì)些(xiē)月(yuè)饼(bǐng)，我(wǒ)觉(jué)得(de)月(yuè)饼(bǐng)很(hěn)好(hǎo)吃(chī)。", en: "My family has some mooncakes, I think mooncakes are very delicious." }
                         ]
@@ -235,36 +317,39 @@
                 items: [
                     {
                         type: "grammar",
+                        subId: "sub-2-1",
                         title: "1. Usage of '就' (Jiù)",
-                        note: "Explanation: When you hear '就', it emphasizes the following clause or action. Pay close attention!<br>• Meaning 1 (Decision/Then): Making a decision right away.<br>• Meaning 2 (Precisely/Exact): Emphasizing 'precisely this'.<br>• Meaning 3 (Let's just): Omitting the subject 'we' (我们), meaning 'Let's just do sth.'",
+                        note: "<b>Explanation:</b> When you hear '就', it emphasizes the following clause or action. Pay close attention!<br>• Meaning 1 (Decision/Then): Making a decision right away.<br>• Meaning 2 (Precisely/Exact): Emphasizing 'precisely this'.<br>• Meaning 3 (Let's just): Omitting the subject 'we' (我们), meaning 'Let's just do sth.'",
                         examples: [
                             { zh: "你(nǐ)不(bù)想(xiǎng)去(qù)，就(jiù)在(zài)家(jiā)休(xiū)息(xi)吧(ba)。", en: "If you don't want to go, just rest at home." },
                             { zh: "这(zhè)里(lǐ)的(de)咖(kā)啡(fēi)不(bù)错(cuò)，就(jiù)喝(hē)咖(kā)啡(fēi)吧(ba)。", en: "The coffee here is good, let's just drink coffee." },
                             { zh: "明(míng)天(tiān)下(xià)雨(yǔ)，我(wǒ)就(jiù)在(zài)家(jiā)工(gōng)作(zuò)。", en: "If it rains tomorrow, I'll work at home." },
                             { zh: "今(jīn)天(tiān)下(xià)课(kè)后(hòu)，我(wǒ)就(jiù)会(huì)去(qù)机(jī)场(chǎng)。", en: "Right after class today, I will go to the airport." },
-                            { zh: "我(wǒ)有(yǒu)两(liǎng)本(běn)，你(nǐ)喜(xǐ)欢(huan)就(jiù)送(sòng)你(nǐ)一(yì)本(běn)。<br><small style='color:#777;'>(Note: '本' is the measure word for books; '送' can mean to deliver or to give freely as a gift)</small>", en: "I have two copies, if you like it I'll give you one." },
+                            { zh: "我(wǒ)有(yǒu)两(liǎng)本(běn)，你(nǐ)喜(xǐ)欢(huan)就(jiù)送(sòng)你(nǐ)一(yì)本(běn)。", en: "I have two copies, if you like it I'll give you one.", explanation: "(Note: '本' is the measure word for books; '送' can mean to deliver or to give freely as a gift)" },
                             { zh: "(我(wǒ)们(men))就(jiù)做(zuò)你(nǐ)爱(ài)吃(chī)的(de)鱼(yú)吧(ba)！", en: "Let's just make the fish you love to eat!" },
                             { zh: "(我(wǒ)们(men))今(jīn)天(tiān)晚(wǎn)上(shang)就(jiù)吃(chī)海(hǎi)南(nán)鸡(jī)饭(fàn)吧(ba)。", en: "Let's just eat Hainanese chicken rice tonight." },
                             { zh: "这(zhè)就(jiù)是(shì)我(wǒ)想(xiǎng)喝(hē)的(de)红(hóng)茶(chá)！", en: "This is precisely the black tea I wanted to drink!" },
                             { zh: "我(wǒ)就(jiù)是(shì)Patrick！", en: "I am Patrick! (Used for emphasis in a crowd)" },
-                            { zh: "A: 你(nǐ)有(yǒu)女(nǚ)友(yǒu)吗(ma)？<br>B: 我(wǒ)的(de)女(nǚ)友(yǒu)就(jiù)在(zài)那(nà)里(lǐ)。", en: "A: Do you have a girlfriend? \nB: My girlfriend is right over there." }
+                            { zh: "A: 你(nǐ)有(yǒu)女(nǚ)友(yǒu)吗(ma)？<br>B: 我(wǒ)的(de)女(nǚ)友(yǒu)就(jiù)在(zài)那(nà)里(lǐ)。", en: "A: Do you have a girlfriend? / B: My girlfriend is right over there." }
                         ]
                     },
                     {
                         type: "grammar",
+                        subId: "sub-2-2",
                         title: "2. Usage of '还 / 还好 / 还行'",
-                        note: "Explanation: Means 'so-so', 'fairly', or 'not bad'—neither extremely good nor extremely bad.",
+                        note: "<b>Explanation:</b> Means 'so-so', 'fairly', or 'not bad' — neither extremely good nor extremely bad.",
                         examples: [
-                            { zh: "a: 你(nǐ)的(de)身(shēn)体(tǐ)怎(zěn)么(me)样(yàng)？<br>b: 还(hái)好(hǎo)。", en: "a: How is your health? \nb: Fairly good / So-so." },
-                            { zh: "a: 这(zhè)件(jiàn)衣(yī)服(fu)大(dà)吗(ma)？<br>b: 还(hái)行(xíng)，不(bú)太(tài)大(dà)。", en: "a: Is this clothing big? \nb: It's alright, not too big." },
-                            { zh: "a: 昨(zuó)天(tiān)的(de)考(kǎo)试(shì)怎(zěn)么(me)样(yàng)？<br>b: 我(wǒ)觉(jué)得(de)听(tīng)和(hé)说(shuō)还(hái)行(xíng)，读(dú)和(hé)写(xiě)不(bù)好(hǎo)。", en: "a: How was yesterday's exam? \nb: I think listening and speaking were okay, reading and writing were not good." },
-                            { zh: "a: 你(nǐ)喜(xǐ)欢(huan)你(nǐ)的(de)公(gōng)司(sī)吗(ma)？<br>b: 还(hái)好(hǎo) / 还(hái)行(xíng)。<br><small style='color:#777;'>(Meaning it's not extremely loved, but not strongly disliked either)</small>", en: "a: Do you like your company? \nb: It's alright." }
+                            { zh: "a: 你(nǐ)的(de)身(shēn)体(tǐ)怎(zěn)么(me)样(yàng)？<br>b: 还(hái)好(hǎo)。", en: "a: How is your health? / b: Fairly good / So-so." },
+                            { zh: "a: 这(zhè)件(jiàn)衣(yī)服(fu)大(dà)吗(ma)？<br>b: 还(hái)行(xíng)，不(bú)太(tài)大(dà)。", en: "a: Is this clothing big? / b: It's alright, not too big." },
+                            { zh: "a: 昨(zuó)天(tiān)的(de)考(kǎo)试(shì)怎(zěn)么(me)样(yàng)？<br>b: 我(wǒ)觉(jué)得(de)听(tīng)和(hé)说(shuō)还(hái)行(xíng)，读(dú)和(hé)写(xiě)不(bù)好(hǎo)。", en: "a: How was yesterday's exam? / b: I think listening and speaking were okay, reading and writing were not good." },
+                            { zh: "a: 你(nǐ)喜(xǐ)欢(huan)你(nǐ)的(de)公(gōng)司(sī)吗(ma)？<br>b: 还(hái)好(hǎo) / 还(hái)行(xíng)。", en: "a: Do you like your company? / b: It's alright.", explanation: "(Meaning it's not extremely loved, but not strongly disliked either)" }
                         ]
                     },
                     {
                         type: "grammar",
+                        subId: "sub-2-3",
                         title: "3. Usage of '有点儿 / 有点'",
-                        note: "Explanation: Used to describe a feeling or state (somewhat / a bit). Note that 一点 (yīdiǎn) emphasizes a small quantity.",
+                        note: "<b>Explanation:</b> Used to describe a feeling or state (somewhat / a bit). Note that 一点 (yīdiǎn) emphasizes a small quantity.",
                         examples: [
                             { zh: "今(jīn)天(tiān)天(tiān)气(qì)有(yǒu)点(diǎn)冷(lěng)。", en: "The weather is a bit cold today." },
                             { zh: "我(wǒ)昨(zuó)天(tiān)有(yǒu)点(diǎn)累(lèi)。", en: "I was a bit tired yesterday." },
@@ -274,8 +359,9 @@
                     },
                     {
                         type: "grammar",
+                        subId: "sub-2-4",
                         title: "4. Usage of '以后'",
-                        note: "Explanation: If placed after a verb/phrase, it means 'after...'. If placed at the very beginning of a sentence, it means 'in the future'.",
+                        note: "<b>Explanation:</b> If placed after a verb/phrase, it means 'after...'. If placed at the very beginning of a sentence, it means 'in the future'.",
                         examples: [
                             { zh: "我(wǒ)下(xià)午(wǔ)四(sì)点(diǎn)考(kǎo)试(shì)，考(kǎo)试(shì)以(yǐ)后(hòu)给(gěi)你(nǐ)打(dǎ)电(diàn)话(huà)。", en: "I have an exam at 4 PM, I'll call you after the exam." },
                             { zh: "今(jīn)天(tiān)下(xià)班(bān)以(yǐ)后(hòu)，我(wǒ)要(yào)睡(shuì)觉(jiào)两(liǎng)个(gè)小(xiǎo)时(shí)。", en: "After work today, I want to sleep for two hours." },
@@ -285,18 +371,20 @@
                     },
                     {
                         type: "grammar",
+                        subId: "sub-2-5",
                         title: "5. Usage of '想'",
-                        note: "Explanation: This character has multiple meanings (based on the heart radical 心 at the bottom representing inner thoughts). It translates to want, think, or miss.",
+                        note: "<b>Explanation:</b> This character has multiple meanings (based on the heart radical 心 at the bottom representing inner thoughts). It translates to want, think, or miss.",
                         examples: [
-                            { zh: "a: 他(tā)在(zài)做(zuò)什(shén)么(me)？<br>b: 他(tā)在(zài)想(xiǎng)昨(zuó)天(tiān)的(de)考(kǎo)试(shì)呢(ne)！", en: "a: What is he doing? \nb: He is thinking about yesterday's exam!" },
-                            { zh: "a: 你(nǐ)在(zài)做(zuò)什(shén)么(me)？<br>b: 我(wǒ)在(zài)想(xiǎng)你(nǐ)！", en: "a: What are you doing? \nb: I am missing you / thinking of you!" },
-                            { zh: "a: 你(nǐ)今(jīn)天(tiān)想(xiǎng)吃(chī)什(shén)么(me)？<br>b: 我(wǒ)不(bù)知(zhī)道(dào)，可(kě)能(néng)海(hǎi)南(nán)鸡(jī)饭(fàn)。", en: "a: What do you want to eat today? \nb: I don't know, maybe Hainanese chicken rice." }
+                            { zh: "a: 他(tā)在(zài)做(zuò)什(shén)么(me)？<br>b: 他(tā)在(zài)想(xiǎng)昨(zuó)天(tiān)的(de)考(kǎo)试(shì)呢(ne)！", en: "a: What is he doing? / b: He is thinking about yesterday's exam!" },
+                            { zh: "a: 你(nǐ)在(zài)做(zuò)什(shén)么(me)？<br>b: 我(wǒ)在(zài)想(xiǎng)你(nǐ)！", en: "a: What are you doing? / b: I am missing you / thinking of you!" },
+                            { zh: "a: 你(nǐ)今(jīn)天(tiān)想(xiǎng)吃(chī)什(shén)么(me)？<br>b: 我(wǒ)不(bù)知(zhī)道(dào)，可(kě)能(néng)海(hǎi)南(nán)鸡(jī)饭(fàn)。", en: "a: What do you want to eat today? / b: I don't know, maybe Hainanese chicken rice." }
                         ]
                     },
                     {
                         type: "grammar",
+                        subId: "sub-2-6",
                         title: "6. '少 + V / V + 少' & '多 + V / V + 多'",
-                        note: "Explanation: Expressing doing less or more of a certain action.",
+                        note: "<b>Explanation:</b> Expressing doing less or more of a certain action.",
                         examples: [
                             { zh: "少(shǎo)喝(hē)一(yì)点(diǎn)吧(ba)。", en: "Drink a little less." },
                             { zh: "喝(hē)多(duō)了(le)不(bù)好(hǎo)。", en: "Drinking too much is not good." },
@@ -305,8 +393,9 @@
                     },
                     {
                         type: "grammar",
+                        subId: "sub-2-7",
                         title: "7. 'A 对 B 不好 / 好'",
-                        note: "Explanation: Expressing how someone treats another person or thing.",
+                        note: "<b>Explanation:</b> Expressing how someone treats another person or thing.",
                         examples: [
                             { zh: "酒(jiǔ)喝(hē)多(duō)了(le)对(duì)身(shēn)体(tǐ)不(bú)好(hǎo)。", en: "Drinking too much alcohol is bad for your health." },
                             { zh: "他(tā)对(duì)女(nǚ)友(yǒu)很(hěn)好(hǎo)，常(cháng)常(cháng)帮(bāng)女(nǚ)友(yǒu)。", en: "He is very good to his girlfriend and often helps her." },
@@ -317,24 +406,31 @@
             },
             {
                 title: "Stress Practice",
-                note: "Explanation: Stress is used to emphasize specific information and ensure the listener catches key points.",
+                note: "Stress is used to emphasize specific information and ensure the listener catches key points.",
                 items: [
-                    { zh: "1. 那(nà)是(shì)我(wǒ)妈(mā)妈(ma)做(zuò)的(de)中(zhōng)国(guó)菜(cài)。", en: "That is Chinese food made by my mom." },
-                    { zh: "2. 那(nà)个(gè)学(xué)校(xiào)是(shì)李(lǐ)老(lǎo)师(shī)工(gōng)作(zuò)了(le)很(hěn)多(duō)年(nián)的(de)地(dì)方(fang)。", en: "That school is the place where Teacher Li worked for many years." },
-                    { zh: "3. 我(wǒ)最(zuì)喜(xǐ)欢(huan)红(hóng)色(sè)的(de)衣(yī)服(fu)。", en: "I like red clothes the most." },
-                    { zh: "4. 你(nǐ)的(de)杯(bēi)子(zi)就(jiù)在(zài)那(nà)里(lǐ)。", en: "Your cup is right there." },
-                    { zh: "5. 大(dà)卫(wèi)的(de)狗(gǒu)飞(fēi)一(yì)样(yàng)地(de)跑(pǎo)了(le)过(guò)去(qù)。", en: "David's dog ran past like flying." },
-                    { zh: "6. 我(wǒ)爸(bà)爸(ba)是(shì)医(yī)生(shēng)，每(měi)天(tiān)从(cóng)早(zǎo)到(dào)晚(wǎn)忙(máng)工(gōng)作(zuò)。", en: "My dad is a doctor, busy working from morning till night every day." },
-                    { zh: "7. 这(zhè)是(shì)今(jīn)天(tiān)早(zǎo)上(shang)的(de)报(bào)纸(zhǐ)。", en: "This is this morning's newspaper." },
-                    { zh: "8. 今(jīn)天(tiān)的(de)羊(yáng)肉(ròu)很(hěn)好(hěn)吃(chī)。", en: "Today's mutton is very delicious." },
-                    { zh: "9. 这(zhè)个(gè)粉(fěn)色(sè)的(de)房(fáng)间(jiān)是(shì)我(wǒ)女(nǚ)儿(ér)的(de)。", en: "This pink room is my daughter's." },
-                    { zh: "10. 大(dà)卫(wèi)在(zài)北(běi)京(jīng)学(xué)习(xí)汉(hàn)语(yǔ)。", en: "David is studying Chinese in Beijing." },
-                    { zh: "11. 我(wǒ)们(men)学(xué)校(xiào)每(měi)天(tiān)早(zǎo)上(shang)八(bā)点(diǎn)半(bàn)上(shàng)课(kè)。", en: "Our school starts classes every day at 8:30 AM." },
-                    { zh: "12. 这(zhè)个(gè)月(yuè)我(wǒ)每(měi)天(tiān)都(dōu)游(yóu)泳(yǒng)。", en: "I swim every day this month." },
-                    { zh: "13. 谢(xiè)朋(péng)买(mǎi)了(le)几(jǐ)个(gè)新(xīn)的(de)杯(bēi)子(zi)。", en: "Xie Peng bought a few new cups." },
-                    { zh: "14. 那(nà)是(shì)李(lǐ)小(xiǎo)姐(jiě)的(de)电(diàn)脑(nǎo)。", en: "That is Miss Li's computer." },
-                    { zh: "15. 粉(fěn)色(sè)是(shì)我(wǒ)女(nǚ)儿(ér)最(zuì)喜(xǐ)欢(huan)的(de)颜(yán)色(sè)。", en: "Pink is my daughter's favorite color." },
-                    { zh: "16. 我(wǒ)每(měi)个(gè)周(zhōu)末(mò)都(dōu)去(qù)那(nà)个(gè)中(zhōng)国(guó)饭(fàn)馆(guǎn)吃(chī)饭(fàn)。", en: "I go to that Chinese restaurant to eat every weekend." }
+                    {
+                        type: "grammar",
+                        subId: "sub-3-1",
+                        title: "Practice Sentences",
+                        examples: [
+                            { zh: "1. 那(nà)是(shì)我(wǒ)妈(mā)妈(ma)做(zuò)的(de)中(zhōng)国(guó)菜(cài)。", en: "That is Chinese food made by my mom." },
+                            { zh: "2. 那(nà)个(gè)学(xué)校(xiào)是(shì)李(lǐ)老(lǎo)师(shī)工(gōng)作(zuò)了(le)很(hěn)多(duō)年(nián)的(de)地(dì)方(fang)。", en: "That school is the place where Teacher Li worked for many years." },
+                            { zh: "3. 我(wǒ)最(zuì)喜(xǐ)欢(huan)红(hóng)色(sè)的(de)衣(yī)服(fu)。", en: "I like red clothes the most." },
+                            { zh: "4. 你(nǐ)的(de)杯(bēi)子(zi)就(jiù)在(zài)那(nà)里(lǐ)。", en: "Your cup is right there." },
+                            { zh: "5. 大(dà)卫(wèi)的(de)狗(gǒu)飞(fēi)一(yì)样(yàng)地(de)跑(pǎo)了(le)过(guò)去(qù)。", en: "David's dog ran past like flying." },
+                            { zh: "6. 我(wǒ)爸(bà)爸(ba)是(shì)医(yī)生(shēng)，每(měi)天(tiān)从(cóng)早(zǎo)到(dào)晚(wǎn)忙(máng)工(gōng)作(zuò)。", en: "My dad is a doctor, busy working from morning till night every day." },
+                            { zh: "7. 这(zhè)是(shì)今(jīn)天(tiān)早(zǎo)上(shang)的(de)报(bào)纸(zhǐ)。", en: "This is this morning's newspaper." },
+                            { zh: "8. 今(jīn)天(tiān)的(de)羊(yáng)肉(ròu)很(hěn)好(hǎo)吃(chī)。", en: "Today's mutton is very delicious." },
+                            { zh: "9. 这(zhè)个(gè)粉(fěn)色(sè)的(de)房(fáng)间(jiān)是(shì)我(wǒ)女(nǚ)儿(ér)的(de)。", en: "This pink room is my daughter's." },
+                            { zh: "10. 大(dà)卫(wèi)在(zài)北(běi)京(jīng)学(xué)习(xí)汉(hàn)语(yǔ)。", en: "David is studying Chinese in Beijing." },
+                            { zh: "11. 我(wǒ)们(men)学(xué)校(xiào)每(měi)天(tiān)早(zǎo)上(shang)八(bā)点(diǎn)半(bàn)上(shàng)课(kè)。", en: "Our school starts classes every day at 8:30 AM." },
+                            { zh: "12. 这(zhè)个(gè)月(yuè)我(wǒ)每(měi)天(tiān)都(dōu)游(yóu)泳(yǒng)。", en: "I swim every day this month." },
+                            { zh: "13. 谢(xiè)朋(péng)买(mǎi)了(le)几(jǐ)个(gè)新(xīn)的(de)杯(bēi)子(zi)。", en: "Xie Peng bought a few new cups." },
+                            { zh: "14. 那(nà)是(shì)李(lǐ)小(xiǎo)姐(jiě)的(de)电(diàn)脑(nǎo)。", en: "That is Miss Li's computer." },
+                            { zh: "15. 粉(fěn)色(sè)是(shì)我(wǒ)女(nǚ)儿(ér)最(zuì)喜(xǐ)欢(huan)的(de)颜(yán)色(sè)。", en: "Pink is my daughter's favorite color." },
+                            { zh: "16. 我(wǒ)每(měi)个(gè)周(zhōu)末(mò)都(dōu)去(qù)那(nà)个(gè)中(zhōng)国(guó)饭(fàn)馆(guǎn)吃(chī)饭(fàn)。", en: "I go to that Chinese restaurant to eat every weekend." }
+                        ]
+                    }
                 ]
             }
         ];
@@ -343,57 +439,62 @@
         let counter = 0;
 
         lessonData.forEach((sec, sIdx) => {
-            let html = `<div class="section" id="sec-${sIdx}"><h2>${sec.title}</h2>`;
-            if(sec.note) html += `<p class="note">${sec.note}</p>`;
-            
+            let html = `<div class="section" id="sec-${sIdx + 1}"><h2>${sec.title}</h2>`;
+            if (sec.note) html += `<p class="note">${sec.note}</p>`;
+
             sec.items.forEach(item => {
+                let anchorAttr = item.subId ? `id="${item.subId}"` : '';
+
                 if (item.type === "grammar") {
-                    html += `<div class="grammar-box">
-                        <div style="font-weight:bold; font-size:16px; color:#8C6239; margin-bottom:5px;">${item.title}</div>`;
-                    if(item.note) html += `<div class="note">${item.note}</div>`;
-                    
+                    html += `<div class="grammar-box" ${anchorAttr}>
+                        <div style="font-weight:bold; font-size:17px; color:#8C6239; margin-bottom:8px;">${item.title}</div>`;
+                    if (item.note) html += `<div class="note">${item.note}</div>`;
+                    if (item.image) html += `<img src="${item.image}" class="lesson-img" alt="Lesson Image">`;
+
                     if (item.wrong && item.correct) {
+                        html += `<div class="wrong-line">❌ ${item.wrong}</div>`;
+                        let btnId = `play-btn-${counter}`;
+                        let recId = `rec-${counter}`;
                         html += `
-                        <div class="item-content" style="margin-top: 10px; align-items:center;">
-                            <span class="wrong" style="margin-right:15px;">❌ </span> <span>${item.wrong}</span>
-                        </div>
-                        <div class="item-content" style="margin-top: 10px; align-items:center;">
-                            <button class="audio-btn" onclick="playAudio('${item.correct}')">🔊 Listen</button>
-                            <button class="rec-btn" onclick="toggleRecord(this, 'rec-${counter}')">🎤 Record</button>
-                            <button class="play-rec-btn" id="play-rec-rec-${counter}" onclick="playRecording('rec-${counter}')" disabled>▶ Play Mine</button>
-                            <span class="correct" style="margin-left:8px;">✅ </span> <span style="margin-left:8px;">${parsePinyin(item.correct)}</span>
+                        <div class="item">
+                            <div class="sentence-row">
+                                <div class="buttons-group">
+                                    <button class="icon-btn" id="${btnId}" onclick="togglePlayAudio('${item.correct}', '${btnId}')" title="Listen Audio">🔊</button>
+                                    <button class="icon-btn" onclick="toggleRecord(this, '${recId}')" title="Record Audio">🎤</button>
+                                    <button class="icon-btn" id="play-rec-${recId}" title="Play Mine" disabled>▶️</button>
+                                </div>
+                                <div class="text-content">
+                                    <div><span class="correct-label">✅</span> ${parsePinyin(item.correct)}</div>
+                                    ${item.correctEn ? `<div class="en-trans">${item.correctEn}</div>` : ''}
+                                </div>
+                            </div>
                         </div>`;
                         counter++;
                     }
 
                     if (item.examples) {
                         item.examples.forEach(ex => {
+                            let btnId = `play-btn-${counter}`;
+                            let recId = `rec-${counter}`;
                             html += `
-                            <div class="item" style="border:none; margin-top:10px; padding-bottom:0;">
-                                <div class="item-content" style="align-items:center;">
-                                    <button class="audio-btn" onclick="playAudio('${ex.zh}')">🔊 Listen</button>
-                                    <button class="rec-btn" onclick="toggleRecord(this, 'rec-${counter}')">🎤 Record</button>
-                                    <button class="play-rec-btn" id="play-rec-rec-${counter}" onclick="playRecording('rec-${counter}')" disabled>▶ Play Mine</button>
-                                    <div style="margin-left:8px;">${parsePinyin(ex.zh)}</div>
+                            <div class="item">
+                                <div class="sentence-row">
+                                    <div class="buttons-group">
+                                        <button class="icon-btn" id="${btnId}" onclick="togglePlayAudio('${ex.zh.replace(/'/g, "\\'")}', '${btnId}')" title="Listen Audio">🔊</button>
+                                        <button class="icon-btn" onclick="toggleRecord(this, '${recId}')" title="Record Audio">🎤</button>
+                                        <button class="icon-btn" id="play-rec-${recId}" title="Play Mine" disabled>▶️</button>
+                                    </div>
+                                    <div class="text-content">
+                                        <div style="font-size:24px; margin-bottom:4px;">${parsePinyin(ex.zh)}</div>
+                                        <div class="en-trans">${ex.en}</div>
+                                        ${ex.explanation ? `<div class="explanation-sub">${ex.explanation}</div>` : ''}
+                                    </div>
                                 </div>
-                                <div class="en-trans">${ex.en}</div>
                             </div>`;
                             counter++;
                         });
                     }
                     html += `</div>`;
-                } else if (item.zh) {
-                    html += `
-                    <div class="item">
-                        <div class="item-content" style="align-items:center;">
-                            <button class="audio-btn" onclick="playAudio('${item.zh}')">🔊 Listen</button>
-                            <button class="rec-btn" onclick="toggleRecord(this, 'rec-${counter}')">🎤 Record</button>
-                            <button class="play-rec-btn" id="play-rec-rec-${counter}" onclick="playRecording('rec-${counter}')" disabled>▶ Play Mine</button>
-                            <div style="margin-left:8px;">${parsePinyin(item.zh)}</div>
-                        </div>
-                        <div class="en-trans">${item.en}</div>
-                    </div>`;
-                    counter++;
                 }
             });
             html += `</div>`;
@@ -412,7 +513,7 @@
 
         function toggleEnglish() {
             enVisible = !enVisible;
-            document.querySelectorAll('.en-trans').forEach(el => {
+            document.querySelectorAll('.en-trans, .explanation-sub').forEach(el => {
                 el.style.display = enVisible ? 'block' : 'none';
             });
         }
