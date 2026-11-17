@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <title>Ariel的第201堂中文課（測試頁面）</title>
+    <style>
+        :root { --bg: #FDFBF7; --primary: #D4A373; --text: #4a4a4a; --white: #fff; --sidebar-width: 280px; }
+        html { scroll-behavior: smooth; }
+        body { font-family: 'Helvetica Neue', Arial, sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; margin: 0; padding: 0; display: flex; transition: margin-left 0.3s ease; }
+
+        .sidebar { width: var(--sidebar-width); background: #FFF9F0; border-right: 1px solid #E6D5B8; height: 100vh; position: fixed; top: 0; left: 0; overflow-y: auto; padding: 20px; box-sizing: border-box; transition: transform 0.3s ease; z-index: 1000; }
+        .sidebar.collapsed { transform: translateX(-100%); }
+        .sidebar h3 { margin-top: 0; color: #8C6239; font-size: 18px; border-bottom: 2px solid var(--primary); padding-bottom: 8px; display: flex; justify-content: space-between; align-items: center; }
+        .sidebar ul { padding-left: 15px; margin: 5px 0 15px 0; list-style-type: disc; }
+        .sidebar li { margin-bottom: 6px; font-size: 13px; }
+        .sidebar .main-menu-item { font-weight: bold; margin-bottom: 4px; font-size: 14px; list-style-type: none; margin-left: -15px; }
+        .sidebar a { color: #555; text-decoration: none; display: block; }
+        .sidebar a:hover { color: #8C6239; font-weight: bold; }
+
+        .sidebar-toggle { position: fixed; top: 15px; left: 15px; z-index: 1100; background: var(--primary); color: white; border: none; padding: 8px 12px; border-radius: 6px; cursor: pointer; font-size: 14px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+
+        .main-content { margin-left: var(--sidebar-width); width: calc(100% - var(--sidebar-width)); padding: 20px 40px; box-sizing: border-box; max-width: 1050px; transition: margin-left 0.3s ease, width 0.3s ease; }
+        .main-content.expanded { margin-left: 0; width: 100%; }
+
+        .test-banner { background: #FFEDED; border: 1px solid #ffb3b3; color: #a33; padding: 10px 15px; border-radius: 8px; margin-top: 20px; font-size: 14px; text-align: center; }
+
+        .header { text-align: center; border-bottom: 2px solid var(--primary); padding-bottom: 10px; margin-bottom: 20px; margin-top: 20px; }
+
+        .controls { position: sticky; top: 0; background: var(--bg); padding: 15px; text-align: center; border-bottom: 1px solid #ccc; z-index: 100; margin-bottom: 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); display: flex; justify-content: center; gap: 10px; }
+        button.control-btn { background: var(--primary); color: white; border: none; padding: 10px 15px; border-radius: 6px; cursor: pointer; font-size: 14px; font-weight: bold; }
+        button.control-btn:hover { background: #B5835A; }
+
+        .icon-btn { background: #f8f9fa; border: 1px solid #ddd; border-radius: 50%; width: 38px; height: 38px; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; font-size: 16px; margin-right: 5px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); transition: background 0.2s; }
+        .icon-btn:hover { background: #e9ecef; }
+        .rec-btn.recording { background: #ff4d4f; color: white; animation: pulse 1.5s infinite; border-color: #ff4d4f; }
+        .play-rec-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
+
+        h2 { color: #8C6239; border-left: 5px solid var(--primary); padding-left: 10px; margin-top: 30px; }
+        .section { margin-bottom: 30px; background: var(--white); padding: 20px; border-radius: 12px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
+        .item { margin-bottom: 20px; display: flex; flex-direction: column; border-bottom: 1px dashed #eee; padding-bottom: 15px; }
+        .item-content { display: flex; align-items: center; flex-wrap: wrap; margin-bottom: 5px; gap: 5px; }
+
+        .grammar-box { background: #FFF9F0; border: 1px solid #E6D5B8; border-radius: 8px; padding: 15px; margin: 15px 0; scroll-margin-top: 80px; }
+        .note { font-size: 15px; color: #555; margin-bottom: 10px; line-height: 1.6; }
+        .note a { color: var(--primary); font-weight: bold; }
+
+        .custom-table { width: 100%; border-collapse: collapse; margin: 12px 0; background: #fff; border-radius: 6px; overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,0.05); table-layout: fixed; }
+        .custom-table th, .custom-table td { border: 1px solid #E6D5B8; padding: 12px; text-align: left; vertical-align: top; font-size: 15px; color: #4a4a4a; line-height: 1.6; font-family: 'Helvetica Neue', Arial, sans-serif; word-wrap: break-word; }
+        .custom-table th { background: #F4EAD3; color: #8C6239; font-weight: bold; text-align: center; font-size: 16px; }
+
+        .inline-img { max-width: 240px; width: 100%; height: auto; border-radius: 8px; border: 1px solid #E6D5B8; box-shadow: 0 2px 5px rgba(0,0,0,0.05); display: block; margin: 10px auto; }
+
+        .audio-player-container { width: 100%; margin-top: 8px; }
+        .audio-player-container audio { width: 100%; height: 36px; }
+
+        .pinyin-group { display: inline-flex; flex-direction: column; align-items: center; margin-right: 3px; vertical-align: bottom; }
+        .py-text { font-size: 11px; color: #777; line-height: 1; margin-bottom: 2px; display: block; text-align: center; white-space: nowrap; }
+        .hz-text { font-size: 15px; font-family: 'Helvetica Neue', Arial, sans-serif; line-height: 1.2; font-weight: normal; text-align: center; }
+
+        .en-trans { color: #666; font-size: 15px; font-style: italic; margin-top: 5px; display: block; }
+
+        body.hide-pinyin .py-text { display: none !important; }
+        body.hide-english .en-trans { display: none !important; }
+
+        /* 翻譯作業檢討 */
+        .review-card { background: var(--white); border: 1px solid #E6D5B8; border-radius: 8px; padding: 15px; margin-bottom: 15px; }
+        .review-en { font-weight: bold; color: #4a4a4a; margin-bottom: 8px; }
+        .review-line { margin: 4px 0; display: flex; gap: 8px; align-items: flex-start; }
+        .review-wrong { color: #b33; }
+        .review-correct { color: #2a7a4a; }
+        .review-note { font-size: 14px; color: #777; font-style: italic; margin-top: 6px; }
+
+        /* 翻譯練習（無答案) */
+        .translation-list { list-style: decimal; padding-left: 20px; }
+        .translation-list li { margin-bottom: 10px; font-size: 15px; }
+
+        /* 閱讀理解 */
+        .reading-passage p { margin: 0 0 14px 0; font-size: 16px; }
+        .reading-questions { list-style: none; padding: 0; margin-top: 10px; }
+        .reading-questions li { background: #FFF9F0; border-left: 4px solid var(--primary); padding: 10px 14px; margin-bottom: 10px; border-radius: 6px; }
+
+        @media (max-width: 900px) {
+            .sidebar { transform: translateX(-100%); }
+            .sidebar.active { transform: translateX(0); }
+            .main-content { margin-left: 0; width: 100%; padding: 20px; }
+        }
+    </style>
+</head>
+<body>
+
+    <button class="sidebar-toggle" onclick="toggleSidebar()">☰ 目录</button>
+
+    <div class="sidebar" id="sidebar">
+        <h3>📖 目录 (Outline) <button style="background:none; border:none; color:#8C6239; font-weight:bold; cursor:pointer; font-size:16px;" onclick="toggleSidebar()">×</button></h3>
+        <ul style="padding-left: 0; list-style: none;">
+            <li class="main-menu-item"><a href="#sec-0">一、暖身</a></li>
+            <ul>
+                <li><a href="#item-0-0">1. 月經</a></li>
+                <li><a href="#item-0-1">2. 蒙古</a></li>
+                <li><a href="#item-0-2">3. 簡體字</a></li>
+                <li><a href="#item-0-3">4. X前 / 的時候</a></li>
+            </ul>
+            <li class="main-menu-item" style="margin-top:10px;"><a href="#sec-1">二、上次作業</a></li>
+            <ul>
+                <li><a href="#item-1-0">1. 翻譯練習檢討</a></li>
+                <li><a href="#item-1-1">2. 鹽</a></li>
+                <li><a href="#item-1-2">3. 過</a></li>
+                <li><a href="#item-1-3">4. 不錯</a></li>
+            </ul>
+            <li class="main-menu-item" style="margin-top:10px;"><a href="#sec-2">三、補充</a></li>
+            <ul>
+                <li><a href="#item-2-0">1. 活</a></li>
+                <li><a href="#item-2-1">2. 最好的 / 最喜歡的</a></li>
+                <li><a href="#item-2-2">3. 紅蘿蔔</a></li>
+                <li><a href="#item-2-3">4. 不+adj.</a></li>
+                <li><a href="#item-2-4">5. 安心</a></li>
+                <li><a href="#item-2-5">6. 半夜</a></li>
+            </ul>
+            <li class="main-menu-item" style="margin-top:10px;"><a href="#sec-3">四、翻譯練習</a></li>
+            <li class="main-menu-item" style="margin-top:10px;"><a href="#sec-4">五、閱讀理解</a></li>
+        </ul>
+    </div>
+
+    <div class="main-content" id="mainContent">
+        <div class="header">
+            <h1>Ariel的第201堂中文課</h1>
+            <p>日期：2026/11/15</p>
+        </div>
+
+        <div class="test-banner">⚠️ 這是測試頁面，用來測試自動產生網頁的流程，不是正式課程網頁。</div>
+
+        <div class="controls">
+            <button class="control-btn" onclick="togglePinyin()">隐藏/显示拼音</button>
+            <button class="control-btn" onclick="toggleEnglish()">隐藏/显示英文</button>
+        </div>
+
+        <div id="content"></div>
+    </div>
+
+    <script>
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const mainContent = document.getElementById('mainContent');
+            if (window.innerWidth <= 900) {
+                sidebar.classList.toggle('active');
+            } else {
+                sidebar.classList.toggle('collapsed');
+                mainContent.classList.toggle('expanded');
+            }
+        }
+
+        function parsePinyin(text) {
+            const regex = /([一-龥a-zA-Z0-9，。？！、：""''()./])\((.*?)\)/g;
+            let parsed = text.replace(regex, (match, char, py) => {
+                return `<span class="pinyin-group"><span class="py-text">${py}</span><span class="hz-text">${char}</span></span>`;
+            });
+            return parsed;
+        }
+
+        let currentUtterance = null;
+        function playAudio(text) {
+            let cleanText = text.replace(/\(.*?\)/g, '');
+            if (speechSynthesis.speaking) {
+                speechSynthesis.cancel();
+                if (currentUtterance === cleanText) {
+                    currentUtterance = null;
+                    return;
+                }
+            }
+            const utterance = new SpeechSynthesisUtterance(cleanText);
+            utterance.lang = 'zh-CN';
+            utterance.rate = 0.85;
+            utterance.onend = () => { currentUtterance = null; };
+            currentUtterance = cleanText;
+            speechSynthesis.speak(utterance);
+        }
+
+        let mediaRecorders = {};
+        let audioUrls = {};
+
+        async function toggleRecord(btn, id) {
+            if (!mediaRecorders[id] || mediaRecorders[id].state === "inactive") {
+                try {
+                    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+                    let chunks = [];
+                    let recorder = new MediaRecorder(stream);
+
+                    recorder.ondataavailable = e => chunks.push(e.data);
+                    recorder.onstop = () => {
+                        const blob = new Blob(chunks, { 'type': 'audio/ogg; codecs=opus' });
+                        audioUrls[id] = URL.createObjectURL(blob);
+                        const playerContainer = document.getElementById(`audio-container-${id}`);
+                        playerContainer.innerHTML = `<audio controls src="${audioUrls[id]}"></audio>`;
+                    };
+
+                    recorder.start();
+                    mediaRecorders[id] = recorder;
+                    btn.innerHTML = "⏹️";
+                    btn.classList.add("recording");
+                } catch (err) {
+                    alert("麦克风权限被拒绝或不支持。");
+                }
+            } else {
+                mediaRecorders[id].stop();
+                btn.innerHTML = "🎤";
+                btn.classList.remove("recording");
+            }
+        }
+
+        function playRecording(id) {
+            if (audioUrls[id]) {
+                const audio = new Audio(audioUrls[id]);
+                audio.play();
+            }
+        }
+
+        function togglePinyin() {
+            document.body.classList.toggle('hide-pinyin');
+        }
+
+        function toggleEnglish() {
+            document.body.classList.toggle('hide-english');
+        }
+
+        const lessonData = [
+            {
+                title: "一、暖身",
+                items: [
+                    {
+                        type: "grammar",
+                        title: "1. 月(yuè)經(jīng)",
+                        notes: ["月經 (yuèjīng) is called that because it happens once every month — 月 means 'month' and 經 means 'to go through / experience'."],
+                        examples: [
+                            { zh: "最(zuì)近(jìn)我(wǒ)的(de)月(yuè)經(jīng)來(lái)，我(wǒ)很(hěn)不(bù)舒(shū)服(fú)，昨(zuó)天(tiān)頭(tóu)很(hěn)痛(tòng)。", en: "My period just started recently, I feel very uncomfortable, and yesterday I had a bad headache." }
+                        ]
+                    },
+                    {
+                        type: "grammar",
+                        title: "2. 蒙(méng)古(gǔ)",
+                        examples: [
+                            { zh: "昨(zuó)天(tiān)我(wǒ)們(men)吃(chī)蒙(méng)古(gǔ)牛(niú)肉(ròu)麵(miàn)，我(wǒ)覺(jué)得(de)還(hái)好(hǎo)，可(kě)是(shì)我(wǒ)太(tài)太(tài)很(hěn)喜(xǐ)歡(huān)。", en: "Yesterday we ate Mongolian beef noodles. I thought it was so-so, but my wife liked it a lot." }
+                        ]
+                    },
+                    {
+                        type: "grammar",
+                        title: "3. 簡(jiǎn)體(tǐ)字(zì)",
+                        notes: ["Review this topic here: <a href=\"https://jany-mandarin.github.io/Chad.lesson189.html#wu-2\" target=\"_blank\">Lesson 189</a>"],
+                        examples: [
+                            { zh: "昨(zuó)天(tiān)我(wǒ)們(men)去(qù)的(de)中(zhōng)式(shì)餐(cān)廳(tīng)，有(yǒu)很(hěn)多(duō)簡(jiǎn)體(tǐ)字(zì)，我(wǒ)用(yòng)手(shǒu)機(jī)查(chá)。", en: "There were a lot of simplified characters at the Chinese restaurant we went to yesterday, so I looked them up on my phone." },
+                            { zh: "我(wǒ)看(kàn)到(dào)蔥(cōng)油(yóu)餅(bǐng)的(de)簡(jiǎn)體(tǐ)字(zì)，和(hé)繁(fán)體(tǐ)字(zì)有(yǒu)點(diǎn)像(xiàng)。", en: "I saw the simplified version of 'scallion pancake,' and it looked a bit like the traditional version." }
+                        ]
+                    },
+                    {
+                        type: "grammar",
+                        title: "4. X前(qián) / 的(de)時(shí)候(hòu)",
+                        notes: ["Review this topic here: <a href=\"https://jany-mandarin.github.io/Chad.lesson195.html#hw-1\" target=\"_blank\">Lesson 195</a>"],
+                        examples: [
+                            { zh: "那(nà)家(jiā)餐(cān)廳(tīng)中(zhōng)午(wǔ)12點(diǎn)前(qián)，就(jiù)有(yǒu)很(hěn)多(duō)人(rén)。", en: "That restaurant already has a lot of people before noon." },
+                            { zh: "那(nà)家(jiā)餐(cān)廳(tīng)在(zài)11點(diǎn)的(de)時(shí)候(hòu)，就(jiù)有(yǒu)很(hěn)多(duō)人(rén)，我(wǒ)覺(jué)得(de)那(nà)家(jiā)餐(cān)廳(tīng)很(hěn)有(yǒu)名(míng)。", en: "That restaurant already has a lot of people at 11 o'clock; I think that restaurant must be famous." }
+                        ]
+                    }
+                ]
+            },
+            {
+                title: "二、上次作業",
+                items: [
+                    {
+                        type: "translation-review",
+                        reviews: [
+                            {
+                                en: "The sausage is very salty, so I can't eat too much at once.",
+                                wrong: "這(zhè)個(gè)香(xiāng)腸(cháng)很(hěn)鹹(xián)，所(suǒ)以(yǐ)我(wǒ)就(jiù)不(bú)會(huì)吃(chī)很(hěn)多(duō)。",
+                                correct: ["這(zhè)個(gè)香(xiāng)腸(cháng)很(hěn)鹹(xián)，所(suǒ)以(yǐ)我(wǒ)就(jiù)不(bú)會(huì)吃(chī)太(tài)多(duō)。"],
+                                note: "太...了 is used in positive (affirmative) sentences."
+                            },
+                            {
+                                en: "This shop is in the city center, so it's convenient to take the MRT.",
+                                wrong: "這(zhè)家(jiā)店(diàn)在(zài)市(shì)區(qū)，所(suǒ)以(yǐ)搭(dā)捷(jié)運(yùn)很(hěn)方(fāng)便(biàn)。",
+                                correct: ["這(zhè)家(jiā)店(diàn)在(zài)市(shì)區(qū)，所(suǒ)以(yǐ)搭(dā)捷(jié)運(yùn)去(qù)很(hěn)方(fāng)便(biàn)。"],
+                                note: "Since the action of 'going' is being emphasized, 去 needs to be added."
+                            },
+                            {
+                                en: "He is very young, but he is already the owner of three companies.",
+                                wrong: "他(tā)很(hěn)輕(qīng)，可(kě)是(shì)他(tā)已(yǐ)經(jīng)有(yǒu)三(sān)個(gè)公(gōng)司(sī)。",
+                                correct: ["他(tā)很(hěn)年(nián)輕(qīng)，可(kě)是(shì)他(tā)已(yǐ)經(jīng)有(yǒu)三(sān)個(gè)公(gōng)司(sī)了(le)。"]
+                            },
+                            {
+                                en: "I like plain yogurt, not the sweetened kind.",
+                                correct: [
+                                    "我(wǒ)喜(xǐ)歡(huān)吃(chī)原(yuán)味(wèi)的(de)優(yōu)格(gé)，不(bù)喜(xǐ)歡(huān)吃(chī)甜(tián)的(de)。",
+                                    "我(wǒ)喜(xǐ)歡(huān)吃(chī)原(yuán)味(wèi)的(de)優(yōu)格(gé)，不(bù)喜(xǐ)歡(huān)加(jiā)糖(táng)的(de)。"
+                                ]
+                            },
+                            {
+                                en: "I'm in a hurry. Can you be a little faster?",
+                                correct: ["我(wǒ)很(hěn)急(jí)，你(nǐ)可(kě)以(yǐ)快(kuài)一(yì)點(diǎn)嗎(ma)？"],
+                                note: "This sentence is very useful — you can use it when you need the bathroom, when talking to a taxi driver, or in many other situations when you're in a hurry."
+                            }
+                        ]
+                    },
+                    {
+                        type: "grammar",
+                        title: "2. 鹽(yán)",
+                        htmlContent: "<img src='https://cdn.phototourl.com/member/2026-11-15-1c5b4560-f629-4031-99ca-d7370f804bd6.png' class='inline-img'>",
+                        notes: ["You can imagine someone's salt is kept in a big jar, and it has to be guarded strictly at all times so no one else takes it."],
+                        examples: [
+                            { zh: "你(nǐ)放(fàng)在(zài)太(tài)多(duō)鹽(yán)了(le)，這(zhè)碗(wǎn)麵(miàn)太(tài)鹹(xián)了(le)。", en: "You put too much salt in — this bowl of noodles is too salty." },
+                            { zh: "這(zhè)碗(wǎn)湯(tāng)都(dōu)沒(méi)有(yǒu)味(wèi)道(dào)，你(nǐ)是(shì)不(bú)是(shì)忘(wàng)記(jì)放(fàng)鹽(yán)? 對(duì)耶(yé)! 我(wǒ)忘(wàng)了(le)!!", en: "This bowl of soup has no flavor at all — did you forget to add salt? Oh right! I forgot!!" }
+                        ]
+                    },
+                    {
+                        type: "grammar",
+                        title: "3. 過(guò)",
+                        notes: ["Means to spend / pass a period of time. Review here: <a href=\"https://jany-mandarin.github.io/Chad.lesson196.html#hw-5\" target=\"_blank\">Lesson 196</a>"],
+                        examples: [
+                            { zh: "我(wǒ)覺(jué)得(de)周(zhōu)末(mò)就(jiù)應(yīng)該(gāi)這(zhè)樣(yàng)過(guò)。", en: "I think weekends should be spent just like this." },
+                            { zh: "這(zhè)個(gè)周(zhōu)末(mò)我(wǒ)過(guò)得(de)很(hěn)舒(shū)服(fú)，因(yīn)為(wèi)我(wǒ)睡(shuì)了(le)很(hěn)久(jiǔ)。", en: "I had a very relaxing weekend because I slept for a long time." }
+                        ]
+                    },
+                    {
+                        type: "grammar",
+                        title: "4. 不(bú)錯(cuò)",
+                        notes: ["Used to describe something (or the weather) as quite good, or acceptable."],
+                        examples: [
+                            { zh: "今(jīn)天(tiān)天(tiān)氣(qì)不(bú)錯(cuò)，很(hěn)舒(shū)服(fú)，沒(méi)有(yǒu)下(xià)雨(yǔ)也(yě)不(bú)會(huì)太(tài)熱(rè)。", en: "The weather is pretty nice today — comfortable, no rain, and not too hot." },
+                            { zh: "這(zhè)件(jiàn)衣(yī)服(fú)不(bú)錯(cuò)，穿(chuān)起(qǐ)來(lái)很(hěn)舒(shū)服(fú)。", en: "This piece of clothing is pretty good — it feels comfortable to wear." }
+                        ]
+                    }
+                ]
+            },
+            {
+                title: "三、補充",
+                items: [
+                    {
+                        type: "grammar",
+                        title: "1. 活(huó)",
+                        htmlContent: "<img src='https://cdn.phototourl.com/member/2026-11-15-920b9f4d-25ea-4f39-b300-3ac849544d9b.png' class='inline-img'>",
+                        notes: ["You can imagine life flowing like running water — being able to speak shows that you are alive, so this character represents proof of being alive."],
+                        examples: [
+                            { zh: "我(wǒ)的(de)貓(māo)已(yǐ)經(jīng)活(huó)了(le)8年(nián)，應(yīng)該(gāi)可(kě)以(yǐ)活(huó)到(dào)20歲(suì)。", en: "My cat has already lived for 8 years; it should be able to live to 20." },
+                            { zh: "他(tā)每(měi)天(tiān)都(dōu)活(huó)得(de)很(hěn)快(kuài)樂(lè)，因(yīn)為(wèi)每(měi)天(tiān)都(dōu)可(kě)以(yǐ)看(kàn)到(dào)漂(piào)亮(liàng)的(de)太(tài)太(tài)和(hé)很(hěn)帥(shuài)的(de)貓(māo)。", en: "He lives happily every day, because every day he gets to see his beautiful wife and his handsome cat." },
+                            { zh: "我(wǒ)不(bù)想(xiǎng)活(huó)了(le)!! 我(wǒ)想(xiǎng)要(yào)去(qù)死(sǐ)!!", en: "I don't want to live anymore!! I want to go die!! (a dramatic/joking exaggeration)" }
+                        ]
+                    },
+                    {
+                        type: "grammar",
+                        title: "2. 最(zuì)好(hǎo)的(de) / 最(zuì)喜(xǐ)歡(huān)的(de)",
+                        notes: ["好 means 'good', so 最好 means 'best'. 喜歡 means 'to like', so 最喜歡 means 'favorite'."],
+                        examples: [
+                            { zh: "我(wǒ)最(zuì)喜(xǐ)歡(huān)的(de)美(měi)式(shì)足(zú)球(qiú)隊(duì)現(xiàn)在(zài)在(zài)維(wéi)斯(sī)康(kāng)辛(xīn)。", en: "My favorite American football team is currently in Wisconsin." },
+                            { zh: "我(wǒ)最(zuì)喜(xǐ)歡(huān)吃(chī)的(de)冰(bīng)淇(qí)淋(lín)是(shì)原(yuán)味(wèi)冰(bīng)淇(qí)淋(lín)。", en: "My favorite ice cream to eat is plain/original flavor ice cream." },
+                            { zh: "他(tā)是(shì)我(wǒ)最(zuì)好(hǎo)的(de)朋(péng)友(yǒu)。", en: "He is my best friend." }
+                        ]
+                    },
+                    {
+                        type: "grammar",
+                        title: "3. 紅(hóng)蘿(luó)蔔(bó)",
+                        htmlContent: "<img src='https://cdn.phototourl.com/member/2026-11-15-31724659-d321-4a74-9487-2609db5e5737.jpg' class='inline-img'>",
+                        notes: ["You can imagine someone using a net to catch a bird that's stealing a radish, then crawling forward to grab it."],
+                        examples: [
+                            { zh: "我(wǒ)很(hěn)喜(xǐ)歡(huān)吃(chī)紅(hóng)蘿(luó)蔔(bó)。", en: "I really like eating carrots." }
+                        ]
+                    },
+                    {
+                        type: "grammar",
+                        title: "4. 不(bù)+adj.",
+                        notes: ["You can add 不 directly before an adjective to make it negative."],
+                        examples: [
+                            { zh: "我(wǒ)覺(jué)得(de)很(hěn)多(duō)美(měi)國(guó)老(lǎo)人(rén)不(bú)健(jiàn)康(kāng)，因(yīn)為(wèi)在(zài)美(měi)國(guó)看(kàn)醫(yī)生(shēng)很(hěn)貴(guì)。", en: "I think a lot of elderly Americans are unhealthy, because seeing a doctor in America is very expensive." },
+                            { zh: "這(zhè)份(fèn)牛(niú)排(pái)不(bù)便(pián)宜(yi)，謝(xiè)謝(xiè)你(nǐ)請(qǐng)我(wǒ)吃(chī)。", en: "This steak isn't cheap — thank you for treating me." },
+                            { zh: "我(wǒ)昨(zuó)天(tiān)睡(shuì)不(bù)好(hǎo)，因(yīn)為(wèi)我(wǒ)的(de)貓(māo)一(yì)直(zhí)跳(tiào)來(lái)跳(tiào)去(qù)。", en: "I didn't sleep well yesterday, because my cat kept jumping around." }
+                        ]
+                    },
+                    {
+                        type: "grammar",
+                        title: "5. 安(ān)心(xīn)",
+                        notes: ["安心 is written/literary language; in spoken Chinese you'd usually say 放心. Both mean your heart can settle down and feel calm/at ease. (This came from a picture we happened to see in class today: <a href=\"https://www.instagram.com/p/DcDBGKsEfvI/?img_index=1\" target=\"_blank\">Instagram post</a>)"],
+                        examples: [
+                            { zh: "這(zhè)是(shì)貓(māo)可(kě)以(yǐ)放(fàng)心(xīn)吃(chī)的(de)食(shí)物(wù)。", en: "This is food that cats can eat with peace of mind. (spoken form)" },
+                            { zh: "這(zhè)是(shì)貓(māo)可(kě)以(yǐ)安(ān)心(xīn)吃(chī)的(de)食(shí)物(wù)。", en: "This is food that cats can eat with peace of mind. (written/literary form)" },
+                            { zh: "你(nǐ)去(qù)非(fēi)洲(zhōu)旅(lǚ)行(xíng)要(yào)小(xiǎo)心(xīn)! 請(qǐng)放(fàng)心(xīn)，我(wǒ)會(huì)非(fēi)常(cháng)小(xiǎo)心(xīn)的(de)。", en: "Be careful traveling to Africa! Don't worry, I'll be very careful." }
+                        ]
+                    },
+                    {
+                        type: "grammar",
+                        title: "6. 半(bàn)夜(yè)",
+                        examples: [
+                            { zh: "我(wǒ)的(de)貓(māo)從(cóng)白(bái)天(tiān)睡(shuì)到(dào)半(bàn)夜(yè)，他(tā)每(měi)天(tiān)都(dōu)過(guò)得(de)很(hěn)舒(shū)服(fú)。", en: "My cat sleeps from daytime all the way to midnight — every day is a comfortable one for him." }
+                        ]
+                    }
+                ]
+            },
+            {
+                title: "四、翻譯練習",
+                items: [
+                    {
+                        type: "translation-list",
+                        sentences: [
+                            "When I stir-fry vegetables, I only add a little salt.",
+                            "My grandmother lived to be ninety. She was always happy.",
+                            "On weekends, I often go shopping in the city center with my wife.",
+                            "I think the original flavor cake is the best. You don't need to add cream.",
+                            "This bowl of noodles is too salty. Next time, please add less soy sauce."
+                        ]
+                    }
+                ]
+            },
+            {
+                title: "五、閱讀理解",
+                items: [
+                    {
+                        type: "reading",
+                        passage: [
+                            "家(jiā)豪(háo)和(hé)雅(yǎ)婷(tíng)是(shì)大(dà)學(xué)同(tóng)學(xué)，現(xiàn)在(zài)他(tā)們(men)都(dōu)在(zài)台(tái)南(nán)工(gōng)作(zuò)。家(jiā)豪(háo)從(cóng)蒙(méng)古(gǔ)來(lái)的(de)，他(tā)的(de)中(zhōng)文(wén)很(hěn)不(bú)錯(cuò)，但(dàn)是(shì)他(tā)還(hái)是(shì)很(hěn)怕(pà)看(kàn)簡(jiǎn)體(tǐ)字(zì)。雅(yǎ)婷(tíng)說(shuō)：「你(nǐ)放(fàng)心(xīn)，我(wǒ)教(jiāo)你(nǐ)認(rèn)字(zì)。」",
+                            "上(shàng)個(gè)月(yuè)的(de)一(yì)天(tiān)半(bàn)夜(yè)，雅(yǎ)婷(tíng)打(dǎ)電(diàn)話(huà)給(gěi)家(jiā)豪(háo)。她(tā)的(de)聲(shēng)音(yīn)很(hěn)急(jí)：「我(wǒ)的(de)月(yuè)經(jīng)來(lái)了(le)，肚(dǔ)子(zi)很(hěn)痛(tòng)。」家(jiā)豪(háo)馬(mǎ)上(shàng)騎(qí)車(chē)去(qù)她(tā)家(jiā)，還(hái)帶(dài)了(le)熱(rè)水(shuǐ)和(hé)藥(yào)。雅(yǎ)婷(tíng)吃(chī)了(le)藥(yào)，休(xiū)息(xī)一(yí)下(xià)，就(jiù)覺(jué)得(de)舒(shū)服(fú)多(duō)了(le)。家(jiā)豪(háo)說(shuō)：「你(nǐ)不(bú)要(yào)急(jí)，慢(màn)慢(màn)來(lái)，我(wǒ)會(huì)在(zài)你(nǐ)旁(páng)邊(biān)。」",
+                            "周(zhōu)末(mò)的(de)時(shí)候(hòu)，他(tā)們(men)一(yì)起(qǐ)去(qù)市(shì)區(qū)吃(chī)飯(fàn)。那(nà)家(jiā)餐(cān)廳(tīng)離(lí)雅(yǎ)婷(tíng)家(jiā)很(hěn)接(jiē)近(jìn)，走(zǒu)路(lù)只(zhǐ)要(yào)十(shí)分(fēn)鐘(zhōng)。雅(yǎ)婷(tíng)說(shuō)：「我(wǒ)去(qù)過(guò)這(zhè)裡(lǐ)很(hěn)多(duō)次(cì)，他(tā)們(men)的(de)湯(tāng)很(hěn)好(hǎo)喝(hē)。」家(jiā)豪(háo)點(diǎn)了(le)一(yì)碗(wǎn)麵(miàn)，他(tā)喝(hē)了(le)一(yì)口(kǒu)湯(tāng)，說(shuō)：「這(zhè)個(gè)湯(tāng)有(yǒu)點(diǎn)鹹(xián)，下(xià)次(cì)我(wǒ)要(yào)請(qǐng)老(lǎo)闆(bǎn)少(shǎo)放(fàng)一(yì)點(diǎn)鹽(yán)。」雅(yǎ)婷(tíng)很(hěn)高(gāo)興(xìng)，她(tā)覺(jué)得(de)家(jiā)豪(háo)說(shuō)話(huà)的(de)樣(yàng)子(zi)像(xiàng)一(yí)個(gè)小(xiǎo)朋(péng)友(yǒu)。",
+                            "吃(chī)完(wán)飯(fàn)以(yǐ)後(hòu)，他(tā)們(men)走(zǒu)到(dào)餐(cān)廳(tīng)前(qián)面(miàn)的(de)一(yí)個(gè)小(xiǎo)公(gōng)園(yuán)。家(jiā)豪(háo)說(shuō)：「我(wǒ)的(de)爺(yé)爺(yé)在(zài)蒙(méng)古(gǔ)活(huó)到(dào)九(jiǔ)十(shí)歲(suì)，他(tā)每(měi)天(tiān)都(dōu)喝(hē)一(yì)杯(bēi)牛(niú)奶(nǎi)。」雅(yǎ)婷(tíng)說(shuō)：「我(wǒ)也(yě)喜(xǐ)歡(huān)牛(niú)奶(nǎi)!」他(tā)們(men)又(yòu)說(shuō)到(dào)最(zuì)喜(xǐ)歡(huān)的(de)水(shuǐ)果(guǒ)。家(jiā)豪(háo)最(zuì)喜(xǐ)歡(huān)的(de)水(shuǐ)果(guǒ)是(shì)香(xiāng)蕉(jiāo)，雅(yǎ)婷(tíng)最(zuì)喜(xǐ)歡(huān)的(de)菜(cài)是(shì)紅(hóng)蘿(luó)蔔(bó)。",
+                            "天(tiān)氣(qì)很(hěn)好(hǎo)，風(fēng)也(yě)不(bú)大(dà)。雅(yǎ)婷(tíng)說(shuō)：「我(wǒ)去(qù)過(guò)蒙(méng)古(gǔ)的(de)草(cǎo)原(yuán)，那(nà)裡(lǐ)的(de)草(cǎo)很(hěn)高(gāo)，很(hěn)漂(piào)亮(liàng)。」家(jiā)豪(háo)說(shuō)：「真(zhēn)的(de)嗎(ma)？下(xià)次(cì)我(wǒ)帶(dài)你(nǐ)去(qù)！」他(tā)們(men)都(dōu)很(hěn)高(gāo)興(xìng)。這(zhè)個(gè)周(zhōu)末(mò)過(guò)得(de)很(hěn)不(bú)錯(cuò)。"
+                        ],
+                        questions: [
+                            "問(wèn)題(tí)一(yì)、家(jiā)豪(háo)說(shuō)「我(wǒ)會(huì)在(zài)你(nǐ)旁(páng)邊(biān)」，你(nǐ)覺(jué)得(de)他(tā)是(shì)一(yí)個(gè)怎(zěn)麼(me)樣(yàng)的(de)朋(péng)友(yǒu)？",
+                            "問(wèn)題(tí)二(èr)、家(jiā)豪(háo)覺(jué)得(de)湯(tāng)有(yǒu)點(diǎn)鹹(xián)，但(dàn)他(tā)沒(méi)有(yǒu)說(shuō)「不(bù)好(hǎo)吃(chī)」。你(nǐ)覺(jué)得(de)他(tā)為(wèi)什(shén)麼(me)這(zhè)樣(yàng)說(shuō)？",
+                            "問(wèn)題(tí)三(sān)、雅(yǎ)婷(tíng)說(shuō)家(jiā)豪(háo)「像(xiàng)一(yí)個(gè)小(xiǎo)朋(péng)友(yǒu)」。你(nǐ)覺(jué)得(de)她(tā)是(shì)喜(xǐ)歡(huān)這(zhè)樣(yàng)的(de)家(jiā)豪(háo)，還(hái)是(shì)不(bù)喜(xǐ)歡(huān)？",
+                            "問(wèn)題(tí)四(sì)、要(yào)是(shì)雅(yǎ)婷(tíng)和(hé)家(jiā)豪(háo)真(zhēn)的(de)一(yì)起(qǐ)去(qù)蒙(méng)古(gǔ)，你(nǐ)覺(jué)得(de)他(tā)們(men)會(huì)做(zuò)什(shén)麼(me)？"
+                        ]
+                    }
+                ]
+            }
+        ];
+
+        const container = document.getElementById('content');
+        let counter = 0;
+
+        function renderExample(ex, idx) {
+            return `
+            <div class="item" style="border:none; margin-top:10px; padding-bottom:0;">
+                <div class="item-content">
+                    <button class="icon-btn" onclick="playAudio('${ex.zh.replace(/'/g, "\\'")}')" title="朗读">🔊</button>
+                    <button class="icon-btn rec-btn" onclick="toggleRecord(this, 'rec-${idx}')" title="录音">🎤</button>
+                    <button class="icon-btn play-rec-btn" id="play-rec-rec-${idx}" onclick="playRecording('rec-${idx}')" disabled title="播放自己">▶</button>
+                </div>
+                <div class="audio-player-container" id="audio-container-rec-${idx}"></div>
+                <div style="margin-top:5px;">${parsePinyin(ex.zh)}</div>
+                <div class="en-trans">${ex.en}</div>
+            </div>`;
+        }
+
+        lessonData.forEach((sec, sIdx) => {
+            let html = `<div class="section" id="sec-${sIdx}">`;
+            if (sec.title) html += `<h2>${sec.title}</h2>`;
+
+            sec.items.forEach((item, iIdx) => {
+                if (item.type === "html") {
+                    html += `<div style="margin: 15px 0;" id="item-${sIdx}-${iIdx}">${item.content}</div>`;
+                } else if (item.type === "grammar") {
+                    html += `<div class="grammar-box" id="item-${sIdx}-${iIdx}">`;
+                    if (item.title) {
+                        html += `<div style="font-weight:bold; font-size:16px; color:#8C6239; margin-bottom:5px;">${parsePinyin(item.title)}</div>`;
+                    }
+                    if (item.notes) {
+                        item.notes.forEach(note => {
+                            html += `<div class="note">${note}</div>`;
+                        });
+                    }
+                    if (item.htmlContent) {
+                        html += item.htmlContent;
+                    }
+                    if (item.examples) {
+                        item.examples.forEach(ex => {
+                            html += renderExample(ex, counter);
+                            counter++;
+                        });
+                    }
+                    html += `</div>`;
+                } else if (item.type === "translation-review") {
+                    html += `<div class="grammar-box" id="item-${sIdx}-${iIdx}">`;
+                    html += `<div style="font-weight:bold; font-size:16px; color:#8C6239; margin-bottom:10px;">${parsePinyin("1. 翻(fān)譯(yì)練(liàn)習(xí)檢(jiǎn)討(tǎo)")}</div>`;
+                    item.reviews.forEach(r => {
+                        html += `<div class="review-card">`;
+                        html += `<div class="review-en">${r.en}</div>`;
+                        if (r.wrong) {
+                            html += `<div class="review-line review-wrong"><span>❌</span><span>${parsePinyin(r.wrong)}</span></div>`;
+                        }
+                        r.correct.forEach(c => {
+                            html += `<div class="review-line review-correct"><span>✅</span><span>${parsePinyin(c)}</span></div>`;
+                        });
+                        if (r.note) {
+                            html += `<div class="review-note">${r.note}</div>`;
+                        }
+                        html += `</div>`;
+                    });
+                    html += `</div>`;
+                } else if (item.type === "translation-list") {
+                    html += `<div class="grammar-box" id="item-${sIdx}-${iIdx}">`;
+                    html += `<ol class="translation-list">`;
+                    item.sentences.forEach(s => {
+                        html += `<li>${s}</li>`;
+                    });
+                    html += `</ol></div>`;
+                } else if (item.type === "reading") {
+                    html += `<div class="grammar-box reading-passage" id="item-${sIdx}-${iIdx}">`;
+                    item.passage.forEach(p => {
+                        html += `<p>${parsePinyin(p)}</p>`;
+                    });
+                    html += `</div>`;
+                    html += `<ul class="reading-questions">`;
+                    item.questions.forEach(q => {
+                        html += `<li>${parsePinyin(q)}</li>`;
+                    });
+                    html += `</ul>`;
+                }
+            });
+            html += `</div>`;
+            container.innerHTML += html;
+        });
+    </script>
+</body>
+</html>
