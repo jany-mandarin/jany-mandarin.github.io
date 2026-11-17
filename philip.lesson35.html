@@ -25,12 +25,12 @@
         .main-content { margin-left: var(--sidebar-width); width: calc(100% - var(--sidebar-width)); padding: 20px 40px; box-sizing: border-box; max-width: 950px; transition: margin-left 0.3s ease, width 0.3s ease; }
         .main-content.expanded { margin-left: 0; width: 100%; }
 
-        /* 頂部導覽列 */
-        .top-nav { display: flex; justify-content: flex-end; gap: 20px; padding: 15px 20px; font-size: 15px; font-weight: bold; }
+        /* 右上角固定導覽列（已改為統一的純文字乾淨格式） */
+        .top-nav { position: fixed; top: 15px; right: 25px; z-index: 1050; display: flex; gap: 15px; font-size: 15px; font-weight: bold; }
         .top-nav a { color: var(--primary); text-decoration: none; }
         .top-nav a:hover { text-decoration: underline; color: #B5835A; }
 
-        .header { text-align: center; border-bottom: 2px solid var(--primary); padding-bottom: 10px; margin-bottom: 20px; }
+        .header { text-align: center; border-bottom: 2px solid var(--primary); padding-bottom: 10px; margin-bottom: 20px; margin-top: 20px; }
         
         .controls { position: sticky; top: 0; background: var(--bg); padding: 15px; text-align: center; border-bottom: 1px solid #ccc; z-index: 100; margin-bottom: 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); display: flex; justify-content: center; gap: 10px; }
         button.control-btn { background: var(--primary); color: white; border: none; padding: 10px 15px; border-radius: 6px; cursor: pointer; font-size: 14px; font-weight: bold; }
@@ -106,12 +106,13 @@
         </ul>
     </div>
 
-    <div class="main-content" id="mainContent">
-        <div class="top-nav">
-            <a href="https://jany-mandarin.github.io/philip.html">Index</a>
-            <a href="https://jany-mandarin.github.io/philip.lesson34.html">第34课</a>
-        </div>
+    <!-- 右上角固定導覽列 -->
+    <div class="top-nav">
+        <a href="https://jany-mandarin.github.io/philip.html">Index</a>
+        <a href="https://jany-mandarin.github.io/philip.lesson34.html">第34堂</a>
+    </div>
 
+    <div class="main-content" id="mainContent">
         <div class="header">
             <h1>菲利普的第35堂中文课</h1>
             <p>日期：2026/10/8</p>
@@ -266,7 +267,7 @@
                         title: "3. 溺 (nì) vs 淹 (yān)",
                         note: "解释：溺是指人或动物的鼻子和嘴巴被水蓋過，不能呼吸，主詞是人。<br>解释：淹是指水蓋過一個東西，主詞是水。<br>Explanation: Drowning (living beings) vs Flooding/Submerging (objects/places by water).",
                         examples: [
-                            { zh: "他(tā)不(bú)会(huì)游(yóu)泳(yǒng)，每(měi)次(cì)去(qù)海(hǎi)边(biān)都(dōu)很(hěn)怕(pà)会(huì)溺(nì)水(shuǐ)，不(bù)能(néng)呼(hū)吸(xī)。", en: "He doesn't know how to swim, and every time he goes to the beach, he is afraid of drowning and not being able to breathe." },
+                            { zh: "他(tā)不(bú)会(huì)游(yóu)泳(yǒng)，每(měi)次(cì)去(qù)海(hǎi)边(biān)都(dōu)很(hěn)怕(pà)会(huì)溺(nì)水(shuǐ)，不(bú)能(néng)呼(hū)吸(xī)。", en: "He doesn't know how to swim, and every time he goes to the beach, he is afraid of drowning and not being able to breathe." },
                             { zh: "下(xià)了(le)好(hǎo)几(jǐ)天(tiān)的(de)大(dà)雨(yǔ)，很(hěn)多(duō)地(dì)方(fāng)都(dōu)淹(yān)水(shuǐ)了(le)。", en: "It rained heavily for days, and many places were flooded." }
                         ]
                     },
