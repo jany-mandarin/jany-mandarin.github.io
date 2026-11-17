@@ -25,12 +25,12 @@
         .main-content { margin-left: var(--sidebar-width); width: calc(100% - var(--sidebar-width)); padding: 20px 40px; box-sizing: border-box; max-width: 1050px; transition: margin-left 0.3s ease, width 0.3s ease; }
         .main-content.expanded { margin-left: 0; width: 100%; }
 
-        /* 顶部导览列 */
-        .top-nav { display: flex; justify-content: flex-end; gap: 20px; padding: 15px 20px; font-size: 15px; font-weight: bold; }
+        /* 右上角固定导览列 */
+        .top-nav { position: fixed; top: 15px; right: 25px; z-index: 1050; display: flex; gap: 15px; background: rgba(253, 251, 247, 0.95); padding: 8px 15px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); font-size: 15px; font-weight: bold; }
         .top-nav a { color: var(--primary); text-decoration: none; }
         .top-nav a:hover { text-decoration: underline; color: #B5835A; }
 
-        .header { text-align: center; border-bottom: 2px solid var(--primary); padding-bottom: 10px; margin-bottom: 20px; }
+        .header { text-align: center; border-bottom: 2px solid var(--primary); padding-bottom: 10px; margin-bottom: 20px; margin-top: 20px; }
         
         .controls { position: sticky; top: 0; background: var(--bg); padding: 15px; text-align: center; border-bottom: 1px solid #ccc; z-index: 100; margin-bottom: 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); display: flex; justify-content: center; gap: 10px; }
         button.control-btn { background: var(--primary); color: white; border: none; padding: 10px 15px; border-radius: 6px; cursor: pointer; font-size: 14px; font-weight: bold; }
@@ -118,12 +118,13 @@
         </ul>
     </div>
 
-    <div class="main-content" id="mainContent">
-        <div class="top-nav">
-            <a href="https://jany-mandarin.github.io/philip.html">Index</a>
-            <a href="philip_lesson_39.html">第39课</a>
-        </div>
+    <!-- 右上角固定导览列 -->
+    <div class="top-nav">
+        <a href="https://jany-mandarin.github.io/philip.html">Index</a>
+        <a href="philip_lesson_39.html">第39课</a>
+    </div>
 
+    <div class="main-content" id="mainContent">
         <div class="header">
             <h1>菲利普的第40堂中文课</h1>
             <p>日期：2026/11/16</p>
@@ -218,7 +219,7 @@
                             "解释：在(zài)中(zhōng)国(guó)形(xíng)容(róng)很(hěn)高(gāo)瘦(shòu)的(de)人(rén)会(huì)说(shuō)他(tā)像(xiàng)电(diàn)线(xiàn)杆(gān)"
                         ],
                         examples: [
-                            { zh: "他(tā)很(hěn)瘦(shòu)又(yòu)很(hěn)高(gāo)，就(jiù)像(xiàng)电(diàn)线(xiàn)杆(gān)一(yí)样(yàng)，在(zài)人(rén)群(qún)中(zhōng)很(hěn)容(róng)易(yì)就(jiù)看(kàn)到(dào)了(le)。", en: "He is very thin and tall, just like a utility pole; it's very easy to spot him in a crowd." }
+                            { zh: "他(tā)很(hěn)瘦(shòu)又(yòu)很(hěn)高(gāo)，就(jiù)像(xiàng)电(diàn)线(xiàn)杆(gān)一(yí)样(yàng)，在(zài)人(rén)群(qún)中(zhōng)很(hěn)容(xi)易(yì)就(jiù)看(kàn)到(dào)了(le)。", en: "He is very thin and tall, just like a utility pole; it's very easy to spot him in a crowd." }
                         ]
                     },
                     {
@@ -236,7 +237,7 @@
                         type: "grammar",
                         title: "2. 形容选举",
                         examples: [
-                            { zh: "这(zhè)次(cì)选(xuǎn)举(jǔ)结(jié)果(guǒ)还(hái)没(méi)出(chū)来(lái)，但(dàn)感(gǎn)觉(jué)不(bù)太(tài)乐(lè)观(guān)，好(hǎo)像(xiàng)投(tóu)票(piào)率(lǜ)很(hěn)低(dī)，可(c，n)能(néng)要(yào)重(chóng)新(xīn)投(tóu)票(piào)。".replace("c，n", "néng"), en: "The election results are not out yet, but it doesn't feel very optimistic. It seems voter turnout is very low, and re-voting might be necessary." },
+                            { zh: "这(zhè)次(cì)选(xuǎn)举(jǔ)结(jié)果(guǒ)还(hái)没(méi)出(chū)来(lái)，但(dàn)感(gǎn)觉(jué)不(bù)太(tài)乐(lè)观(guān)，好(hǎo)像(xiàng)投(tóu)票(piào)率(lǜ)很(hěn)低(dī)，可(néng)能(néng)要(yào)重(chóng)新(xīn)投(tóu)票(piào)。", en: "The election results are not out yet, but it doesn't feel very optimistic. It seems voter turnout is very low, and re-voting might be necessary." },
                             { zh: "这(zhè)次(cì)机(jī)会(huì)党(dǎng)崛(jué)起(qǐ)，他(tā)们(men)的(de)席(xí)次(cì)可(kě)能(néng)会(huì)到(dào)七(qī)席(xí)，他(tā)们(men)高(gāo)兴(xìng)地(de)飞(fēi)上(shàng)天(tiān)。", en: "This time the Opportunity Party is rising, and their seats might reach seven; they are overjoyed (flying up to the sky)." }
                         ]
                     }
@@ -264,7 +265,7 @@
                         ],
                         examples: [
                             { zh: "台(tái)风(fēng)即(jí)将(jiāng)来(lái)袭(xí)，政(zhèng)府(fǔ)呼(hū)吁(yù)民(mín)众(zhòng)应(yīng)做(zuò)好(hǎo)防(fáng)台(tái)措(cuò)施(shī)。", en: "A typhoon is approaching, and the government is urging the public to take typhoon preparedness measures." },
-                            { zh: "这(zhè)个(gè)社(shè)区(qū)的(de)居(jū)民(mín)非(fēi)常(cháng)友(yǒu)善(shàn)，常(cháng)常(cháng)互(hù)相(xiāng)分(fēn)享(xiāng)蔬(shū)果(guǒ)。", en: "The residents of this community are very friendly and often share fruits and vegetables with each other." }
+                            { zh: "这(zhè)个(gè)社(shè)区(qū)的(de)居(jū)民(mín)非(fēi)常(cháng)友(yǒu)善(shàn)，常(cháng)常(cháng)互(hù)相(xiāng)分(fēn)享(xiǎng)蔬(shū)果(guǒ)。", en: "The residents of this community are very friendly and often share fruits and vegetables with each other." }
                         ]
                     },
                     {
@@ -288,7 +289,7 @@
                         examples: [
                             { zh: "他(tā)安(ān)静(jìng)地(de)躲(duǒ)在(zài)角(jiǎo)落(luò)，不(bù)知(zhī)道(dào)在(zài)做(zuò)什(shén)么(me)。", en: "He quietly hid in the corner, not knowing what he was doing." },
                             { zh: "他(tā)暗(àn)自(zì)决(jué)定(dìng)以(yǐ)后(hòu)绝(jué)对(duì)不(bù)要(yào)再(zài)吃(chī)甜(tián)食(shí)了(le)！", en: "He secretly decided never to eat sweets again!" },
-                            { zh: "他(tā)暗(àn)自(zì)发(fā)誓(shì)以(yǐ)后(hòu)要(yǒu)保(bǎo)护(hù)家(jiā)人(rén)不(bù)要(yào)再(zài)被(bèi)坏(huài)人(rén)欺(qī)负(fù)。", en: "He secretly vowed to protect his family in the future so they wouldn't be bullied by bad guys again." }
+                            { zh: "他(tā)暗(àn)自(zì)发(fā)誓(shì)以(yǐ)后(hòu)要(yǒu)保(bǎo)护(hòu)家(jiā)人(rén)不(bù)要(yǒu)再(zài)被(bèi)坏(huài)人(rén)欺(qī)负(fù)。", en: "He secretly vowed to protect his family in the future so they wouldn't be bullied by bad guys again." }
                         ]
                     },
                     {
@@ -306,7 +307,7 @@
                         ],
                         examples: [
                             { zh: "他(tā)们(men)每(měi)天(tiān)都(dōu)在(zài)水(shuǐ)深(shēn)火(huǒ)热(rè)的(de)环(huán)境(jìng)工(gōng)作(zuò)，身(shēn)体(tǐ)终(zhōng)于(yú)熬(áo)不(bù)住(zhù)，纷(fēn)纷(fēn)离(lí)职(zhí)了(le)！", en: "They work in dire, fiery environments every day; their bodies finally couldn't take it anymore, and they resigned one after another!" },
-                            { zh: "这(zhè)种(zhǒng)水(shuǐ)深(shēn)火(huǒ)热(rè)的(de)日(rì)子(zi)到(dào)底(dǐ)还(hái)要(yào)过(guò)多(duò)久(jiǔ)？ 我(wǒ)快(kuài)受(shòu)不(bù)了(liǎo)了(le)。", en: "How much longer do we have to live this miserable, scorching life? I can't take it much longer. (Note: liǎo le)" }
+                            { zh: "这(zhè)种(zhǒng)水(shuǐ)深(shēn)火(huǒ)热(rè)的(de)日(rì)子(zi)到(dǐ)底(dǐ)还(hái)要(yào)过(guò)多(duō)久(jiǔ)？ 我(wǒ)快(kuài)受(shòu)不(bù)了(liǎo)了(le)。", en: "How much longer do we have to live this miserable, scorching life? I can't take it much longer. (Note: liǎo le)" }
                         ]
                     }
                 ]
@@ -337,7 +338,7 @@
                                 en: "To trace back to, to retroactively track"
                             },
                             {
-                                hz: "番(pān)禺(yú)",
+                                hz: "番(fān)禺(yú)",
                                 plain: "番禺",
                                 en: "Panyu (a district in Guangzhou, China)"
                             }
@@ -435,7 +436,7 @@
         }
 
         function togglePinyin() {
-            body.classList.toggle('hide-pinyin');
+            document.body.classList.toggle('hide-pinyin');
         }
 
         function toggleEnglish() {
