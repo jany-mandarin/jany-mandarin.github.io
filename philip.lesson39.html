@@ -25,12 +25,12 @@
         .main-content { margin-left: var(--sidebar-width); width: calc(100% - var(--sidebar-width)); padding: 20px 40px; box-sizing: border-box; max-width: 1050px; transition: margin-left 0.3s ease, width 0.3s ease; }
         .main-content.expanded { margin-left: 0; width: 100%; }
 
-        /* 顶部导览列 */
-        .top-nav { display: flex; justify-content: flex-end; gap: 20px; padding: 15px 20px; font-size: 15px; font-weight: bold; }
+        /* 右上角固定导览列（已改为无背景色的纯文字干净格式） */
+        .top-nav { position: fixed; top: 15px; right: 25px; z-index: 1050; display: flex; gap: 15px; font-size: 15px; font-weight: bold; }
         .top-nav a { color: var(--primary); text-decoration: none; }
         .top-nav a:hover { text-decoration: underline; color: #B5835A; }
 
-        .header { text-align: center; border-bottom: 2px solid var(--primary); padding-bottom: 10px; margin-bottom: 20px; }
+        .header { text-align: center; border-bottom: 2px solid var(--primary); padding-bottom: 10px; margin-bottom: 20px; margin-top: 20px; }
         
         .controls { position: sticky; top: 0; background: var(--bg); padding: 15px; text-align: center; border-bottom: 1px solid #ccc; z-index: 100; margin-bottom: 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); display: flex; justify-content: center; gap: 10px; }
         button.control-btn { background: var(--primary); color: white; border: none; padding: 10px 15px; border-radius: 6px; cursor: pointer; font-size: 14px; font-weight: bold; }
@@ -110,12 +110,13 @@
         </ul>
     </div>
 
-    <div class="main-content" id="mainContent">
-        <div class="top-nav">
-            <a href="https://jany-mandarin.github.io/philip.html">Index</a>
-            <a href="philip_lesson_38.html">第38课</a>
-        </div>
+    <!-- 右上角固定导览列 -->
+    <div class="top-nav">
+        <a href="https://jany-mandarin.github.io/philip.html">Index</a>
+        <a href="https://jany-mandarin.github.io/philip.lesson38.html">第38堂</a>
+    </div>
 
+    <div class="main-content" id="mainContent">
         <div class="header">
             <h1>菲利普的第39堂中文课</h1>
             <p>日期：2026/11/6</p>
@@ -273,7 +274,7 @@
                         title: "5. 食(shí)物(wù)中(zhòng)毒(dú)",
                         note: "解释：吃到不干净的食物而生病。<br>Explanation: Food poisoning.",
                         examples: [
-                            { zh: "大(dà)概(gài)五(wǔ)年(nián)前(qián)，是(shì)我(wǒ)觉(jué)得(de)我(wǒ)离(lí)死(sǐ)亡(wáng)最(zuì)近(jìn)的(de)一(yí)次(cì)，因(yīn)为(wèi)我(wǒ)在(zài)超(chāo)市(shì)买(mǎi)了(le)不(bù)新(xīn)鲜(xiān)的(de)肉(ròu)，中(zhòng)了(le)弯(wān)曲(qū)杆(gān)菌(jūn)，一(yī)直(zhí)发(fā)烧(shāo)，还(hái)有(yǒu)拉(lā)血(xuě)尿(niào)，超(chāo)级(jí)不(bù)舒(shū)服(fú)的(de)，幸(xìng)好(hǎo)最(zuì)后(hòu)好(hòu)了(le)。", en: "About five years ago was the time I felt closest to death, because I bought unfresh meat at the supermarket, got infected with Campylobacter, had a persistent fever, and passed bloody urine. It was super uncomfortable, but fortunately I got better in the end." }
+                            { zh: "大(dà)概(gài)五(wǔ)年(nián)前(qián)，是(shì)我(wǒ)觉(jué)得(de)我(wǒ)离(lí)死(sǐ)亡(wáng)最(zuì)近(jìn)的(de)一(yí)次(cì)，因(yīn)为(wèi)我(wǒ)在(zài)超(chāo)市(shì)买(mái)了(le)不(bù)新(xīn)鲜(xiān)的(de)肉(ròu)，中(zhòng)了(le)弯(wān)曲(qū)杆(gān)菌(jūn)，一(yī)直(zhí)发(fā)烧(shāo)，还(hái)有(yǒu)拉(lā)血(xuè)尿(niào)，超(chāo)级(jí)不(bù)舒(shū)服(fú)的(de)，幸(xìng)好(hǎo)最(zuì)后(hòu)好(hǎo)了(le)。", en: "About five years ago was the time I felt closest to death, because I bought unfresh meat at the supermarket, got infected with Campylobacter, had a persistent fever, and passed bloody urine. It was super uncomfortable, but fortunately I got better in the end." }
                         ]
                     },
                     {
