@@ -25,12 +25,12 @@
         .main-content { margin-left: var(--sidebar-width); width: calc(100% - var(--sidebar-width)); padding: 20px 40px; box-sizing: border-box; max-width: 950px; transition: margin-left 0.3s ease, width 0.3s ease; }
         .main-content.expanded { margin-left: 0; width: 100%; }
 
-        /* 頂部導覽列 */
-        .top-nav { display: flex; justify-content: flex-end; gap: 20px; padding: 15px 20px; font-size: 15px; font-weight: bold; }
+        /* 右上角固定導覽列（已改為統一的純文字乾淨格式） */
+        .top-nav { position: fixed; top: 15px; right: 25px; z-index: 1050; display: flex; gap: 15px; font-size: 15px; font-weight: bold; }
         .top-nav a { color: var(--primary); text-decoration: none; }
         .top-nav a:hover { text-decoration: underline; color: #B5835A; }
 
-        .header { text-align: center; border-bottom: 2px solid var(--primary); padding-bottom: 10px; margin-bottom: 20px; }
+        .header { text-align: center; border-bottom: 2px solid var(--primary); padding-bottom: 10px; margin-bottom: 20px; margin-top: 20px; }
         
         .controls { position: sticky; top: 0; background: var(--bg); padding: 15px; text-align: center; border-bottom: 1px solid #ccc; z-index: 100; margin-bottom: 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); display: flex; justify-content: center; gap: 10px; }
         button.control-btn { background: var(--primary); color: white; border: none; padding: 10px 15px; border-radius: 6px; cursor: pointer; font-size: 14px; font-weight: bold; }
@@ -122,12 +122,13 @@
         </ul>
     </div>
 
-    <div class="main-content" id="mainContent">
-        <div class="top-nav">
-            <a href="https://jany-mandarin.github.io/philip.html">Index</a>
-            <a href="https://jany-mandarin.github.io/philip.lesson35.html">第35课</a>
-        </div>
+    <!-- 右上角固定導覽列 -->
+    <div class="top-nav">
+        <a href="https://jany-mandarin.github.io/philip.html">Index</a>
+        <a href="https://jany-mandarin.github.io/philip.lesson35.html">第35堂</a>
+    </div>
 
+    <div class="main-content" id="mainContent">
         <div class="header">
             <h1>菲利普的第36堂中文课</h1>
             <p>日期：2026/10/15</p>
@@ -218,10 +219,10 @@
                     {
                         type: "grammar",
                         title: "1. 圣(shèng)婴(yīng)现(xiàn)象(xiàng) / 反(fǎn)圣(shèng)婴(yīng)现(xiàn)象(xiàng)",
-                        note: "解释：圣(shèng)婴(yīng)现(xiàn)象(xiàng)（El Niño）指(zhǐ)太(tài)平(píng)洋(yáng)东(dōng)部(bù)和(hé)中(zhōng)部(bù)海(hǎi)水(shuǐ)异(yì)常(cháng)变(biàn)暖(nuǎn)的(de)现(xiàn)象(xiàng)；反(fǎn)圣(shèng)婴(yīng)现(xiàn)象(xiàng)（La Niña）则(zé)指(zhǐ)海(hǎi)水(shuǐ)异(yì)常(cháng)变(biàn)冷(lěng)的(de)现(xiàng)象(xiàng)，两(liǎng)者(zhě)都(dōu)会(huì)对(duì)全(quán)球(qiú)气(qì)候(hòu)造(zào)成(chéng)巨(jù)大(dà)影(yǐng)响(xiǎng)。<br>Explanation: El Niño and La Niña climate phenomena.",
+                        note: "解释：圣(shèng)婴(yīng)现(xiàn)象(xiàng)（El Niño）指(zhǐ)太(tài)平(píng)洋(yáng)东(dōng)部(bù)和(hé)中(zhōng)部(bù)海(hǎi)水(shuǐ)异(yì)常(cháng)变(biàn)暖(nuǎn)的(de)现(xiàn)象(xiàng)；反(fǎn)圣(shèng)婴(yīng)现(xiàn)象(xiàng)（La Niña）则(zé)指(zhǐ)海(hǎi)水(shuǐ)异(yì)常(cháng)变(biàn)冷(lěng)的(de)现(xiàn)象(xiàng)，两(liǎng)者(zhě)都(dōu)会(huì)对(duì)全(quán)球(qiú)气(qì)候(hòu)造(zào)成(chéng)巨(jù)大(dà)影(yǐng)响(xiǎng)。<br>Explanation: El Niño and La Niña climate phenomena.",
                         examples: [
                             { zh: "受(shòu)到(dào)圣(shèng)婴(yīng)现(xiàn)象(xiàng)的(de)影(yǐng)响(xiǎng)，今(jīn)年(nián)夏(xià)天(tiān)特(tè)别(bié)炎(yán)热(rè)。", en: "Affected by El Niño, this summer is particularly hot." },
-                            { zh: "反(fǎn)圣(shèng)婴(yīng)现(xiàng)象(xiàng)往(wǎng)往(wǎng)会(huì)带(dài)来(lái)更(gèng)多(duō)的(de)降(jiàng)雨(yǔ)和(hé)台(tái)风(fēng)。", en: "La Niña tends to bring more rainfall and typhoons." }
+                            { zh: "反(fǎn)圣(shèng)婴(yīng)现(xiàn)象(xiàng)往(wǎng)往(wǎng)会(huì)带(dài)来(lái)更(gèng)多(duō)的(de)降(jiàng)雨(yǔ)和(hé)台(tái)风(fēng)。", en: "La Niña tends to bring more rainfall and typhoons." }
                         ]
                     },
                     {
@@ -282,7 +283,7 @@
                     {
                         type: "grammar",
                         title: "4. 讲(jiǎng)述(shù)... vs 说(shuō)出(chū)...",
-                        note: "解释：讲(jiǎng)述(shù)多(duō)用(yòng)在(zài)讲(jiǎng)述(shù)一(yí)个(gè)完(wán)整(zhěng)的(de)故(gù)事(shì)或(huò)客(kè)观(guān)事(shì)实(shí)；真(zhēn)相(xiàng)原(yuán)本(běn)是(shì)藏(cáng)起(qǐ)来(lái)的(de)，所(suǒ)以(yǐ)要(yǒu)用(yòng)「说(shuō)出(chū)」真(zhēn)相(xiàng)。<br>Explanation: Narrate (stories/facts) vs Reveal/Speak out (hidden truth).",
+                        note: "解释：讲(jiǎng)述(shù)多(duō)用(yòng)在(zài)讲(jiǎng)述(shù)一(yí)个(gè)完(wán)整(zhěng)的(de)故(gù)事(shì)或(huò)客(kè)观(guān)事(shì)实(shí)；真(zhēn)相(xiàng)原(yuán)本(běn)是(shì)藏(cáng)起(qǐ)来(lái)的(de)，所(suǒ)以(yǐ)要(yào)用(yòng)「说(shuō)出(chū)」真(zhēn)相(xiàng)。<br>Explanation: Narrate (stories/facts) vs Reveal/Speak out (hidden truth).",
                         examples: [
                             { zh: "这(zhè)本(běn)书(shū)讲(jiǎng)述(shù)了(le)一(yí)个(gè)关(guān)于(yú)勇(yǒng)气(qì)的(de)历(lì)史(shǐ)事(shì)实(shí)。", en: "This book narrates a historical fact about courage." },
                             { zh: "他(tā)终(zhōng)于(yú)鼓(gǔ)起(qì)勇(yǒng)气(qì)说(shuō)出(chū)了(le)当(dāng)年(nián)的(de)真(zhēn)相(xiàng)。", en: "He finally mustered the courage to speak out the truth of that year." }
