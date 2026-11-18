@@ -1,147 +1,191 @@
 <!DOCTYPE html>
-<html lang="zh-Hant">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Oops! Mandarin 虛擬村莊 - 角色創造</title>
+    <title>Oops! Mandarin Village - Character Creator</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* 模擬 3D 立體陰影與旋轉浮動感 */
+        .avatar-3d-shadow {
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+    </style>
 </head>
-<body class="bg-gradient-to-br from-amber-50 to-teal-100 min-h-screen flex items-center justify-center font-sans">
+<body class="bg-gradient-to-br from-slate-900 via-teal-950 to-emerald-900 min-h-screen flex items-center justify-center font-sans text-gray-100 p-4">
 
-    <!-- 主容器 -->
-    <div class="bg-white/90 backdrop-blur-md p-8 rounded-3xl shadow-xl max-w-lg w-full mx-4 border border-white/50">
+    <!-- 主容器：左右雙欄大卡片 -->
+    <div class="bg-slate-900/80 backdrop-blur-xl border border-teal-500/30 rounded-3xl shadow-2xl max-w-4xl w-full grid grid-cols-1 md:grid-cols-2 overflow-hidden">
         
-        <!-- 標題區 -->
-        <div class="text-center mb-6">
-            <h1 class="text-2xl font-bold text-teal-800">🌱 Oops! Mandarin 虛擬村莊</h1>
-            <p class="text-sm text-gray-500 mt-1">打造你的專屬角色，加入全球中文學習者的世界！</p>
-        </div>
-
-        <!-- 步驟 1：基本資料 -->
-        <div id="step-1" class="space-y-4">
+        <!-- =================  বাম列 (LEFT COLUMN): 設定面板 ================= -->
+        <div class="p-8 flex flex-col justify-between border-b md:border-b-0 md:border-r border-teal-500/20">
             <div>
-                <label class="block text-xs font-semibold text-gray-600 uppercase tracking-wider mb-1">你的名字或綽號</label>
-                <input type="text" id="username" placeholder="例如：Jany" class="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-teal-500 text-sm bg-white/50">
+                <div class="mb-6">
+                    <span class="text-xs font-semibold uppercase tracking-widest text-teal-400 bg-teal-500/10 px-3 py-1 rounded-full border border-teal-500/20">Step 1 of 2</span>
+                    <h1 class="text-2xl font-bold text-white mt-2">Create Your Character</h1>
+                    <p class="text-sm text-gray-400 mt-1">Design your avatar to join the global Mandarin learning village.</p>
+                </div>
+
+                <!-- 表單選項區 -->
+                <div class="space-y-4">
+                    <!-- 名字 -->
+                    <div>
+                        <label class="block text-xs font-medium text-gray-300 uppercase tracking-wider mb-1">Your Name / Nickname</label>
+                        <input type="text" id="username" value="Traveler" oninput="updatePreview()" class="w-full px-4 py-2.5 rounded-xl bg-slate-800 border border-slate-700 focus:outline-none focus:ring-2 focus:ring-teal-500 text-sm text-white">
+                    </div>
+
+                    <!-- 國家 -->
+                    <div>
+                        <label class="block text-xs font-medium text-gray-300 uppercase tracking-wider mb-1">Country / Region</label>
+                        <select id="country" onchange="updatePreview()" class="w-full px-4 py-2.5 rounded-xl bg-slate-800 border border-slate-700 focus:outline-none focus:ring-2 focus:ring-teal-500 text-sm text-white">
+                            <option value="🇺🇸 United States">🇺🇸 United States</option>
+                            <option value="🇫🇷 France">🇫🇷 France</option>
+                            <option value="🇳🇿 New Zealand">🇳🇿 New Zealand</option>
+                            <option value="🇹🇼 Taiwan">🇹🇼 Taiwan</option>
+                            <option value="🌐 Other Region">🌐 Other Region</option>
+                        </select>
+                    </div>
+
+                    <!-- 皮膚顏色 -->
+                    <div>
+                        <label class="block text-xs font-medium text-gray-300 uppercase tracking-wider mb-1">Skin Tone</label>
+                        <div class="flex gap-3">
+                            <button onclick="setSkin('#fed7aa', this)" class="skin-btn w-8 h-8 rounded-full bg-[#fed7aa] border-2 border-teal-500 ring-offset-2 ring-offset-slate-900 focus:ring-2 focus:ring-teal-400 transition"></button>
+                            <button onclick="setSkin('#fcd34d', this)" class="skin-btn w-8 h-8 rounded-full bg-[#fcd34d] border-2 border-transparent hover:scale-110 transition"></button>
+                            <button onclick="setSkin('#d97706', this)" class="skin-btn w-8 h-8 rounded-full bg-[#d97706] border-2 border-transparent hover:scale-110 transition"></button>
+                            <button onclick="setSkin('#854d0e', this)" class="skin-btn w-8 h-8 rounded-full bg-[#854d0e] border-2 border-transparent hover:scale-110 transition"></button>
+                        </div>
+                    </div>
+
+                    <!-- 頭髮與帽子 -->
+                    <div>
+                        <label class="block text-xs font-medium text-gray-300 uppercase tracking-wider mb-1">Hair & Hat Style</label>
+                        <div class="grid grid-cols-3 gap-2">
+                            <button onclick="setHair('Short Bob', 'bg-amber-900', 'rounded-t-2xl')" class="p-2 text-xs rounded-xl bg-slate-800 hover:bg-slate-700 border border-slate-700 text-center transition">Short Hair</button>
+                            <button onclick="setHair('Long Flow', 'bg-amber-950', 'rounded-t-3xl h-14')" class="p-2 text-xs rounded-xl bg-slate-800 hover:bg-slate-700 border border-slate-700 text-center transition">Long Hair</button>
+                            <button onclick="setHair('Aboriginal Hat', 'bg-red-600', 'rounded-lg border-4 border-white')" class="p-2 text-xs rounded-xl bg-slate-800 hover:bg-slate-700 border border-slate-700 text-center transition text-red-400 font-semibold">Festive Hat</button>
+                        </div>
+                    </div>
+
+                    <!-- 衣服造型 -->
+                    <div>
+                        <label class="block text-xs font-medium text-gray-300 uppercase tracking-wider mb-1">Outfit Style</label>
+                        <div class="grid grid-cols-3 gap-2">
+                            <button onclick="setOutfit('bg-teal-600', 'Casual Tee')" class="p-2 text-xs rounded-xl bg-slate-800 hover:bg-slate-700 border border-slate-700 text-center transition">Casual Tee</button>
+                            <button onclick="setOutfit('bg-red-700 border-2 border-white', 'Traditional Wear')" class="p-2 text-xs rounded-xl bg-slate-800 hover:bg-slate-700 border border-slate-700 text-center transition text-red-300">Traditional</button>
+                            <button onclick="setOutfit('bg-indigo-600', 'Hoodie')" class="p-2 text-xs rounded-xl bg-slate-800 hover:bg-slate-700 border border-slate-700 text-center transition">Hoodie</button>
+                        </div>
+                    </div>
+                </div>
             </div>
 
-            <div>
-                <label class="block text-xs font-semibold text-gray-600 uppercase tracking-wider mb-1">來自哪個國家／地區</label>
-                <select id="country" class="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-teal-500 text-sm bg-white/50">
-                    <option value="🇹🇼 台灣">🇹🇼 台灣 (Taiwan)</option>
-                    <option value="🇫🇷 法國">🇫🇷 法國 (France)</option>
-                    <option value="🇳🇿 紐西蘭">🇳🇿 紐西蘭 (New Zealand)</option>
-                    <option value="🇺🇸 美國">🇺🇸 美國 (USA)</option>
-                    <option value="🌐 其他">🌐 其他國家</option>
-                </select>
-            </div>
-
-            <button onclick="goToStep2()" class="w-full mt-4 bg-teal-600 hover:bg-teal-700 text-white font-medium py-3 rounded-xl transition shadow-lg shadow-teal-600/25">
-                下一步：設計你的外觀 🎨
+            <!-- 進入地圖按鈕 -->
+            <button onclick="enterWorld()" class="mt-8 w-full bg-teal-500 hover:bg-teal-400 text-slate-950 font-bold py-3.5 rounded-xl transition shadow-lg shadow-teal-500/20">
+                Enter Village World 🚀
             </button>
         </div>
 
-        <!-- 步驟 2：外觀客製化（捏臉換裝） -->
-        <div id="step-2" class="space-y-4 hidden">
-            <!-- 角色預覽框（模擬 3D 公仔感） -->
-            <div class="bg-teal-50 rounded-2xl p-6 text-center border border-teal-100 flex flex-col items-center justify-center relative">
-                <div class="w-24 h-24 rounded-full bg-amber-100 border-4 border-white shadow-md flex items-center justify-center text-4xl mb-2 transition-all" id="avatar-preview">
-                    🧑
+        <!-- ================= 右列 (RIGHT COLUMN): 3D 立體人偶預覽 ================= -->
+        <div class="p-8 flex flex-col items-center justify-center bg-slate-950/40 relative">
+            
+            <div class="absolute top-4 right-4 text-xs text-gray-500 uppercase tracking-widest">Live 3D Preview</div>
+
+            <!-- 立體公仔展示台 (Isometric Miniature Diorama Stage) -->
+            <div class="w-56 h-72 rounded-3xl bg-gradient-to-b from-teal-900/30 to-slate-900/80 border border-teal-500/20 flex flex-col items-center justify-center relative avatar-3d-shadow p-4">
+                
+                <!-- 地面陰影與基座 -->
+                <div class="absolute bottom-6 w-32 h-6 bg-black/40 rounded-full blur-md"></div>
+
+                <!-- 3D Ｑ版人偶容器 -->
+                <div id="avatar-container" class="relative flex flex-col items-center transform hover:scale-105 transition-transform duration-300">
+                    
+                    <!-- 帽子／頭髮 -->
+                    <div id="avatar-hair" class="w-20 h-10 bg-amber-900 rounded-t-2xl z-20 mb-[-6px] shadow-md transition-all"></div>
+
+                    <!-- 頭部 (圓滾滾立體感) -->
+                    <div id="avatar-head" class="w-16 h-16 rounded-full bg-[#fed7aa] shadow-inner relative z-10 flex items-center justify-center transition-all">
+                        <!-- 眼睛與腮紅 -->
+                        <div class="flex space-x-3 items-center">
+                            <div class="w-2 h-2 bg-slate-900 rounded-full"></div>
+                            <div class="w-2 h-2 bg-slate-900 rounded-full"></div>
+                        </div>
+                        <div class="absolute bottom-2 flex space-x-5 opacity-40">
+                            <div class="w-2 h-1 bg-pink-400 rounded-full"></div>
+                            <div class="w-2 h-1 bg-pink-400 rounded-full"></div>
+                        </div>
+                    </div>
+
+                    <!-- 身體與衣服 -->
+                    <div id="avatar-body" class="w-20 h-20 bg-teal-600 rounded-2xl mt-[-10px] shadow-lg relative z-0 flex items-center justify-center transition-all">
+                        <!-- 裝飾線條或圖騰 -->
+                        <div class="w-8 h-1 bg-white/30 rounded-full"></div>
+                    </div>
+
+                    <!-- 雙腳 -->
+                    <div class="flex space-x-3 mt-[-4px]">
+                        <div class="w-4 h-6 bg-slate-800 rounded-b-lg"></div>
+                        <div class="w-4 h-6 bg-slate-800 rounded-b-lg"></div>
+                    </div>
                 </div>
-                <div class="font-bold text-teal-900" id="preview-name">名字</div>
-                <div class="text-xs text-teal-600" id="preview-country">國家</div>
+
+                <!-- 玩家名稱與國籍標籤 -->
+                <div class="mt-6 text-center z-30">
+                    <div id="display-name" class="font-bold text-white text-base tracking-wide">Traveler</div>
+                    <div id="display-country" class="text-xs text-teal-400 mt-0.5">🇺🇸 United States</div>
+                </div>
             </div>
 
-            <!-- 頭髮選項 -->
-            <div>
-                <label class="block text-xs font-semibold text-gray-600 uppercase tracking-wider mb-1">選擇髮型／帽子</label>
-                <div class="grid grid-cols-4 gap-2 text-center">
-                    <button type="button" onclick="setAccessory('帽', '🧢')" class="p-2 border rounded-xl hover:border-teal-500 focus:bg-teal-50 text-xs">🧢 圓帽</button>
-                    <button type="button" onclick="setAccessory('長', '👧')" class="p-2 border rounded-xl hover:border-teal-500 focus:bg-teal-50 text-xs">👧 長髮</button>
-                    <button type="button" onclick="setAccessory('短', '👦')" class="p-2 border rounded-xl hover:border-teal-500 focus:bg-teal-50 text-xs">👦 短髮</button>
-                    <button type="button" onclick="setAccessory('無', '🧑')" class="p-2 border rounded-xl hover:border-teal-500 focus:bg-teal-50 text-xs">✨ 俐落</button>
-                </div>
-            </div>
-
-            <!-- 服裝風格選項 -->
-            <div>
-                <label class="block text-xs font-semibold text-gray-600 uppercase tracking-wider mb-1">選擇服裝風格</label>
-                <div class="grid grid-cols-3 gap-2 text-center">
-                    <button type="button" onclick="setOutfit('日常服', '👕')" class="p-2 border rounded-xl hover:border-teal-500 focus:bg-teal-50 text-xs">👕 日常休閒</button>
-                    <button type="button" onclick="setOutfit('傳統服', '👘')" class="p-2 border rounded-xl hover:border-teal-500 focus:bg-teal-50 text-xs">👘 特色服飾</button>
-                    <button type="button" onclick="setOutfit('連帽衣', '🧥')" class="p-2 border rounded-xl hover:border-teal-500 focus:bg-teal-50 text-xs">🧥 溫暖針織</button>
-                </div>
-            </div>
-
-            <div class="flex space-x-2 mt-4">
-                <button onclick="goBackToStep1()" class="w-1/3 bg-gray-200 hover:bg-gray-300 text-gray-700 font-medium py-3 rounded-xl transition">
-                    上一步
-                </button>
-                <button onclick="enterWorld()" class="w-2/3 bg-teal-600 hover:bg-teal-700 text-white font-medium py-3 rounded-xl transition shadow-lg shadow-teal-600/25">
-                    完成並進入村莊世界 🚀
-                </button>
-            </div>
         </div>
 
     </div>
 
     <script>
-        let userData = {
-            name: '',
-            country: '',
-            accessory: '🧑',
-            outfit: '👕'
+        // 資料狀態
+        let character = {
+            name: "Traveler",
+            country: "🇺🇸 United States",
+            skin: "#fed7aa",
+            hairClass: "w-20 h-10 bg-amber-900 rounded-t-2xl",
+            outfitClass: "w-20 h-20 bg-teal-600 rounded-2xl"
         };
 
-        function goToStep2() {
-            const nameInput = document.getElementById('username').value.trim();
-            if(!nameInput) {
-                alert('請先輸入你的名字或綽號唷！');
-                return;
+        function updatePreview() {
+            character.name = document.getElementById('username').value || "Traveler";
+            character.country = document.getElementById('country').value;
+
+            document.getElementById('display-name').innerText = character.name;
+            document.getElementById('display-country').innerText = character.country;
+        }
+
+        function setSkin(color, btn) {
+            character.skin = color;
+            document.getElementById('avatar-head').style.backgroundColor = color;
+            
+            // 按鈕選取外框切換
+            document.querySelectorAll('.skin-btn').forEach(b => b.classList.remove('border-teal-500', 'ring-2'));
+            btn.classList.add('border-teal-500', 'ring-2');
+        }
+
+        function setHair(styleName, colorClass, shapeClass) {
+            const hairEl = document.getElementById('avatar-hair');
+            hairEl.className = `w-20 z-20 mb-[-6px] shadow-md transition-all ${colorClass} ${shapeClass}`;
+            if(styleName === 'Long Flow') {
+                hairEl.style.height = '56px';
+            } else if(styleName === 'Aboriginal Hat') {
+                hairEl.style.height = '32px';
+            } else {
+                hairEl.style.height = '40px';
             }
-            userData.name = nameInput;
-            userData.country = document.getElementById('country').value;
-
-            document.getElementById('preview-name').innerText = userData.name;
-            document.getElementById('preview-country').innerText = userData.country;
-
-            document.getElementById('step-1').classList.add('hidden');
-            document.getElementById('step-2').classList.remove('hidden');
         }
 
-        function goBackToStep1() {
-            document.getElementById('step-2').classList.add('hidden');
-            document.getElementById('step-1').classList.remove('hidden');
-        }
-
-        function setAccessory(type, emoji) {
-            userData.accessory = emoji;
-            updateAvatar();
-        }
-
-        function setOutfit(style, emoji) {
-            userData.outfit = emoji;
-            updateAvatar();
-        }
-
-        function updateAvatar() {
-            // 簡單用 Emoji 組合模擬預覽，之後上線可以換成精緻的 2D 向量圖片或 3D 模型
-            document.getElementById('avatar-preview').innerText = userData.accessory;
+        function setOutfit(classNames, styleName) {
+            const bodyEl = document.getElementById('avatar-body');
+            bodyEl.className = `w-20 h-20 rounded-2xl mt-[-10px] shadow-lg relative z-0 flex items-center justify-center transition-all ${classNames}`;
         }
 
         function enterWorld() {
-            alert(`太棒了，${userData.name}！你的角色已建立成功。接下來我們準備把你帶進六邊形世界地圖與大家相見！`);
-            // 這裡未來會將資料存入 localStorage，並跳轉至地圖主畫面
+            alert(`Awesome, ${character.name}! Your character is ready. Next, we will step into the 2D/3D isometric village map!`);
         }
     </script>
 </body>
 </html>
-```[cite: 1]
-
----
-
-### 💡 接下來的規劃：
-如果這個外觀與步驟流程符合妳心中的想像，我們下一步就可以來規劃：
-1. **地圖畫面**：如何用六邊形排版呈現村莊（住宅區、咖啡廳、學校、公園等）。
-2. **資料記憶**：如何用瀏覽器的 `localStorage` 讓使用者下次直接用名字登入，不用重設。
-
-妳覺得這個步驟流程和預覽介面感覺對了嗎？
