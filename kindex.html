@@ -3,13 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Oops! Mandarin Village - 3D Character Creator</title>
+    <title>Oops! Mandarin Village - 3D Character Studio</title>
+    <!-- 引入 Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- 引入 Spline Viewer 專用 script（用於載入 3D 畫布） -->
+    <script type="module" src="https://unpkg.com/@splinetool/viewer@1.9.48/build/spline-viewer.js"></script>
     <style>
-        /* 3D 質感與柔和陰影 */
-        .diorama-shadow {
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.3), inset 0 2px 4px rgba(255, 255, 255, 0.1);
-        }
         .custom-scrollbar::-webkit-scrollbar {
             width: 6px;
         }
@@ -32,9 +31,9 @@
         <div class="md:col-span-7 p-6 md:p-8 flex flex-col justify-between border-b md:border-b-0 md:border-r border-teal-500/20 max-h-[90vh] overflow-y-auto custom-scrollbar">
             <div>
                 <div class="mb-6">
-                    <span class="text-xs font-semibold uppercase tracking-widest text-teal-400 bg-teal-500/10 px-3 py-1 rounded-full border border-teal-500/20">Step 1: Customize Avatar</span>
-                    <h1 class="text-2xl font-bold text-white mt-2">Character Studio</h1>
-                    <p class="text-sm text-gray-400 mt-1">Design your 3D style for the Oops! Mandarin Village.</p>
+                    <span class="text-xs font-semibold uppercase tracking-widest text-teal-400 bg-teal-500/10 px-3 py-1 rounded-full border border-teal-500/20">Step 1: 3D Character Studio</span>
+                    <h1 class="text-2xl font-bold text-white mt-2">Customize Your Avatar</h1>
+                    <p class="text-sm text-gray-400 mt-1">Design your 3D look for the Oops! Mandarin Village.</p>
                 </div>
 
                 <!-- 控制表單群組 -->
@@ -57,51 +56,32 @@
                         </div>
                     </div>
 
-                    <!-- 膚色選擇 -->
+                    <!-- 皮膚顏色 -->
                     <div>
                         <label class="block text-xs font-medium text-gray-300 uppercase tracking-wider mb-1">Skin Tone</label>
                         <div class="flex gap-3">
-                            <button onclick="setSkin('#fed7aa', this)" class="skin-btn w-8 h-8 rounded-full bg-[#fed7aa] border-2 border-teal-400 ring-offset-2 ring-offset-slate-900 transition hover:scale-110"></button>
-                            <button onclick="setSkin('#fcd34d', this)" class="skin-btn w-8 h-8 rounded-full bg-[#fcd34d] border-2 border-transparent transition hover:scale-110"></button>
-                            <button onclick="setSkin('#d97706', this)" class="skin-btn w-8 h-8 rounded-full bg-[#d97706] border-2 border-transparent transition hover:scale-110"></button>
-                            <button onclick="setSkin('#854d0e', this)" class="skin-btn w-8 h-8 rounded-full bg-[#854d0e] border-2 border-transparent transition hover:scale-110"></button>
+                            <button onclick="setSkin('light', this)" class="skin-btn w-8 h-8 rounded-full bg-[#fed7aa] border-2 border-teal-400 ring-offset-2 ring-offset-slate-900 transition hover:scale-110"></button>
+                            <button onclick="setSkin('tan', this)" class="skin-btn w-8 h-8 rounded-full bg-[#fcd34d] border-2 border-transparent transition hover:scale-110"></button>
+                            <button onclick="setSkin('dark', this)" class="skin-btn w-8 h-8 rounded-full bg-[#d97706] border-2 border-transparent transition hover:scale-110"></button>
                         </div>
                     </div>
 
-                    <!-- 髮型與髮色 -->
+                    <!-- 衣服造型 (短袖、帽T、裙子) -->
                     <div>
-                        <label class="block text-xs font-medium text-gray-300 uppercase tracking-wider mb-1">Hair Style & Color</label>
-                        <div class="grid grid-cols-3 gap-2 mb-2">
-                            <button onclick="setHairStyle('short', 'Short Bob')" class="p-2 text-xs rounded-xl bg-slate-800 hover:bg-slate-700 border border-slate-700 text-center transition">Short Bob</button>
-                            <button onclick="setHairStyle('long', 'Long Flow')" class="p-2 text-xs rounded-xl bg-slate-800 hover:bg-slate-700 border border-slate-700 text-center transition">Long Hair</button>
-                            <button onclick="setHairStyle('curly', 'Curly Hair')" class="p-2 text-xs rounded-xl bg-slate-800 hover:bg-slate-700 border border-slate-700 text-center transition">Curly</button>
-                        </div>
-                        <div class="flex gap-2">
-                            <button onclick="setHairColor('#451a03', this)" class="hair-color w-6 h-6 rounded-full bg-[#451a03] border-2 border-teal-400"></button>
-                            <button onclick="setHairColor('#78350f', this)" class="hair-color w-6 h-6 rounded-full bg-[#78350f] border-2 border-transparent"></button>
-                            <button onclick="setHairColor('#b45309', this)" class="hair-color w-6 h-6 rounded-full bg-[#b45309] border-2 border-transparent"></button>
-                            <button onclick="setHairColor('#1e293b', this)" class="hair-color w-6 h-6 rounded-full bg-[#1e293b] border-2 border-transparent"></button>
-                            <button onclick="setHairColor('#facc15', this)" class="hair-color w-6 h-6 rounded-full bg-[#facc15] border-2 border-transparent"></button>
-                        </div>
-                    </div>
-
-                    <!-- 衣服造型 (短袖、帽T、裙子等) -->
-                    <div>
-                        <label class="block text-xs font-medium text-gray-300 uppercase tracking-wider mb-1">Outfit Style (Top & Bottom)</label>
+                        <label class="block text-xs font-medium text-gray-300 uppercase tracking-wider mb-1">Outfit Style</label>
                         <div class="grid grid-cols-3 gap-2">
-                            <button onclick="setOutfit('tee', 'bg-teal-600', 'Short Sleeve Tee', 'bg-slate-700')" class="p-2 text-xs rounded-xl bg-slate-800 hover:bg-slate-700 border border-slate-700 text-center transition">Short Tee</button>
-                            <button onclick="setOutfit('hoodie', 'bg-indigo-600', 'Cozy Hoodie', 'bg-slate-800')" class="p-2 text-xs rounded-xl bg-slate-800 hover:bg-slate-700 border border-slate-700 text-center transition">Hoodie</button>
-                            <button onclick="setOutfit('skirt', 'bg-rose-500', 'Tee & Skirt', 'bg-rose-950')" class="p-2 text-xs rounded-xl bg-slate-800 hover:bg-slate-700 border border-slate-700 text-center transition">Skirt Set</button>
+                            <button onclick="setOutfit('tee')" class="p-2 text-xs rounded-xl bg-slate-800 hover:bg-slate-700 border border-slate-700 text-center transition">Short Tee</button>
+                            <button onclick="setOutfit('hoodie')" class="p-2 text-xs rounded-xl bg-slate-800 hover:bg-slate-700 border border-slate-700 text-center transition">Hoodie</button>
+                            <button onclick="setOutfit('skirt')" class="p-2 text-xs rounded-xl bg-slate-800 hover:bg-slate-700 border border-slate-700 text-center transition">Skirt Set</button>
                         </div>
                     </div>
 
                     <!-- 鞋子選擇 -->
                     <div>
                         <label class="block text-xs font-medium text-gray-300 uppercase tracking-wider mb-1">Shoes</label>
-                        <div class="grid grid-cols-3 gap-2">
-                            <button onclick="setShoes('bg-slate-900', 'Sneakers')" class="p-2 text-xs rounded-xl bg-slate-800 hover:bg-slate-700 border border-slate-700 text-center transition">Sneakers</button>
-                            <button onclick="setShoes('bg-amber-800', 'Leather Boots')" class="p-2 text-xs rounded-xl bg-slate-800 hover:bg-slate-700 border border-slate-700 text-center transition">Boots</button>
-                            <button onclick="setShoes('bg-teal-800', 'Casual Shoes')" class="p-2 text-xs rounded-xl bg-slate-800 hover:bg-slate-700 border border-slate-700 text-center transition">Casual</button>
+                        <div class="grid grid-cols-2 gap-2">
+                            <button onclick="setShoes('sneakers')" class="p-2 text-xs rounded-xl bg-slate-800 hover:bg-slate-700 border border-slate-700 text-center transition">Sneakers</button>
+                            <button onclick="setShoes('boots')" class="p-2 text-xs rounded-xl bg-slate-800 hover:bg-slate-700 border border-slate-700 text-center transition">Casual Boots</button>
                         </div>
                     </div>
 
@@ -123,88 +103,32 @@
             </button>
         </div>
 
-        <!-- ================= RIGHT COLUMN: 3D 立體公仔即時預覽 (5欄) ================= -->
+        <!-- ================= RIGHT COLUMN: 3D Spline 畫布預覽 (5欄) ================= -->
         <div class="md:col-span-5 p-6 md:p-8 flex flex-col items-center justify-center bg-slate-950/60 relative">
-            <div class="absolute top-4 right-4 text-xs text-teal-400 font-mono uppercase tracking-widest bg-teal-950/80 px-3 py-1 rounded-full border border-teal-500/30">3D Miniature Preview</div>
+            <div class="absolute top-4 right-4 text-xs text-teal-400 font-mono uppercase tracking-widest bg-teal-950/80 px-3 py-1 rounded-full border border-teal-500/30">Spline 3D Viewer</div>
 
-            <!-- 立體展示台 (Isometric Miniature Diorama Stage) -->
-            <div class="w-64 h-80 rounded-3xl bg-gradient-to-b from-teal-950/40 via-slate-900/90 to-slate-950 border border-teal-500/30 flex flex-col items-center justify-center relative diorama-shadow p-4">
+            <!-- 3D 互動展示區 -->
+            <div class="w-full h-80 rounded-3xl bg-gradient-to-b from-teal-950/40 via-slate-900/90 to-slate-950 border border-teal-500/30 flex flex-col items-center justify-center relative overflow-hidden shadow-2xl">
                 
-                <!-- 地面陰影 -->
-                <div class="absolute bottom-8 w-36 h-6 bg-black/60 rounded-full blur-md"></div>
+                <!-- 這裡嵌入妳未來在 Spline 做好的 3D 角色網址 -->
+                <!-- 範例先使用公開的 Spline 3D 互動範例展示效果 -->
+                <spline-viewer url="https://prod.spline.design/6Wq1Q7YGyM-iab9i/scene.splinecode" class="w-full h-full"></spline-viewer>
 
-                <!-- 3D Q版立體公仔容器 -->
-                <div class="relative flex flex-col items-center transform hover:scale-105 transition-transform duration-300">
-                    
-                    <!-- 配件：眼鏡 (顯示於頭部上方) -->
-                    <div id="acc-glasses" class="absolute top-8 z-30 hidden text-sm">👓</div>
-                    
-                    <!-- 耳環 -->
-                    <div id="acc-earrings" class="absolute top-12 z-20 hidden flex justify-between w-20 px-1">
-                        <span class="text-[10px] text-amber-300">💎</span>
-                        <span class="text-[10px] text-amber-300">💎</span>
-                    </div>
+            </div>
 
-                    <!-- 頭髮造型 -->
-                    <div id="avatar-hair" class="w-20 h-10 bg-[#451a03] rounded-t-2xl z-20 mb-[-6px] shadow-md transition-all"></div>
-
-                    <!-- 頭部 (圓潤立體感) -->
-                    <div id="avatar-head" class="w-16 h-16 rounded-full bg-[#fed7aa] shadow-inner relative z-10 flex items-center justify-center transition-all">
-                        <!-- 眼睛 -->
-                        <div class="flex space-x-3 items-center">
-                            <div class="w-2 h-2 bg-slate-900 rounded-full"></div>
-                            <div class="w-2 h-2 bg-slate-900 rounded-full"></div>
-                        </div>
-                        <!-- 腮紅 -->
-                        <div class="absolute bottom-2 flex space-x-5 opacity-50">
-                            <div class="w-2 h-1 bg-pink-400 rounded-full"></div>
-                            <div class="w-2 h-1 bg-pink-400 rounded-full"></div>
-                        </div>
-                    </div>
-
-                    <!-- 配件：圍巾 -->
-                    <div id="acc-scarf" class="absolute top-22 z-20 hidden w-22 h-4 bg-rose-500 rounded-full shadow-md"></div>
-
-                    <!-- 身體與衣服 -->
-                    <div id="avatar-body" class="w-20 h-18 bg-teal-600 rounded-2xl mt-[-10px] shadow-lg relative z-0 flex flex-col items-center justify-center transition-all">
-                        <div id="outfit-detail" class="w-8 h-1 bg-white/30 rounded-full"></div>
-                    </div>
-
-                    <!-- 下半身 (褲子或裙子) -->
-                    <div id="avatar-bottom" class="w-20 h-8 bg-slate-700 rounded-b-xl mt-[-4px] z-0 flex justify-around items-center px-3 transition-all">
-                        <div class="w-3 h-4 bg-slate-900 rounded-sm"></div>
-                        <div class="w-3 h-4 bg-slate-900 rounded-sm"></div>
-                    </div>
-
-                    <!-- 鞋子 -->
-                    <div class="flex space-x-4 mt-[-2px]">
-                        <div id="shoe-left" class="w-5 h-3 bg-slate-900 rounded-full"></div>
-                        <div id="shoe-right" class="w-5 h-3 bg-slate-900 rounded-full"></div>
-                    </div>
-                </div>
-
-                <!-- 玩家名稱與國家標籤 -->
-                <div class="mt-6 text-center z-30">
-                    <div id="display-name" class="font-bold text-white text-base tracking-wide">Traveler</div>
-                    <div id="display-country" class="text-xs text-teal-400 mt-0.5">🇺🇸 United States</div>
-                </div>
+            <!-- 玩家名稱與國家即時標籤 -->
+            <div class="mt-4 text-center z-30">
+                <div id="display-name" class="font-bold text-white text-base tracking-wide">Traveler</div>
+                <div id="display-country" class="text-xs text-teal-400 mt-0.5">🇺🇸 United States</div>
             </div>
         </div>
 
     </div>
 
     <script>
-        // 角色資料狀態
         let state = {
             name: "Traveler",
-            country: "🇺🇸 United States",
-            skin: "#fed7aa",
-            hairColor: "#451a03",
-            hairStyle: "short",
-            topColor: "bg-teal-600",
-            bottomColor: "bg-slate-700",
-            shoeColor: "bg-slate-900",
-            accessories: { glasses: false, earrings: false, scarf: false }
+            country: "🇺🇸 United States"
         };
 
         function updateDetails() {
@@ -214,84 +138,35 @@
             document.getElementById('display-country').innerText = state.country;
         }
 
-        function setSkin(color, btn) {
-            state.skin = color;
-            document.getElementById('avatar-head').style.backgroundColor = color;
+        function setSkin(tone, btn) {
             document.querySelectorAll('.skin-btn').forEach(b => b.classList.remove('border-teal-400', 'ring-2'));
             btn.classList.add('border-teal-400', 'ring-2');
+            // 這裡未來可以寫程式碼去呼叫 Spline 3D 物件改變材質顏色
         }
 
-        function setHairColor(color, btn) {
-            state.hairColor = color;
-            document.getElementById('avatar-hair').style.backgroundColor = color;
-            document.querySelectorAll('.hair-color').forEach(b => b.classList.remove('border-teal-400'));
-            btn.classList.add('border-teal-400');
+        function setOutfit(type) {
+            console.log("Selected outfit:", type);
         }
 
-        function setHairStyle(style, name) {
-            state.hairStyle = style;
-            const hairEl = document.getElementById('avatar-hair');
-            if(style === 'short') {
-                hairEl.className = "w-20 h-10 rounded-t-2xl z-20 mb-[-6px] shadow-md transition-all";
-            } else if(style === 'long') {
-                hairEl.className = "w-20 h-16 rounded-t-3xl z-20 mb-[-6px] shadow-md transition-all";
-            } else if(style === 'curly') {
-                hairEl.className = "w-22 h-12 rounded-full z-20 mb-[-8px] shadow-md transition-all";
-            }
-            hairEl.style.backgroundColor = state.hairColor;
-        }
-
-        function setOutfit(type, topClass, topName, bottomClass) {
-            state.topColor = topClass;
-            state.bottomColor = bottomClass;
-            
-            const bodyEl = document.getElementById('avatar-body');
-            bodyEl.className = `w-20 h-18 rounded-2xl mt-[-10px] shadow-lg relative z-0 flex flex-col items-center justify-center transition-all ${topClass}`;
-            
-            const bottomEl = document.getElementById('avatar-bottom');
-            bottomEl.className = `w-20 h-8 rounded-b-xl mt-[-4px] z-0 flex justify-around items-center px-3 transition-all ${bottomClass}`;
-            
-            // 針對裙子做特殊外型微調
-            if(type === 'skirt') {
-                bottomEl.style.borderRadius = "0px 0px 16px 16px";
-                bottomEl.style.width = "24px";
-                bottomEl.style.margin = "-4px auto 0 auto";
-            } else {
-                bottomEl.style.width = "20px";
-                bottomEl.style.borderRadius = "0px 0px 12px 12px";
-            }
-        }
-
-        function setShoes(colorClass, name) {
-            state.shoeColor = colorClass;
-            document.getElementById('shoe-left').className = `w-5 h-3 rounded-full transition-all ${colorClass}`;
-            document.getElementById('shoe-right').className = `w-5 h-3 rounded-full transition-all ${colorClass}`;
+        function setShoes(type) {
+            console.log("Selected shoes:", type);
         }
 
         function toggleAccessory(type) {
-            state.accessories[type] = !state.accessories[type];
-            const el = document.getElementById(`acc-${type}`);
             const btn = document.getElementById(`btn-${type}`);
-            
-            if(state.accessories[type]) {
-                el.classList.remove('hidden');
-                btn.classList.add('border-teal-400', 'bg-teal-950');
-            } else {
-                el.classList.add('hidden');
-                btn.classList.remove('border-teal-400', 'bg-teal-950');
-            }
+            btn.classList.toggle('border-teal-400');
+            btn.classList.toggle('bg-teal-950');
         }
 
         function clearAccessories() {
-            state.accessories = { glasses: false, earrings: false, scarf: false };
             ['glasses', 'earrings', 'scarf'].forEach(type => {
-                document.getElementById(`acc-${type}`).classList.add('hidden');
-                document.getElementById(`btn-${type}`).classList.remove('border-teal-400', 'bg-teal-950');
+                const btn = document.getElementById(`btn-${type}`);
+                btn.classList.remove('border-teal-400', 'bg-teal-950');
             });
         }
 
         function enterWorld() {
-            alert(`Great! ${state.name} from ${state.country} is ready. Next, we can connect this character to the 2.5D village map!`);
+            alert(`Awesome! ${state.name} from ${state.country} is ready to enter the village world on GitHub Pages!`);
         }
     </script>
 </body>
