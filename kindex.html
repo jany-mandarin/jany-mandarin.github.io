@@ -76,4 +76,72 @@
                 <button onclick="goBackToStep1()" class="w-1/3 bg-gray-200 hover:bg-gray-300 text-gray-700 font-medium py-3 rounded-xl transition">
                     上一步
                 </button>
-                <button onclick="enterWorld()" class="w-2/3 bg-teal-600 hover:bg-teal-700 text-white font-medium py-3 rounded-xl
+                <button onclick="enterWorld()" class="w-2/3 bg-teal-600 hover:bg-teal-700 text-white font-medium py-3 rounded-xl transition shadow-lg shadow-teal-600/25">
+                    完成並進入村莊世界 🚀
+                </button>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        let userData = {
+            name: '',
+            country: '',
+            accessory: '🧑',
+            outfit: '👕'
+        };
+
+        function goToStep2() {
+            const nameInput = document.getElementById('username').value.trim();
+            if(!nameInput) {
+                alert('請先輸入你的名字或綽號唷！');
+                return;
+            }
+            userData.name = nameInput;
+            userData.country = document.getElementById('country').value;
+
+            document.getElementById('preview-name').innerText = userData.name;
+            document.getElementById('preview-country').innerText = userData.country;
+
+            document.getElementById('step-1').classList.add('hidden');
+            document.getElementById('step-2').classList.remove('hidden');
+        }
+
+        function goBackToStep1() {
+            document.getElementById('step-2').classList.add('hidden');
+            document.getElementById('step-1').classList.remove('hidden');
+        }
+
+        function setAccessory(type, emoji) {
+            userData.accessory = emoji;
+            updateAvatar();
+        }
+
+        function setOutfit(style, emoji) {
+            userData.outfit = emoji;
+            updateAvatar();
+        }
+
+        function updateAvatar() {
+            // 簡單用 Emoji 組合模擬預覽，之後上線可以換成精緻的 2D 向量圖片或 3D 模型
+            document.getElementById('avatar-preview').innerText = userData.accessory;
+        }
+
+        function enterWorld() {
+            alert(`太棒了，${userData.name}！你的角色已建立成功。接下來我們準備把你帶進六邊形世界地圖與大家相見！`);
+            // 這裡未來會將資料存入 localStorage，並跳轉至地圖主畫面
+        }
+    </script>
+</body>
+</html>
+```[cite: 1]
+
+---
+
+### 💡 接下來的規劃：
+如果這個外觀與步驟流程符合妳心中的想像，我們下一步就可以來規劃：
+1. **地圖畫面**：如何用六邊形排版呈現村莊（住宅區、咖啡廳、學校、公園等）。
+2. **資料記憶**：如何用瀏覽器的 `localStorage` 讓使用者下次直接用名字登入，不用重設。
+
+妳覺得這個步驟流程和預覽介面感覺對了嗎？
