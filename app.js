@@ -8,6 +8,8 @@
   const englishOut = document.getElementById("englishOut");
   const comboOut = document.getElementById("comboOut");
   const breakdownBody = document.getElementById("breakdownBody");
+  const sentencePinyinOut = document.getElementById("sentencePinyinOut");
+  const englishTranslation = document.getElementById("englishTranslation");
 
   let dict = null;
   let tokens = [];
@@ -131,6 +133,7 @@
     zhuyinOut.innerHTML = zhuyinParts.join("");
     englishOut.innerHTML = englishParts.join("");
     comboOut.innerHTML = comboParts.join("");
+    sentencePinyinOut.textContent = E.toSentencePinyin(tokens, sandhi);
   }
 
   function escapeHtml(s) {
@@ -183,6 +186,20 @@
         btn.classList.add("copied");
         setTimeout(() => { btn.textContent = "複製"; btn.classList.remove("copied"); }, 1500);
       });
+    });
+  });
+
+  document.getElementById("copyDiaryBtn").addEventListener("click", () => {
+    const chinese = input.value.trim();
+    const pinyinLine = sentencePinyinOut.textContent;
+    const englishLine = englishTranslation.value.trim();
+    const lines = [chinese, pinyinLine];
+    if (englishLine) lines.push(englishLine);
+    copyText(lines.join("\n")).then(() => {
+      const btn = document.getElementById("copyDiaryBtn");
+      const orig = btn.textContent;
+      btn.textContent = "已複製！";
+      setTimeout(() => { btn.textContent = orig; }, 1500);
     });
   });
 

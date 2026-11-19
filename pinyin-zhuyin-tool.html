@@ -55,6 +55,17 @@
   <span class="status" id="status"></span>
 </div>
 
+<section class="panel">
+  <h2 style="margin-top:0">日記格式 Diary format</h2>
+  <p class="legend">像課本一樣整句排版：中文一行、拼音一行（自動標詞界、台灣讀音、ㄧ/不變調）、英文翻譯自己打一行（翻譯沒辦法自動生成，貼上你自己的版本就好）。</p>
+  <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:10px;margin:8px 0">
+    <div class="out" id="sentencePinyinOut" style="flex:1"></div>
+    <button class="copybtn" data-copy="sentencePinyinOut" style="flex-shrink:0">複製</button>
+  </div>
+  <textarea id="englishTranslation" placeholder="在這裡貼上你自己的英文翻譯（例如用聊天視窗問我，或自己寫）..." style="width:100%;min-height:60px;font-size:1.1rem;padding:10px 14px;border:2px solid var(--line);border-radius:8px 20px 8px 20px;font-family:Nunito,sans-serif;resize:vertical;background:var(--card);color:var(--ink)"></textarea>
+  <p style="margin-top:12px"><button class="btn" id="copyDiaryBtn" type="button">複製三行（中文／拼音／英文）</button></p>
+</section>
+
 <div class="grid">
   <div class="card"><h3>拼音 Pinyin <button class="copybtn" data-copy="pinyinOut">複製</button></h3>
     <div class="out" id="pinyinOut"></div></div>
@@ -80,7 +91,7 @@
 </section>
 
 <section class="panel">
-  <p class="src">拼音／注音字典資料來自 <a href="https://cc-cedict.org/" target="_blank" rel="noopener">CC-CEDICT</a>（CC BY-SA 4.0）。台灣讀音是從 CC-CEDICT 裡明確標註「Taiwan pr.」的詞條自動抓出來的，不是亂猜的，但沒被標註的詞字典還是會顯示大陸讀音，需要的話可以手動改下拉選單。多音字的預設讀音是用常見程度猜的，不一定每次都對，建議確認後再用。變調只自動處理了三聲連讀、「不＋四聲」、單獨的「一」這三個最常見規則。</p>
+  <p class="src">拼音／注音字典資料來自 <a href="https://cc-cedict.org/" target="_blank" rel="noopener">CC-CEDICT</a>（CC BY-SA 4.0）。台灣讀音是從 CC-CEDICT 裡明確標註「Taiwan pr.」的詞條自動抓出來的，不是亂猜的，但沒被標註的詞字典還是會顯示大陸讀音，需要的話可以手動改下拉選單。多音字的預設讀音是用常見程度猜的，不一定每次都對，建議確認後再用。變調只自動處理了三聲連讀、「不＋四聲」、單獨的「一」這三個最常見規則，而且照課本慣例，「日記格式」的拼音行只會寫出 ㄧ／不 的變調（yí／bú），三聲連讀還是照字典本調寫（nǐ hǎo 不會寫成 ní hǎo），跟口語唸法不同是正常的。斷詞是用詞典比對，長句偶爾會切錯（少數狀況），英文翻譯沒辦法自動生成，需要自己貼上。</p>
 </section>
 
 </div>

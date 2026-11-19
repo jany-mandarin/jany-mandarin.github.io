@@ -116,6 +116,16 @@
   const MAX_WORD_LEN = 4;
   const CJK_RE = /[\u4e00-\u9fff]/;
 
+  // Common "\u4e00 + measure/classifier word" combos that CEDICT lists as a
+  // single dictionary entry but which are still ordinary numeral-plus-
+  // classifier uses, subject to tone sandhi in real speech (see applySandhi).
+  const YI_MEASURE_COMBOS = new Set([
+    "\u4e00\u500b", "\u4e00\u4e9b", "\u4e00\u4e0b", "\u4e00\u9ede", "\u4e00\u6b21", "\u4e00\u6a23", "\u4e00\u76f4", "\u4e00\u5b9a", "\u4e00\u8d77",
+    "\u4e00\u56de", "\u4e00\u904d", "\u4e00\u8072", "\u4e00\u7a2e", "\u4e00\u4f4d", "\u4e00\u4ef6", "\u4e00\u96bb", "\u4e00\u5f35", "\u4e00\u672c",
+    "\u4e00\u676f", "\u4e00\u7897", "\u4e00\u7247", "\u4e00\u9846", "\u4e00\u7c92", "\u4e00\u7fa4", "\u4e00\u6279", "\u4e00\u5c0d", "\u4e00\u96d9",
+    "\u4e00\u534a", "\u4e00\u584a", "\u4e00\u689d", "\u4e00\u9053", "\u4e00\u5834", "\u4e00\u8d9f", "\u4e00\u9663", "\u4e00\u523b", "\u4e00\u908a",
+  ]);
+
   function isSurnameish(entry) {
     return /^[A-Z]/.test(entry.p); // CEDICT capitalizes proper-noun/surname headwords
   }
@@ -131,6 +141,11 @@
     return entry.tw || entry.p;
   }
 
+  // Rare/formal dictionary words that greedy longest-match would otherwise
+  // steal from a far more common following word, e.g. "在外" (outer;
+  // excluded) swallowing the 在 that belongs with 外面 (outside) in "在外面".
+  const SEGMENTATION_BLOCKLIST = new Set(["在外"]);
+
   function segment(text, dict) {
     const tokens = [];
     let i = 0;
@@ -140,7 +155,7 @@
         for (let len = MAX_WORD_LEN; len >= 1; len--) {
           if (i + len > text.length) continue;
           const cand = text.slice(i, i + len);
-          if (dict[cand]) { matched = cand; break; }
+          if (dict[cand] && !SEGMENTATION_BLOCKLIST.has(cand)) { matched = cand; break; }
         }
       }
       if (matched) {
@@ -181,42 +196,123 @@
     }
     if (cur.length) runs.push(cur);
 
-    const result = {}; // "ti-si" -> { tone, sandhi: bool }
+    const result = {}; // "ti-si" -> { raw, changed, rule }
     for (const run of runs) {
       const origTones = run.map((it) => toneOf(it.raw));
       const newTones = origTones.slice();
-      // 3-3 sandhi (non-cascading, based on original tones)
+      const rule = new Array(run.length).fill(null);
+      // 3-3 sandhi (non-cascading, based on original tones). Only crosses a
+      // word boundary when the leading word is a single character (pronoun/
+      // surname/adverb + what follows, e.g. 你好, 許小姐, 很好) - the classic
+      // tightly-bound cases. A multi-character word (e.g. a place name) does
+      // NOT drag the sandhi into the next word across a subject/predicate
+      // break (台北 before 很冷 must NOT sandhi 北). This rule is a spoken-
+      // pronunciation note only - standard written pinyin keeps citation
+      // tones for it (nǐ hǎo, not ní hǎo), unlike the 一/不 rules below.
       for (let k = 0; k < run.length - 1; k++) {
-        if (origTones[k] === 3 && origTones[k + 1] === 3) newTones[k] = 2;
+        if (origTones[k] !== 3 || origTones[k + 1] !== 3) continue;
+        const sameToken = run[k].tokenIndex === run[k + 1].tokenIndex;
+        const leadTok = tokens[run[k].tokenIndex];
+        if (sameToken || leadTok.hanzi.length === 1) { newTones[k] = 2; rule[k] = "tone33"; }
       }
       // 不 + 4th tone -> bú (checked at the character's own position, so it
       // also fires inside multi-char words like 不錯/不是/是不是)
       for (let k = 0; k < run.length - 1; k++) {
         const tok = tokens[run[k].tokenIndex];
         const ch = tok.hanzi[run[k].syllIndex];
-        if (ch === "不" && origTones[k] === 4 && origTones[k + 1] === 4) newTones[k] = 2;
+        if (ch === "不" && origTones[k] === 4 && origTones[k + 1] === 4) { newTones[k] = 2; rule[k] = "bu"; }
       }
-      // isolated 一 sandhi (only when "一" stands as its own single-char token,
-      // i.e. it wasn't absorbed into a longer dictionary word)
+      // 一 sandhi: fires when "一" stands as its own single-char token (not
+      // absorbed into a longer dictionary word, e.g. 一月/十一/第一 keep their
+      // citation tone), OR when it is the first character of one of the
+      // common "一 + measure word" entries below, which ARE lexicalized as a
+      // single CEDICT entry but are still ordinary "one + classifier" uses
+      // that undergo the sandhi in real speech (一起/一樣/一個/一下 etc.).
       for (let k = 0; k < run.length - 1; k++) {
         const tok = tokens[run[k].tokenIndex];
-        if (tok.hanzi === "一" && tok.entries && origTones[k] === 1) {
-          newTones[k] = origTones[k + 1] === 4 ? 2 : (origTones[k + 1] <= 3 ? 4 : origTones[k]);
+        const isStandalone = tok.hanzi === "一" && run[k].syllIndex === 0;
+        const isMeasureCombo = run[k].syllIndex === 0 && tok.hanzi[0] === "一" && YI_MEASURE_COMBOS.has(tok.hanzi);
+        if ((isStandalone || isMeasureCombo) && tok.entries && origTones[k] === 1) {
+          // 個 (classifier) surfaces as neutral tone (5) in CEDICT, but its
+          // underlying tone is 4th (gè) for the purpose of this rule.
+          const nextChar = tok.hanzi[run[k].syllIndex + 1];
+          const nextTone = nextChar === "個" && origTones[k + 1] === 5 ? 4 : origTones[k + 1];
+          newTones[k] = nextTone === 4 ? 2 : (nextTone <= 3 ? 4 : origTones[k]);
+          rule[k] = "yi";
         }
       }
       run.forEach((it, k) => {
         result[`${it.tokenIndex}-${it.syllIndex}`] = {
           raw: setTone(it.raw, newTones[k]),
           changed: newTones[k] !== origTones[k],
+          rule: rule[k],
         };
       });
     }
     return result;
   }
 
+  // ---------- continuous sentence-style pinyin (textbook orthography) ----------
+  // Words/tokens space-separated, syllables within one token joined with no
+  // space (apostrophe inserted before an a/o/e-initial syllable to avoid
+  // ambiguity, e.g. 企鵝 -> qi'e), proper nouns and sentence starts
+  // capitalized, Chinese punctuation converted to its Western equivalent.
+  const PUNCT_MAP = {
+    "，": ",", "。": ".", "！": "!", "？": "?", "；": ";", "：": ":",
+    "、": ",", "「": "“", "」": "”", "『": "‘", "』": "’",
+    "（": "(", "）": ")", "《": "“", "》": "”", "…": "...", "—": "-",
+  };
+  const SENTENCE_END = new Set([".", "!", "?"]);
+
+  function isProperEntry(entry) {
+    return /^[A-Z]/.test(entry.p);
+  }
+
+  function toSentencePinyin(tokens, sandhi) {
+    let out = "";
+    let atStart = true;
+    tokens.forEach((tok, ti) => {
+      if (tok.entries) {
+        const entry = tok.entries[tok.chosen];
+        const sylls = effectivePinyin(entry).split(" ");
+        // Numeral+classifier combos (一個/一些/一下...) are one dictionary
+        // entry but are written as two separate words in pinyin orthography.
+        const splitAsWords = YI_MEASURE_COMBOS.has(tok.hanzi);
+        let chunk = "";
+        sylls.forEach((s, si) => {
+          // Written pinyin conventionally keeps citation tones for 3rd-tone
+          // sandhi, but writes out the 一/不 sandhi forms (yí, bú...).
+          const adj = sandhi && sandhi[`${ti}-${si}`];
+          const raw = adj && adj.rule !== "tone33" ? adj.raw : s;
+          const marked = toToneMarkPinyin(raw);
+          const startsVowel = /^(u:)?[aoe]/i.test(raw);
+          if (si > 0) chunk += splitAsWords ? " " : (startsVowel ? "'" : "");
+          chunk += marked;
+        });
+        if (atStart || isProperEntry(entry)) {
+          chunk = chunk.charAt(0).toUpperCase() + chunk.slice(1);
+        }
+        out += (out && !out.endsWith(" ") ? " " : "") + chunk;
+        atStart = false;
+      } else {
+        const ch = tok.hanzi;
+        if (/\s/.test(ch)) {
+          out += out.endsWith(" ") ? "" : " ";
+          return;
+        }
+        const isPunct = ch in PUNCT_MAP;
+        const mapped = isPunct ? PUNCT_MAP[ch] : ch;
+        out += isPunct ? mapped : (out && !out.endsWith(" ") ? " " : "") + mapped;
+        if (SENTENCE_END.has(mapped)) atStart = true;
+      }
+    });
+    return out.trim().replace(/ +/g, " ");
+  }
+
   const api = {
     toZhuyin, toToneMarkPinyin, parseTone, toneOf, setTone,
     segment, pickPrimary, effectivePinyin, applySandhi, isSurnameish,
+    toSentencePinyin,
   };
   if (typeof module !== "undefined") module.exports = api;
   else root.MandarinEngine = api;
