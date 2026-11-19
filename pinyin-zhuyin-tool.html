@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>中文注音拼音英文產生器</title>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600&family=Nunito:wght@400;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{--bg:#fffbe6;--card:#ffffff;--yellow:#ffeb99;--pink:#ffc8dd;--blue:#bde0fe;--ink:#5b4b6b;--soft:#9a8aa8;--line:#f3e6ee;--teal:#155a70;--orange:#f26a1b;--red:#d9402a}
+  @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#2b2433;--card:#383043;--yellow:#7a6a2e;--pink:#8a4a63;--blue:#3d5f7f;--ink:#f6eefb;--soft:#c3b3d1;--line:#4a4057}}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:Nunito,"Noto Sans TC","PingFang TC","Microsoft JhengHei",sans-serif;line-height:1.5}
+  .wrap{max-width:1000px;margin:0 auto;padding:22px 16px 50px}
+  h1{font-family:Fredoka,Nunito,sans-serif;font-size:clamp(1.6rem,4vw,2.2rem);margin:.2em 0;color:var(--ink)}
+  .lead{color:var(--soft);font-weight:700;margin-top:0}
+  textarea#input{width:100%;min-height:110px;font-size:1.3rem;line-height:1.7;padding:14px 16px;border:3px solid var(--ink);border-radius:8px 24px 8px 24px;font-family:Nunito,"Noto Sans TC","PingFang TC","Microsoft JhengHei",sans-serif;resize:vertical;background:var(--card);color:var(--ink)}
+  .controls{display:flex;flex-wrap:wrap;gap:10px 18px;align-items:center;margin:12px 0}
+  .controls label{font-weight:700;display:flex;align-items:center;gap:6px}
+  .status{font-size:.95rem;color:var(--soft)}
+  .status.err{color:var(--red);font-weight:700}
+  .btn{display:inline-block;background:var(--orange);color:#fff;padding:11px 24px;border-radius:999px;border:0;font:700 1rem Nunito,sans-serif;cursor:pointer}
+  .btn:hover{opacity:.9}
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:10px}
+  @media(max-width:720px){.grid{grid-template-columns:1fr}}
+  .card{background:var(--card);border-radius:22px;padding:14px 18px 18px;box-shadow:0 4px 0 var(--line)}
+  .card h3{margin:0 0 4px;font-size:1.1rem;display:flex;justify-content:space-between;align-items:center;gap:10px}
+  .card .copybtn{font:700 .85rem Nunito,sans-serif;background:var(--blue);color:var(--ink);border:0;border-radius:999px;padding:6px 16px;cursor:pointer;white-space:nowrap}
+  .card .copybtn.copied{background:var(--pink)}
+  .out{font-size:1.25rem;line-height:2;min-height:2.4em;word-break:break-word;white-space:pre-wrap}
+  .out .ann{color:var(--teal);font-weight:700}
+  @media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .out .ann{color:#7fd0e8}}
+  .out .sandhi{color:var(--red)}
+  .combo .ann{font-size:.78em;vertical-align:middle}
+  .panel{background:var(--card);border-radius:22px;padding:16px 20px 20px;margin:22px 0;box-shadow:0 4px 0 var(--line)}
+  table#breakdown{width:100%;border-collapse:collapse;margin-top:8px;font-size:1.05rem}
+  table#breakdown th{text-align:left;color:var(--soft);border-bottom:2px solid var(--line);padding:6px 8px}
+  table#breakdown td{border-bottom:1px solid var(--line);padding:7px 8px;vertical-align:middle}
+  table#breakdown select{font:700 1rem Nunito,sans-serif;border:2px solid var(--blue);border-radius:6px;padding:3px 6px;background:var(--card);color:var(--ink)}
+  .hz{font-size:1.4rem}
+  .legend{font-size:.92rem;color:var(--soft)}
+  .legend .sandhi{color:var(--red);font-weight:700}
+  .src{font-size:.88rem;color:var(--soft)}
+  .src a{color:var(--teal)}
+</style>
+</head>
+<body>
+<div class="wrap">
+<h1>中文 → 拼音・注音・英文 產生器</h1>
+<p class="lead">輸入中文，自動生成拼音、注音（含台灣讀音與變調）、英文對照，逐字解釋可直接複製貼上。</p>
+
+<textarea id="input" placeholder="在這裡貼上或輸入中文，例如：你好，我和你一起去吃飯。">你好，我和你一起去吃飯。</textarea>
+<div class="controls">
+  <button class="btn" id="analyzeBtn" type="button">分析 Analyze</button>
+  <label><input type="checkbox" id="sandhiToggle" checked> 顯示變調（連讀音變，紅字標示）</label>
+  <span class="status" id="status"></span>
+</div>
+
+<div class="grid">
+  <div class="card"><h3>拼音 Pinyin <button class="copybtn" data-copy="pinyinOut">複製</button></h3>
+    <div class="out" id="pinyinOut"></div></div>
+  <div class="card"><h3>注音 Zhuyin <button class="copybtn" data-copy="zhuyinOut">複製</button></h3>
+    <div class="out" id="zhuyinOut"></div></div>
+  <div class="card"><h3>英文 English <button class="copybtn" data-copy="englishOut">複製</button></h3>
+    <div class="out" id="englishOut"></div></div>
+  <div class="card combo"><h3>整合 All-in-one <button class="copybtn" data-copy="comboOut">複製</button></h3>
+    <div class="out" id="comboOut"></div></div>
+</div>
+
+<section class="panel">
+  <h2 style="margin-top:0">逐字解釋 Word-by-word</h2>
+  <p class="legend">每個字／詞如果有多種讀音，可以直接用下拉選單換成正確的那個。改了之後，上面四欄會自動跟著更新。<br>
+  <span class="sandhi">紅字</span> = 這個字因為變調，實際唸的聲調跟字典不一樣。</p>
+  <div style="overflow-x:auto">
+    <table id="breakdown">
+      <thead><tr><th>字</th><th>注音</th><th>拼音</th><th>英文</th></tr></thead>
+      <tbody id="breakdownBody"></tbody>
+    </table>
+  </div>
+  <p style="margin-top:14px"><button class="btn" id="copyListBtn" type="button">複製逐字清單</button></p>
+</section>
+
+<section class="panel">
+  <p class="src">拼音／注音字典資料來自 <a href="https://cc-cedict.org/" target="_blank" rel="noopener">CC-CEDICT</a>（CC BY-SA 4.0）。台灣讀音是從 CC-CEDICT 裡明確標註「Taiwan pr.」的詞條自動抓出來的，不是亂猜的，但沒被標註的詞字典還是會顯示大陸讀音，需要的話可以手動改下拉選單。多音字的預設讀音是用常見程度猜的，不一定每次都對，建議確認後再用。變調只自動處理了三聲連讀、「不＋四聲」、單獨的「一」這三個最常見規則。</p>
+</section>
+
+</div>
+
+<script src="engine.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
