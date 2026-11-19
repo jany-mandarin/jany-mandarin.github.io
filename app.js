@@ -46,27 +46,69 @@
     return E.segment(text, dict);
   }
 
-  function render() {
+  // citation-form display values for a token: her override if she's typed
+  // one, otherwise the computed default from the currently chosen entry.
+  function citationDisplay(tok) {
+    const entry = tok.entries[tok.chosen];
+    const sylls = E.effectivePinyin(entry).split(" ");
+    return {
+      zhuyin: sylls.map(E.toZhuyin).join(""),
+      pinyin: sylls.map(E.toToneMarkPinyin).join(" "),
+      english: entry.e,
+    };
+  }
+  function currentDisplay(tok) {
+    return tok.override || citationDisplay(tok);
+  }
+
+  // Cheap refresh: only the 四行格式 zhuyin/pinyin lines, no table rebuild
+  // (so typing in a breakdown-table field never loses focus/cursor).
+  function updateLine4() {
     const sandhiOn = sandhiToggle.checked;
     const sandhi = sandhiOn ? E.applySandhi(tokens) : {};
+    line4zh.textContent = input.value.trim();
+    line4zy.value = "(" + E.toSentenceZhuyin(tokens, sandhi) + ")";
+    line4py.value = "(" + E.toSentencePinyin(tokens, sandhi) + ")";
+  }
 
+  function renderBreakdown() {
     breakdownBody.innerHTML = "";
 
     tokens.forEach((tok, ti) => {
       if (!tok.entries) return; // punctuation / latin / digits / unknown char: no breakdown row
-      const entry = tok.entries[tok.chosen];
-      const sylls = E.effectivePinyin(entry).split(" ");
-      const citationPinyin = sylls.map(E.toToneMarkPinyin).join(" ");
-      const citationZhuyin = sylls.map(E.toZhuyin).join("");
 
-      // breakdown row (citation form, dictionary tone)
       const tr = document.createElement("tr");
       const tdHz = document.createElement("td");
       tdHz.className = "hz";
       tdHz.textContent = tok.hanzi;
+
       const tdZy = document.createElement("td");
+      const zyInput = document.createElement("input");
+      zyInput.className = "cellEdit";
       const tdPy = document.createElement("td");
+      const pyWrap = document.createElement("div");
+      pyWrap.className = "pyWrap";
+      const pyInput = document.createElement("input");
+      pyInput.className = "cellEdit";
       const tdEn = document.createElement("td");
+      const enInput = document.createElement("input");
+      enInput.className = "cellEdit cellEditWide";
+
+      function fillFromCurrent() {
+        const d = currentDisplay(tok);
+        zyInput.value = d.zhuyin;
+        pyInput.value = d.pinyin;
+        enInput.value = d.english;
+      }
+      fillFromCurrent();
+
+      function onEdit() {
+        tok.override = { zhuyin: zyInput.value, pinyin: pyInput.value, english: enInput.value };
+        updateLine4();
+      }
+      zyInput.addEventListener("input", onEdit);
+      pyInput.addEventListener("input", onEdit);
+      enInput.addEventListener("input", onEdit);
 
       if (tok.entries.length > 1) {
         const sel = document.createElement("select");
@@ -80,25 +122,19 @@
         });
         sel.addEventListener("change", () => {
           tok.chosen = parseInt(sel.value, 10);
-          render();
+          tok.override = null; // switching dictionary sense starts fresh
+          fillFromCurrent();
+          updateLine4();
         });
-        tdZy.textContent = citationZhuyin;
-        tdPy.appendChild(sel);
-        tdEn.textContent = entry.e;
-      } else {
-        tdZy.textContent = citationZhuyin;
-        tdPy.textContent = citationPinyin;
-        tdEn.textContent = entry.e;
+        pyWrap.appendChild(sel);
       }
+      pyWrap.appendChild(pyInput);
+      tdPy.appendChild(pyWrap);
+      tdZy.appendChild(zyInput);
+      tdEn.appendChild(enInput);
       tr.append(tdHz, tdZy, tdPy, tdEn);
       breakdownBody.appendChild(tr);
     });
-
-    // four-line format: re-draft the zhuyin/pinyin lines fresh on every
-    // analyze (her hand edits only persist until the next Analyze click)
-    line4zh.textContent = input.value.trim();
-    line4zy.value = "(" + E.toSentenceZhuyin(tokens, sandhi) + ")";
-    line4py.value = "(" + E.toSentencePinyin(tokens, sandhi) + ")";
   }
 
   function analyze() {
@@ -106,12 +142,13 @@
     const text = input.value.trim();
     if (!text) { setStatus("請先輸入中文"); return; }
     tokens = buildTokens(text);
-    render();
+    renderBreakdown();
+    updateLine4();
     setStatus("完成！共 " + tokens.length + " 個字/詞/符號。");
   }
 
   document.getElementById("analyzeBtn").addEventListener("click", analyze);
-  sandhiToggle.addEventListener("change", render);
+  sandhiToggle.addEventListener("change", updateLine4);
 
   let debounceTimer = null;
   input.addEventListener("input", () => {
@@ -224,20 +261,11 @@
   });
 
   document.getElementById("copyListBtn").addEventListener("click", () => {
-    const sandhiOn = sandhiToggle.checked;
-    const sandhi = sandhiOn ? E.applySandhi(tokens) : {};
     const lines = [];
-    tokens.forEach((tok, ti) => {
+    tokens.forEach((tok) => {
       if (!tok.entries) return;
-      const entry = tok.entries[tok.chosen];
-      const sylls = E.effectivePinyin(entry).split(" ");
-      const spokenSylls = sylls.map((s, si) => {
-        const adj = sandhi[`${ti}-${si}`];
-        return adj ? adj.raw : s;
-      });
-      const py = spokenSylls.map(E.toToneMarkPinyin).join(" ");
-      const zy = spokenSylls.map(E.toZhuyin).join("");
-      lines.push(`${tok.hanzi}(${zy})(${py})-${shortGloss(entry.e)}`);
+      const d = currentDisplay(tok);
+      lines.push(`${tok.hanzi}(${d.zhuyin})(${d.pinyin})-${shortGloss(d.english)}`);
     });
     copyText(lines.join("\n")).then(() => {
       const btn = document.getElementById("copyListBtn");

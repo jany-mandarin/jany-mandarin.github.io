@@ -177,7 +177,10 @@
   function buildSyllableStream(tokens) {
     const stream = []; // {tokenIndex, syllIndex, raw}
     tokens.forEach((tok, ti) => {
-      if (!tok.entries) { stream.push(null); return; } // boundary marker
+      // boundary marker: punctuation, OR a hand-overridden token (free text
+      // isn't structured tone data, so it can't feed sandhi math, and
+      // shouldn't let neighbouring words sandhi across it either)
+      if (!tok.entries || tok.override) { stream.push(null); return; }
       const entry = tok.entries[tok.chosen];
       const sylls = effectivePinyin(entry).split(" ");
       sylls.forEach((s, si) => stream.push({ tokenIndex: ti, syllIndex: si, raw: s }));
@@ -274,11 +277,16 @@
   // syllable, e.g. 企鵝 -> qi'e; zhuyin has no such ambiguity), proper nouns
   // and sentence starts capitalized (pinyin mode only), Chinese punctuation
   // converted to its Western equivalent.
-  function toSentenceForm(tokens, sandhi, renderSyll, useApostrophe, capitalize) {
+  function toSentenceForm(tokens, sandhi, renderSyll, useApostrophe, capitalize, overrideKey) {
     let out = "";
     let atStart = true;
     tokens.forEach((tok, ti) => {
-      if (tok.entries) {
+      if (tok.override) {
+        // Hand-corrected token: use exactly what she typed, verbatim, no
+        // further tone/sandhi/apostrophe processing.
+        out += (out && !out.endsWith(" ") ? " " : "") + (tok.override[overrideKey] || "");
+        atStart = false;
+      } else if (tok.entries) {
         const entry = tok.entries[tok.chosen];
         const sylls = effectivePinyin(entry).split(" ");
         // Numeral+classifier combos (一個/一些/一下...) are one dictionary
@@ -316,11 +324,11 @@
   }
 
   function toSentencePinyin(tokens, sandhi) {
-    return toSentenceForm(tokens, sandhi, toToneMarkPinyin, true, true);
+    return toSentenceForm(tokens, sandhi, toToneMarkPinyin, true, true, "pinyin");
   }
 
   function toSentenceZhuyin(tokens, sandhi) {
-    return toSentenceForm(tokens, sandhi, toZhuyin, false, false);
+    return toSentenceForm(tokens, sandhi, toZhuyin, false, false, "zhuyin");
   }
 
   const api = {

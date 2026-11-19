@@ -33,7 +33,11 @@
   table#breakdown{width:100%;border-collapse:collapse;margin-top:8px;font-size:1.05rem}
   table#breakdown th{text-align:left;color:var(--soft);border-bottom:2px solid var(--line);padding:6px 8px}
   table#breakdown td{border-bottom:1px solid var(--line);padding:7px 8px;vertical-align:middle}
-  table#breakdown select{font:700 1rem Nunito,sans-serif;border:2px solid var(--blue);border-radius:6px;padding:3px 6px;background:var(--card);color:var(--ink)}
+  table#breakdown select{font:700 .92rem Nunito,sans-serif;border:2px solid var(--blue);border-radius:6px;padding:3px 6px;background:var(--card);color:var(--ink);max-width:100%}
+  .pyWrap{display:flex;flex-direction:column;gap:4px}
+  input.cellEdit{font:700 1rem Nunito,sans-serif;border:2px solid var(--line);border-radius:6px;padding:4px 8px;background:var(--card);color:var(--ink);width:9em;max-width:100%}
+  input.cellEdit:focus{border-color:var(--blue);outline:none}
+  input.cellEditWide{width:16em}
   .hz{font-size:1.4rem}
   .legend{font-size:.92rem;color:var(--soft)}
   .legend .sandhi{color:var(--red);font-weight:700}
@@ -86,7 +90,7 @@
 
 <section class="panel">
   <h2 style="margin-top:0">逐字解釋 Word-by-word</h2>
-  <p class="legend">每個字／詞如果有多種讀音，可以直接用下拉選單換成正確的那個。改了之後，上面「四行格式」的注音／拼音會自動跟著更新。</p>
+  <p class="legend">注音／拼音／英文都可以直接點進框框裡改（例如聲調錯了、台灣讀音不一樣），有多種讀音的字會多一個下拉選單方便快速切換。改了之後，上面「四行格式」的注音／拼音會自動跟著更新。</p>
   <div style="overflow-x:auto">
     <table id="breakdown">
       <thead><tr><th>字</th><th>注音</th><th>拼音</th><th>英文</th></tr></thead>
