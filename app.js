@@ -3,10 +3,6 @@
   const statusEl = document.getElementById("status");
   const input = document.getElementById("input");
   const sandhiToggle = document.getElementById("sandhiToggle");
-  const pinyinOut = document.getElementById("pinyinOut");
-  const zhuyinOut = document.getElementById("zhuyinOut");
-  const englishOut = document.getElementById("englishOut");
-  const comboOut = document.getElementById("comboOut");
   const breakdownBody = document.getElementById("breakdownBody");
   const line4zh = document.getElementById("line4zh");
   const line4zy = document.getElementById("line4zy");
@@ -54,47 +50,14 @@
     const sandhiOn = sandhiToggle.checked;
     const sandhi = sandhiOn ? E.applySandhi(tokens) : {};
 
-    const pinyinParts = [];
-    const zhuyinParts = [];
-    const englishParts = [];
-    const comboParts = [];
     breakdownBody.innerHTML = "";
 
     tokens.forEach((tok, ti) => {
-      if (!tok.entries) {
-        // punctuation / latin / digits / unknown single char pass through
-        const lit = escapeHtml(tok.hanzi);
-        pinyinParts.push(lit);
-        zhuyinParts.push(lit);
-        englishParts.push(lit);
-        comboParts.push(lit);
-        return;
-      }
+      if (!tok.entries) return; // punctuation / latin / digits / unknown char: no breakdown row
       const entry = tok.entries[tok.chosen];
       const sylls = E.effectivePinyin(entry).split(" ");
       const citationPinyin = sylls.map(E.toToneMarkPinyin).join(" ");
       const citationZhuyin = sylls.map(E.toZhuyin).join("");
-
-      const spokenSylls = sylls.map((s, si) => {
-        const adj = sandhi[`${ti}-${si}`];
-        return adj ? adj.raw : s;
-      });
-      const anyChanged = sylls.some((s, si) => {
-        const adj = sandhi[`${ti}-${si}`];
-        return adj && adj.changed;
-      });
-      const spokenPinyin = spokenSylls.map(E.toToneMarkPinyin).join(" ");
-      const spokenZhuyin = spokenSylls.map(E.toZhuyin).join("");
-      const glossShort = shortGloss(entry.e);
-      const hzEsc = escapeHtml(tok.hanzi);
-      const cls = anyChanged ? "ann sandhi" : "ann";
-
-      pinyinParts.push(`${hzEsc}<span class="${cls}">(${escapeHtml(spokenPinyin)})</span>`);
-      zhuyinParts.push(`${hzEsc}<span class="${cls}">(${escapeHtml(spokenZhuyin)})</span>`);
-      englishParts.push(`${hzEsc}<span class="ann">(${escapeHtml(glossShort)})</span>`);
-      comboParts.push(
-        `${hzEsc}<span class="${cls}">(${escapeHtml(spokenZhuyin)})(${escapeHtml(spokenPinyin)})</span>-${escapeHtml(glossShort)}`
-      );
 
       // breakdown row (citation form, dictionary tone)
       const tr = document.createElement("tr");
@@ -131,20 +94,11 @@
       breakdownBody.appendChild(tr);
     });
 
-    pinyinOut.innerHTML = pinyinParts.join("");
-    zhuyinOut.innerHTML = zhuyinParts.join("");
-    englishOut.innerHTML = englishParts.join("");
-    comboOut.innerHTML = comboParts.join("");
-
     // four-line format: re-draft the zhuyin/pinyin lines fresh on every
     // analyze (her hand edits only persist until the next Analyze click)
     line4zh.textContent = input.value.trim();
     line4zy.value = "(" + E.toSentenceZhuyin(tokens, sandhi) + ")";
     line4py.value = "(" + E.toSentencePinyin(tokens, sandhi) + ")";
-  }
-
-  function escapeHtml(s) {
-    return s.replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
   }
 
   function analyze() {
@@ -196,15 +150,27 @@
     });
   });
 
-  document.getElementById("copy4Btn").addEventListener("click", () => {
+  function bindCombinedCopy(btnId, buildLines) {
+    document.getElementById(btnId).addEventListener("click", () => {
+      copyText(buildLines().join("\n")).then(() => {
+        const btn = document.getElementById(btnId);
+        const orig = btn.textContent;
+        btn.textContent = "已複製！";
+        setTimeout(() => { btn.textContent = orig; }, 1500);
+      });
+    });
+  }
+
+  bindCombinedCopy("copy4Btn", () => {
     const lines = [line4zh.textContent, line4zy.value, line4py.value];
     if (line4en.value.trim()) lines.push(line4en.value.trim());
-    copyText(lines.join("\n")).then(() => {
-      const btn = document.getElementById("copy4Btn");
-      const orig = btn.textContent;
-      btn.textContent = "已複製！";
-      setTimeout(() => { btn.textContent = orig; }, 1500);
-    });
+    return lines;
+  });
+
+  bindCombinedCopy("copy3Btn", () => {
+    const lines = [line4zh.textContent, line4py.value];
+    if (line4en.value.trim()) lines.push(line4en.value.trim());
+    return lines;
   });
 
   // --- US / NZ (British-style) spelling toggle for the English line ---

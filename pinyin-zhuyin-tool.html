@@ -26,17 +26,9 @@
   .line4 .out{flex:1;padding:8px 2px}
   textarea.editline{flex:1;font-size:1.2rem;line-height:1.6;padding:8px 12px;border:2px solid var(--line);border-radius:8px 18px 8px 18px;font-family:Nunito,"Noto Sans TC","PingFang TC","Microsoft JhengHei",sans-serif;resize:vertical;background:var(--card);color:var(--ink)}
   .line4 .copybtn{flex-shrink:0;align-self:flex-start;margin-top:6px}
-  .grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:10px}
-  @media(max-width:720px){.grid{grid-template-columns:1fr}}
-  .card{background:var(--card);border-radius:22px;padding:14px 18px 18px;box-shadow:0 4px 0 var(--line)}
-  .card h3{margin:0 0 4px;font-size:1.1rem;display:flex;justify-content:space-between;align-items:center;gap:10px}
-  .card .copybtn{font:700 .85rem Nunito,sans-serif;background:var(--blue);color:var(--ink);border:0;border-radius:999px;padding:6px 16px;cursor:pointer;white-space:nowrap}
-  .card .copybtn.copied{background:var(--pink)}
+  .copybtn{font:700 .85rem Nunito,sans-serif;background:var(--blue);color:var(--ink);border:0;border-radius:999px;padding:6px 16px;cursor:pointer;white-space:nowrap}
+  .copybtn.copied{background:var(--pink)}
   .out{font-size:1.25rem;line-height:2;min-height:2.4em;word-break:break-word;white-space:pre-wrap}
-  .out .ann{color:var(--teal);font-weight:700}
-  @media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .out .ann{color:#7fd0e8}}
-  .out .sandhi{color:var(--red)}
-  .combo .ann{font-size:.78em;vertical-align:middle}
   .panel{background:var(--card);border-radius:22px;padding:16px 20px 20px;margin:22px 0;box-shadow:0 4px 0 var(--line)}
   table#breakdown{width:100%;border-collapse:collapse;margin-top:8px;font-size:1.05rem}
   table#breakdown th{text-align:left;color:var(--soft);border-bottom:2px solid var(--line);padding:6px 8px}
@@ -57,7 +49,7 @@
 <textarea id="input" placeholder="在這裡貼上或輸入中文，例如：你好，我和你一起去吃飯。">你好，我和你一起去吃飯。</textarea>
 <div class="controls">
   <button class="btn" id="analyzeBtn" type="button">分析 Analyze</button>
-  <label><input type="checkbox" id="sandhiToggle" checked> 顯示變調（連讀音變，紅字標示）</label>
+  <label><input type="checkbox" id="sandhiToggle" checked> 套用變調（ㄧ／不／三聲連讀）</label>
   <span class="status" id="status"></span>
 </div>
 
@@ -65,7 +57,8 @@
   <h2 style="margin-top:0">四行格式 Four-line format</h2>
   <p class="legend">像 Google 翻譯一樣：中文一行、注音一行、拼音一行、英文一行。注音／拼音前後自動加括弧，而且都可以直接在框框裡手動微調（比如變調、台灣讀音）。英文翻譯要自己貼上，下面有美式／紐式拼字切換。</p>
 
-  <div class="line4"><span class="line4label">中文</span><div class="out" id="line4zh"></div></div>
+  <div class="line4"><span class="line4label">中文</span><div class="out" id="line4zh"></div>
+    <button class="copybtn" data-copy="line4zh">複製</button></div>
 
   <div class="line4"><span class="line4label">注音</span>
     <textarea id="line4zy" class="editline" rows="2"></textarea>
@@ -85,24 +78,15 @@
     <button class="btn alt" id="toNzBtn" type="button">🇳🇿 紐式 (colour)</button>
   </div>
 
-  <p style="margin-top:14px"><button class="btn" id="copy4Btn" type="button">複製四行</button></p>
+  <p style="margin-top:14px">
+    <button class="btn" id="copy4Btn" type="button">複製四行（中／注／拼／英）</button>
+    <button class="btn alt" id="copy3Btn" type="button">複製三行（中／拼／英，不含注音）</button>
+  </p>
 </section>
-
-<div class="grid">
-  <div class="card"><h3>拼音 Pinyin <button class="copybtn" data-copy="pinyinOut">複製</button></h3>
-    <div class="out" id="pinyinOut"></div></div>
-  <div class="card"><h3>注音 Zhuyin <button class="copybtn" data-copy="zhuyinOut">複製</button></h3>
-    <div class="out" id="zhuyinOut"></div></div>
-  <div class="card"><h3>英文 English <button class="copybtn" data-copy="englishOut">複製</button></h3>
-    <div class="out" id="englishOut"></div></div>
-  <div class="card combo"><h3>整合 All-in-one <button class="copybtn" data-copy="comboOut">複製</button></h3>
-    <div class="out" id="comboOut"></div></div>
-</div>
 
 <section class="panel">
   <h2 style="margin-top:0">逐字解釋 Word-by-word</h2>
-  <p class="legend">每個字／詞如果有多種讀音，可以直接用下拉選單換成正確的那個。改了之後，上面四欄會自動跟著更新。<br>
-  <span class="sandhi">紅字</span> = 這個字因為變調，實際唸的聲調跟字典不一樣。</p>
+  <p class="legend">每個字／詞如果有多種讀音，可以直接用下拉選單換成正確的那個。改了之後，上面「四行格式」的注音／拼音會自動跟著更新。</p>
   <div style="overflow-x:auto">
     <table id="breakdown">
       <thead><tr><th>字</th><th>注音</th><th>拼音</th><th>英文</th></tr></thead>
