@@ -8,8 +8,10 @@
   const englishOut = document.getElementById("englishOut");
   const comboOut = document.getElementById("comboOut");
   const breakdownBody = document.getElementById("breakdownBody");
-  const sentencePinyinOut = document.getElementById("sentencePinyinOut");
-  const englishTranslation = document.getElementById("englishTranslation");
+  const line4zh = document.getElementById("line4zh");
+  const line4zy = document.getElementById("line4zy");
+  const line4py = document.getElementById("line4py");
+  const line4en = document.getElementById("line4en");
 
   let dict = null;
   let tokens = [];
@@ -133,7 +135,12 @@
     zhuyinOut.innerHTML = zhuyinParts.join("");
     englishOut.innerHTML = englishParts.join("");
     comboOut.innerHTML = comboParts.join("");
-    sentencePinyinOut.textContent = E.toSentencePinyin(tokens, sandhi);
+
+    // four-line format: re-draft the zhuyin/pinyin lines fresh on every
+    // analyze (her hand edits only persist until the next Analyze click)
+    line4zh.textContent = input.value.trim();
+    line4zy.value = "(" + E.toSentenceZhuyin(tokens, sandhi) + ")";
+    line4py.value = "(" + E.toSentencePinyin(tokens, sandhi) + ")";
   }
 
   function escapeHtml(s) {
@@ -180,7 +187,7 @@
   document.querySelectorAll(".copybtn").forEach((btn) => {
     btn.addEventListener("click", () => {
       const target = document.getElementById(btn.dataset.copy);
-      const text = target.innerText;
+      const text = btn.dataset.copyValue ? target.value : target.innerText;
       copyText(text).then(() => {
         btn.textContent = "已複製！";
         btn.classList.add("copied");
@@ -189,18 +196,65 @@
     });
   });
 
-  document.getElementById("copyDiaryBtn").addEventListener("click", () => {
-    const chinese = input.value.trim();
-    const pinyinLine = sentencePinyinOut.textContent;
-    const englishLine = englishTranslation.value.trim();
-    const lines = [chinese, pinyinLine];
-    if (englishLine) lines.push(englishLine);
+  document.getElementById("copy4Btn").addEventListener("click", () => {
+    const lines = [line4zh.textContent, line4zy.value, line4py.value];
+    if (line4en.value.trim()) lines.push(line4en.value.trim());
     copyText(lines.join("\n")).then(() => {
-      const btn = document.getElementById("copyDiaryBtn");
+      const btn = document.getElementById("copy4Btn");
       const orig = btn.textContent;
       btn.textContent = "已複製！";
       setTimeout(() => { btn.textContent = orig; }, 1500);
     });
+  });
+
+  // --- US / NZ (British-style) spelling toggle for the English line ---
+  const US_TO_NZ = {
+    color: "colour", colors: "colours", colored: "coloured", coloring: "colouring",
+    favorite: "favourite", favorites: "favourites", favor: "favour", favors: "favours", favored: "favoured",
+    honor: "honour", honors: "honours", honored: "honoured", honoring: "honouring",
+    humor: "humour", humorous: "humourous", labor: "labour", labored: "laboured",
+    neighbor: "neighbour", neighbors: "neighbours", neighborhood: "neighbourhood",
+    behavior: "behaviour", behaviors: "behaviours", flavor: "flavour", flavors: "flavours",
+    rumor: "rumour", rumors: "rumours", vigor: "vigour", valor: "valour", armor: "armour",
+    realize: "realise", realized: "realised", realizes: "realises", realizing: "realising",
+    organize: "organise", organized: "organised", organizes: "organises", organizing: "organising",
+    organization: "organisation", organizations: "organisations",
+    recognize: "recognise", recognized: "recognised", recognizes: "recognises", recognizing: "recognising",
+    apologize: "apologise", apologized: "apologised", apologizes: "apologises", apologizing: "apologising",
+    analyze: "analyse", analyzed: "analysed", analyzes: "analyses", analyzing: "analysing",
+    center: "centre", centers: "centres", centered: "centred",
+    theater: "theatre", theaters: "theatres", liter: "litre", liters: "litres", meter: "metre", meters: "metres",
+    traveling: "travelling", traveled: "travelled", traveler: "traveller", travelers: "travellers",
+    canceled: "cancelled", canceling: "cancelling", modeling: "modelling", modeled: "modelled",
+    labeled: "labelled", labeling: "labelling",
+    gray: "grey", grays: "greys",
+    defense: "defence", offense: "offence", license: "licence", pretense: "pretence",
+    tire: "tyre", tires: "tyres", curb: "kerb", aluminum: "aluminium",
+    math: "maths", mom: "mum", moms: "mums",
+    airplane: "aeroplane", apartment: "flat", cookie: "biscuit", cookies: "biscuits",
+    vacation: "holiday", vacations: "holidays", candy: "sweets", sidewalk: "pavement",
+    gasoline: "petrol", soccer: "football", pajamas: "pyjamas", diaper: "nappy", diapers: "nappies",
+  };
+  const NZ_TO_US = Object.fromEntries(Object.entries(US_TO_NZ).map(([a, b]) => [b, a]));
+
+  function matchCase(sample, word) {
+    if (sample === sample.toUpperCase()) return word.toUpperCase();
+    if (sample[0] === sample[0].toUpperCase()) return word[0].toUpperCase() + word.slice(1);
+    return word;
+  }
+
+  function convertSpelling(text, map) {
+    return text.replace(/[A-Za-z]+/g, (word) => {
+      const hit = map[word.toLowerCase()];
+      return hit ? matchCase(word, hit) : word;
+    });
+  }
+
+  document.getElementById("toNzBtn").addEventListener("click", () => {
+    line4en.value = convertSpelling(line4en.value, US_TO_NZ);
+  });
+  document.getElementById("toUsBtn").addEventListener("click", () => {
+    line4en.value = convertSpelling(line4en.value, NZ_TO_US);
   });
 
   document.getElementById("copyListBtn").addEventListener("click", () => {

@@ -268,7 +268,13 @@
     return /^[A-Z]/.test(entry.p);
   }
 
-  function toSentencePinyin(tokens, sandhi) {
+  // Shared renderer for both toSentencePinyin and toSentenceZhuyin: words
+  // space-separated, syllables within one word joined with no space
+  // (pinyin mode additionally inserts an apostrophe before an a/o/e-initial
+  // syllable, e.g. 企鵝 -> qi'e; zhuyin has no such ambiguity), proper nouns
+  // and sentence starts capitalized (pinyin mode only), Chinese punctuation
+  // converted to its Western equivalent.
+  function toSentenceForm(tokens, sandhi, renderSyll, useApostrophe, capitalize) {
     let out = "";
     let atStart = true;
     tokens.forEach((tok, ti) => {
@@ -284,12 +290,12 @@
           // sandhi, but writes out the 一/不 sandhi forms (yí, bú...).
           const adj = sandhi && sandhi[`${ti}-${si}`];
           const raw = adj && adj.rule !== "tone33" ? adj.raw : s;
-          const marked = toToneMarkPinyin(raw);
-          const startsVowel = /^(u:)?[aoe]/i.test(raw);
+          const rendered = renderSyll(raw);
+          const startsVowel = useApostrophe && /^(u:)?[aoe]/i.test(raw);
           if (si > 0) chunk += splitAsWords ? " " : (startsVowel ? "'" : "");
-          chunk += marked;
+          chunk += rendered;
         });
-        if (atStart || isProperEntry(entry)) {
+        if (capitalize && (atStart || isProperEntry(entry))) {
           chunk = chunk.charAt(0).toUpperCase() + chunk.slice(1);
         }
         out += (out && !out.endsWith(" ") ? " " : "") + chunk;
@@ -309,10 +315,18 @@
     return out.trim().replace(/ +/g, " ");
   }
 
+  function toSentencePinyin(tokens, sandhi) {
+    return toSentenceForm(tokens, sandhi, toToneMarkPinyin, true, true);
+  }
+
+  function toSentenceZhuyin(tokens, sandhi) {
+    return toSentenceForm(tokens, sandhi, toZhuyin, false, false);
+  }
+
   const api = {
     toZhuyin, toToneMarkPinyin, parseTone, toneOf, setTone,
     segment, pickPrimary, effectivePinyin, applySandhi, isSurnameish,
-    toSentencePinyin,
+    toSentencePinyin, toSentenceZhuyin,
   };
   if (typeof module !== "undefined") module.exports = api;
   else root.MandarinEngine = api;
