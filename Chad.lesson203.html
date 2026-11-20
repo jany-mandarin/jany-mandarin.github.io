@@ -1,0 +1,813 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chad's Mandarin Lesson 203</title>
+    <style>
+        :root { --bg: #FDFBF7; --primary: #D4A373; --text: #4a4a4a; --white: #fff; --sidebar-width: 280px; }
+        html { scroll-behavior: smooth; }
+        body { font-family: 'Helvetica Neue', Arial, sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; margin: 0; padding: 0; display: flex; transition: margin-left 0.3s ease; }
+
+        /* Navigation */
+        .top-nav { position: fixed; top: 0; left: 0; width: 100%; background: #FFF9F0; border-bottom: 1px solid #E6D5B8; padding: 10px 20px; box-sizing: border-box; text-align: right; z-index: 1200; display: flex; justify-content: flex-end; align-items: center; }
+        .top-nav a { color: var(--primary); font-weight: bold; text-decoration: none; margin-left: 20px; font-size: 15px; }
+        .top-nav a:hover { text-decoration: underline; color: #8C6239; }
+
+        /* Sidebar */
+        .sidebar { width: var(--sidebar-width); background: #FFF9F0; border-right: 1px solid #E6D5B8; height: 100vh; position: fixed; top: 0; left: 0; overflow-y: auto; padding: 60px 20px 20px 20px; box-sizing: border-box; transition: transform 0.3s ease; z-index: 1000; }
+        .sidebar.collapsed { transform: translateX(-100%); }
+        .sidebar h3 { margin-top: 0; color: #8C6239; font-size: 18px; border-bottom: 2px solid var(--primary); padding-bottom: 8px; display: flex; justify-content: space-between; align-items: center; }
+        .sidebar ol { padding-left: 20px; margin: 10px 0; color: #555; }
+        .sidebar li { margin-bottom: 8px; font-size: 15px; font-weight: bold; color: #8C6239; }
+        .sidebar ul { padding-left: 15px; list-style-type: circle; margin-top: 5px; margin-bottom: 15px; font-weight: normal; }
+        .sidebar ul li { font-size: 13.5px; margin-bottom: 6px; color: #555; }
+        .sidebar a { color: #555; text-decoration: none; display: block; }
+        .sidebar a:hover { color: #D4A373; font-weight: bold; }
+
+        .sidebar-toggle { position: fixed; top: 50px; left: 15px; z-index: 1100; background: var(--primary); color: white; border: none; padding: 8px 12px; border-radius: 6px; cursor: pointer; font-size: 14px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+
+        /* Main Content */
+        .main-content { margin-top: 40px; margin-left: var(--sidebar-width); width: calc(100% - var(--sidebar-width)); padding: 20px 40px; box-sizing: border-box; max-width: 900px; transition: margin-left 0.3s ease, width 0.3s ease; }
+        .main-content.expanded { margin-left: 0; width: 100%; }
+        .header { text-align: center; border-bottom: 2px solid var(--primary); padding-bottom: 10px; margin-bottom: 20px; margin-top: 20px; }
+
+        /* Controls */
+        .controls { position: sticky; top: 40px; background: var(--bg); padding: 15px; text-align: center; border-bottom: 1px solid #ccc; z-index: 100; margin-bottom: 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
+        button.control-btn { background: var(--primary); color: white; border: none; padding: 10px 15px; margin: 5px; border-radius: 6px; cursor: pointer; font-size: 14px; font-weight: bold; }
+        button.control-btn:hover { background: #B5835A; }
+
+        /* Audio Circle Buttons */
+        .btn-group { display: flex; align-items: center; margin-right: 15px; margin-bottom: 5px; flex-shrink: 0; gap: 8px; }
+        .audio-btn, .rec-btn, .play-rec-btn {
+            background: #EFEFEF;
+            color: #4A4A4A;
+            font-size: 16px;
+            border-radius: 50%;
+            width: 42px;
+            height: 42px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+            padding: 0;
+            line-height: 1;
+        }
+        .audio-btn:hover { background: #E2E2E2; transform: scale(1.05); }
+        .rec-btn:hover { background: #E2E2E2; transform: scale(1.05); }
+        .rec-btn.recording { background: #FFD1D1; color: #D90429; animation: pulse 1.5s infinite; }
+        .play-rec-btn { background: #EFEFEF; color: #4A4A4A; }
+        .play-rec-btn:enabled:hover { background: #E2E2E2; transform: scale(1.05); }
+        .play-rec-btn:disabled { background: #F5F5F5; color: #CCC; cursor: not-allowed; box-shadow: none; }
+
+        @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.5; } 100% { opacity: 1; } }
+
+        /* Content Blocks */
+        h2 { color: #8C6239; border-left: 5px solid var(--primary); padding-left: 10px; margin-top: 30px; }
+        .section { margin-bottom: 30px; background: var(--white); padding: 20px; border-radius: 12px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); scroll-margin-top: 130px; }
+        .grammar-box { background: #FFF9F0; border: 1px solid #E6D5B8; border-radius: 8px; padding: 15px; margin: 15px 0; scroll-margin-top: 140px; }
+        .item-content { display: flex; align-items: flex-start; margin-top: 10px; margin-bottom: 10px; flex-wrap: wrap; }
+
+        /* Bopomofo (Zhuyin) Vertical Formatting */
+        .zy-text { display: inline-block; line-height: 2.4; font-size: 18px; }
+        .zy-char-wrap { display: inline-flex; align-items: center; margin-right: 2px; }
+        .zy-char { font-size: 26px; font-family: "DFKai-SB", "BiauKai", serif; }
+        .zy-box { display: inline-flex; flex-direction: column; justify-content: center; position: relative; margin-left: 2px; padding-right: 8px; }
+        .zy-symbols { writing-mode: vertical-rl; text-orientation: upright; font-size: 11px; letter-spacing: -2px; }
+        .zy-tone { position: absolute; right: 0px; top: 50%; transform: translateY(-50%); font-size: 11px; }
+        .zy-neutral { position: absolute; top: -11px; left: 50%; transform: translateX(-50%); font-size: 11px; }
+
+        .en-trans { color: #666; font-size: 15px; font-style: italic; margin-top: 5px; margin-left: 0; width: 100%; display:block;}
+        .note { font-size: 14px; color: #555; margin-top: 10px; margin-bottom: 10px; line-height: 1.5; background: #fdfaf6; padding: 8px 12px; border-left: 3px solid #D4A373; border-radius: 4px; }
+        .vocab-img { max-width: 100%; height: auto; border-radius: 8px; border: 1px solid #E6D5B8; display: block; margin: 10px 0; max-height: 220px; }
+
+        .hw-review-block { background: #fff; border: 1px solid #E6D5B8; border-radius: 8px; padding: 12px 15px; margin: 12px 0; }
+        .wrong-line { color: #B54848; font-size: 16px; margin: 6px 0; }
+        .err-del { color: #B54848; text-decoration: line-through; }
+        .err-fix { color: #B54848; font-weight: bold; }
+
+        .homework-q { font-size: 17px; font-weight: bold; color: #8C6239; margin-bottom: 8px; }
+        .hw-textarea { width: 100%; height: 60px; margin-top: 5px; border-radius: 6px; border: 1px solid #E6D5B8; padding: 10px; font-family: inherit; font-size:16px; box-sizing: border-box; background: #fff; }
+        .hw-textarea:focus { border-color: var(--primary); outline: none; box-shadow: 0 0 5px rgba(212, 163, 115, 0.5); }
+
+        .quiz-card { background: #fff; border: 1px solid #E6D5B8; border-radius: 8px; padding: 15px; margin-bottom: 15px; }
+        .reading-paragraph { font-size: 18px; line-height: 2.2; margin-bottom: 15px; background: #FFFDF9; padding: 15px; border-radius: 8px; border: 1px solid #E6D5B8; }
+
+        /* Tables */
+        .custom-table { width: 100%; border-collapse: collapse; margin: 15px 0; background: #fff; border-radius: 8px; overflow: hidden; box-shadow: 0 1px 4px rgba(0,0,0,0.05); }
+        .custom-table th, .custom-table td { border: 1px solid #E6D5B8; padding: 12px; text-align: left; font-size: 14px; line-height: 1.5; vertical-align: top; }
+        .custom-table th { background-color: #F7EBE1; color: #8C6239; font-weight: bold; text-align: center; }
+        .custom-table td.center { text-align: center; }
+        .custom-table img.dish-img { width: 100%; max-width: 160px; height: auto; border-radius: 6px; display: block; }
+
+        @media (max-width: 900px) {
+            .sidebar { transform: translateX(-100%); }
+            .sidebar.active { transform: translateX(0); }
+            .main-content { margin-left: 0; width: 100%; padding: 20px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="top-nav">
+        <a href="https://jany-mandarin.github.io/Chad.html">Index</a>
+        <a href="https://jany-mandarin.github.io/Chad.lesson202.html">Lesson 202</a>
+    </div>
+
+    <button class="sidebar-toggle" onclick="toggleSidebar()">☰ Outline</button>
+
+    <div class="sidebar" id="sidebar">
+        <h3>📖 Outline <button style="background:none; border:none; color:#8C6239; font-weight:bold; cursor:pointer; font-size:16px;" onclick="toggleSidebar()">×</button></h3>
+        <ol>
+            <li><a href="#sec-0">Homework Review</a>
+                <ul>
+                    <li><a href="#hw-1">1. 發現 / 發現了</a></li>
+                    <li><a href="#hw-2">2. 出發</a></li>
+                    <li><a href="#hw-3">3. 旅行 / 玩</a></li>
+                    <li><a href="#hw-4">4. 九份</a></li>
+                    <li><a href="#hw-5">5. 上次作業訂正</a></li>
+                </ul>
+            </li>
+            <li><a href="#sec-1">Food Review</a>
+                <ul>
+                    <li><a href="#food-1">1. 點心</a></li>
+                    <li><a href="#food-2">2. 食物名稱</a></li>
+                    <li><a href="#food-3">3. 菜色名稱</a></li>
+                    <li><a href="#food-4">4. 內用</a></li>
+                    <li><a href="#food-5">5. 付款</a></li>
+                    <li><a href="#food-6">6. 刷卡</a></li>
+                </ul>
+            </li>
+            <li><a href="#sec-2">Cloze Test</a></li>
+            <li><a href="#sec-3">Translation Practice</a></li>
+        </ol>
+    </div>
+
+    <div class="main-content" id="mainContent">
+        <div class="header">
+            <h1>Chad's Mandarin Lesson 203</h1>
+            <p>Date: <span id="currentDate">2026/11/21</span></p>
+        </div>
+
+        <div class="controls">
+            <button class="control-btn" onclick="toggleZhuyin()">Toggle Bopomofo</button>
+            <button class="control-btn" onclick="toggleEnglish()">Toggle English</button>
+        </div>
+
+        <!-- Section 0: Homework Review -->
+        <div class="section" id="sec-0">
+            <h2>Homework Review</h2>
+
+            <!-- 1. 發現 / 發現了 -->
+            <div id="hw-1" class="grammar-box">
+                <h3><span class="zy-text">1. 發(ㄈㄚ)現(ㄒㄧㄢˋ) / 發(ㄈㄚ)現(ㄒㄧㄢˋ)了(ㄌㄜ˙)</span> (Notice / Discover)</h3>
+                <table class="custom-table">
+                    <thead>
+                        <tr>
+                            <th style="width: 16%;"></th>
+                            <th style="width: 42%;">
+                                <div class="item-content" style="margin:0; justify-content:center;">
+                                    <span class="zy-text" style="margin-right:8px;">發(ㄈㄚ)現(ㄒㄧㄢˋ)</span>
+                                    <div class="btn-group" style="margin:0;">
+                                        <button class="audio-btn" onclick="playAudioText(this)">🔊</button>
+                                        <button class="rec-btn" onclick="toggleRecord(this)">🎤</button>
+                                        <button class="play-rec-btn" disabled>▶️</button>
+                                    </div>
+                                </div>
+                            </th>
+                            <th style="width: 42%;">
+                                <div class="item-content" style="margin:0; justify-content:center;">
+                                    <span class="zy-text" style="margin-right:8px;">發(ㄈㄚ)現(ㄒㄧㄢˋ)了(ㄌㄜ˙)</span>
+                                    <div class="btn-group" style="margin:0;">
+                                        <button class="audio-btn" onclick="playAudioText(this)">🔊</button>
+                                        <button class="rec-btn" onclick="toggleRecord(this)">🎤</button>
+                                        <button class="play-rec-btn" disabled>▶️</button>
+                                    </div>
+                                </div>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td style="font-weight:bold; background:#FAF3E0; text-align:center;">English</td>
+                            <td>Like <i>"notice"</i> — it simply introduces a new piece of information. The listener's attention jumps straight to the fact itself.</td>
+                            <td>Like <i>"discover" / "I figured it out!" / "I found it"</i> — used when you finally caught or found something after looking or observing, often something surprising (a secret, or something you never knew before).</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight:bold; background:#FAF3E0; text-align:center;">Explanation</td>
+                            <td>Because the focus isn't on the action of discovering itself — it's just on the new fact — you don't add 「了」.</td>
+                            <td>This shows that after looking or observing, you finally caught / found something, and you feel surprised about it.</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight:bold; background:#FAF3E0; text-align:center;">Pattern</td>
+                            <td>「發現」+ [A Clause / Situation] <b>(Without 「了」)</b></td>
+                            <td>「發現了」+ [A Specific Noun] <b>(With 「了」)</b> / Used alone as an exclamation</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight:bold; background:#FAF3E0; text-align:center;">Examples</td>
+                            <td>
+                                <div class="item-content">
+                                    <div class="btn-group"><button class="audio-btn" onclick="playAudioText(this)">🔊</button><button class="rec-btn" onclick="toggleRecord(this)">🎤</button><button class="play-rec-btn" disabled>▶️</button></div>
+                                    <div><span class="zy-text">我(ㄨㄛˇ)發(ㄈㄚ)現(ㄒㄧㄢˋ)我(ㄨㄛˇ)的(ㄉㄜ˙)貓(ㄇㄠ)生(ㄕㄥ)病(ㄅㄧㄥˋ)了(ㄌㄜ˙)！</span><span class="en-trans">I noticed my cat is sick!</span></div>
+                                </div>
+                                <div class="item-content">
+                                    <div class="btn-group"><button class="audio-btn" onclick="playAudioText(this)">🔊</button><button class="rec-btn" onclick="toggleRecord(this)">🎤</button><button class="play-rec-btn" disabled>▶️</button></div>
+                                    <div><span class="zy-text">我(ㄨㄛˇ)發(ㄈㄚ)現(ㄒㄧㄢˋ)我(ㄨㄛˇ)忘(ㄨㄤˋ)了(ㄌㄜ˙)帶(ㄉㄞˋ)錢(ㄑㄧㄢˊ)包(ㄅㄠ)！</span><span class="en-trans">I noticed I forgot to bring my wallet!</span></div>
+                                </div>
+                                <div class="item-content">
+                                    <div class="btn-group"><button class="audio-btn" onclick="playAudioText(this)">🔊</button><button class="rec-btn" onclick="toggleRecord(this)">🎤</button><button class="play-rec-btn" disabled>▶️</button></div>
+                                    <div><span class="zy-text">我(ㄨㄛˇ)發(ㄈㄚ)現(ㄒㄧㄢˋ)我(ㄨㄛˇ)的(ㄉㄜ˙)手(ㄕㄡˇ)機(ㄐㄧ)已(ㄧˇ)經(ㄐㄧㄥ)有(ㄧㄡˇ)地(ㄉㄧˋ)圖(ㄊㄨˊ)了(ㄌㄜ˙)！</span><span class="en-trans">I noticed my phone already has a map on it!</span></div>
+                                </div>
+                                <div class="item-content">
+                                    <div class="btn-group"><button class="audio-btn" onclick="playAudioText(this)">🔊</button><button class="rec-btn" onclick="toggleRecord(this)">🎤</button><button class="play-rec-btn" disabled>▶️</button></div>
+                                    <div><span class="zy-text">我(ㄨㄛˇ)發(ㄈㄚ)現(ㄒㄧㄢˋ)下(ㄒㄧㄚˋ)周(ㄓㄡ)有(ㄧㄡˇ)一(ㄧˊ)個(ㄍㄜ˙)節(ㄐㄧㄝˊ)日(ㄖˋ)，我(ㄨㄛˇ)不(ㄅㄨˊ)用(ㄩㄥˋ)上(ㄕㄤˋ)班(ㄅㄢ)。</span><span class="en-trans">I noticed next week there's a holiday, so I don't need to go to work.</span></div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="item-content">
+                                    <div class="btn-group"><button class="audio-btn" onclick="playAudioText(this)">🔊</button><button class="rec-btn" onclick="toggleRecord(this)">🎤</button><button class="play-rec-btn" disabled>▶️</button></div>
+                                    <div><span class="zy-text">昨(ㄗㄨㄛˊ)天(ㄊㄧㄢ)我(ㄨㄛˇ)在(ㄗㄞˋ)書(ㄕㄨ)裡(ㄌㄧˇ)發(ㄈㄚ)現(ㄒㄧㄢˋ)了(ㄌㄜ˙)我(ㄨㄛˇ)太(ㄊㄞˋ)太(ㄊㄞˋ)的(ㄉㄜ˙)錢(ㄑㄧㄢˊ)。</span><span class="en-trans">Yesterday I discovered my wife's money in a book.</span></div>
+                                </div>
+                                <div class="item-content">
+                                    <div class="btn-group"><button class="audio-btn" onclick="playAudioText(this)">🔊</button><button class="rec-btn" onclick="toggleRecord(this)">🎤</button><button class="play-rec-btn" disabled>▶️</button></div>
+                                    <div><span class="zy-text">十(ㄕˊ)年(ㄋㄧㄢˊ)前(ㄑㄧㄢˊ)我(ㄨㄛˇ)在(ㄗㄞˋ)我(ㄨㄛˇ)家(ㄐㄧㄚ)門(ㄇㄣˊ)口(ㄎㄡˇ)發(ㄈㄚ)現(ㄒㄧㄢˋ)了(ㄌㄜ˙)我(ㄨㄛˇ)的(ㄉㄜ˙)貓(ㄇㄠ)。</span><span class="en-trans">10 years ago I discovered my cat at my front door.</span></div>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- 2. 出發 -->
+            <div id="hw-2" class="grammar-box">
+                <h3><span class="zy-text">2. 出(ㄔㄨ)發(ㄈㄚ)</span> (To set off / depart)</h3>
+                <div class="note">
+                    <b>Explanation:</b> The subject of 出發 is usually a person or something alive — because only a living thing can "set off" or "head out" on its own.
+                </div>
+                <div class="item-content">
+                    <div class="btn-group">
+                        <button class="audio-btn" onclick="playAudioText(this)">🔊</button>
+                        <button class="rec-btn" onclick="toggleRecord(this)">🎤</button>
+                        <button class="play-rec-btn" disabled>▶️</button>
+                    </div>
+                    <div>
+                        <span class="zy-text">我(ㄨㄛˇ)明(ㄇㄧㄥˊ)天(ㄊㄧㄢ)早(ㄗㄠˇ)上(ㄕㄤˋ)會(ㄏㄨㄟˋ)出(ㄔㄨ)發(ㄈㄚ)去(ㄑㄩˋ)台(ㄊㄞˊ)灣(ㄨㄢ)。</span>
+                        <span class="en-trans">I'll set off for Taiwan tomorrow morning.</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 3. 旅行/玩 -->
+            <div id="hw-3" class="grammar-box">
+                <h3><span class="zy-text">3. 旅(ㄌㄩˇ)行(ㄒㄧㄥˊ) / 玩(ㄨㄢˊ)</span> (Travel / Play & have fun)</h3>
+                <div class="note">
+                    <b>Explanation:</b> 旅行 means "to travel" — it describes the whole trip in general. 玩 means "to play / have fun" — it describes what you actually do once you get to a specific place. So you usually use 旅行 for the trip as a whole, and 玩 for enjoying time at one particular spot inside that trip.
+                </div>
+                <div class="item-content">
+                    <div class="btn-group">
+                        <button class="audio-btn" onclick="playAudioText(this)">🔊</button>
+                        <button class="rec-btn" onclick="toggleRecord(this)">🎤</button>
+                        <button class="play-rec-btn" disabled>▶️</button>
+                    </div>
+                    <div>
+                        <span class="zy-text">我(ㄨㄛˇ)下(ㄒㄧㄚˋ)禮(ㄌㄧˇ)拜(ㄅㄞˋ)要(ㄧㄠˋ)去(ㄑㄩˋ)台(ㄊㄞˊ)灣(ㄨㄢ)旅(ㄌㄩˇ)行(ㄒㄧㄥˊ)，我(ㄨㄛˇ)會(ㄏㄨㄟˋ)去(ㄑㄩˋ)九(ㄐㄧㄡˇ)份(ㄈㄣˋ)玩(ㄨㄢˊ)。</span>
+                        <span class="en-trans">Next week I'm going to travel to Taiwan; I'll go have fun in Jiufen.</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 4. 九份 -->
+            <div id="hw-4" class="grammar-box">
+                <h3><span class="zy-text">4. 九(ㄐㄧㄡˇ)份(ㄈㄣˋ)</span> (Jiufen)</h3>
+                <div class="note">
+                    <b>Explanation:</b> Jiufen (九份) is in the mountains. Long ago, very few families lived there — only nine households (九戶人家). Whenever people went out to buy goods, or ship supplies in by sea, for convenience they would always divide the goods into nine equal shares (份) to split among the nine households. That's how the name "九份" (Nine Shares) came to be.
+                </div>
+                <div class="item-content">
+                    <div class="btn-group">
+                        <button class="audio-btn" onclick="playAudioText(this)">🔊</button>
+                        <button class="rec-btn" onclick="toggleRecord(this)">🎤</button>
+                        <button class="play-rec-btn" disabled>▶️</button>
+                    </div>
+                    <div>
+                        <span class="zy-text">現(ㄒㄧㄢˋ)在(ㄗㄞˋ)九(ㄐㄧㄡˇ)份(ㄈㄣˋ)很(ㄏㄣˇ)有(ㄧㄡˇ)名(ㄇㄧㄥˊ)，因(ㄧㄣ)為(ㄨㄟˋ)有(ㄧㄡˇ)人(ㄖㄣˊ)說(ㄕㄨㄛ)很(ㄏㄣˇ)像(ㄒㄧㄤˋ)日(ㄖˋ)本(ㄅㄣˇ)的(ㄉㄜ˙)動(ㄉㄨㄥˋ)畫(ㄏㄨㄚˋ)電(ㄉㄧㄢˋ)影(ㄧㄥˇ)。</span>
+                        <span class="en-trans">Now Jiufen is very famous, because some people say it looks like a Japanese animated movie.</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 5. 上次作業訂正 -->
+            <div id="hw-5" class="grammar-box">
+                <h3><span class="zy-text">5. 上(ㄕㄤˋ)次(ㄘˋ)作(ㄗㄨㄛˋ)業(ㄧㄝˋ)訂(ㄉㄧㄥˋ)正(ㄓㄥˋ)</span> (Last Homework — Corrections)</h3>
+                <div class="note" style="font-size:13px;">
+                    The left column is what you wrote. <span class="err-del">Struck-through</span> words should be removed, and <span class="err-fix">red bold</span> words show where a character was missing. The right column is the corrected version, with Bopomofo and audio.
+                </div>
+                <table class="custom-table">
+                    <thead>
+                        <tr>
+                            <th style="width: 50%;">原本的 (Original)</th>
+                            <th style="width: 50%;">修改後正確的 (Corrected)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>下週我要去台灣出差，所以這幾天<span class="err-del">（前？）</span>我每天都很忙。</td>
+                            <td>
+                                <div class="item-content">
+                                    <div class="btn-group"><button class="audio-btn" onclick="playAudioText(this)">🔊</button><button class="rec-btn" onclick="toggleRecord(this)">🎤</button><button class="play-rec-btn" disabled>▶️</button></div>
+                                    <div><span class="zy-text">下(ㄒㄧㄚˋ)週(ㄓㄡ)我(ㄨㄛˇ)要(ㄧㄠˋ)去(ㄑㄩˋ)台(ㄊㄞˊ)灣(ㄨㄢ)出(ㄔㄨ)差(ㄔㄞ)，所(ㄙㄨㄛˇ)以(ㄧˇ)這(ㄓㄜˋ)幾(ㄐㄧˇ)天(ㄊㄧㄢ)我(ㄨㄛˇ)每(ㄇㄟˇ)天(ㄊㄧㄢ)都(ㄉㄡ)很(ㄏㄣˇ)忙(ㄇㄤˊ)。</span></div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>今天我公司沒有開會，我先只上一下班，再訂房<span class="err-del">了</span>。我訂了台北時<span class="err-fix">寓所</span>，因為這家飯店離台北車站很近，所以去哪裡都很方便。台北時<span class="err-fix">寓所</span>也有洗衣機，不用錢，我可以少帶一點衣服。</td>
+                            <td>
+                                <div class="item-content">
+                                    <div class="btn-group"><button class="audio-btn" onclick="playAudioText(this)">🔊</button><button class="rec-btn" onclick="toggleRecord(this)">🎤</button><button class="play-rec-btn" disabled>▶️</button></div>
+                                    <div><span class="zy-text">今(ㄐㄧㄣ)天(ㄊㄧㄢ)我(ㄨㄛˇ)公(ㄍㄨㄥ)司(ㄙ)沒(ㄇㄟˊ)有(ㄧㄡˇ)開(ㄎㄞ)會(ㄏㄨㄟˋ)，我(ㄨㄛˇ)先(ㄒㄧㄢ)只(ㄓˇ)上(ㄕㄤˋ)一(ㄧˊ)下(ㄒㄧㄚˋ)班(ㄅㄢ)，再(ㄗㄞˋ)訂(ㄉㄧㄥˋ)房(ㄈㄤˊ)。我(ㄨㄛˇ)訂(ㄉㄧㄥˋ)了(ㄌㄜ˙)台(ㄊㄞˊ)北(ㄅㄟˇ)時(ㄕˊ)代(ㄉㄞˋ)寓(ㄩˋ)所(ㄙㄨㄛˇ)，因(ㄧㄣ)為(ㄨㄟˋ)這(ㄓㄜˋ)家(ㄐㄧㄚ)飯(ㄈㄢˋ)店(ㄉㄧㄢˋ)離(ㄌㄧˊ)台(ㄊㄞˊ)北(ㄅㄟˇ)車(ㄔㄜ)站(ㄓㄢˋ)很(ㄏㄣˇ)近(ㄐㄧㄣˋ)，所(ㄙㄨㄛˇ)以(ㄧˇ)去(ㄑㄩˋ)哪(ㄋㄚˇ)裡(ㄌㄧˇ)都(ㄉㄡ)很(ㄏㄣˇ)方(ㄈㄤ)便(ㄅㄧㄢˋ)。台(ㄊㄞˊ)北(ㄅㄟˇ)時(ㄕˊ)代(ㄉㄞˋ)寓(ㄩˋ)所(ㄙㄨㄛˇ)也(ㄧㄝˇ)有(ㄧㄡˇ)洗(ㄒㄧˇ)衣(ㄧ)機(ㄐㄧ)，不(ㄅㄨˋ)用(ㄩㄥˋ)錢(ㄑㄧㄢˊ)，我(ㄨㄛˇ)可(ㄎㄜˇ)以(ㄧˇ)少(ㄕㄠˇ)帶(ㄉㄞˋ)一(ㄧˋ)點(ㄉㄧㄢˇ)衣(ㄧ)服(ㄈㄨˊ)。</span></div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>我晚上在行李箱裡放了很多東西，也放了一雙防水鞋子，因為在台灣常常下雨。我發現了下週有節日，所以出差以後，我可以在台灣<span class="err-del">旅行</span>幾天～我非常快樂！</td>
+                            <td>
+                                <div class="item-content">
+                                    <div class="btn-group"><button class="audio-btn" onclick="playAudioText(this)">🔊</button><button class="rec-btn" onclick="toggleRecord(this)">🎤</button><button class="play-rec-btn" disabled>▶️</button></div>
+                                    <div><span class="zy-text">我(ㄨㄛˇ)晚(ㄨㄢˇ)上(ㄕㄤˋ)在(ㄗㄞˋ)行(ㄒㄧㄥˊ)李(ㄌㄧˇ)箱(ㄒㄧㄤ)裡(ㄌㄧˇ)放(ㄈㄤˋ)了(ㄌㄜ˙)很(ㄏㄣˇ)多(ㄉㄨㄛ)東(ㄉㄨㄥ)西(ㄒㄧ)，也(ㄧㄝˇ)放(ㄈㄤˋ)了(ㄌㄜ˙)一(ㄧˋ)雙(ㄕㄨㄤ)防(ㄈㄤˊ)水(ㄕㄨㄟˇ)鞋(ㄒㄧㄝˊ)子(ㄗ˙)，因(ㄧㄣ)為(ㄨㄟˋ)在(ㄗㄞˋ)台(ㄊㄞˊ)灣(ㄨㄢ)常(ㄔㄤˊ)常(ㄔㄤˊ)下(ㄒㄧㄚˋ)雨(ㄩˇ)。我(ㄨㄛˇ)發(ㄈㄚ)現(ㄒㄧㄢˋ)了(ㄌㄜ˙)下(ㄒㄧㄚˋ)週(ㄓㄡ)有(ㄧㄡˇ)節(ㄐㄧㄝˊ)日(ㄖˋ)，所(ㄙㄨㄛˇ)以(ㄧˇ)出(ㄔㄨ)差(ㄔㄞ)以(ㄧˇ)後(ㄏㄡˋ)，我(ㄨㄛˇ)可(ㄎㄜˇ)以(ㄧˇ)在(ㄗㄞˋ)台(ㄊㄞˊ)灣(ㄨㄢ)玩(ㄨㄢˊ)幾(ㄐㄧˇ)天(ㄊㄧㄢ)～我(ㄨㄛˇ)非(ㄈㄟ)常(ㄔㄤˊ)快(ㄎㄨㄞˋ)樂(ㄌㄜˋ)！</span></div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>明天，<span class="err-del">這出差</span>終於要出發了！</td>
+                            <td>
+                                <div class="item-content">
+                                    <div class="btn-group"><button class="audio-btn" onclick="playAudioText(this)">🔊</button><button class="rec-btn" onclick="toggleRecord(this)">🎤</button><button class="play-rec-btn" disabled>▶️</button></div>
+                                    <div><span class="zy-text">明(ㄇㄧㄥˊ)天(ㄊㄧㄢ)，我(ㄨㄛˇ)終(ㄓㄨㄥ)於(ㄩˊ)要(ㄧㄠˋ)出(ㄔㄨ)發(ㄈㄚ)了(ㄌㄜ˙)！</span></div>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Section 1: Food Review -->
+        <div class="section" id="sec-1">
+            <h2>Food Review</h2>
+
+            <!-- 1. 點心 -->
+            <div id="food-1" class="grammar-box">
+                <h3><span class="zy-text">1. 點(ㄉㄧㄢˇ)心(ㄒㄧㄣ)</span> (Snacks)</h3>
+                <div class="note">
+                    <b>Explanation:</b> 點心 means small snacks or light bites — not a full meal. It can be sweet treats, or small savory food you eat between meals.
+                </div>
+                <div class="item-content">
+                    <div class="btn-group">
+                        <button class="audio-btn" onclick="playAudioText(this)">🔊</button>
+                        <button class="rec-btn" onclick="toggleRecord(this)">🎤</button>
+                        <button class="play-rec-btn" disabled>▶️</button>
+                    </div>
+                    <div>
+                        <span class="zy-text">我(ㄨㄛˇ)在(ㄗㄞˋ)台(ㄊㄞˊ)灣(ㄨㄢ)開(ㄎㄞ)會(ㄏㄨㄟˋ)的(ㄉㄜ˙)時(ㄕˊ)候(ㄏㄡ˙)，公(ㄍㄨㄥ)司(ㄙ)都(ㄉㄡ)會(ㄏㄨㄟˋ)買(ㄇㄞˇ)很(ㄏㄣˇ)多(ㄉㄨㄛ)小(ㄒㄧㄠˇ)點(ㄉㄧㄢˇ)心(ㄒㄧㄣ)給(ㄍㄟˇ)我(ㄨㄛˇ)吃(ㄔ)。</span>
+                        <span class="en-trans">When I'm in a meeting in Taiwan, the company always buys a lot of small snacks for me to eat.</span>
+                    </div>
+                </div>
+                <div class="item-content">
+                    <div class="btn-group">
+                        <button class="audio-btn" onclick="playAudioText(this)">🔊</button>
+                        <button class="rec-btn" onclick="toggleRecord(this)">🎤</button>
+                        <button class="play-rec-btn" disabled>▶️</button>
+                    </div>
+                    <div>
+                        <span class="zy-text">我(ㄨㄛˇ)現(ㄒㄧㄢˋ)在(ㄗㄞˋ)有(ㄧㄡˇ)點(ㄉㄧㄢˇ)餓(ㄜˋ)，我(ㄨㄛˇ)要(ㄧㄠˋ)吃(ㄔ)一(ㄧˋ)些(ㄒㄧㄝ)小(ㄒㄧㄠˇ)點(ㄉㄧㄢˇ)心(ㄒㄧㄣ)。</span>
+                        <span class="en-trans">I'm a little hungry now; I want to eat a few small snacks.</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 2. 食物名稱 -->
+            <div id="food-2" class="grammar-box">
+                <h3><span class="zy-text">2. 食(ㄕˊ)物(ㄨˋ)名(ㄇㄧㄥˊ)稱(ㄔㄥ)</span> (Food Names)</h3>
+                <table class="custom-table">
+                    <thead>
+                        <tr>
+                            <th style="width: 40%;">中文</th>
+                            <th style="width: 30%;">English</th>
+                            <th style="width: 30%;">Audio & Recording</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td><span class="zy-text">海(ㄏㄞˇ)鮮(ㄒㄧㄢ)</span></td><td>seafood</td><td><div class="item-content" style="margin:0;"><div class="btn-group"><button class="audio-btn" onclick="playAudioText(this)">🔊</button><button class="rec-btn" onclick="toggleRecord(this)">🎤</button><button class="play-rec-btn" disabled>▶️</button></div></div></td></tr>
+                        <tr><td><span class="zy-text">青(ㄑㄧㄥ)椒(ㄐㄧㄠ)</span></td><td>green bell pepper</td><td><div class="item-content" style="margin:0;"><div class="btn-group"><button class="audio-btn" onclick="playAudioText(this)">🔊</button><button class="rec-btn" onclick="toggleRecord(this)">🎤</button><button class="play-rec-btn" disabled>▶️</button></div></div></td></tr>
+                        <tr><td><span class="zy-text">甜(ㄊㄧㄢˊ)椒(ㄐㄧㄠ)</span></td><td>sweet (bell) pepper</td><td><div class="item-content" style="margin:0;"><div class="btn-group"><button class="audio-btn" onclick="playAudioText(this)">🔊</button><button class="rec-btn" onclick="toggleRecord(this)">🎤</button><button class="play-rec-btn" disabled>▶️</button></div></div></td></tr>
+                        <tr><td><span class="zy-text">辣(ㄌㄚˋ)椒(ㄐㄧㄠ)</span></td><td>chili pepper</td><td><div class="item-content" style="margin:0;"><div class="btn-group"><button class="audio-btn" onclick="playAudioText(this)">🔊</button><button class="rec-btn" onclick="toggleRecord(this)">🎤</button><button class="play-rec-btn" disabled>▶️</button></div></div></td></tr>
+                        <tr><td><span class="zy-text">炸(ㄓㄚˋ)豆(ㄉㄡˋ)腐(ㄈㄨˇ)</span></td><td>fried tofu</td><td><div class="item-content" style="margin:0;"><div class="btn-group"><button class="audio-btn" onclick="playAudioText(this)">🔊</button><button class="rec-btn" onclick="toggleRecord(this)">🎤</button><button class="play-rec-btn" disabled>▶️</button></div></div></td></tr>
+                        <tr><td><span class="zy-text">滷(ㄌㄨˇ) / 魯(ㄌㄨˇ)肉(ㄖㄡˋ)飯(ㄈㄢˋ)</span></td><td>braised pork rice</td><td><div class="item-content" style="margin:0;"><div class="btn-group"><button class="audio-btn" onclick="playAudioText(this)">🔊</button><button class="rec-btn" onclick="toggleRecord(this)">🎤</button><button class="play-rec-btn" disabled>▶️</button></div></div></td></tr>
+                        <tr><td><span class="zy-text">飯(ㄈㄢˋ)捲(ㄐㄩㄢˇ)</span></td><td>rice roll</td><td><div class="item-content" style="margin:0;"><div class="btn-group"><button class="audio-btn" onclick="playAudioText(this)">🔊</button><button class="rec-btn" onclick="toggleRecord(this)">🎤</button><button class="play-rec-btn" disabled>▶️</button></div></div></td></tr>
+                        <tr><td><span class="zy-text">飯(ㄈㄢˋ)糰(ㄊㄨㄢˊ)</span></td><td>rice ball</td><td><div class="item-content" style="margin:0;"><div class="btn-group"><button class="audio-btn" onclick="playAudioText(this)">🔊</button><button class="rec-btn" onclick="toggleRecord(this)">🎤</button><button class="play-rec-btn" disabled>▶️</button></div></div></td></tr>
+                        <tr><td><span class="zy-text">月(ㄩㄝˋ)餅(ㄅㄧㄥˇ)</span></td><td>mooncake</td><td><div class="item-content" style="margin:0;"><div class="btn-group"><button class="audio-btn" onclick="playAudioText(this)">🔊</button><button class="rec-btn" onclick="toggleRecord(this)">🎤</button><button class="play-rec-btn" disabled>▶️</button></div></div></td></tr>
+                        <tr><td><span class="zy-text">蛋(ㄉㄢˋ)餅(ㄅㄧㄥˇ)</span></td><td>egg pancake / crepe</td><td><div class="item-content" style="margin:0;"><div class="btn-group"><button class="audio-btn" onclick="playAudioText(this)">🔊</button><button class="rec-btn" onclick="toggleRecord(this)">🎤</button><button class="play-rec-btn" disabled>▶️</button></div></div></td></tr>
+                        <tr><td><span class="zy-text">紅(ㄏㄨㄥˊ)蘿(ㄌㄨㄛˊ)蔔(ㄅㄛ˙)</span></td><td>carrot</td><td><div class="item-content" style="margin:0;"><div class="btn-group"><button class="audio-btn" onclick="playAudioText(this)">🔊</button><button class="rec-btn" onclick="toggleRecord(this)">🎤</button><button class="play-rec-btn" disabled>▶️</button></div></div></td></tr>
+                        <tr><td><span class="zy-text">白(ㄅㄞˊ)蘿(ㄌㄨㄛˊ)蔔(ㄅㄛ˙)</span></td><td>white radish / daikon</td><td><div class="item-content" style="margin:0;"><div class="btn-group"><button class="audio-btn" onclick="playAudioText(this)">🔊</button><button class="rec-btn" onclick="toggleRecord(this)">🎤</button><button class="play-rec-btn" disabled>▶️</button></div></div></td></tr>
+                        <tr><td><span class="zy-text">蘿(ㄌㄨㄛˊ)蔔(ㄅㄛ˙)糕(ㄍㄠ)</span></td><td>radish cake</td><td><div class="item-content" style="margin:0;"><div class="btn-group"><button class="audio-btn" onclick="playAudioText(this)">🔊</button><button class="rec-btn" onclick="toggleRecord(this)">🎤</button><button class="play-rec-btn" disabled>▶️</button></div></div></td></tr>
+                        <tr><td><span class="zy-text">竹(ㄓㄨˊ)筍(ㄙㄨㄣˇ)</span></td><td>bamboo shoot</td><td><div class="item-content" style="margin:0;"><div class="btn-group"><button class="audio-btn" onclick="playAudioText(this)">🔊</button><button class="rec-btn" onclick="toggleRecord(this)">🎤</button><button class="play-rec-btn" disabled>▶️</button></div></div></td></tr>
+                        <tr><td><span class="zy-text">蘆(ㄌㄨˊ)筍(ㄙㄨㄣˇ)</span></td><td>asparagus</td><td><div class="item-content" style="margin:0;"><div class="btn-group"><button class="audio-btn" onclick="playAudioText(this)">🔊</button><button class="rec-btn" onclick="toggleRecord(this)">🎤</button><button class="play-rec-btn" disabled>▶️</button></div></div></td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- 3. 菜色名稱 -->
+            <div id="food-3" class="grammar-box">
+                <h3><span class="zy-text">3. 菜(ㄘㄞˋ)色(ㄙㄜˋ)名(ㄇㄧㄥˊ)稱(ㄔㄥ)</span> (Dish Names)</h3>
+                <table class="custom-table">
+                    <thead>
+                        <tr>
+                            <th style="width: 25%;">Picture</th>
+                            <th style="width: 35%;">中文</th>
+                            <th style="width: 20%;">English</th>
+                            <th style="width: 20%;">Audio & Recording</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><img class="dish-img" src="https://cdn.phototourl.com/member/2026-11-20-d680015c-4c4a-4e70-8e2d-df312d027673.png" alt="海苔飯捲"></td>
+                            <td><span class="zy-text">海(ㄏㄞˇ)苔(ㄊㄞˊ)飯(ㄈㄢˋ)捲(ㄐㄩㄢˇ)</span></td>
+                            <td>seaweed rice roll</td>
+                            <td><div class="item-content" style="margin:0;"><div class="btn-group"><button class="audio-btn" onclick="playAudioText(this)">🔊</button><button class="rec-btn" onclick="toggleRecord(this)">🎤</button><button class="play-rec-btn" disabled>▶️</button></div></div></td>
+                        </tr>
+                        <tr>
+                            <td><img class="dish-img" src="https://cdn.phototourl.com/member/2026-11-20-65415bfb-2078-4549-aed4-e8452b934a79.png" alt="海苔飯糰"></td>
+                            <td><span class="zy-text">海(ㄏㄞˇ)苔(ㄊㄞˊ)飯(ㄈㄢˋ)糰(ㄊㄨㄢˊ)</span></td>
+                            <td>seaweed rice ball</td>
+                            <td><div class="item-content" style="margin:0;"><div class="btn-group"><button class="audio-btn" onclick="playAudioText(this)">🔊</button><button class="rec-btn" onclick="toggleRecord(this)">🎤</button><button class="play-rec-btn" disabled>▶️</button></div></div></td>
+                        </tr>
+                        <tr>
+                            <td><img class="dish-img" src="https://cdn.phototourl.com/member/2026-11-20-1231ef17-da81-41fb-a638-0cb9563bafd2.png" alt="鐵板燒"></td>
+                            <td><span class="zy-text">鐵(ㄊㄧㄝˇ)板(ㄅㄢˇ)燒(ㄕㄠ)</span></td>
+                            <td>teppanyaki</td>
+                            <td><div class="item-content" style="margin:0;"><div class="btn-group"><button class="audio-btn" onclick="playAudioText(this)">🔊</button><button class="rec-btn" onclick="toggleRecord(this)">🎤</button><button class="play-rec-btn" disabled>▶️</button></div></div></td>
+                        </tr>
+                        <tr>
+                            <td><img class="dish-img" src="https://cdn.phototourl.com/member/2026-11-20-8e1b130d-6425-407b-a984-23be857f8722.png" alt="青椒炒牛肉"></td>
+                            <td><span class="zy-text">青(ㄑㄧㄥ)椒(ㄐㄧㄠ)炒(ㄔㄠˇ)牛(ㄋㄧㄡˊ)肉(ㄖㄡˋ)</span></td>
+                            <td>beef stir-fried with green peppers</td>
+                            <td><div class="item-content" style="margin:0;"><div class="btn-group"><button class="audio-btn" onclick="playAudioText(this)">🔊</button><button class="rec-btn" onclick="toggleRecord(this)">🎤</button><button class="play-rec-btn" disabled>▶️</button></div></div></td>
+                        </tr>
+                        <tr>
+                            <td><img class="dish-img" src="https://cdn.phototourl.com/member/2026-11-20-7c9550af-26b7-480f-845c-a67f9b60cdf2.png" alt="蔥爆豬肉絲"></td>
+                            <td><span class="zy-text">蔥(ㄘㄨㄥ)爆(ㄅㄠˋ)豬(ㄓㄨ)肉(ㄖㄡˋ)絲(ㄙ)</span></td>
+                            <td>pork shreds stir-fried with scallion</td>
+                            <td><div class="item-content" style="margin:0;"><div class="btn-group"><button class="audio-btn" onclick="playAudioText(this)">🔊</button><button class="rec-btn" onclick="toggleRecord(this)">🎤</button><button class="play-rec-btn" disabled>▶️</button></div></div></td>
+                        </tr>
+                        <tr>
+                            <td><img class="dish-img" src="https://cdn.phototourl.com/member/2026-11-20-c9807772-784a-4ddc-a5ef-3b7c8deb2aa7.png" alt="清炒高麗菜"></td>
+                            <td><span class="zy-text">清(ㄑㄧㄥ)炒(ㄔㄠˇ)高(ㄍㄠ)麗(ㄌㄧˋ)菜(ㄘㄞˋ)</span></td>
+                            <td>plain stir-fried cabbage</td>
+                            <td><div class="item-content" style="margin:0;"><div class="btn-group"><button class="audio-btn" onclick="playAudioText(this)">🔊</button><button class="rec-btn" onclick="toggleRecord(this)">🎤</button><button class="play-rec-btn" disabled>▶️</button></div></div></td>
+                        </tr>
+                        <tr>
+                            <td><img class="dish-img" src="https://cdn.phototourl.com/member/2026-11-20-3324a45d-fce2-4215-98fa-68a75ecb1d19.png" alt="燴飯"></td>
+                            <td><span class="zy-text">燴(ㄏㄨㄟˋ)飯(ㄈㄢˋ)</span></td>
+                            <td>rice with gravy</td>
+                            <td><div class="item-content" style="margin:0;"><div class="btn-group"><button class="audio-btn" onclick="playAudioText(this)">🔊</button><button class="rec-btn" onclick="toggleRecord(this)">🎤</button><button class="play-rec-btn" disabled>▶️</button></div></div></td>
+                        </tr>
+                        <tr>
+                            <td><img class="dish-img" src="https://cdn.phototourl.com/member/2026-11-20-3d96b886-6467-448f-a123-c933975fe756.png" alt="米粉"></td>
+                            <td><span class="zy-text">米(ㄇㄧˇ)粉(ㄈㄣˇ)</span></td>
+                            <td>rice noodles</td>
+                            <td><div class="item-content" style="margin:0;"><div class="btn-group"><button class="audio-btn" onclick="playAudioText(this)">🔊</button><button class="rec-btn" onclick="toggleRecord(this)">🎤</button><button class="play-rec-btn" disabled>▶️</button></div></div></td>
+                        </tr>
+                        <tr>
+                            <td><img class="dish-img" src="https://cdn.phototourl.com/member/2026-11-20-497382ee-103e-4799-ab35-1a09ee2b316a.png" alt="冬粉"></td>
+                            <td><span class="zy-text">冬(ㄉㄨㄥ)粉(ㄈㄣˇ)</span></td>
+                            <td>glass noodles / vermicelli</td>
+                            <td><div class="item-content" style="margin:0;"><div class="btn-group"><button class="audio-btn" onclick="playAudioText(this)">🔊</button><button class="rec-btn" onclick="toggleRecord(this)">🎤</button><button class="play-rec-btn" disabled>▶️</button></div></div></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- 4. 內用 -->
+            <div id="food-4" class="grammar-box">
+                <h3><span class="zy-text">4. 內(ㄋㄟˋ)用(ㄩㄥˋ)</span> (Dine in)</h3>
+                <img src="https://cdn.phototourl.com/member/2026-11-20-086ffc96-e1e9-448c-ae5e-507df24180e2.png" alt="內用" class="vocab-img">
+                <div class="note">
+                    <b>Explanation:</b> 內 is made up of 入 (to enter) inside an outer shape. 入 means "to enter" — you'll often see it in 入口 (entrance). Since 內 contains 入 (to enter), it carries the sense of "going inward," which is why 內 means "inside."
+                </div>
+                <div class="item-content">
+                    <div class="btn-group">
+                        <button class="audio-btn" onclick="playAudioText(this)">🔊</button>
+                        <button class="rec-btn" onclick="toggleRecord(this)">🎤</button>
+                        <button class="play-rec-btn" disabled>▶️</button>
+                    </div>
+                    <div>
+                        <span class="zy-text">你(ㄋㄧˇ)要(ㄧㄠˋ)內(ㄋㄟˋ)用(ㄩㄥˋ)還(ㄏㄞˊ)是(ㄕˋ)外(ㄨㄞˋ)帶(ㄉㄞˋ)？</span>
+                        <span class="en-trans">Are you dining in or taking out?</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 5. 付款 -->
+            <div id="food-5" class="grammar-box">
+                <h3><span class="zy-text">5. 付(ㄈㄨˋ)款(ㄎㄨㄢˇ)</span> (To make a payment)</h3>
+                <img src="https://cdn.phototourl.com/member/2026-11-20-a9831c52-a56c-4fd5-b752-84a8dd50fbd2.png" alt="付款" class="vocab-img">
+                <div class="note">
+                    <b>Explanation:</b> 款 is a more formal word for "money / funds," used in words like 存款 (savings), 公款 (public funds), 匯款 (money transfer). You can imagine the right side of 款 as a person crouching down, praying with both hands for money to fall from the sky.
+                </div>
+                <div class="item-content">
+                    <div class="btn-group">
+                        <button class="audio-btn" onclick="playAudioText(this)">🔊</button>
+                        <button class="rec-btn" onclick="toggleRecord(this)">🎤</button>
+                        <button class="play-rec-btn" disabled>▶️</button>
+                    </div>
+                    <div>
+                        <span class="zy-text">這(ㄓㄜˋ)家(ㄐㄧㄚ)餐(ㄘㄢ)廳(ㄊㄧㄥ)寫(ㄒㄧㄝˇ)請(ㄑㄧㄥˇ)先(ㄒㄧㄢ)付(ㄈㄨˋ)款(ㄎㄨㄢˇ)，所(ㄙㄨㄛˇ)以(ㄧˇ)你(ㄋㄧˇ)寫(ㄒㄧㄝˇ)完(ㄨㄢˊ)菜(ㄘㄞˋ)單(ㄉㄢ)就(ㄐㄧㄡˋ)要(ㄧㄠˋ)先(ㄒㄧㄢ)付(ㄈㄨˋ)錢(ㄑㄧㄢˊ)。</span>
+                        <span class="en-trans">This restaurant has a sign that says please pay first, so once you finish writing your order you need to pay first.</span>
+                    </div>
+                </div>
+                <div class="item-content">
+                    <div class="btn-group">
+                        <button class="audio-btn" onclick="playAudioText(this)">🔊</button>
+                        <button class="rec-btn" onclick="toggleRecord(this)">🎤</button>
+                        <button class="play-rec-btn" disabled>▶️</button>
+                    </div>
+                    <div>
+                        <span class="zy-text">這(ㄓㄜˋ)裡(ㄌㄧˇ)不(ㄅㄨˊ)用(ㄩㄥˋ)先(ㄒㄧㄢ)付(ㄈㄨˋ)款(ㄎㄨㄢˇ)，老(ㄌㄠˇ)闆(ㄅㄢˇ)說(ㄕㄨㄛ):「慢(ㄇㄢˋ)慢(ㄇㄢˋ)吃(ㄔ)，吃(ㄔ)完(ㄨㄢˊ)再(ㄗㄞˋ)付(ㄈㄨˋ)。」</span>
+                        <span class="en-trans">Here you don't need to pay first — the owner said: "Take your time eating, pay after you're done."</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 6. 刷卡 -->
+            <div id="food-6" class="grammar-box">
+                <h3><span class="zy-text">6. 刷(ㄕㄨㄚ)卡(ㄎㄚˇ)</span> (To swipe a card)</h3>
+                <div class="note">
+                    <b>Explanation:</b> 刷 originally meant "to clean with a brush." The right side looks like a knife (as if scraping something off), and the bottom-left part looks like the shape of a brush. That's why words like 刷牙 (brush teeth) and 刷子 (brush) use this character. Nowadays, 刷 is also used for "swiping a card" (刷卡).
+                </div>
+                <div class="item-content">
+                    <div class="btn-group">
+                        <button class="audio-btn" onclick="playAudioText(this)">🔊</button>
+                        <button class="rec-btn" onclick="toggleRecord(this)">🎤</button>
+                        <button class="play-rec-btn" disabled>▶️</button>
+                    </div>
+                    <div>
+                        <span class="zy-text">你(ㄋㄧˇ)要(ㄧㄠˋ)刷(ㄕㄨㄚ)牙(ㄧㄚˊ)還(ㄏㄞˊ)是(ㄕˋ)付(ㄈㄨˋ)現(ㄒㄧㄢˋ)？我(ㄨㄛˇ)要(ㄧㄠˋ)付(ㄈㄨˋ)現(ㄒㄧㄢˋ)，謝(ㄒㄧㄝˋ)謝(ㄒㄧㄝ˙)你(ㄋㄧˇ)。</span>
+                        <span class="en-trans">Do you want to brush your teeth or pay cash? I'll pay cash, thank you. (A play on words — 刷牙 and 付現 both use 刷/付, like 刷卡 and 付現 for paying.)</span>
+                    </div>
+                </div>
+                <div class="item-content">
+                    <div class="btn-group">
+                        <button class="audio-btn" onclick="playAudioText(this)">🔊</button>
+                        <button class="rec-btn" onclick="toggleRecord(this)">🎤</button>
+                        <button class="play-rec-btn" disabled>▶️</button>
+                    </div>
+                    <div>
+                        <span class="zy-text">我(ㄨㄛˇ)現(ㄒㄧㄢˋ)在(ㄗㄞˋ)要(ㄧㄠˋ)去(ㄑㄩˋ)刷(ㄕㄨㄚ)牙(ㄧㄚˊ)了(ㄌㄜ˙)！</span>
+                        <span class="en-trans">I'm going to go brush my teeth now!</span>
+                    </div>
+                </div>
+                <div class="item-content">
+                    <div class="btn-group">
+                        <button class="audio-btn" onclick="playAudioText(this)">🔊</button>
+                        <button class="rec-btn" onclick="toggleRecord(this)">🎤</button>
+                        <button class="play-rec-btn" disabled>▶️</button>
+                    </div>
+                    <div>
+                        <span class="zy-text">這(ㄓㄜˋ)是(ㄕˋ)我(ㄨㄛˇ)的(ㄉㄜ˙)牙(ㄧㄚˊ)刷(ㄕㄨㄚ)。</span>
+                        <span class="en-trans">This is my toothbrush.</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 2: Cloze Test -->
+        <div class="section" id="sec-2">
+            <h2>Cloze Test (克漏字)</h2>
+            <div class="quiz-card">
+                <div class="note" style="font-size: 15px;">
+                    <b>Instructions:</b> Fill in the blanks below using the words in the box.
+                </div>
+
+                <div style="background:#FFF9F0; border:1px solid #E6D5B8; border-radius:8px; padding:15px; margin:15px 0; text-align:center;">
+                    <span class="zy-text">出(ㄔㄨ)發(ㄈㄚ)、</span>
+                    <span class="zy-text">玩(ㄨㄢˊ)、</span>
+                    <span class="zy-text">發(ㄈㄚ)現(ㄒㄧㄢˋ)、</span>
+                    <span class="zy-text">點(ㄉㄧㄢˇ)心(ㄒㄧㄣ)、</span>
+                    <span class="zy-text">刷(ㄕㄨㄚ)卡(ㄎㄚˇ)、</span>
+                    <span class="zy-text">發(ㄈㄚ)現(ㄒㄧㄢˋ)了(ㄌㄜ˙)</span>
+                </div>
+
+                <div class="homework-q" style="font-weight: normal; font-size: 17px; line-height: 2.2;">
+                    我上個星期______去台灣，我每天都去很多地方______。有一天，我去九份玩，我______那裡有很多好吃的______。吃完飯以後我______，不用付現金，很方便。回家以後，我______我的行李箱裡還有一些台灣的巧克力！
+                </div>
+                <textarea class="hw-textarea" style="height: 160px;" placeholder="Write out the complete paragraph with your answers here..."></textarea>
+            </div>
+        </div>
+
+        <!-- Section 3: Translation Practice -->
+        <div class="section" id="sec-3">
+            <h2>Translation Practice</h2>
+            <div class="quiz-card">
+                <div class="homework-q" style="font-weight: normal; font-size: 16px;">
+                    Yesterday I went to a small restaurant near my hotel in Taipei for dinner. The waiter asked me if I wanted to eat in or take out. I said I wanted to eat in.
+                    <br><br>
+                    I looked at the menu and saw a lot of food I like, such as braised pork rice, fried tofu, and seafood. I ordered braised pork rice and fried tofu, and I also ordered a few small snacks.
+                    <br><br>
+                    After I finished eating, I wanted to pay. I found out that this restaurant doesn't accept cards, so I couldn't swipe my card — I had to pay with cash.
+                    <br><br>
+                    The food was really delicious! I also discovered that the owner was very friendly. Tomorrow I want to go to Jiufen to have fun, and maybe eat at this restaurant again before I leave Taiwan.
+                </div>
+                <textarea class="hw-textarea" style="height: 220px;" placeholder="Type your Chinese translation of the whole article here..."></textarea>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const mainContent = document.getElementById('mainContent');
+            if (window.innerWidth <= 900) {
+                sidebar.classList.toggle('active');
+            } else {
+                sidebar.classList.toggle('collapsed');
+                mainContent.classList.toggle('expanded');
+            }
+        }
+
+        // ====== Parse Zhuyin on Load (DOM based) ======
+        function parseZhuyinDOM() {
+            const regex = /([一-龥a-zA-Z0-9])\((.*?)\)/g;
+            document.querySelectorAll('.zy-text').forEach(el => {
+                let html = el.innerHTML;
+                let parsed = html.replace(regex, (match, char, zy) => {
+                    let tone = '';
+                    let symbols = zy;
+                    let isNeutral = false;
+
+                    if (zy.includes('ˊ')) { tone = 'ˊ'; symbols = zy.replace('ˊ', ''); }
+                    else if (zy.includes('ˇ')) { tone = 'ˇ'; symbols = zy.replace('ˇ', ''); }
+                    else if (zy.includes('ˋ')) { tone = 'ˋ'; symbols = zy.replace('ˋ', ''); }
+                    else if (zy.includes('˙')) { isNeutral = true; symbols = zy.replace('˙', ''); }
+
+                    let toneHtml = tone ? `<span class="zy-tone">${tone}</span>` : '';
+                    let neutralHtml = isNeutral ? `<span class="zy-neutral">˙</span>` : '';
+
+                    return `<div class="zy-char-wrap"><span class="zy-char">${char}</span><div class="zy-box">${neutralHtml}<span class="zy-symbols">${symbols}</span>${toneHtml}</div></div>`;
+                });
+                el.innerHTML = parsed;
+            });
+        }
+        document.addEventListener("DOMContentLoaded", parseZhuyinDOM);
+
+        // ====== Audio Reading ======
+        let currentUtteranceText = "";
+        function playAudioText(btn) {
+            let container = btn.closest('.item-content');
+            let zyDiv = container ? container.querySelector('.zy-text') : null;
+
+            // Support single whole reading passage block
+            if (!zyDiv && container && container.parentElement) {
+                zyDiv = container.parentElement.querySelector('.zy-text');
+            }
+            if (!zyDiv) {
+                let tr = btn.closest('tr');
+                if (tr) zyDiv = tr.querySelector('.zy-text');
+            }
+            if (!zyDiv) {
+                let rp = btn.closest('.reading-paragraph');
+                if (rp) zyDiv = rp.querySelector('.zy-text');
+            }
+            if(!zyDiv) return;
+
+            let wraps = zyDiv.querySelectorAll('.zy-char-wrap');
+            let cleanText = "";
+            if (wraps.length > 0) {
+                let strArr = [];
+                wraps.forEach(w => {
+                    let charEl = w.querySelector('.zy-char');
+                    let symEl = w.querySelector('.zy-symbols');
+                    let toneEl = w.querySelector('.zy-tone');
+                    let neuEl = w.querySelector('.zy-neutral');
+                    if (!charEl) return;
+
+                    let ch = charEl.innerText;
+                    let zy = (neuEl ? '˙' : '') + (symEl ? symEl.innerText : '') + (toneEl ? toneEl.innerText : '');
+
+                    // 台灣發音與破音字修正（傳給語音引擎的同音字替換，不影響畫面顯示）
+                    if (ch === '和' && zy === 'ㄏㄢˋ') {
+                        ch = '漢';
+                    } else if (ch === '吐' && zy === 'ㄊㄨˋ') {
+                        ch = '兔';
+                    } else if (ch === '教' && zy === 'ㄐㄧㄠ') {
+                        ch = '交';
+                    }
+                    strArr.push(ch);
+                });
+                cleanText = strArr.join('');
+            } else {
+                cleanText = zyDiv.innerText.replace(/\(.*?\)/g, '');
+            }
+
+            cleanText = cleanText.replace(/^[A-Z0-9]+[：:]\s*/gi, '').replace(/\s+[A-Z0-9]+[：:]\s*/gi, ' ').replace(/[A-Z0-9]+[：:]/gi, '');
+            cleanText = cleanText.replace(/\//g, ' ');
+
+            // Ensure TTS pronounces specific words correctly
+            cleanText = cleanText.replace(/在家教中文/g, '在家 教中文');
+            cleanText = cleanText.replace(/在家教/g, '在家 教');
+            cleanText = cleanText.replace(/吐了/g, '兔了');
+
+            if (speechSynthesis.speaking && currentUtteranceText === cleanText) {
+                if (speechSynthesis.paused) {
+                    speechSynthesis.resume();
+                } else {
+                    speechSynthesis.pause();
+                }
+                return;
+            }
+
+            speechSynthesis.cancel();
+            currentUtteranceText = cleanText;
+            const utterance = new SpeechSynthesisUtterance(cleanText);
+            utterance.lang = 'zh-TW';
+            utterance.rate = 0.85;
+            utterance.onend = () => { currentUtteranceText = ""; };
+            speechSynthesis.speak(utterance);
+        }
+
+        // ====== Audio Recording ======
+        let mediaRecorders = {};
+        let recIdCounter = 0;
+        async function toggleRecord(btn) {
+            let container = btn.closest('.item-content');
+            let targetParent = container || btn.closest('td') || btn.parentElement;
+            let player = targetParent.querySelector('audio');
+            let playBtn = targetParent.querySelector('.play-rec-btn');
+
+            if (!btn.dataset.recId) {
+                btn.dataset.recId = "rec-" + recIdCounter++;
+            }
+            let id = btn.dataset.recId;
+
+            if (!player) {
+                player = document.createElement('audio');
+                player.controls = true;
+                player.style.display = 'none';
+                player.style.width = '100%';
+                player.style.marginTop = '10px';
+                targetParent.appendChild(player);
+            }
+
+            if (!mediaRecorders[id] || mediaRecorders[id].state === "inactive") {
+                try {
+                    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+                    let chunks = [];
+                    let recorder = new MediaRecorder(stream);
+
+                    recorder.ondataavailable = e => chunks.push(e.data);
+                    recorder.onstop = () => {
+                        const blob = new Blob(chunks, { 'type': 'audio/webm' });
+                        player.src = URL.createObjectURL(blob);
+                        player.style.display = 'block';
+                        playBtn.disabled = false;
+                        playBtn.onclick = () => player.play();
+                        stream.getTracks().forEach(track => track.stop());
+                    };
+
+                    recorder.start();
+                    mediaRecorders[id] = recorder;
+                    btn.innerHTML = "⏹️";
+                    btn.classList.add("recording");
+                    player.style.display = 'none';
+                } catch (err) {
+                    alert("Microphone access denied. 請允許瀏覽器使用麥克風。");
+                }
+            } else {
+                mediaRecorders[id].stop();
+                btn.innerHTML = "🎤";
+                btn.classList.remove("recording");
+            }
+        }
+
+        // Toggle visibility
+        let zyVisible = true;
+        let enVisible = true;
+
+        function toggleZhuyin() {
+            zyVisible = !zyVisible;
+            document.querySelectorAll('.zy-box').forEach(el => {
+                el.style.display = zyVisible ? 'inline-flex' : 'none';
+            });
+        }
+
+        function toggleEnglish() {
+            enVisible = !enVisible;
+            document.querySelectorAll('.en-trans').forEach(el => {
+                el.style.display = enVisible ? 'block' : 'none';
+            });
+        }
+    </script>
+</body>
+</html>
