@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>菲利普的第41堂中文课</title>
+    <style>
+        :root { --bg: #FDFBF7; --primary: #D4A373; --text: #4a4a4a; --white: #fff; --sidebar-width: 280px; }
+        html { scroll-behavior: smooth; }
+        body { font-family: 'Helvetica Neue', Arial, sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; margin: 0; padding: 0; display: flex; transition: margin-left 0.3s ease; }
+
+        /* 左侧收合大纲导览列 */
+        .sidebar { width: var(--sidebar-width); background: #FFF9F0; border-right: 1px solid #E6D5B8; height: 100vh; position: fixed; top: 0; left: 0; overflow-y: auto; padding: 20px; box-sizing: border-box; transition: transform 0.3s ease; z-index: 1000; }
+        .sidebar.collapsed { transform: translateX(-100%); }
+        .sidebar h3 { margin-top: 0; color: #8C6239; font-size: 18px; border-bottom: 2px solid var(--primary); padding-bottom: 8px; display: flex; justify-content: space-between; align-items: center; }
+        .sidebar ul { padding-left: 15px; margin: 5px 0 15px 0; list-style-type: disc; }
+        .sidebar li { margin-bottom: 6px; font-size: 13px; }
+        .sidebar .main-menu-item { font-weight: bold; margin-bottom: 4px; font-size: 14px; list-style-type: none; margin-left: -15px; }
+        .sidebar a { color: #555; text-decoration: none; display: block; }
+        .sidebar a:hover { color: #8C6239; font-weight: bold; }
+
+        /* 切换按钮 */
+        .sidebar-toggle { position: fixed; top: 15px; left: 15px; z-index: 1100; background: var(--primary); color: white; border: none; padding: 8px 12px; border-radius: 6px; cursor: pointer; font-size: 14px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+
+        /* 主内容区 */
+        .main-content { margin-left: var(--sidebar-width); width: calc(100% - var(--sidebar-width)); padding: 20px 40px; box-sizing: border-box; max-width: 1050px; transition: margin-left 0.3s ease, width 0.3s ease; }
+        .main-content.expanded { margin-left: 0; width: 100%; }
+
+        /* 右上角固定导览列 */
+        .top-nav { position: fixed; top: 15px; right: 25px; z-index: 1050; display: flex; gap: 15px; font-size: 15px; font-weight: bold; }
+        .top-nav a { color: var(--primary); text-decoration: none; }
+        .top-nav a:hover { text-decoration: underline; color: #B5835A; }
+
+        .header { text-align: center; border-bottom: 2px solid var(--primary); padding-bottom: 10px; margin-bottom: 20px; margin-top: 20px; }
+
+        .controls { position: sticky; top: 0; background: var(--bg); padding: 15px; text-align: center; border-bottom: 1px solid #ccc; z-index: 100; margin-bottom: 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); display: flex; justify-content: center; gap: 10px; }
+        button.control-btn { background: var(--primary); color: white; border: none; padding: 10px 15px; border-radius: 6px; cursor: pointer; font-size: 14px; font-weight: bold; }
+        button.control-btn:hover { background: #B5835A; }
+
+        /* 图示化按钮 */
+        .icon-btn { background: #f8f9fa; border: 1px solid #ddd; border-radius: 50%; width: 38px; height: 38px; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; font-size: 16px; margin-right: 5px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); transition: background 0.2s; }
+        .icon-btn:hover { background: #e9ecef; }
+        .rec-btn.recording { background: #ff4d4f; color: white; animation: pulse 1.5s infinite; border-color: #ff4d4f; }
+        .play-rec-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
+
+        h2 { color: #8C6239; border-left: 5px solid var(--primary); padding-left: 10px; margin-top: 30px; }
+        .section { margin-bottom: 30px; background: var(--white); padding: 20px; border-radius: 12px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
+        .item { margin-bottom: 20px; display: flex; flex-direction: column; border-bottom: 1px dashed #eee; padding-bottom: 15px; }
+        .item-content { display: flex; align-items: center; flex-wrap: wrap; margin-bottom: 5px; gap: 5px; }
+
+        .grammar-box { background: #FFF9F0; border: 1px solid #E6D5B8; border-radius: 8px; padding: 15px; margin: 15px 0; scroll-margin-top: 80px; }
+        .note { font-size: 15px; color: #555; margin-bottom: 10px; line-height: 1.6; }
+
+        /* 表格样式统一强制设定 */
+        .custom-table { width: 100%; border-collapse: collapse; margin: 12px 0; background: #fff; border-radius: 6px; overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,0.05); table-layout: fixed; }
+        .custom-table th, .custom-table td { border: 1px solid #E6D5B8; padding: 12px; text-align: left; vertical-align: top; font-size: 15px; color: #4a4a4a; line-height: 1.6; font-family: 'Helvetica Neue', Arial, sans-serif; word-wrap: break-word; }
+        .custom-table th { background: #F4EAD3; color: #8C6239; font-weight: bold; text-align: center; font-size: 16px; }
+
+        .vocab-table th:nth-child(1), .vocab-table td:nth-child(1) { width: 40%; font-weight: bold; background: #FAF3E0; }
+        .vocab-table th:nth-child(2), .vocab-table td:nth-child(2) { width: 60%; }
+
+        /* 内嵌图片样式 */
+        .inline-img { max-width: 240px; width: 100%; height: auto; border-radius: 8px; border: 1px solid #E6D5B8; box-shadow: 0 2px 5px rgba(0,0,0,0.05); display: block; margin: 10px auto; }
+
+        /* 录音播放器独立换行区块 */
+        .audio-player-container { width: 100%; margin-top: 8px; }
+        .audio-player-container audio { width: 100%; height: 36px; }
+
+        /* 上排拼音与汉字排版 */
+        .pinyin-group { display: inline-flex; flex-direction: column; align-items: center; margin-right: 3px; vertical-align: bottom; }
+        .py-text { font-size: 11px; color: #777; line-height: 1; margin-bottom: 2px; display: block; text-align: center; white-space: nowrap; }
+        .hz-text { font-size: 15px; font-family: 'Helvetica Neue', Arial, sans-serif; line-height: 1.2; font-weight: normal; text-align: center; }
+
+        .en-trans { color: #666; font-size: 15px; font-style: italic; margin-top: 5px; display: block; }
+
+        /* 隐藏拼音与英文的控制类 */
+        body.hide-pinyin .py-text { display: none !important; }
+        body.hide-english .en-trans { display: none !important; }
+
+        @media (max-width: 900px) {
+            .sidebar { transform: translateX(-100%); }
+            .sidebar.active { transform: translateX(0); }
+            .main-content { margin-left: 0; width: 100%; padding: 20px; }
+        }
+    </style>
+</head>
+<body>
+
+    <button class="sidebar-toggle" onclick="toggleSidebar()">☰ 目录</button>
+
+    <div class="sidebar" id="sidebar">
+        <h3>📖 目录 (Outline) <button style="background:none; border:none; color:#8C6239; font-weight:bold; cursor:pointer; font-size:16px;" onclick="toggleSidebar()">×</button></h3>
+        <ul style="padding-left: 0; list-style: none;">
+            <li class="main-menu-item"><a href="#sec-0">一、暖身</a></li>
+            <ul>
+                <li><a href="#item-0-0">1. 喀喀响</a></li>
+                <li><a href="#item-0-1">2. 形容懒的说法</a></li>
+                <li><a href="#item-0-2">3. 形容这个人怪怪的成语</a></li>
+            </ul>
+            <li class="main-menu-item" style="margin-top:10px;"><a href="#sec-1">二、上次作业</a></li>
+            <ul>
+                <li><a href="#item-1-0">1. 居高不下</a></li>
+                <li><a href="#item-1-1">2. 书面语用法</a></li>
+                <li><a href="#item-1-2">3. 烹饪 / 烹调</a></li>
+                <li><a href="#item-1-3">4. 传播 / 喷</a></li>
+                <li><a href="#item-1-5">5. 误会 / 误以为</a></li>
+                <li><a href="#item-1-7">6. 随着时间推移</a></li>
+            </ul>
+            <li class="main-menu-item" style="margin-top:10px;"><a href="#sec-2">三、侨批新闻</a></li>
+            <ul>
+                <li><a href="#item-2-1">1. 暹罗 / 泰国</a></li>
+                <li><a href="#item-2-2">2. 拼搏</a></li>
+                <li><a href="#item-2-3">3. 辛勤</a></li>
+                <li><a href="#item-2-4">4. 亲身经历</a></li>
+                <li><a href="#item-2-5">5. 无可奈何</a></li>
+                <li><a href="#item-2-6">6. 寄托</a></li>
+                <li><a href="#item-2-7">7. 男丁</a></li>
+                <li><a href="#item-2-8">8. 牵挂</a></li>
+            </ul>
+        </ul>
+    </div>
+
+    <!-- 右上角固定导览列 -->
+    <div class="top-nav">
+        <a href="https://jany-mandarin.github.io/philip.html">Index</a>
+        <a href="https://jany-mandarin.github.io/philip.lesson40.html">第40堂</a>
+    </div>
+
+    <div class="main-content" id="mainContent">
+        <div class="header">
+            <h1>菲利普的第41堂中文课</h1>
+            <p>日期：2026/11/20</p>
+        </div>
+
+        <div class="controls">
+            <button class="control-btn" onclick="togglePinyin()">隐藏/显示拼音</button>
+            <button class="control-btn" onclick="toggleEnglish()">隐藏/显示英文</button>
+        </div>
+
+        <div id="content"></div>
+    </div>
+
+    <script>
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const mainContent = document.getElementById('mainContent');
+            if (window.innerWidth <= 900) {
+                sidebar.classList.toggle('active');
+            } else {
+                sidebar.classList.toggle('collapsed');
+                mainContent.classList.toggle('expanded');
+            }
+        }
+
+        function parsePinyin(text) {
+            const regex = /([一-龥a-zA-Z0-9，。？！、：""''()./])\((.*?)\)/g;
+            let parsed = text.replace(regex, (match, char, py) => {
+                return `<span class="pinyin-group"><span class="py-text">${py}</span><span class="hz-text">${char}</span></span>`;
+            });
+            return parsed;
+        }
+
+        let currentUtterance = null;
+        function playAudio(text) {
+            let cleanText = text.replace(/\(.*?\)/g, '');
+            if (speechSynthesis.speaking) {
+                speechSynthesis.cancel();
+                if (currentUtterance === cleanText) {
+                    currentUtterance = null;
+                    return;
+                }
+            }
+            const utterance = new SpeechSynthesisUtterance(cleanText);
+            utterance.lang = 'zh-CN';
+            utterance.rate = 0.85;
+            utterance.onend = () => { currentUtterance = null; };
+            currentUtterance = cleanText;
+            speechSynthesis.speak(utterance);
+        }
+
+        let mediaRecorders = {};
+        let audioUrls = {};
+
+        async function toggleRecord(btn, id) {
+            if (!mediaRecorders[id] || mediaRecorders[id].state === "inactive") {
+                try {
+                    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+                    let chunks = [];
+                    let recorder = new MediaRecorder(stream);
+
+                    recorder.ondataavailable = e => chunks.push(e.data);
+                    recorder.onstop = () => {
+                        const blob = new Blob(chunks, { 'type': 'audio/ogg; codecs=opus' });
+                        audioUrls[id] = URL.createObjectURL(blob);
+                        const playerContainer = document.getElementById(`audio-container-${id}`);
+                        playerContainer.innerHTML = `<audio controls src="${audioUrls[id]}"></audio>`;
+                    };
+
+                    recorder.start();
+                    mediaRecorders[id] = recorder;
+                    btn.innerHTML = "⏹️";
+                    btn.classList.add("recording");
+                } catch (err) {
+                    alert("麦克风权限被拒绝或不支持。");
+                }
+            } else {
+                mediaRecorders[id].stop();
+                btn.innerHTML = "🎤";
+                btn.classList.remove("recording");
+            }
+        }
+
+        function audioCell(plainText, id) {
+            return `<div class="item-content" style="margin-top:8px;">
+                <button class="icon-btn" onclick="playAudio('${plainText}')" title="朗读">🔊</button>
+                <button class="icon-btn rec-btn" onclick="toggleRecord(this, '${id}')" title="录音">🎤</button>
+                <button class="icon-btn play-rec-btn" id="play-rec-${id}" onclick="playRecording('${id}')" disabled title="播放自己">▶</button>
+            </div>
+            <div class="audio-player-container" id="audio-container-${id}"></div>`;
+        }
+
+        const kouyuRows = [
+            { left: "属(shǔ)于(yú)", leftPlain: "属于", right: "隶(lì)属(shǔ)于(yú)", rightPlain: "隶属于" },
+            { left: "做(zuò)饭(fàn)", leftPlain: "做饭", right: "烹(pēng)饪(rèn)", rightPlain: "烹饪" },
+            { left: "调(tiáo)味(wèi)", leftPlain: "调味", right: "烹(pēng)调(tiáo)", rightPlain: "烹调" },
+            { left: "设(shè)下(xià)", leftPlain: "设下", right: "设(shè)定(dìng)", rightPlain: "设定" },
+            { left: "发(fā)生(shēng)了(le)变(biàn)化(huà)", leftPlain: "发生了变化", right: "改(gǎi)变(biàn)", rightPlain: "改变" },
+            { left: "在(zài)标(biāo)签(qiān)上(shàng)注(zhù)明(míng)", leftPlain: "在标签上注明", right: "标(biāo)示(shì)", rightPlain: "标示" }
+        ];
+        const kouyuRowsHtml = kouyuRows.map((r, idx) =>
+            `<tr><td>${parsePinyin(r.left)}${audioCell(r.leftPlain, 'rec-kou-' + idx)}</td><td>${parsePinyin(r.right)}${audioCell(r.rightPlain, 'rec-shu-' + idx)}</td></tr>`
+        ).join('');
+
+        const lessonData = [
+            {
+                title: "一、暖身",
+                items: [
+                    {
+                        type: "grammar",
+                        title: "1. 喀(kā)喀(kā)响(xiǎng)",
+                        notes: ["解释：形(xíng)容(róng)声(shēng)音(yīn)的(de)词(cí)"],
+                        examples: [
+                            { zh: "最(zuì)近(jìn)我(wǒ)的(de)膝(xī)盖(gài)不(bù)知(zhī)为(wèi)什(shén)么(me)喀(kā)喀(kā)响(xiǎng)，可(kě)能(néng)是(shì)我(wǒ)最(zuì)近(jìn)比(bǐ)较(jiào)少(shǎo)运(yùn)动(dòng)，最(zuì)近(jìn)应(yīng)该(gāi)会(huì)恢(huī)复(fù)运(yùn)动(dòng)，再(zài)看(kàn)看(kàn)状(zhuàng)况(kuàng)。", en: "Recently my knees have been making a cracking sound for some reason; it's probably because I haven't been exercising much lately. I should resume exercising soon and see how it goes." }
+                        ]
+                    },
+                    {
+                        type: "grammar",
+                        title: "2. 形容懒的说法",
+                        notes: ["解释：不(bù)想(xiǎng)上(shàng)班(bān)，想(xiǎng)偷(tōu)懒(lǎn)的(de)说(shuō)法(fǎ)：无(wú)心(xīn)工(gōng)作(zuò)、心(xīn)飞(fēi)走(zǒu)了(le)、摸(mō)鱼(yú)、躺(tǎng)平(píng)、提(tí)不(bù)起(qǐ)劲(jìn)、犯(fàn)懒(lǎn)"],
+                        examples: [
+                            { zh: "十(shí)二(èr)月(yuè)的(de)假(jià)期(qī)快(kuài)到(dào)了(le)，大(dà)家(jiā)都(dōu)无(wú)心(xīn)上(shàng)班(bān)，心(xīn)都(dōu)飞(fēi)走(zǒu)了(le)。", en: "December's holiday is coming soon, and everyone has no heart for work; their minds have already flown away." },
+                            { zh: "圣(shèng)诞(dàn)节(jié)快(kuài)到(dào)了(le)，大(dà)家(jiā)都(dōu)只(zhǐ)想(xiǎng)摸(mō)鱼(yú)、躺(tǎng)平(píng)，不(bù)想(xiǎng)太(tài)认(rèn)真(zhēn)工(gōng)作(zuò)。", en: "Christmas is coming soon; everyone just wants to slack off and lie flat, not wanting to work too seriously." },
+                            { zh: "我(wǒ)今(jīn)天(tiān)就(jiù)是(shì)提(tí)不(bù)起(qǐ)劲(jìn)工(gōng)作(zuò)，觉(jué)得(de)想(xiǎng)休(xiū)息(xi)。", en: "Today I just can't find the motivation to work; I feel like resting." },
+                            { zh: "每(měi)次(cì)一(yí)到(dào)下(xià)午(wǔ)，我(wǒ)就(jiù)想(xiǎng)犯(fàn)懒(lǎn)，不(bù)工(gōng)作(zuò)，等(děng)待(dài)下(xià)班(bān)。", en: "Every time the afternoon comes, I feel like being lazy, not working, just waiting for quitting time." }
+                        ]
+                    },
+                    {
+                        type: "grammar",
+                        title: "3. 形容这个人怪怪的成语",
+                        notes: ["解释：异(yì)想(xiǎng)天(tiān)开(kāi)：形(xíng)容(róng)一(yí)个(gè)人(rén)的(de)想(xiǎng)法(fǎ)和(hé)大(dà)家(jiā)不(bù)一(yí)样(yàng)，根(gēn)本(běn)不(bù)可(kě)能(néng)实(shí)现(xiàn)，有(yǒu)负(fù)面(miàn)的(de)意(yì)思(si)。天(tiān)马(mǎ)行(xíng)空(kōng)：也(yě)是(shì)说(shuō)一(yí)个(gè)人(rén)的(de)想(xiǎng)法(fǎ)和(hé)大(dà)家(jiā)不(bù)一(yí)样(yàng)，很(hěn)天(tiān)真(zhēn)，正(zhèng)面(miàn)、负(fù)面(miàn)都(dōu)有(yǒu)。"],
+                        examples: [
+                            { zh: "以(yǐ)前(qián)莱(lái)特(tè)兄(xiōng)弟(dì)觉(jué)得(de)人(rén)类(lèi)有(yǒu)天(tiān)可(kě)以(yǐ)飞(fēi)上(shàng)天(tiān)，那(nà)时(shí)候(hou)大(dà)家(jiā)都(dōu)说(shuō)他(tā)的(de)想(xiǎng)法(fǎ)太(tài)天(tiān)马(mǎ)行(xíng)空(kōng)，根(gēn)本(běn)不(bù)可(kě)能(néng)，结(jié)果(guǒ)他(tā)们(men)发(fā)明(míng)了(le)飞(fēi)机(jī)，完(wán)成(chéng)人(rén)类(lèi)飞(fēi)行(xíng)的(de)梦(mèng)想(xiǎng)。", en: "The Wright brothers once believed humans could fly one day. At the time, everyone said his idea was far too fantastical and impossible — yet they went on to invent the airplane, fulfilling humanity's dream of flight." },
+                            { zh: "在(zài)没(méi)有(yǒu)钱(qián)的(de)情(qíng)况(kuàng)下(xià)，想(xiǎng)要(yào)做(zuò)一(yì)艘(sōu)太(tài)空(kōng)船(chuán)飞(fēi)上(shàng)月(yuè)球(qiú)，根(gēn)本(běn)是(shì)异(yì)想(xiǎng)天(tiān)开(kāi)。", en: "Wanting to build a spaceship to fly to the moon with no money at all is simply a wild, impossible fantasy." },
+                            { zh: "川(chuān)普(pǔ)想(xiǎng)要(yào)让(ràng)加(jiā)拿(ná)大(dà)变(biàn)成(chéng)美(měi)国(guó)的(de)一(yí)个(gè)州(zhōu)，根(gēn)本(běn)是(shì)异(yì)想(xiǎng)天(tiān)开(kāi)。", en: "Trump wanting to turn Canada into a U.S. state is simply a wild fantasy." }
+                        ]
+                    }
+                ]
+            },
+            {
+                title: "二、上次作业",
+                items: [
+                    {
+                        type: "grammar",
+                        title: "1. 居(jū)高(gāo)不(bú)下(xià)",
+                        notes: ["解释：形(xíng)容(róng)一(yí)个(gè)价(jià)钱(qián)、数(shù)字(zì)或(huò)状(zhuàng)态(tài)非(fēi)常(cháng)高(gāo)，都(dōu)没(méi)有(yǒu)往(wǎng)下(xià)"],
+                        examples: [
+                            { zh: "受(shòu)到(dào)天(tiān)灾(zāi)的(de)影(yǐng)响(xiǎng)，蔬(shū)菜(cài)的(de)价(jià)格(gé)一(yì)直(zhí)居(jū)高(gāo)不(bú)下(xià)。", en: "Affected by natural disasters, vegetable prices have remained consistently high." },
+                            { zh: "新(xīn)西(xī)兰(lán)的(de)弯(wān)曲(qū)杆(gǎn)菌(jūn)感(gǎn)染(rǎn)率(lǜ)一(yì)直(zhí)居(jū)高(gāo)不(bú)下(xià)。", en: "New Zealand's campylobacter infection rate has remained consistently high." },
+                            { zh: "那(nà)个(gè)政(zhèng)治(zhì)人(rén)员(yuán)做(zuò)错(cuò)事(shì)但(dàn)不(bú)下(xià)台(tái)，民(mín)众(zhòng)的(de)怨(yuàn)恨(hèn)都(dōu)居(jū)高(gāo)不(bú)下(xià)。", en: "That politician did something wrong but won't step down; public resentment remains consistently high." }
+                        ]
+                    },
+                    {
+                        type: "html",
+                        content: `<div class="grammar-box"><div style="font-weight:bold; font-size:16px; color:#8C6239; margin-bottom:5px;">2. 书(shū)面(miàn)语(yǔ)用(yòng)法(fǎ)</div><table class="custom-table"><thead><tr><th>口语</th><th>书面语</th></tr></thead><tbody>${kouyuRowsHtml}</tbody></table></div>`
+                    },
+                    {
+                        type: "grammar",
+                        title: "3. 烹(pēng)饪(rèn) / 烹(pēng)调(tiáo)",
+                        notes: ["解释：烹(pēng)饪(rèn)：比(bǐ)较(jiào)大(dà)的(de)概(gài)念(niàn)，指(zhǐ)「煮(zhǔ)饭(fàn)、做(zuò)菜(cài)」这(zhè)整(zhěng)个(gè)动(dòng)作(zuò)，从(cóng)准(zhǔn)备(bèi)食(shí)材(cái)到(dào)煮(zhǔ)熟(shú)的(de)过(guò)程(chéng)都(dōu)算(suàn)，是(shì)「做(zuò)饭(fàn)」的(de)书(shū)面(miàn)语(yǔ)说(shuō)法(fǎ)。烹(pēng)调(tiáo)：范(fàn)围(wéi)比(bǐ)较(jiào)小(xiǎo)，比(bǐ)较(jiào)着(zhuó)重(zhòng)在(zài)「用(yòng)什(shén)么(me)方(fāng)法(fǎ)、放(fàng)什(shén)么(me)调(tiáo)味(wèi)料(liào)」把(bǎ)食(shí)物(wù)煮(zhǔ)出(chū)味(wèi)道(dao)，是(shì)「调(tiáo)味(wèi)」的(de)书(shū)面(miàn)语(yǔ)说(shuō)法(fǎ)。简(jiǎn)单(dān)来(lái)说(shuō)：烹(pēng)饪(rèn)是(shì)做(zuò)菜(cài)的(de)整(zhěng)个(gè)过(guò)程(chéng)；烹(pēng)调(tiáo)比(bǐ)较(jiào)强(qiáng)调(diào)「怎(zěn)么(me)煮(zhǔ)、怎(zěn)么(me)调(tiáo)味(wèi)」这(zhè)个(gè)部(bù)分(fen)。"],
+                        examples: [
+                            { zh: "这(zhè)家(jiā)餐(cān)厅(tīng)的(de)烹(pēng)饪(rèn)方(fāng)式(shì)很(hěn)健(jiàn)康(kāng)，很(hěn)少(shǎo)用(yòng)油(yóu)。", en: "This restaurant's cooking style is very healthy; they use very little oil." },
+                            { zh: "每(měi)个(gè)地(dì)方(fāng)的(de)烹(pēng)调(tiáo)方(fāng)法(fǎ)都(dōu)不(bù)一(yí)样(yàng)，有(yǒu)的(de)地(dì)方(fāng)喜(xǐ)欢(huān)辣(là)，有(yǒu)的(de)地(dì)方(fāng)喜(xǐ)欢(huān)甜(tián)。", en: "Cooking methods differ from place to place — some regions like spicy food, others like sweet." }
+                        ]
+                    },
+                    {
+                        type: "html",
+                        content: `<div class="grammar-box"><div style="font-weight:bold; font-size:16px; color:#8C6239; margin-bottom:5px;">4. 传(chuán)播(bō) / 喷(pēn)</div>
+                            <table class="custom-table"><thead><tr><th style="width:18%;">词</th><th style="width:41%;">解释</th><th style="width:41%;">使用情境</th></tr></thead><tbody>
+                            <tr><td style="font-weight:bold;">${parsePinyin("传(chuán)播(bō)")}</td><td>${parsePinyin("一(yí)件(jiàn)事(shì)情(qíng)（像(xiàng)是(shì)病(bìng)毒(dú)、消(xiāo)息(xi)、文(wén)化(huà)）从(cóng)一(yí)个(gè)地(dì)方(fāng)，经(jīng)过(guò)很(hěn)多(duō)人(rén)或(huò)很(hěn)多(duō)方(fāng)法(fǎ)，慢(màn)慢(màn)变(biàn)成(chéng)很(hěn)多(duō)地(dì)方(fāng)的(de)人(rén)都(dōu)知(zhī)道(dào)、都(dōu)受(shòu)到(dào)影(yǐng)响(xiǎng)。")}</td><td>${parsePinyin("常(cháng)常(cháng)用(yòng)在(zài)比(bǐ)较(jiào)大(dà)的(de)范(fàn)围(wéi)，比(bǐ)如(rú)一(yí)个(gè)城(chéng)市(shì)、一(yí)个(gè)国(guó)家(jiā)，甚(shèn)至(zhì)全(quán)世(shì)界(jiè)。")}</td></tr>
+                            <tr><td style="font-weight:bold;">${parsePinyin("喷(pēn)")}</td><td>${parsePinyin("液(yè)体(tǐ)或(huò)气(qì)体(tǐ)很(hěn)用(yòng)力(lì)、很(hěn)快(kuài)地(de)从(cóng)一(yí)个(gè)小(xiǎo)地(dì)方(fāng)冲(chōng)出(chū)来(lái)。")}</td><td>${parsePinyin("通(tōng)常(cháng)是(shì)一(yí)下(xià)子(zi)的(de)动(dòng)作(zuò)，范(fàn)围(wéi)比(bǐ)较(jiào)小(xiǎo)，比(bǐ)如(rú)从(cóng)嘴(zuǐ)巴(ba)、鼻(bí)子(zi)或(huò)一(yí)个(gè)洞(dòng)喷(pēn)出(chū)来(lái)。")}</td></tr>
+                            </tbody></table>
+                            <div class="note" style="margin-top:10px;">${parsePinyin("比(bǐ)较(jiào)：一(yí)个(gè)人(rén)打(dǎ)喷(pēn)嚏(tì)（喷(pēn)）的(de)时(shí)候(hou)，病(bìng)毒(dú)会(huì)喷(pēn)出(chū)来(lái)，然(rán)后(hòu)传(chuán)播(bō)给(gěi)其(qí)他(tā)人(rén)——喷(pēn)是(shì)「小(xiǎo)动(dòng)作(zuò)」，传(chuán)播(bō)是(shì)「大(dà)范(fàn)围(wéi)的(de)结(jié)果(guǒ)」。")}</div></div>`
+                    },
+                    {
+                        type: "grammar",
+                        title: "",
+                        examples: [
+                            { zh: "这(zhè)个(gè)病(bìng)毒(dú)传(chuán)播(bō)得(de)很(hěn)快(kuài)，现(xiàn)在(zài)已(yǐ)经(jīng)有(yǒu)很(hěn)多(duō)国(guó)家(jiā)都(dōu)有(yǒu)病(bìng)人(rén)了(le)。", en: "This virus is spreading very fast; many countries already have patients now." },
+                            { zh: "这(zhè)个(gè)消(xiāo)息(xi)在(zài)网(wǎng)络(luò)上(shàng)传(chuán)播(bō)得(de)非(fēi)常(cháng)快(kuài)，一(yì)天(tiān)之(zhī)内(nèi)大(dà)家(jiā)都(dōu)知(zhī)道(dào)了(le)。", en: "This piece of news spread extremely fast online; within a day everyone knew about it." },
+                            { zh: "这(zhè)部(bù)电(diàn)影(yǐng)想(xiǎng)传(chuán)播(bō)的(de)是(shì)爱(ài)与(yǔ)和(hé)平(píng)的(de)精(jīng)神(shén)。", en: "What this movie wants to convey is the spirit of love and peace." },
+                            { zh: "他(tā)打(dǎ)喷(pēn)嚏(tì)的(de)时(shí)候(hou)，口(kǒu)水(shuǐ)喷(pēn)到(dào)了(le)我(wǒ)的(de)脸(liǎn)上(shàng)。", en: "When he sneezed, saliva sprayed onto my face." },
+                            { zh: "你(nǐ)可(kě)以(yǐ)帮(bāng)我(wǒ)喷(pēn)一(yì)点(diǎn)香(xiāng)水(shuǐ)吗(ma)？", en: "Can you spray a little perfume on me?" },
+                            { zh: "火(huǒ)山(shān)喷(pēn)出(chū)了(le)很(hěn)多(duō)烟(yān)和(hé)石(shí)头(tou)。", en: "The volcano spewed out a lot of smoke and rocks." }
+                        ]
+                    },
+                    {
+                        type: "html",
+                        content: `<div class="grammar-box"><div style="font-weight:bold; font-size:16px; color:#8C6239; margin-bottom:5px;">5. 误(wù)会(huì) / 误(wù)以(yǐ)为(wéi)</div>
+                            <table class="custom-table"><thead><tr><th style="width:18%;">词</th><th style="width:41%;">解释</th><th style="width:41%;">使用情境</th></tr></thead><tbody>
+                            <tr><td style="font-weight:bold;">${parsePinyin("误(wù)会(huì)")}</td><td>${parsePinyin("当(dāng)你(nǐ)听(tīng)到(dào)或(huò)看(kàn)到(dào)别(bié)人(rén)做(zuò)的(de)事(shì)、说(shuō)的(de)话(huà)，但(dàn)你(nǐ)理(lǐ)解(jiě)的(de)意(yì)思(si)和(hé)对(duì)方(fāng)真(zhēn)正(zhèng)的(de)意(yì)思(si)不(bù)一(yí)样(yàng)，你(nǐ)想(xiǎng)的(de)是(shì)「不(bù)好(hǎo)的(de)」或(huò)「错(cuò)误(wù)的(de)」理(lǐ)解(jiě)。")}</td><td>${parsePinyin("通(tōng)常(cháng)跟(gēn)「人(rén)跟(gēn)人(rén)之(zhī)间(jiān)」的(de)感(gǎn)觉(jué)或(huò)关(guān)系(xi)有(yǒu)关(guān)。")}</td></tr>
+                            <tr><td style="font-weight:bold;">${parsePinyin("误(wù)以(yǐ)为(wéi)")}</td><td>${parsePinyin("你(nǐ)心(xīn)里(lǐ)本(běn)来(lái)相(xiāng)信(xìn)一(yí)件(jiàn)事(shì)是(shì)真(zhēn)的(de)，但(dàn)后(hòu)来(lái)发(fā)现(xiàn)不(bú)是(shì)真(zhēn)的(de)，你(nǐ)「相(xiāng)信(xìn)错(cuò)了(le)」。")}</td><td>${parsePinyin("比(bǐ)较(jiào)常(cháng)用(yòng)在(zài)「事(shì)实(shí)」上(shàng)面(miàn)，不(bù)一(yí)定(dìng)跟(gēn)别(bié)人(rén)的(de)感(gǎn)觉(jué)有(yǒu)关(guān)。")}</td></tr>
+                            </tbody></table>
+                            <div class="note" style="margin-top:10px;">${parsePinyin("比(bǐ)较(jiào)：误(wù)会(huì)是(shì)「我(wǒ)以(yǐ)为(wéi)你(nǐ)生(shēng)气(qì)了(le)，但(dàn)其(qí)实(shí)你(nǐ)没(méi)有(yǒu)」（跟(gēn)感(gǎn)觉(jué)有(yǒu)关(guān)）；误(wù)以(yǐ)为(wéi)是(shì)「我(wǒ)以(yǐ)为(wéi)今(jīn)天(tiān)放(fàng)假(jià)，但(dàn)其(qí)实(shí)没(méi)有(yǒu)」（跟(gēn)事(shì)实(shí)有(yǒu)关(guān)）。")}</div></div>`
+                    },
+                    {
+                        type: "grammar",
+                        title: "",
+                        examples: [
+                            { zh: "不(bú)要(yào)误(wù)会(huì)我(wǒ)的(de)意(yì)思(si)，我(wǒ)不(bú)是(shì)在(zài)骂(mà)你(nǐ)，我(wǒ)只(zhǐ)是(shì)在(zài)跟(gēn)你(nǐ)讨(tǎo)论(lùn)。", en: "Don't misunderstand what I mean — I'm not scolding you, I'm just discussing it with you." },
+                            { zh: "我(wǒ)误(wù)以(yǐ)为(wéi)今(jīn)天(tiān)是(shì)国(guó)定(dìng)假(jià)日(rì)，所(suǒ)以(yǐ)没(méi)有(yǒu)去(qù)上(shàng)班(bān)，结(jié)果(guǒ)被(bèi)老(lǎo)板(bǎn)骂(mà)了(le)。", en: "I mistakenly thought today was a national holiday, so I didn't go to work, and ended up getting scolded by my boss." },
+                            { zh: "我(wǒ)误(wù)以(yǐ)为(wéi)这(zhè)家(jiā)餐(cān)厅(tīng)已(yǐ)经(jīng)关(guān)了(le)，没(méi)想(xiǎng)到(dào)它(tā)还(hái)在(zài)营(yíng)业(yè)。", en: "I mistakenly thought this restaurant had already closed, but it turns out it's still open." }
+                        ]
+                    },
+                    {
+                        type: "grammar",
+                        title: "6. 随(suí)着(zhe)时(shí)间(jiān)推(tuī)移(yí)",
+                        notes: ["解释：这(zhè)句(jù)话(huà)通(tōng)常(cháng)会(huì)放(fàng)在(zài)句(jù)子(zi)的(de)前(qián)面(miàn)，不(bú)太(tài)会(huì)放(fàng)在(zài)句(jù)中(zhōng)，表(biǎo)示(shì)随(suí)着(zhe)时(shí)间(jiān)过(guò)去(qù)，有(yǒu)什(shén)么(me)改(gǎi)变(biàn)"],
+                        examples: [
+                            { zh: "随(suí)着(zhe)时(shí)间(jiān)的(de)推(tuī)移(yí)，新(xīn)西(xī)兰(lán)的(de)弯(wān)曲(qū)菌(jūn)感(gǎn)染(rǎn)率(lǜ)已(yǐ)明(míng)显(xiǎn)下(xià)降(jiàng)。", en: "Over time, New Zealand's campylobacter infection rate has clearly declined." },
+                            { zh: "随(suí)着(zhe)时(shí)间(jiān)的(de)推(tuī)移(yí)，人(rén)们(men)对(duì)食(shí)品(pǐn)安(ān)全(quán)的(de)认(rèn)识(shi)逐(zhú)渐(jiàn)提(tí)高(gāo)。", en: "Over time, people's awareness of food safety has gradually increased." }
+                        ]
+                    }
+                ]
+            },
+            {
+                title: "三、侨批新闻",
+                items: [
+                    {
+                        type: "html",
+                        content: `<p style="margin-top:0;">参考新闻：《侨批背后的万里乡愁：给阿嬷的情书，由初代华人移民共同写就》(RNZ 中文, 2026/7/17) — <a href="https://www.rnz.co.nz/news/chinese/728650" target="_blank" style="color:var(--primary); font-weight:bold;">新闻连结</a></p>`
+                    },
+                    {
+                        type: "grammar",
+                        title: "1. 暹(xiān)罗(luó) / 泰(tài)国(guó)",
+                        notes: ["解释：暹(xiān)罗(luó)：泰(tài)国(guó)这(zhè)个(gè)国(guó)家(jiā)以(yǐ)前(qián)（大(dà)概(gài)1939年(nián)以(yǐ)前(qián)）的(de)名(míng)字(zì)，跟(gēn)历(lì)史(shǐ)、文(wén)化(huà)有(yǒu)关(guān)时(shí)比(bǐ)较(jiào)常(cháng)用(yòng)。泰(tài)国(guó)：这(zhè)个(gè)国(guó)家(jiā)现(xiàn)在(zài)正(zhèng)式(shì)的(de)名(míng)字(zì)。有(yǒu)一(yí)个(gè)说(shuō)法(fǎ)是(shì)，泰(tài)文(wén)里(lǐ)的(de)「泰(tài)」这(zhè)个(gè)字(zì)有(yǒu)「自(zì)由(yóu)」的(de)意(yì)思(si)，所(suǒ)以(yǐ)「泰(tài)国(guó)」也(yě)可(kě)以(yǐ)理(lǐ)解(jiě)成(chéng)「自(zì)由(yóu)的(de)国(guó)家(jiā)」。"],
+                        examples: [
+                            { zh: "以(yǐ)前(qián)的(de)中(zhōng)国(guó)人(rén)常(cháng)常(cháng)说(shuō)要(yào)去(qù)暹(xiān)罗(luó)讨(tǎo)生(shēng)活(huó)，暹(xiān)罗(luó)就(jiù)是(shì)现(xiàn)在(zài)的(de)泰(tài)国(guó)。", en: "In the past, Chinese people often said they were going to Siam to make a living — Siam is what is now called Thailand." }
+                        ]
+                    },
+                    {
+                        type: "grammar",
+                        title: "2. 拼(pīn)搏(bó)",
+                        notes: ["解释：为(wèi)了(le)一(yí)个(gè)目(mù)标(biāo)，很(hěn)努(nǔ)力(lì)、很(hěn)用(yòng)力(lì)地(de)去(qù)做(zuò)，像(xiàng)是(shì)在(zài)比(bǐ)赛(sài)的(de)时(shí)候(hou)"],
+                        examples: [
+                            { zh: "运(yùn)动(dòng)员(yuán)为(wèi)了(le)赢(yíng)得(dé)比(bǐ)赛(sài)，拼(pīn)搏(bó)到(dào)最(zuì)后(hòu)一(yì)秒(miǎo)。", en: "The athlete fought hard all the way to the last second to win the competition." },
+                            { zh: "他(tā)为(wèi)了(le)实(shí)现(xiàn)自(zì)己(jǐ)的(de)梦(mèng)想(xiǎng)，拼(pīn)搏(bó)了(le)十(shí)几(jǐ)年(nián)，终(zhōng)于(yú)成(chéng)功(gōng)了(le)。", en: "He struggled hard for over a decade to achieve his dream, and finally succeeded." },
+                            { zh: "这(zhè)家(jiā)公(gōng)司(sī)刚(gāng)成(chéng)立(lì)的(de)时(shí)候(hou)，大(dà)家(jiā)都(dōu)拼(pīn)搏(bó)到(dào)很(hěn)晚(wǎn)才(cái)下(xià)班(bān)，一(yì)起(qǐ)把(bǎ)生(shēng)意(yì)做(zuò)起(qǐ)来(lái)。", en: "When this company was first founded, everyone fought hard and worked late together to build up the business." },
+                            { zh: "很(hěn)多(duō)早(zǎo)期(qī)的(de)华(huá)人(rén)移(yí)民(mín)，离(lí)开(kāi)家(jiā)乡(xiāng)去(qù)国(guó)外(wài)拼(pīn)搏(bó)，就(jiù)是(shì)希(xī)望(wàng)家(jiā)人(rén)能(néng)过(guò)上(shàng)更(gèng)好(hǎo)的(de)生(shēng)活(huó)。", en: "Many early Chinese immigrants left their hometowns to struggle abroad, hoping their families could live a better life." }
+                        ]
+                    },
+                    {
+                        type: "grammar",
+                        title: "3. 辛(xīn)勤(qín)",
+                        notes: ["解释：辛(xīn)勤(qín)：形(xíng)容(róng)一(yí)个(gè)人(rén)每(měi)天(tiān)都(dōu)很(hěn)努(nǔ)力(lì)、很(hěn)认(rèn)真(zhēn)地(de)工(gōng)作(zuò)，花(huā)很(hěn)多(duō)时(shí)间(jiān)和(hé)力(lì)气(qì)，而(ér)且(qiě)很(hěn)有(yǒu)耐(nài)心(xīn)，是(shì)长(cháng)期(qī)这(zhè)样(yàng)做(zuò)，不(bú)是(shì)只(zhǐ)有(yǒu)一(yì)天(tiān)。跟(gēn)「勤(qín)劳(láo)」意(yì)思(si)很(hěn)接(jiē)近(jìn)——「勤(qín)劳(láo)」单(dān)纯(chún)说(shuō)这(zhè)个(gè)人(rén)个(gè)性(xìng)很(hěn)努(nǔ)力(lì)、不(bù)偷(tōu)懒(lǎn)；「辛(xīn)勤(qín)」更(gèng)强(qiáng)调(diào)「很(hěn)辛(xīn)苦(kǔ)、很(hěn)累(lèi)」的(de)感(gǎn)觉(jué)。"],
+                        examples: [
+                            { zh: "农(nóng)夫(fū)每(měi)天(tiān)都(dōu)很(hěn)辛(xīn)勤(qín)地(de)工(gōng)作(zuò)，才(cái)能(néng)种(zhòng)出(chū)好(hǎo)吃(chī)的(de)蔬(shū)菜(cài)。", en: "Farmers work diligently every day so they can grow delicious vegetables." },
+                            { zh: "她(tā)辛(xīn)勤(qín)了(le)一(yí)辈(bèi)子(zi)，才(cái)把(bǎ)孩(hái)子(zi)养(yǎng)大(dà)、送(sòng)他(tā)们(men)上(shàng)大(dà)学(xué)。", en: "She toiled diligently her whole life in order to raise her children and send them to university." },
+                            { zh: "这(zhè)家(jiā)店(diàn)的(de)老(lǎo)板(bǎn)很(hěn)勤(qín)劳(láo)，每(měi)天(tiān)都(dōu)是(shì)第(dì)一(yī)个(gè)开(kāi)门(mén)、最(zuì)后(hòu)一(yí)个(gè)关(guān)门(mén)的(de)人(rén)。", en: "This shop's owner is very hardworking — every day he's the first to open and the last to close." }
+                        ]
+                    },
+                    {
+                        type: "grammar",
+                        title: "4. 亲(qīn)身(shēn)经(jīng)历(lì)",
+                        notes: ["解释：自(zì)己(jǐ)真(zhēn)的(de)做(zuò)过(guò)、看(kàn)过(guò)或(huò)感(gǎn)受(shòu)过(guò)的(de)事(shì)情(qíng)，不(bú)是(shì)听(tīng)别(bié)人(rén)说(shuō)的(de)"],
+                        examples: [
+                            { zh: "这(zhè)不(bú)是(shì)我(wǒ)听(tīng)说(shuō)的(de)，是(shì)我(wǒ)的(de)亲(qīn)身(shēn)经(jīng)历(lì)，我(wǒ)真(zhēn)的(de)看(kàn)到(dào)了(le)。", en: "This isn't something I heard from others — it's my own firsthand experience, I really saw it myself." },
+                            { zh: "她(tā)根(gēn)据(jù)自(zì)己(jǐ)的(de)亲(qīn)身(shēn)经(jīng)历(lì)，写(xiě)了(le)一(yì)本(běn)书(shū)，跟(gēn)大(dà)家(jiā)分(fēn)享(xiǎng)她(tā)的(de)故(gù)事(shì)。", en: "Based on her own firsthand experience, she wrote a book to share her story with everyone." },
+                            { zh: "如(rú)果(guǒ)不(bú)是(shì)亲(qīn)身(shēn)经(jīng)历(lì)过(guò)，你(nǐ)很(hěn)难(nán)理(lǐ)解(jiě)那(nà)种(zhǒng)感(gǎn)觉(jué)。", en: "If you haven't experienced it firsthand, it's hard to understand that feeling." },
+                            { zh: "这(zhè)位(wèi)作(zuò)家(jiā)用(yòng)他(tā)在(zài)战(zhàn)争(zhēng)中(zhōng)的(de)亲(qīn)身(shēn)经(jīng)历(lì)，写(xiě)出(chū)了(le)很(hěn)感(gǎn)动(dòng)人(rén)的(de)故(gù)事(shì)。", en: "This writer used his firsthand experience from the war to write a very moving story." }
+                        ]
+                    },
+                    {
+                        type: "grammar",
+                        title: "5. 无(wú)可(kě)奈(nài)何(hé)",
+                        notes: ["解释：一(yí)个(gè)成(chéng)语(yǔ)，意(yì)思(si)是(shì)「没(méi)有(yǒu)办(bàn)法(fǎ)、没(méi)有(yǒu)选(xuǎn)择(zé)」，不(bù)管(guǎn)怎(zěn)么(me)做(zuò)都(dōu)改(gǎi)变(biàn)不(bù)了(liǎo)现(xiàn)在(zài)的(de)情(qíng)况(kuàng)，心(xīn)里(lǐ)会(huì)觉(jué)得(de)很(hěn)无(wú)力(lì)。里(lǐ)面(miàn)的(de)「奈(nài)」这(zhè)个(gè)字(zì)，本(běn)来(lái)的(de)意(yì)思(si)是(shì)「怎(zěn)么(me)样(yàng)、拿(ná)……怎(zěn)么(me)办(bàn)」，所(suǒ)以(yǐ)「无(wú)可(kě)奈(nài)何(hé)」直(zhí)接(jiē)翻(fān)译(yì)就(jiù)是(shì)「没(méi)有(yǒu)任(rèn)何(hé)方(fāng)法(fǎ)可(kě)以(yǐ)拿(ná)它(tā)怎(zěn)么(me)办(bàn)」。"],
+                        examples: [
+                            { zh: "现(xiàn)在(zài)塞(sāi)车(chē)塞(sāi)得(de)很(hěn)严(yán)重(zhòng)，我(wǒ)们(men)也(yě)无(wú)可(kě)奈(nài)何(hé)，只(zhǐ)能(néng)等(děng)。", en: "Traffic is very heavy right now, and there's nothing we can do about it — we can only wait." },
+                            { zh: "老(lǎo)板(bǎn)突(tū)然(rán)说(shuō)明(míng)天(tiān)要(yào)加(jiā)班(bān)，大(dà)家(jiā)都(dōu)很(hěn)无(wú)可(kě)奈(nài)何(hé)，只(zhǐ)好(hǎo)配(pèi)合(hé)。", en: "The boss suddenly said we need to work overtime tomorrow; everyone felt helpless but had no choice but to go along with it." },
+                            { zh: "以(yǐ)前(qián)潮(cháo)汕(shàn)地(dì)区(qū)有(yǒu)一(yí)句(jù)话(huà)叫(jiào)「无(wú)可(kě)奈(nài)何(hé)过(guò)暹(xiān)罗(luó)」，形(xíng)容(róng)以(yǐ)前(qián)的(de)人(rén)为(wèi)了(le)生(shēng)活(huó)，不(bù)得(dé)不(bù)离(lí)开(kāi)家(jiā)乡(xiāng)去(qù)暹(xiān)罗(luó)工(gōng)作(zuò)。", en: "In the past, there was a saying in the Chaoshan region, 'helplessly crossing to Siam,' describing how people back then had no choice but to leave their hometowns and go work in Siam just to survive." }
+                        ]
+                    },
+                    {
+                        type: "grammar",
+                        title: "6. 寄(jì)托(tuō)",
+                        notes: ["解释：这(zhè)个(gè)字(zì)有(yǒu)两(liǎng)个(gè)意(yì)思(si)：第(dì)一(yī)，把(bǎ)一(yí)个(gè)东(dōng)西(xi)（像(xiàng)是(shì)信(xìn)、钱(qián)、物(wù)品(pǐn)）交(jiāo)给(gěi)别(bié)人(rén)，请(qǐng)对(duì)方(fāng)带(dài)给(gěi)另(lìng)外(wài)一(yí)个(gè)人(rén)；第(dì)二(èr)，把(bǎ)自(zì)己(jǐ)的(de)感(gǎn)情(qíng)、希(xī)望(wàng)或(huò)想(xiǎng)法(fǎ)，放(fàng)在(zài)一(yí)件(jiàn)事(shì)情(qíng)或(huò)一(yí)个(gè)东(dōng)西(xi)上(shàng)面(miàn)。这(zhè)次(cì)新(xīn)闻(wén)里(lǐ)提(tí)到(dào)的(de)「侨(qiáo)批(pī)」，就(jiù)是(shì)以(yǐ)前(qián)华(huá)人(rén)移(yí)民(mín)寄(jì)回(huí)家(jiā)乡(xiāng)的(de)信(xìn)和(hé)钱(qián)，里(lǐ)面(miàn)不(bù)只(zhǐ)寄(jì)托(tuō)了(le)钱(qián)，也(yě)寄(jì)托(tuō)了(le)他(tā)们(men)对(duì)家(jiā)人(rén)的(de)思(sī)念(niàn)和(hé)爱(ài)。"],
+                        examples: [
+                            { zh: "他(tā)把(bǎ)对(duì)家(jiā)人(rén)的(de)思(sī)念(niàn)，都(dōu)寄(jì)托(tuō)在(zài)每(měi)个(gè)月(yuè)寄(jì)回(huí)家(jiā)的(de)信(xìn)里(lǐ)。", en: "He puts all his longing for his family into the letters he sends home every month." },
+                            { zh: "这(zhè)封(fēng)信(xìn)寄(jì)托(tuō)了(le)妈(mā)妈(ma)对(duì)孩(hái)子(zi)满(mǎn)满(mǎn)的(de)爱(ài)与(yǔ)期(qī)待(dài)。", en: "This letter carries all of the mother's love and hopes for her child." },
+                            { zh: "侨(qiáo)批(pī)不(bù)只(zhǐ)是(shì)钱(qián)，也(yě)是(shì)华(huá)人(rén)移(yí)民(mín)寄(jì)托(tuō)思(sī)念(niàn)、报(bào)平(píng)安(ān)的(de)方(fāng)式(shì)。", en: "Qiaopi letters weren't just about money — they were also a way for Chinese immigrants to convey their longing and let family know they were safe." }
+                        ]
+                    },
+                    {
+                        type: "grammar",
+                        title: "7. 男(nán)丁(dīng)",
+                        notes: ["解释：指(zhǐ)一(yí)个(gè)家(jiā)庭(tíng)里(lǐ)的(de)男(nán)生(shēng)，特(tè)别(bié)是(shì)儿(ér)子(zi)、孙(sūn)子(zi)这(zhè)种(zhǒng)可(kě)以(yǐ)「传(chuán)宗(zōng)接(jiē)代(dài)」（继(jì)续(xù)家(jiā)族(zú)的(de)姓(xìng)氏(shì)、血(xuè)脉(mài)）的(de)男(nán)性(xìng)成(chéng)员(yuán)。这(zhè)个(gè)词(cí)比(bǐ)较(jiào)传(chuán)统(tǒng)、比(bǐ)较(jiào)正(zhèng)式(shì)，现(xiàn)在(zài)日(rì)常(cháng)生(shēng)活(huó)比(bǐ)较(jiào)少(shǎo)用(yòng)，通(tōng)常(cháng)出(chū)现(xiàn)在(zài)讲(jiǎng)「家(jiā)族(zú)」的(de)时(shí)候(hou)。"],
+                        examples: [
+                            { zh: "以(yǐ)前(qián)的(de)人(rén)观(guān)念(niàn)比(bǐ)较(jiào)传(chuán)统(tǒng)，觉(jué)得(de)一(yí)定(dìng)要(yào)生(shēng)男(nán)丁(dīng)，才(cái)能(néng)传(chuán)宗(zōng)接(jiē)代(dài)。", en: "People in the past had more traditional ideas and felt they had to have a son in order to carry on the family line." },
+                            { zh: "在(zài)那(nà)个(gè)年(nián)代(dài)，家(jiā)里(lǐ)的(de)男(nán)丁(dīng)常(cháng)常(cháng)要(yào)离(lí)开(kāi)家(jiā)乡(xiāng)，出(chū)国(guó)工(gōng)作(zuò)赚(zhuàn)钱(qián)，寄(jì)钱(qián)回(huí)家(jiā)养(yǎng)活(huó)全(quán)家(jiā)人(rén)。", en: "In that era, the male heirs of a family often had to leave their hometown to work abroad and earn money, sending money home to support the whole family." }
+                        ]
+                    },
+                    {
+                        type: "grammar",
+                        title: "8. 牵(qiān)挂(guà)",
+                        notes: ["解释：想(xiǎng)像(xiàng)一(yí)个(gè)东(dōng)西(xi)挂(guà)在(zài)心(xīn)上(shàng)，心(xīn)里(lǐ)一(yì)直(zhí)想(xiǎng)着(zhe)、担(dān)心(xīn)着(zhe)某(mǒu)一(yí)个(gè)人(rén)或(huò)某(mǒu)一(yí)件(jiàn)事(shì)，没(méi)办(bàn)法(fǎ)完(wán)全(quán)放(fàng)心(xīn)，通(tōng)常(cháng)是(shì)因(yīn)为(wèi)很(hěn)在(zài)意(yì)对(duì)方(fāng)，或(huò)是(shì)离(lí)对(duì)方(fāng)很(hěn)远(yuǎn)、没(méi)办(bàn)法(fǎ)常(cháng)常(cháng)见(jiàn)面(miàn)，才(cái)会(huì)有(yǒu)这(zhè)种(zhǒng)感(gǎn)觉(jué)。常(cháng)常(cháng)用(yòng)在(zài)家(jiā)人(rén)、朋(péng)友(yǒu)之(zhī)间(jiān)的(de)感(gǎn)情(qíng)上(shàng)面(miàn)。"],
+                        examples: [
+                            { zh: "妈(mā)妈(ma)最(zuì)牵(qiān)挂(guà)的(de)就(jiù)是(shì)在(zài)国(guó)外(wài)读(dú)书(shū)的(de)孩(hái)子(zi)，每(měi)天(tiān)都(dōu)担(dān)心(xīn)他(tā)吃(chī)得(de)好(hǎo)不(bù)好(hǎo)。", en: "What a mother worries about most is her child studying abroad — she worries every day about whether he's eating well." },
+                            { zh: "虽(suī)然(rán)他(tā)已(yǐ)经(jīng)出(chū)国(guó)很(hěn)多(duō)年(nián)了(le)，但(dàn)心(xīn)里(lǐ)一(yì)直(zhí)牵(qiān)挂(guà)着(zhe)家(jiā)乡(xiāng)的(de)父(fù)母(mǔ)。", en: "Even though he has been abroad for many years, he still constantly worries about and misses his parents back home." },
+                            { zh: "侨(qiáo)批(pī)里(lǐ)常(cháng)常(cháng)写(xiě)满(mǎn)了(le)华(huá)人(rén)移(yí)民(mín)对(duì)家(jiā)人(rén)的(de)牵(qiān)挂(guà)与(yǔ)思(sī)念(niàn)。", en: "Qiaopi letters are often filled with the longing and concern Chinese immigrants felt for their families." }
+                        ]
+                    }
+                ]
+            }
+        ];
+
+        const container = document.getElementById('content');
+        let counter = 0;
+
+        lessonData.forEach((sec, sIdx) => {
+            let html = `<div class="section" id="sec-${sIdx}">`;
+            if (sec.title) html += `<h2>${sec.title}</h2>`;
+
+            sec.items.forEach((item, iIdx) => {
+                if (item.type === "html") {
+                    html += `<div style="margin: 15px 0;" id="item-${sIdx}-${iIdx}">${item.content}</div>`;
+                } else if (item.type === "vocab-table-custom") {
+                    html += `<div class="grammar-box" id="item-${sIdx}-${iIdx}">`;
+                    html += `<table class="custom-table vocab-table"><thead><tr>`;
+                    html += `<th>中文 (Chinese)</th><th>英文解释 (English)</th>`;
+                    html += `</tr></thead><tbody>`;
+
+                    item.rows.forEach((row, rIdx) => {
+                        let recId = `rec-vocab-${rIdx}`;
+                        html += `<tr>`;
+                        html += `<td>
+                            ${parsePinyin(row.hz)}
+                            <div class="item-content" style="margin-top:8px;">
+                                <button class="icon-btn" onclick="playAudio('${row.plain}')" title="朗读">🔊</button>
+                                <button class="icon-btn rec-btn" onclick="toggleRecord(this, '${recId}')" title="录音">🎤</button>
+                                <button class="icon-btn play-rec-btn" id="play-rec-${recId}" onclick="playRecording('${recId}')" disabled title="播放自己">▶</button>
+                            </div>
+                            <div class="audio-player-container" id="audio-container-${recId}"></div>
+                        </td>`;
+                        html += `<td>${row.en}</td>`;
+                        html += `</tr>`;
+                    });
+                    html += `</tbody></table></div>`;
+                } else if (item.type === "grammar") {
+                    html += `<div class="grammar-box" id="item-${sIdx}-${iIdx}">`;
+                    if(item.title) {
+                        html += `<div style="font-weight:bold; font-size:16px; color:#8C6239; margin-bottom:5px;">${parsePinyin(item.title)}</div>`;
+                    }
+                    if(item.notes) {
+                        item.notes.forEach(note => {
+                            html += `<div class="note">${parsePinyin(note)}</div>`;
+                        });
+                    }
+                    if(item.note) {
+                        html += `<div class="note">${parsePinyin(item.note)}</div>`;
+                    }
+                    if(item.htmlContent) {
+                        html += item.htmlContent;
+                    }
+
+                    if (item.examples) {
+                        item.examples.forEach(ex => {
+                            html += `
+                            <div class="item" style="border:none; margin-top:10px; padding-bottom:0;">
+                                <div class="item-content">
+                                    <button class="icon-btn" onclick="playAudio('${ex.zh}')" title="朗读">🔊</button>
+                                    <button class="icon-btn rec-btn" onclick="toggleRecord(this, 'rec-${counter}')" title="录音">🎤</button>
+                                    <button class="icon-btn play-rec-btn" id="play-rec-rec-${counter}" onclick="playRecording('rec-${counter}')" disabled title="播放自己">▶</button>
+                                </div>
+                                <div class="audio-player-container" id="audio-container-rec-${counter}"></div>
+                                <div style="margin-top:5px;">${parsePinyin(ex.zh)}</div>
+                                <div class="en-trans">${ex.en}</div>
+                            </div>`;
+                            counter++;
+                        });
+                    }
+                    html += `</div>`;
+                }
+            });
+            html += `</div>`;
+            container.innerHTML += html;
+        });
+
+        function playRecording(id) {
+            if (audioUrls[id]) {
+                const audio = new Audio(audioUrls[id]);
+                audio.play();
+            }
+        }
+
+        function togglePinyin() {
+            document.body.classList.toggle('hide-pinyin');
+        }
+
+        function toggleEnglish() {
+            document.body.classList.toggle('hide-english');
+        }
+    </script>
+</body>
+</html>
