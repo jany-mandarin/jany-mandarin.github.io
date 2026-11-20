@@ -54,7 +54,7 @@
         .item-content { display: flex; align-items: center; flex-wrap: wrap; margin-bottom: 5px; gap: 5px; }
 
         .grammar-box { background: #FFF9F0; border: 1px solid #E6D5B8; border-radius: 8px; padding: 15px; margin: 15px 0; scroll-margin-top: 80px; }
-        .note { font-size: 15px; color: #555; margin-bottom: 10px; line-height: 1.6; }
+        .note { font-size: 20px; color: #555; margin-top: 10px; margin-bottom: 10px; line-height: 1.6; background: #fdfaf6; padding: 8px 14px; border-left: 3px solid #D4A373; border-radius: 4px; }
 
         /* 表格样式统一强制设定 */
         .custom-table { width: 100%; border-collapse: collapse; margin: 12px 0; background: #fff; border-radius: 6px; overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,0.05); table-layout: fixed; }
@@ -286,7 +286,7 @@
                     },
                     {
                         type: "html",
-                        content: `<div class="grammar-box"><div style="font-weight:bold; font-size:16px; color:#8C6239; margin-bottom:5px;">2. 书(shū)面(miàn)语(yǔ)用(yòng)法(fǎ)</div><table class="custom-table"><thead><tr><th>口语</th><th>书面语</th></tr></thead><tbody>${kouyuRowsHtml}</tbody></table></div>`
+                        content: `<div class="grammar-box"><div style="font-weight:bold; font-size:20px; color:#8C6239; margin-bottom:5px;">${parsePinyin("2. 书(shū)面(miàn)语(yǔ)用(yòng)法(fǎ)")}</div><table class="custom-table"><thead><tr><th>口语</th><th>书面语</th></tr></thead><tbody>${kouyuRowsHtml}</tbody></table></div>`
                     },
                     {
                         type: "grammar",
@@ -299,7 +299,7 @@
                     },
                     {
                         type: "html",
-                        content: `<div class="grammar-box"><div style="font-weight:bold; font-size:16px; color:#8C6239; margin-bottom:5px;">4. 传(chuán)播(bō) / 喷(pēn)</div>
+                        content: `<div class="grammar-box"><div style="font-weight:bold; font-size:20px; color:#8C6239; margin-bottom:5px;">${parsePinyin("4. 传(chuán)播(bō) / 喷(pēn)")}</div>
                             <table class="custom-table"><thead><tr><th style="width:18%;">词</th><th style="width:41%;">解释</th><th style="width:41%;">使用情境</th></tr></thead><tbody>
                             <tr><td style="font-weight:bold;">${parsePinyin("传(chuán)播(bō)")}</td><td>${parsePinyin("一(yí)件(jiàn)事(shì)情(qíng)（像(xiàng)是(shì)病(bìng)毒(dú)、消(xiāo)息(xi)、文(wén)化(huà)）从(cóng)一(yí)个(gè)地(dì)方(fāng)，经(jīng)过(guò)很(hěn)多(duō)人(rén)或(huò)很(hěn)多(duō)方(fāng)法(fǎ)，慢(màn)慢(màn)变(biàn)成(chéng)很(hěn)多(duō)地(dì)方(fāng)的(de)人(rén)都(dōu)知(zhī)道(dào)、都(dōu)受(shòu)到(dào)影(yǐng)响(xiǎng)。")}</td><td>${parsePinyin("常(cháng)常(cháng)用(yòng)在(zài)比(bǐ)较(jiào)大(dà)的(de)范(fàn)围(wéi)，比(bǐ)如(rú)一(yí)个(gè)城(chéng)市(shì)、一(yí)个(gè)国(guó)家(jiā)，甚(shèn)至(zhì)全(quán)世(shì)界(jiè)。")}</td></tr>
                             <tr><td style="font-weight:bold;">${parsePinyin("喷(pēn)")}</td><td>${parsePinyin("液(yè)体(tǐ)或(huò)气(qì)体(tǐ)很(hěn)用(yòng)力(lì)、很(hěn)快(kuài)地(de)从(cóng)一(yí)个(gè)小(xiǎo)地(dì)方(fāng)冲(chōng)出(chū)来(lái)。")}</td><td>${parsePinyin("通(tōng)常(cháng)是(shì)一(yí)下(xià)子(zi)的(de)动(dòng)作(zuò)，范(fàn)围(wéi)比(bǐ)较(jiào)小(xiǎo)，比(bǐ)如(rú)从(cóng)嘴(zuǐ)巴(ba)、鼻(bí)子(zi)或(huò)一(yí)个(gè)洞(dòng)喷(pēn)出(chū)来(lái)。")}</td></tr>
@@ -320,7 +320,7 @@
                     },
                     {
                         type: "html",
-                        content: `<div class="grammar-box"><div style="font-weight:bold; font-size:16px; color:#8C6239; margin-bottom:5px;">5. 误(wù)会(huì) / 误(wù)以(yǐ)为(wéi)</div>
+                        content: `<div class="grammar-box"><div style="font-weight:bold; font-size:20px; color:#8C6239; margin-bottom:5px;">${parsePinyin("5. 误(wù)会(huì) / 误(wù)以(yǐ)为(wéi)")}</div>
                             <table class="custom-table"><thead><tr><th style="width:18%;">词</th><th style="width:41%;">解释</th><th style="width:41%;">使用情境</th></tr></thead><tbody>
                             <tr><td style="font-weight:bold;">${parsePinyin("误(wù)会(huì)")}</td><td>${parsePinyin("当(dāng)你(nǐ)听(tīng)到(dào)或(huò)看(kàn)到(dào)别(bié)人(rén)做(zuò)的(de)事(shì)、说(shuō)的(de)话(huà)，但(dàn)你(nǐ)理(lǐ)解(jiě)的(de)意(yì)思(si)和(hé)对(duì)方(fāng)真(zhēn)正(zhèng)的(de)意(yì)思(si)不(bù)一(yí)样(yàng)，你(nǐ)想(xiǎng)的(de)是(shì)「不(bù)好(hǎo)的(de)」或(huò)「错(cuò)误(wù)的(de)」理(lǐ)解(jiě)。")}</td><td>${parsePinyin("通(tōng)常(cháng)跟(gēn)「人(rén)跟(gēn)人(rén)之(zhī)间(jiān)」的(de)感(gǎn)觉(jué)或(huò)关(guān)系(xi)有(yǒu)关(guān)。")}</td></tr>
                             <tr><td style="font-weight:bold;">${parsePinyin("误(wù)以(yǐ)为(wéi)")}</td><td>${parsePinyin("你(nǐ)心(xīn)里(lǐ)本(běn)来(lái)相(xiāng)信(xìn)一(yí)件(jiàn)事(shì)是(shì)真(zhēn)的(de)，但(dàn)后(hòu)来(lái)发(fā)现(xiàn)不(bú)是(shì)真(zhēn)的(de)，你(nǐ)「相(xiāng)信(xìn)错(cuò)了(le)」。")}</td><td>${parsePinyin("比(bǐ)较(jiào)常(cháng)用(yòng)在(zài)「事(shì)实(shí)」上(shàng)面(miàn)，不(bù)一(yí)定(dìng)跟(gēn)别(bié)人(rén)的(de)感(gǎn)觉(jué)有(yǒu)关(guān)。")}</td></tr>
@@ -472,7 +472,7 @@
                 } else if (item.type === "grammar") {
                     html += `<div class="grammar-box" id="item-${sIdx}-${iIdx}">`;
                     if(item.title) {
-                        html += `<div style="font-weight:bold; font-size:16px; color:#8C6239; margin-bottom:5px;">${parsePinyin(item.title)}</div>`;
+                        html += `<div style="font-weight:bold; font-size:20px; color:#8C6239; margin-bottom:5px;">${parsePinyin(item.title)}</div>`;
                     }
                     if(item.notes) {
                         item.notes.forEach(note => {
