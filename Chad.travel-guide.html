@@ -8,33 +8,44 @@
 :root { --bg: #FDFBF7; --primary: #D4A373; --text: #4a4a4a; --white: #fff; }
 html { scroll-behavior: smooth; }
 body { font-family: 'Helvetica Neue', Arial, sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; margin: 0; padding: 0; }
-.top-nav { position: sticky; top: 0; background: #FFF9F0; border-bottom: 1px solid #E6D5B8; padding: 10px 16px; box-sizing: border-box; text-align: center; z-index: 1200; }
-.top-nav a { color: var(--primary); font-weight: bold; text-decoration: none; margin: 0 10px; font-size: 16px; }
+.top-nav { position: fixed; top: 0; left: 0; width: 100%; background: #FFF9F0; border-bottom: 1px solid #E6D5B8; padding: 10px 16px; box-sizing: border-box; text-align: right; z-index: 1200; }
+.top-nav a { color: var(--primary); font-weight: bold; text-decoration: none; margin-left: 16px; font-size: 16px; }
+
+/* Sidebar */
+.sidebar-toggle { position: fixed; top: 54px; left: 12px; z-index: 1100; background: var(--primary); color: white; border: none; padding: 10px 14px; border-radius: 8px; cursor: pointer; font-size: 15px; font-weight: bold; box-shadow: 0 2px 5px rgba(0,0,0,0.15); }
+.sidebar { width: 280px; background: #FFF9F0; border-right: 1px solid #E6D5B8; height: 100vh; position: fixed; top: 0; left: 0; overflow-y: auto; padding: 60px 16px 20px 16px; box-sizing: border-box; transition: transform 0.3s ease; z-index: 1000; }
+.sidebar.collapsed { transform: translateX(-100%); }
+.sidebar h3 { margin: 0 0 10px 0; color: #8C6239; font-size: 18px; display: flex; justify-content: space-between; align-items: center; }
+.sidebar ol { margin: 0; padding-left: 20px; }
+.sidebar li { margin-bottom: 10px; }
+.sidebar a { color: #555; text-decoration: none; font-size: 15px; display: block; }
+.sidebar a .en { display: block; color: #999; font-size: 12px; }
+.sidebar a:hover { color: var(--primary); font-weight: bold; }
+
+.main-content { margin-top: 44px; margin-left: 280px; transition: margin-left 0.3s ease; padding-bottom: 60px; }
+.main-content.expanded { margin-left: 0; }
+
 .header { text-align: center; padding: 16px 12px 6px 12px; }
 .header h1 { font-size: 24px; color: #8C6239; margin: 0 0 4px 0; }
 .header p { font-size: 14px; color: #888; margin: 0; }
-.controls { position: sticky; top: 42px; background: var(--bg); padding: 10px; text-align: center; border-bottom: 1px solid #E6D5B8; z-index: 100; }
+.controls { position: sticky; top: 0; background: var(--bg); padding: 10px; text-align: center; border-bottom: 1px solid #E6D5B8; z-index: 100; }
 button.control-btn { background: var(--primary); color: white; border: none; padding: 10px 14px; margin: 4px; border-radius: 8px; cursor: pointer; font-size: 15px; font-weight: bold; }
-.toc { background: #FFF9F0; border: 1px solid #E6D5B8; border-radius: 10px; margin: 14px 12px; padding: 14px 16px; }
-.toc h3 { margin: 0 0 8px 0; color: #8C6239; font-size: 18px; }
-.toc ol { margin: 0; padding-left: 22px; }
-.toc li { margin-bottom: 8px; }
-.toc a { color: #555; text-decoration: none; font-size: 16px; }
-.toc a:hover { color: var(--primary); font-weight: bold; }
 
-.main { max-width: 700px; margin: 0 auto; padding: 0 12px 60px 12px; }
-.section { background: var(--white); border-radius: 14px; box-shadow: 0 2px 6px rgba(0,0,0,0.06); margin: 18px 0; padding: 16px 14px; scroll-margin-top: 95px; }
+.main { max-width: 700px; margin: 0 auto; padding: 0 12px 20px 12px; }
+.section { background: var(--white); border-radius: 14px; box-shadow: 0 2px 6px rgba(0,0,0,0.06); margin: 18px 0; padding: 16px 14px; scroll-margin-top: 20px; }
 .section h2 { color: #8C6239; border-left: 5px solid var(--primary); padding-left: 10px; font-size: 21px; margin: 0 0 12px 0; }
 
-/* Dialogue bubbles */
-.dialog-box { margin-bottom: 14px; }
-.dialog-line { margin: 14px 0; }
+/* Dialogue — one continuous conversation block */
+.dialog-box { background: #FFF9F0; border: 1px solid #E6D5B8; border-radius: 12px; padding: 14px 16px; margin-bottom: 8px; }
+.dialog-turn { margin: 16px 0; }
+.dialog-turn:first-child { margin-top: 0; }
+.dialog-turn:last-child { margin-bottom: 0; }
 .speaker { font-weight: bold; color: #8C6239; font-size: 15px; margin-bottom: 4px; }
 .speaker .en { font-weight: normal; color: #999; font-size: 13px; }
-.dialog-row { display: flex; align-items: flex-start; gap: 10px; background: #FFF9F0; border: 1px solid #E6D5B8; border-radius: 10px; padding: 10px 12px; }
+.audio-unit { display: flex; align-items: flex-start; gap: 10px; }
 .audio-btn { flex-shrink: 0; background: #EFEFEF; color: #4A4A4A; font-size: 18px; border-radius: 50%; width: 44px; height: 44px; display: inline-flex; align-items: center; justify-content: center; border: none; cursor: pointer; }
 .audio-btn:hover { background: #E2E2E2; }
-.dialog-content { flex: 1; min-width: 0; }
+.au-content { flex: 1; min-width: 0; }
 .note-line { text-align: center; color: #999; font-size: 14px; font-style: italic; margin: 10px 0; }
 
 /* Bopomofo (Zhuyin) - enlarged for mobile */
@@ -47,22 +58,30 @@ button.control-btn { background: var(--primary); color: white; border: none; pad
 .zy-neutral { position: absolute; top: -13px; left: 50%; transform: translateX(-50%); font-size: 13px; }
 .en-trans { color: #666; font-size: 16px; font-style: italic; margin-top: 6px; display: block; }
 
-/* Vocab cards */
-.vocab-title { font-size: 17px; font-weight: bold; color: #8C6239; margin: 14px 0 8px 0; border-top: 1px dashed #E6D5B8; padding-top: 12px; }
-.vocab-grid { display: flex; flex-direction: column; gap: 10px; }
-.vocab-card { background: #fdfaf6; border-left: 4px solid var(--primary); border-radius: 8px; padding: 10px 14px; }
-.vocab-word-row { display: flex; align-items: center; gap: 10px; }
-.vocab-word-row .zy-text { font-size: 22px; line-height: 2.6; }
-.vocab-word-row .zy-char { font-size: 30px; }
-.vocab-en { color: #8C6239; font-weight: bold; font-size: 15px; margin-left: 2px; }
-.vocab-example { margin-top: 6px; }
-.vocab-example .zy-text { font-size: 18px; }
-.vocab-example .zy-char { font-size: 26px; }
-.vocab-note { font-size: 14px; color: #555; margin-top: 6px; line-height: 1.6; }
+/* Vocab table — side-by-side comparison */
+.vocab-title { font-size: 17px; font-weight: bold; color: #8C6239; margin: 16px 0 8px 0; }
+.vocab-table { width: 100%; border-collapse: collapse; table-layout: fixed; }
+.vocab-table th, .vocab-table td { border: 1px solid #E6D5B8; padding: 10px; vertical-align: top; text-align: left; word-wrap: break-word; }
+.vocab-table th { background: #F7EBE1; color: #8C6239; font-size: 14px; }
+.vocab-table th:nth-child(1), .vocab-table td:nth-child(1) { width: 34%; }
+.vocab-table th:nth-child(2), .vocab-table td:nth-child(2) { width: 26%; }
+.vocab-table th:nth-child(3), .vocab-table td:nth-child(3) { width: 40%; }
+.vocab-table .zy-text { font-size: 18px; line-height: 2.6; }
+.vocab-table .zy-char { font-size: 24px; }
+.vocab-table .vocab-en { color: #8C6239; font-weight: bold; font-size: 14px; }
+.vocab-table .en-trans { font-size: 14px; }
+.vocab-table .vocab-note { font-size: 13px; color: #555; margin-top: 6px; line-height: 1.5; }
+.vocab-table .audio-unit { gap: 6px; }
+.vocab-table .audio-btn { width: 34px; height: 34px; font-size: 14px; }
 
+@media (max-width: 900px) {
+  .sidebar { transform: translateX(-100%); }
+  .sidebar.active { transform: translateX(0); }
+  .main-content { margin-left: 0; }
+}
 @media (max-width: 480px) {
   .zy-char { font-size: 30px; }
-  .vocab-word-row .zy-char { font-size: 28px; }
+  .vocab-table .zy-char { font-size: 20px; }
 }
 </style>
 </head>
@@ -70,25 +89,29 @@ button.control-btn { background: var(--primary); color: white; border: none; pad
 
 <div class="top-nav">
   <a href="https://jany-mandarin.github.io/Chad.html">Index</a>
-  <a href="#toc">Contents</a>
 </div>
 
-<div class="header">
-  <h1>✈️ Chad's Taiwan Travel Guide</h1>
-  <p>一段旅程會用到的對話與單字 · Dialogue &amp; Vocabulary for a Trip to Taiwan</p>
+<button class="sidebar-toggle" onclick="toggleSidebar()">☰ Contents</button>
+
+<div class="sidebar" id="sidebar">
+  <h3>📖 Contents <button style="background:none; border:none; color:#8C6239; font-weight:bold; cursor:pointer; font-size:16px;" onclick="toggleSidebar()">×</button></h3>
+  <ol id="tocList"></ol>
 </div>
 
-<div class="controls">
-  <button class="control-btn" onclick="toggleZhuyin()">Toggle Bopomofo</button>
-  <button class="control-btn" onclick="toggleEnglish()">Toggle English</button>
-</div>
-
-<div class="main">
-  <div class="toc" id="toc">
-    <h3>📖 Contents</h3>
-    <ol id="tocList"></ol>
+<div class="main-content" id="mainContent">
+  <div class="header">
+    <h1>✈️ Chad's Taiwan Travel Guide</h1>
+    <p>一段旅程會用到的對話與單字 · Dialogue &amp; Vocabulary for a Trip to Taiwan</p>
   </div>
-  <div id="sections"></div>
+
+  <div class="controls">
+    <button class="control-btn" onclick="toggleZhuyin()">Toggle Bopomofo</button>
+    <button class="control-btn" onclick="toggleEnglish()">Toggle English</button>
+  </div>
+
+  <div class="main">
+    <div id="sections"></div>
+  </div>
 </div>
 
 <script>
@@ -344,6 +367,16 @@ function zy(text) {
   return `<span class="zy-text">${text}</span>`;
 }
 
+function audioUnit(zhText, enText, extraClass) {
+  return `<div class="audio-unit ${extraClass||''}">
+      <button class="audio-btn" onclick="playAudioText(this)">🔊</button>
+      <div class="au-content">
+        ${zy(zhText)}
+        <span class="en-trans">${enText}</span>
+      </div>
+    </div>`;
+}
+
 function render() {
   const tocList = document.getElementById('tocList');
   const container = document.getElementById('sections');
@@ -351,7 +384,7 @@ function render() {
   let html = '';
 
   sections.forEach(sec => {
-    tocHtml += `<li><a href="#${sec.id}">${sec.title}</a> <span style="color:#999;font-size:13px;">${sec.titleEn}</span></li>`;
+    tocHtml += `<li><a href="#${sec.id}" onclick="closeSidebarOnMobile()">${sec.title}<span class="en">${sec.titleEn}</span></a></li>`;
 
     let dialogHtml = '';
     sec.dialogue.forEach(line => {
@@ -361,40 +394,27 @@ function render() {
       }
       const speakerEn = line.speakerEn ? ` <span class="en">(${line.speakerEn})</span>` : '';
       dialogHtml += `
-        <div class="dialog-line">
+        <div class="dialog-turn">
           <div class="speaker">${line.speaker}${speakerEn}：</div>
-          <div class="dialog-row">
-            <button class="audio-btn" onclick="playAudioText(this)">🔊</button>
-            <div class="dialog-content">
-              ${zy(line.zh)}
-              <span class="en-trans">${line.en}</span>
-            </div>
-          </div>
+          ${audioUnit(line.zh, line.en)}
         </div>`;
     });
 
-    let vocabHtml = '<div class="vocab-title">🔑 Key Vocabulary</div><div class="vocab-grid">';
+    let vocabHtml = `<div class="vocab-title">🔑 Key Vocabulary</div>
+      <table class="vocab-table">
+        <thead><tr><th>單字 Word</th><th>English</th><th>例句 Example</th></tr></thead>
+        <tbody>`;
     sec.vocab.forEach(v => {
-      let exampleHtml = '';
-      if (v.ex_zh) {
-        exampleHtml = `
-          <div class="dialog-row vocab-example" style="margin-top:8px;">
-            <button class="audio-btn" onclick="playAudioText(this)">🔊</button>
-            <div class="dialog-content">
-              ${zy(v.ex_zh)}
-              <span class="en-trans">${v.ex_en}</span>
-            </div>
-          </div>`;
-      }
       const noteHtml = v.note ? `<div class="vocab-note">${v.note}</div>` : '';
+      const exampleCell = v.ex_zh ? audioUnit(v.ex_zh, v.ex_en) : '<span style="color:#ccc;">—</span>';
       vocabHtml += `
-        <div class="vocab-card">
-          <div class="vocab-word-row">${zy(v.word)}<span class="vocab-en">${v.en}</span></div>
-          ${noteHtml}
-          ${exampleHtml}
-        </div>`;
+        <tr>
+          <td>${audioUnit(v.word, '', 'vocab-word-audio')}</td>
+          <td><span class="vocab-en">${v.en}</span>${noteHtml}</td>
+          <td>${exampleCell}</td>
+        </tr>`;
     });
-    vocabHtml += '</div>';
+    vocabHtml += '</tbody></table>';
 
     html += `
       <div class="section" id="${sec.id}">
@@ -407,6 +427,7 @@ function render() {
   tocList.innerHTML = tocHtml;
   container.innerHTML = html;
   parseZhuyinDOM();
+  document.querySelectorAll('.vocab-word-audio .en-trans').forEach(el => el.remove());
 }
 
 // ====== Parse Zhuyin on Load (DOM based) ======
@@ -433,10 +454,10 @@ function parseZhuyinDOM() {
   });
 }
 
-// ====== Audio Reading (speaker labels are plain text, outside .dialog-content, so they are never read) ======
+// ====== Audio Reading (speaker labels are plain text, outside .audio-unit, so they are never read) ======
 let currentUtteranceText = "";
 function playAudioText(btn) {
-  let container = btn.closest('.dialog-content') || btn.closest('.dialog-row');
+  let container = btn.closest('.audio-unit');
   let zyDiv = container ? container.querySelector('.zy-text') : null;
   if (!zyDiv) return;
 
@@ -483,6 +504,22 @@ function toggleZhuyin() {
 function toggleEnglish() {
   enVisible = !enVisible;
   document.querySelectorAll('.en-trans, .vocab-en').forEach(el => { el.style.display = enVisible ? (el.classList.contains('vocab-en') ? 'inline' : 'block') : 'none'; });
+}
+
+function toggleSidebar() {
+  const sidebar = document.getElementById('sidebar');
+  const mainContent = document.getElementById('mainContent');
+  if (window.innerWidth <= 900) {
+    sidebar.classList.toggle('active');
+  } else {
+    sidebar.classList.toggle('collapsed');
+    mainContent.classList.toggle('expanded');
+  }
+}
+function closeSidebarOnMobile() {
+  if (window.innerWidth <= 900) {
+    document.getElementById('sidebar').classList.remove('active');
+  }
 }
 
 document.addEventListener("DOMContentLoaded", render);
