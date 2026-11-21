@@ -56,16 +56,17 @@ button.control-btn { background: var(--primary); color: white; border: none; pad
 .zy-symbols { writing-mode: vertical-rl; text-orientation: upright; font-size: 14px; letter-spacing: -2px; }
 .zy-tone { position: absolute; right: 0px; top: 50%; transform: translateY(-50%); font-size: 14px; }
 .zy-neutral { position: absolute; top: -13px; left: 50%; transform: translateX(-50%); font-size: 13px; }
-.en-trans { color: #666; font-size: 16px; font-style: italic; margin-top: 6px; display: block; }
+.en-trans { color: #666; font-size: 16px; font-style: italic; margin-top: 6px; display: none; }
+.vocab-en { display: none; }
+.vocab-note { display: none; }
 
 /* Vocab table — side-by-side comparison */
 .vocab-title { font-size: 17px; font-weight: bold; color: #8C6239; margin: 16px 0 8px 0; }
 .vocab-table { width: 100%; border-collapse: collapse; table-layout: fixed; }
 .vocab-table th, .vocab-table td { border: 1px solid #E6D5B8; padding: 10px; vertical-align: top; text-align: left; word-wrap: break-word; }
 .vocab-table th { background: #F7EBE1; color: #8C6239; font-size: 14px; }
-.vocab-table th:nth-child(1), .vocab-table td:nth-child(1) { width: 28%; }
-.vocab-table th:nth-child(2), .vocab-table td:nth-child(2) { width: 36%; }
-.vocab-table th:nth-child(3), .vocab-table td:nth-child(3) { width: 36%; }
+.vocab-table th:nth-child(1), .vocab-table td:nth-child(1) { width: 40%; }
+.vocab-table th:nth-child(2), .vocab-table td:nth-child(2) { width: 60%; }
 .vocab-table .zy-text { font-size: 18px; line-height: 2.6; }
 .vocab-table .zy-char { font-size: 24px; }
 .vocab-table .vocab-en { color: #8C6239; font-weight: bold; font-size: 14px; }
@@ -368,12 +369,13 @@ function zy(text) {
   return `<span class="zy-text">${text}</span>`;
 }
 
-function audioUnit(zhText, enText, extraClass) {
+function audioUnit(zhText, enText, extraClass, enClass) {
+  enClass = enClass || 'en-trans';
   return `<div class="audio-unit ${extraClass||''}">
       <button class="audio-btn" onclick="playAudioText(this)">🔊</button>
       <div class="au-content">
         ${zy(zhText)}
-        <span class="en-trans">${enText}</span>
+        <span class="${enClass}">${enText}</span>
       </div>
     </div>`;
 }
@@ -403,18 +405,16 @@ function render() {
 
     let vocabHtml = `<div class="vocab-title">🔑 Key Vocabulary</div>
       <table class="vocab-table">
-        <thead><tr><th>中文</th><th>例句</th><th>English</th></tr></thead>
+        <thead><tr><th>中文單字</th><th>中文例句</th></tr></thead>
         <tbody>`;
     sec.vocab.forEach(v => {
       const noteHtml = v.note ? `<div class="vocab-note">${v.note}</div>` : '';
-      const wordCell = audioUnit(v.word, '', 'vocab-word-audio');
-      const exampleCell = v.ex_zh ? audioUnit(v.ex_zh, '', 'vocab-ex-audio') : '<span style="color:#ccc;">—</span>';
-      const exEnHtml = v.ex_en ? `<span class="en-trans" style="display:block; margin-top:6px;">${v.ex_en}</span>` : '';
+      const wordCell = audioUnit(v.word, v.en, 'vocab-word-audio', 'vocab-en') + noteHtml;
+      const exampleCell = v.ex_zh ? audioUnit(v.ex_zh, v.ex_en) : '<span style="color:#ccc;">—</span>';
       vocabHtml += `
         <tr>
           <td>${wordCell}</td>
           <td>${exampleCell}</td>
-          <td><span class="vocab-en">${v.en}</span>${noteHtml}${exEnHtml}</td>
         </tr>`;
     });
     vocabHtml += '</tbody></table>';
@@ -430,7 +430,6 @@ function render() {
   tocList.innerHTML = tocHtml;
   container.innerHTML = html;
   parseZhuyinDOM();
-  document.querySelectorAll('.vocab-word-audio .en-trans, .vocab-ex-audio .en-trans').forEach(el => el.remove());
 }
 
 // ====== Parse Zhuyin on Load (DOM based) ======
@@ -499,14 +498,16 @@ function playAudioText(btn) {
 }
 
 let zyVisible = true;
-let enVisible = true;
+let enVisible = false;
 function toggleZhuyin() {
   zyVisible = !zyVisible;
   document.querySelectorAll('.zy-box').forEach(el => { el.style.display = zyVisible ? 'inline-flex' : 'none'; });
 }
 function toggleEnglish() {
   enVisible = !enVisible;
-  document.querySelectorAll('.en-trans, .vocab-en').forEach(el => { el.style.display = enVisible ? (el.classList.contains('vocab-en') ? 'inline' : 'block') : 'none'; });
+  document.querySelectorAll('.en-trans, .vocab-en, .vocab-note').forEach(el => {
+    el.style.display = enVisible ? (el.classList.contains('vocab-en') ? 'inline' : 'block') : 'none';
+  });
 }
 
 function toggleSidebar() {
