@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -68,21 +68,17 @@
         .en-trans { color: #666; font-size: 15px; font-style: italic; margin-top: 4px; display: block; }
         .fr-trans { color: #457b9d; font-size: 15px; font-style: italic; margin-top: 2px; display: block; }
         .fr-trans::before { content: "🇫🇷 "; font-style: normal; }
-        .note { font-size: 15px; color: #555; margin-bottom: 12px; line-height: 1.6; background: #fdfaf6; padding: 10px 14px; border-left: 3px solid #D4A373; border-radius: 4px; }
-        .note-fr { font-size: 14px; color: #3a5a73; margin-top: 8px; line-height: 1.6; background: #f0f6fa; padding: 10px 14px; border-left: 3px solid #457b9d; border-radius: 4px; }
+        .note-fr { font-size: 15px; color: #2c4c63; margin-bottom: 10px; line-height: 1.6; background: #f0f6fa; padding: 10px 14px; border-left: 3px solid #457b9d; border-radius: 4px; }
+        .note { font-size: 14px; color: #777; margin-bottom: 12px; line-height: 1.6; background: #fdfaf6; padding: 10px 14px; border-left: 3px solid #D4A373; border-radius: 4px; }
+        .speaker-label { font-weight: bold; color: #8C6239; font-size: 14px; margin-top: 12px; margin-bottom: 2px; }
 
         .custom-table { width: 100%; border-collapse: collapse; margin: 15px 0; background: white; border-radius: 8px; overflow: hidden; border: 1px solid #E6D5B8; }
-        .custom-table th { background: #F4E8D8; color: #8C6239; padding: 12px; font-size: 16px; text-align: left; border-bottom: 2px solid #E6D5B8; }
+        .custom-table th { background: #F4E8D8; color: #8C6239; padding: 12px; font-size: 16px; text-align: center; border-bottom: 2px solid #E6D5B8; }
         .custom-table td { padding: 12px; border-bottom: 1px solid #eee; vertical-align: middle; }
         .custom-table tr:last-child td { border-bottom: none; }
 
         .lesson-img { max-width: 100%; border-radius: 8px; margin: 10px 0; border: 1px solid #E6D5B8; display: block; }
-
-        .diagram-row { display: flex; align-items: center; justify-content: center; gap: 20px; flex-wrap: wrap; margin: 12px 0; }
-        .diagram-card { background: white; border: 1px solid #E6D5B8; border-radius: 10px; padding: 14px 18px; text-align: center; min-width: 130px; }
-        .diagram-card .flag { font-size: 28px; }
-        .diagram-card .label { font-weight: bold; color: #8C6239; margin-top: 4px; }
-        .diagram-arrow { font-size: 24px; color: #D4A373; font-weight: bold; }
+        .th-img { max-width: 110px; display: block; margin: 0 auto 6px auto; border-radius: 6px; }
 
         @media (max-width: 900px) {
             .sidebar { transform: translateX(-100%); }
@@ -97,31 +93,35 @@
         <a href="https://jany-mandarin.github.io/margot-leni.html">Index</a>
     </div>
 
-    <button class="sidebar-toggle" onclick="toggleSidebar()">☰ Outline</button>
+    <button class="sidebar-toggle" onclick="toggleSidebar()">☰ Sommaire</button>
 
     <div class="sidebar" id="sidebar">
-        <h3>📖 Outline <button style="background:none; border:none; color:#8C6239; font-weight:bold; cursor:pointer; font-size:16px;" onclick="toggleSidebar()">×</button></h3>
+        <h3>📖 Sommaire <button style="background:none; border:none; color:#8C6239; font-weight:bold; cursor:pointer; font-size:16px;" onclick="toggleSidebar()">×</button></h3>
         <ol>
             <li>
-                <a href="#sec-1">一、上次作業討論 (Last Homework Review)</a>
+                <a href="#sec-1">Révision du dernier cours</a>
                 <ul class="sub-list">
-                    <li><a href="#sub-1-1">1. 常常 / 有時候 / 不常 (Frequency)</a></li>
-                    <li><a href="#sub-1-2">2. 閱讀：小明和小月的故事</a></li>
-                    <li><a href="#sub-1-3">3. 來 vs 去</a></li>
-                    <li><a href="#sub-1-4">4. 會 (Ability)</a></li>
-                    <li><a href="#sub-1-5">5. 想 (Want)</a></li>
-                    <li><a href="#sub-1-6">6. 第 + 數字 + 量詞</a></li>
-                    <li><a href="#sub-1-7">7. 十年前 / 不 + V. / 不會 + V.</a></li>
+                    <li><a href="#sub-1-1">Fréquence : 常常 / 有时候 / 不常</a></li>
+                    <li><a href="#sub-1-2">Lecture : Xiaoming &amp; Xiaoyue</a></li>
+                    <li><a href="#sub-1-3">来 vs 去</a></li>
+                    <li><a href="#sub-1-4">会</a></li>
+                    <li><a href="#sub-1-5">想</a></li>
+                    <li><a href="#sub-1-6">第 + nombre + classificateur</a></li>
+                    <li><a href="#sub-1-7">il y a... / 不 + V. / 不会 + V.</a></li>
                 </ul>
             </li>
             <li>
-                <a href="#sec-2">二、新的內容 (New Content)</a>
+                <a href="#sec-2">Nouveau contenu</a>
                 <ul class="sub-list">
-                    <li><a href="#sub-2-1">卡通、電影生詞 (Cartoon & Movie Vocabulary)</a></li>
+                    <li><a href="#sub-2-1">Vocabulaire : dessins animés et films</a></li>
                 </ul>
             </li>
             <li>
-                <a href="#sec-3">三、下次作業 (Next Homework)</a>
+                <a href="#sec-3">Devoirs</a>
+                <ul class="sub-list">
+                    <li><a href="#sub-3-1">Devoir 1 : ton humeur</a></li>
+                    <li><a href="#sub-3-2">Devoir 2 : un film</a></li>
+                </ul>
             </li>
         </ol>
     </div>
@@ -134,8 +134,8 @@
 
         <div class="controls">
             <button class="control-btn" onclick="togglePinyin()">Toggle Pinyin</button>
-            <button class="control-btn" onclick="toggleEnglish()">Toggle English</button>
             <button class="control-btn fr-btn" onclick="toggleFrench()">Toggle French</button>
+            <button class="control-btn" onclick="toggleEnglish()">Toggle English</button>
         </div>
 
         <div id="content"></div>
@@ -264,8 +264,8 @@
                     </div>
                     <div class="text-content">
                         <div style="font-size:24px; margin-bottom:4px;">${parsePinyin(ex.zh)}</div>
-                        ${ex.en ? `<div class="en-trans">${ex.en}</div>` : ''}
                         ${ex.fr ? `<div class="fr-trans">${ex.fr}</div>` : ''}
+                        ${ex.en ? `<div class="en-trans">${ex.en}</div>` : ''}
                     </div>
                 </div>
             </div>`;
@@ -273,178 +273,199 @@
             return html;
         }
 
+        function speakerLabel(name) {
+            return `<div class="speaker-label">${name} :</div>`;
+        }
+
         const lessonData = [
             {
-                title: "一、上次作業討論 (Last Homework Review)",
+                title: "1. Révision du dernier cours",
                 items: [
                     {
                         type: "grammar",
                         subId: "sub-1-1",
-                        title: "1. 常常 / 有時候 / 不常 (Frequency)",
-                        note: "<b>Explanation:</b> These words describe how often something happens. In Chinese, sentences usually need an object after a verb — 「跑」(run) alone cannot stand as a full sentence, it needs 「跑步」(run + step).",
-                        noteFr: "<b>Explication :</b> Ces mots décrivent la fréquence d'une action. En chinois, une phrase a généralement besoin d'un objet après le verbe — 「跑」(courir) seul ne peut pas former une phrase complète, il faut 「跑步」(courir + pas).",
+                        title: "Fréquence : 常常 / 有时候 / 不常",
+                        noteFr: "Ces mots décrivent la fréquence d'une action. En chinois, une phrase a généralement besoin d'un objet après le verbe — 「跑」(courir) seul ne peut pas former une phrase complète, il faut 「跑步」(courir + pas).",
+                        note: "<b>Explanation:</b> These words describe how often something happens. 「跑」(run) alone cannot stand as a full sentence, it needs 「跑步」(run + step).",
                         examples: [
-                            { zh: "常(cháng)常(cháng)", en: "often", fr: "souvent" },
-                            { zh: "有(yǒu)时(shí)候(hou)", en: "sometimes", fr: "parfois" },
-                            { zh: "不(bù)常(cháng)", en: "not often / rarely", fr: "pas souvent / rarement" },
-                            { zh: "你(nǐ)常(cháng)常(cháng)跑(pǎo)步(bù)吗(ma)？", en: "Do you run often?", fr: "Cours-tu souvent ?" },
-                            { zh: "我(wǒ)不(bù)常(cháng)跑(pǎo)步(bù)，所(suǒ)以(yǐ)我(wǒ)很(hěn)紧(jǐn)张(zhāng)。", en: "I don't run very often, so I'm very nervous.", fr: "Je ne cours pas très souvent, donc je suis très nerveux/nerveuse." }
+                            { zh: "常(cháng)常(cháng)", fr: "souvent", en: "often" },
+                            { zh: "有(yǒu)时(shí)候(hou)", fr: "parfois", en: "sometimes" },
+                            { zh: "不(bù)常(cháng)", fr: "pas souvent / rarement", en: "not often / rarely" },
+                            { zh: "你(nǐ)常(cháng)常(cháng)跑(pǎo)步(bù)吗(ma)？", fr: "Cours-tu souvent ?", en: "Do you run often?" },
+                            { zh: "我(wǒ)不(bù)常(cháng)跑(pǎo)步(bù)，所(suǒ)以(yǐ)我(wǒ)很(hěn)紧(jǐn)张(zhāng)。", fr: "Je ne cours pas très souvent, donc je suis très nerveux/nerveuse.", en: "I don't run very often, so I'm very nervous." }
                         ]
                     },
                     {
                         type: "reading",
                         subId: "sub-1-2",
-                        title: "2. 閱讀：小明和小月的故事",
-                        note: "<b>Reading practice:</b> Xiaoming and Xiaoyue's trip to Japan to find Totoro.",
+                        title: "Lecture : l'histoire de Xiaoming et Xiaoyue",
                         noteFr: "<b>Compréhension écrite :</b> Le voyage de Xiaoming et Xiaoyue au Japon pour chercher Totoro.",
+                        note: "<b>Reading practice:</b> Xiaoming and Xiaoyue's trip to Japan to find Totoro.",
                         examples: [
-                            { zh: "小(xiǎo)明(míng)和(hé)小(xiǎo)月(yuè)小(xiǎo)时(shí)候(hou)看(kàn)过(guò)龙(lóng)猫(māo)，他(tā)们(men)想(xiǎng)去(qù)日(rì)本(běn)找(zhǎo)龙(lóng)猫(māo)，所(suǒ)以(yǐ)他(tā)们(men)下(xià)个(gè)月(yuè)要(yào)去(qù)日(rì)本(běn)旅(lǚ)行(xíng)。", en: "When they were little, Xiaoming and Xiaoyue watched Totoro, and they want to go to Japan to find Totoro, so next month they are going to travel to Japan.", fr: "Quand ils étaient petits, Xiaoming et Xiaoyue ont regardé Totoro, et ils veulent aller au Japon pour chercher Totoro, donc le mois prochain ils vont voyager au Japon." },
-                            { zh: "他(tā)们(men)的(de)飞(fēi)机(jī)是(shì)十(shí)二(èr)月(yuè)十(shí)四(sì)号(hào)晚(wǎn)上(shàng)八(bā)点(diǎn)飞(fēi)，十(shí)五(wǔ)号(hào)早(zǎo)上(shàng)十(shí)点(diǎn)到(dào)日(rì)本(běn)。", en: "Their flight departs at 8pm on December 14th, and arrives in Japan at 10am on the 15th.", fr: "Leur avion décolle à 20h le 14 décembre, et arrive au Japon à 10h le 15." },
-                            { zh: "下(xià)飞(fēi)机(jī)后(hòu)，他(tā)们(men)看(kàn)到(dào)一(yí)只(zhī)很(hěn)大(dà)的(de)龙(lóng)猫(māo)娃(wá)娃(wa)，他(tā)们(men)都(dōu)很(hěn)高(gāo)兴(xìng)。", en: "After getting off the plane, they saw a very big Totoro stuffed animal, and they were very happy.", fr: "Après être descendus de l'avion, ils ont vu une très grande peluche Totoro, et ils étaient très contents." },
-                            { zh: "可(kě)是(shì)他(tā)们(men)不(bú)会(huì)说(shuō)日(rì)文(wén)，很(hěn)难(nán)找(zhǎo)到(dào)酒(jiǔ)店(diàn)，所(suǒ)以(yǐ)他(tā)们(men)用(yòng)英(yīng)文(wén)。", en: "But they can't speak Japanese, so it was hard to find a hotel, so they used English.", fr: "Mais ils ne savent pas parler japonais, alors c'était difficile de trouver un hôtel, donc ils ont utilisé l'anglais." },
-                            { zh: "有(yǒu)一(yí)个(gè)日(rì)本(běn)人(rén)会(huì)说(shuō)英(yīng)文(wén)，帮(bāng)他(tā)们(men)找(zhǎo)到(dào)酒(jiǔ)店(diàn)，他(tā)们(men)很(hěn)开(kāi)心(xīn)。", en: "There was a Japanese person who could speak English, who helped them find a hotel, and they were very happy.", fr: "Il y avait un Japonais qui savait parler anglais, qui les a aidés à trouver un hôtel, et ils étaient très contents." }
+                            { zh: "小(xiǎo)明(míng)和(hé)小(xiǎo)月(yuè)小(xiǎo)时(shí)候(hou)看(kàn)过(guò)龙(lóng)猫(māo)，他(tā)们(men)想(xiǎng)去(qù)日(rì)本(běn)找(zhǎo)龙(lóng)猫(māo)，所(suǒ)以(yǐ)他(tā)们(men)下(xià)个(gè)月(yuè)要(yào)去(qù)日(rì)本(běn)旅(lǚ)行(xíng)。", fr: "Quand ils étaient petits, Xiaoming et Xiaoyue ont regardé Totoro, et ils veulent aller au Japon pour chercher Totoro, donc le mois prochain ils vont voyager au Japon.", en: "When they were little, Xiaoming and Xiaoyue watched Totoro, and they want to go to Japan to find Totoro, so next month they are going to travel to Japan." },
+                            { zh: "他(tā)们(men)的(de)飞(fēi)机(jī)是(shì)十(shí)二(èr)月(yuè)十(shí)四(sì)号(hào)晚(wǎn)上(shàng)八(bā)点(diǎn)飞(fēi)，十(shí)五(wǔ)号(hào)早(zǎo)上(shàng)十(shí)点(diǎn)到(dào)日(rì)本(běn)。", fr: "Leur avion décolle à 20h le 14 décembre, et arrive au Japon à 10h le 15.", en: "Their flight departs at 8pm on December 14th, and arrives in Japan at 10am on the 15th." },
+                            { zh: "下(xià)飞(fēi)机(jī)后(hòu)，他(tā)们(men)看(kàn)到(dào)一(yì)只(zhī)很(hěn)大(dà)的(de)龙(lóng)猫(māo)娃(wá)娃(wa)，他(tā)们(men)都(dōu)很(hěn)高(gāo)兴(xìng)。", fr: "Après être descendus de l'avion, ils ont vu une très grande peluche Totoro, et ils étaient très contents.", en: "After getting off the plane, they saw a very big Totoro stuffed animal, and they were very happy." },
+                            { zh: "可(kě)是(shì)他(tā)们(men)不(bú)会(huì)说(shuō)日(rì)文(wén)，很(hěn)难(nán)找(zhǎo)到(dào)酒(jiǔ)店(diàn)，所(suǒ)以(yǐ)他(tā)们(men)用(yòng)英(yīng)文(wén)。", fr: "Mais ils ne savent pas parler japonais, alors c'était difficile de trouver un hôtel, donc ils ont utilisé l'anglais.", en: "But they can't speak Japanese, so it was hard to find a hotel, so they used English." },
+                            { zh: "有(yǒu)一(yí)个(gè)日(rì)本(běn)人(rén)会(huì)说(shuō)英(yīng)文(wén)，帮(bāng)他(tā)们(men)找(zhǎo)到(dào)酒(jiǔ)店(diàn)，他(tā)们(men)很(hěn)开(kāi)心(xīn)。", fr: "Il y avait un Japonais qui savait parler anglais, qui les a aidés à trouver un hôtel, et ils étaient très contents.", en: "There was a Japanese person who could speak English, who helped them find a hotel, and they were very happy." }
                         ]
                     },
                     {
                         type: "custom",
                         subId: "sub-1-3",
-                        title: "3. 來 vs 去",
+                        title: "来 vs 去",
                         html: `
-                        <div class="note"><b>来 (lái):</b> Someone is getting closer and closer to the <u>speaker</u>. &nbsp;|&nbsp; <b>去 (qù):</b> Someone is moving further and further away from the <u>speaker</u>.</div>
-                        <div class="note-fr"><b>来 (lái) :</b> Quelqu'un se rapproche de plus en plus du <u>locuteur</u>. &nbsp;|&nbsp; <b>去 (qù) :</b> Quelqu'un s'éloigne de plus en plus du <u>locuteur</u>.</div>
-                        <div class="diagram-row">
-                            <div class="diagram-card"><div class="flag">🇹🇼</div><div class="label">居貞 (speaker)</div></div>
-                            <div class="diagram-arrow">←</div>
-                            <div class="diagram-card"><div class="flag">🇫🇷</div><div class="label">馬蘇 &amp; 萊尼</div></div>
-                        </div>
-                        ${exampleRow({ zh: "明(míng)天(tiān)你(nǐ)们(men)要(yào)来(lái)台(tái)湾(wān)吗(ma)？", en: "Tomorrow, are you (both) coming to Taiwan? — 来 used because the speaker lives in Taiwan, asking them to get closer.", fr: "Demain, venez-vous à Taïwan ? — 来 utilisé car le locuteur habite à Taïwan et demande de se rapprocher de lui." })}
-                        ${exampleRow({ zh: "好(hǎo)啊(a)！明(míng)天(tiān)我(wǒ)们(men)去(qù)台(tái)湾(wān)。", en: "Great! Tomorrow we are going to Taiwan. — 去 used because they are leaving their current location (France).", fr: "D'accord ! Demain, nous allons à Taïwan. — 去 utilisé car ils quittent l'endroit où ils se trouvent (la France)." })}
-                        <div class="diagram-row">
-                            <div class="diagram-card"><div class="flag">🇫🇷</div><div class="label">馬蘇 &amp; 萊尼</div></div>
-                            <div class="diagram-arrow">←</div>
-                            <div class="diagram-card"><div class="flag">🇹🇼</div><div class="label">居貞</div></div>
-                        </div>
-                        ${exampleRow({ zh: "明(míng)天(tiān)你(nǐ)要(yào)来(lái)法(fǎ)国(guó)吗(ma)？", en: "Tomorrow, are you coming to France? — 来 used because the speakers (Margot & Léni) are in France, asking 居貞 to get closer.", fr: "Demain, viens-tu en France ? — 来 utilisé car les locuteurs (Margot et Léni) sont en France et demandent à 居貞 de se rapprocher." })}
-                        ${exampleRow({ zh: "好(hǎo)啊(a)！明(míng)天(tiān)我(wǒ)去(qù)法(fǎ)国(guó)。", en: "Great! Tomorrow I am going to France. — 去 used because 居貞 is leaving Taiwan.", fr: "D'accord ! Demain, je vais en France. — 去 utilisé car 居貞 quitte Taïwan." })}
+                        <table class="custom-table">
+                            <thead><tr>
+                                <th><img src="https://cdn.phototourl.com/member/2026-11-21-7eefdd6a-bdf1-4cd3-84f7-3163e86831e3.png" class="th-img" alt="来">来 (lái)</th>
+                                <th><img src="https://cdn.phototourl.com/member/2026-11-21-269b1521-8f5e-4886-8e2e-0aacb0fbbe4e.png" class="th-img" alt="去">去 (qù)</th>
+                            </tr></thead>
+                            <tbody>
+                                <tr>
+                                    <td>🇫🇷 Quelqu'un se rapproche de plus en plus du <u>locuteur</u>.<br>🇬🇧 Someone is getting closer and closer to the <u>speaker</u>.</td>
+                                    <td>🇫🇷 Quelqu'un s'éloigne de plus en plus du <u>locuteur</u>.<br>🇬🇧 Someone is moving further and further away from the <u>speaker</u>.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <div style="font-weight:bold; color:#8C6239; margin-top:20px;">Exemple 1</div>
+                        <img src="https://cdn.phototourl.com/member/2026-11-21-2cf0f77f-35e4-4bdf-a1c8-9debddaff05d.png" class="lesson-img" alt="Exemple 1">
+                        ${speakerLabel("居贞")}
+                        ${exampleRow({ zh: "明(míng)天(tiān)你(nǐ)们(men)要(yào)来(lái)台(tái)湾(wān)吗(ma)？", fr: "Demain, venez-vous à Taïwan ?", en: "Tomorrow, are you (both) coming to Taiwan?" })}
+                        ${speakerLabel("马苏和莱尼")}
+                        ${exampleRow({ zh: "好(hǎo)啊(a)！明(míng)天(tiān)我(wǒ)们(men)去(qù)台(tái)湾(wān)。", fr: "D'accord ! Demain, nous allons à Taïwan.", en: "Great! Tomorrow we are going to Taiwan." })}
+
+                        <div style="font-weight:bold; color:#8C6239; margin-top:20px;">Exemple 2</div>
+                        <img src="https://cdn.phototourl.com/member/2026-11-21-58f3ba58-9d8f-420c-ac97-1d0c322169e4.png" class="lesson-img" alt="Exemple 2">
+                        ${speakerLabel("马苏和莱尼")}
+                        ${exampleRow({ zh: "明(míng)天(tiān)你(nǐ)要(yào)来(lái)法(fǎ)国(guó)吗(ma)？", fr: "Demain, viens-tu en France ?", en: "Tomorrow, are you coming to France?" })}
+                        ${speakerLabel("居贞")}
+                        ${exampleRow({ zh: "好(hǎo)啊(a)！明(míng)天(tiān)我(wǒ)去(qù)法(fǎ)国(guó)。", fr: "D'accord ! Demain, je vais en France.", en: "Great! Tomorrow I am going to France." })}
                         `
                     },
                     {
                         type: "grammar",
                         subId: "sub-1-4",
-                        title: "4. 會 (huì) — Ability",
+                        title: "会 (huì) — pouvoir / savoir faire",
+                        noteFr: "会 est utilisé pour des compétences qu'on peut apprendre (par ex. conduire, cuisiner, les langues).",
                         note: "<b>Explanation:</b> 會 is used for skills that can be learned (e.g. driving, cooking, languages).",
-                        noteFr: "<b>Explication :</b> 會 est utilisé pour des compétences qu'on peut apprendre (par ex. conduire, cuisiner, les langues).",
                         examples: [
-                            { zh: "你(nǐ)会(huì)开(kāi)车(chē)吗(ma)？", en: "Can you drive?", fr: "Sais-tu conduire ?" },
-                            { zh: "我(wǒ)会(huì) / 我(wǒ)不(bú)会(huì)", en: "I can / I can't", fr: "Je sais / je ne sais pas" },
-                            { zh: "你(nǐ)会(huì)做(zuò)饭(fàn)吗(ma)？", en: "Can you cook?", fr: "Sais-tu cuisiner ?" },
-                            { zh: "会(huì)，我(wǒ)会(huì)做(zuò)老(lǎo)干(gān)妈(mā)炒(chǎo)饭(fàn)。", en: "Yes, I can make Lao Gan Ma fried rice.", fr: "Oui, je sais faire du riz frit à la Lao Gan Ma." }
+                            { zh: "你(nǐ)会(huì)开(kāi)车(chē)吗(ma)？", fr: "Sais-tu conduire ?", en: "Can you drive?" },
+                            { zh: "我(wǒ)会(huì) / 我(wǒ)不(bú)会(huì)", fr: "Je sais / je ne sais pas", en: "I can / I can't" },
+                            { zh: "你(nǐ)会(huì)做(zuò)饭(fàn)吗(ma)？", fr: "Sais-tu cuisiner ?", en: "Can you cook?" },
+                            { zh: "会(huì)，我(wǒ)会(huì)做(zuò)老(lǎo)干(gān)妈(mā)炒(chǎo)饭(fàn)。", fr: "Oui, je sais faire du riz frit à la Lao Gan Ma.", en: "Yes, I can make Lao Gan Ma fried rice." }
                         ]
                     },
                     {
                         type: "custom",
                         subId: "sub-1-5",
-                        title: "5. 想 (xiǎng) — Want",
+                        title: "想 (xiǎng) — vouloir",
                         html: `
-                        <div class="note"><b>想 (xiǎng):</b> would like to + v. / want — this expresses <b>the degree of desire</b>: 想 (would like to / want) &lt; 要 (want, stronger) &lt; 去 (actually going to do it).</div>
-                        <div class="note-fr"><b>想 (xiǎng) :</b> aimerais / voudrais + v. — ceci exprime <b>le degré de désir</b> : 想 (aimerais / veux) &lt; 要 (veux, plus fort) &lt; 去 (vais réellement le faire).</div>
-                        <div class="diagram-row">
-                            <div class="diagram-card"><div class="label">想</div><div style="font-size:13px;color:#777;">would like to / want</div></div>
-                            <div class="diagram-arrow">&lt;</div>
-                            <div class="diagram-card"><div class="label">要</div><div style="font-size:13px;color:#777;">want</div></div>
-                            <div class="diagram-arrow">&lt;</div>
-                            <div class="diagram-card"><div class="label">去</div><div style="font-size:13px;color:#777;">going to do it</div></div>
-                        </div>
-                        ${exampleRow({ zh: "你(nǐ)想(xiǎng)学(xué)开(kāi)车(chē)吗(ma)？", en: "Do you want to learn how to drive?", fr: "Veux-tu apprendre à conduire ?" })}
-                        ${exampleRow({ zh: "我(wǒ)不(bù)想(xiǎng)，我(wǒ)没(méi)时(shí)间(jiān)。", en: "I don't want to, I don't have time.", fr: "Je ne veux pas, je n'ai pas le temps." })}
+                        <div class="note-fr">想 (xiǎng) : aimerais / voudrais + v. — ceci exprime <b>le degré de désir</b> : 想 (aimerais / veux) &lt; 想要 (veux) &lt; 要 (vais le faire).</div>
+                        <div class="note"><b>想 (xiǎng):</b> would like to + v. / want — <b>the degree of desire</b>: 想 &lt; 想要 &lt; 要.</div>
+                        <img src="https://cdn.phototourl.com/member/2026-11-21-3337134b-1b5d-4ea6-8d82-ef86747e8496.png" class="lesson-img" alt="想 / 要 / 去">
+                        ${exampleRow({ zh: "你(nǐ)想(xiǎng)学(xué)开(kāi)车(chē)吗(ma)？", fr: "Veux-tu apprendre à conduire ?", en: "Do you want to learn how to drive?" })}
+                        ${exampleRow({ zh: "我(wǒ)不(bù)想(xiǎng)，我(wǒ)没(méi)时(shí)间(jiān)。", fr: "Je ne veux pas, je n'ai pas le temps.", en: "I don't want to, I don't have time." })}
+                        `
+                    },
+                    {
+                        type: "custom",
+                        subId: "sub-1-6",
+                        title: "第 + nombre + classificateur",
+                        html: `
+                        <div class="note-fr">Pour parler de quelque chose qui a un ordre, on utilise 第 + nombre + classificateur.</div>
+                        <div class="note"><b>Explanation:</b> When we speak of something that has an order, we use 第 + number + measure word.</div>
+                        <img src="https://cdn.phototourl.com/member/2026-11-21-a053f7b9-b7f4-4398-9705-c273f47f75ba.png" class="lesson-img" alt="第一個 / 第二個 / 第三個">
+                        ${exampleRow({ zh: "第(dì)一(yī)个(gè)", fr: "Le premier", en: "First one" })}
+                        ${exampleRow({ zh: "第(dì)二(èr)个(gè)", fr: "Le deuxième", en: "Second one" })}
+                        ${exampleRow({ zh: "第(dì)三(sān)个(gè)", fr: "Le troisième", en: "Third one" })}
+                        ${exampleRow({ zh: "名(míng)字(zi) / 很(hěn)有(yǒu)名(míng)", fr: "nom / célèbre", en: "name / famous" })}
+                        <img src="https://cdn.phototourl.com/member/2026-11-21-b25f43af-5aad-4048-8693-7c3543228a31.png" class="lesson-img" alt="第一名 / 第二名 / 第三名">
+                        ${exampleRow({ zh: "第(dì)一(yī)名(míng) / 第(dì)二(èr)名(míng) / 第(dì)三(sān)名(míng)", fr: "Première place / Deuxième place / Troisième place", en: "First Place / Second Place / Third Place" })}
+                        ${exampleRow({ zh: "比(bǐ)赛(sài)", fr: "Compétition", en: "Competition" })}
+                        ${exampleRow({ zh: "这(zhè)个(gè)跑(pǎo)步(bù)比(bǐ)赛(sài)，我(wǒ)是(shì)第(dì)一(yī)名(míng)。", fr: "Je suis arrivé(e) premier/première à cette course à pied.", en: "I came in first place in this running race." })}
+                        <div class="note-fr" style="margin-top:12px;">活动 (huódòng) est une « activité » ou un « événement » qu'on planifie pour s'amuser, faire de l'exercice, ou pour un objectif (une fête, une randonnée, un événement scolaire). 事 (shì) signifie « des choses à faire », « des affaires » du quotidien — le travail, les courses, des problèmes.</div>
+                        <div class="note">活動 (huódòng) is an 'activity' / 'event'. 事 (shì) means 'things to do' / 'matters' in daily life.</div>
+                        ${exampleRow({ zh: "活(huó)动(dòng)", fr: "activité / événement", en: "activity / event" })}
+                        ${exampleRow({ zh: "事(shì)", fr: "affaires / choses à faire", en: "matters / stuff" })}
+                        ${exampleRow({ zh: "今(jīn)天(tiān)晚(wǎn)上(shàng)八(bā)点(diǎn)我(wǒ)的(de)公(gōng)司(sī)有(yǒu)跑(pǎo)步(bù)活(huó)动(dòng)。", fr: "Ce soir à 20h, mon entreprise organise un événement de course à pied.", en: "My company has a running event tonight at 8:00." })}
+                        ${exampleRow({ zh: "好(hǎo)早(zǎo) / 好(hǎo)晚(wǎn)", fr: "si tôt / si tard", en: "so early / so late" })}
                         `
                     },
                     {
                         type: "grammar",
-                        subId: "sub-1-6",
-                        title: "6. 第 + 數字 + 量詞 (Ordinal Numbers)",
-                        note: "<b>Explanation:</b> When we speak of something that has an order, we use 第 + number + measure word. 活動 (huódòng) is an 'activity' or 'event' planned for fun, exercise, or a goal (a party, a hike, a school event). 事 (shì) means 'things to do,' 'matters,' or 'stuff' in daily life — work, errands, problems.",
-                        noteFr: "<b>Explication :</b> Pour parler de quelque chose qui a un ordre, on utilise 第 + nombre + classificateur. 活動 (huódòng) est une 'activité' ou un 'événement' qu'on planifie pour s'amuser, faire de l'exercice, ou pour un objectif (une fête, une randonnée, un événement scolaire). 事 (shì) signifie 'des choses à faire', 'des affaires', ou 'des trucs' du quotidien — le travail, les courses, des problèmes.",
-                        examples: [
-                            { zh: "第(dì)一(yī)个(gè)", en: "First one", fr: "Le premier" },
-                            { zh: "第(dì)二(èr)个(gè)", en: "Second one", fr: "Le deuxième" },
-                            { zh: "第(dì)三(sān)个(gè)", en: "Third one", fr: "Le troisième" },
-                            { zh: "名(míng)字(zi) / 很(hěn)有(yǒu)名(míng)", en: "name / famous", fr: "nom / célèbre" },
-                            { zh: "第(dì)一(yī)名(míng) / 第(dì)二(èr)名(míng) / 第(dì)三(sān)名(míng)", en: "First Place / Second Place / Third Place", fr: "Première place / Deuxième place / Troisième place" },
-                            { zh: "比(bǐ)赛(sài)", en: "Competition", fr: "Compétition" },
-                            { zh: "这(zhè)个(gè)跑(pǎo)步(bù)比(bǐ)赛(sài)，我(wǒ)是(shì)第(dì)一(yī)名(míng)。", en: "I came in first place in this running race.", fr: "Je suis arrivé(e) premier/première à cette course à pied." },
-                            { zh: "活(huó)动(dòng)", en: "activity / event", fr: "activité / événement" },
-                            { zh: "事(shì)", en: "matters / stuff", fr: "affaires / choses à faire" },
-                            { zh: "今(jīn)天(tiān)晚(wǎn)上(shàng)八(bā)点(diǎn)我(wǒ)的(de)公(gōng)司(sī)有(yǒu)跑(pǎo)步(bù)活(huó)动(dòng)。", en: "My company has a running event tonight at 8:00.", fr: "Ce soir à 20h, mon entreprise organise un événement de course à pied." },
-                            { zh: "好(hǎo)早(zǎo) / 好(hǎo)晚(wǎn)", en: "so early / so late", fr: "si tôt / si tard" }
-                        ]
-                    },
-                    {
-                        type: "grammar",
                         subId: "sub-1-7",
-                        title: "7. 十年前 / 不 + V. / 不會 + V.",
+                        title: "il y a... / 不 + V. / 不会 + V.",
+                        noteFr: "temps + 前 (qián) = « il y a ___ ». 不 + v. = ne pas faire quelque chose (par choix). 不会 + v. = ne pas savoir faire quelque chose (manque de compétence).",
                         note: "<b>Explanation:</b> time + 前 (qián) = \"___ ago\". 不 + v. = don't do something (choice). 不會 + v. = can't do something (lack of skill).",
-                        noteFr: "<b>Explication :</b> temps + 前 (qián) = \"il y a ___\". 不 + v. = ne pas faire quelque chose (par choix). 不會 + v. = ne pas savoir faire quelque chose (manque de compétence).",
                         examples: [
-                            { zh: "十(shí)年(nián)前(qián)，我(wǒ)去(qù)过(guò)日(rì)本(běn)。", en: "I went to Japan ten years ago.", fr: "Je suis allé(e) au Japon il y a dix ans." },
-                            { zh: "在(zài)台(tái)湾(wān)，我(wǒ)们(men)不(bù)说(shuō)日(rì)文(wén)，我(wǒ)们(men)说(shuō)中(zhōng)文(wén)。", en: "In Taiwan, we don't speak Japanese, we speak Chinese.", fr: "À Taïwan, on ne parle pas japonais, on parle chinois." },
-                            { zh: "在(zài)法(fǎ)国(guó)，我(wǒ)们(men)不(bù)说(shuō)英(yīng)文(wén)，我(wǒ)们(men)说(shuō)法(fǎ)文(wén)。", en: "In France, we don't speak English, we speak French.", fr: "En France, on ne parle pas anglais, on parle français." }
+                            { zh: "十(shí)年(nián)前(qián)，我(wǒ)去(qù)过(guò)日(rì)本(běn)。", fr: "Je suis allé(e) au Japon il y a dix ans.", en: "I went to Japan ten years ago." },
+                            { zh: "在(zài)台(tái)湾(wān)，我(wǒ)们(men)不(bù)说(shuō)日(rì)文(wén)，我(wǒ)们(men)说(shuō)中(zhōng)文(wén)。", fr: "À Taïwan, on ne parle pas japonais, on parle chinois.", en: "In Taiwan, we don't speak Japanese, we speak Chinese." },
+                            { zh: "在(zài)法(fǎ)国(guó)，我(wǒ)们(men)不(bù)说(shuō)英(yīng)文(wén)，我(wǒ)们(men)说(shuō)法(fǎ)文(wén)。", fr: "En France, on ne parle pas anglais, on parle français.", en: "In France, we don't speak English, we speak French." }
                         ]
                     }
                 ]
             },
             {
-                title: "二、新的內容 (New Content)",
+                title: "2. Nouveau contenu",
                 items: [
                     {
                         type: "grammar",
                         subId: "sub-2-1",
-                        title: "卡通、電影生詞 (Cartoon & Movie Vocabulary)",
-                        note: "⚠️ Be careful: 动(dòng) \"move\" looks similar to 东(dōng) \"east\" — different character, different tone!",
+                        title: "Vocabulaire : dessins animés et films",
                         noteFr: "⚠️ Attention : 动(dòng) « bouger » ressemble à 东(dōng) « est » — un caractère différent, un ton différent !",
+                        note: "⚠️ Be careful: 动(dòng) \"move\" looks similar to 东(dōng) \"east\".",
                         examples: [
-                            { zh: "卡(kǎ)通(tōng)", en: "cartoon", fr: "dessin animé" },
-                            { zh: "动(dòng)画(huà)", en: "animation (动 move + 画 painting)", fr: "animation (动 bouger + 画 peinture)" },
-                            { zh: "电(diàn)影(yǐng)", en: "movie (电 electricity + 影 shadow)", fr: "film (电 électricité + 影 ombre)" },
-                            { zh: "电(diàn)影(yǐng)院(yuàn)", en: "cinema", fr: "cinéma" },
-                            { zh: "公(gōng)园(yuán)", en: "park", fr: "parc" },
-                            { zh: "主(zhǔ)角(jiǎo)", en: "main character", fr: "personnage principal" },
-                            { zh: "警(jǐng)察(chá)", en: "police", fr: "police" },
-                            { zh: "女(nǚ)警(jǐng)", en: "policewoman", fr: "policière" },
-                            { zh: "男(nán)警(jǐng)", en: "policeman", fr: "policier" },
-                            { zh: "飞(fēi)天(tiān)小(xiǎo)女(nǚ)警(jǐng)", en: "The Powerpuff Girls", fr: "Les Supers Nanas" },
-                            { zh: "羊(yáng)", en: "sheep", fr: "mouton" },
-                            { zh: "笑(xiào)", en: "laugh", fr: "rire" },
-                            { zh: "笑(xiào)笑(xiào)羊(yáng)", en: "Shaun the Sheep", fr: "Shaun le Mouton" },
-                            { zh: "饥(jī)饿(è)游(yóu)戏(xì)", en: "Hunger Games", fr: "Hunger Games" }
+                            { zh: "卡(kǎ)通(tōng)", fr: "dessin animé", en: "cartoon" },
+                            { zh: "动(dòng)画(huà)", fr: "animation (动 bouger + 画 peinture)", en: "animation (动 move + 画 painting)" },
+                            { zh: "电(diàn)影(yǐng)", fr: "film (电 électricité + 影 ombre)", en: "movie (电 electricity + 影 shadow)" },
+                            { zh: "电(diàn)影(yǐng)院(yuàn)", fr: "cinéma", en: "cinema" },
+                            { zh: "公(gōng)园(yuán)", fr: "parc", en: "park" },
+                            { zh: "主(zhǔ)角(jiǎo)", fr: "personnage principal", en: "main character" },
+                            { zh: "警(jǐng)察(chá)", fr: "police", en: "police" },
+                            { zh: "女(nǚ)警(jǐng)", fr: "policière", en: "policewoman" },
+                            { zh: "男(nán)警(jǐng)", fr: "policier", en: "policeman" },
+                            { zh: "飞(fēi)天(tiān)小(xiǎo)女(nǚ)警(jǐng)", fr: "Les Supers Nanas", en: "The Powerpuff Girls" },
+                            { zh: "羊(yáng)", fr: "mouton", en: "sheep" },
+                            { zh: "笑(xiào)", fr: "rire", en: "laugh" },
+                            { zh: "笑(xiào)笑(xiào)羊(yáng)", fr: "Shaun le Mouton", en: "Shaun the Sheep" },
+                            { zh: "饥(jī)饿(è)游(yóu)戏(xì)", fr: "Hunger Games", en: "Hunger Games" }
                         ]
                     }
                 ]
             },
             {
-                title: "三、下次作業 (Next Homework)",
+                title: "3. Devoirs pour la prochaine fois",
                 items: [
                     {
                         type: "custom",
                         subId: "sub-3-1",
-                        title: "口說練習：介紹一部電影 (Speaking: Introduce a movie)",
+                        title: "Devoir 1 : ton humeur cette semaine",
                         html: `
-                        <div class="note">Every class, we have to use this grammar pattern to share something that happened this week and practice our speaking skills. Introduce a movie you recently watched, or one of your favorites, in Chinese — tell us what the story is about.</div>
-                        <div class="note-fr">À chaque cours, nous devons utiliser cette structure grammaticale pour partager quelque chose qui s'est passé cette semaine et pratiquer notre expression orale. Présente en chinois un film que tu as regardé récemment, ou un de tes films préférés, et raconte-nous de quoi parle l'histoire.</div>
+                        <div class="note-fr">À chaque cours, nous devons utiliser cette structure grammaticale pour partager quelque chose qui s'est passé cette semaine et pratiquer notre expression orale.</div>
+                        <div class="note">Every class, we have to use this grammar pattern to share something that happened this week and practice our speaking skills.</div>
                         <table class="custom-table" style="margin-top:15px;">
-                            <thead><tr><th>中文</th><th>English</th><th>Français</th></tr></thead>
+                            <thead><tr><th>中文</th><th>Français</th><th>English</th></tr></thead>
                             <tbody>
-                                <tr><td style="font-size:20px;">${parsePinyin("快(kuài)乐(lè)")} 😄</td><td>happy</td><td>content(e)</td></tr>
-                                <tr><td style="font-size:20px;">${parsePinyin("生(shēng)气(qì)")} 😠</td><td>angry</td><td>fâché(e)</td></tr>
-                                <tr><td style="font-size:20px;">${parsePinyin("伤(shāng)心(xīn)")} 😢</td><td>sad</td><td>triste</td></tr>
-                                <tr><td style="font-size:20px;">${parsePinyin("紧(jǐn)张(zhāng)")} 😰</td><td>nervous</td><td>nerveux(se)</td></tr>
+                                <tr><td style="font-size:20px;">${parsePinyin("快(kuài)乐(lè)")} 😄</td><td>content(e)</td><td>happy</td></tr>
+                                <tr><td style="font-size:20px;">${parsePinyin("生(shēng)气(qì)")} 😠</td><td>fâché(e)</td><td>angry</td></tr>
+                                <tr><td style="font-size:20px;">${parsePinyin("伤(shāng)心(xīn)")} 😢</td><td>triste</td><td>sad</td></tr>
+                                <tr><td style="font-size:20px;">${parsePinyin("紧(jǐn)张(zhāng)")} 😰</td><td>nerveux(se)</td><td>nervous</td></tr>
                             </tbody>
                         </table>
-                        <div style="margin-top:15px;">${exampleRow({ zh: "上(shàng) / 这(zhè) / 下(xià)星(xīng)期(qī)我(wǒ)有(yǒu)一(yí)个(gè) ____ 的(de)事(shì)....", en: "Last / this / next week I had a ___ thing happen...", fr: "La semaine dernière / cette semaine / la semaine prochaine, j'ai eu un événement ___..." })}</div>
+                        <div style="margin-top:15px;">${exampleRow({ zh: "上(shàng) / 这(zhè) / 下(xià)星(xīng)期(qī)我(wǒ)有(yǒu)一(yí)个(gè) ____ 的(de)事(shì)....", fr: "La semaine dernière / cette semaine / la semaine prochaine, j'ai eu un événement ___...", en: "Last / this / next week I had a ___ thing happen..." })}</div>
+                        `
+                    },
+                    {
+                        type: "custom",
+                        subId: "sub-3-2",
+                        title: "Devoir 2 : présente un film",
+                        html: `
+                        <div class="note-fr">Présente en chinois un film que tu as regardé récemment, ou un de tes films préférés, et raconte-nous de quoi parle l'histoire.</div>
+                        <div class="note">Introduce a movie you recently watched, or one of your favorites, in Chinese — tell us what the story is about.</div>
                         <div class="grammar-box" style="margin-top:10px;">
-                            <div style="font-weight:bold; color:#8C6239; margin-bottom:8px;">eg. 範例 (Doraemon)</div>
-                            ${exampleRow({ zh: "我(wǒ)最(zuì)近(jìn)看(kàn)了(le)哆(duō)啦(lā)A梦(mèng)去(qù)年(nián)的(de)电(diàn)影(yǐng)，是(shì)有(yǒu)关(guān)画(huà)画(huà)的(de)电(diàn)影(yǐng)，大(dà)家(jiā)可(kě)以(yǐ)去(qù)画(huà)里(lǐ)，很(hěn)好(hǎo)玩(wán)。", en: "I recently watched last year's Doraemon movie. It's about paintings — the characters can actually enter the paintings, which is really fun!", fr: "J'ai récemment regardé le film de Doraemon de l'année dernière. Ça parle de peintures : les personnages peuvent en fait entrer dans les peintures, c'est vraiment amusant !" })}
-                            ${exampleRow({ zh: "哆(duō)啦(lā)A梦(mèng)的(de)主(zhǔ)角(jiǎo)们(men)都(dōu)去(qù)到(dào)画(huà)里(lǐ)，和(hé)画(huà)里(lǐ)的(de)人(rén)打(dǎ)架(jià)，最(zuì)后(hòu)他(tā)们(men)赢(yíng)了(le)！", en: "The main characters from Doraemon go inside the paintings and end up fighting the people there. In the end, they win!", fr: "Les personnages principaux de Doraemon entrent dans les peintures et finissent par se battre avec les gens qui s'y trouvent. À la fin, ils gagnent !" })}
+                            <div style="font-weight:bold; color:#8C6239; margin-bottom:8px;">eg. 例子 (Doraemon)</div>
+                            ${exampleRow({ zh: "我(wǒ)最(zuì)近(jìn)看(kàn)了(le)哆(duō)啦(lā)A梦(mèng)去(qù)年(nián)的(de)电(diàn)影(yǐng)，是(shì)有(yǒu)关(guān)画(huà)画(huà)的(de)电(diàn)影(yǐng)，大(dà)家(jiā)可(kě)以(yǐ)去(qù)画(huà)里(lǐ)，很(hěn)好(hǎo)玩(wán)。", fr: "J'ai récemment regardé le film de Doraemon de l'année dernière. Ça parle de peintures : les personnages peuvent en fait entrer dans les peintures, c'est vraiment amusant !", en: "I recently watched last year's Doraemon movie. It's about paintings — the characters can actually enter the paintings, which is really fun!" })}
+                            ${exampleRow({ zh: "哆(duō)啦(lā)A梦(mèng)的(de)主(zhǔ)角(jiǎo)们(men)都(dōu)去(qù)到(dào)画(huà)里(lǐ)，和(hé)画(huà)里(lǐ)的(de)人(rén)打(dǎ)架(jià)，最(zuì)后(hòu)他(tā)们(men)赢(yíng)了(le)！", fr: "Les personnages principaux de Doraemon entrent dans les peintures et finissent par se battre avec les gens qui s'y trouvent. À la fin, ils gagnent !", en: "The main characters from Doraemon go inside the paintings and end up fighting the people there. In the end, they win!" })}
                         </div>
                         `
                     }
@@ -468,8 +489,8 @@
                 } else if (item.type === "grammar" || item.type === "reading") {
                     html += `<div class="grammar-box" ${anchorAttr}>
                         <div style="font-weight:bold; font-size:17px; color:#8C6239; margin-bottom:8px;">${item.title}</div>`;
-                    if(item.note) html += `<div class="note">${item.note}</div>`;
                     if(item.noteFr) html += `<div class="note-fr">${item.noteFr}</div>`;
+                    if(item.note) html += `<div class="note">${item.note}</div>`;
                     if(item.image) html += `<img src="${item.image}" class="lesson-img" alt="Lesson Image">`;
 
                     if (item.examples) {
