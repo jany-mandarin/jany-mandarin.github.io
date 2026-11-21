@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -93,34 +93,35 @@
         <a href="https://jany-mandarin.github.io/margot-leni.html">Index</a>
     </div>
 
-    <button class="sidebar-toggle" onclick="toggleSidebar()">☰ Sommaire</button>
+    <button class="sidebar-toggle" onclick="toggleSidebar()">☰ Outline</button>
 
     <div class="sidebar" id="sidebar">
-        <h3>📖 Sommaire <button style="background:none; border:none; color:#8C6239; font-weight:bold; cursor:pointer; font-size:16px;" onclick="toggleSidebar()">×</button></h3>
+        <h3>📖 Outline <button style="background:none; border:none; color:#8C6239; font-weight:bold; cursor:pointer; font-size:16px;" onclick="toggleSidebar()">×</button></h3>
         <ol>
             <li>
-                <a href="#sec-1">Révision du dernier cours</a>
+                <a href="#sec-1">Last Homework Review</a>
                 <ul class="sub-list">
-                    <li><a href="#sub-1-1">Fréquence : 常常 / 有时候 / 不常</a></li>
-                    <li><a href="#sub-1-2">Lecture : Xiaoming &amp; Xiaoyue</a></li>
-                    <li><a href="#sub-1-3">来 vs 去</a></li>
-                    <li><a href="#sub-1-4">会</a></li>
-                    <li><a href="#sub-1-5">想</a></li>
-                    <li><a href="#sub-1-6">第 + nombre + classificateur</a></li>
-                    <li><a href="#sub-1-7">il y a... / 不 + V. / 不会 + V.</a></li>
+                    <li><a href="#sub-1-1">来 vs 去</a></li>
+                    <li><a href="#sub-1-2">会</a></li>
+                    <li><a href="#sub-1-3">想</a></li>
+                    <li><a href="#sub-1-4">Frequency: 常常 / 有时候 / 不常</a></li>
+                    <li><a href="#sub-1-5">第 + Number + Measure Word</a></li>
+                    <li><a href="#sub-1-6">Reading: Xiaoming &amp; Xiaoyue</a></li>
+                    <li><a href="#sub-1-7">十年前 (Time Ago)</a></li>
+                    <li><a href="#sub-1-8">不 / 不会 (Negation)</a></li>
                 </ul>
             </li>
             <li>
-                <a href="#sec-2">Nouveau contenu</a>
+                <a href="#sec-2">New Content</a>
                 <ul class="sub-list">
-                    <li><a href="#sub-2-1">Vocabulaire : dessins animés et films</a></li>
+                    <li><a href="#sub-2-1">Vocabulary: Cartoons &amp; Movies</a></li>
                 </ul>
             </li>
             <li>
-                <a href="#sec-3">Devoirs</a>
+                <a href="#sec-3">Homework</a>
                 <ul class="sub-list">
-                    <li><a href="#sub-3-1">Devoir 1 : ton humeur</a></li>
-                    <li><a href="#sub-3-2">Devoir 2 : un film</a></li>
+                    <li><a href="#sub-3-1">Homework 1: Your Mood</a></li>
+                    <li><a href="#sub-3-2">Homework 2: A Movie</a></li>
                 </ul>
             </li>
         </ol>
@@ -185,7 +186,8 @@
             let cleanText = text.replace(/<[^>]*>/g, '')
                                 .replace(/\(.*?\)/g, '')
                                 .replace(/^[a-zA-Z]:\s*/g, '')
-                                .replace(/^\d+\.\s*/, '');
+                                .replace(/^\d+\.\s*/, '')
+                                .replace(/角/g, '饺'); // 角 defaults to "jué" in TTS; force the "jiǎo" reading used in 主角
 
             const utterance = new SpeechSynthesisUtterance(cleanText);
             utterance.lang = 'zh-CN';
@@ -279,39 +281,11 @@
 
         const lessonData = [
             {
-                title: "1. Révision du dernier cours",
+                title: "1. Last Homework Review",
                 items: [
                     {
-                        type: "grammar",
-                        subId: "sub-1-1",
-                        title: "Fréquence : 常常 / 有时候 / 不常",
-                        noteFr: "Ces mots décrivent la fréquence d'une action. En chinois, une phrase a généralement besoin d'un objet après le verbe — 「跑」(courir) seul ne peut pas former une phrase complète, il faut 「跑步」(courir + pas).",
-                        note: "<b>Explanation:</b> These words describe how often something happens. 「跑」(run) alone cannot stand as a full sentence, it needs 「跑步」(run + step).",
-                        examples: [
-                            { zh: "常(cháng)常(cháng)", fr: "souvent", en: "often" },
-                            { zh: "有(yǒu)时(shí)候(hou)", fr: "parfois", en: "sometimes" },
-                            { zh: "不(bù)常(cháng)", fr: "pas souvent / rarement", en: "not often / rarely" },
-                            { zh: "你(nǐ)常(cháng)常(cháng)跑(pǎo)步(bù)吗(ma)？", fr: "Cours-tu souvent ?", en: "Do you run often?" },
-                            { zh: "我(wǒ)不(bù)常(cháng)跑(pǎo)步(bù)，所(suǒ)以(yǐ)我(wǒ)很(hěn)紧(jǐn)张(zhāng)。", fr: "Je ne cours pas très souvent, donc je suis très nerveux/nerveuse.", en: "I don't run very often, so I'm very nervous." }
-                        ]
-                    },
-                    {
-                        type: "reading",
-                        subId: "sub-1-2",
-                        title: "Lecture : l'histoire de Xiaoming et Xiaoyue",
-                        noteFr: "<b>Compréhension écrite :</b> Le voyage de Xiaoming et Xiaoyue au Japon pour chercher Totoro.",
-                        note: "<b>Reading practice:</b> Xiaoming and Xiaoyue's trip to Japan to find Totoro.",
-                        examples: [
-                            { zh: "小(xiǎo)明(míng)和(hé)小(xiǎo)月(yuè)小(xiǎo)时(shí)候(hou)看(kàn)过(guò)龙(lóng)猫(māo)，他(tā)们(men)想(xiǎng)去(qù)日(rì)本(běn)找(zhǎo)龙(lóng)猫(māo)，所(suǒ)以(yǐ)他(tā)们(men)下(xià)个(gè)月(yuè)要(yào)去(qù)日(rì)本(běn)旅(lǚ)行(xíng)。", fr: "Quand ils étaient petits, Xiaoming et Xiaoyue ont regardé Totoro, et ils veulent aller au Japon pour chercher Totoro, donc le mois prochain ils vont voyager au Japon.", en: "When they were little, Xiaoming and Xiaoyue watched Totoro, and they want to go to Japan to find Totoro, so next month they are going to travel to Japan." },
-                            { zh: "他(tā)们(men)的(de)飞(fēi)机(jī)是(shì)十(shí)二(èr)月(yuè)十(shí)四(sì)号(hào)晚(wǎn)上(shàng)八(bā)点(diǎn)飞(fēi)，十(shí)五(wǔ)号(hào)早(zǎo)上(shàng)十(shí)点(diǎn)到(dào)日(rì)本(běn)。", fr: "Leur avion décolle à 20h le 14 décembre, et arrive au Japon à 10h le 15.", en: "Their flight departs at 8pm on December 14th, and arrives in Japan at 10am on the 15th." },
-                            { zh: "下(xià)飞(fēi)机(jī)后(hòu)，他(tā)们(men)看(kàn)到(dào)一(yì)只(zhī)很(hěn)大(dà)的(de)龙(lóng)猫(māo)娃(wá)娃(wa)，他(tā)们(men)都(dōu)很(hěn)高(gāo)兴(xìng)。", fr: "Après être descendus de l'avion, ils ont vu une très grande peluche Totoro, et ils étaient très contents.", en: "After getting off the plane, they saw a very big Totoro stuffed animal, and they were very happy." },
-                            { zh: "可(kě)是(shì)他(tā)们(men)不(bú)会(huì)说(shuō)日(rì)文(wén)，很(hěn)难(nán)找(zhǎo)到(dào)酒(jiǔ)店(diàn)，所(suǒ)以(yǐ)他(tā)们(men)用(yòng)英(yīng)文(wén)。", fr: "Mais ils ne savent pas parler japonais, alors c'était difficile de trouver un hôtel, donc ils ont utilisé l'anglais.", en: "But they can't speak Japanese, so it was hard to find a hotel, so they used English." },
-                            { zh: "有(yǒu)一(yí)个(gè)日(rì)本(běn)人(rén)会(huì)说(shuō)英(yīng)文(wén)，帮(bāng)他(tā)们(men)找(zhǎo)到(dào)酒(jiǔ)店(diàn)，他(tā)们(men)很(hěn)开(kāi)心(xīn)。", fr: "Il y avait un Japonais qui savait parler anglais, qui les a aidés à trouver un hôtel, et ils étaient très contents.", en: "There was a Japanese person who could speak English, who helped them find a hotel, and they were very happy." }
-                        ]
-                    },
-                    {
                         type: "custom",
-                        subId: "sub-1-3",
+                        subId: "sub-1-1",
                         title: "来 vs 去",
                         html: `
                         <table class="custom-table">
@@ -344,8 +318,8 @@
                     },
                     {
                         type: "grammar",
-                        subId: "sub-1-4",
-                        title: "会 (huì) — pouvoir / savoir faire",
+                        subId: "sub-1-2",
+                        title: "会 (huì) — Ability",
                         noteFr: "会 est utilisé pour des compétences qu'on peut apprendre (par ex. conduire, cuisiner, les langues).",
                         note: "<b>Explanation:</b> 會 is used for skills that can be learned (e.g. driving, cooking, languages).",
                         examples: [
@@ -357,8 +331,8 @@
                     },
                     {
                         type: "custom",
-                        subId: "sub-1-5",
-                        title: "想 (xiǎng) — vouloir",
+                        subId: "sub-1-3",
+                        title: "想 (xiǎng) — Want",
                         html: `
                         <div class="note-fr">想 (xiǎng) : aimerais / voudrais + v. — ceci exprime <b>le degré de désir</b> : 想 (aimerais / veux) &lt; 想要 (veux) &lt; 要 (vais le faire).</div>
                         <div class="note"><b>想 (xiǎng):</b> would like to + v. / want — <b>the degree of desire</b>: 想 &lt; 想要 &lt; 要.</div>
@@ -368,9 +342,23 @@
                         `
                     },
                     {
+                        type: "grammar",
+                        subId: "sub-1-4",
+                        title: "Frequency: 常常 / 有时候 / 不常",
+                        noteFr: "Ces mots décrivent la fréquence d'une action. En chinois, une phrase a généralement besoin d'un objet après le verbe — 「跑」(courir) seul ne peut pas former une phrase complète, il faut 「跑步」(courir + pas).",
+                        note: "<b>Explanation:</b> These words describe how often something happens. 「跑」(run) alone cannot stand as a full sentence, it needs 「跑步」(run + step).",
+                        examples: [
+                            { zh: "常(cháng)常(cháng)", fr: "souvent", en: "often" },
+                            { zh: "有(yǒu)时(shí)候(hòu)", fr: "parfois", en: "sometimes" },
+                            { zh: "不(bù)常(cháng)", fr: "pas souvent / rarement", en: "not often / rarely" },
+                            { zh: "你(nǐ)常(cháng)常(cháng)跑(pǎo)步(bù)吗(ma)？", fr: "Cours-tu souvent ?", en: "Do you run often?" },
+                            { zh: "我(wǒ)不(bù)常(cháng)跑(pǎo)步(bù)，所(suǒ)以(yǐ)我(wǒ)很(hěn)紧(jǐn)张(zhāng)。", fr: "Je ne cours pas très souvent, donc je suis très nerveux/nerveuse.", en: "I don't run very often, so I'm very nervous." }
+                        ]
+                    },
+                    {
                         type: "custom",
-                        subId: "sub-1-6",
-                        title: "第 + nombre + classificateur",
+                        subId: "sub-1-5",
+                        title: "第 + Number + Measure Word",
                         html: `
                         <div class="note-fr">Pour parler de quelque chose qui a un ordre, on utilise 第 + nombre + classificateur.</div>
                         <div class="note"><b>Explanation:</b> When we speak of something that has an order, we use 第 + number + measure word.</div>
@@ -392,13 +380,36 @@
                         `
                     },
                     {
+                        type: "reading",
+                        subId: "sub-1-6",
+                        title: "Reading: Xiaoming and Xiaoyue's Story",
+                        noteFr: "<b>Compréhension écrite :</b> Le voyage de Xiaoming et Xiaoyue au Japon pour chercher Totoro.",
+                        note: "<b>Reading practice:</b> Xiaoming and Xiaoyue's trip to Japan to find Totoro.",
+                        examples: [
+                            { zh: "小(xiǎo)明(míng)和(hé)小(xiǎo)月(yuè)小(xiǎo)时(shí)候(hòu)看(kàn)过(guò)龙(lóng)猫(māo)，他(tā)们(men)想(xiǎng)去(qù)日(rì)本(běn)找(zhǎo)龙(lóng)猫(māo)，所(suǒ)以(yǐ)他(tā)们(men)下(xià)个(gè)月(yuè)要(yào)去(qù)日(rì)本(běn)旅(lǚ)行(xíng)。", fr: "Quand ils étaient petits, Xiaoming et Xiaoyue ont regardé Totoro, et ils veulent aller au Japon pour chercher Totoro, donc le mois prochain ils vont voyager au Japon.", en: "When they were little, Xiaoming and Xiaoyue watched Totoro, and they want to go to Japan to find Totoro, so next month they are going to travel to Japan." },
+                            { zh: "他(tā)们(men)的(de)飞(fēi)机(jī)是(shì)十(shí)二(èr)月(yuè)十(shí)四(sì)号(hào)晚(wǎn)上(shàng)八(bā)点(diǎn)飞(fēi)，十(shí)五(wǔ)号(hào)早(zǎo)上(shàng)十(shí)点(diǎn)到(dào)日(rì)本(běn)。", fr: "Leur avion décolle à 20h le 14 décembre, et arrive au Japon à 10h le 15.", en: "Their flight departs at 8pm on December 14th, and arrives in Japan at 10am on the 15th." },
+                            { zh: "下(xià)飞(fēi)机(jī)后(hòu)，他(tā)们(men)看(kàn)到(dào)一(yì)只(zhī)很(hěn)大(dà)的(de)龙(lóng)猫(māo)娃(wá)娃(wa)，他(tā)们(men)都(dōu)很(hěn)高(gāo)兴(xìng)。", fr: "Après être descendus de l'avion, ils ont vu une très grande peluche Totoro, et ils étaient très contents.", en: "After getting off the plane, they saw a very big Totoro stuffed animal, and they were very happy." },
+                            { zh: "可(kě)是(shì)他(tā)们(men)不(bú)会(huì)说(shuō)日(rì)文(wén)，很(hěn)难(nán)找(zhǎo)到(dào)酒(jiǔ)店(diàn)，所(suǒ)以(yǐ)他(tā)们(men)用(yòng)英(yīng)文(wén)。", fr: "Mais ils ne savent pas parler japonais, alors c'était difficile de trouver un hôtel, donc ils ont utilisé l'anglais.", en: "But they can't speak Japanese, so it was hard to find a hotel, so they used English." },
+                            { zh: "有(yǒu)一(yí)个(gè)日(rì)本(běn)人(rén)会(huì)说(shuō)英(yīng)文(wén)，帮(bāng)他(tā)们(men)找(zhǎo)到(dào)酒(jiǔ)店(diàn)，他(tā)们(men)很(hěn)开(kāi)心(xīn)。", fr: "Il y avait un Japonais qui savait parler anglais, qui les a aidés à trouver un hôtel, et ils étaient très contents.", en: "There was a Japanese person who could speak English, who helped them find a hotel, and they were very happy." }
+                        ]
+                    },
+                    {
                         type: "grammar",
                         subId: "sub-1-7",
-                        title: "il y a... / 不 + V. / 不会 + V.",
-                        noteFr: "temps + 前 (qián) = « il y a ___ ». 不 + v. = ne pas faire quelque chose (par choix). 不会 + v. = ne pas savoir faire quelque chose (manque de compétence).",
-                        note: "<b>Explanation:</b> time + 前 (qián) = \"___ ago\". 不 + v. = don't do something (choice). 不會 + v. = can't do something (lack of skill).",
+                        title: "十年前 (Time + Ago)",
+                        noteFr: "temps + 前 (qián) = « il y a ___ ».",
+                        note: "<b>Explanation:</b> time + 前 (qián) = \"___ ago\".",
                         examples: [
-                            { zh: "十(shí)年(nián)前(qián)，我(wǒ)去(qù)过(guò)日(rì)本(běn)。", fr: "Je suis allé(e) au Japon il y a dix ans.", en: "I went to Japan ten years ago." },
+                            { zh: "十(shí)年(nián)前(qián)，我(wǒ)去(qù)过(guò)日(rì)本(běn)。", fr: "Je suis allé(e) au Japon il y a dix ans.", en: "I went to Japan ten years ago." }
+                        ]
+                    },
+                    {
+                        type: "grammar",
+                        subId: "sub-1-8",
+                        title: "不 / 不会 (Negation)",
+                        noteFr: "不 + v. = ne pas faire quelque chose (par choix). 不会 + v. = ne pas savoir faire quelque chose (manque de compétence).",
+                        note: "<b>Explanation:</b> 不 + v. = don't do something (choice). 不會 + v. = can't do something (lack of skill).",
+                        examples: [
                             { zh: "在(zài)台(tái)湾(wān)，我(wǒ)们(men)不(bù)说(shuō)日(rì)文(wén)，我(wǒ)们(men)说(shuō)中(zhōng)文(wén)。", fr: "À Taïwan, on ne parle pas japonais, on parle chinois.", en: "In Taiwan, we don't speak Japanese, we speak Chinese." },
                             { zh: "在(zài)法(fǎ)国(guó)，我(wǒ)们(men)不(bù)说(shuō)英(yīng)文(wén)，我(wǒ)们(men)说(shuō)法(fǎ)文(wén)。", fr: "En France, on ne parle pas anglais, on parle français.", en: "In France, we don't speak English, we speak French." }
                         ]
@@ -406,12 +417,12 @@
                 ]
             },
             {
-                title: "2. Nouveau contenu",
+                title: "2. New Content",
                 items: [
                     {
                         type: "grammar",
                         subId: "sub-2-1",
-                        title: "Vocabulaire : dessins animés et films",
+                        title: "Vocabulary: Cartoons &amp; Movies",
                         noteFr: "⚠️ Attention : 动(dòng) « bouger » ressemble à 东(dōng) « est » — un caractère différent, un ton différent !",
                         note: "⚠️ Be careful: 动(dòng) \"move\" looks similar to 东(dōng) \"east\".",
                         examples: [
@@ -434,12 +445,12 @@
                 ]
             },
             {
-                title: "3. Devoirs pour la prochaine fois",
+                title: "3. Homework for Next Time",
                 items: [
                     {
                         type: "custom",
                         subId: "sub-3-1",
-                        title: "Devoir 1 : ton humeur cette semaine",
+                        title: "Homework 1: Your Mood This Week",
                         html: `
                         <div class="note-fr">À chaque cours, nous devons utiliser cette structure grammaticale pour partager quelque chose qui s'est passé cette semaine et pratiquer notre expression orale.</div>
                         <div class="note">Every class, we have to use this grammar pattern to share something that happened this week and practice our speaking skills.</div>
@@ -458,7 +469,7 @@
                     {
                         type: "custom",
                         subId: "sub-3-2",
-                        title: "Devoir 2 : présente un film",
+                        title: "Homework 2: Introduce a Movie",
                         html: `
                         <div class="note-fr">Présente en chinois un film que tu as regardé récemment, ou un de tes films préférés, et raconte-nous de quoi parle l'histoire.</div>
                         <div class="note">Introduce a movie you recently watched, or one of your favorites, in Chinese — tell us what the story is about.</div>
