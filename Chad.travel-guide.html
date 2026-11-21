@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chad's Taiwan Travel Guide</title>
+<style>
+:root { --bg: #FDFBF7; --primary: #D4A373; --text: #4a4a4a; --white: #fff; }
+html { scroll-behavior: smooth; }
+body { font-family: 'Helvetica Neue', Arial, sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; margin: 0; padding: 0; }
+.top-nav { position: sticky; top: 0; background: #FFF9F0; border-bottom: 1px solid #E6D5B8; padding: 10px 16px; box-sizing: border-box; text-align: center; z-index: 1200; }
+.top-nav a { color: var(--primary); font-weight: bold; text-decoration: none; margin: 0 10px; font-size: 16px; }
+.header { text-align: center; padding: 16px 12px 6px 12px; }
+.header h1 { font-size: 24px; color: #8C6239; margin: 0 0 4px 0; }
+.header p { font-size: 14px; color: #888; margin: 0; }
+.controls { position: sticky; top: 42px; background: var(--bg); padding: 10px; text-align: center; border-bottom: 1px solid #E6D5B8; z-index: 100; }
+button.control-btn { background: var(--primary); color: white; border: none; padding: 10px 14px; margin: 4px; border-radius: 8px; cursor: pointer; font-size: 15px; font-weight: bold; }
+.toc { background: #FFF9F0; border: 1px solid #E6D5B8; border-radius: 10px; margin: 14px 12px; padding: 14px 16px; }
+.toc h3 { margin: 0 0 8px 0; color: #8C6239; font-size: 18px; }
+.toc ol { margin: 0; padding-left: 22px; }
+.toc li { margin-bottom: 8px; }
+.toc a { color: #555; text-decoration: none; font-size: 16px; }
+.toc a:hover { color: var(--primary); font-weight: bold; }
+
+.main { max-width: 700px; margin: 0 auto; padding: 0 12px 60px 12px; }
+.section { background: var(--white); border-radius: 14px; box-shadow: 0 2px 6px rgba(0,0,0,0.06); margin: 18px 0; padding: 16px 14px; scroll-margin-top: 95px; }
+.section h2 { color: #8C6239; border-left: 5px solid var(--primary); padding-left: 10px; font-size: 21px; margin: 0 0 12px 0; }
+
+/* Dialogue bubbles */
+.dialog-box { margin-bottom: 14px; }
+.dialog-line { margin: 14px 0; }
+.speaker { font-weight: bold; color: #8C6239; font-size: 15px; margin-bottom: 4px; }
+.speaker .en { font-weight: normal; color: #999; font-size: 13px; }
+.dialog-row { display: flex; align-items: flex-start; gap: 10px; background: #FFF9F0; border: 1px solid #E6D5B8; border-radius: 10px; padding: 10px 12px; }
+.audio-btn { flex-shrink: 0; background: #EFEFEF; color: #4A4A4A; font-size: 18px; border-radius: 50%; width: 44px; height: 44px; display: inline-flex; align-items: center; justify-content: center; border: none; cursor: pointer; }
+.audio-btn:hover { background: #E2E2E2; }
+.dialog-content { flex: 1; min-width: 0; }
+.note-line { text-align: center; color: #999; font-size: 14px; font-style: italic; margin: 10px 0; }
+
+/* Bopomofo (Zhuyin) - enlarged for mobile */
+.zy-text { display: inline-block; line-height: 3; font-size: 20px; }
+.zy-char-wrap { display: inline-flex; align-items: center; margin-right: 3px; }
+.zy-char { font-size: 32px; font-family: "DFKai-SB", "BiauKai", serif; }
+.zy-box { display: inline-flex; flex-direction: column; justify-content: center; position: relative; margin-left: 2px; padding-right: 10px; }
+.zy-symbols { writing-mode: vertical-rl; text-orientation: upright; font-size: 14px; letter-spacing: -2px; }
+.zy-tone { position: absolute; right: 0px; top: 50%; transform: translateY(-50%); font-size: 14px; }
+.zy-neutral { position: absolute; top: -13px; left: 50%; transform: translateX(-50%); font-size: 13px; }
+.en-trans { color: #666; font-size: 16px; font-style: italic; margin-top: 6px; display: block; }
+
+/* Vocab cards */
+.vocab-title { font-size: 17px; font-weight: bold; color: #8C6239; margin: 14px 0 8px 0; border-top: 1px dashed #E6D5B8; padding-top: 12px; }
+.vocab-grid { display: flex; flex-direction: column; gap: 10px; }
+.vocab-card { background: #fdfaf6; border-left: 4px solid var(--primary); border-radius: 8px; padding: 10px 14px; }
+.vocab-word-row { display: flex; align-items: center; gap: 10px; }
+.vocab-word-row .zy-text { font-size: 22px; line-height: 2.6; }
+.vocab-word-row .zy-char { font-size: 30px; }
+.vocab-en { color: #8C6239; font-weight: bold; font-size: 15px; margin-left: 2px; }
+.vocab-example { margin-top: 6px; }
+.vocab-example .zy-text { font-size: 18px; }
+.vocab-example .zy-char { font-size: 26px; }
+.vocab-note { font-size: 14px; color: #555; margin-top: 6px; line-height: 1.6; }
+
+@media (max-width: 480px) {
+  .zy-char { font-size: 30px; }
+  .vocab-word-row .zy-char { font-size: 28px; }
+}
+</style>
+</head>
+<body>
+
+<div class="top-nav">
+  <a href="https://jany-mandarin.github.io/Chad.html">Index</a>
+  <a href="#toc">Contents</a>
+</div>
+
+<div class="header">
+  <h1>✈️ Chad's Taiwan Travel Guide</h1>
+  <p>一段旅程會用到的對話與單字 · Dialogue &amp; Vocabulary for a Trip to Taiwan</p>
+</div>
+
+<div class="controls">
+  <button class="control-btn" onclick="toggleZhuyin()">Toggle Bopomofo</button>
+  <button class="control-btn" onclick="toggleEnglish()">Toggle English</button>
+</div>
+
+<div class="main">
+  <div class="toc" id="toc">
+    <h3>📖 Contents</h3>
+    <ol id="tocList"></ol>
+  </div>
+  <div id="sections"></div>
+</div>
+
+<script>
+const sections = [
+{
+  id: "s1", title: "一、抵達台灣機場、出關", titleEn: "Arrival &amp; Immigration",
+  dialogue: [
+    {speaker:"海關人員", speakerEn:"Immigration Officer", zh:"護(ㄏㄨˋ)照(ㄓㄠˋ)，謝(ㄒㄧㄝˋ)謝(ㄒㄧㄝ˙)。", en:"Passport, please."},
+    {speaker:"查德", zh:"這(ㄓㄜˋ)是(ㄕˋ)我(ㄨㄛˇ)的(ㄉㄜ˙)護(ㄏㄨˋ)照(ㄓㄠˋ)。", en:"Here is my passport."},
+    {speaker:"海關人員", speakerEn:"Immigration Officer", zh:"你(ㄋㄧˇ)來(ㄌㄞˊ)台(ㄊㄞˊ)灣(ㄨㄢ)做(ㄗㄨㄛˋ)什(ㄕㄣˊ)麼(ㄇㄜ˙)？旅(ㄌㄩˇ)行(ㄒㄧㄥˊ)還(ㄏㄞˊ)是(ㄕˋ)出(ㄔㄨ)差(ㄔㄞ)？", en:"What are you here for? Traveling or a business trip?"},
+    {speaker:"查德", zh:"我(ㄨㄛˇ)來(ㄌㄞˊ)出(ㄔㄨ)差(ㄔㄞ)。", en:"I'm here on a business trip."},
+    {speaker:"海關人員", speakerEn:"Immigration Officer", zh:"你(ㄋㄧˇ)一(ㄧˊ)個(ㄍㄜ˙)人(ㄖㄣˊ)來(ㄌㄞˊ)嗎(ㄇㄚ˙)？", en:"Are you traveling alone?"},
+    {speaker:"查德", zh:"對(ㄉㄨㄟˋ)，我(ㄨㄛˇ)一(ㄧˊ)個(ㄍㄜ˙)人(ㄖㄣˊ)來(ㄌㄞˊ)。", en:"Yes, I'm alone."},
+    {speaker:"海關人員", speakerEn:"Immigration Officer", zh:"你(ㄋㄧˇ)的(ㄉㄜ˙)工(ㄍㄨㄥ)作(ㄗㄨㄛˋ)是(ㄕˋ)什(ㄕㄣˊ)麼(ㄇㄜ˙)？", en:"What is your job?"},
+    {speaker:"查德", zh:"我(ㄨㄛˇ)的(ㄉㄜ˙)工(ㄍㄨㄥ)作(ㄗㄨㄛˋ)是(ㄕˋ)買(ㄇㄞˇ)台(ㄊㄞˊ)灣(ㄨㄢ)的(ㄉㄜ˙)螺(ㄌㄨㄛˊ)絲(ㄙ)去(ㄑㄩˋ)美(ㄇㄟˇ)國(ㄍㄨㄛˊ)賣(ㄇㄞˋ)。", en:"My job is buying screws in Taiwan to sell in the US."},
+    {speaker:"海關人員", speakerEn:"Immigration Officer", zh:"你(ㄋㄧˇ)會(ㄏㄨㄟˋ)在(ㄗㄞˋ)台(ㄊㄞˊ)灣(ㄨㄢ)待(ㄉㄞ)多(ㄉㄨㄛ)久(ㄐㄧㄡˇ)？", en:"How long will you stay in Taiwan?"},
+    {speaker:"查德", zh:"三(ㄙㄢ)天(ㄊㄧㄢ)。", en:"Three days."},
+    {speaker:"海關人員", speakerEn:"Immigration Officer", zh:"你(ㄋㄧˇ)會(ㄏㄨㄟˋ)住(ㄓㄨˋ)在(ㄗㄞˋ)哪(ㄋㄚˇ)裡(ㄌㄧˇ)？", en:"Where will you be staying?"},
+    {speaker:"查德", zh:"我(ㄨㄛˇ)會(ㄏㄨㄟˋ)住(ㄓㄨˋ)在(ㄗㄞˋ)台(ㄊㄞˊ)北(ㄅㄟˇ)的(ㄉㄜ˙)台(ㄊㄞˊ)北(ㄅㄟˇ)時(ㄕˊ)代(ㄉㄞˋ)寓(ㄩˋ)所(ㄙㄨㄛˇ)。", en:"I'll be staying at Taipei Era Residence in Taipei."},
+    {speaker:"海關人員", speakerEn:"Immigration Officer", zh:"你(ㄋㄧˇ)帶(ㄉㄞˋ)多(ㄉㄨㄛ)少(ㄕㄠˇ)現(ㄒㄧㄢˋ)金(ㄐㄧㄣ)？", en:"How much cash are you carrying?"},
+    {speaker:"查德", zh:"三(ㄙㄢ)千(ㄑㄧㄢ)塊(ㄎㄨㄞˋ)。", en:"3,000 NT dollars."},
+    {speaker:"海關人員", speakerEn:"Immigration Officer", zh:"好(ㄏㄠˇ)，歡(ㄏㄨㄢ)迎(ㄧㄥˊ)你(ㄋㄧˇ)。", en:"Okay, welcome."}
+  ],
+  vocab: [
+    {word:"出(ㄔㄨ)關(ㄍㄨㄢ)", en:"chūguān – go through customs/immigration", ex_zh:"下(ㄒㄧㄚˋ)飛(ㄈㄟ)機(ㄐㄧ)以(ㄧˇ)後(ㄏㄡˋ)，我(ㄨㄛˇ)們(ㄇㄣ˙)要(ㄧㄠˋ)先(ㄒㄧㄢ)出(ㄔㄨ)關(ㄍㄨㄢ)。", ex_en:"After we get off the plane, we need to go through immigration first."},
+    {word:"旅(ㄌㄩˇ)行(ㄒㄧㄥˊ)", en:"lǚxíng – to travel", ex_zh:"你(ㄋㄧˇ)來(ㄌㄞˊ)台(ㄊㄞˊ)灣(ㄨㄢ)做(ㄗㄨㄛˋ)什(ㄕㄣˊ)麼(ㄇㄜ˙)？旅(ㄌㄩˇ)行(ㄒㄧㄥˊ)還(ㄏㄞˊ)是(ㄕˋ)出(ㄔㄨ)差(ㄔㄞ)？", ex_en:"What are you here for? Traveling or a business trip?"},
+    {word:"待(ㄉㄞ)", en:"dāi – to stay (1st tone!)", note:"Careful: this is a different 待 from 期待(ㄑㄧˊㄉㄞˋ) \"to look forward to,\" where 待 is 4th tone (dài). Here, meaning \"to stay,\" it's 1st tone dāi.", ex_zh:"你(ㄋㄧˇ)會(ㄏㄨㄟˋ)在(ㄗㄞˋ)台(ㄊㄞˊ)灣(ㄨㄢ)待(ㄉㄞ)多(ㄉㄨㄛ)久(ㄐㄧㄡˇ)？", ex_en:"How long will you stay in Taiwan?"},
+    {word:"一(ㄧˊ)個(ㄍㄜ˙)人(ㄖㄣˊ)", en:"yí ge rén – alone / by oneself", ex_zh:"你(ㄋㄧˇ)一(ㄧˊ)個(ㄍㄜ˙)人(ㄖㄣˊ)來(ㄌㄞˊ)嗎(ㄇㄚ˙)？", ex_en:"Are you traveling alone?"},
+    {word:"工(ㄍㄨㄥ)作(ㄗㄨㄛˋ)", en:"gōngzuò – job / work", ex_zh:"我(ㄨㄛˇ)的(ㄉㄜ˙)工(ㄍㄨㄥ)作(ㄗㄨㄛˋ)是(ㄕˋ)買(ㄇㄞˇ)台(ㄊㄞˊ)灣(ㄨㄢ)的(ㄉㄜ˙)螺(ㄌㄨㄛˊ)絲(ㄙ)去(ㄑㄩˋ)美(ㄇㄟˇ)國(ㄍㄨㄛˊ)賣(ㄇㄞˋ)。", ex_en:"My job is buying screws in Taiwan to sell in the US."},
+    {word:"現(ㄒㄧㄢˋ)金(ㄐㄧㄣ)", en:"xiànjīn – cash", ex_zh:"你(ㄋㄧˇ)帶(ㄉㄞˋ)多(ㄉㄨㄛ)少(ㄕㄠˇ)現(ㄒㄧㄢˋ)金(ㄐㄧㄣ)？三(ㄙㄢ)千(ㄑㄧㄢ)塊(ㄎㄨㄞˋ)。", ex_en:"How much cash are you carrying? 3,000 NT dollars."}
+  ]
+},
+{
+  id: "s2", title: "二、搭計程車到飯店", titleEn: "Taxi to the Hotel",
+  dialogue: [
+    {speaker:"查德", zh:"你(ㄋㄧˇ)好(ㄏㄠˇ)，我(ㄨㄛˇ)要(ㄧㄠˋ)去(ㄑㄩˋ)台(ㄊㄞˊ)北(ㄅㄟˇ)時(ㄕˊ)代(ㄉㄞˋ)寓(ㄩˋ)所(ㄙㄨㄛˇ)，謝(ㄒㄧㄝˋ)謝(ㄒㄧㄝ˙)。", en:"Hi, I'd like to go to Taipei Era Residence, thanks."},
+    {speaker:"司機", speakerEn:"Driver", zh:"好(ㄏㄠˇ)的(ㄉㄜ˙)，請(ㄑㄧㄥˇ)上(ㄕㄤˋ)車(ㄔㄜ)。", en:"Okay, please get in."},
+    {speaker:"查德", zh:"我(ㄨㄛˇ)的(ㄉㄜ˙)行(ㄒㄧㄥˊ)李(ㄌㄧˇ)箱(ㄒㄧㄤ)很(ㄏㄣˇ)重(ㄓㄨㄥˋ)，我(ㄨㄛˇ)來(ㄌㄞˊ)幫(ㄅㄤ)你(ㄋㄧˇ)。", en:"My suitcase is heavy, let me help you (with it)."},
+    {speaker:"司機", speakerEn:"Driver", zh:"好(ㄏㄠˇ)的(ㄉㄜ˙)，謝(ㄒㄧㄝˋ)謝(ㄒㄧㄝ˙)。", en:"Okay, thanks."},
+    {note:"在車上 (In the car)"},
+    {speaker:"司機", speakerEn:"Driver", zh:"台(ㄊㄞˊ)北(ㄅㄟˇ)時(ㄕˊ)代(ㄉㄞˋ)寓(ㄩˋ)所(ㄙㄨㄛˇ)在(ㄗㄞˋ)哪(ㄋㄚˇ)裡(ㄌㄧˇ)？", en:"Where is Taipei Era Residence?"},
+    {speaker:"查德", zh:"台(ㄊㄞˊ)北(ㄅㄟˇ)時(ㄕˊ)代(ㄉㄞˋ)寓(ㄩˋ)所(ㄙㄨㄛˇ)在(ㄗㄞˋ)台(ㄊㄞˊ)北(ㄅㄟˇ)市(ㄕˋ)中(ㄓㄨㄥ)正(ㄓㄥˋ)區(ㄑㄩ)林(ㄌㄧㄣˊ)森(ㄙㄣ)南(ㄋㄢˊ)路(ㄌㄨˋ)七(ㄑㄧ)號(ㄏㄠˋ)。", en:"It's at No. 7, Linsen South Road, Zhongzheng District, Taipei City."},
+    {speaker:"司機", speakerEn:"Driver", zh:"我(ㄨㄛˇ)知(ㄓ)道(ㄉㄠˋ)了(ㄌㄜ˙)！你(ㄋㄧˇ)是(ㄕˋ)哪(ㄋㄚˇ)裡(ㄌㄧˇ)人(ㄖㄣˊ)？你(ㄋㄧˇ)會(ㄏㄨㄟˋ)說(ㄕㄨㄛ)中(ㄓㄨㄥ)文(ㄨㄣˊ)？", en:"Got it! Where are you from? You can speak Chinese?"},
+    {speaker:"查德", zh:"我(ㄨㄛˇ)是(ㄕˋ)美(ㄇㄟˇ)國(ㄍㄨㄛˊ)人(ㄖㄣˊ)。我(ㄨㄛˇ)已(ㄧˇ)經(ㄐㄧㄥ)學(ㄒㄩㄝˊ)了(ㄌㄜ˙)十(ㄕˊ)七(ㄑㄧ)個(ㄍㄜ˙)月(ㄩㄝˋ)的(ㄉㄜ˙)中(ㄓㄨㄥ)文(ㄨㄣˊ)了(ㄌㄜ˙)！", en:"I'm American. I've already been learning Chinese for 17 months!"},
+    {note:"到了以後 (After arriving)"},
+    {speaker:"查德", zh:"多(ㄉㄨㄛ)少(ㄕㄠˇ)錢(ㄑㄧㄢˊ)？", en:"How much is it?"},
+    {speaker:"司機", speakerEn:"Driver", zh:"一(ㄧˋ)共(ㄍㄨㄥˋ)一(ㄧ)千(ㄑㄧㄢ)四(ㄙˋ)。", en:"1,400 NT dollars in total."},
+    {speaker:"查德", zh:"好(ㄏㄠˇ)，這(ㄓㄜˋ)是(ㄕˋ)錢(ㄑㄧㄢˊ)，謝(ㄒㄧㄝˋ)謝(ㄒㄧㄝ˙)。", en:"Okay, here's the money, thanks."},
+    {speaker:"司機", speakerEn:"Driver", zh:"謝(ㄒㄧㄝˋ)謝(ㄒㄧㄝ˙)。", en:"Thank you."}
+  ],
+  vocab: [
+    {word:"計(ㄐㄧˋ)程(ㄔㄥˊ)車(ㄔㄜ)", en:"jìchéngchē – taxi", ex_zh:"我(ㄨㄛˇ)要(ㄧㄠˋ)搭(ㄉㄚ)計(ㄐㄧˋ)程(ㄔㄥˊ)車(ㄔㄜ)去(ㄑㄩˋ)飯(ㄈㄢˋ)店(ㄉㄧㄢˋ)。", ex_en:"I want to take a taxi to the hotel."},
+    {word:"司(ㄙ)機(ㄐㄧ)", en:"sījī – driver", ex_zh:"司(ㄙ)機(ㄐㄧ)人(ㄖㄣˊ)很(ㄏㄣˇ)好(ㄏㄠˇ)。", ex_en:"The driver is very nice."},
+    {word:"區(ㄑㄩ) / 路(ㄌㄨˋ) / 號(ㄏㄠˋ)", en:"district / road / number", note:"Taiwanese addresses go: City + District (區) + Road/Street (路/街) + Number (號).", ex_zh:"台(ㄊㄞˊ)北(ㄅㄟˇ)市(ㄕˋ)中(ㄓㄨㄥ)正(ㄓㄥˋ)區(ㄑㄩ)林(ㄌㄧㄣˊ)森(ㄙㄣ)南(ㄋㄢˊ)路(ㄌㄨˋ)七(ㄑㄧ)號(ㄏㄠˋ)。", ex_en:"No. 7, Linsen South Road, Zhongzheng District, Taipei City."}
+  ]
+},
+{
+  id: "s3", title: "三、飯店入住", titleEn: "Hotel Check-in",
+  dialogue: [
+    {speaker:"查德", zh:"你(ㄋㄧˇ)好(ㄏㄠˇ)，我(ㄨㄛˇ)要(ㄧㄠˋ)入(ㄖㄨˋ)住(ㄓㄨˋ)，我(ㄨㄛˇ)叫(ㄐㄧㄠˋ)查(ㄔㄚˊ)德(ㄉㄜˊ)。", en:"Hi, I'd like to check in, my name is Chad."},
+    {speaker:"櫃檯人員", speakerEn:"Front Desk Staff", zh:"好(ㄏㄠˇ)的(ㄉㄜ˙)，請(ㄑㄧㄥˇ)給(ㄍㄟˇ)我(ㄨㄛˇ)您(ㄋㄧㄣˊ)的(ㄉㄜ˙)護(ㄏㄨˋ)照(ㄓㄠˋ)。", en:"Okay, please give me your passport."},
+    {speaker:"查德", zh:"好(ㄏㄠˇ)，這(ㄓㄜˋ)是(ㄕˋ)我(ㄨㄛˇ)的(ㄉㄜ˙)護(ㄏㄨˋ)照(ㄓㄠˋ)。", en:"Okay, here's my passport."},
+    {speaker:"櫃檯人員", speakerEn:"Front Desk Staff", zh:"您(ㄋㄧㄣˊ)訂(ㄉㄧㄥˋ)了(ㄌㄜ˙)一(ㄧ)間(ㄐㄧㄢ)雙(ㄕㄨㄤ)人(ㄖㄣˊ)房(ㄈㄤˊ)，住(ㄓㄨˋ)三(ㄙㄢ)晚(ㄨㄢˇ)，對(ㄉㄨㄟˋ)嗎(ㄇㄚ˙)？", en:"You booked a double room for three nights, is that right?"},
+    {speaker:"查德", zh:"對(ㄉㄨㄟˋ)。", en:"Correct."},
+    {speaker:"櫃檯人員", speakerEn:"Front Desk Staff", zh:"這(ㄓㄜˋ)是(ㄕˋ)您(ㄋㄧㄣˊ)的(ㄉㄜ˙)房(ㄈㄤˊ)卡(ㄎㄚˇ)，房(ㄈㄤˊ)間(ㄐㄧㄢ)在(ㄗㄞˋ)五(ㄨˇ)樓(ㄌㄡˊ)，早(ㄗㄠˇ)餐(ㄘㄢ)在(ㄗㄞˋ)地(ㄉㄧˋ)下(ㄒㄧㄚˋ)一(ㄧ)樓(ㄌㄡˊ)，從(ㄘㄨㄥˊ)七(ㄑㄧ)點(ㄉㄧㄢˇ)到(ㄉㄠˋ)十(ㄕˊ)點(ㄉㄧㄢˇ)。", en:"Here's your room card, your room is on the 5th floor, and breakfast is on B1, from 7 to 10."},
+    {speaker:"查德", zh:"好(ㄏㄠˇ)，謝(ㄒㄧㄝˋ)謝(ㄒㄧㄝ˙)。", en:"Okay, thank you."}
+  ],
+  vocab: [
+    {word:"入(ㄖㄨˋ)住(ㄓㄨˋ)", en:"rùzhù – to check in", ex_zh:"我(ㄨㄛˇ)要(ㄧㄠˋ)入(ㄖㄨˋ)住(ㄓㄨˋ)，我(ㄨㄛˇ)叫(ㄐㄧㄠˋ)查(ㄔㄚˊ)德(ㄉㄜˊ)。", ex_en:"I'd like to check in, my name is Chad."},
+    {word:"雙(ㄕㄨㄤ)人(ㄖㄣˊ)房(ㄈㄤˊ)", en:"shuāngrénfáng – double room"},
+    {word:"單(ㄉㄢ)人(ㄖㄣˊ)房(ㄈㄤˊ)", en:"dānrénfáng – single room", ex_zh:"單(ㄉㄢ)人(ㄖㄣˊ)房(ㄈㄤˊ)比(ㄅㄧˇ)雙(ㄕㄨㄤ)人(ㄖㄣˊ)房(ㄈㄤˊ)小(ㄒㄧㄠˇ)，只(ㄓˇ)有(ㄧㄡˇ)一(ㄧ)張(ㄓㄤ)床(ㄔㄨㄤˊ)。", ex_en:"A single room is smaller than a double room—it only has one bed."},
+    {word:"房(ㄈㄤˊ)卡(ㄎㄚˇ)", en:"fángkǎ – room key card"},
+    {word:"地(ㄉㄧˋ)下(ㄒㄧㄚˋ)室(ㄕˋ)", en:"dìxiàshì – basement", ex_zh:"健(ㄐㄧㄢˋ)身(ㄕㄣ)房(ㄈㄤˊ)在(ㄗㄞˋ)地(ㄉㄧˋ)下(ㄒㄧㄚˋ)室(ㄕˋ)。", ex_en:"The gym is in the basement."},
+    {word:"地(ㄉㄧˋ)下(ㄒㄧㄚˋ)一(ㄧ)樓(ㄌㄡˊ)", en:"dìxià yī lóu – basement floor 1 (B1)", ex_zh:"早(ㄗㄠˇ)餐(ㄘㄢ)在(ㄗㄞˋ)地(ㄉㄧˋ)下(ㄒㄧㄚˋ)一(ㄧ)樓(ㄌㄡˊ)。", ex_en:"Breakfast is on B1."}
+  ]
+},
+{
+  id: "s4", title: "四、悠遊卡加值", titleEn: "EasyCard Top-up",
+  dialogue: [
+    {speaker:"查德", zh:"請(ㄑㄧㄥˇ)問(ㄨㄣˋ)，悠(ㄧㄡ)遊(ㄧㄡˊ)卡(ㄎㄚˇ)在(ㄗㄞˋ)這(ㄓㄜˋ)裡(ㄌㄧˇ)可(ㄎㄜˇ)以(ㄧˇ)加(ㄐㄧㄚ)值(ㄓˊ)嗎(ㄇㄚ˙)？", en:"Excuse me, can I top up my EasyCard here?"},
+    {speaker:"店員", speakerEn:"Clerk", zh:"可(ㄎㄜˇ)以(ㄧˇ)，你(ㄋㄧˇ)要(ㄧㄠˋ)加(ㄐㄧㄚ)多(ㄉㄨㄛ)少(ㄕㄠˇ)？", en:"Yes, how much would you like to add?"},
+    {speaker:"查德", zh:"我(ㄨㄛˇ)要(ㄧㄠˋ)加(ㄐㄧㄚ)五(ㄨˇ)百(ㄅㄞˇ)元(ㄩㄢˊ)，謝(ㄒㄧㄝˋ)謝(ㄒㄧㄝ˙)。", en:"I'd like to add 500, thanks."},
+    {speaker:"店員", speakerEn:"Clerk", zh:"好(ㄏㄠˇ)，加(ㄐㄧㄚ)值(ㄓˊ)完(ㄨㄢˊ)成(ㄔㄥˊ)了(ㄌㄜ˙)。", en:"Okay, the top-up is complete."}
+  ],
+  vocab: [
+    {word:"加(ㄐㄧㄚ)值(ㄓˊ)", en:"jiāzhí – to top up"},
+    {word:"完(ㄨㄢˊ)成(ㄔㄥˊ)", en:"wánchéng – to complete / finish"}
+  ]
+},
+{
+  id: "s5", title: "五、搭捷運", titleEn: "Taking the MRT",
+  dialogue: [
+    {speaker:"查德", zh:"請(ㄑㄧㄥˇ)問(ㄨㄣˋ)，去(ㄑㄩˋ)忠(ㄓㄨㄥ)孝(ㄒㄧㄠˋ)復(ㄈㄨˋ)興(ㄒㄧㄥ)站(ㄓㄢˋ)要(ㄧㄠˋ)去(ㄑㄩˋ)哪(ㄋㄚˇ)裡(ㄌㄧˇ)搭(ㄉㄚ)？", en:"Excuse me, where do I board to get to Zhongxiao Fuxing Station?"},
+    {speaker:"站務員", speakerEn:"Station Staff", zh:"在(ㄗㄞˋ)這(ㄓㄜˋ)裡(ㄌㄧˇ)，三(ㄙㄢ)站(ㄓㄢˋ)就(ㄐㄧㄡˋ)到(ㄉㄠˋ)了(ㄌㄜ˙)。", en:"Right here, three stops and you'll be there."},
+    {speaker:"查德", zh:"謝(ㄒㄧㄝˋ)謝(ㄒㄧㄝ˙)你(ㄋㄧˇ)。", en:"Thank you."}
+  ],
+  vocab: [
+    {word:"忠(ㄓㄨㄥ)孝(ㄒㄧㄠˋ)復(ㄈㄨˋ)興(ㄒㄧㄥ)站(ㄓㄢˋ)", en:"Zhongxiao Fuxing Station"},
+    {word:"善(ㄕㄢˋ)導(ㄉㄠˇ)寺(ㄙˋ)站(ㄓㄢˋ)", en:"Shandao Temple Station"},
+    {word:"南(ㄋㄢˊ)港(ㄍㄤˇ)展(ㄓㄢˇ)覽(ㄌㄢˇ)館(ㄍㄨㄢˇ)站(ㄓㄢˋ)", en:"Nangang Exhibition Center Station"}
+  ]
+},
+{
+  id: "s6", title: "六、開會自我介紹", titleEn: "Self-Introduction at a Meeting",
+  dialogue: [
+    {speaker:"查德", zh:"大(ㄉㄚˋ)家(ㄐㄧㄚ)好(ㄏㄠˇ)，我(ㄨㄛˇ)姓(ㄒㄧㄥˋ)包(ㄅㄠ)，叫(ㄐㄧㄠˋ)查(ㄔㄚˊ)德(ㄉㄜˊ)，我(ㄨㄛˇ)是(ㄕˋ)美(ㄇㄟˇ)國(ㄍㄨㄛˊ)人(ㄖㄣˊ)，我(ㄨㄛˇ)會(ㄏㄨㄟˋ)說(ㄕㄨㄛ)一(ㄧˋ)點(ㄉㄧㄢˇ)中(ㄓㄨㄥ)文(ㄨㄣˊ)，我(ㄨㄛˇ)有(ㄧㄡˇ)學(ㄒㄩㄝˊ)注(ㄓㄨˋ)音(ㄧㄣ)。", en:"Hi everyone, my surname is Bao, my name is Chad, I'm American, I can speak a little Chinese, and I've learned Zhuyin."},
+    {speaker:"同事", speakerEn:"Coworker", zh:"你(ㄋㄧˇ)好(ㄏㄠˇ)，我(ㄨㄛˇ)姓(ㄒㄧㄥˋ)陳(ㄔㄣˊ)，你(ㄋㄧˇ)可(ㄎㄜˇ)以(ㄧˇ)叫(ㄐㄧㄠˋ)我(ㄨㄛˇ)陳(ㄔㄣˊ)經(ㄐㄧㄥ)理(ㄌㄧˇ)。很(ㄏㄣˇ)高(ㄍㄠ)興(ㄒㄧㄥˋ)認(ㄖㄣˋ)識(ㄕˋ)你(ㄋㄧˇ)！", en:"Hello, my surname is Chen, you can call me Manager Chen. Nice to meet you!"},
+    {speaker:"查德", zh:"我(ㄨㄛˇ)也(ㄧㄝˇ)很(ㄏㄣˇ)高(ㄍㄠ)興(ㄒㄧㄥˋ)認(ㄖㄣˋ)識(ㄕˋ)你(ㄋㄧˇ)們(ㄇㄣ˙)，我(ㄨㄛˇ)很(ㄏㄣˇ)喜(ㄒㄧˇ)歡(ㄏㄨㄢ)台(ㄊㄞˊ)灣(ㄨㄢ)。", en:"Nice to meet you all too, I really like Taiwan."},
+    {speaker:"同事", speakerEn:"Coworker", zh:"歡(ㄏㄨㄢ)迎(ㄧㄥˊ)你(ㄋㄧˇ)來(ㄌㄞˊ)台(ㄊㄞˊ)灣(ㄨㄢ)！", en:"Welcome to Taiwan!"}
+  ],
+  vocab: [
+    {word:"姓(ㄒㄧㄥˋ)", en:"xìng – surname", ex_zh:"我(ㄨㄛˇ)姓(ㄒㄧㄥˋ)包(ㄅㄠ)。", ex_en:"My surname is Bao."},
+    {word:"經(ㄐㄧㄥ)理(ㄌㄧˇ)", en:"jīnglǐ – manager", ex_zh:"陳(ㄔㄣˊ)經(ㄐㄧㄥ)理(ㄌㄧˇ)", ex_en:"Manager Chen"},
+    {word:"小(ㄒㄧㄠˇ)姐(ㄐㄧㄝˇ)", en:"xiǎojiě – Miss / Ms.", ex_zh:"王(ㄨㄤˊ)小(ㄒㄧㄠˇ)姐(ㄐㄧㄝˇ)", ex_en:"Ms. Wang"},
+    {word:"先(ㄒㄧㄢ)生(ㄕㄥ)", en:"xiānshēng – Mr.", ex_zh:"林(ㄌㄧㄣˊ)先(ㄒㄧㄢ)生(ㄕㄥ)", ex_en:"Mr. Lin", note:"In Taiwan, when people aren't familiar with each other yet, it's common to address someone as \"Surname + 先生/小姐/job title,\" e.g. 林先生, 王小姐, 陳經理."}
+  ]
+},
+{
+  id: "s7", title: "七、餐廳點餐", titleEn: "Ordering at a Restaurant",
+  dialogue: [
+    {speaker:"服務生", speakerEn:"Waiter", zh:"歡(ㄏㄨㄢ)迎(ㄧㄥˊ)光(ㄍㄨㄤ)臨(ㄌㄧㄣˊ)，請(ㄑㄧㄥˇ)問(ㄨㄣˋ)幾(ㄐㄧˇ)位(ㄨㄟˋ)？", en:"Welcome! How many people?"},
+    {speaker:"查德", zh:"一(ㄧˊ)位(ㄨㄟˋ)，謝(ㄒㄧㄝˋ)謝(ㄒㄧㄝ˙)。", en:"One, thanks."},
+    {speaker:"服務生", speakerEn:"Waiter", zh:"內(ㄋㄟˋ)用(ㄩㄥˋ)還(ㄏㄞˊ)是(ㄕˋ)外(ㄨㄞˋ)帶(ㄉㄞˋ)？", en:"For here or to go?"},
+    {speaker:"查德", zh:"內(ㄋㄟˋ)用(ㄩㄥˋ)，謝(ㄒㄧㄝˋ)謝(ㄒㄧㄝ˙)。", en:"For here, thanks."},
+    {speaker:"服務生", speakerEn:"Waiter", zh:"這(ㄓㄜˋ)是(ㄕˋ)菜(ㄘㄞˋ)單(ㄉㄢ)，請(ㄑㄧㄥˇ)問(ㄨㄣˋ)要(ㄧㄠˋ)點(ㄉㄧㄢˇ)什(ㄕㄣˊ)麼(ㄇㄜ˙)？", en:"Here's the menu, what would you like?"},
+    {speaker:"查德", zh:"我(ㄨㄛˇ)要(ㄧㄠˋ)一(ㄧˋ)碗(ㄨㄢˇ)牛(ㄋㄧㄡˊ)肉(ㄖㄡˋ)麵(ㄇㄧㄢˋ)，小(ㄒㄧㄠˇ)辣(ㄌㄚˋ)。", en:"I'll have a bowl of beef noodles, mildly spicy."},
+    {speaker:"服務生", speakerEn:"Waiter", zh:"要(ㄧㄠˋ)加(ㄐㄧㄚ)點(ㄉㄧㄢˇ)一(ㄧˊ)份(ㄈㄣˋ)滷(ㄌㄨˇ)肉(ㄖㄡˋ)飯(ㄈㄢˋ)嗎(ㄇㄚ˙)？我(ㄨㄛˇ)們(ㄇㄣ˙)的(ㄉㄜ˙)滷(ㄌㄨˇ)肉(ㄖㄡˋ)飯(ㄈㄢˋ)很(ㄏㄣˇ)好(ㄏㄠˇ)吃(ㄔ)，你(ㄋㄧˇ)可(ㄎㄜˇ)以(ㄧˇ)試(ㄕˋ)試(ㄕˋ)看(ㄎㄢˋ)。", en:"Would you like to add braised pork rice too? Ours is very good, you can give it a try."},
+    {speaker:"查德", zh:"好(ㄏㄠˇ)，那(ㄋㄚˋ)我(ㄨㄛˇ)要(ㄧㄠˋ)一(ㄧˊ)份(ㄈㄣˋ)滷(ㄌㄨˇ)肉(ㄖㄡˋ)飯(ㄈㄢˋ)。", en:"Okay, I'll have braised pork rice too then."},
+    {speaker:"服務生", speakerEn:"Waiter", zh:"要(ㄧㄠˋ)加(ㄐㄧㄚ)點(ㄉㄧㄢˇ)什(ㄕㄣˊ)麼(ㄇㄜ˙)飲(ㄧㄣˇ)料(ㄌㄧㄠˋ)嗎(ㄇㄚ˙)？", en:"Would you like to add any drink?"},
+    {speaker:"查德", zh:"我(ㄨㄛˇ)要(ㄧㄠˋ)一(ㄧˋ)杯(ㄅㄟ)紅(ㄏㄨㄥˊ)茶(ㄔㄚˊ)，謝(ㄒㄧㄝˋ)謝(ㄒㄧㄝ˙)。", en:"I'll have a black tea, thanks."}
+  ],
+  vocab: [
+    {word:"內(ㄋㄟˋ)用(ㄩㄥˋ)", en:"nèiyòng – dine in", ex_zh:"你(ㄋㄧˇ)要(ㄧㄠˋ)外(ㄨㄞˋ)帶(ㄉㄞˋ)還(ㄏㄞˊ)是(ㄕˋ)內(ㄋㄟˋ)用(ㄩㄥˋ)？", ex_en:"Would you like it to go, or for here?"},
+    {word:"盤(ㄆㄢˊ)", en:"pán – plate (measure word)", ex_zh:"一(ㄧˋ)盤(ㄆㄢˊ)炒(ㄔㄠˇ)高(ㄍㄠ)麗(ㄌㄧˋ)菜(ㄘㄞˋ)。", ex_en:"A plate of stir-fried cabbage."},
+    {word:"試(ㄕˋ)試(ㄕˋ)看(ㄎㄢˋ)", en:"shìshi kàn – give it a try", ex_zh:"你(ㄋㄧˇ)可(ㄎㄜˇ)以(ㄧˇ)試(ㄕˋ)試(ㄕˋ)看(ㄎㄢˋ)。", ex_en:"You can give it a try."}
+  ]
+},
+{
+  id: "s8", title: "八、飲料店點飲料", titleEn: "Ordering at a Drink Shop",
+  dialogue: [
+    {speaker:"店員", speakerEn:"Clerk", zh:"歡(ㄏㄨㄢ)迎(ㄧㄥˊ)光(ㄍㄨㄤ)臨(ㄌㄧㄣˊ)，請(ㄑㄧㄥˇ)問(ㄨㄣˋ)要(ㄧㄠˋ)喝(ㄏㄜ)什(ㄕㄣˊ)麼(ㄇㄜ˙)？", en:"Welcome! What would you like to drink?"},
+    {speaker:"查德", zh:"我(ㄨㄛˇ)要(ㄧㄠˋ)一(ㄧˋ)杯(ㄅㄟ)珍(ㄓㄣ)珠(ㄓㄨ)奶(ㄋㄞˇ)茶(ㄔㄚˊ)。", en:"I'd like a bubble milk tea."},
+    {speaker:"店員", speakerEn:"Clerk", zh:"甜(ㄊㄧㄢˊ)度(ㄉㄨˋ)冰(ㄅㄧㄥ)塊(ㄎㄨㄞˋ)呢(ㄋㄜ˙)？", en:"Sweetness and ice level?"},
+    {speaker:"查德", zh:"半(ㄅㄢˋ)糖(ㄊㄤˊ)，正(ㄓㄥˋ)常(ㄔㄤˊ)冰(ㄅㄧㄥ)，謝(ㄒㄧㄝˋ)謝(ㄒㄧㄝ˙)。", en:"Half sugar, regular ice, thanks."},
+    {speaker:"店員", speakerEn:"Clerk", zh:"好(ㄏㄠˇ)的(ㄉㄜ˙)，一(ㄧˋ)共(ㄍㄨㄥˋ)六(ㄌㄧㄡˋ)十(ㄕˊ)元(ㄩㄢˊ)。", en:"Okay, 60 NT dollars in total."},
+    {speaker:"查德", zh:"謝(ㄒㄧㄝˋ)謝(ㄒㄧㄝ˙)。", en:"Thanks."}
+  ],
+  vocab: [
+    {word:"甜(ㄊㄧㄢˊ)度(ㄉㄨˋ)冰(ㄅㄧㄥ)塊(ㄎㄨㄞˋ)", en:"tiándù bīngkuài – sweetness & ice level"},
+    {word:"正(ㄓㄥˋ)常(ㄔㄤˊ)冰(ㄅㄧㄥ)", en:"zhèngcháng bīng – regular ice"},
+    {word:"少(ㄕㄠˇ)糖(ㄊㄤˊ)", en:"shǎotáng – less sugar"},
+    {word:"半(ㄅㄢˋ)糖(ㄊㄤˊ)", en:"bàntáng – half sugar"},
+    {word:"微(ㄨㄟˊ)糖(ㄊㄤˊ)", en:"wēitáng – a little sugar"},
+    {word:"無(ㄨˊ)糖(ㄊㄤˊ)", en:"wútáng – no sugar"},
+    {word:"布(ㄅㄨˋ)丁(ㄉㄧㄥ)", en:"bùdīng – pudding"},
+    {word:"芋(ㄩˋ)圓(ㄩㄢˊ)", en:"yùyuán – taro balls"},
+    {word:"地(ㄉㄧˋ)瓜(ㄍㄨㄚ)圓(ㄩㄢˊ)", en:"dìguāyuán – sweet potato balls"},
+    {word:"椰(ㄧㄝˊ)果(ㄍㄨㄛˇ)", en:"yēguǒ – coconut jelly"}
+  ]
+},
+{
+  id: "s9", title: "九、搭高鐵", titleEn: "Taking the HSR",
+  dialogue: [
+    {speaker:"查德", zh:"你(ㄋㄧˇ)好(ㄏㄠˇ)，我(ㄨㄛˇ)要(ㄧㄠˋ)買(ㄇㄞˇ)一(ㄧˋ)張(ㄓㄤ)到(ㄉㄠˋ)台(ㄊㄞˊ)中(ㄓㄨㄥ)的(ㄉㄜ˙)商(ㄕㄤ)務(ㄨˋ)票(ㄆㄧㄠˋ)。", en:"Hi, I'd like to buy a business-class ticket to Taichung."},
+    {speaker:"站務員", speakerEn:"Station Staff", zh:"好(ㄏㄠˇ)的(ㄉㄜ˙)，幾(ㄐㄧˇ)點(ㄉㄧㄢˇ)的(ㄉㄜ˙)車(ㄔㄜ)？", en:"Okay, what time?"},
+    {speaker:"查德", zh:"下(ㄒㄧㄚˋ)午(ㄨˇ)兩(ㄌㄧㄤˇ)點(ㄉㄧㄢˇ)的(ㄉㄜ˙)，謝(ㄒㄧㄝˋ)謝(ㄒㄧㄝ˙)。", en:"2pm, thanks."},
+    {speaker:"站務員", speakerEn:"Station Staff", zh:"一(ㄧˋ)共(ㄍㄨㄥˋ)一(ㄧ)千(ㄑㄧㄢ)兩(ㄌㄧㄤˇ)百(ㄅㄞˇ)五(ㄨˇ)十(ㄕˊ)，你(ㄋㄧˇ)要(ㄧㄠˋ)刷(ㄕㄨㄚ)卡(ㄎㄚˇ)還(ㄏㄞˊ)是(ㄕˋ)付(ㄈㄨˋ)現(ㄒㄧㄢˋ)？", en:"1,250 in total. Card or cash?"},
+    {speaker:"查德", zh:"好(ㄏㄠˇ)，我(ㄨㄛˇ)要(ㄧㄠˋ)刷(ㄕㄨㄚ)卡(ㄎㄚˇ)，謝(ㄒㄧㄝˋ)謝(ㄒㄧㄝ˙)。", en:"Card, please, thanks."},
+    {speaker:"站務員", speakerEn:"Station Staff", zh:"這(ㄓㄜˋ)是(ㄕˋ)你(ㄋㄧˇ)的(ㄉㄜ˙)票(ㄆㄧㄠˋ)。", en:"Here's your ticket."},
+    {speaker:"查德", zh:"謝(ㄒㄧㄝˋ)謝(ㄒㄧㄝ˙)。", en:"Thanks."}
+  ],
+  vocab: [
+    {word:"高(ㄍㄠ)鐵(ㄊㄧㄝˇ)", en:"gāotiě – High Speed Rail"},
+    {word:"商(ㄕㄤ)務(ㄨˋ)票(ㄆㄧㄠˋ)", en:"shāngwùpiào – business-class ticket"},
+    {word:"刷(ㄕㄨㄚ)卡(ㄎㄚˇ)", en:"shuākǎ – to pay by card"}
+  ]
+},
+{
+  id: "s10", title: "十、搭公車", titleEn: "Taking the Bus",
+  dialogue: [
+    {speaker:"查德", zh:"請(ㄑㄧㄥˇ)問(ㄨㄣˋ)這(ㄓㄜˋ)台(ㄊㄞˊ)公(ㄍㄨㄥ)車(ㄔㄜ)有(ㄧㄡˇ)到(ㄉㄠˋ)九(ㄐㄧㄡˇ)份(ㄈㄣˋ)嗎(ㄇㄚ˙)？", en:"Excuse me, does this bus go to Jiufen?"},
+    {speaker:"司機", speakerEn:"Driver", zh:"有(ㄧㄡˇ)到(ㄉㄠˋ)，快(ㄎㄨㄞˋ)上(ㄕㄤˋ)車(ㄔㄜ)。上(ㄕㄤˋ)車(ㄔㄜ)要(ㄧㄠˋ)刷(ㄕㄨㄚ)卡(ㄎㄚˇ)，下(ㄒㄧㄚˋ)車(ㄔㄜ)也(ㄧㄝˇ)要(ㄧㄠˋ)刷(ㄕㄨㄚ)。", en:"Yes it does, hop on. Tap your card when you get on, and tap again when you get off."},
+    {speaker:"查德", zh:"沒(ㄇㄟˊ)問(ㄨㄣˋ)題(ㄊㄧˊ)，我(ㄨㄛˇ)用(ㄩㄥˋ)悠(ㄧㄡ)遊(ㄧㄡˊ)卡(ㄎㄚˇ)，謝(ㄒㄧㄝˋ)謝(ㄒㄧㄝ˙)。", en:"No problem, I'll use my EasyCard, thanks."},
+    {speaker:"司機", speakerEn:"Driver", zh:"快(ㄎㄨㄞˋ)到(ㄉㄠˋ)了(ㄌㄜ˙)的(ㄉㄜ˙)時(ㄕˊ)候(ㄏㄡˋ)，下(ㄒㄧㄚˋ)車(ㄔㄜ)請(ㄑㄧㄥˇ)按(ㄢˋ)鈴(ㄌㄧㄥˊ)。", en:"When you're almost there, please press the bell to get off."},
+    {speaker:"查德", zh:"好(ㄏㄠˇ)，謝(ㄒㄧㄝˋ)謝(ㄒㄧㄝ˙)你(ㄋㄧˇ)。", en:"Okay, thank you."}
+  ],
+  vocab: [
+    {word:"按(ㄢˋ)鈴(ㄌㄧㄥˊ)", en:"ànlíng – press the (request-stop) bell", ex_zh:"下(ㄒㄧㄚˋ)車(ㄔㄜ)請(ㄑㄧㄥˇ)按(ㄢˋ)鈴(ㄌㄧㄥˊ)。", ex_en:"Please press the bell to get off."}
+  ]
+},
+{
+  id: "s11", title: "十一、問路", titleEn: "Asking for Directions",
+  dialogue: [
+    {speaker:"查德", zh:"請(ㄑㄧㄥˇ)問(ㄨㄣˋ)，附(ㄈㄨˋ)近(ㄐㄧㄣˋ)有(ㄧㄡˇ)廁(ㄘㄜˋ)所(ㄙㄨㄛˇ)嗎(ㄇㄚ˙)？", en:"Excuse me, is there a restroom nearby?"},
+    {speaker:"路人", speakerEn:"Passerby", zh:"有(ㄧㄡˇ)，在(ㄗㄞˋ)便(ㄅㄧㄢˋ)利(ㄌㄧˋ)商(ㄕㄤ)店(ㄉㄧㄢˋ)裡(ㄌㄧˇ)面(ㄇㄧㄢˋ)。", en:"Yes, inside the convenience store."},
+    {speaker:"查德", zh:"便(ㄅㄧㄢˋ)利(ㄌㄧˋ)商(ㄕㄤ)店(ㄉㄧㄢˋ)在(ㄗㄞˋ)哪(ㄋㄚˇ)裡(ㄌㄧˇ)？", en:"Where's the convenience store?"},
+    {speaker:"路人", speakerEn:"Passerby", zh:"在(ㄗㄞˋ)前(ㄑㄧㄢˊ)面(ㄇㄧㄢˋ)的(ㄉㄜ˙)十(ㄕˊ)字(ㄗˋ)路(ㄌㄨˋ)口(ㄎㄡˇ)，紅(ㄏㄨㄥˊ)綠(ㄌㄩˋ)燈(ㄉㄥ)旁(ㄆㄤˊ)邊(ㄅㄧㄢ)。", en:"At the intersection up ahead, next to the traffic light."},
+    {speaker:"查德", zh:"謝(ㄒㄧㄝˋ)謝(ㄒㄧㄝ˙)你(ㄋㄧˇ)！", en:"Thank you!"}
+  ],
+  vocab: [
+    {word:"附(ㄈㄨˋ)近(ㄐㄧㄣˋ)", en:"fùjìn – A在B附近 (A is near B)", ex_zh:"廁(ㄘㄜˋ)所(ㄙㄨㄛˇ)在(ㄗㄞˋ)便(ㄅㄧㄢˋ)利(ㄌㄧˋ)商(ㄕㄤ)店(ㄉㄧㄢˋ)附(ㄈㄨˋ)近(ㄐㄧㄣˋ)。", ex_en:"The restroom is near the convenience store."},
+    {word:"旁(ㄆㄤˊ)邊(ㄅㄧㄢ)", en:"pángbiān – A在B旁邊 (A is beside B)", ex_zh:"捷(ㄐㄧㄝˊ)運(ㄩㄣˋ)站(ㄓㄢˋ)在(ㄗㄞˋ)紅(ㄏㄨㄥˊ)綠(ㄌㄩˋ)燈(ㄉㄥ)旁(ㄆㄤˊ)邊(ㄅㄧㄢ)。", ex_en:"The MRT station is next to the traffic light."},
+    {word:"左(ㄗㄨㄛˇ)邊(ㄅㄧㄢ)", en:"zuǒbiān – A在B左邊 (A is on B's left)", ex_zh:"超(ㄔㄠ)市(ㄕˋ)在(ㄗㄞˋ)銀(ㄧㄣˊ)行(ㄏㄤˊ)的(ㄉㄜ˙)左(ㄗㄨㄛˇ)邊(ㄅㄧㄢ)。", ex_en:"The supermarket is to the left of the bank."},
+    {word:"右(ㄧㄡˋ)邊(ㄅㄧㄢ)", en:"yòubiān – A在B右邊 (A is on B's right)", ex_zh:"夜(ㄧㄝˋ)市(ㄕˋ)在(ㄗㄞˋ)老(ㄌㄠˇ)街(ㄐㄧㄝ)的(ㄉㄜ˙)右(ㄧㄡˋ)邊(ㄅㄧㄢ)。", ex_en:"The night market is to the right of the old street."},
+    {word:"前(ㄑㄧㄢˊ)面(ㄇㄧㄢˋ)", en:"qiánmiàn – A在B前面 (A is in front of B)", ex_zh:"公(ㄍㄨㄥ)車(ㄔㄜ)站(ㄓㄢˋ)在(ㄗㄞˋ)學(ㄒㄩㄝˊ)校(ㄒㄧㄠˋ)前(ㄑㄧㄢˊ)面(ㄇㄧㄢˋ)。", ex_en:"The bus stop is in front of the school."},
+    {word:"後(ㄏㄡˋ)面(ㄇㄧㄢˋ)", en:"hòumiàn – A在B後面 (A is behind B)", ex_zh:"廁(ㄘㄜˋ)所(ㄙㄨㄛˇ)在(ㄗㄞˋ)餐(ㄘㄢ)廳(ㄊㄧㄥ)後(ㄏㄡˋ)面(ㄇㄧㄢˋ)。", ex_en:"The restroom is behind the restaurant."},
+    {word:"十(ㄕˊ)字(ㄗˋ)路(ㄌㄨˋ)口(ㄎㄡˇ)", en:"shízì lùkǒu – intersection"},
+    {word:"馬(ㄇㄚˇ)路(ㄌㄨˋ)", en:"mǎlù – road / street"},
+    {word:"超(ㄔㄠ)市(ㄕˋ)", en:"chāoshì – supermarket"},
+    {word:"夜(ㄧㄝˋ)市(ㄕˋ)", en:"yèshì – night market"},
+    {word:"老(ㄌㄠˇ)街(ㄐㄧㄝ)", en:"lǎojiē – old street"}
+  ]
+},
+{
+  id: "s12", title: "十二、買伴手禮", titleEn: "Buying Souvenirs (Mooncakes & Pineapple Cakes)",
+  dialogue: [
+    {speaker:"查德", zh:"你(ㄋㄧˇ)好(ㄏㄠˇ)，請(ㄑㄧㄥˇ)問(ㄨㄣˋ)這(ㄓㄜˋ)個(ㄍㄜ˙)鳳(ㄈㄥˋ)梨(ㄌㄧˊ)酥(ㄙㄨ)多(ㄉㄨㄛ)少(ㄕㄠˇ)錢(ㄑㄧㄢˊ)？", en:"Hi, how much are these pineapple cakes?"},
+    {speaker:"店員", speakerEn:"Clerk", zh:"一(ㄧˋ)盒(ㄏㄜˊ)三(ㄙㄢ)百(ㄅㄞˇ)元(ㄩㄢˊ)，裡(ㄌㄧˇ)面(ㄇㄧㄢˋ)有(ㄧㄡˇ)十(ㄕˊ)個(ㄍㄜ˙)。", en:"300 a box, with ten inside."},
+    {speaker:"查德", zh:"好(ㄏㄠˇ)，那(ㄋㄚˋ)月(ㄩㄝˋ)餅(ㄅㄧㄥˇ)呢(ㄋㄜ˙)？", en:"Okay, what about mooncakes?"},
+    {speaker:"店員", speakerEn:"Clerk", zh:"月(ㄩㄝˋ)餅(ㄅㄧㄥˇ)一(ㄧˋ)盒(ㄏㄜˊ)五(ㄨˇ)百(ㄅㄞˇ)元(ㄩㄢˊ)，裡(ㄌㄧˇ)面(ㄇㄧㄢˋ)有(ㄧㄡˇ)六(ㄌㄧㄡˋ)個(ㄍㄜ˙)，是(ㄕˋ)很(ㄏㄣˇ)受(ㄕㄡˋ)歡(ㄏㄨㄢ)迎(ㄧㄥˊ)的(ㄉㄜ˙)禮(ㄌㄧˇ)物(ㄨˋ)。", en:"Mooncakes are 500 a box, with six inside—they're a very popular gift."},
+    {speaker:"查德", zh:"太(ㄊㄞˋ)陽(ㄧㄤˊ)餅(ㄅㄧㄥˇ)呢(ㄋㄜ˙)？", en:"What about sun cakes?"},
+    {speaker:"店員", speakerEn:"Clerk", zh:"太(ㄊㄞˋ)陽(ㄧㄤˊ)餅(ㄅㄧㄥˇ)也(ㄧㄝˇ)很(ㄏㄣˇ)受(ㄕㄡˋ)歡(ㄏㄨㄢ)迎(ㄧㄥˊ)，一(ㄧˋ)盒(ㄏㄜˊ)三(ㄙㄢ)百(ㄅㄞˇ)五(ㄨˇ)十(ㄕˊ)元(ㄩㄢˊ)。", en:"Sun cakes are popular too, 350 a box."},
+    {speaker:"查德", zh:"好(ㄏㄠˇ)，我(ㄨㄛˇ)要(ㄧㄠˋ)一(ㄧˋ)盒(ㄏㄜˊ)鳳(ㄈㄥˋ)梨(ㄌㄧˊ)酥(ㄙㄨ)、一(ㄧˋ)盒(ㄏㄜˊ)月(ㄩㄝˋ)餅(ㄅㄧㄥˇ)，還(ㄏㄞˊ)有(ㄧㄡˇ)一(ㄧˋ)盒(ㄏㄜˊ)太(ㄊㄞˋ)陽(ㄧㄤˊ)餅(ㄅㄧㄥˇ)。", en:"Okay, I'll take a box of pineapple cakes, a box of mooncakes, and a box of sun cakes."},
+    {speaker:"店員", speakerEn:"Clerk", zh:"一(ㄧˋ)共(ㄍㄨㄥˋ)一(ㄧ)千(ㄑㄧㄢ)一(ㄧ)百(ㄅㄞˇ)五(ㄨˇ)十(ㄕˊ)元(ㄩㄢˊ)，你(ㄋㄧˇ)要(ㄧㄠˋ)刷(ㄕㄨㄚ)卡(ㄎㄚˇ)還(ㄏㄞˊ)是(ㄕˋ)付(ㄈㄨˋ)現(ㄒㄧㄢˋ)？", en:"1,150 in total. Card or cash?"},
+    {speaker:"查德", zh:"我(ㄨㄛˇ)刷(ㄕㄨㄚ)卡(ㄎㄚˇ)，謝(ㄒㄧㄝˋ)謝(ㄒㄧㄝ˙)。", en:"Card, thanks."},
+    {speaker:"店員", speakerEn:"Clerk", zh:"好(ㄏㄠˇ)的(ㄉㄜ˙)，這(ㄓㄜˋ)是(ㄕˋ)你(ㄋㄧˇ)的(ㄉㄜ˙)東(ㄉㄨㄥ)西(ㄒㄧ)，謝(ㄒㄧㄝˋ)謝(ㄒㄧㄝ˙)光(ㄍㄨㄤ)臨(ㄌㄧㄣˊ)！", en:"Okay, here's your stuff, thanks for coming!"}
+  ],
+  vocab: [
+    {word:"很(ㄏㄣˇ)受(ㄕㄡˋ)歡(ㄏㄨㄢ)迎(ㄧㄥˊ)", en:"hěn shòu huānyíng – very popular"},
+    {word:"月(ㄩㄝˋ)餅(ㄅㄧㄥˇ)", en:"yuèbǐng – mooncake"},
+    {word:"太(ㄊㄞˋ)陽(ㄧㄤˊ)餅(ㄅㄧㄥˇ)", en:"tàiyángbǐng – sun cake"},
+    {word:"鳳(ㄈㄥˋ)梨(ㄌㄧˊ)酥(ㄙㄨ)", en:"fènglísū – pineapple cake"}
+  ]
+},
+{
+  id: "s13", title: "十三、機場出境", titleEn: "Airport Departure",
+  dialogue: [
+    {speaker:"地勤人員", speakerEn:"Ground Staff", zh:"您(ㄋㄧㄣˊ)好(ㄏㄠˇ)，請(ㄑㄧㄥˇ)給(ㄍㄟˇ)我(ㄨㄛˇ)您(ㄋㄧㄣˊ)的(ㄉㄜ˙)護(ㄏㄨˋ)照(ㄓㄠˋ)和(ㄏㄢˋ)機(ㄐㄧ)票(ㄆㄧㄠˋ)。", en:"Hello, please give me your passport and ticket."},
+    {speaker:"查德", zh:"好(ㄏㄠˇ)，這(ㄓㄜˋ)是(ㄕˋ)我(ㄨㄛˇ)的(ㄉㄜ˙)護(ㄏㄨˋ)照(ㄓㄠˋ)和(ㄏㄢˋ)機(ㄐㄧ)票(ㄆㄧㄠˋ)。", en:"Okay, here's my passport and ticket."},
+    {speaker:"地勤人員", speakerEn:"Ground Staff", zh:"請(ㄑㄧㄥˇ)問(ㄨㄣˋ)你(ㄋㄧˇ)有(ㄧㄡˇ)幾(ㄐㄧˇ)個(ㄍㄜ˙)行(ㄒㄧㄥˊ)李(ㄌㄧˇ)？", en:"How many bags do you have?"},
+    {speaker:"查德", zh:"我(ㄨㄛˇ)有(ㄧㄡˇ)一(ㄧˊ)個(ㄍㄜ˙)行(ㄒㄧㄥˊ)李(ㄌㄧˇ)箱(ㄒㄧㄤ)，這(ㄓㄜˋ)是(ㄕˋ)我(ㄨㄛˇ)的(ㄉㄜ˙)包(ㄅㄠ)包(ㄅㄠ)，我(ㄨㄛˇ)拿(ㄋㄚˊ)著(ㄓㄜ˙)。", en:"I have one suitcase, and this is my bag, I'm carrying it myself."},
+    {speaker:"地勤人員", speakerEn:"Ground Staff", zh:"好(ㄏㄠˇ)，這(ㄓㄜˋ)是(ㄕˋ)您(ㄋㄧㄣˊ)的(ㄉㄜ˙)登(ㄉㄥ)機(ㄐㄧ)證(ㄓㄥˋ)，謝(ㄒㄧㄝˋ)謝(ㄒㄧㄝ˙)！", en:"Okay, here's your boarding pass, thank you!"}
+  ],
+  vocab: [
+    {word:"托(ㄊㄨㄛ)運(ㄩㄣˋ)", en:"tuōyùn – to check (baggage)", ex_zh:"我(ㄨㄛˇ)有(ㄧㄡˇ)一(ㄧˊ)個(ㄍㄜ˙)行(ㄒㄧㄥˊ)李(ㄌㄧˇ)箱(ㄒㄧㄤ)要(ㄧㄠˋ)託(ㄊㄨㄛ)運(ㄩㄣˋ)。", ex_en:"I have one suitcase to check."},
+    {word:"隨(ㄙㄨㄟˊ)身(ㄕㄣ)", en:"suíshēn – carry-on / on one's person", ex_zh:"這(ㄓㄜˋ)是(ㄕˋ)我(ㄨㄛˇ)的(ㄉㄜ˙)隨(ㄙㄨㄟˊ)身(ㄕㄣ)行(ㄒㄧㄥˊ)李(ㄌㄧˇ)。", ex_en:"This is my carry-on bag."},
+    {word:"超(ㄔㄠ)重(ㄓㄨㄥˋ)", en:"chāozhòng – overweight", ex_zh:"行(ㄒㄧㄥˊ)李(ㄌㄧˇ)箱(ㄒㄧㄤ)超(ㄔㄠ)重(ㄓㄨㄥˋ)了(ㄌㄜ˙)，要(ㄧㄠˋ)加(ㄐㄧㄚ)收(ㄕㄡ)費(ㄈㄟˋ)用(ㄩㄥˋ)。", ex_en:"The suitcase is overweight, so there's an extra fee."}
+  ]
+}
+];
+
+function zy(text) {
+  return `<span class="zy-text">${text}</span>`;
+}
+
+function render() {
+  const tocList = document.getElementById('tocList');
+  const container = document.getElementById('sections');
+  let tocHtml = '';
+  let html = '';
+
+  sections.forEach(sec => {
+    tocHtml += `<li><a href="#${sec.id}">${sec.title}</a> <span style="color:#999;font-size:13px;">${sec.titleEn}</span></li>`;
+
+    let dialogHtml = '';
+    sec.dialogue.forEach(line => {
+      if (line.note) {
+        dialogHtml += `<div class="note-line">${line.note}</div>`;
+        return;
+      }
+      const speakerEn = line.speakerEn ? ` <span class="en">(${line.speakerEn})</span>` : '';
+      dialogHtml += `
+        <div class="dialog-line">
+          <div class="speaker">${line.speaker}${speakerEn}：</div>
+          <div class="dialog-row">
+            <button class="audio-btn" onclick="playAudioText(this)">🔊</button>
+            <div class="dialog-content">
+              ${zy(line.zh)}
+              <span class="en-trans">${line.en}</span>
+            </div>
+          </div>
+        </div>`;
+    });
+
+    let vocabHtml = '<div class="vocab-title">🔑 Key Vocabulary</div><div class="vocab-grid">';
+    sec.vocab.forEach(v => {
+      let exampleHtml = '';
+      if (v.ex_zh) {
+        exampleHtml = `
+          <div class="dialog-row vocab-example" style="margin-top:8px;">
+            <button class="audio-btn" onclick="playAudioText(this)">🔊</button>
+            <div class="dialog-content">
+              ${zy(v.ex_zh)}
+              <span class="en-trans">${v.ex_en}</span>
+            </div>
+          </div>`;
+      }
+      const noteHtml = v.note ? `<div class="vocab-note">${v.note}</div>` : '';
+      vocabHtml += `
+        <div class="vocab-card">
+          <div class="vocab-word-row">${zy(v.word)}<span class="vocab-en">${v.en}</span></div>
+          ${noteHtml}
+          ${exampleHtml}
+        </div>`;
+    });
+    vocabHtml += '</div>';
+
+    html += `
+      <div class="section" id="${sec.id}">
+        <h2>${sec.title} <span style="color:#999; font-size:15px; font-weight:normal;">${sec.titleEn}</span></h2>
+        <div class="dialog-box">${dialogHtml}</div>
+        ${vocabHtml}
+      </div>`;
+  });
+
+  tocList.innerHTML = tocHtml;
+  container.innerHTML = html;
+  parseZhuyinDOM();
+}
+
+// ====== Parse Zhuyin on Load (DOM based) ======
+function parseZhuyinDOM() {
+  const regex = /([一-龥a-zA-Z0-9])\((.*?)\)/g;
+  document.querySelectorAll('.zy-text').forEach(el => {
+    let html = el.innerHTML;
+    let parsed = html.replace(regex, (match, char, zyval) => {
+      let tone = '';
+      let symbols = zyval;
+      let isNeutral = false;
+
+      if (zyval.includes('ˊ')) { tone = 'ˊ'; symbols = zyval.replace('ˊ', ''); }
+      else if (zyval.includes('ˇ')) { tone = 'ˇ'; symbols = zyval.replace('ˇ', ''); }
+      else if (zyval.includes('ˋ')) { tone = 'ˋ'; symbols = zyval.replace('ˋ', ''); }
+      else if (zyval.includes('˙')) { isNeutral = true; symbols = zyval.replace('˙', ''); }
+
+      let toneHtml = tone ? `<span class="zy-tone">${tone}</span>` : '';
+      let neutralHtml = isNeutral ? `<span class="zy-neutral">˙</span>` : '';
+
+      return `<div class="zy-char-wrap"><span class="zy-char">${char}</span><div class="zy-box">${neutralHtml}<span class="zy-symbols">${symbols}</span>${toneHtml}</div></div>`;
+    });
+    el.innerHTML = parsed;
+  });
+}
+
+// ====== Audio Reading (speaker labels are plain text, outside .dialog-content, so they are never read) ======
+let currentUtteranceText = "";
+function playAudioText(btn) {
+  let container = btn.closest('.dialog-content') || btn.closest('.dialog-row');
+  let zyDiv = container ? container.querySelector('.zy-text') : null;
+  if (!zyDiv) return;
+
+  let wraps = zyDiv.querySelectorAll('.zy-char-wrap');
+  let cleanText = "";
+  if (wraps.length > 0) {
+    let strArr = [];
+    wraps.forEach(w => {
+      let charEl = w.querySelector('.zy-char');
+      let symEl = w.querySelector('.zy-symbols');
+      let toneEl = w.querySelector('.zy-tone');
+      let neuEl = w.querySelector('.zy-neutral');
+      if (!charEl) return;
+      let ch = charEl.innerText;
+      strArr.push(ch);
+    });
+    cleanText = strArr.join('');
+  } else {
+    cleanText = zyDiv.innerText.replace(/\(.*?\)/g, '');
+  }
+
+  cleanText = cleanText.replace(/\//g, ' ');
+
+  if (speechSynthesis.speaking && currentUtteranceText === cleanText) {
+    if (speechSynthesis.paused) { speechSynthesis.resume(); } else { speechSynthesis.pause(); }
+    return;
+  }
+
+  speechSynthesis.cancel();
+  currentUtteranceText = cleanText;
+  const utterance = new SpeechSynthesisUtterance(cleanText);
+  utterance.lang = 'zh-TW';
+  utterance.rate = 0.85;
+  utterance.onend = () => { currentUtteranceText = ""; };
+  speechSynthesis.speak(utterance);
+}
+
+let zyVisible = true;
+let enVisible = true;
+function toggleZhuyin() {
+  zyVisible = !zyVisible;
+  document.querySelectorAll('.zy-box').forEach(el => { el.style.display = zyVisible ? 'inline-flex' : 'none'; });
+}
+function toggleEnglish() {
+  enVisible = !enVisible;
+  document.querySelectorAll('.en-trans, .vocab-en').forEach(el => { el.style.display = enVisible ? (el.classList.contains('vocab-en') ? 'inline' : 'block') : 'none'; });
+}
+
+document.addEventListener("DOMContentLoaded", render);
+</script>
+</body>
+</html>
