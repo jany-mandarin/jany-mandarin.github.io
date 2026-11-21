@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Margot & Léni's Mandarin Lesson 44</title>
+    <style>
+        :root { --bg: #FDFBF7; --primary: #D4A373; --text: #4a4a4a; --white: #fff; --sidebar-width: 280px; }
+        html { scroll-behavior: smooth; }
+        body { font-family: 'Helvetica Neue', Arial, sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; margin: 0; padding: 0; display: flex; transition: margin-left 0.3s ease; }
+
+        /* Top Navigation */
+        .top-nav { position: fixed; top: 0; left: 0; width: 100%; background: #FFF9F0; border-bottom: 1px solid #E6D5B8; padding: 10px 20px; box-sizing: border-box; text-align: right; z-index: 1200; display: flex; justify-content: flex-end; align-items: center; }
+        .top-nav a { color: var(--primary); font-weight: bold; text-decoration: none; margin-left: 20px; font-size: 15px; }
+        .top-nav a:hover { text-decoration: underline; color: #8C6239; }
+
+        /* Sidebar */
+        .sidebar { width: var(--sidebar-width); background: #FFF9F0; border-right: 1px solid #E6D5B8; height: 100vh; position: fixed; top: 0; left: 0; overflow-y: auto; padding: 60px 20px 20px 20px; box-sizing: border-box; transition: transform 0.3s ease; z-index: 1000; }
+        .sidebar.collapsed { transform: translateX(-100%); }
+        .sidebar h3 { margin-top: 0; color: #8C6239; font-size: 18px; border-bottom: 2px solid var(--primary); padding-bottom: 8px; display: flex; justify-content: space-between; align-items: center; }
+        .sidebar ol { padding-left: 20px; margin: 10px 0; color: #555; }
+        .sidebar li { margin-bottom: 8px; font-size: 15px; font-weight: bold; color: #8C6239; }
+        .sidebar ul { padding-left: 15px; list-style-type: circle; margin-top: 5px; margin-bottom: 15px; font-weight: normal; }
+        .sidebar ul li { font-size: 13.5px; margin-bottom: 6px; color: #555; }
+        .sidebar a { color: #555; text-decoration: none; display: block; }
+        .sidebar a:hover { color: #D4A373; font-weight: bold; }
+
+        .sidebar-toggle { position: fixed; top: 50px; left: 15px; z-index: 1100; background: var(--primary); color: white; border: none; padding: 8px 12px; border-radius: 6px; cursor: pointer; font-size: 14px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+
+        /* Main Content */
+        .main-content { margin-top: 40px; margin-left: var(--sidebar-width); width: calc(100% - var(--sidebar-width)); padding: 20px 40px; box-sizing: border-box; max-width: 900px; transition: margin-left 0.3s ease, width 0.3s ease; }
+        .main-content.expanded { margin-left: 0; width: 100%; }
+        .header { text-align: center; border-bottom: 2px solid var(--primary); padding-bottom: 10px; margin-bottom: 20px; margin-top: 20px; }
+
+        /* Controls */
+        .controls { position: sticky; top: 40px; background: rgba(253, 251, 247, 0.95); backdrop-filter: blur(5px); padding: 15px; text-align: center; border-bottom: 1px solid #ccc; z-index: 900; margin-bottom: 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); border-radius: 8px; }
+        button.control-btn { background: var(--primary); color: white; border: none; padding: 10px 15px; margin: 5px; border-radius: 6px; cursor: pointer; font-size: 14px; font-weight: bold; box-shadow: 0 2px 4px rgba(0,0,0,0.08); }
+        button.control-btn:hover { background: #B5835A; }
+        button.control-btn.fr-btn { background: #457b9d; }
+        button.control-btn.fr-btn:hover { background: #35607d; }
+
+        /* Sentence Row & Audio Circle Buttons (Placed BEFORE sentence) */
+        .sentence-row { display: flex; align-items: center; gap: 15px; width: 100%; margin-bottom: 10px; }
+        .buttons-group { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
+        .icon-btn { background: #EFEFEF; color: #4A4A4A; width: 40px; height: 40px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; border: none; cursor: pointer; box-shadow: 0 1px 3px rgba(0,0,0,0.08); transition: transform 0.1s, background 0.2s; }
+        .icon-btn:hover { background: #E2E2E2; transform: scale(1.05); }
+        .icon-btn.recording { background: #ff4d4f; color: white; animation: pulse 1.5s infinite; }
+        .icon-btn.playing { background: #457b9d; color: white; }
+        .icon-btn:disabled { background: #F5F5F5; color: #CCC; cursor: not-allowed; box-shadow: none; transform: none; }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(255, 77, 79, 0.4); }
+            70% { box-shadow: 0 0 0 10px rgba(255, 77, 79, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(255, 77, 79, 0); }
+        }
+
+        .text-content { display: flex; flex-direction: column; flex-grow: 1; }
+
+        /* Content Blocks */
+        h2 { color: #8C6239; border-left: 5px solid var(--primary); padding-left: 10px; margin-top: 30px; }
+        .section { margin-bottom: 30px; background: var(--white); padding: 25px; border-radius: 12px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); scroll-margin-top: 130px; }
+        .grammar-box { background: #FFF9F0; border: 1px solid #E6D5B8; border-radius: 8px; padding: 20px; margin: 20px 0; scroll-margin-top: 140px; }
+
+        .pinyin-group { display: inline-flex; flex-direction: column; align-items: center; margin-right: 2px; vertical-align: bottom; }
+        .py-text { font-size: 11px; color: #777; line-height: 1; margin-bottom: 2px; }
+        .hz-text { font-size: 24px; font-family: sans-serif; line-height: 1.2; }
+
+        .en-trans { color: #666; font-size: 15px; font-style: italic; margin-top: 4px; display: block; }
+        .fr-trans { color: #457b9d; font-size: 15px; font-style: italic; margin-top: 2px; display: block; }
+        .fr-trans::before { content: "🇫🇷 "; font-style: normal; }
+        .note { font-size: 15px; color: #555; margin-bottom: 12px; line-height: 1.6; background: #fdfaf6; padding: 10px 14px; border-left: 3px solid #D4A373; border-radius: 4px; }
+        .note-fr { font-size: 14px; color: #3a5a73; margin-top: 8px; line-height: 1.6; background: #f0f6fa; padding: 10px 14px; border-left: 3px solid #457b9d; border-radius: 4px; }
+
+        .custom-table { width: 100%; border-collapse: collapse; margin: 15px 0; background: white; border-radius: 8px; overflow: hidden; border: 1px solid #E6D5B8; }
+        .custom-table th { background: #F4E8D8; color: #8C6239; padding: 12px; font-size: 16px; text-align: left; border-bottom: 2px solid #E6D5B8; }
+        .custom-table td { padding: 12px; border-bottom: 1px solid #eee; vertical-align: middle; }
+        .custom-table tr:last-child td { border-bottom: none; }
+
+        .lesson-img { max-width: 100%; border-radius: 8px; margin: 10px 0; border: 1px solid #E6D5B8; display: block; }
+
+        .diagram-row { display: flex; align-items: center; justify-content: center; gap: 20px; flex-wrap: wrap; margin: 12px 0; }
+        .diagram-card { background: white; border: 1px solid #E6D5B8; border-radius: 10px; padding: 14px 18px; text-align: center; min-width: 130px; }
+        .diagram-card .flag { font-size: 28px; }
+        .diagram-card .label { font-weight: bold; color: #8C6239; margin-top: 4px; }
+        .diagram-arrow { font-size: 24px; color: #D4A373; font-weight: bold; }
+
+        @media (max-width: 900px) {
+            .sidebar { transform: translateX(-100%); }
+            .sidebar.active { transform: translateX(0); }
+            .main-content { margin-left: 0; width: 100%; padding: 20px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="top-nav">
+        <a href="https://jany-mandarin.github.io/margot-leni.html">Index</a>
+    </div>
+
+    <button class="sidebar-toggle" onclick="toggleSidebar()">☰ Outline</button>
+
+    <div class="sidebar" id="sidebar">
+        <h3>📖 Outline <button style="background:none; border:none; color:#8C6239; font-weight:bold; cursor:pointer; font-size:16px;" onclick="toggleSidebar()">×</button></h3>
+        <ol>
+            <li>
+                <a href="#sec-1">一、上次作業討論 (Last Homework Review)</a>
+                <ul class="sub-list">
+                    <li><a href="#sub-1-1">1. 常常 / 有時候 / 不常 (Frequency)</a></li>
+                    <li><a href="#sub-1-2">2. 閱讀：小明和小月的故事</a></li>
+                    <li><a href="#sub-1-3">3. 來 vs 去</a></li>
+                    <li><a href="#sub-1-4">4. 會 (Ability)</a></li>
+                    <li><a href="#sub-1-5">5. 想 (Want)</a></li>
+                    <li><a href="#sub-1-6">6. 第 + 數字 + 量詞</a></li>
+                    <li><a href="#sub-1-7">7. 十年前 / 不 + V. / 不會 + V.</a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="#sec-2">二、新的內容 (New Content)</a>
+                <ul class="sub-list">
+                    <li><a href="#sub-2-1">卡通、電影生詞 (Cartoon & Movie Vocabulary)</a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="#sec-3">三、下次作業 (Next Homework)</a>
+            </li>
+        </ol>
+    </div>
+
+    <div class="main-content" id="mainContent">
+        <div class="header">
+            <h1>Margot & Léni's Mandarin Lesson 44</h1>
+            <p>Date: 2026/11/20</p>
+        </div>
+
+        <div class="controls">
+            <button class="control-btn" onclick="togglePinyin()">Toggle Pinyin</button>
+            <button class="control-btn" onclick="toggleEnglish()">Toggle English</button>
+            <button class="control-btn fr-btn" onclick="toggleFrench()">Toggle French</button>
+        </div>
+
+        <div id="content"></div>
+    </div>
+
+    <script>
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const mainContent = document.getElementById('mainContent');
+            if (window.innerWidth <= 900) {
+                sidebar.classList.toggle('active');
+            } else {
+                sidebar.classList.toggle('collapsed');
+                mainContent.classList.toggle('expanded');
+            }
+        }
+
+        function parsePinyin(text) {
+            const regex = /([一-龥a-zA-Z0-9，。？！、：""''])\((.*?)\)/g;
+            let parsed = text.replace(regex, (match, char, py) => {
+                return `<span class="pinyin-group"><span class="py-text">${py}</span><span class="hz-text">${char}</span></span>`;
+            });
+            return parsed;
+        }
+
+        let currentUtterance = null;
+        let activePlayBtn = null;
+
+        function togglePlayAudio(text, btnId) {
+            const btn = document.getElementById(btnId);
+
+            if (speechSynthesis.speaking) {
+                if (speechSynthesis.paused) {
+                    speechSynthesis.resume();
+                    if(btn) btn.classList.add("playing");
+                    return;
+                } else {
+                    speechSynthesis.cancel();
+                    if(activePlayBtn) activePlayBtn.classList.remove("playing");
+                    if(activePlayBtn === btn) {
+                        activePlayBtn = null;
+                        return;
+                    }
+                }
+            }
+
+            let cleanText = text.replace(/<[^>]*>/g, '')
+                                .replace(/\(.*?\)/g, '')
+                                .replace(/^[a-zA-Z]:\s*/g, '')
+                                .replace(/^\d+\.\s*/, '');
+
+            const utterance = new SpeechSynthesisUtterance(cleanText);
+            utterance.lang = 'zh-CN';
+            utterance.rate = 0.85;
+
+            utterance.onstart = () => {
+                if(activePlayBtn) activePlayBtn.classList.remove("playing");
+                activePlayBtn = btn;
+                if(btn) btn.classList.add("playing");
+            };
+
+            utterance.onend = () => {
+                if(btn) btn.classList.remove("playing");
+                activePlayBtn = null;
+            };
+
+            utterance.onerror = () => {
+                if(btn) btn.classList.remove("playing");
+                activePlayBtn = null;
+            };
+
+            currentUtterance = utterance;
+            speechSynthesis.speak(utterance);
+        }
+
+        let mediaRecorders = {};
+        let audioUrls = {};
+
+        async function toggleRecord(btn, id) {
+            if (!mediaRecorders[id] || mediaRecorders[id].state === "inactive") {
+                try {
+                    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+                    let chunks = [];
+                    let recorder = new MediaRecorder(stream);
+
+                    recorder.ondataavailable = e => chunks.push(e.data);
+                    recorder.onstop = () => {
+                        const blob = new Blob(chunks, { 'type': 'audio/webm' });
+                        audioUrls[id] = URL.createObjectURL(blob);
+                        let playRecBtn = document.getElementById(`play-rec-${id}`);
+                        if(playRecBtn) {
+                            playRecBtn.disabled = false;
+                            playRecBtn.onclick = () => {
+                                const audio = new Audio(audioUrls[id]);
+                                audio.play();
+                            };
+                        }
+                    };
+
+                    recorder.start();
+                    mediaRecorders[id] = recorder;
+                    btn.innerHTML = "⏹️";
+                    btn.classList.add("recording");
+                } catch (err) {
+                    alert("Microphone access denied or not supported.");
+                }
+            } else {
+                mediaRecorders[id].stop();
+                btn.innerHTML = "🎤";
+                btn.classList.remove("recording");
+            }
+        }
+
+        let counter = 0;
+
+        function exampleRow(ex) {
+            let btnId = `play-btn-${counter}`;
+            let recId = `rec-${counter}`;
+            let html = `
+            <div class="item">
+                <div class="sentence-row">
+                    <div class="buttons-group">
+                        <button class="icon-btn" id="${btnId}" onclick="togglePlayAudio('${ex.zh}', '${btnId}')" title="Listen Audio">🔊</button>
+                        <button class="icon-btn" onclick="toggleRecord(this, '${recId}')" title="Record Audio">🎤</button>
+                        <button class="icon-btn" id="play-rec-${recId}" title="Play Mine" disabled>▶️</button>
+                    </div>
+                    <div class="text-content">
+                        <div style="font-size:24px; margin-bottom:4px;">${parsePinyin(ex.zh)}</div>
+                        ${ex.en ? `<div class="en-trans">${ex.en}</div>` : ''}
+                        ${ex.fr ? `<div class="fr-trans">${ex.fr}</div>` : ''}
+                    </div>
+                </div>
+            </div>`;
+            counter++;
+            return html;
+        }
+
+        const lessonData = [
+            {
+                title: "一、上次作業討論 (Last Homework Review)",
+                items: [
+                    {
+                        type: "grammar",
+                        subId: "sub-1-1",
+                        title: "1. 常常 / 有時候 / 不常 (Frequency)",
+                        note: "<b>Explanation:</b> These words describe how often something happens. In Chinese, sentences usually need an object after a verb — 「跑」(run) alone cannot stand as a full sentence, it needs 「跑步」(run + step).",
+                        noteFr: "<b>Explication :</b> Ces mots décrivent la fréquence d'une action. En chinois, une phrase a généralement besoin d'un objet après le verbe — 「跑」(courir) seul ne peut pas former une phrase complète, il faut 「跑步」(courir + pas).",
+                        examples: [
+                            { zh: "常(cháng)常(cháng)", en: "often", fr: "souvent" },
+                            { zh: "有(yǒu)时(shí)候(hou)", en: "sometimes", fr: "parfois" },
+                            { zh: "不(bù)常(cháng)", en: "not often / rarely", fr: "pas souvent / rarement" },
+                            { zh: "你(nǐ)常(cháng)常(cháng)跑(pǎo)步(bù)吗(ma)？", en: "Do you run often?", fr: "Cours-tu souvent ?" },
+                            { zh: "我(wǒ)不(bù)常(cháng)跑(pǎo)步(bù)，所(suǒ)以(yǐ)我(wǒ)很(hěn)紧(jǐn)张(zhāng)。", en: "I don't run very often, so I'm very nervous.", fr: "Je ne cours pas très souvent, donc je suis très nerveux/nerveuse." }
+                        ]
+                    },
+                    {
+                        type: "reading",
+                        subId: "sub-1-2",
+                        title: "2. 閱讀：小明和小月的故事",
+                        note: "<b>Reading practice:</b> Xiaoming and Xiaoyue's trip to Japan to find Totoro.",
+                        noteFr: "<b>Compréhension écrite :</b> Le voyage de Xiaoming et Xiaoyue au Japon pour chercher Totoro.",
+                        examples: [
+                            { zh: "小(xiǎo)明(míng)和(hé)小(xiǎo)月(yuè)小(xiǎo)时(shí)候(hou)看(kàn)过(guò)龙(lóng)猫(māo)，他(tā)们(men)想(xiǎng)去(qù)日(rì)本(běn)找(zhǎo)龙(lóng)猫(māo)，所(suǒ)以(yǐ)他(tā)们(men)下(xià)个(gè)月(yuè)要(yào)去(qù)日(rì)本(běn)旅(lǚ)行(xíng)。", en: "When they were little, Xiaoming and Xiaoyue watched Totoro, and they want to go to Japan to find Totoro, so next month they are going to travel to Japan.", fr: "Quand ils étaient petits, Xiaoming et Xiaoyue ont regardé Totoro, et ils veulent aller au Japon pour chercher Totoro, donc le mois prochain ils vont voyager au Japon." },
+                            { zh: "他(tā)们(men)的(de)飞(fēi)机(jī)是(shì)十(shí)二(èr)月(yuè)十(shí)四(sì)号(hào)晚(wǎn)上(shàng)八(bā)点(diǎn)飞(fēi)，十(shí)五(wǔ)号(hào)早(zǎo)上(shàng)十(shí)点(diǎn)到(dào)日(rì)本(běn)。", en: "Their flight departs at 8pm on December 14th, and arrives in Japan at 10am on the 15th.", fr: "Leur avion décolle à 20h le 14 décembre, et arrive au Japon à 10h le 15." },
+                            { zh: "下(xià)飞(fēi)机(jī)后(hòu)，他(tā)们(men)看(kàn)到(dào)一(yí)只(zhī)很(hěn)大(dà)的(de)龙(lóng)猫(māo)娃(wá)娃(wa)，他(tā)们(men)都(dōu)很(hěn)高(gāo)兴(xìng)。", en: "After getting off the plane, they saw a very big Totoro stuffed animal, and they were very happy.", fr: "Après être descendus de l'avion, ils ont vu une très grande peluche Totoro, et ils étaient très contents." },
+                            { zh: "可(kě)是(shì)他(tā)们(men)不(bú)会(huì)说(shuō)日(rì)文(wén)，很(hěn)难(nán)找(zhǎo)到(dào)酒(jiǔ)店(diàn)，所(suǒ)以(yǐ)他(tā)们(men)用(yòng)英(yīng)文(wén)。", en: "But they can't speak Japanese, so it was hard to find a hotel, so they used English.", fr: "Mais ils ne savent pas parler japonais, alors c'était difficile de trouver un hôtel, donc ils ont utilisé l'anglais." },
+                            { zh: "有(yǒu)一(yí)个(gè)日(rì)本(běn)人(rén)会(huì)说(shuō)英(yīng)文(wén)，帮(bāng)他(tā)们(men)找(zhǎo)到(dào)酒(jiǔ)店(diàn)，他(tā)们(men)很(hěn)开(kāi)心(xīn)。", en: "There was a Japanese person who could speak English, who helped them find a hotel, and they were very happy.", fr: "Il y avait un Japonais qui savait parler anglais, qui les a aidés à trouver un hôtel, et ils étaient très contents." }
+                        ]
+                    },
+                    {
+                        type: "custom",
+                        subId: "sub-1-3",
+                        title: "3. 來 vs 去",
+                        html: `
+                        <div class="note"><b>来 (lái):</b> Someone is getting closer and closer to the <u>speaker</u>. &nbsp;|&nbsp; <b>去 (qù):</b> Someone is moving further and further away from the <u>speaker</u>.</div>
+                        <div class="note-fr"><b>来 (lái) :</b> Quelqu'un se rapproche de plus en plus du <u>locuteur</u>. &nbsp;|&nbsp; <b>去 (qù) :</b> Quelqu'un s'éloigne de plus en plus du <u>locuteur</u>.</div>
+                        <div class="diagram-row">
+                            <div class="diagram-card"><div class="flag">🇹🇼</div><div class="label">居貞 (speaker)</div></div>
+                            <div class="diagram-arrow">←</div>
+                            <div class="diagram-card"><div class="flag">🇫🇷</div><div class="label">馬蘇 &amp; 萊尼</div></div>
+                        </div>
+                        ${exampleRow({ zh: "明(míng)天(tiān)你(nǐ)们(men)要(yào)来(lái)台(tái)湾(wān)吗(ma)？", en: "Tomorrow, are you (both) coming to Taiwan? — 来 used because the speaker lives in Taiwan, asking them to get closer.", fr: "Demain, venez-vous à Taïwan ? — 来 utilisé car le locuteur habite à Taïwan et demande de se rapprocher de lui." })}
+                        ${exampleRow({ zh: "好(hǎo)啊(a)！明(míng)天(tiān)我(wǒ)们(men)去(qù)台(tái)湾(wān)。", en: "Great! Tomorrow we are going to Taiwan. — 去 used because they are leaving their current location (France).", fr: "D'accord ! Demain, nous allons à Taïwan. — 去 utilisé car ils quittent l'endroit où ils se trouvent (la France)." })}
+                        <div class="diagram-row">
+                            <div class="diagram-card"><div class="flag">🇫🇷</div><div class="label">馬蘇 &amp; 萊尼</div></div>
+                            <div class="diagram-arrow">←</div>
+                            <div class="diagram-card"><div class="flag">🇹🇼</div><div class="label">居貞</div></div>
+                        </div>
+                        ${exampleRow({ zh: "明(míng)天(tiān)你(nǐ)要(yào)来(lái)法(fǎ)国(guó)吗(ma)？", en: "Tomorrow, are you coming to France? — 来 used because the speakers (Margot & Léni) are in France, asking 居貞 to get closer.", fr: "Demain, viens-tu en France ? — 来 utilisé car les locuteurs (Margot et Léni) sont en France et demandent à 居貞 de se rapprocher." })}
+                        ${exampleRow({ zh: "好(hǎo)啊(a)！明(míng)天(tiān)我(wǒ)去(qù)法(fǎ)国(guó)。", en: "Great! Tomorrow I am going to France. — 去 used because 居貞 is leaving Taiwan.", fr: "D'accord ! Demain, je vais en France. — 去 utilisé car 居貞 quitte Taïwan." })}
+                        `
+                    },
+                    {
+                        type: "grammar",
+                        subId: "sub-1-4",
+                        title: "4. 會 (huì) — Ability",
+                        note: "<b>Explanation:</b> 會 is used for skills that can be learned (e.g. driving, cooking, languages).",
+                        noteFr: "<b>Explication :</b> 會 est utilisé pour des compétences qu'on peut apprendre (par ex. conduire, cuisiner, les langues).",
+                        examples: [
+                            { zh: "你(nǐ)会(huì)开(kāi)车(chē)吗(ma)？", en: "Can you drive?", fr: "Sais-tu conduire ?" },
+                            { zh: "我(wǒ)会(huì) / 我(wǒ)不(bú)会(huì)", en: "I can / I can't", fr: "Je sais / je ne sais pas" },
+                            { zh: "你(nǐ)会(huì)做(zuò)饭(fàn)吗(ma)？", en: "Can you cook?", fr: "Sais-tu cuisiner ?" },
+                            { zh: "会(huì)，我(wǒ)会(huì)做(zuò)老(lǎo)干(gān)妈(mā)炒(chǎo)饭(fàn)。", en: "Yes, I can make Lao Gan Ma fried rice.", fr: "Oui, je sais faire du riz frit à la Lao Gan Ma." }
+                        ]
+                    },
+                    {
+                        type: "custom",
+                        subId: "sub-1-5",
+                        title: "5. 想 (xiǎng) — Want",
+                        html: `
+                        <div class="note"><b>想 (xiǎng):</b> would like to + v. / want — this expresses <b>the degree of desire</b>: 想 (would like to / want) &lt; 要 (want, stronger) &lt; 去 (actually going to do it).</div>
+                        <div class="note-fr"><b>想 (xiǎng) :</b> aimerais / voudrais + v. — ceci exprime <b>le degré de désir</b> : 想 (aimerais / veux) &lt; 要 (veux, plus fort) &lt; 去 (vais réellement le faire).</div>
+                        <div class="diagram-row">
+                            <div class="diagram-card"><div class="label">想</div><div style="font-size:13px;color:#777;">would like to / want</div></div>
+                            <div class="diagram-arrow">&lt;</div>
+                            <div class="diagram-card"><div class="label">要</div><div style="font-size:13px;color:#777;">want</div></div>
+                            <div class="diagram-arrow">&lt;</div>
+                            <div class="diagram-card"><div class="label">去</div><div style="font-size:13px;color:#777;">going to do it</div></div>
+                        </div>
+                        ${exampleRow({ zh: "你(nǐ)想(xiǎng)学(xué)开(kāi)车(chē)吗(ma)？", en: "Do you want to learn how to drive?", fr: "Veux-tu apprendre à conduire ?" })}
+                        ${exampleRow({ zh: "我(wǒ)不(bù)想(xiǎng)，我(wǒ)没(méi)时(shí)间(jiān)。", en: "I don't want to, I don't have time.", fr: "Je ne veux pas, je n'ai pas le temps." })}
+                        `
+                    },
+                    {
+                        type: "grammar",
+                        subId: "sub-1-6",
+                        title: "6. 第 + 數字 + 量詞 (Ordinal Numbers)",
+                        note: "<b>Explanation:</b> When we speak of something that has an order, we use 第 + number + measure word. 活動 (huódòng) is an 'activity' or 'event' planned for fun, exercise, or a goal (a party, a hike, a school event). 事 (shì) means 'things to do,' 'matters,' or 'stuff' in daily life — work, errands, problems.",
+                        noteFr: "<b>Explication :</b> Pour parler de quelque chose qui a un ordre, on utilise 第 + nombre + classificateur. 活動 (huódòng) est une 'activité' ou un 'événement' qu'on planifie pour s'amuser, faire de l'exercice, ou pour un objectif (une fête, une randonnée, un événement scolaire). 事 (shì) signifie 'des choses à faire', 'des affaires', ou 'des trucs' du quotidien — le travail, les courses, des problèmes.",
+                        examples: [
+                            { zh: "第(dì)一(yī)个(gè)", en: "First one", fr: "Le premier" },
+                            { zh: "第(dì)二(èr)个(gè)", en: "Second one", fr: "Le deuxième" },
+                            { zh: "第(dì)三(sān)个(gè)", en: "Third one", fr: "Le troisième" },
+                            { zh: "名(míng)字(zi) / 很(hěn)有(yǒu)名(míng)", en: "name / famous", fr: "nom / célèbre" },
+                            { zh: "第(dì)一(yī)名(míng) / 第(dì)二(èr)名(míng) / 第(dì)三(sān)名(míng)", en: "First Place / Second Place / Third Place", fr: "Première place / Deuxième place / Troisième place" },
+                            { zh: "比(bǐ)赛(sài)", en: "Competition", fr: "Compétition" },
+                            { zh: "这(zhè)个(gè)跑(pǎo)步(bù)比(bǐ)赛(sài)，我(wǒ)是(shì)第(dì)一(yī)名(míng)。", en: "I came in first place in this running race.", fr: "Je suis arrivé(e) premier/première à cette course à pied." },
+                            { zh: "活(huó)动(dòng)", en: "activity / event", fr: "activité / événement" },
+                            { zh: "事(shì)", en: "matters / stuff", fr: "affaires / choses à faire" },
+                            { zh: "今(jīn)天(tiān)晚(wǎn)上(shàng)八(bā)点(diǎn)我(wǒ)的(de)公(gōng)司(sī)有(yǒu)跑(pǎo)步(bù)活(huó)动(dòng)。", en: "My company has a running event tonight at 8:00.", fr: "Ce soir à 20h, mon entreprise organise un événement de course à pied." },
+                            { zh: "好(hǎo)早(zǎo) / 好(hǎo)晚(wǎn)", en: "so early / so late", fr: "si tôt / si tard" }
+                        ]
+                    },
+                    {
+                        type: "grammar",
+                        subId: "sub-1-7",
+                        title: "7. 十年前 / 不 + V. / 不會 + V.",
+                        note: "<b>Explanation:</b> time + 前 (qián) = \"___ ago\". 不 + v. = don't do something (choice). 不會 + v. = can't do something (lack of skill).",
+                        noteFr: "<b>Explication :</b> temps + 前 (qián) = \"il y a ___\". 不 + v. = ne pas faire quelque chose (par choix). 不會 + v. = ne pas savoir faire quelque chose (manque de compétence).",
+                        examples: [
+                            { zh: "十(shí)年(nián)前(qián)，我(wǒ)去(qù)过(guò)日(rì)本(běn)。", en: "I went to Japan ten years ago.", fr: "Je suis allé(e) au Japon il y a dix ans." },
+                            { zh: "在(zài)台(tái)湾(wān)，我(wǒ)们(men)不(bù)说(shuō)日(rì)文(wén)，我(wǒ)们(men)说(shuō)中(zhōng)文(wén)。", en: "In Taiwan, we don't speak Japanese, we speak Chinese.", fr: "À Taïwan, on ne parle pas japonais, on parle chinois." },
+                            { zh: "在(zài)法(fǎ)国(guó)，我(wǒ)们(men)不(bù)说(shuō)英(yīng)文(wén)，我(wǒ)们(men)说(shuō)法(fǎ)文(wén)。", en: "In France, we don't speak English, we speak French.", fr: "En France, on ne parle pas anglais, on parle français." }
+                        ]
+                    }
+                ]
+            },
+            {
+                title: "二、新的內容 (New Content)",
+                items: [
+                    {
+                        type: "grammar",
+                        subId: "sub-2-1",
+                        title: "卡通、電影生詞 (Cartoon & Movie Vocabulary)",
+                        note: "⚠️ Be careful: 动(dòng) \"move\" looks similar to 东(dōng) \"east\" — different character, different tone!",
+                        noteFr: "⚠️ Attention : 动(dòng) « bouger » ressemble à 东(dōng) « est » — un caractère différent, un ton différent !",
+                        examples: [
+                            { zh: "卡(kǎ)通(tōng)", en: "cartoon", fr: "dessin animé" },
+                            { zh: "动(dòng)画(huà)", en: "animation (动 move + 画 painting)", fr: "animation (动 bouger + 画 peinture)" },
+                            { zh: "电(diàn)影(yǐng)", en: "movie (电 electricity + 影 shadow)", fr: "film (电 électricité + 影 ombre)" },
+                            { zh: "电(diàn)影(yǐng)院(yuàn)", en: "cinema", fr: "cinéma" },
+                            { zh: "公(gōng)园(yuán)", en: "park", fr: "parc" },
+                            { zh: "主(zhǔ)角(jiǎo)", en: "main character", fr: "personnage principal" },
+                            { zh: "警(jǐng)察(chá)", en: "police", fr: "police" },
+                            { zh: "女(nǚ)警(jǐng)", en: "policewoman", fr: "policière" },
+                            { zh: "男(nán)警(jǐng)", en: "policeman", fr: "policier" },
+                            { zh: "飞(fēi)天(tiān)小(xiǎo)女(nǚ)警(jǐng)", en: "The Powerpuff Girls", fr: "Les Supers Nanas" },
+                            { zh: "羊(yáng)", en: "sheep", fr: "mouton" },
+                            { zh: "笑(xiào)", en: "laugh", fr: "rire" },
+                            { zh: "笑(xiào)笑(xiào)羊(yáng)", en: "Shaun the Sheep", fr: "Shaun le Mouton" },
+                            { zh: "饥(jī)饿(è)游(yóu)戏(xì)", en: "Hunger Games", fr: "Hunger Games" }
+                        ]
+                    }
+                ]
+            },
+            {
+                title: "三、下次作業 (Next Homework)",
+                items: [
+                    {
+                        type: "custom",
+                        subId: "sub-3-1",
+                        title: "口說練習：介紹一部電影 (Speaking: Introduce a movie)",
+                        html: `
+                        <div class="note">Every class, we have to use this grammar pattern to share something that happened this week and practice our speaking skills. Introduce a movie you recently watched, or one of your favorites, in Chinese — tell us what the story is about.</div>
+                        <div class="note-fr">À chaque cours, nous devons utiliser cette structure grammaticale pour partager quelque chose qui s'est passé cette semaine et pratiquer notre expression orale. Présente en chinois un film que tu as regardé récemment, ou un de tes films préférés, et raconte-nous de quoi parle l'histoire.</div>
+                        <table class="custom-table" style="margin-top:15px;">
+                            <thead><tr><th>中文</th><th>English</th><th>Français</th></tr></thead>
+                            <tbody>
+                                <tr><td style="font-size:20px;">${parsePinyin("快(kuài)乐(lè)")} 😄</td><td>happy</td><td>content(e)</td></tr>
+                                <tr><td style="font-size:20px;">${parsePinyin("生(shēng)气(qì)")} 😠</td><td>angry</td><td>fâché(e)</td></tr>
+                                <tr><td style="font-size:20px;">${parsePinyin("伤(shāng)心(xīn)")} 😢</td><td>sad</td><td>triste</td></tr>
+                                <tr><td style="font-size:20px;">${parsePinyin("紧(jǐn)张(zhāng)")} 😰</td><td>nervous</td><td>nerveux(se)</td></tr>
+                            </tbody>
+                        </table>
+                        <div style="margin-top:15px;">${exampleRow({ zh: "上(shàng) / 这(zhè) / 下(xià)星(xīng)期(qī)我(wǒ)有(yǒu)一(yí)个(gè) ____ 的(de)事(shì)....", en: "Last / this / next week I had a ___ thing happen...", fr: "La semaine dernière / cette semaine / la semaine prochaine, j'ai eu un événement ___..." })}</div>
+                        <div class="grammar-box" style="margin-top:10px;">
+                            <div style="font-weight:bold; color:#8C6239; margin-bottom:8px;">eg. 範例 (Doraemon)</div>
+                            ${exampleRow({ zh: "我(wǒ)最(zuì)近(jìn)看(kàn)了(le)哆(duō)啦(lā)A梦(mèng)去(qù)年(nián)的(de)电(diàn)影(yǐng)，是(shì)有(yǒu)关(guān)画(huà)画(huà)的(de)电(diàn)影(yǐng)，大(dà)家(jiā)可(kě)以(yǐ)去(qù)画(huà)里(lǐ)，很(hěn)好(hǎo)玩(wán)。", en: "I recently watched last year's Doraemon movie. It's about paintings — the characters can actually enter the paintings, which is really fun!", fr: "J'ai récemment regardé le film de Doraemon de l'année dernière. Ça parle de peintures : les personnages peuvent en fait entrer dans les peintures, c'est vraiment amusant !" })}
+                            ${exampleRow({ zh: "哆(duō)啦(lā)A梦(mèng)的(de)主(zhǔ)角(jiǎo)们(men)都(dōu)去(qù)到(dào)画(huà)里(lǐ)，和(hé)画(huà)里(lǐ)的(de)人(rén)打(dǎ)架(jià)，最(zuì)后(hòu)他(tā)们(men)赢(yíng)了(le)！", en: "The main characters from Doraemon go inside the paintings and end up fighting the people there. In the end, they win!", fr: "Les personnages principaux de Doraemon entrent dans les peintures et finissent par se battre avec les gens qui s'y trouvent. À la fin, ils gagnent !" })}
+                        </div>
+                        `
+                    }
+                ]
+            }
+        ];
+
+        const container = document.getElementById('content');
+
+        lessonData.forEach((sec, sIdx) => {
+            let html = `<div class="section" id="sec-${sIdx+1}"><h2>${sec.title}</h2>`;
+
+            sec.items.forEach(item => {
+                let anchorAttr = item.subId ? `id="${item.subId}"` : '';
+
+                if (item.type === "custom") {
+                    html += `<div class="grammar-box" ${anchorAttr}>
+                        <div style="font-weight:bold; font-size:17px; color:#8C6239; margin-bottom:8px;">${item.title}</div>
+                        ${item.html}
+                    </div>`;
+                } else if (item.type === "grammar" || item.type === "reading") {
+                    html += `<div class="grammar-box" ${anchorAttr}>
+                        <div style="font-weight:bold; font-size:17px; color:#8C6239; margin-bottom:8px;">${item.title}</div>`;
+                    if(item.note) html += `<div class="note">${item.note}</div>`;
+                    if(item.noteFr) html += `<div class="note-fr">${item.noteFr}</div>`;
+                    if(item.image) html += `<img src="${item.image}" class="lesson-img" alt="Lesson Image">`;
+
+                    if (item.examples) {
+                        item.examples.forEach(ex => { html += exampleRow(ex); });
+                    }
+                    html += `</div>`;
+                }
+            });
+            html += `</div>`;
+            container.innerHTML += html;
+        });
+
+        let pinyinVisible = true;
+        let enVisible = true;
+        let frVisible = true;
+
+        function togglePinyin() {
+            pinyinVisible = !pinyinVisible;
+            document.querySelectorAll('.py-text').forEach(el => {
+                el.style.display = pinyinVisible ? 'block' : 'none';
+            });
+        }
+
+        function toggleEnglish() {
+            enVisible = !enVisible;
+            document.querySelectorAll('.en-trans').forEach(el => {
+                el.style.display = enVisible ? 'block' : 'none';
+            });
+        }
+
+        function toggleFrench() {
+            frVisible = !frVisible;
+            document.querySelectorAll('.fr-trans').forEach(el => {
+                el.style.display = frVisible ? 'block' : 'none';
+            });
+        }
+    </script>
+</body>
+</html>
