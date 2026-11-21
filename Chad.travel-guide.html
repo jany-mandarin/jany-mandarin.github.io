@@ -8,12 +8,12 @@
 :root { --bg: #FDFBF7; --primary: #D4A373; --text: #4a4a4a; --white: #fff; }
 html { scroll-behavior: smooth; }
 body { font-family: 'Helvetica Neue', Arial, sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; margin: 0; padding: 0; }
-.top-nav { position: fixed; top: 0; left: 0; width: 100%; background: #FFF9F0; border-bottom: 1px solid #E6D5B8; padding: 10px 16px; box-sizing: border-box; text-align: right; z-index: 1200; }
+.top-nav { position: fixed; top: 0; left: 0; width: 100%; background: #FFF9F0; border-bottom: 1px solid #E6D5B8; padding: 10px 16px; box-sizing: border-box; text-align: right; z-index: 1200; -webkit-transform: translateZ(0); transform: translateZ(0); }
 .top-nav a { color: var(--primary); font-weight: bold; text-decoration: none; margin-left: 16px; font-size: 16px; }
 
 /* Sidebar */
-.sidebar-toggle { position: fixed; top: 54px; left: 12px; z-index: 1100; background: var(--primary); color: white; border: none; padding: 10px 14px; border-radius: 8px; cursor: pointer; font-size: 15px; font-weight: bold; box-shadow: 0 2px 5px rgba(0,0,0,0.15); }
-.sidebar { width: 280px; background: #FFF9F0; border-right: 1px solid #E6D5B8; height: 100vh; position: fixed; top: 0; left: 0; overflow-y: auto; padding: 60px 16px 20px 16px; box-sizing: border-box; transition: transform 0.3s ease; z-index: 1000; }
+.sidebar-toggle { position: fixed; top: 54px; left: 12px; z-index: 1100; background: var(--primary); color: white; border: none; padding: 10px 14px; border-radius: 8px; cursor: pointer; font-size: 15px; font-weight: bold; box-shadow: 0 2px 5px rgba(0,0,0,0.15); -webkit-transform: translateZ(0); transform: translateZ(0); }
+.sidebar { width: 280px; background: #FFF9F0; border-right: 1px solid #E6D5B8; height: 100vh; position: fixed; top: 0; left: 0; overflow-y: auto; padding: 60px 16px 20px 16px; box-sizing: border-box; transition: transform 0.3s ease; z-index: 1000; -webkit-transform: translateZ(0); transform: translateZ(0); will-change: transform; backface-visibility: hidden; }
 .sidebar.collapsed { transform: translateX(-100%); }
 .sidebar h3 { margin: 0 0 10px 0; color: #8C6239; font-size: 18px; display: flex; justify-content: space-between; align-items: center; }
 .sidebar ol { margin: 0; padding-left: 20px; }
@@ -136,12 +136,13 @@ const sections = [
     {speaker:"海關人員", speakerEn:"Immigration Officer", zh:"好(ㄏㄠˇ)，歡(ㄏㄨㄢ)迎(ㄧㄥˊ)你(ㄋㄧˇ)。", en:"Okay, welcome."}
   ],
   vocab: [
-    {word:"出(ㄔㄨ)關(ㄍㄨㄢ)", en:"chūguān – go through customs/immigration", ex_zh:"下(ㄒㄧㄚˋ)飛(ㄈㄟ)機(ㄐㄧ)以(ㄧˇ)後(ㄏㄡˋ)，我(ㄨㄛˇ)們(ㄇㄣ˙)要(ㄧㄠˋ)先(ㄒㄧㄢ)出(ㄔㄨ)關(ㄍㄨㄢ)。", ex_en:"After we get off the plane, we need to go through immigration first."},
-    {word:"旅(ㄌㄩˇ)行(ㄒㄧㄥˊ)", en:"lǚxíng – to travel", ex_zh:"你(ㄋㄧˇ)來(ㄌㄞˊ)台(ㄊㄞˊ)灣(ㄨㄢ)做(ㄗㄨㄛˋ)什(ㄕㄣˊ)麼(ㄇㄜ˙)？旅(ㄌㄩˇ)行(ㄒㄧㄥˊ)還(ㄏㄞˊ)是(ㄕˋ)出(ㄔㄨ)差(ㄔㄞ)？", ex_en:"What are you here for? Traveling or a business trip?"},
-    {word:"待(ㄉㄞ)", en:"dāi – to stay (1st tone!)", note:"Careful: this is a different 待 from 期待(ㄑㄧˊㄉㄞˋ) \"to look forward to,\" where 待 is 4th tone (dài). Here, meaning \"to stay,\" it's 1st tone dāi.", ex_zh:"你(ㄋㄧˇ)會(ㄏㄨㄟˋ)在(ㄗㄞˋ)台(ㄊㄞˊ)灣(ㄨㄢ)待(ㄉㄞ)多(ㄉㄨㄛ)久(ㄐㄧㄡˇ)？", ex_en:"How long will you stay in Taiwan?"},
-    {word:"一(ㄧˊ)個(ㄍㄜ˙)人(ㄖㄣˊ)", en:"yí ge rén – alone / by oneself", ex_zh:"你(ㄋㄧˇ)一(ㄧˊ)個(ㄍㄜ˙)人(ㄖㄣˊ)來(ㄌㄞˊ)嗎(ㄇㄚ˙)？", ex_en:"Are you traveling alone?"},
-    {word:"工(ㄍㄨㄥ)作(ㄗㄨㄛˋ)", en:"gōngzuò – job / work", ex_zh:"我(ㄨㄛˇ)的(ㄉㄜ˙)工(ㄍㄨㄥ)作(ㄗㄨㄛˋ)是(ㄕˋ)買(ㄇㄞˇ)台(ㄊㄞˊ)灣(ㄨㄢ)的(ㄉㄜ˙)螺(ㄌㄨㄛˊ)絲(ㄙ)去(ㄑㄩˋ)美(ㄇㄟˇ)國(ㄍㄨㄛˊ)賣(ㄇㄞˋ)。", ex_en:"My job is buying screws in Taiwan to sell in the US."},
-    {word:"現(ㄒㄧㄢˋ)金(ㄐㄧㄣ)", en:"xiànjīn – cash", ex_zh:"你(ㄋㄧˇ)帶(ㄉㄞˋ)多(ㄉㄨㄛ)少(ㄕㄠˇ)現(ㄒㄧㄢˋ)金(ㄐㄧㄣ)？三(ㄙㄢ)千(ㄑㄧㄢ)塊(ㄎㄨㄞˋ)。", ex_en:"How much cash are you carrying? 3,000 NT dollars."}
+    {word:"出(ㄔㄨ)關(ㄍㄨㄢ)", en:"go through customs/immigration", ex_zh:"下(ㄒㄧㄚˋ)飛(ㄈㄟ)機(ㄐㄧ)以(ㄧˇ)後(ㄏㄡˋ)，我(ㄨㄛˇ)們(ㄇㄣ˙)要(ㄧㄠˋ)先(ㄒㄧㄢ)出(ㄔㄨ)關(ㄍㄨㄢ)。", ex_en:"After we get off the plane, we need to go through immigration first."},
+    {word:"海(ㄏㄞˇ)關(ㄍㄨㄢ)", en:"Customs (the checkpoint / office itself)", ex_zh:"海(ㄏㄞˇ)關(ㄍㄨㄢ)人(ㄖㄣˊ)員(ㄩㄢˊ)在(ㄗㄞˋ)機(ㄐㄧ)場(ㄔㄤˇ)工(ㄍㄨㄥ)作(ㄗㄨㄛˋ)。", ex_en:"Customs officers work at the airport."},
+    {word:"旅(ㄌㄩˇ)行(ㄒㄧㄥˊ)", en:"to travel", ex_zh:"你(ㄋㄧˇ)來(ㄌㄞˊ)台(ㄊㄞˊ)灣(ㄨㄢ)做(ㄗㄨㄛˋ)什(ㄕㄣˊ)麼(ㄇㄜ˙)？旅(ㄌㄩˇ)行(ㄒㄧㄥˊ)還(ㄏㄞˊ)是(ㄕˋ)出(ㄔㄨ)差(ㄔㄞ)？", ex_en:"What are you here for? Traveling or a business trip?"},
+    {word:"待(ㄉㄞ)", en:"to stay (1st tone!)", note:"Careful: this is a different 待 from 期待(ㄑㄧˊㄉㄞˋ) \"to look forward to,\" where 待 is 4th tone (ㄉㄞˋ). Here, meaning \"to stay,\" it's 1st tone (ㄉㄞ, no tone mark).", ex_zh:"你(ㄋㄧˇ)會(ㄏㄨㄟˋ)在(ㄗㄞˋ)台(ㄊㄞˊ)灣(ㄨㄢ)待(ㄉㄞ)多(ㄉㄨㄛ)久(ㄐㄧㄡˇ)？", ex_en:"How long will you stay in Taiwan?"},
+    {word:"一(ㄧˊ)個(ㄍㄜ˙)人(ㄖㄣˊ)", en:"alone / by oneself", ex_zh:"你(ㄋㄧˇ)一(ㄧˊ)個(ㄍㄜ˙)人(ㄖㄣˊ)來(ㄌㄞˊ)嗎(ㄇㄚ˙)？", ex_en:"Are you traveling alone?"},
+    {word:"工(ㄍㄨㄥ)作(ㄗㄨㄛˋ)", en:"job / work", ex_zh:"我(ㄨㄛˇ)的(ㄉㄜ˙)工(ㄍㄨㄥ)作(ㄗㄨㄛˋ)是(ㄕˋ)買(ㄇㄞˇ)台(ㄊㄞˊ)灣(ㄨㄢ)的(ㄉㄜ˙)螺(ㄌㄨㄛˊ)絲(ㄙ)去(ㄑㄩˋ)美(ㄇㄟˇ)國(ㄍㄨㄛˊ)賣(ㄇㄞˋ)。", ex_en:"My job is buying screws in Taiwan to sell in the US."},
+    {word:"現(ㄒㄧㄢˋ)金(ㄐㄧㄣ)", en:"cash", ex_zh:"你(ㄋㄧˇ)帶(ㄉㄞˋ)多(ㄉㄨㄛ)少(ㄕㄠˇ)現(ㄒㄧㄢˋ)金(ㄐㄧㄣ)？三(ㄙㄢ)千(ㄑㄧㄢ)塊(ㄎㄨㄞˋ)。", ex_en:"How much cash are you carrying? 3,000 NT dollars."}
   ]
 },
 {
@@ -163,8 +164,8 @@ const sections = [
     {speaker:"司機", speakerEn:"Driver", zh:"謝(ㄒㄧㄝˋ)謝(ㄒㄧㄝ˙)。", en:"Thank you."}
   ],
   vocab: [
-    {word:"計(ㄐㄧˋ)程(ㄔㄥˊ)車(ㄔㄜ)", en:"jìchéngchē – taxi", ex_zh:"我(ㄨㄛˇ)要(ㄧㄠˋ)搭(ㄉㄚ)計(ㄐㄧˋ)程(ㄔㄥˊ)車(ㄔㄜ)去(ㄑㄩˋ)飯(ㄈㄢˋ)店(ㄉㄧㄢˋ)。", ex_en:"I want to take a taxi to the hotel."},
-    {word:"司(ㄙ)機(ㄐㄧ)", en:"sījī – driver", ex_zh:"司(ㄙ)機(ㄐㄧ)人(ㄖㄣˊ)很(ㄏㄣˇ)好(ㄏㄠˇ)。", ex_en:"The driver is very nice."},
+    {word:"計(ㄐㄧˋ)程(ㄔㄥˊ)車(ㄔㄜ)", en:"taxi", ex_zh:"我(ㄨㄛˇ)要(ㄧㄠˋ)搭(ㄉㄚ)計(ㄐㄧˋ)程(ㄔㄥˊ)車(ㄔㄜ)去(ㄑㄩˋ)飯(ㄈㄢˋ)店(ㄉㄧㄢˋ)。", ex_en:"I want to take a taxi to the hotel."},
+    {word:"司(ㄙ)機(ㄐㄧ)", en:"driver", ex_zh:"司(ㄙ)機(ㄐㄧ)人(ㄖㄣˊ)很(ㄏㄣˇ)好(ㄏㄠˇ)。", ex_en:"The driver is very nice."},
     {word:"區(ㄑㄩ) / 路(ㄌㄨˋ) / 號(ㄏㄠˋ)", en:"district / road / number", note:"Taiwanese addresses go: City + District (區) + Road/Street (路/街) + Number (號).", ex_zh:"台(ㄊㄞˊ)北(ㄅㄟˇ)市(ㄕˋ)中(ㄓㄨㄥ)正(ㄓㄥˋ)區(ㄑㄩ)林(ㄌㄧㄣˊ)森(ㄙㄣ)南(ㄋㄢˊ)路(ㄌㄨˋ)七(ㄑㄧ)號(ㄏㄠˋ)。", ex_en:"No. 7, Linsen South Road, Zhongzheng District, Taipei City."}
   ]
 },
@@ -180,12 +181,12 @@ const sections = [
     {speaker:"查德", zh:"好(ㄏㄠˇ)，謝(ㄒㄧㄝˋ)謝(ㄒㄧㄝ˙)。", en:"Okay, thank you."}
   ],
   vocab: [
-    {word:"入(ㄖㄨˋ)住(ㄓㄨˋ)", en:"rùzhù – to check in", ex_zh:"我(ㄨㄛˇ)要(ㄧㄠˋ)入(ㄖㄨˋ)住(ㄓㄨˋ)，我(ㄨㄛˇ)叫(ㄐㄧㄠˋ)查(ㄔㄚˊ)德(ㄉㄜˊ)。", ex_en:"I'd like to check in, my name is Chad."},
-    {word:"雙(ㄕㄨㄤ)人(ㄖㄣˊ)房(ㄈㄤˊ)", en:"shuāngrénfáng – double room"},
-    {word:"單(ㄉㄢ)人(ㄖㄣˊ)房(ㄈㄤˊ)", en:"dānrénfáng – single room", ex_zh:"單(ㄉㄢ)人(ㄖㄣˊ)房(ㄈㄤˊ)比(ㄅㄧˇ)雙(ㄕㄨㄤ)人(ㄖㄣˊ)房(ㄈㄤˊ)小(ㄒㄧㄠˇ)，只(ㄓˇ)有(ㄧㄡˇ)一(ㄧ)張(ㄓㄤ)床(ㄔㄨㄤˊ)。", ex_en:"A single room is smaller than a double room—it only has one bed."},
-    {word:"房(ㄈㄤˊ)卡(ㄎㄚˇ)", en:"fángkǎ – room key card"},
-    {word:"地(ㄉㄧˋ)下(ㄒㄧㄚˋ)室(ㄕˋ)", en:"dìxiàshì – basement", ex_zh:"健(ㄐㄧㄢˋ)身(ㄕㄣ)房(ㄈㄤˊ)在(ㄗㄞˋ)地(ㄉㄧˋ)下(ㄒㄧㄚˋ)室(ㄕˋ)。", ex_en:"The gym is in the basement."},
-    {word:"地(ㄉㄧˋ)下(ㄒㄧㄚˋ)一(ㄧ)樓(ㄌㄡˊ)", en:"dìxià yī lóu – basement floor 1 (B1)", ex_zh:"早(ㄗㄠˇ)餐(ㄘㄢ)在(ㄗㄞˋ)地(ㄉㄧˋ)下(ㄒㄧㄚˋ)一(ㄧ)樓(ㄌㄡˊ)。", ex_en:"Breakfast is on B1."}
+    {word:"入(ㄖㄨˋ)住(ㄓㄨˋ)", en:"to check in", ex_zh:"我(ㄨㄛˇ)要(ㄧㄠˋ)入(ㄖㄨˋ)住(ㄓㄨˋ)，我(ㄨㄛˇ)叫(ㄐㄧㄠˋ)查(ㄔㄚˊ)德(ㄉㄜˊ)。", ex_en:"I'd like to check in, my name is Chad."},
+    {word:"雙(ㄕㄨㄤ)人(ㄖㄣˊ)房(ㄈㄤˊ)", en:"double room"},
+    {word:"單(ㄉㄢ)人(ㄖㄣˊ)房(ㄈㄤˊ)", en:"single room", ex_zh:"單(ㄉㄢ)人(ㄖㄣˊ)房(ㄈㄤˊ)比(ㄅㄧˇ)雙(ㄕㄨㄤ)人(ㄖㄣˊ)房(ㄈㄤˊ)小(ㄒㄧㄠˇ)，只(ㄓˇ)有(ㄧㄡˇ)一(ㄧ)張(ㄓㄤ)床(ㄔㄨㄤˊ)。", ex_en:"A single room is smaller than a double room—it only has one bed."},
+    {word:"房(ㄈㄤˊ)卡(ㄎㄚˇ)", en:"room key card"},
+    {word:"地(ㄉㄧˋ)下(ㄒㄧㄚˋ)室(ㄕˋ)", en:"basement", ex_zh:"健(ㄐㄧㄢˋ)身(ㄕㄣ)房(ㄈㄤˊ)在(ㄗㄞˋ)地(ㄉㄧˋ)下(ㄒㄧㄚˋ)室(ㄕˋ)。", ex_en:"The gym is in the basement."},
+    {word:"地(ㄉㄧˋ)下(ㄒㄧㄚˋ)一(ㄧ)樓(ㄌㄡˊ)", en:"basement floor 1 (B1)", ex_zh:"早(ㄗㄠˇ)餐(ㄘㄢ)在(ㄗㄞˋ)地(ㄉㄧˋ)下(ㄒㄧㄚˋ)一(ㄧ)樓(ㄌㄡˊ)。", ex_en:"Breakfast is on B1."}
   ]
 },
 {
@@ -197,8 +198,8 @@ const sections = [
     {speaker:"店員", speakerEn:"Clerk", zh:"好(ㄏㄠˇ)，加(ㄐㄧㄚ)值(ㄓˊ)完(ㄨㄢˊ)成(ㄔㄥˊ)了(ㄌㄜ˙)。", en:"Okay, the top-up is complete."}
   ],
   vocab: [
-    {word:"加(ㄐㄧㄚ)值(ㄓˊ)", en:"jiāzhí – to top up"},
-    {word:"完(ㄨㄢˊ)成(ㄔㄥˊ)", en:"wánchéng – to complete / finish"}
+    {word:"加(ㄐㄧㄚ)值(ㄓˊ)", en:"to top up"},
+    {word:"完(ㄨㄢˊ)成(ㄔㄥˊ)", en:"to complete / finish"}
   ]
 },
 {
@@ -209,9 +210,9 @@ const sections = [
     {speaker:"查德", zh:"謝(ㄒㄧㄝˋ)謝(ㄒㄧㄝ˙)你(ㄋㄧˇ)。", en:"Thank you."}
   ],
   vocab: [
-    {word:"忠(ㄓㄨㄥ)孝(ㄒㄧㄠˋ)復(ㄈㄨˋ)興(ㄒㄧㄥ)站(ㄓㄢˋ)", en:"Zhongxiao Fuxing Station"},
-    {word:"善(ㄕㄢˋ)導(ㄉㄠˇ)寺(ㄙˋ)站(ㄓㄢˋ)", en:"Shandao Temple Station"},
-    {word:"南(ㄋㄢˊ)港(ㄍㄤˇ)展(ㄓㄢˇ)覽(ㄌㄢˇ)館(ㄍㄨㄢˇ)站(ㄓㄢˋ)", en:"Nangang Exhibition Center Station"}
+    {word:"忠(ㄓㄨㄥ)孝(ㄒㄧㄠˋ)復(ㄈㄨˋ)興(ㄒㄧㄥ)站(ㄓㄢˋ)", en:"MRT station"},
+    {word:"善(ㄕㄢˋ)導(ㄉㄠˇ)寺(ㄙˋ)站(ㄓㄢˋ)", en:"MRT station"},
+    {word:"南(ㄋㄢˊ)港(ㄍㄤˇ)展(ㄓㄢˇ)覽(ㄌㄢˇ)館(ㄍㄨㄢˇ)站(ㄓㄢˋ)", en:"MRT station"}
   ]
 },
 {
@@ -223,10 +224,10 @@ const sections = [
     {speaker:"同事", speakerEn:"Coworker", zh:"歡(ㄏㄨㄢ)迎(ㄧㄥˊ)你(ㄋㄧˇ)來(ㄌㄞˊ)台(ㄊㄞˊ)灣(ㄨㄢ)！", en:"Welcome to Taiwan!"}
   ],
   vocab: [
-    {word:"姓(ㄒㄧㄥˋ)", en:"xìng – surname", ex_zh:"我(ㄨㄛˇ)姓(ㄒㄧㄥˋ)包(ㄅㄠ)。", ex_en:"My surname is Bao."},
-    {word:"經(ㄐㄧㄥ)理(ㄌㄧˇ)", en:"jīnglǐ – manager", ex_zh:"陳(ㄔㄣˊ)經(ㄐㄧㄥ)理(ㄌㄧˇ)", ex_en:"Manager Chen"},
-    {word:"小(ㄒㄧㄠˇ)姐(ㄐㄧㄝˇ)", en:"xiǎojiě – Miss / Ms.", ex_zh:"王(ㄨㄤˊ)小(ㄒㄧㄠˇ)姐(ㄐㄧㄝˇ)", ex_en:"Ms. Wang"},
-    {word:"先(ㄒㄧㄢ)生(ㄕㄥ)", en:"xiānshēng – Mr.", ex_zh:"林(ㄌㄧㄣˊ)先(ㄒㄧㄢ)生(ㄕㄥ)", ex_en:"Mr. Lin", note:"In Taiwan, when people aren't familiar with each other yet, it's common to address someone as \"Surname + 先生/小姐/job title,\" e.g. 林先生, 王小姐, 陳經理."}
+    {word:"姓(ㄒㄧㄥˋ)", en:"surname", ex_zh:"我(ㄨㄛˇ)姓(ㄒㄧㄥˋ)包(ㄅㄠ)。", ex_en:"My surname is Bao."},
+    {word:"經(ㄐㄧㄥ)理(ㄌㄧˇ)", en:"manager", ex_zh:"陳(ㄔㄣˊ)經(ㄐㄧㄥ)理(ㄌㄧˇ)", ex_en:"Manager Chen"},
+    {word:"小(ㄒㄧㄠˇ)姐(ㄐㄧㄝˇ)", en:"Miss / Ms.", ex_zh:"王(ㄨㄤˊ)小(ㄒㄧㄠˇ)姐(ㄐㄧㄝˇ)", ex_en:"Ms. Wang"},
+    {word:"先(ㄒㄧㄢ)生(ㄕㄥ)", en:"Mr.", ex_zh:"林(ㄌㄧㄣˊ)先(ㄒㄧㄢ)生(ㄕㄥ)", ex_en:"Mr. Lin", note:"In Taiwan, when people aren't familiar with each other yet, it's common to address someone as \"Surname + 先生/小姐/job title,\" e.g. 林先生, 王小姐, 陳經理."}
   ]
 },
 {
@@ -244,9 +245,9 @@ const sections = [
     {speaker:"查德", zh:"我(ㄨㄛˇ)要(ㄧㄠˋ)一(ㄧˋ)杯(ㄅㄟ)紅(ㄏㄨㄥˊ)茶(ㄔㄚˊ)，謝(ㄒㄧㄝˋ)謝(ㄒㄧㄝ˙)。", en:"I'll have a black tea, thanks."}
   ],
   vocab: [
-    {word:"內(ㄋㄟˋ)用(ㄩㄥˋ)", en:"nèiyòng – dine in", ex_zh:"你(ㄋㄧˇ)要(ㄧㄠˋ)外(ㄨㄞˋ)帶(ㄉㄞˋ)還(ㄏㄞˊ)是(ㄕˋ)內(ㄋㄟˋ)用(ㄩㄥˋ)？", ex_en:"Would you like it to go, or for here?"},
-    {word:"盤(ㄆㄢˊ)", en:"pán – plate (measure word)", ex_zh:"一(ㄧˋ)盤(ㄆㄢˊ)炒(ㄔㄠˇ)高(ㄍㄠ)麗(ㄌㄧˋ)菜(ㄘㄞˋ)。", ex_en:"A plate of stir-fried cabbage."},
-    {word:"試(ㄕˋ)試(ㄕˋ)看(ㄎㄢˋ)", en:"shìshi kàn – give it a try", ex_zh:"你(ㄋㄧˇ)可(ㄎㄜˇ)以(ㄧˇ)試(ㄕˋ)試(ㄕˋ)看(ㄎㄢˋ)。", ex_en:"You can give it a try."}
+    {word:"內(ㄋㄟˋ)用(ㄩㄥˋ)", en:"dine in", ex_zh:"你(ㄋㄧˇ)要(ㄧㄠˋ)外(ㄨㄞˋ)帶(ㄉㄞˋ)還(ㄏㄞˊ)是(ㄕˋ)內(ㄋㄟˋ)用(ㄩㄥˋ)？", ex_en:"Would you like it to go, or for here?"},
+    {word:"盤(ㄆㄢˊ)", en:"plate (measure word)", ex_zh:"一(ㄧˋ)盤(ㄆㄢˊ)炒(ㄔㄠˇ)高(ㄍㄠ)麗(ㄌㄧˋ)菜(ㄘㄞˋ)。", ex_en:"A plate of stir-fried cabbage."},
+    {word:"試(ㄕˋ)試(ㄕˋ)看(ㄎㄢˋ)", en:"give it a try", ex_zh:"你(ㄋㄧˇ)可(ㄎㄜˇ)以(ㄧˇ)試(ㄕˋ)試(ㄕˋ)看(ㄎㄢˋ)。", ex_en:"You can give it a try."}
   ]
 },
 {
@@ -260,16 +261,16 @@ const sections = [
     {speaker:"查德", zh:"謝(ㄒㄧㄝˋ)謝(ㄒㄧㄝ˙)。", en:"Thanks."}
   ],
   vocab: [
-    {word:"甜(ㄊㄧㄢˊ)度(ㄉㄨˋ)冰(ㄅㄧㄥ)塊(ㄎㄨㄞˋ)", en:"tiándù bīngkuài – sweetness & ice level"},
-    {word:"正(ㄓㄥˋ)常(ㄔㄤˊ)冰(ㄅㄧㄥ)", en:"zhèngcháng bīng – regular ice"},
-    {word:"少(ㄕㄠˇ)糖(ㄊㄤˊ)", en:"shǎotáng – less sugar"},
-    {word:"半(ㄅㄢˋ)糖(ㄊㄤˊ)", en:"bàntáng – half sugar"},
-    {word:"微(ㄨㄟˊ)糖(ㄊㄤˊ)", en:"wēitáng – a little sugar"},
-    {word:"無(ㄨˊ)糖(ㄊㄤˊ)", en:"wútáng – no sugar"},
-    {word:"布(ㄅㄨˋ)丁(ㄉㄧㄥ)", en:"bùdīng – pudding"},
-    {word:"芋(ㄩˋ)圓(ㄩㄢˊ)", en:"yùyuán – taro balls"},
-    {word:"地(ㄉㄧˋ)瓜(ㄍㄨㄚ)圓(ㄩㄢˊ)", en:"dìguāyuán – sweet potato balls"},
-    {word:"椰(ㄧㄝˊ)果(ㄍㄨㄛˇ)", en:"yēguǒ – coconut jelly"}
+    {word:"甜(ㄊㄧㄢˊ)度(ㄉㄨˋ)冰(ㄅㄧㄥ)塊(ㄎㄨㄞˋ)", en:"sweetness &amp; ice level"},
+    {word:"正(ㄓㄥˋ)常(ㄔㄤˊ)冰(ㄅㄧㄥ)", en:"regular ice"},
+    {word:"少(ㄕㄠˇ)糖(ㄊㄤˊ)", en:"less sugar"},
+    {word:"半(ㄅㄢˋ)糖(ㄊㄤˊ)", en:"half sugar"},
+    {word:"微(ㄨㄟˊ)糖(ㄊㄤˊ)", en:"a little sugar"},
+    {word:"無(ㄨˊ)糖(ㄊㄤˊ)", en:"no sugar"},
+    {word:"布(ㄅㄨˋ)丁(ㄉㄧㄥ)", en:"pudding"},
+    {word:"芋(ㄩˋ)圓(ㄩㄢˊ)", en:"taro balls"},
+    {word:"地(ㄉㄧˋ)瓜(ㄍㄨㄚ)圓(ㄩㄢˊ)", en:"sweet potato balls"},
+    {word:"椰(ㄧㄝˊ)果(ㄍㄨㄛˇ)", en:"coconut jelly"}
   ]
 },
 {
@@ -284,9 +285,9 @@ const sections = [
     {speaker:"查德", zh:"謝(ㄒㄧㄝˋ)謝(ㄒㄧㄝ˙)。", en:"Thanks."}
   ],
   vocab: [
-    {word:"高(ㄍㄠ)鐵(ㄊㄧㄝˇ)", en:"gāotiě – High Speed Rail"},
-    {word:"商(ㄕㄤ)務(ㄨˋ)票(ㄆㄧㄠˋ)", en:"shāngwùpiào – business-class ticket"},
-    {word:"刷(ㄕㄨㄚ)卡(ㄎㄚˇ)", en:"shuākǎ – to pay by card"}
+    {word:"高(ㄍㄠ)鐵(ㄊㄧㄝˇ)", en:"High Speed Rail"},
+    {word:"商(ㄕㄤ)務(ㄨˋ)票(ㄆㄧㄠˋ)", en:"business-class ticket"},
+    {word:"刷(ㄕㄨㄚ)卡(ㄎㄚˇ)", en:"to pay by card"}
   ]
 },
 {
@@ -299,7 +300,7 @@ const sections = [
     {speaker:"查德", zh:"好(ㄏㄠˇ)，謝(ㄒㄧㄝˋ)謝(ㄒㄧㄝ˙)你(ㄋㄧˇ)。", en:"Okay, thank you."}
   ],
   vocab: [
-    {word:"按(ㄢˋ)鈴(ㄌㄧㄥˊ)", en:"ànlíng – press the (request-stop) bell", ex_zh:"下(ㄒㄧㄚˋ)車(ㄔㄜ)請(ㄑㄧㄥˇ)按(ㄢˋ)鈴(ㄌㄧㄥˊ)。", ex_en:"Please press the bell to get off."}
+    {word:"按(ㄢˋ)鈴(ㄌㄧㄥˊ)", en:"press the (request-stop) bell", ex_zh:"下(ㄒㄧㄚˋ)車(ㄔㄜ)請(ㄑㄧㄥˇ)按(ㄢˋ)鈴(ㄌㄧㄥˊ)。", ex_en:"Please press the bell to get off."}
   ]
 },
 {
@@ -312,17 +313,17 @@ const sections = [
     {speaker:"查德", zh:"謝(ㄒㄧㄝˋ)謝(ㄒㄧㄝ˙)你(ㄋㄧˇ)！", en:"Thank you!"}
   ],
   vocab: [
-    {word:"附(ㄈㄨˋ)近(ㄐㄧㄣˋ)", en:"fùjìn – A在B附近 (A is near B)", ex_zh:"廁(ㄘㄜˋ)所(ㄙㄨㄛˇ)在(ㄗㄞˋ)便(ㄅㄧㄢˋ)利(ㄌㄧˋ)商(ㄕㄤ)店(ㄉㄧㄢˋ)附(ㄈㄨˋ)近(ㄐㄧㄣˋ)。", ex_en:"The restroom is near the convenience store."},
-    {word:"旁(ㄆㄤˊ)邊(ㄅㄧㄢ)", en:"pángbiān – A在B旁邊 (A is beside B)", ex_zh:"捷(ㄐㄧㄝˊ)運(ㄩㄣˋ)站(ㄓㄢˋ)在(ㄗㄞˋ)紅(ㄏㄨㄥˊ)綠(ㄌㄩˋ)燈(ㄉㄥ)旁(ㄆㄤˊ)邊(ㄅㄧㄢ)。", ex_en:"The MRT station is next to the traffic light."},
-    {word:"左(ㄗㄨㄛˇ)邊(ㄅㄧㄢ)", en:"zuǒbiān – A在B左邊 (A is on B's left)", ex_zh:"超(ㄔㄠ)市(ㄕˋ)在(ㄗㄞˋ)銀(ㄧㄣˊ)行(ㄏㄤˊ)的(ㄉㄜ˙)左(ㄗㄨㄛˇ)邊(ㄅㄧㄢ)。", ex_en:"The supermarket is to the left of the bank."},
-    {word:"右(ㄧㄡˋ)邊(ㄅㄧㄢ)", en:"yòubiān – A在B右邊 (A is on B's right)", ex_zh:"夜(ㄧㄝˋ)市(ㄕˋ)在(ㄗㄞˋ)老(ㄌㄠˇ)街(ㄐㄧㄝ)的(ㄉㄜ˙)右(ㄧㄡˋ)邊(ㄅㄧㄢ)。", ex_en:"The night market is to the right of the old street."},
-    {word:"前(ㄑㄧㄢˊ)面(ㄇㄧㄢˋ)", en:"qiánmiàn – A在B前面 (A is in front of B)", ex_zh:"公(ㄍㄨㄥ)車(ㄔㄜ)站(ㄓㄢˋ)在(ㄗㄞˋ)學(ㄒㄩㄝˊ)校(ㄒㄧㄠˋ)前(ㄑㄧㄢˊ)面(ㄇㄧㄢˋ)。", ex_en:"The bus stop is in front of the school."},
-    {word:"後(ㄏㄡˋ)面(ㄇㄧㄢˋ)", en:"hòumiàn – A在B後面 (A is behind B)", ex_zh:"廁(ㄘㄜˋ)所(ㄙㄨㄛˇ)在(ㄗㄞˋ)餐(ㄘㄢ)廳(ㄊㄧㄥ)後(ㄏㄡˋ)面(ㄇㄧㄢˋ)。", ex_en:"The restroom is behind the restaurant."},
-    {word:"十(ㄕˊ)字(ㄗˋ)路(ㄌㄨˋ)口(ㄎㄡˇ)", en:"shízì lùkǒu – intersection"},
-    {word:"馬(ㄇㄚˇ)路(ㄌㄨˋ)", en:"mǎlù – road / street"},
-    {word:"超(ㄔㄠ)市(ㄕˋ)", en:"chāoshì – supermarket"},
-    {word:"夜(ㄧㄝˋ)市(ㄕˋ)", en:"yèshì – night market"},
-    {word:"老(ㄌㄠˇ)街(ㄐㄧㄝ)", en:"lǎojiē – old street"}
+    {word:"附(ㄈㄨˋ)近(ㄐㄧㄣˋ)", en:"A在B附近 (A is near B)", ex_zh:"廁(ㄘㄜˋ)所(ㄙㄨㄛˇ)在(ㄗㄞˋ)便(ㄅㄧㄢˋ)利(ㄌㄧˋ)商(ㄕㄤ)店(ㄉㄧㄢˋ)附(ㄈㄨˋ)近(ㄐㄧㄣˋ)。", ex_en:"The restroom is near the convenience store."},
+    {word:"旁(ㄆㄤˊ)邊(ㄅㄧㄢ)", en:"A在B旁邊 (A is beside B)", ex_zh:"捷(ㄐㄧㄝˊ)運(ㄩㄣˋ)站(ㄓㄢˋ)在(ㄗㄞˋ)紅(ㄏㄨㄥˊ)綠(ㄌㄩˋ)燈(ㄉㄥ)旁(ㄆㄤˊ)邊(ㄅㄧㄢ)。", ex_en:"The MRT station is next to the traffic light."},
+    {word:"左(ㄗㄨㄛˇ)邊(ㄅㄧㄢ)", en:"A在B左邊 (A is on B's left)", ex_zh:"超(ㄔㄠ)市(ㄕˋ)在(ㄗㄞˋ)銀(ㄧㄣˊ)行(ㄏㄤˊ)的(ㄉㄜ˙)左(ㄗㄨㄛˇ)邊(ㄅㄧㄢ)。", ex_en:"The supermarket is to the left of the bank."},
+    {word:"右(ㄧㄡˋ)邊(ㄅㄧㄢ)", en:"A在B右邊 (A is on B's right)", ex_zh:"夜(ㄧㄝˋ)市(ㄕˋ)在(ㄗㄞˋ)老(ㄌㄠˇ)街(ㄐㄧㄝ)的(ㄉㄜ˙)右(ㄧㄡˋ)邊(ㄅㄧㄢ)。", ex_en:"The night market is to the right of the old street."},
+    {word:"前(ㄑㄧㄢˊ)面(ㄇㄧㄢˋ)", en:"A在B前面 (A is in front of B)", ex_zh:"公(ㄍㄨㄥ)車(ㄔㄜ)站(ㄓㄢˋ)在(ㄗㄞˋ)學(ㄒㄩㄝˊ)校(ㄒㄧㄠˋ)前(ㄑㄧㄢˊ)面(ㄇㄧㄢˋ)。", ex_en:"The bus stop is in front of the school."},
+    {word:"後(ㄏㄡˋ)面(ㄇㄧㄢˋ)", en:"A在B後面 (A is behind B)", ex_zh:"廁(ㄘㄜˋ)所(ㄙㄨㄛˇ)在(ㄗㄞˋ)餐(ㄘㄢ)廳(ㄊㄧㄥ)後(ㄏㄡˋ)面(ㄇㄧㄢˋ)。", ex_en:"The restroom is behind the restaurant."},
+    {word:"十(ㄕˊ)字(ㄗˋ)路(ㄌㄨˋ)口(ㄎㄡˇ)", en:"intersection"},
+    {word:"馬(ㄇㄚˇ)路(ㄌㄨˋ)", en:"road / street"},
+    {word:"超(ㄔㄠ)市(ㄕˋ)", en:"supermarket"},
+    {word:"夜(ㄧㄝˋ)市(ㄕˋ)", en:"night market"},
+    {word:"老(ㄌㄠˇ)街(ㄐㄧㄝ)", en:"old street"}
   ]
 },
 {
@@ -340,10 +341,10 @@ const sections = [
     {speaker:"店員", speakerEn:"Clerk", zh:"好(ㄏㄠˇ)的(ㄉㄜ˙)，這(ㄓㄜˋ)是(ㄕˋ)你(ㄋㄧˇ)的(ㄉㄜ˙)東(ㄉㄨㄥ)西(ㄒㄧ)，謝(ㄒㄧㄝˋ)謝(ㄒㄧㄝ˙)光(ㄍㄨㄤ)臨(ㄌㄧㄣˊ)！", en:"Okay, here's your stuff, thanks for coming!"}
   ],
   vocab: [
-    {word:"很(ㄏㄣˇ)受(ㄕㄡˋ)歡(ㄏㄨㄢ)迎(ㄧㄥˊ)", en:"hěn shòu huānyíng – very popular"},
-    {word:"月(ㄩㄝˋ)餅(ㄅㄧㄥˇ)", en:"yuèbǐng – mooncake"},
-    {word:"太(ㄊㄞˋ)陽(ㄧㄤˊ)餅(ㄅㄧㄥˇ)", en:"tàiyángbǐng – sun cake"},
-    {word:"鳳(ㄈㄥˋ)梨(ㄌㄧˊ)酥(ㄙㄨ)", en:"fènglísū – pineapple cake"}
+    {word:"很(ㄏㄣˇ)受(ㄕㄡˋ)歡(ㄏㄨㄢ)迎(ㄧㄥˊ)", en:"very popular"},
+    {word:"月(ㄩㄝˋ)餅(ㄅㄧㄥˇ)", en:"mooncake"},
+    {word:"太(ㄊㄞˋ)陽(ㄧㄤˊ)餅(ㄅㄧㄥˇ)", en:"sun cake"},
+    {word:"鳳(ㄈㄥˋ)梨(ㄌㄧˊ)酥(ㄙㄨ)", en:"pineapple cake"}
   ]
 },
 {
@@ -356,9 +357,9 @@ const sections = [
     {speaker:"地勤人員", speakerEn:"Ground Staff", zh:"好(ㄏㄠˇ)，這(ㄓㄜˋ)是(ㄕˋ)您(ㄋㄧㄣˊ)的(ㄉㄜ˙)登(ㄉㄥ)機(ㄐㄧ)證(ㄓㄥˋ)，謝(ㄒㄧㄝˋ)謝(ㄒㄧㄝ˙)！", en:"Okay, here's your boarding pass, thank you!"}
   ],
   vocab: [
-    {word:"托(ㄊㄨㄛ)運(ㄩㄣˋ)", en:"tuōyùn – to check (baggage)", ex_zh:"我(ㄨㄛˇ)有(ㄧㄡˇ)一(ㄧˊ)個(ㄍㄜ˙)行(ㄒㄧㄥˊ)李(ㄌㄧˇ)箱(ㄒㄧㄤ)要(ㄧㄠˋ)託(ㄊㄨㄛ)運(ㄩㄣˋ)。", ex_en:"I have one suitcase to check."},
-    {word:"隨(ㄙㄨㄟˊ)身(ㄕㄣ)", en:"suíshēn – carry-on / on one's person", ex_zh:"這(ㄓㄜˋ)是(ㄕˋ)我(ㄨㄛˇ)的(ㄉㄜ˙)隨(ㄙㄨㄟˊ)身(ㄕㄣ)行(ㄒㄧㄥˊ)李(ㄌㄧˇ)。", ex_en:"This is my carry-on bag."},
-    {word:"超(ㄔㄠ)重(ㄓㄨㄥˋ)", en:"chāozhòng – overweight", ex_zh:"行(ㄒㄧㄥˊ)李(ㄌㄧˇ)箱(ㄒㄧㄤ)超(ㄔㄠ)重(ㄓㄨㄥˋ)了(ㄌㄜ˙)，要(ㄧㄠˋ)加(ㄐㄧㄚ)收(ㄕㄡ)費(ㄈㄟˋ)用(ㄩㄥˋ)。", ex_en:"The suitcase is overweight, so there's an extra fee."}
+    {word:"托(ㄊㄨㄛ)運(ㄩㄣˋ)", en:"to check (baggage)", ex_zh:"我(ㄨㄛˇ)有(ㄧㄡˇ)一(ㄧˊ)個(ㄍㄜ˙)行(ㄒㄧㄥˊ)李(ㄌㄧˇ)箱(ㄒㄧㄤ)要(ㄧㄠˋ)託(ㄊㄨㄛ)運(ㄩㄣˋ)。", ex_en:"I have one suitcase to check."},
+    {word:"隨(ㄙㄨㄟˊ)身(ㄕㄣ)", en:"carry-on / on one's person", ex_zh:"這(ㄓㄜˋ)是(ㄕˋ)我(ㄨㄛˇ)的(ㄉㄜ˙)隨(ㄙㄨㄟˊ)身(ㄕㄣ)行(ㄒㄧㄥˊ)李(ㄌㄧˇ)。", ex_en:"This is my carry-on bag."},
+    {word:"超(ㄔㄠ)重(ㄓㄨㄥˋ)", en:"overweight", ex_zh:"行(ㄒㄧㄥˊ)李(ㄌㄧˇ)箱(ㄒㄧㄤ)超(ㄔㄠ)重(ㄓㄨㄥˋ)了(ㄌㄜ˙)，要(ㄧㄠˋ)加(ㄐㄧㄚ)收(ㄕㄡ)費(ㄈㄟˋ)用(ㄩㄥˋ)。", ex_en:"The suitcase is overweight, so there's an extra fee."}
   ]
 }
 ];
