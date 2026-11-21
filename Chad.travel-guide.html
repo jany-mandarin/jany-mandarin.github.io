@@ -63,9 +63,9 @@ button.control-btn { background: var(--primary); color: white; border: none; pad
 .vocab-table { width: 100%; border-collapse: collapse; table-layout: fixed; }
 .vocab-table th, .vocab-table td { border: 1px solid #E6D5B8; padding: 10px; vertical-align: top; text-align: left; word-wrap: break-word; }
 .vocab-table th { background: #F7EBE1; color: #8C6239; font-size: 14px; }
-.vocab-table th:nth-child(1), .vocab-table td:nth-child(1) { width: 34%; }
-.vocab-table th:nth-child(2), .vocab-table td:nth-child(2) { width: 26%; }
-.vocab-table th:nth-child(3), .vocab-table td:nth-child(3) { width: 40%; }
+.vocab-table th:nth-child(1), .vocab-table td:nth-child(1) { width: 28%; }
+.vocab-table th:nth-child(2), .vocab-table td:nth-child(2) { width: 36%; }
+.vocab-table th:nth-child(3), .vocab-table td:nth-child(3) { width: 36%; }
 .vocab-table .zy-text { font-size: 18px; line-height: 2.6; }
 .vocab-table .zy-char { font-size: 24px; }
 .vocab-table .vocab-en { color: #8C6239; font-weight: bold; font-size: 14px; }
@@ -403,16 +403,18 @@ function render() {
 
     let vocabHtml = `<div class="vocab-title">🔑 Key Vocabulary</div>
       <table class="vocab-table">
-        <thead><tr><th>單字 Word</th><th>English</th><th>例句 Example</th></tr></thead>
+        <thead><tr><th>中文</th><th>例句</th><th>English</th></tr></thead>
         <tbody>`;
     sec.vocab.forEach(v => {
       const noteHtml = v.note ? `<div class="vocab-note">${v.note}</div>` : '';
-      const exampleCell = v.ex_zh ? audioUnit(v.ex_zh, v.ex_en) : '<span style="color:#ccc;">—</span>';
+      const wordCell = audioUnit(v.word, '', 'vocab-word-audio');
+      const exampleCell = v.ex_zh ? audioUnit(v.ex_zh, '', 'vocab-ex-audio') : '<span style="color:#ccc;">—</span>';
+      const exEnHtml = v.ex_en ? `<span class="en-trans" style="display:block; margin-top:6px;">${v.ex_en}</span>` : '';
       vocabHtml += `
         <tr>
-          <td>${audioUnit(v.word, '', 'vocab-word-audio')}</td>
-          <td><span class="vocab-en">${v.en}</span>${noteHtml}</td>
+          <td>${wordCell}</td>
           <td>${exampleCell}</td>
+          <td><span class="vocab-en">${v.en}</span>${noteHtml}${exEnHtml}</td>
         </tr>`;
     });
     vocabHtml += '</tbody></table>';
@@ -428,7 +430,7 @@ function render() {
   tocList.innerHTML = tocHtml;
   container.innerHTML = html;
   parseZhuyinDOM();
-  document.querySelectorAll('.vocab-word-audio .en-trans').forEach(el => el.remove());
+  document.querySelectorAll('.vocab-word-audio .en-trans, .vocab-ex-audio .en-trans').forEach(el => el.remove());
 }
 
 // ====== Parse Zhuyin on Load (DOM based) ======
