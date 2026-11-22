@@ -12,7 +12,7 @@ body { font-family: 'Helvetica Neue', Arial, sans-serif; background: var(--bg); 
 .top-nav a { color: var(--primary); font-weight: bold; text-decoration: none; margin-left: 16px; font-size: 16px; }
 
 /* Sidebar */
-.sidebar-toggle { position: fixed; top: 54px; left: 12px; z-index: 1100; background: var(--primary); color: white; border: none; padding: 10px 14px; border-radius: 8px; cursor: pointer; font-size: 15px; font-weight: bold; box-shadow: 0 2px 5px rgba(0,0,0,0.15); -webkit-transform: translateZ(0); transform: translateZ(0); }
+.sidebar-toggle { position: fixed; top: 54px; left: 12px; z-index: 1250; background: var(--primary); color: white; border: none; padding: 10px 14px; border-radius: 8px; cursor: pointer; font-size: 15px; font-weight: bold; box-shadow: 0 2px 5px rgba(0,0,0,0.15); -webkit-transform: translateZ(0); transform: translateZ(0); }
 .sidebar { width: 280px; background: #FFF9F0; border-right: 1px solid #E6D5B8; height: 100vh; position: fixed; top: 0; left: 0; overflow-y: auto; padding: 60px 16px 20px 16px; box-sizing: border-box; transition: transform 0.3s ease; z-index: 1000; -webkit-transform: translateZ(0); transform: translateZ(0); will-change: transform; backface-visibility: hidden; }
 .sidebar.collapsed { transform: translateX(-100%); }
 .sidebar h3 { margin: 0 0 10px 0; color: #8C6239; font-size: 18px; display: flex; justify-content: space-between; align-items: center; }
@@ -183,8 +183,8 @@ const sections = [
   ],
   vocab: [
     {word:"入(ㄖㄨˋ)住(ㄓㄨˋ)", en:"to check in", ex_zh:"我(ㄨㄛˇ)要(ㄧㄠˋ)入(ㄖㄨˋ)住(ㄓㄨˋ)，我(ㄨㄛˇ)叫(ㄐㄧㄠˋ)查(ㄔㄚˊ)德(ㄉㄜˊ)。", ex_en:"I'd like to check in, my name is Chad."},
-    {word:"雙(ㄕㄨㄤ)人(ㄖㄣˊ)房(ㄈㄤˊ)", en:"double room"},
-    {word:"單(ㄉㄢ)人(ㄖㄣˊ)房(ㄈㄤˊ)", en:"single room", ex_zh:"單(ㄉㄢ)人(ㄖㄣˊ)房(ㄈㄤˊ)比(ㄅㄧˇ)雙(ㄕㄨㄤ)人(ㄖㄣˊ)房(ㄈㄤˊ)小(ㄒㄧㄠˇ)，只(ㄓˇ)有(ㄧㄡˇ)一(ㄧ)張(ㄓㄤ)床(ㄔㄨㄤˊ)。", ex_en:"A single room is smaller than a double room—it only has one bed."},
+    {word:"雙(ㄕㄨㄤ)人(ㄖㄣˊ)房(ㄈㄤˊ)", en:"double room", ex_zh:"我(ㄨㄛˇ)和(ㄏㄢˋ)太(ㄊㄞˋ)太(ㄊㄞ˙)去(ㄑㄩˋ)台(ㄊㄞˊ)灣(ㄨㄢ)的(ㄉㄜ˙)時(ㄕˊ)候(ㄏㄡˋ)，我(ㄨㄛˇ)會(ㄏㄨㄟˋ)訂(ㄉㄧㄥˋ)雙(ㄕㄨㄤ)人(ㄖㄣˊ)房(ㄈㄤˊ)。", ex_en:"When my wife and I go to Taiwan, I'll book a double room."},
+    {word:"單(ㄉㄢ)人(ㄖㄣˊ)房(ㄈㄤˊ)", en:"single room", ex_zh:"我(ㄨㄛˇ)一(ㄧˊ)個(ㄍㄜ˙)人(ㄖㄣˊ)在(ㄗㄞˋ)台(ㄊㄞˊ)灣(ㄨㄢ)的(ㄉㄜ˙)時(ㄕˊ)候(ㄏㄡˋ)，我(ㄨㄛˇ)會(ㄏㄨㄟˋ)訂(ㄉㄧㄥˋ)單(ㄉㄢ)人(ㄖㄣˊ)房(ㄈㄤˊ)，因(ㄧㄣ)為(ㄨㄟˋ)我(ㄨㄛˇ)只(ㄓˇ)會(ㄏㄨㄟˋ)在(ㄗㄞˋ)房(ㄈㄤˊ)間(ㄐㄧㄢ)睡(ㄕㄨㄟˋ)覺(ㄐㄧㄠˋ)。", ex_en:"When I'm in Taiwan alone, I'll book a single room, because I'll only be sleeping in the room."},
     {word:"房(ㄈㄤˊ)卡(ㄎㄚˇ)", en:"room key card"},
     {word:"地(ㄉㄧˋ)下(ㄒㄧㄚˋ)室(ㄕˋ)", en:"basement", ex_zh:"健(ㄐㄧㄢˋ)身(ㄕㄣ)房(ㄈㄤˊ)在(ㄗㄞˋ)地(ㄉㄧˋ)下(ㄒㄧㄚˋ)室(ㄕˋ)。", ex_en:"The gym is in the basement."},
     {word:"地(ㄉㄧˋ)下(ㄒㄧㄚˋ)一(ㄧ)樓(ㄌㄡˊ)", en:"basement floor 1 (B1)", ex_zh:"早(ㄗㄠˇ)餐(ㄘㄢ)在(ㄗㄞˋ)地(ㄉㄧˋ)下(ㄒㄧㄚˋ)一(ㄧ)樓(ㄌㄡˊ)。", ex_en:"Breakfast is on B1."}
