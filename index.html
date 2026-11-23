@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jany's Students</title>
+    <style>
+        :root { --bg: #FDFBF7; --primary: #D4A373; --text: #4a4a4a; --white: #fff; --highlight: #8C6239; }
+        body { font-family: 'Helvetica Neue', Arial, sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; max-width: 650px; margin: 0 auto; padding: 40px 20px 30px 20px; }
+        h1 { color: var(--highlight); border-bottom: 2px solid var(--primary); padding-bottom: 15px; margin-bottom: 20px; text-align: center; }
+        .profile { font-size: 16px; margin-bottom: 30px; color: #555; text-align: center; }
+
+        .menu { display: flex; flex-direction: column; gap: 20px; }
+        .menu-item { background: var(--white); padding: 20px; border-radius: 12px; text-decoration: none; color: var(--text); border: 2px solid transparent; transition: all 0.2s; display: block; box-shadow: 0 3px 8px rgba(0,0,0,0.05); }
+        .menu-item:hover { background: #FFF9F0; border-color: var(--primary); transform: translateY(-3px); box-shadow: 0 6px 12px rgba(0,0,0,0.1); }
+
+        .lesson-header { display: flex; justify-content: space-between; align-items: center; }
+        .lesson-title { font-size: 20px; font-weight: bold; color: var(--highlight); margin: 0; }
+        .lesson-sub { font-size: 14px; color: #888; margin-top: 4px; }
+    </style>
+</head>
+<body>
+
+    <h1>📚 Jany's Students</h1>
+
+    <div class="profile">
+        所有學生的課程目錄，點進去就能找到各自的講義。
+    </div>
+
+    <div class="menu">
+
+        <a href="Chad.html" class="menu-item">
+            <div class="lesson-header">
+                <div class="lesson-title">👨‍🎓 Chad</div>
+            </div>
+            <div class="lesson-sub">注音、A2，目前到第 204 堂課 + 旅遊指南</div>
+        </a>
+
+        <a href="philip.html" class="menu-item">
+            <div class="lesson-header">
+                <div class="lesson-title">👨‍🎓 Philip 菲利普</div>
+            </div>
+            <div class="lesson-sub">簡體字、拼音、C1，目前到第 41 堂課</div>
+        </a>
+
+        <a href="patrick.html" class="menu-item">
+            <div class="lesson-header">
+                <div class="lesson-title">👨‍🎓 Patrick</div>
+            </div>
+            <div class="lesson-sub">拼音、A1-A2，目前到第 59 堂課</div>
+        </a>
+
+        <a href="margot-leni.html" class="menu-item">
+            <div class="lesson-header">
+                <div class="lesson-title">👩‍🎓👦 Margot & Léni</div>
+            </div>
+            <div class="lesson-sub">法國學生、拼音、簡體字、A1-A2，目前到第 44 堂課</div>
+        </a>
+
+        <a href="eileen.lesson2.html" class="menu-item">
+            <div class="lesson-header">
+                <div class="lesson-title">👩‍🎓 Eileen</div>
+            </div>
+            <div class="lesson-sub">目前只有第 2 堂課，還沒有自己的目錄頁</div>
+        </a>
+
+    </div>
+
+</body>
+</html>
