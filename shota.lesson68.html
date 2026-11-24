@@ -182,7 +182,8 @@
             let cleanText = text.replace(/<[^>]*>/g, '')
                                 .replace(/\(.*?\)/g, '')
                                 .replace(/^[a-zA-Z]:\s*/g, '')
-                                .replace(/^\d+\.\s*/, '');
+                                .replace(/^\d+\.\s*/, '')
+                                .replace(/都/g, '兜');
 
             const utterance = new SpeechSynthesisUtterance(cleanText);
             utterance.lang = 'zh-TW';
