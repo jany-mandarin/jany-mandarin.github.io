@@ -214,9 +214,24 @@ function toggleSidebar(){
  const s=document.getElementById('sb'),m=document.getElementById('main');
  if(window.innerWidth<=900){
   s.classList.toggle('active');
- }else{
-  s.classList.toggle('collapsed');
-  m.classList.toggle('expanded');
+  return;
+ }
+ let anchorEl=null,anchorTop=null;
+ document.querySelectorAll('.section[id]').forEach(el=>{
+  const top=el.getBoundingClientRect().top;
+  if(top<=160){anchorEl=el;anchorTop=top;}
+ });
+ s.classList.toggle('collapsed');
+ m.classList.toggle('expanded');
+ if(anchorEl){
+  let restored=false;
+  const restore=()=>{
+   if(restored)return;
+   restored=true;
+   window.scrollBy(0, anchorEl.getBoundingClientRect().top - anchorTop);
+  };
+  m.addEventListener('transitionend', restore, {once:true});
+  setTimeout(restore, 350);
  }
 }
 

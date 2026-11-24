@@ -149,9 +149,27 @@
             const mainContent = document.getElementById('mainContent');
             if (window.innerWidth <= 900) {
                 sidebar.classList.toggle('active');
-            } else {
-                sidebar.classList.toggle('collapsed');
-                mainContent.classList.toggle('expanded');
+                return;
+            }
+
+            let anchorEl = null, anchorTop = null;
+            document.querySelectorAll('.grammar-box[id], .section[id]').forEach(el => {
+                const top = el.getBoundingClientRect().top;
+                if (top <= 160) { anchorEl = el; anchorTop = top; }
+            });
+
+            sidebar.classList.toggle('collapsed');
+            mainContent.classList.toggle('expanded');
+
+            if (anchorEl) {
+                let restored = false;
+                const restore = () => {
+                    if (restored) return;
+                    restored = true;
+                    window.scrollBy(0, anchorEl.getBoundingClientRect().top - anchorTop);
+                };
+                mainContent.addEventListener('transitionend', restore, { once: true });
+                setTimeout(restore, 350);
             }
         }
 
