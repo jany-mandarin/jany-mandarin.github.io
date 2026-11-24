@@ -163,7 +163,7 @@
             mainContent.classList.toggle('expanded');
 
             if (anchorEl) {
-                window.scrollBy(0, anchorEl.getBoundingClientRect().top - anchorTop);
+                window.scrollBy({ top: anchorEl.getBoundingClientRect().top - anchorTop, left: 0, behavior: 'instant' });
             }
         }
 
