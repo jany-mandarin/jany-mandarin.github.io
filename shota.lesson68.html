@@ -28,7 +28,7 @@
         .sidebar-toggle { position: fixed; top: 50px; left: 15px; z-index: 1250; background: var(--primary); color: white; border: none; padding: 8px 12px; border-radius: 6px; cursor: pointer; font-size: 14px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
 
         /* Main Content */
-        .main-content { margin-top: 40px; margin-left: var(--sidebar-width); width: calc(100% - var(--sidebar-width)); padding: 20px 40px; box-sizing: border-box; transition: margin-left 0.3s ease, width 0.3s ease; }
+        .main-content { margin-top: 40px; margin-left: var(--sidebar-width); width: calc(100% - var(--sidebar-width)); padding: 20px 40px; box-sizing: border-box; }
         .main-content > * { max-width: 900px; margin-left: auto; margin-right: auto; }
         .main-content.expanded { margin-left: 0; width: 100%; }
         .header { text-align: center; border-bottom: 2px solid var(--primary); padding-bottom: 10px; margin-bottom: 20px; margin-top: 20px; }
@@ -151,8 +151,8 @@
 
             // Toggling the sidebar changes the content width, which can
             // reflow the text and shift everything vertically. Remember
-            // what's at the top of the view and scroll back to it once
-            // the width transition finishes, so the page doesn't "jump".
+            // what's at the top of the view and correct for it in the
+            // same instant so the page never visibly jumps.
             let anchorEl = null, anchorTop = null;
             document.querySelectorAll('.grammar-box[id], .section[id]').forEach(el => {
                 const top = el.getBoundingClientRect().top;
@@ -163,14 +163,7 @@
             mainContent.classList.toggle('expanded');
 
             if (anchorEl) {
-                let restored = false;
-                const restore = () => {
-                    if (restored) return;
-                    restored = true;
-                    window.scrollBy(0, anchorEl.getBoundingClientRect().top - anchorTop);
-                };
-                mainContent.addEventListener('transitionend', restore, { once: true });
-                setTimeout(restore, 350);
+                window.scrollBy(0, anchorEl.getBoundingClientRect().top - anchorTop);
             }
         }
 
