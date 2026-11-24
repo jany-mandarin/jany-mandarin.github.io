@@ -163,7 +163,11 @@
             mainContent.classList.toggle('expanded');
 
             if (anchorEl) {
-                window.scrollBy({ top: anchorEl.getBoundingClientRect().top - anchorTop, left: 0, behavior: 'instant' });
+                const delta = anchorEl.getBoundingClientRect().top - anchorTop;
+                const prevScrollBehavior = document.documentElement.style.scrollBehavior;
+                document.documentElement.style.scrollBehavior = 'auto';
+                window.scrollBy(0, delta);
+                document.documentElement.style.scrollBehavior = prevScrollBehavior;
             }
         }
 
