@@ -224,7 +224,11 @@ function toggleSidebar(){
  s.classList.toggle('collapsed');
  m.classList.toggle('expanded');
  if(anchorEl){
-  window.scrollBy(0, anchorEl.getBoundingClientRect().top - anchorTop);
+  const delta=anchorEl.getBoundingClientRect().top-anchorTop;
+  const prevSB=document.documentElement.style.scrollBehavior;
+  document.documentElement.style.scrollBehavior='auto';
+  window.scrollBy(0, delta);
+  document.documentElement.style.scrollBehavior=prevSB;
  }
 }
 
