@@ -545,9 +545,21 @@
                         <table class="custom-table"><thead><tr>`;
                     item.tableHeaders.forEach(th => { html += `<th>${th}</th>`; });
                     html += `</tr></thead><tbody>`;
+                    const pinyinTestRegex = /([一-龥a-zA-Z0-9，。？！、：""''])\((.*?)\)/;
                     item.tableRows.forEach(row => {
                         html += `<tr>`;
-                        row.forEach(cell => { html += `<td>${parsePinyin(cell)}</td>`; });
+                        row.forEach(cell => {
+                            if (pinyinTestRegex.test(cell)) {
+                                let btnId = `play-btn-${counter}`;
+                                html += `<td><div style="display:flex; align-items:flex-start; gap:8px;">
+                                    <button class="icon-btn" id="${btnId}" onclick="togglePlayAudio('${cell.replace(/<br>/g, ' ')}', '${btnId}')" title="Listen Audio" style="width:30px; height:30px; flex-shrink:0;">🔊</button>
+                                    <div>${parsePinyin(cell)}</div>
+                                </div></td>`;
+                                counter++;
+                            } else {
+                                html += `<td>${parsePinyin(cell)}</td>`;
+                            }
+                        });
                         html += `</tr>`;
                     });
                     html += `</tbody></table></div>`;
