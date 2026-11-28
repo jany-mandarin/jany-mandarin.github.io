@@ -1,0 +1,685 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Margot & Léni's Mandarin Lesson 45</title>
+    <style>
+        :root { --bg: #FDFBF7; --primary: #D4A373; --text: #4a4a4a; --white: #fff; --sidebar-width: 280px; }
+        html { scroll-behavior: smooth; }
+        body { font-family: 'Helvetica Neue', Arial, sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; margin: 0; padding: 0; display: flex; transition: margin-left 0.3s ease; }
+
+        /* Top Navigation */
+        .top-nav { position: fixed; top: 0; left: 0; width: 100%; background: #FFF9F0; border-bottom: 1px solid #E6D5B8; padding: 10px 20px; box-sizing: border-box; text-align: right; z-index: 1200; display: flex; justify-content: flex-end; align-items: center; }
+        .top-nav a { color: var(--primary); font-weight: bold; text-decoration: none; margin-left: 20px; font-size: 15px; }
+        .top-nav a:hover { text-decoration: underline; color: #8C6239; }
+
+        /* Sidebar */
+        .sidebar { width: var(--sidebar-width); background: #FFF9F0; border-right: 1px solid #E6D5B8; height: 100vh; position: fixed; top: 0; left: 0; overflow-y: auto; padding: 60px 20px 20px 20px; box-sizing: border-box; transition: transform 0.3s ease; z-index: 1000; }
+        .sidebar.collapsed { transform: translateX(-100%); }
+        .sidebar h3 { margin-top: 0; color: #8C6239; font-size: 18px; border-bottom: 2px solid var(--primary); padding-bottom: 8px; display: flex; justify-content: space-between; align-items: center; }
+        .sidebar ol { padding-left: 20px; margin: 10px 0; color: #555; }
+        .sidebar li { margin-bottom: 8px; font-size: 15px; font-weight: bold; color: #8C6239; }
+        .sidebar ul { padding-left: 15px; list-style-type: circle; margin-top: 5px; margin-bottom: 15px; font-weight: normal; }
+        .sidebar ul li { font-size: 13.5px; margin-bottom: 6px; color: #555; }
+        .sidebar a { color: #555; text-decoration: none; display: block; }
+        .sidebar a:hover { color: #D4A373; font-weight: bold; }
+
+        .sidebar-toggle { position: fixed; top: 50px; left: 15px; z-index: 1100; background: var(--primary); color: white; border: none; padding: 8px 12px; border-radius: 6px; cursor: pointer; font-size: 14px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+
+        /* Main Content */
+        .main-content { margin-top: 40px; margin-left: var(--sidebar-width); width: calc(100% - var(--sidebar-width)); padding: 20px 40px; box-sizing: border-box; }
+        .main-content > * { max-width: 900px; margin-left: auto; margin-right: auto; }
+        .main-content.expanded { margin-left: 0; width: 100%; }
+        .header { text-align: center; border-bottom: 2px solid var(--primary); padding-bottom: 10px; margin-bottom: 20px; margin-top: 20px; }
+
+        /* Controls */
+        .controls { position: sticky; top: 40px; background: rgba(253, 251, 247, 0.95); backdrop-filter: blur(5px); padding: 15px; text-align: center; border-bottom: 1px solid #ccc; z-index: 900; margin-bottom: 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); border-radius: 8px; }
+        button.control-btn { background: var(--primary); color: white; border: none; padding: 10px 15px; margin: 5px; border-radius: 6px; cursor: pointer; font-size: 14px; font-weight: bold; box-shadow: 0 2px 4px rgba(0,0,0,0.08); }
+        button.control-btn:hover { background: #B5835A; }
+        button.control-btn.fr-btn { background: #457b9d; }
+        button.control-btn.fr-btn:hover { background: #35607d; }
+
+        /* Sentence Row & Audio Circle Buttons (Placed BEFORE sentence) */
+        .sentence-row { display: flex; align-items: center; gap: 15px; width: 100%; margin-bottom: 10px; }
+        .buttons-group { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
+        .icon-btn { background: #EFEFEF; color: #4A4A4A; width: 40px; height: 40px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; border: none; cursor: pointer; box-shadow: 0 1px 3px rgba(0,0,0,0.08); transition: transform 0.1s, background 0.2s; }
+        .icon-btn:hover { background: #E2E2E2; transform: scale(1.05); }
+        .icon-btn.recording { background: #ff4d4f; color: white; animation: pulse 1.5s infinite; }
+        .icon-btn.playing { background: #457b9d; color: white; }
+        .icon-btn:disabled { background: #F5F5F5; color: #CCC; cursor: not-allowed; box-shadow: none; transform: none; }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(255, 77, 79, 0.4); }
+            70% { box-shadow: 0 0 0 10px rgba(255, 77, 79, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(255, 77, 79, 0); }
+        }
+
+        .text-content { display: flex; flex-direction: column; flex-grow: 1; }
+
+        /* Content Blocks */
+        h2 { color: #8C6239; border-left: 5px solid var(--primary); padding-left: 10px; margin-top: 30px; }
+        .section { margin-bottom: 30px; background: var(--white); padding: 25px; border-radius: 12px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); scroll-margin-top: 130px; }
+        .grammar-box { background: #FFF9F0; border: 1px solid #E6D5B8; border-radius: 8px; padding: 20px; margin: 20px 0; scroll-margin-top: 140px; }
+
+        .pinyin-group { display: inline-flex; flex-direction: column; align-items: center; margin-right: 2px; vertical-align: bottom; }
+        .py-text { font-size: 11px; color: #777; line-height: 1; margin-bottom: 2px; }
+        .hz-text { font-size: 24px; font-family: sans-serif; line-height: 1.2; }
+
+        .en-trans { color: #666; font-size: 15px; font-style: italic; margin-top: 4px; display: block; }
+        .fr-trans { color: #457b9d; font-size: 15px; font-style: italic; margin-top: 2px; display: block; }
+        .fr-trans::before { content: "🇫🇷 "; font-style: normal; }
+        .note-fr { font-size: 15px; color: #2c4c63; margin-bottom: 10px; line-height: 1.6; background: #f0f6fa; padding: 10px 14px; border-left: 3px solid #457b9d; border-radius: 4px; }
+        .note { font-size: 14px; color: #777; margin-bottom: 12px; line-height: 1.6; background: #fdfaf6; padding: 10px 14px; border-left: 3px solid #D4A373; border-radius: 4px; }
+        .speaker-label { font-weight: bold; color: #8C6239; font-size: 14px; margin-top: 12px; margin-bottom: 2px; }
+
+        .custom-table { width: 100%; border-collapse: collapse; margin: 15px 0; background: white; border-radius: 8px; overflow: hidden; border: 1px solid #E6D5B8; }
+        .custom-table th { background: #F4E8D8; color: #8C6239; padding: 12px; font-size: 16px; text-align: center; border-bottom: 2px solid #E6D5B8; }
+        .custom-table td { padding: 12px; border-bottom: 1px solid #eee; vertical-align: middle; }
+        .custom-table tr:last-child td { border-bottom: none; }
+
+        .lesson-img { max-width: 100%; border-radius: 8px; margin: 10px 0; border: 1px solid #E6D5B8; display: block; }
+        .th-img { max-width: 210px; width: 100%; height: auto; display: block; margin: 0 auto 6px auto; border-radius: 6px; }
+
+        @media (max-width: 900px) {
+            .sidebar { transform: translateX(-100%); }
+            .sidebar.active { transform: translateX(0); }
+            .main-content { margin-left: 0; width: 100%; padding: 20px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="top-nav">
+        <a href="https://jany-mandarin.github.io/margot-leni.html">Index</a>
+    </div>
+
+    <button class="sidebar-toggle" onclick="toggleSidebar()">☰ Outline</button>
+
+    <div class="sidebar" id="sidebar">
+        <h3>📖 Outline <button style="background:none; border:none; color:#8C6239; font-weight:bold; cursor:pointer; font-size:16px;" onclick="toggleSidebar()">×</button></h3>
+        <ol>
+            <li>
+                <a href="#sec-1">Daily Life</a>
+                <ul class="sub-list">
+                    <li><a href="#sub-1-1">零下 (líng xià) — Below Zero</a></li>
+                    <li><a href="#sub-1-2">下雪 (xià xuě) — To Snow</a></li>
+                    <li><a href="#sub-1-3">去 + Place + Verb</a></li>
+                    <li><a href="#sub-1-4">游戏 (yóu xì) — Game</a></li>
+                    <li><a href="#sub-1-5">加 (jiā) — To Add</a></li>
+                    <li><a href="#sub-1-6">不难 (bù nán) — Not Difficult</a></li>
+                    <li><a href="#sub-1-7">不会 (bú huì) — Won't / Can't</a></li>
+                    <li><a href="#sub-1-8">写 (xiě) — To Write</a></li>
+                    <li><a href="#sub-1-9">V1 + 后, V2 / Time Words</a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="#sec-2">Movies</a>
+                <ul class="sub-list">
+                    <li><a href="#sub-2-1">Measure Word for Movies: 部</a></li>
+                    <li><a href="#sub-2-2">A 和 B 一样 — A is the Same as B</a></li>
+                    <li><a href="#sub-2-3">拍 (pāi) — Clap / Pat / Photograph</a></li>
+                    <li><a href="#sub-2-4">Adjectives to Describe Movies</a></li>
+                    <li><a href="#sub-2-5">魔戒 (mó jiè) — The Lord of the Rings</a></li>
+                    <li><a href="#sub-2-6">Describing Movie Length</a></li>
+                    <li><a href="#sub-2-7">Elements of a Movie</a></li>
+                    <li><a href="#sub-2-8">How to Tell a Story</a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="#sec-3">Homework</a>
+                <ul class="sub-list">
+                    <li><a href="#sub-3-1">Homework: Your Trip to London</a></li>
+                </ul>
+            </li>
+        </ol>
+    </div>
+
+    <div class="main-content" id="mainContent">
+        <div class="header">
+            <h1>Margot & Léni's Mandarin Lesson 45</h1>
+            <p>Date: 2026/11/28</p>
+        </div>
+
+        <div class="controls">
+            <button class="control-btn" onclick="togglePinyin()">Toggle Pinyin</button>
+            <button class="control-btn fr-btn" onclick="toggleFrench()">Toggle French</button>
+            <button class="control-btn" onclick="toggleEnglish()">Toggle English</button>
+        </div>
+
+        <div id="content"></div>
+    </div>
+
+    <script>
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const mainContent = document.getElementById('mainContent');
+            if (window.innerWidth <= 900) {
+                sidebar.classList.toggle('active');
+                return;
+            }
+
+            let anchorEl = null, anchorTop = null;
+            document.querySelectorAll('.grammar-box[id], .section[id]').forEach(el => {
+                const top = el.getBoundingClientRect().top;
+                if (top <= 160) { anchorEl = el; anchorTop = top; }
+            });
+
+            sidebar.classList.toggle('collapsed');
+            mainContent.classList.toggle('expanded');
+
+            if (anchorEl) {
+                const delta = anchorEl.getBoundingClientRect().top - anchorTop;
+                const prevScrollBehavior = document.documentElement.style.scrollBehavior;
+                document.documentElement.style.scrollBehavior = 'auto';
+                window.scrollBy(0, delta);
+                document.documentElement.style.scrollBehavior = prevScrollBehavior;
+            }
+        }
+
+        function parsePinyin(text) {
+            const regex = /([一-龥a-zA-Z0-9，。？！、：""''])\((.*?)\)/g;
+            let parsed = text.replace(regex, (match, char, py) => {
+                return `<span class="pinyin-group"><span class="py-text">${py}</span><span class="hz-text">${char}</span></span>`;
+            });
+            return parsed;
+        }
+
+        let currentUtterance = null;
+        let activePlayBtn = null;
+
+        function togglePlayAudio(text, btnId) {
+            const btn = document.getElementById(btnId);
+
+            if (speechSynthesis.speaking) {
+                if (speechSynthesis.paused) {
+                    speechSynthesis.resume();
+                    if(btn) btn.classList.add("playing");
+                    return;
+                } else {
+                    speechSynthesis.cancel();
+                    if(activePlayBtn) activePlayBtn.classList.remove("playing");
+                    if(activePlayBtn === btn) {
+                        activePlayBtn = null;
+                        return;
+                    }
+                }
+            }
+
+            let cleanText = text.replace(/<[^>]*>/g, '')
+                                .replace(/\(.*?\)/g, '')
+                                .replace(/^[a-zA-Z]:\s*/g, '')
+                                .replace(/^\d+\.\s*/, '')
+                                .replace(/角/g, '饺'); // 角 defaults to "jué" in TTS; force the "jiǎo" reading used in 主角
+
+            const utterance = new SpeechSynthesisUtterance(cleanText);
+            utterance.lang = 'zh-CN';
+            utterance.rate = 0.85;
+
+            utterance.onstart = () => {
+                if(activePlayBtn) activePlayBtn.classList.remove("playing");
+                activePlayBtn = btn;
+                if(btn) btn.classList.add("playing");
+            };
+
+            utterance.onend = () => {
+                if(btn) btn.classList.remove("playing");
+                activePlayBtn = null;
+            };
+
+            utterance.onerror = () => {
+                if(btn) btn.classList.remove("playing");
+                activePlayBtn = null;
+            };
+
+            currentUtterance = utterance;
+            speechSynthesis.speak(utterance);
+        }
+
+        let mediaRecorders = {};
+        let audioUrls = {};
+
+        async function toggleRecord(btn, id) {
+            if (!mediaRecorders[id] || mediaRecorders[id].state === "inactive") {
+                try {
+                    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+                    let chunks = [];
+                    let recorder = new MediaRecorder(stream);
+
+                    recorder.ondataavailable = e => chunks.push(e.data);
+                    recorder.onstop = () => {
+                        const blob = new Blob(chunks, { 'type': 'audio/webm' });
+                        audioUrls[id] = URL.createObjectURL(blob);
+                        let playRecBtn = document.getElementById(`play-rec-${id}`);
+                        if(playRecBtn) {
+                            playRecBtn.disabled = false;
+                            playRecBtn.onclick = () => {
+                                const audio = new Audio(audioUrls[id]);
+                                audio.play();
+                            };
+                        }
+                    };
+
+                    recorder.start();
+                    mediaRecorders[id] = recorder;
+                    btn.innerHTML = "⏹️";
+                    btn.classList.add("recording");
+                } catch (err) {
+                    alert("Microphone access denied or not supported.");
+                }
+            } else {
+                mediaRecorders[id].stop();
+                btn.innerHTML = "🎤";
+                btn.classList.remove("recording");
+            }
+        }
+
+        let counter = 0;
+
+        function exampleRow(ex) {
+            let btnId = `play-btn-${counter}`;
+            let recId = `rec-${counter}`;
+            let html = `
+            <div class="item">
+                <div class="sentence-row">
+                    <div class="buttons-group">
+                        <button class="icon-btn" id="${btnId}" onclick="togglePlayAudio('${ex.zh}', '${btnId}')" title="Listen Audio">🔊</button>
+                        <button class="icon-btn" onclick="toggleRecord(this, '${recId}')" title="Record Audio">🎤</button>
+                        <button class="icon-btn" id="play-rec-${recId}" title="Play Mine" disabled>▶️</button>
+                    </div>
+                    <div class="text-content">
+                        <div style="font-size:24px; margin-bottom:4px;">${parsePinyin(ex.zh)}</div>
+                        ${ex.fr ? `<div class="fr-trans">${ex.fr}</div>` : ''}
+                        ${ex.en ? `<div class="en-trans">${ex.en}</div>` : ''}
+                    </div>
+                </div>
+            </div>`;
+            counter++;
+            return html;
+        }
+
+        function speakerLabel(name) {
+            return `<div class="speaker-label">${name} :</div>`;
+        }
+
+        const lessonData = [
+            {
+                title: "1. Daily Life",
+                items: [
+                    {
+                        type: "grammar",
+                        subId: "sub-1-1",
+                        title: "零下 (líng xià) — Below Zero",
+                        noteFr: "Pour dire « -1 degré », en chinois on dit littéralement « zéro moins un degré » : 零下一度.",
+                        note: "<b>Explanation:</b> To say \"-1 degree\", Chinese literally says \"zero minus one degree\": 零下一度.",
+                        examples: [
+                            { zh: "今(jīn)天(tiān)零(líng)下(xià)一(yí)度(dù)，太(tài)冷(lěng)了(le)！！", fr: "Aujourd'hui il fait -1 degré, c'est trop froid !!", en: "Today it's -1 degree, way too cold!!" },
+                            { zh: "今(jīn)天(tiān)零(líng)下(xià)两(liǎng)度(dù)，好(hǎo)冷(lěng)好(hǎo)冷(lěng)好(hǎo)冷(lěng)！！", fr: "Aujourd'hui il fait -2 degrés, trop froid, trop froid, trop froid !!", en: "Today it's -2 degrees, so cold, so cold, so cold!!" }
+                        ]
+                    },
+                    {
+                        type: "custom",
+                        subId: "sub-1-2",
+                        title: "下雪 (xià xuě) — To Snow",
+                        html: `
+                        <div class="note-fr">下雪 est une action/un verbe : la neige (雪) tombe (下) du ciel. 雪 seul est le nom « neige ».</div>
+                        <div class="note"><b>Explanation:</b> 下雪 is an action/verb — snow (雪) falls (下) from the sky. 雪 by itself is the noun "snow".</div>
+                        <img src="https://cdn.phototourl.com/member/2026-11-28-31b62567-fab7-421b-b780-34e65d7e1f4e.png" class="lesson-img" alt="下雪">
+                        ${exampleRow({ zh: "巴(bā)黎(lí)不(bù)常(cháng)下(xià)雪(xuě)。", fr: "Il ne neige pas souvent à Paris.", en: "It doesn't snow often in Paris." })}
+                        ${exampleRow({ zh: "我(wǒ)喜(xǐ)欢(huān)加(jiā)拿(ná)大(dà)下(xià)雪(xuě)，因(yīn)为(wèi)可(kě)以(yǐ)做(zuò)雪(xuě)人(rén)。", fr: "J'aime quand il neige au Canada, parce qu'on peut faire un bonhomme de neige.", en: "I like it when it snows in Canada, because you can make a snowman." })}
+                        `
+                    },
+                    {
+                        type: "grammar",
+                        subId: "sub-1-3",
+                        title: "去 + Place + Verb",
+                        noteFr: "去 (qù) + lieu + verbe = « aller à [lieu] pour faire [quelque chose] ».",
+                        note: "<b>Explanation:</b> 去 (qù) + place + verb = \"to go to [place] to do [something]\".",
+                        examples: [
+                            { zh: "我(wǒ)们(men)下(xià)礼(lǐ)拜(bài)二(èr)会(huì)去(qù)新(xīn)家(jiā)住(zhù)。", fr: "Mardi prochain, nous allons habiter dans notre nouvelle maison.", en: "Next Tuesday, we will go live at our new house." },
+                            { zh: "我(wǒ)们(men)晚(wǎn)上(shàng)会(huì)去(qù)饭(fàn)馆(guǎn)吃(chī)饭(fàn)。", fr: "Ce soir, nous allons au restaurant pour manger.", en: "Tonight we will go to a restaurant to eat." },
+                            { zh: "我(wǒ)们(men)明(míng)天(tiān)会(huì)去(qù)朋(péng)友(yǒu)家(jiā)打(dǎ)麻(má)将(jiàng)。", fr: "Demain, nous allons chez des amis pour jouer au mahjong.", en: "Tomorrow we will go to a friend's house to play mahjong." }
+                        ]
+                    },
+                    {
+                        type: "grammar",
+                        subId: "sub-1-4",
+                        title: "游戏 (yóu xì) — Game",
+                        examples: [
+                            { zh: "我(wǒ)买(mǎi)了(le)一(yí)个(gè)游(yóu)戏(xì)给(gěi)爸(bà)爸(ba)，我(wǒ)爸(bà)爸(ba)喜(xǐ)欢(huān)玩(wán)游(yóu)戏(xì)。", fr: "J'ai acheté un jeu pour mon père, mon père aime jouer aux jeux vidéo.", en: "I bought a game for my dad, my dad likes to play games." },
+                            { zh: "我(wǒ)昨(zuó)天(tiān)看(kàn)了(le)饥(jī)饿(è)游(yóu)戏(xì)6。", fr: "Hier, j'ai regardé Hunger Games 6.", en: "Yesterday I watched Hunger Games 6." }
+                        ]
+                    },
+                    {
+                        type: "grammar",
+                        subId: "sub-1-5",
+                        title: "加 (jiā) — To Add",
+                        noteFr: "加 (jiā) se prononce comme 家 (jiā), et signifie « ajouter ». « 加一加一 » est une façon familière de dire « moi aussi / comptez-moi » (littéralement « ajoute-un, ajoute-un »).",
+                        note: "<b>Explanation:</b> 加 (jiā) is pronounced the same as 家 (jiā), and means \"to add\". \"加一加一\" is a casual way to say \"me too / count me in\" (literally \"add one, add one\").",
+                        examples: [
+                            { zh: "台(tái)湾(wān)的(de)提(tí)拉(lā)米(mǐ)苏(sū)会(huì)加(jiā)酒(jiǔ)。", fr: "Le tiramisu taïwanais a de l'alcool ajouté.", en: "Taiwanese tiramisu has alcohol added to it." },
+                            { zh: "你(nǐ)的(de)炒(chǎo)饭(fàn)要(yào)加(jiā)老(lǎo)干(gān)妈(mā)吗(ma)？要(yào)！我(wǒ)喜(xǐ)欢(huān)老(lǎo)干(gān)妈(mā)。", fr: "Veux-tu ajouter du Lao Gan Ma à ton riz frit ? Oui ! J'aime le Lao Gan Ma.", en: "Do you want to add Lao Gan Ma to your fried rice? Yes! I like Lao Gan Ma." },
+                            { zh: "你(nǐ)明(míng)天(tiān)要(yào)一(yì)起(qǐ)去(qù)我(wǒ)的(de)派(pài)对(duì)吗(ma)？好(hǎo)啊(a)！！加(jiā)一(yī)加(jiā)一(yī)。", fr: "Veux-tu venir à ma fête demain ? D'accord !! Comptez-moi !", en: "Do you want to come to my party tomorrow? Sure!! Count me in!" }
+                        ]
+                    },
+                    {
+                        type: "grammar",
+                        subId: "sub-1-6",
+                        title: "不难 (bù nán) — Not Difficult",
+                        noteFr: "En chinois, « facile » s'écrit avec deux mots différents selon le contexte, ce qui peut embrouiller les débutants — on peut simplement dire 不难 (« pas difficile ») à la place.",
+                        note: "<b>Explanation:</b> Chinese has two different words for \"easy\" depending on context, which can confuse beginners — it's fine to just say 不难 (\"not difficult\") instead.",
+                        examples: [
+                            { zh: "我(wǒ)觉(jué)得(de)做(zuò)提(tí)拉(lā)米(mǐ)苏(sū)不(bù)难(nán)。", fr: "Je trouve que faire du tiramisu n'est pas difficile.", en: "I think making tiramisu isn't difficult." },
+                            { zh: "我(wǒ)觉(jué)得(de)做(zuò)炒(chǎo)饭(fàn)不(bù)难(nán)。", fr: "Je trouve que faire du riz frit n'est pas difficile.", en: "I think making fried rice isn't difficult." }
+                        ]
+                    },
+                    {
+                        type: "grammar",
+                        subId: "sub-1-7",
+                        title: "不会 (bú huì) — Won't / Can't",
+                        noteFr: "会 exprime le futur « will » en chinois, donc « ne pas faire quelque chose dans le futur » se dit 不会.",
+                        note: "<b>Explanation:</b> 会 expresses the future \"will\" in Chinese, so \"will not do something in the future\" is said with 不会.",
+                        examples: [
+                            { zh: "你(nǐ)这(zhè)周(zhōu)末(mò)会(huì)去(qù)莱(lái)尼(ní)爸(bà)爸(ba)的(de)生(shēng)日(rì)派(pài)对(duì)吗(ma)？我(wǒ)不(bú)会(huì)去(qù)，因(yīn)为(wèi)很(hěn)远(yuǎn)。", fr: "Vas-tu à la fête d'anniversaire du père de Léni ce week-end ? Je n'irai pas, parce que c'est très loin.", en: "Will you go to Léni's dad's birthday party this weekend? I won't go, because it's very far." },
+                            { zh: "明(míng)天(tiān)你(nǐ)会(huì)去(qù)上(shàng)班(bān)吗(ma)？我(wǒ)不(bú)会(huì)去(qù)，明(míng)天(tiān)是(shì)周(zhōu)末(mò)。", fr: "Vas-tu travailler demain ? Je n'irai pas, demain c'est le week-end.", en: "Will you go to work tomorrow? I won't go, tomorrow is the weekend." }
+                        ]
+                    },
+                    {
+                        type: "grammar",
+                        subId: "sub-1-8",
+                        title: "写 (xiě) — To Write",
+                        noteFr: "写 (écrire) est généralement suivi de 字 (caractère/mot).",
+                        note: "<b>Explanation:</b> 写 (to write) is usually followed by 字 (character/word).",
+                        examples: [
+                            { zh: "你(nǐ)常(cháng)常(cháng)写(xiě)英(yīng)文(wén)字(zì)吗(ma)？不(bù)常(cháng)，我(wǒ)不(bù)常(cháng)写(xiě)字(zì)。", fr: "Écris-tu souvent en anglais ? Pas souvent, je n'écris pas souvent.", en: "Do you often write English words? Not often, I don't write often." },
+                            { zh: "你(nǐ)常(cháng)常(cháng)写(xiě)法(fǎ)文(wén)字(zì)吗(ma)？很(hěn)常(cháng)，我(wǒ)天(tiān)天(tiān)写(xiě)。", fr: "Écris-tu souvent en français ? Très souvent, j'écris tous les jours.", en: "Do you often write French words? Very often, I write every day." }
+                        ]
+                    },
+                    {
+                        type: "custom",
+                        subId: "sub-1-9",
+                        title: "V1 + 后, V2 / Time Words",
+                        html: `
+                        <div class="note-fr">下 s'utilise pour une période future (下星期, 下个月), tandis que 后 s'utilise après avoir fait une action (V1 + 后, V2 = « après avoir fait V1, V2 »).</div>
+                        <div class="note"><b>Explanation:</b> 下 is used for a future time unit (下星期, 下个月), while 后 is used after doing an action (V1 + 后, V2 = "after doing V1, V2").</div>
+                        ${exampleRow({ zh: "吃(chī)饭(fàn)后(hòu)，我(wǒ)会(huì)洗(xǐ)手(shǒu)。", fr: "Après avoir mangé, je me lave les mains.", en: "After eating, I will wash my hands." })}
+                        ${exampleRow({ zh: "看(kàn)电(diàn)影(yǐng)后(hòu)，我(wǒ)会(huì)听(tīng)它(tā)的(de)音(yīn)乐(yuè)。", fr: "Après avoir regardé le film, j'écoute sa musique.", en: "After watching the movie, I will listen to its music." })}
+                        <table class="custom-table" style="margin-top:15px;">
+                            <thead><tr><th>Past</th><th>Present</th><th>Future</th></tr></thead>
+                            <tbody>
+                                <tr>
+                                    <td>${parsePinyin("去(qù)年(nián)")}<div class="en-trans">last year</div><div class="fr-trans">l'année dernière</div></td>
+                                    <td>${parsePinyin("今(jīn)年(nián)")}<div class="en-trans">this year</div><div class="fr-trans">cette année</div></td>
+                                    <td>${parsePinyin("明(míng)年(nián)")}<div class="en-trans">next year</div><div class="fr-trans">l'année prochaine</div></td>
+                                </tr>
+                                <tr>
+                                    <td>${parsePinyin("上(shàng)个(gè)月(yuè)")}<div class="en-trans">last month</div><div class="fr-trans">le mois dernier</div></td>
+                                    <td>${parsePinyin("这(zhè)个(gè)月(yuè)")}<div class="en-trans">this month</div><div class="fr-trans">ce mois-ci</div></td>
+                                    <td>${parsePinyin("下(xià)个(gè)月(yuè)")}<div class="en-trans">next month</div><div class="fr-trans">le mois prochain</div></td>
+                                </tr>
+                                <tr>
+                                    <td>${parsePinyin("上(shàng)星(xīng)期(qī)")}<div class="en-trans">last week</div><div class="fr-trans">la semaine dernière</div></td>
+                                    <td>${parsePinyin("这(zhè)星(xīng)期(qī)")}<div class="en-trans">this week</div><div class="fr-trans">cette semaine</div></td>
+                                    <td>${parsePinyin("下(xià)星(xīng)期(qī)")}<div class="en-trans">next week</div><div class="fr-trans">la semaine prochaine</div></td>
+                                </tr>
+                                <tr>
+                                    <td>${parsePinyin("昨(zuó)天(tiān)")}<div class="en-trans">yesterday</div><div class="fr-trans">hier</div></td>
+                                    <td>${parsePinyin("今(jīn)天(tiān)")}<div class="en-trans">today</div><div class="fr-trans">aujourd'hui</div></td>
+                                    <td>${parsePinyin("明(míng)天(tiān)")}<div class="en-trans">tomorrow</div><div class="fr-trans">demain</div></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        `
+                    }
+                ]
+            },
+            {
+                title: "2. Movies",
+                items: [
+                    {
+                        type: "grammar",
+                        subId: "sub-2-1",
+                        title: "Measure Word for Movies: 部",
+                        noteFr: "Le classificateur pour « film » est 部 : 一部电影. Parfois, les gens sont « paresseux » et laissent tomber 部, en disant directement le nom du film + un numéro.",
+                        note: "<b>Explanation:</b> The measure word for \"movie\" is 部: 一部电影. Sometimes people are \"lazy\" and drop 部, saying the movie's name + a number directly.",
+                        examples: [
+                            { zh: "我(wǒ)昨(zuó)天(tiān)看(kàn)了(le)两(liǎng)部(bù)电(diàn)影(yǐng)，一(yí)部(bù)是(shì)龙(lóng)猫(māo)，一(yí)部(bù)是(shì)饥(jī)饿(è)游(yóu)戏(xì)。", fr: "Hier, j'ai regardé deux films, l'un était Totoro, l'autre était Hunger Games.", en: "Yesterday I watched two movies, one was Totoro, one was Hunger Games." },
+                            { zh: "饥(jī)饿(è)游(yóu)戏(xì)现(xiàn)在(zài)有(yǒu)六(liù)部(bù)，我(wǒ)昨(zuó)天(tiān)看(kàn)了(le)饥(jī)饿(è)游(yóu)戏(xì)6。", fr: "Il y a maintenant six Hunger Games, hier j'ai regardé Hunger Games 6.", en: "There are now six Hunger Games movies, yesterday I watched Hunger Games 6." }
+                        ]
+                    },
+                    {
+                        type: "grammar",
+                        subId: "sub-2-2",
+                        title: "A 和 B 一样 — A is the Same as B",
+                        examples: [
+                            { zh: "我(wǒ)和(hé)莱(lái)尼(ní)一(yí)样(yàng)，都(dōu)是(shì)法(fǎ)国(guó)人(rén)。", fr: "Léni et moi sommes pareils, nous sommes tous les deux français.", en: "Léni and I are the same, we're both French." },
+                            { zh: "今(jīn)天(tiān)和(hé)昨(zuó)天(tiān)一(yí)样(yàng)，没(méi)有(yǒu)下(xià)雨(yǔ)。", fr: "Aujourd'hui est comme hier, il n'a pas plu.", en: "Today is the same as yesterday, it didn't rain." },
+                            { zh: "饥(jī)饿(è)游(yóu)戏(xì)6和(hé)饥(jī)饿(è)游(yóu)戏(xì)1一(yí)样(yàng)。", fr: "Hunger Games 6 est pareil à Hunger Games 1.", en: "Hunger Games 6 is the same as Hunger Games 1." }
+                        ]
+                    },
+                    {
+                        type: "grammar",
+                        subId: "sub-2-3",
+                        title: "拍 (pāi) — Clap / Pat / Photograph",
+                        noteFr: "拍 seul veut dire « taper/frapper » quelque chose. Avec une personne, ça peut vouloir dire « prendre une photo de quelqu'un ». 拍 + 手 (main) = 拍手 = applaudir.",
+                        note: "<b>Explanation:</b> 拍 by itself means to pat/hit something. With a person, it can mean \"to take a photo of someone\". 拍 + 手 (hand) = 拍手 = to applaud.",
+                        examples: [
+                            { zh: "看(kàn)那(nà)部(bù)电(diàn)影(yǐng)后(hòu)，我(wǒ)们(men)都(dōu)拍(pāi)手(shǒu)，因(yīn)为(wèi)很(hěn)好(hǎo)看(kàn)。", fr: "Après avoir regardé ce film, nous avons tous applaudi, parce qu'il était très bien.", en: "After watching that movie, we all clapped, because it was really good." },
+                            { zh: "我(wǒ)常(cháng)常(cháng)拍(pāi)莱(lái)尼(ní)。", fr: "Je prends souvent des photos de Léni.", en: "I often take photos of Léni." },
+                            { zh: "很(hěn)多(duō)人(rén)看(kàn)完(wán)饥(jī)饿(è)游(yóu)戏(xì)六(liù)，会(huì)拍(pāi)拍(pāi)手(shǒu)，我(wǒ)不(bù)知(zhī)道(dào)为(wèi)什(shén)么(me)。", fr: "Beaucoup de gens applaudissent après avoir fini Hunger Games 6, je ne sais pas pourquoi.", en: "A lot of people clap after finishing Hunger Games 6, I don't know why." }
+                        ]
+                    },
+                    {
+                        type: "custom",
+                        subId: "sub-2-4",
+                        title: "Adjectives to Describe Movies",
+                        html: `
+                        <div class="note-fr">很 + adj. On dit simplement 不 + adj. pour le contraire, sans 很.</div>
+                        <div class="note"><b>Explanation:</b> 很 + adj. For the opposite, just say 不 + adj., without 很.</div>
+                        <table class="custom-table">
+                            <thead><tr><th>Word</th><th>Example Sentences</th></tr></thead>
+                            <tbody>
+                                <tr>
+                                    <td><img src="https://cdn.phototourl.com/member/2026-11-28-ab8cac6f-8b47-458f-8b51-dfee27d0c0f3.png" class="th-img" alt="很好看">${parsePinyin("很(hěn)好(hǎo)看(kàn)")}</td>
+                                    <td>
+                                        <div>${parsePinyin("我(wǒ)觉(jué)得(de)魔(mó)戒(jiè)很(hěn)好(hǎo)看(kàn)。")}</div>
+                                        <div class="en-trans">I think The Lord of the Rings looks great.</div>
+                                        <div class="fr-trans">Je trouve que Le Seigneur des Anneaux a l'air génial.</div>
+                                        <div style="margin-top:8px;">${parsePinyin("我(wǒ)觉(jué)得(de)饥(jī)饿(è)游(yóu)戏(xì)六(liù)不(bù)好(hǎo)看(kàn)。")}</div>
+                                        <div class="en-trans">I think Hunger Games 6 doesn't look good.</div>
+                                        <div class="fr-trans">Je trouve que Hunger Games 6 n'a pas l'air bien.</div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><img src="https://cdn.phototourl.com/member/2026-11-28-bbbffd83-3222-4ce5-9a49-a57612d66c16.png" class="th-img" alt="很可爱">${parsePinyin("很(hěn)可(kě)爱(ài)")}</td>
+                                    <td>
+                                        <div>${parsePinyin("我(wǒ)觉(jué)得(de)龙(lóng)猫(māo)很(hěn)可(kě)爱(ài)。")}</div>
+                                        <div class="en-trans">I think Totoro is very cute.</div>
+                                        <div class="fr-trans">Je trouve que Totoro est très mignon.</div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><img src="https://cdn.phototourl.com/member/2026-11-28-4d77bbed-1f9e-4bbd-ba78-69a82c3a52ce.png" class="th-img" alt="很好笑">${parsePinyin("很(hěn)好(hǎo)笑(xiào)")}</td>
+                                    <td>
+                                        <div>${parsePinyin("我(wǒ)觉(jué)得(de)那(nà)部(bù)电(diàn)影(yǐng)很(hěn)好(hǎo)笑(xiào)。")}</div>
+                                        <div class="en-trans">I think that movie is very funny.</div>
+                                        <div class="fr-trans">Je trouve que ce film est très drôle.</div>
+                                        <div style="margin-top:8px;">${parsePinyin("我(wǒ)觉(jué)得(de)饥(jī)饿(è)游(yóu)戏(xì)不(bù)好(hǎo)笑(xiào)。")}</div>
+                                        <div class="en-trans">I think Hunger Games isn't funny.</div>
+                                        <div class="fr-trans">Je trouve que Hunger Games n'est pas drôle.</div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><img src="https://cdn.phototourl.com/member/2026-11-28-f692967b-0ebe-4ab0-a8e4-e2ffe64786c2.png" class="th-img" alt="很可怕">${parsePinyin("很(hěn)可(kě)怕(pà)")}</td>
+                                    <td>
+                                        <div>${parsePinyin("我(wǒ)不(bù)喜(xǐ)欢(huān)看(kàn)很(hěn)可(kě)怕(pà)的(de)电(diàn)影(yǐng)。")}</div>
+                                        <div class="en-trans">I don't like watching very scary movies.</div>
+                                        <div class="fr-trans">Je n'aime pas regarder des films très effrayants.</div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><img src="https://cdn.phototourl.com/member/2026-11-28-d33c5309-b952-429b-ab7f-7470ce725af0.png" class="th-img" alt="很无聊">${parsePinyin("很(hěn)无(wú)聊(liáo)")}</td>
+                                    <td>
+                                        <div>${parsePinyin("我(wǒ)觉(jué)得(de)韩(hán)国(guó)的(de)Hope很(hěn)无(wú)聊(liáo)。")}</div>
+                                        <div class="en-trans">I think the Korean show Hope is boring.</div>
+                                        <div class="fr-trans">Je trouve que la série coréenne Hope est ennuyeuse.</div>
+                                        <div style="margin-top:8px;">${parsePinyin("我(wǒ)觉(jué)得(de)魔(mó)戒(jiè)不(bù)无(wú)聊(liáo)。")}</div>
+                                        <div class="en-trans">I think The Lord of the Rings isn't boring.</div>
+                                        <div class="fr-trans">Je trouve que Le Seigneur des Anneaux n'est pas ennuyeux.</div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        `
+                    },
+                    {
+                        type: "grammar",
+                        subId: "sub-2-5",
+                        title: "魔戒 (mó jiè) — The Lord of the Rings",
+                        noteFr: "魔 représente la magie, 戒 représente la bague/l'anneau.",
+                        note: "<b>Explanation:</b> 魔 represents magic, 戒 represents a ring.",
+                        examples: [
+                            { zh: "你(nǐ)有(yǒu)戒(jiè)指(zhǐ)吗(ma)？", fr: "As-tu une bague ?", en: "Do you have a ring?" },
+                            { zh: "我(wǒ)有(yǒu)戒(jiè)指(zhǐ)。", fr: "J'ai une bague.", en: "I have a ring." },
+                            { zh: "你(nǐ)有(yǒu)魔(mó)法(fǎ)吗(ma)？", fr: "As-tu de la magie ?", en: "Do you have magic?" },
+                            { zh: "我(wǒ)没(méi)有(yǒu)魔(mó)法(fǎ)。", fr: "Je n'ai pas de magie.", en: "I don't have magic." }
+                        ]
+                    },
+                    {
+                        type: "grammar",
+                        subId: "sub-2-6",
+                        title: "Describing Movie Length",
+                        noteFr: "Structure : ___电影是多久？(Combien de temps dure le film ___ ?)",
+                        note: "<b>Pattern:</b> ___电影是多久？(How long is the ___ movie?)",
+                        examples: [
+                            { zh: "魔(mó)戒(jiè)电(diàn)影(yǐng)是(shì)多(duō)久(jiǔ)？", fr: "Combien de temps dure le film Le Seigneur des Anneaux ?", en: "How long is The Lord of the Rings movie?" },
+                            { zh: "魔(mó)戒(jiè)电(diàn)影(yǐng)是(shì)两(liǎng)小(xiǎo)时(shí)。", fr: "Le film Le Seigneur des Anneaux dure deux heures.", en: "The Lord of the Rings movie is two hours." },
+                            { zh: "那(nà)个(gè)电(diàn)影(yǐng)是(shì)两(liǎng)小(xiǎo)时(shí)半(bàn)。", fr: "Ce film dure deux heures et demie.", en: "That movie is two and a half hours." }
+                        ]
+                    },
+                    {
+                        type: "custom",
+                        subId: "sub-2-7",
+                        title: "Elements of a Movie",
+                        html: `
+                        <table class="custom-table">
+                            <thead><tr>
+                                <th><img src="https://cdn.phototourl.com/member/2026-11-28-7bae0a76-c176-41f0-a522-6e70220cf900.png" class="th-img" alt="主角">${parsePinyin("主(zhǔ)角(jiǎo)")}</th>
+                                <th><img src="https://cdn.phototourl.com/member/2026-11-28-eaf71122-c0e2-4914-9f36-f721906cbbd9.png" class="th-img" alt="音乐">${parsePinyin("音(yīn)乐(yuè)")}</th>
+                                <th><img src="https://cdn.phototourl.com/member/2026-11-28-ece2d95d-a86a-4bff-840f-2ced8e1fd11a.png" class="th-img" alt="画面">${parsePinyin("画(huà)面(miàn)")}</th>
+                                <th><img src="https://cdn.phototourl.com/member/2026-11-28-557311a1-f28f-4bda-aa3c-d9c06e693238.png" class="th-img" alt="故事">${parsePinyin("故(gù)事(shì)")}</th>
+                            </tr></thead>
+                            <tbody>
+                                <tr>
+                                    <td style="font-size:13.5px; text-align:left;">🇬🇧 主 = main, 角 = character/role.<br>🇫🇷 主 = principal, 角 = personnage/rôle.</td>
+                                    <td style="font-size:13.5px; text-align:left;">🇬🇧 音 = sound. 乐 is the same character as 快乐 (happy), but with two pronunciations (lè / yuè).<br>🇫🇷 音 = son. 乐 est le même caractère que 快乐 (content), mais avec deux prononciations (lè / yuè).</td>
+                                    <td style="font-size:13.5px; text-align:left;">🇬🇧 画 = picture/drawing, 面 = face (here: the visuals).<br>🇫🇷 画 = image/dessin, 面 = visage (ici : l'image à l'écran).</td>
+                                    <td style="font-size:13.5px; text-align:left;">🇬🇧 故 = old, 事 = matter/thing (here: the story).<br>🇫🇷 故 = ancien, 事 = affaire/chose (ici : l'histoire).</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        ${exampleRow({ zh: "你(nǐ)觉(jué)得(de)电(diàn)影(yǐng)的(de)什(shén)么(me)最(zuì)重(zhòng)要(yào)？", fr: "D'après toi, qu'est-ce qui est le plus important dans un film ?", en: "What do you think is most important in a movie?" })}
+                        ${exampleRow({ zh: "我(wǒ)觉(jué)得(de)电(diàn)影(yǐng)的(de)故(gù)事(shì)最(zuì)重(zhòng)要(yào)。", fr: "Je trouve que l'histoire du film est la plus importante.", en: "I think a movie's story is the most important." })}
+                        ${exampleRow({ zh: "你(nǐ)喜(xǐ)欢(huān)听(tīng)英(yīng)文(wén)音(yīn)乐(yuè)吗(ma)？我(wǒ)喜(xǐ)欢(huān)听(tīng)。", fr: "Aimes-tu écouter de la musique en anglais ? J'aime écouter.", en: "Do you like listening to English music? I like listening." })}
+                        ${exampleRow({ zh: "你(nǐ)常(cháng)常(cháng)听(tīng)中(zhōng)文(wén)音(yīn)乐(yuè)吗(ma)？我(wǒ)很(hěn)少(shǎo)听(tīng)。", fr: "Écoutes-tu souvent de la musique en chinois ? J'en écoute rarement.", en: "Do you often listen to Chinese music? I rarely listen." })}
+                        `
+                    },
+                    {
+                        type: "custom",
+                        subId: "sub-2-8",
+                        title: "How to Tell a Story",
+                        html: `
+                        <div class="note-fr">1 commence l'histoire (有一天.../今天.../昨天...), 2 dit ce qui s'est passé (然后...), 3 dit la fin (最后...).</div>
+                        <div class="note"><b>Explanation:</b> 1 starts the story (有一天.../今天.../昨天...), 2 says what happened (然后...), 3 says the ending (最后...).</div>
+                        <table class="custom-table">
+                            <thead><tr><th>1</th><th>2</th><th>3</th></tr></thead>
+                            <tbody>
+                                <tr>
+                                    <td>${parsePinyin("有(yǒu)一(yì)天(tiān)...")}<br>${parsePinyin("今(jīn)天(tiān)...")}<br>${parsePinyin("昨(zuó)天(tiān)...")}</td>
+                                    <td>${parsePinyin("然(rán)后(hòu)...")}<div class="en-trans" style="margin-top:6px;">(something happened)</div><div class="fr-trans">(un événement s'est produit)</div></td>
+                                    <td>${parsePinyin("最(zuì)后(hòu)...")}<div class="en-trans" style="margin-top:6px;">(how it ended)</div><div class="fr-trans">(comment ça s'est terminé)</div></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div style="margin-top:15px;">${exampleRow({ zh: "饥(jī)饿(è)游(yóu)戏(xì)6是(shì)有(yǒu)一(yì)天(tiān)有(yǒu)一(yí)个(gè)男(nán)生(shēng)，他(tā)参(cān)加(jiā)饥(jī)饿(è)游(yóu)戏(xì)，然(rán)后(hòu)他(tā)赢(yíng)了(le)，最(zuì)后(hòu)他(tā)很(hěn)伤(shāng)心(xīn)，因(yīn)为(wèi)他(tā)杀(shā)死(sǐ)很(hěn)多(duō)人(rén)。", fr: "Hunger Games 6, c'est l'histoire d'un garçon qui participe aux Hunger Games, puis il gagne, et à la fin il est très triste parce qu'il a tué beaucoup de gens.", en: "Hunger Games 6 is about one day there was a boy, he joined the Hunger Games, then he won, and in the end he was very sad because he killed a lot of people." })}</div>
+                        `
+                    }
+                ]
+            },
+            {
+                title: "3. Homework for Next Time",
+                items: [
+                    {
+                        type: "custom",
+                        subId: "sub-3-1",
+                        title: "Homework: Your Trip to London",
+                        html: `
+                        <div class="note-fr">Écris l'histoire de votre voyage à Londres, en utilisant le vocabulaire et les structures grammaticales ci-dessus.</div>
+                        <div class="note">Write the story of your trip to London, using the vocabulary and grammar patterns above.</div>
+                        <div class="grammar-box" style="margin-top:10px;">
+                            <div style="font-weight:bold; color:#8C6239; margin-bottom:8px;">eg. 例子</div>
+                            ${exampleRow({ zh: "上(shàng)周(zhōu)末(mò)我(wǒ)们(men)去(qù)了(le)伦(lún)敦(dūn)，我(wǒ)们(men)去(qù)了(le)英(yīng)国(guó)饭(fàn)馆(guǎn)吃(chī)饭(fàn)，然(rán)后(hòu)看(kàn)了(le)伦(lún)敦(dūn)塔(tǎ)，最(zuì)后(hòu)坐(zuò)飞(fēi)机(jī)回(huí)法(fǎ)国(guó)。", fr: "Le week-end dernier, nous sommes allés à Londres, nous sommes allés manger dans un restaurant anglais, puis nous avons vu la Tour de Londres, et enfin nous avons pris l'avion pour rentrer en France.", en: "Last weekend we went to London, we went to eat at a British restaurant, then saw the Tower of London, and finally took a plane back to France." })}
+                        </div>
+                        `
+                    }
+                ]
+            }
+        ];
+
+        const container = document.getElementById('content');
+
+        lessonData.forEach((sec, sIdx) => {
+            let html = `<div class="section" id="sec-${sIdx+1}"><h2>${sec.title}</h2>`;
+
+            sec.items.forEach(item => {
+                let anchorAttr = item.subId ? `id="${item.subId}"` : '';
+
+                if (item.type === "custom") {
+                    html += `<div class="grammar-box" ${anchorAttr}>
+                        <div style="font-weight:bold; font-size:17px; color:#8C6239; margin-bottom:8px;">${item.title}</div>
+                        ${item.html}
+                    </div>`;
+                } else if (item.type === "grammar" || item.type === "reading") {
+                    html += `<div class="grammar-box" ${anchorAttr}>
+                        <div style="font-weight:bold; font-size:17px; color:#8C6239; margin-bottom:8px;">${item.title}</div>`;
+                    if(item.noteFr) html += `<div class="note-fr">${item.noteFr}</div>`;
+                    if(item.note) html += `<div class="note">${item.note}</div>`;
+                    if(item.image) html += `<img src="${item.image}" class="lesson-img" alt="Lesson Image">`;
+
+                    if (item.examples) {
+                        item.examples.forEach(ex => { html += exampleRow(ex); });
+                    }
+                    html += `</div>`;
+                }
+            });
+            html += `</div>`;
+            container.innerHTML += html;
+        });
+
+        let pinyinVisible = true;
+        let enVisible = true;
+        let frVisible = true;
+
+        function togglePinyin() {
+            pinyinVisible = !pinyinVisible;
+            document.querySelectorAll('.py-text').forEach(el => {
+                el.style.display = pinyinVisible ? 'block' : 'none';
+            });
+        }
+
+        function toggleEnglish() {
+            enVisible = !enVisible;
+            document.querySelectorAll('.en-trans').forEach(el => {
+                el.style.display = enVisible ? 'block' : 'none';
+            });
+        }
+
+        function toggleFrench() {
+            frVisible = !frVisible;
+            document.querySelectorAll('.fr-trans').forEach(el => {
+                el.style.display = frVisible ? 'block' : 'none';
+            });
+        }
+    </script>
+</body>
+</html>
