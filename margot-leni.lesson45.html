@@ -302,6 +302,18 @@
             return `<div class="speaker-label">${name} :</div>`;
         }
 
+        function audioCell(zh) {
+            let btnId = `play-btn-${counter}`;
+            let recId = `rec-${counter}`;
+            counter++;
+            return `<div class="buttons-group" style="margin-bottom:6px;">
+                <button class="icon-btn" id="${btnId}" onclick="togglePlayAudio('${zh}', '${btnId}')" title="Listen Audio">🔊</button>
+                <button class="icon-btn" onclick="toggleRecord(this, '${recId}')" title="Record Audio">🎤</button>
+                <button class="icon-btn" id="play-rec-${recId}" title="Play Mine" disabled>▶️</button>
+            </div>
+            <div style="font-size:20px;">${parsePinyin(zh)}</div>`;
+        }
+
         const lessonData = [
             {
                 title: "1. Daily Life",
@@ -408,24 +420,24 @@
                             <thead><tr><th>Past</th><th>Present</th><th>Future</th></tr></thead>
                             <tbody>
                                 <tr>
-                                    <td>${parsePinyin("去(qù)年(nián)")}<div class="en-trans">last year</div><div class="fr-trans">l'année dernière</div></td>
-                                    <td>${parsePinyin("今(jīn)年(nián)")}<div class="en-trans">this year</div><div class="fr-trans">cette année</div></td>
-                                    <td>${parsePinyin("明(míng)年(nián)")}<div class="en-trans">next year</div><div class="fr-trans">l'année prochaine</div></td>
+                                    <td>${audioCell("去(qù)年(nián)")}<div class="en-trans">last year</div><div class="fr-trans">l'année dernière</div></td>
+                                    <td>${audioCell("今(jīn)年(nián)")}<div class="en-trans">this year</div><div class="fr-trans">cette année</div></td>
+                                    <td>${audioCell("明(míng)年(nián)")}<div class="en-trans">next year</div><div class="fr-trans">l'année prochaine</div></td>
                                 </tr>
                                 <tr>
-                                    <td>${parsePinyin("上(shàng)个(gè)月(yuè)")}<div class="en-trans">last month</div><div class="fr-trans">le mois dernier</div></td>
-                                    <td>${parsePinyin("这(zhè)个(gè)月(yuè)")}<div class="en-trans">this month</div><div class="fr-trans">ce mois-ci</div></td>
-                                    <td>${parsePinyin("下(xià)个(gè)月(yuè)")}<div class="en-trans">next month</div><div class="fr-trans">le mois prochain</div></td>
+                                    <td>${audioCell("上(shàng)个(gè)月(yuè)")}<div class="en-trans">last month</div><div class="fr-trans">le mois dernier</div></td>
+                                    <td>${audioCell("这(zhè)个(gè)月(yuè)")}<div class="en-trans">this month</div><div class="fr-trans">ce mois-ci</div></td>
+                                    <td>${audioCell("下(xià)个(gè)月(yuè)")}<div class="en-trans">next month</div><div class="fr-trans">le mois prochain</div></td>
                                 </tr>
                                 <tr>
-                                    <td>${parsePinyin("上(shàng)星(xīng)期(qī)")}<div class="en-trans">last week</div><div class="fr-trans">la semaine dernière</div></td>
-                                    <td>${parsePinyin("这(zhè)星(xīng)期(qī)")}<div class="en-trans">this week</div><div class="fr-trans">cette semaine</div></td>
-                                    <td>${parsePinyin("下(xià)星(xīng)期(qī)")}<div class="en-trans">next week</div><div class="fr-trans">la semaine prochaine</div></td>
+                                    <td>${audioCell("上(shàng)星(xīng)期(qī)")}<div class="en-trans">last week</div><div class="fr-trans">la semaine dernière</div></td>
+                                    <td>${audioCell("这(zhè)星(xīng)期(qī)")}<div class="en-trans">this week</div><div class="fr-trans">cette semaine</div></td>
+                                    <td>${audioCell("下(xià)星(xīng)期(qī)")}<div class="en-trans">next week</div><div class="fr-trans">la semaine prochaine</div></td>
                                 </tr>
                                 <tr>
-                                    <td>${parsePinyin("昨(zuó)天(tiān)")}<div class="en-trans">yesterday</div><div class="fr-trans">hier</div></td>
-                                    <td>${parsePinyin("今(jīn)天(tiān)")}<div class="en-trans">today</div><div class="fr-trans">aujourd'hui</div></td>
-                                    <td>${parsePinyin("明(míng)天(tiān)")}<div class="en-trans">tomorrow</div><div class="fr-trans">demain</div></td>
+                                    <td>${audioCell("昨(zuó)天(tiān)")}<div class="en-trans">yesterday</div><div class="fr-trans">hier</div></td>
+                                    <td>${audioCell("今(jīn)天(tiān)")}<div class="en-trans">today</div><div class="fr-trans">aujourd'hui</div></td>
+                                    <td>${audioCell("明(míng)天(tiān)")}<div class="en-trans">tomorrow</div><div class="fr-trans">demain</div></td>
                                 </tr>
                             </tbody>
                         </table>
@@ -480,50 +492,50 @@
                             <thead><tr><th>Word</th><th>Example Sentences</th></tr></thead>
                             <tbody>
                                 <tr>
-                                    <td><img src="https://cdn.phototourl.com/member/2026-11-28-ab8cac6f-8b47-458f-8b51-dfee27d0c0f3.png" class="th-img" alt="很好看">${parsePinyin("很(hěn)好(hǎo)看(kàn)")}</td>
+                                    <td><img src="https://cdn.phototourl.com/member/2026-11-28-ab8cac6f-8b47-458f-8b51-dfee27d0c0f3.png" class="th-img" alt="很好看">${audioCell("很(hěn)好(hǎo)看(kàn)")}</td>
                                     <td>
-                                        <div>${parsePinyin("我(wǒ)觉(jué)得(de)魔(mó)戒(jiè)很(hěn)好(hǎo)看(kàn)。")}</div>
+                                        <div>${audioCell("我(wǒ)觉(jué)得(de)魔(mó)戒(jiè)很(hěn)好(hǎo)看(kàn)。")}</div>
                                         <div class="en-trans">I think The Lord of the Rings looks great.</div>
                                         <div class="fr-trans">Je trouve que Le Seigneur des Anneaux a l'air génial.</div>
-                                        <div style="margin-top:8px;">${parsePinyin("我(wǒ)觉(jué)得(de)饥(jī)饿(è)游(yóu)戏(xì)六(liù)不(bù)好(hǎo)看(kàn)。")}</div>
+                                        <div style="margin-top:8px;">${audioCell("我(wǒ)觉(jué)得(de)饥(jī)饿(è)游(yóu)戏(xì)六(liù)不(bù)好(hǎo)看(kàn)。")}</div>
                                         <div class="en-trans">I think Hunger Games 6 doesn't look good.</div>
                                         <div class="fr-trans">Je trouve que Hunger Games 6 n'a pas l'air bien.</div>
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td><img src="https://cdn.phototourl.com/member/2026-11-28-bbbffd83-3222-4ce5-9a49-a57612d66c16.png" class="th-img" alt="很可爱">${parsePinyin("很(hěn)可(kě)爱(ài)")}</td>
+                                    <td><img src="https://cdn.phototourl.com/member/2026-11-28-bbbffd83-3222-4ce5-9a49-a57612d66c16.png" class="th-img" alt="很可爱">${audioCell("很(hěn)可(kě)爱(ài)")}</td>
                                     <td>
-                                        <div>${parsePinyin("我(wǒ)觉(jué)得(de)龙(lóng)猫(māo)很(hěn)可(kě)爱(ài)。")}</div>
+                                        <div>${audioCell("我(wǒ)觉(jué)得(de)龙(lóng)猫(māo)很(hěn)可(kě)爱(ài)。")}</div>
                                         <div class="en-trans">I think Totoro is very cute.</div>
                                         <div class="fr-trans">Je trouve que Totoro est très mignon.</div>
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td><img src="https://cdn.phototourl.com/member/2026-11-28-4d77bbed-1f9e-4bbd-ba78-69a82c3a52ce.png" class="th-img" alt="很好笑">${parsePinyin("很(hěn)好(hǎo)笑(xiào)")}</td>
+                                    <td><img src="https://cdn.phototourl.com/member/2026-11-28-4d77bbed-1f9e-4bbd-ba78-69a82c3a52ce.png" class="th-img" alt="很好笑">${audioCell("很(hěn)好(hǎo)笑(xiào)")}</td>
                                     <td>
-                                        <div>${parsePinyin("我(wǒ)觉(jué)得(de)那(nà)部(bù)电(diàn)影(yǐng)很(hěn)好(hǎo)笑(xiào)。")}</div>
+                                        <div>${audioCell("我(wǒ)觉(jué)得(de)那(nà)部(bù)电(diàn)影(yǐng)很(hěn)好(hǎo)笑(xiào)。")}</div>
                                         <div class="en-trans">I think that movie is very funny.</div>
                                         <div class="fr-trans">Je trouve que ce film est très drôle.</div>
-                                        <div style="margin-top:8px;">${parsePinyin("我(wǒ)觉(jué)得(de)饥(jī)饿(è)游(yóu)戏(xì)不(bù)好(hǎo)笑(xiào)。")}</div>
+                                        <div style="margin-top:8px;">${audioCell("我(wǒ)觉(jué)得(de)饥(jī)饿(è)游(yóu)戏(xì)不(bù)好(hǎo)笑(xiào)。")}</div>
                                         <div class="en-trans">I think Hunger Games isn't funny.</div>
                                         <div class="fr-trans">Je trouve que Hunger Games n'est pas drôle.</div>
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td><img src="https://cdn.phototourl.com/member/2026-11-28-f692967b-0ebe-4ab0-a8e4-e2ffe64786c2.png" class="th-img" alt="很可怕">${parsePinyin("很(hěn)可(kě)怕(pà)")}</td>
+                                    <td><img src="https://cdn.phototourl.com/member/2026-11-28-f692967b-0ebe-4ab0-a8e4-e2ffe64786c2.png" class="th-img" alt="很可怕">${audioCell("很(hěn)可(kě)怕(pà)")}</td>
                                     <td>
-                                        <div>${parsePinyin("我(wǒ)不(bù)喜(xǐ)欢(huān)看(kàn)很(hěn)可(kě)怕(pà)的(de)电(diàn)影(yǐng)。")}</div>
+                                        <div>${audioCell("我(wǒ)不(bù)喜(xǐ)欢(huān)看(kàn)很(hěn)可(kě)怕(pà)的(de)电(diàn)影(yǐng)。")}</div>
                                         <div class="en-trans">I don't like watching very scary movies.</div>
                                         <div class="fr-trans">Je n'aime pas regarder des films très effrayants.</div>
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td><img src="https://cdn.phototourl.com/member/2026-11-28-d33c5309-b952-429b-ab7f-7470ce725af0.png" class="th-img" alt="很无聊">${parsePinyin("很(hěn)无(wú)聊(liáo)")}</td>
+                                    <td><img src="https://cdn.phototourl.com/member/2026-11-28-d33c5309-b952-429b-ab7f-7470ce725af0.png" class="th-img" alt="很无聊">${audioCell("很(hěn)无(wú)聊(liáo)")}</td>
                                     <td>
-                                        <div>${parsePinyin("我(wǒ)觉(jué)得(de)韩(hán)国(guó)的(de)Hope很(hěn)无(wú)聊(liáo)。")}</div>
+                                        <div>${audioCell("我(wǒ)觉(jué)得(de)韩(hán)国(guó)的(de)Hope很(hěn)无(wú)聊(liáo)。")}</div>
                                         <div class="en-trans">I think the Korean show Hope is boring.</div>
                                         <div class="fr-trans">Je trouve que la série coréenne Hope est ennuyeuse.</div>
-                                        <div style="margin-top:8px;">${parsePinyin("我(wǒ)觉(jué)得(de)魔(mó)戒(jiè)不(bù)无(wú)聊(liáo)。")}</div>
+                                        <div style="margin-top:8px;">${audioCell("我(wǒ)觉(jué)得(de)魔(mó)戒(jiè)不(bù)无(wú)聊(liáo)。")}</div>
                                         <div class="en-trans">I think The Lord of the Rings isn't boring.</div>
                                         <div class="fr-trans">Je trouve que Le Seigneur des Anneaux n'est pas ennuyeux.</div>
                                     </td>
@@ -564,10 +576,10 @@
                         html: `
                         <table class="custom-table">
                             <thead><tr>
-                                <th><img src="https://cdn.phototourl.com/member/2026-11-28-7bae0a76-c176-41f0-a522-6e70220cf900.png" class="th-img" alt="主角">${parsePinyin("主(zhǔ)角(jiǎo)")}</th>
-                                <th><img src="https://cdn.phototourl.com/member/2026-11-28-eaf71122-c0e2-4914-9f36-f721906cbbd9.png" class="th-img" alt="音乐">${parsePinyin("音(yīn)乐(yuè)")}</th>
-                                <th><img src="https://cdn.phototourl.com/member/2026-11-28-ece2d95d-a86a-4bff-840f-2ced8e1fd11a.png" class="th-img" alt="画面">${parsePinyin("画(huà)面(miàn)")}</th>
-                                <th><img src="https://cdn.phototourl.com/member/2026-11-28-557311a1-f28f-4bda-aa3c-d9c06e693238.png" class="th-img" alt="故事">${parsePinyin("故(gù)事(shì)")}</th>
+                                <th><img src="https://cdn.phototourl.com/member/2026-11-28-7bae0a76-c176-41f0-a522-6e70220cf900.png" class="th-img" alt="主角">${audioCell("主(zhǔ)角(jiǎo)")}</th>
+                                <th><img src="https://cdn.phototourl.com/member/2026-11-28-eaf71122-c0e2-4914-9f36-f721906cbbd9.png" class="th-img" alt="音乐">${audioCell("音(yīn)乐(yuè)")}</th>
+                                <th><img src="https://cdn.phototourl.com/member/2026-11-28-ece2d95d-a86a-4bff-840f-2ced8e1fd11a.png" class="th-img" alt="画面">${audioCell("画(huà)面(miàn)")}</th>
+                                <th><img src="https://cdn.phototourl.com/member/2026-11-28-557311a1-f28f-4bda-aa3c-d9c06e693238.png" class="th-img" alt="故事">${audioCell("故(gù)事(shì)")}</th>
                             </tr></thead>
                             <tbody>
                                 <tr>
@@ -595,9 +607,9 @@
                             <thead><tr><th>1</th><th>2</th><th>3</th></tr></thead>
                             <tbody>
                                 <tr>
-                                    <td>${parsePinyin("有(yǒu)一(yì)天(tiān)...")}<br>${parsePinyin("今(jīn)天(tiān)...")}<br>${parsePinyin("昨(zuó)天(tiān)...")}</td>
-                                    <td>${parsePinyin("然(rán)后(hòu)...")}<div class="en-trans" style="margin-top:6px;">(something happened)</div><div class="fr-trans">(un événement s'est produit)</div></td>
-                                    <td>${parsePinyin("最(zuì)后(hòu)...")}<div class="en-trans" style="margin-top:6px;">(how it ended)</div><div class="fr-trans">(comment ça s'est terminé)</div></td>
+                                    <td>${audioCell("有(yǒu)一(yì)天(tiān)...")}${audioCell("今(jīn)天(tiān)...")}${audioCell("昨(zuó)天(tiān)...")}</td>
+                                    <td>${audioCell("然(rán)后(hòu)...")}<div class="en-trans" style="margin-top:6px;">(something happened)</div><div class="fr-trans">(un événement s'est produit)</div></td>
+                                    <td>${audioCell("最(zuì)后(hòu)...")}<div class="en-trans" style="margin-top:6px;">(how it ended)</div><div class="fr-trans">(comment ça s'est terminé)</div></td>
                                 </tr>
                             </tbody>
                         </table>
